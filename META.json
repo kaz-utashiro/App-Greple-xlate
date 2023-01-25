@@ -56,6 +56,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kaz-utashiro/App-Greple-deepl/issues"
+      },
+      "homepage" : "https://github.com/kaz-utashiro/App-Greple-deepl",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/kaz-utashiro/App-Greple-deepl.git",
+         "web" : "https://github.com/kaz-utashiro/App-Greple-deepl"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:UTASHIRO",
    "x_contributors" : [

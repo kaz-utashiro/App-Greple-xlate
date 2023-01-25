@@ -1,4 +1,4 @@
-
+[![Actions Status](https://github.com/kaz-utashiro/App-Greple-deepl/actions/workflows/test.yml/badge.svg)](https://github.com/kaz-utashiro/App-Greple-deepl/actions)
 # NAME
 
 App::Greple::deepl - deepl module for greple
@@ -45,11 +45,16 @@ text `(?s).*`.
     Command result goes to standard out, so redirect to file if necessary,
     or consider to use [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) module.
 
-- **--deepl-format**
+- **--xlate-to** (DEFAULT: `JA`)
+
+    Specify the target language.  You can get available languages by
+    `deepl languages` command.
+
+- **--deepl-format**=_format_ (DEFAULT: conflict)
 
     Specify the output format for original and translated text.
 
-    - **conflict** (DEFAULT)
+    - **conflict**
 
         Print original and translated text in [git(1)](http://man.he.net/man1/git) conflict marker format.
 
@@ -61,7 +66,7 @@ text `(?s).*`.
 
         You can recover the original file by next [sed(1)](http://man.he.net/man1/sed) command.
 
-            sed -e '/^<<<<<<< /d' -e '/^=======/,/^>>>>>>> /d'
+            sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
     - **ifdef**
 
@@ -86,11 +91,6 @@ text `(?s).*`.
 
         If the format is `none` or unkown, only translated text is printed.
 
-- **--xlate-to** (DEFAULT: `JA`)
-
-    Specify the target language.  You can get available languages by
-    `deepl languages` command.
-
 - **--**\[**no-**\]**deepl-progress** (DEFAULT: True)
 
     See the tranlsation result in real time in the STDERR output.
@@ -102,11 +102,11 @@ text `(?s).*`.
     **--no-deepl-join** option.
 
 - **--deepl-fold**
-- **--deepl-fold-width**=_n_ (DEFAULT: 76)
+- **--deepl-fold-width**=_n_ (DEFAULT: 70)
 
-    Fold translated text by the specified width.  Default width is 76 and
+    Fold converted text by the specified width.  Default width is 70 and
     can be set by **--deepl-fold-width** option.  Four columns are reserved
-    for run-in operation, so each line could hold 80 characters at most.
+    for run-in operation, so each line could hold 74 characters at most.
 
 - **--deepl-match-entire**
 

@@ -52,13 +52,18 @@ translation before invoking actual work.
 Command result goes to standard out, so redirect to file if necessary,
 or consider to use L<App::Greple::update> module.
 
-=item B<--deepl-format>
+=item B<--xlate-to> (DEFAULT: C<JA>)
+
+Specify the target language.  You can get available languages by
+C<deepl languages> command.
+
+=item B<--deepl-format>=I<format> (DEFAULT: conflict)
 
 Specify the output format for original and translated text.
 
 =over 4
 
-=item B<conflict> (DEFAULT)
+=item B<conflict>
 
 Print original and translated text in L<git(1)> conflict marker format.
 
@@ -70,7 +75,7 @@ Print original and translated text in L<git(1)> conflict marker format.
 
 You can recover the original file by next L<sed(1)> command.
 
-    sed -e '/^<<<<<<< /d' -e '/^=======/,/^>>>>>>> /d'
+    sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
 =item B<ifdef>
 
@@ -97,11 +102,6 @@ If the format is C<none> or unkown, only translated text is printed.
 
 =back
 
-=item B<--xlate-to> (DEFAULT: C<JA>)
-
-Specify the target language.  You can get available languages by
-C<deepl languages> command.
-
 =item B<-->[B<no->]B<deepl-progress> (DEFAULT: True)
 
 See the tranlsation result in real time in the STDERR output.
@@ -114,11 +114,11 @@ B<--no-deepl-join> option.
 
 =item B<--deepl-fold>
 
-=item B<--deepl-fold-width>=I<n> (DEFAULT: 76)
+=item B<--deepl-fold-width>=I<n> (DEFAULT: 70)
 
-Fold translated text by the specified width.  Default width is 76 and
+Fold converted text by the specified width.  Default width is 70 and
 can be set by B<--deepl-fold-width> option.  Four columns are reserved
-for run-in operation, so each line could hold 80 characters at most.
+for run-in operation, so each line could hold 74 characters at most.
 
 =item B<--deepl-match-entire>
 
@@ -188,7 +188,7 @@ our $cleanup_trailing_newlines = 1;
 our $lang_from = 'ORIGINAL';
 our $lang_to = 'JA';
 our $fold_line = 0;
-our $fold_width = 76;
+our $fold_width = 70;
 our $auth_key;
 our $cache_data
     //= $ENV{GREPLE_DEEPL_USECACHE};
@@ -198,13 +198,15 @@ our $cache_file
 our %LABELS = (
     none => undef,
     conflict => [
-	"<<<<<<< $lang_from\n",
-	"=======\n",
-	">>>>>>> $lang_to\n" ],
+	sprintf("<<<<<<< %s\n", uc $lang_from),
+	sprintf("=======\n"),
+	sprintf(">>>>>>> %s\n", uc $lang_to)
+    ],
     ifdef => [
-	"#ifdef $lang_from\n",
-	"#endif\n#ifdef $lang_to\n",
-	"#endif\n" ],
+	sprintf("#ifdef %s\n", uc $lang_from),
+	"#endif\n" . sprintf("#ifdef %s\n", uc $lang_to),
+	"#endif\n"
+    ],
     space => [ '', "\n", '' ],
     );
 
@@ -213,51 +215,35 @@ my $xlate_new_cache = {};
 my $xlate_cache_update;
 
 sub get_label {
-    $LABELS{$_[0]};
+    my $label = $LABELS{+shift};
+    ref $label eq 'CODE' ? [ $label->() ] : $label;
 }
 
 sub _translate {
+    state $deepl = App::cdif::Command->new;
     state $command = [ 'deepl', 'text',
 		       '--to' => $lang_to,
 		       $auth_key ? ('--auth-key' => $auth_key) : () ];
-    (state $deepl = App::cdif::Command->new)
-	->command([@$command, $_[0]])->update->data;
+    my $from = shift;
+
+    print STDERR "From:\n", $from =~ s/^/\t< /mgr
+	if $show_progress;
+
+    my $to = $deepl->command([@$command, $from])->update->data;
+
+    print STDERR "To:\n", $to =~ s/^/\t> /mgr, "\n\n"
+	if $show_progress;
+
+    return $to;
 }
 
 sub translate {
-    goto _translate unless $cache_data;
+    goto &_translate unless $cache_data;
     my $text = shift;
     $xlate_new_cache->{$text} //= $xlate_old_cache->{$text} // do {
 	$xlate_cache_update++;
 	_translate $text;
     };
-}
-
-sub deepl {
-    my %args = @_;
-    my $orig = $_;
-    $orig .= "\n" unless $orig =~ /\n\z/;
-
-    print STDERR "From:\n", $orig =~ s/^/\t< /mgr
-	if $show_progress;
-
-    my $source = $orig;
-    $source =~ s/.\K\n(?=.)/ /g if $join_paragraph;
-
-    $_ = translate($source);
-
-    s/\n\K\n+\z// if $cleanup_trailing_newlines;
-    $_ = fold_lines($_) if $fold_line;
-
-    print STDERR "To:\n", s/^/\t> /mgr, "\n\n"
-	if $show_progress;
-
-    if (state $label = get_label($output_format)) {
-	my($start, $mid, $end) = @$label;
-	return join '', $start, $orig, $mid, $_, $end;
-    } else {
-	return $_;
-    }
 }
 
 sub fold_lines {
@@ -271,23 +257,59 @@ sub fold_lines {
     join "\n", $fold->text($_[0])->chops;
 }
 
+sub deepl {
+    my %args = @_;
+    my $orig = $_;
+    $orig .= "\n" unless $orig =~ /\n\z/;
+
+    my $source = $orig;
+    $source =~ s/.\K\n(?=.)/ /g if $join_paragraph;
+
+    $_ = translate $source;
+    $_ =~ s/\n{2,}\z/\n/ if $cleanup_trailing_newlines;
+    $_ = fold_lines $_ if $fold_line;
+
+    if (state $label = get_label $output_format) {
+	my($start, $mid, $end) = @$label;
+	return join '', $start, $orig, $mid, $_, $end;
+    } else {
+	return $_;
+    }
+}
+
 use JSON;
 
 sub read_cache {
-    if (open my $fh, $cache_file) {
+    my $file = shift;
+    %$xlate_new_cache = %$xlate_old_cache = ();
+    if (open my $fh, $file) {
 	my $json = do { local $/; <$fh> };
-	my $hash = decode_json $json;
+	my $hash = $json eq '' ? {} : decode_json $json;
 	%$xlate_old_cache = %$hash;
-	warn "read cache from $cache_file\n";
+	warn "read cache from $file\n";
     }
 }
 
 sub write_cache {
-    if (open my $fh, ">$cache_file") {
+    my $file = shift;
+    if (open my $fh, '>', $file) {
 	my $json = encode_json $xlate_new_cache;
 	print $fh $json;
-	warn "write cache to $cache_file\n";
+	warn "write cache to $file\n";
     }
+}
+
+sub before {
+    my %args = @_;
+    my $filename = delete $args{&::FILELABEL} or die;
+    if ($cache_data) {
+	$cache_file = "$filename.xlate.$lang_to.json";
+	read_cache($cache_file) if $cache_data;
+    }
+}
+
+sub after {
+    write_cache($cache_file) if $cache_data and $xlate_cache_update;
 }
 
 sub prologue {
@@ -295,12 +317,10 @@ sub prologue {
 	if (lc $cache_data eq 'accumulate') {
 	    $xlate_new_cache = $xlate_old_cache;
 	}
-	read_cache if $cache_data;
     }
 }
 
 sub epilogue {
-    write_cache if $cache_data and $xlate_cache_update;
 }
 
 1;
@@ -315,10 +335,12 @@ builtin deepl-fold!        $fold_line
 builtin deepl-fold-width=i $fold_width
 builtin xlate-from=s       $lang_from
 builtin xlate-to=s         $lang_to
-builtin deepl_cache        $cache_data
+builtin deepl-cache!       $cache_data
 
 option default \
 	--face +E --ci=A \
+	--begin    __PACKAGE__::before \
+	--end      __PACKAGE__::after \
 	--prologue __PACKAGE__::prologue \
 	--epilogue __PACKAGE__::epilogue
 
@@ -328,6 +350,8 @@ option --xlate --cm &deepl
 
 option --deepl-match-entire    --re '\A(?s).+\z'
 option --deepl-match-paragraph --re '^(.+\n)+'
-option --deepl-match-podtext   -Mperl --pod --re '^(\w.*\n)+'
+option --deepl-match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
+
+option --ifdef-color --re '^#ifdef(?s:.*?)^#endif.*\n'
 
 #  LocalWords:  deepl ifdef unifdef Greple greple perl
