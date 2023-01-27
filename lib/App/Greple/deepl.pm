@@ -178,6 +178,7 @@ use Data::Dumper;
 
 our @EXPORT = qw(deepl);
 
+use JSON;
 use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
 
@@ -197,16 +198,16 @@ our $cache_file
 
 our %LABELS = (
     none => undef,
-    conflict => [
-	sprintf("<<<<<<< %s\n", uc $lang_from),
-	sprintf("=======\n"),
-	sprintf(">>>>>>> %s\n", uc $lang_to)
-    ],
-    ifdef => [
-	sprintf("#ifdef %s\n", uc $lang_from),
-	"#endif\n" . sprintf("#ifdef %s\n", uc $lang_to),
-	"#endif\n"
-    ],
+    conflict => sub {
+	( sprintf("<<<<<<< %s\n", uc $lang_from),
+	  sprintf("=======\n"),
+	  sprintf(">>>>>>> %s\n", uc $lang_to) ) ;
+    },
+    ifdef => sub {
+	( sprintf("#ifdef %s\n", uc $lang_from),
+	  "#endif\n" . sprintf("#ifdef %s\n", uc $lang_to),
+	  "#endif\n" ) ;
+    },
     space => [ '', "\n", '' ],
     );
 
@@ -240,7 +241,7 @@ sub _translate {
 sub translate {
     goto &_translate unless $cache_data;
     my $text = shift;
-    $xlate_new_cache->{$text} //= $xlate_old_cache->{$text} // do {
+    $xlate_new_cache->{$text} //= delete $xlate_old_cache->{$text} // do {
 	$xlate_cache_update++;
 	_translate $text;
     };
@@ -277,8 +278,6 @@ sub deepl {
     }
 }
 
-use JSON;
-
 sub read_cache {
     my $file = shift;
     %$xlate_new_cache = %$xlate_old_cache = ();
@@ -309,7 +308,10 @@ sub before {
 }
 
 sub after {
-    write_cache($cache_file) if $cache_data and $xlate_cache_update;
+    if ($cache_data
+	and ($xlate_cache_update or %$xlate_old_cache)) {
+	write_cache($cache_file);
+    }
 }
 
 sub prologue {
