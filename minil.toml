@@ -1,4 +1,4 @@
-name = "App-Greple-deepl"
+name = "App-Greple-xlate"
 badges = [ "github-actions/test.yml" ]
 authority = "cpan:UTASHIRO"
 

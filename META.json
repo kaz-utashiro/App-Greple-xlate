@@ -1,5 +1,5 @@
 {
-   "abstract" : "deepl module for greple",
+   "abstract" : "translation support module for greple",
    "author" : [
       "Kazumasa Utashiro"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "App-Greple-deepl",
+   "name" : "App-Greple-xlate",
    "no_index" : {
       "directory" : [
          "t",
@@ -44,6 +44,7 @@
          "requires" : {
             "App::Greple" : "0",
             "App::sdif" : "0",
+            "Getopt::EX" : "v2.1.2",
             "JSON" : "0",
             "Text::ANSI::Fold" : "0",
             "perl" : "v5.14.0"

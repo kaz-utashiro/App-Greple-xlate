@@ -1,4 +1,4 @@
-package App::Greple::deepl;
+package App::Greple::xlate;
 
 our $VERSION = "0.01";
 
@@ -6,21 +6,23 @@ our $VERSION = "0.01";
 
 =head1 NAME
 
-App::Greple::deepl - deepl module for greple
+App::Greple::xlate - translation support module for greple
 
 =head1 SYNOPSIS
 
-    greple -Mdeepl --xlate target-file
+    greple -Mxlate::deepl --xlate pattern target-file
 
 =head1 DESCRIPTION
 
-B<Greple> B<deepl> module find text blocks and replace them by the
-translated text produced by the B<deepl> command.
+B<Greple> B<xlate> module find text blocks and replace them by the
+translated text.  Currently only DeepL service is supported by the
+B<xlate::deepl> module.
 
 If you want to translate normal text block in L<pod> style document,
-use B<greple> command with C<deepl> and C<perl> module like this:
+use B<greple> command with C<xlate::deepl> and C<perl> module like
+this:
 
-    greple -Mdeepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
 Pattern C<^(\w.*\n)+> means consecutive lines starting with
 alpha-numeric character.  This command will find and replace them by
@@ -33,9 +35,9 @@ marker format compatible with L<git(1)>.  Using C<ifdef> format, you
 can get desired part by L<unifdef(1)> command easily.  Format can be
 specified by B<--deepl-format> option.
 
-If you want to translate entire text, use B<--deepl-match-entire>
-option.  This is a short-cut to specify the pattern matches entire
-text C<(?s).*>.
+If you want to translate entire text, use B<--match-entire> option.
+This is a short-cut to specify the pattern matches entire text
+C<(?s).*>.
 
 =head1 OPTIONS
 
@@ -57,7 +59,7 @@ or consider to use L<App::Greple::update> module.
 Specify the target language.  You can get available languages by
 C<deepl languages> command.
 
-=item B<--deepl-format>=I<format> (DEFAULT: conflict)
+=item B<--xlate-format>=I<format> (DEFAULT: conflict)
 
 Specify the output format for original and translated text.
 
@@ -102,25 +104,25 @@ If the format is C<none> or unkown, only translated text is printed.
 
 =back
 
-=item B<-->[B<no->]B<deepl-progress> (DEFAULT: True)
+=item B<-->[B<no->]B<xlate-progress> (DEFAULT: True)
 
 See the tranlsation result in real time in the STDERR output.
 
-=item B<-->[B<no->]B<deepl-join> (DEFAULT: True)
+=item B<-->[B<no->]B<xlate-join> (DEFAULT: True)
 
 By default, continuous non-space lines are connected together to make
 a single line paragraph.  If you don't need this operation, use
 B<--no-deepl-join> option.
 
-=item B<--deepl-fold>
+=item B<--xlate-fold>
 
-=item B<--deepl-fold-width>=I<n> (DEFAULT: 70)
+=item B<--xlate-fold-width>=I<n> (DEFAULT: 70)
 
 Fold converted text by the specified width.  Default width is 70 and
-can be set by B<--deepl-fold-width> option.  Four columns are reserved
+can be set by B<--xlate-fold-width> option.  Four columns are reserved
 for run-in operation, so each line could hold 74 characters at most.
 
-=item B<--deepl-match-entire>
+=item B<--match-entire>
 
 Set the whole text of the file as a target area.
 
@@ -173,28 +175,27 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
-use Exporter 'import';
 use Data::Dumper;
-
-our @EXPORT = qw(deepl);
 
 use JSON;
 use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
+use App::Greple::xlate::deepl;
 
+our $do_translate;
+our $engine = 'deepl';
 our $show_progress = 1;
 our $output_format = 'conflict';
 our $join_paragraph = 1;
-our $cleanup_trailing_newlines = 1;
+our $squash_newlines = 1;
 our $lang_from = 'ORIGINAL';
 our $lang_to = 'JA';
 our $fold_line = 0;
 our $fold_width = 70;
 our $auth_key;
-our $cache_data
-    //= $ENV{GREPLE_DEEPL_USECACHE};
-our $cache_file
-    //= ($ENV{GREPLE_DEEPL_CACHEFILE} || '__GREPLE_DEEPL_CACHE__.json');
+our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto';
+
+my $current_file;
 
 our %LABELS = (
     none => undef,
@@ -214,23 +215,38 @@ our %LABELS = (
 my $xlate_old_cache = {};
 my $xlate_new_cache = {};
 my $xlate_cache_update;
+my $xlate_called;
+
+sub prologue {
+    if (defined $cache_method) {
+	if ($cache_method eq '') {
+	    $cache_method = 'auto';
+	}
+	if (lc $cache_method eq 'accumulate') {
+	    $xlate_new_cache = $xlate_old_cache;
+	}
+	if ($cache_method =~ /^(no|never)/i) {
+	    $cache_method = '';
+	}
+    }
+
+    $App::Greple::xlate::deepl::lang_from = $lang_from;
+    $App::Greple::xlate::deepl::lang_to = $lang_to;
+}
 
 sub get_label {
     my $label = $LABELS{+shift};
     ref $label eq 'CODE' ? [ $label->() ] : $label;
 }
 
-sub _translate {
-    state $deepl = App::cdif::Command->new;
-    state $command = [ 'deepl', 'text',
-		       '--to' => $lang_to,
-		       $auth_key ? ('--auth-key' => $auth_key) : () ];
+sub translate_anyway {
     my $from = shift;
+    $DB::single = 1;
 
     print STDERR "From:\n", $from =~ s/^/\t< /mgr
 	if $show_progress;
 
-    my $to = $deepl->command([@$command, $from])->update->data;
+    my $to = App::Greple::xlate::deepl::xlate $from;
 
     print STDERR "To:\n", $to =~ s/^/\t> /mgr, "\n\n"
 	if $show_progress;
@@ -239,11 +255,11 @@ sub _translate {
 }
 
 sub translate {
-    goto &_translate unless $cache_data;
+    goto &_translate_anyway unless $cache_method;
     my $text = shift;
     $xlate_new_cache->{$text} //= delete $xlate_old_cache->{$text} // do {
 	$xlate_cache_update++;
-	_translate $text;
+	translate_anyway $text;
     };
 }
 
@@ -258,7 +274,7 @@ sub fold_lines {
     join "\n", $fold->text($_[0])->chops;
 }
 
-sub deepl {
+sub xlate {
     my %args = @_;
     my $orig = $_;
     $orig .= "\n" unless $orig =~ /\n\z/;
@@ -266,8 +282,9 @@ sub deepl {
     my $source = $orig;
     $source =~ s/.\K\n(?=.)/ /g if $join_paragraph;
 
+    $xlate_called++;
     $_ = translate $source;
-    $_ =~ s/\n{2,}\z/\n/ if $cleanup_trailing_newlines;
+    $_ =~ s/\n\n+/\n/g if $squash_newlines;
     $_ = fold_lines $_ if $fold_line;
 
     if (state $label = get_label $output_format) {
@@ -275,6 +292,15 @@ sub deepl {
 	return join '', $start, $orig, $mid, $_, $end;
     } else {
 	return $_;
+    }
+}
+
+sub cache_file {
+    my $file = "$current_file.xlate-$engine-$lang_to.json";
+    if ($cache_method eq 'auto') {
+	-f $file ? $file : undef;
+    } else {
+	$cache_method ? $file : undef;
     }
 }
 
@@ -300,59 +326,58 @@ sub write_cache {
 
 sub before {
     my %args = @_;
-    my $filename = delete $args{&::FILELABEL} or die;
-    if ($cache_data) {
-	$cache_file = "$filename.xlate.$lang_to.json";
-	read_cache($cache_file) if $cache_data;
+    $current_file = delete $args{&::FILELABEL} or die;
+    if (my $cache = cache_file) {
+	if ($cache_method eq 'create') {
+	    unless (-f $cache) {
+		open my $fh, '>', $cache or die "$cache: $!\n";
+		warn "created $cache\n";
+		print $fh "{}\n";
+	    }
+	    die "skip $current_file";
+	}
+	read_cache $cache;
     }
 }
 
 sub after {
-    if ($cache_data
-	and ($xlate_cache_update or %$xlate_old_cache)) {
-	write_cache($cache_file);
-    }
-}
-
-sub prologue {
-    if ($cache_data) {
-	if (lc $cache_data eq 'accumulate') {
-	    $xlate_new_cache = $xlate_old_cache;
+    if (my $cache = cache_file) {
+	if ($do_translate
+	    and ($xlate_cache_update or %$xlate_old_cache)) {
+	    write_cache $cache;
 	}
     }
-}
-
-sub epilogue {
 }
 
 1;
 
 __DATA__
 
-builtin deepl-progress!    $show_progress
-builtin deepl-format=s     $output_format
-builtin deepl-join!        $join_paragraph
-builtin deepl-auth-key=s   $auth_key
-builtin deepl-fold!        $fold_line
-builtin deepl-fold-width=i $fold_width
+builtin xlate-progress!    $show_progress
+builtin xlate-format=s     $output_format
+builtin xlate-join!        $join_paragraph
+builtin xlate-fold!        $fold_line
+builtin xlate-fold-width=i $fold_width
 builtin xlate-from=s       $lang_from
 builtin xlate-to=s         $lang_to
-builtin deepl-cache!       $cache_data
+builtin xlate-cache:s      $cache_method
+builtin xlate-xlate        $do_translate
+
+builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
 
 option default \
 	--face +E --ci=A \
 	--begin    __PACKAGE__::before \
 	--end      __PACKAGE__::after \
-	--prologue __PACKAGE__::prologue \
-	--epilogue __PACKAGE__::epilogue
+	--prologue __PACKAGE__::prologue
 
-option --deepl-target --ci=A --face=+E
+option --xlate-target --ci=A --face=+E
 
-option --xlate --cm &deepl
+option --xlate --xlate-xlate --cm &__PACKAGE__::xlate
 
-option --deepl-match-entire    --re '\A(?s).+\z'
-option --deepl-match-paragraph --re '^(.+\n)+'
-option --deepl-match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
+option --match-entire    --re '\A(?s).+\z'
+option --match-paragraph --re '^(.+\n)+'
+option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 
 option --ifdef-color --re '^#ifdef(?s:.*?)^#endif.*\n'
 

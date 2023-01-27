@@ -1,21 +1,23 @@
 [![Actions Status](https://github.com/kaz-utashiro/App-Greple-deepl/actions/workflows/test.yml/badge.svg)](https://github.com/kaz-utashiro/App-Greple-deepl/actions)
 # NAME
 
-App::Greple::deepl - deepl module for greple
+App::Greple::xlate - translation support module for greple
 
 # SYNOPSIS
 
-    greple -Mdeepl --xlate target-file
+    greple -Mxlate::deepl --xlate pattern target-file
 
 # DESCRIPTION
 
-**Greple** **deepl** module find text blocks and replace them by the
-translated text produced by the **deepl** command.
+**Greple** **xlate** module find text blocks and replace them by the
+translated text.  Currently only DeepL service is supported by the
+**xlate::deepl** module.
 
 If you want to translate normal text block in [pod](https://metacpan.org/pod/pod) style document,
-use **greple** command with `deepl` and `perl` module like this:
+use **greple** command with `xlate::deepl` and `perl` module like
+this:
 
-    greple -Mdeepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
 Pattern `^(\w.*\n)+` means consecutive lines starting with
 alpha-numeric character.  This command will find and replace them by
@@ -28,9 +30,9 @@ marker format compatible with [git(1)](http://man.he.net/man1/git).  Using `ifde
 can get desired part by [unifdef(1)](http://man.he.net/man1/unifdef) command easily.  Format can be
 specified by **--deepl-format** option.
 
-If you want to translate entire text, use **--deepl-match-entire**
-option.  This is a short-cut to specify the pattern matches entire
-text `(?s).*`.
+If you want to translate entire text, use **--match-entire** option.
+This is a short-cut to specify the pattern matches entire text
+`(?s).*`.
 
 # OPTIONS
 
@@ -50,7 +52,7 @@ text `(?s).*`.
     Specify the target language.  You can get available languages by
     `deepl languages` command.
 
-- **--deepl-format**=_format_ (DEFAULT: conflict)
+- **--xlate-format**=_format_ (DEFAULT: conflict)
 
     Specify the output format for original and translated text.
 
@@ -91,24 +93,24 @@ text `(?s).*`.
 
         If the format is `none` or unkown, only translated text is printed.
 
-- **--**\[**no-**\]**deepl-progress** (DEFAULT: True)
+- **--**\[**no-**\]**xlate-progress** (DEFAULT: True)
 
     See the tranlsation result in real time in the STDERR output.
 
-- **--**\[**no-**\]**deepl-join** (DEFAULT: True)
+- **--**\[**no-**\]**xlate-join** (DEFAULT: True)
 
     By default, continuous non-space lines are connected together to make
     a single line paragraph.  If you don't need this operation, use
     **--no-deepl-join** option.
 
-- **--deepl-fold**
-- **--deepl-fold-width**=_n_ (DEFAULT: 70)
+- **--xlate-fold**
+- **--xlate-fold-width**=_n_ (DEFAULT: 70)
 
     Fold converted text by the specified width.  Default width is 70 and
-    can be set by **--deepl-fold-width** option.  Four columns are reserved
+    can be set by **--xlate-fold-width** option.  Four columns are reserved
     for run-in operation, so each line could hold 74 characters at most.
 
-- **--deepl-match-entire**
+- **--match-entire**
 
     Set the whole text of the file as a target area.
 
