@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/kaz-utashiro/App-Greple-deepl/actions/workflows/test.yml/badge.svg)](https://github.com/kaz-utashiro/App-Greple-deepl/actions)
+[![Actions Status](https://github.com/kaz-utashiro/App-Greple-xlate/actions/workflows/test.yml/badge.svg)](https://github.com/kaz-utashiro/App-Greple-xlate/actions)
 # NAME
 
 App::Greple::xlate - translation support module for greple
@@ -113,6 +113,36 @@ This is a short-cut to specify the pattern matches entire text
 - **--match-entire**
 
     Set the whole text of the file as a target area.
+
+# CACHE OPTIONS
+
+**xlate** module can store cached text of translation for each file and
+read it before execution to eliminate the overhead of asking to
+server.  With the default cache strategy `auto`, it maintains cache
+data only when the cache file exists for target file.  If the
+corresponding cache file does not exist, it does not create it.
+
+- --xlate-cache=_strategy_
+    - `auto` (Default)
+
+        Maintain cache file if it exists.
+
+    - `create`
+
+        Create empty cache file and exit.
+
+    - `always`, `yes`, `1`
+
+        Maintain cache anyway.
+
+    - `never`, `no`, `0`
+
+        Never use cache file even if it exists.
+
+    - `accumulate`
+
+        By default behavior, unused data is removed from cache file.  If you
+        don't want to remove them and keep in the file, use `accumulate`.
 
 # ENVIRONMENT
 

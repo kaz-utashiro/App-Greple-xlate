@@ -59,13 +59,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/kaz-utashiro/App-Greple-deepl/issues"
+         "web" : "https://github.com/kaz-utashiro/App-Greple-xlate/issues"
       },
-      "homepage" : "https://github.com/kaz-utashiro/App-Greple-deepl",
+      "homepage" : "https://github.com/kaz-utashiro/App-Greple-xlate",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/kaz-utashiro/App-Greple-deepl.git",
-         "web" : "https://github.com/kaz-utashiro/App-Greple-deepl"
+         "url" : "https://github.com/kaz-utashiro/App-Greple-xlate.git",
+         "web" : "https://github.com/kaz-utashiro/App-Greple-xlate"
       }
    },
    "version" : "0.01",

@@ -128,6 +128,45 @@ Set the whole text of the file as a target area.
 
 =back
 
+=head1 CACHE OPTIONS
+
+B<xlate> module can store cached text of translation for each file and
+read it before execution to eliminate the overhead of asking to
+server.  With the default cache strategy C<auto>, it maintains cache
+data only when the cache file exists for target file.  If the
+corresponding cache file does not exist, it does not create it.
+
+=over 7
+
+=item --xlate-cache=I<strategy>
+
+=over 4
+
+=item C<auto> (Default)
+
+Maintain cache file if it exists.
+
+=item C<create>
+
+Create empty cache file and exit.
+
+=item C<always>, C<yes>, C<1>
+
+Maintain cache anyway.
+
+=item C<never>, C<no>, C<0>
+
+Never use cache file even if it exists.
+
+=item C<accumulate>
+
+By default behavior, unused data is removed from cache file.  If you
+don't want to remove them and keep in the file, use C<accumulate>.
+
+=back
+
+=back
+
 =head1 ENVIRONMENT
 
 =over 7
@@ -241,7 +280,6 @@ sub get_label {
 
 sub translate_anyway {
     my $from = shift;
-    $DB::single = 1;
 
     print STDERR "From:\n", $from =~ s/^/\t< /mgr
 	if $show_progress;
@@ -255,7 +293,7 @@ sub translate_anyway {
 }
 
 sub translate {
-    goto &_translate_anyway unless $cache_method;
+    goto &translate_anyway unless $cache_method;
     my $text = shift;
     $xlate_new_cache->{$text} //= delete $xlate_old_cache->{$text} // do {
 	$xlate_cache_update++;
