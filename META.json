@@ -42,11 +42,10 @@
       },
       "runtime" : {
          "requires" : {
-            "App::Greple" : "0",
-            "App::sdif" : "0",
-            "Getopt::EX" : "v2.1.2",
+            "App::Greple" : "9.01",
+            "App::sdif" : "v4.24.0",
             "JSON" : "0",
-            "Text::ANSI::Fold" : "0",
+            "Text::ANSI::Fold" : "2.19",
             "perl" : "v5.14.0"
          }
       },
