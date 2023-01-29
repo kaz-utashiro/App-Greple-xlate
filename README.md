@@ -47,10 +47,16 @@ This is a short-cut to specify the pattern matches entire text
     Command result goes to standard out, so redirect to file if necessary,
     or consider to use [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) module.
 
+- **--xlate-engine**=_engine_
+
+    Specify the translation engine to be used.  You don't have to use this
+    option because module `xlate::deepl` declares it as
+    `--xlate-engine=deepl`.
+
 - **--xlate-to** (Default: `JA`)
 
     Specify the target language.  You can get available languages by
-    `deepl languages` command.
+    `deepl languages` command when using **DeepL** engine.
 
 - **--xlate-format**=_format_ (Default: conflict)
 
@@ -133,7 +139,7 @@ corresponding cache file does not exist, it does not create it.
 
     - `always`, `yes`, `1`
 
-        Maintain cache anyway.
+        Maintain cache anyway as far as the target is normal file.
 
     - `never`, `no`, `0`
 

@@ -54,10 +54,16 @@ translation before invoking actual work.
 Command result goes to standard out, so redirect to file if necessary,
 or consider to use L<App::Greple::update> module.
 
+=item B<--xlate-engine>=I<engine>
+
+Specify the translation engine to be used.  You don't have to use this
+option because module C<xlate::deepl> declares it as
+C<--xlate-engine=deepl>.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Specify the target language.  You can get available languages by
-C<deepl languages> command.
+C<deepl languages> command when using B<DeepL> engine.
 
 =item B<--xlate-format>=I<format> (Default: conflict)
 
@@ -152,7 +158,7 @@ Create empty cache file and exit.
 
 =item C<always>, C<yes>, C<1>
 
-Maintain cache anyway.
+Maintain cache anyway as far as the target is normal file.
 
 =item C<never>, C<no>, C<0>
 
@@ -219,10 +225,8 @@ use Data::Dumper;
 use JSON;
 use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
-use App::Greple::xlate::deepl;
 
-our $do_translate;
-our $engine = 'deepl';
+our $xlate_engine;
 our $show_progress = 1;
 our $output_format = 'conflict';
 our $join_paragraph = 1;
@@ -269,8 +273,21 @@ sub prologue {
 	}
     }
 
-    $App::Greple::xlate::deepl::lang_from = $lang_from;
-    $App::Greple::xlate::deepl::lang_to = $lang_to;
+    if ($xlate_engine) {
+	my $mod = __PACKAGE__ . "::$xlate_engine";
+	if (eval "require $mod") {
+	    $mod->import;
+	} else {
+	    die "Engine $xlate_engine is not available.\n";
+	}
+	no strict 'refs';
+	${"$mod\::lang_from"} = $lang_from;
+	${"$mod\::lang_to"} = $lang_to;
+	*XLATE = \&{"$mod\::xlate"};
+	if (not defined &XLATE) {
+	    die "No \"xlate\" function in $mod.\n";
+	}
+    }
 }
 
 sub get_label {
@@ -284,7 +301,7 @@ sub translate_anyway {
     print STDERR "From:\n", $from =~ s/^/\t< /mgr
 	if $show_progress;
 
-    my $to = App::Greple::xlate::deepl::xlate $from;
+    my $to = &XLATE($from);
 
     print STDERR "To:\n", $to =~ s/^/\t> /mgr, "\n\n"
 	if $show_progress;
@@ -334,11 +351,15 @@ sub xlate {
 }
 
 sub cache_file {
-    my $file = "$current_file.xlate-$engine-$lang_to.json";
+    my $file = "$current_file.xlate-$xlate_engine-$lang_to.json";
     if ($cache_method eq 'auto') {
 	-f $file ? $file : undef;
     } else {
-	$cache_method ? $file : undef;
+	if ($cache_method and -f $current_file) {
+	    $file;
+	} else {
+	    undef;
+	}
     }
 }
 
@@ -365,6 +386,10 @@ sub write_cache {
 sub before {
     my %args = @_;
     $current_file = delete $args{&::FILELABEL} or die;
+    $xlate_cache_update = 0;
+    if (not defined $xlate_engine) {
+	die "Select translation engine.\n";
+    }
     if (my $cache = cache_file) {
 	if ($cache_method eq 'create') {
 	    unless (-f $cache) {
@@ -380,8 +405,7 @@ sub before {
 
 sub after {
     if (my $cache = cache_file) {
-	if ($do_translate
-	    and ($xlate_cache_update or %$xlate_old_cache)) {
+	if ($xlate_cache_update or %$xlate_old_cache) {
 	    write_cache $cache;
 	}
     }
@@ -399,19 +423,20 @@ builtin xlate-fold-width=i $fold_width
 builtin xlate-from=s       $lang_from
 builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
-builtin xlate-xlate        $do_translate
+builtin xlate-engine=s     $xlate_engine
 
 builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
 
 option default \
 	--face +E --ci=A \
-	--begin    __PACKAGE__::before \
-	--end      __PACKAGE__::after \
 	--prologue __PACKAGE__::prologue
 
 option --xlate-target --ci=A --face=+E
 
-option --xlate --xlate-xlate --cm &__PACKAGE__::xlate
+option --xlate \
+	--begin &__PACKAGE__::before \
+	--end   &__PACKAGE__::after \
+	--cm    &__PACKAGE__::xlate
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

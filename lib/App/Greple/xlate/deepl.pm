@@ -5,11 +5,6 @@ our $VERSION = "0.01";
 use v5.14;
 use warnings;
 
-use Exporter 'import';
-use Data::Dumper;
-
-our @EXPORT = qw(deepl);
-
 use App::cdif::Command;
 
 our $lang_from = 'ORIGINAL';
@@ -30,4 +25,4 @@ sub xlate {
 
 __DATA__
 
-option default -Mxlate
+option default -Mxlate --xlate-engine=deepl
