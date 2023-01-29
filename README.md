@@ -47,12 +47,12 @@ This is a short-cut to specify the pattern matches entire text
     Command result goes to standard out, so redirect to file if necessary,
     or consider to use [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) module.
 
-- **--xlate-to** (DEFAULT: `JA`)
+- **--xlate-to** (Default: `JA`)
 
     Specify the target language.  You can get available languages by
     `deepl languages` command.
 
-- **--xlate-format**=_format_ (DEFAULT: conflict)
+- **--xlate-format**=_format_ (Default: conflict)
 
     Specify the output format for original and translated text.
 
@@ -93,18 +93,18 @@ This is a short-cut to specify the pattern matches entire text
 
         If the format is `none` or unkown, only translated text is printed.
 
-- **--**\[**no-**\]**xlate-progress** (DEFAULT: True)
+- **--**\[**no-**\]**xlate-progress** (Default: True)
 
     See the tranlsation result in real time in the STDERR output.
 
-- **--**\[**no-**\]**xlate-join** (DEFAULT: True)
+- **--**\[**no-**\]**xlate-join** (Default: True)
 
     By default, continuous non-space lines are connected together to make
     a single line paragraph.  If you don't need this operation, use
     **--no-deepl-join** option.
 
 - **--xlate-fold**
-- **--xlate-fold-width**=_n_ (DEFAULT: 70)
+- **--xlate-fold-width**=_n_ (Default: 70)
 
     Fold converted text by the specified width.  Default width is 70 and
     can be set by **--xlate-fold-width** option.  Four columns are reserved

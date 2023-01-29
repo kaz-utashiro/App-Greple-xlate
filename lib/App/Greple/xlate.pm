@@ -54,12 +54,12 @@ translation before invoking actual work.
 Command result goes to standard out, so redirect to file if necessary,
 or consider to use L<App::Greple::update> module.
 
-=item B<--xlate-to> (DEFAULT: C<JA>)
+=item B<--xlate-to> (Default: C<JA>)
 
 Specify the target language.  You can get available languages by
 C<deepl languages> command.
 
-=item B<--xlate-format>=I<format> (DEFAULT: conflict)
+=item B<--xlate-format>=I<format> (Default: conflict)
 
 Specify the output format for original and translated text.
 
@@ -104,11 +104,11 @@ If the format is C<none> or unkown, only translated text is printed.
 
 =back
 
-=item B<-->[B<no->]B<xlate-progress> (DEFAULT: True)
+=item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
 
-=item B<-->[B<no->]B<xlate-join> (DEFAULT: True)
+=item B<-->[B<no->]B<xlate-join> (Default: True)
 
 By default, continuous non-space lines are connected together to make
 a single line paragraph.  If you don't need this operation, use
@@ -116,7 +116,7 @@ B<--no-deepl-join> option.
 
 =item B<--xlate-fold>
 
-=item B<--xlate-fold-width>=I<n> (DEFAULT: 70)
+=item B<--xlate-fold-width>=I<n> (Default: 70)
 
 Fold converted text by the specified width.  Default width is 70 and
 can be set by B<--xlate-fold-width> option.  Four columns are reserved
