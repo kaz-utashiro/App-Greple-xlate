@@ -25,8 +25,8 @@ this:
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
 Pattern C<^(\w.*\n)+> means consecutive lines starting with
-alpha-numeric character.  This command will find and replace them by
-the B<deepl> command output.
+alpha-numeric letter.  This command will find and replace them by the
+B<deepl> command output.
 
 Option B<--all> is used to produce entire text.
 
@@ -113,12 +113,6 @@ If the format is C<none> or unkown, only translated text is printed.
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
-
-=item B<-->[B<no->]B<xlate-join> (Default: True)
-
-By default, continuous non-space lines are connected together to make
-a single line paragraph.  If you don't need this operation, use
-B<--no-deepl-join> option.
 
 =item B<--xlate-fold>
 
@@ -229,7 +223,7 @@ use App::cdif::Command;
 our $xlate_engine;
 our $show_progress = 1;
 our $output_format = 'conflict';
-our $join_paragraph = 1;
+our $collapse_spaces = 1;
 our $squash_newlines = 1;
 our $lang_from = 'ORIGINAL';
 our $lang_to = 'JA';
@@ -237,6 +231,7 @@ our $fold_line = 0;
 our $fold_width = 70;
 our $auth_key;
 our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto';
+our $dryrun = 0;
 
 my $current_file;
 
@@ -301,6 +296,8 @@ sub translate_anyway {
     print STDERR "From:\n", $from =~ s/^/\t< /mgr
 	if $show_progress;
 
+    return $from if $dryrun;
+
     my $to = &XLATE($from);
 
     print STDERR "To:\n", $to =~ s/^/\t> /mgr, "\n\n"
@@ -335,7 +332,11 @@ sub xlate {
     $orig .= "\n" unless $orig =~ /\n\z/;
 
     my $source = $orig;
-    $source =~ s/.\K\n(?=.)/ /g if $join_paragraph;
+    if ($collapse_spaces) {
+	$source =~ s{^.+(?:\n.+)*}{
+	    ${^MATCH} =~ s/\A\s+|\s+\z//gr =~ s/\s+/ /gr
+	}pmge;
+    }
 
     $xlate_called++;
     $_ = translate $source;
@@ -375,6 +376,7 @@ sub read_cache {
 }
 
 sub write_cache {
+    return if $dryrun;
     my $file = shift;
     if (open my $fh, '>', $file) {
 	my $json = encode_json $xlate_new_cache;
@@ -417,21 +419,19 @@ __DATA__
 
 builtin xlate-progress!    $show_progress
 builtin xlate-format=s     $output_format
-builtin xlate-join!        $join_paragraph
 builtin xlate-fold!        $fold_line
 builtin xlate-fold-width=i $fold_width
 builtin xlate-from=s       $lang_from
 builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
+builtin xlate-dryrun       $dryrun
 
 builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
 
 option default \
 	--face +E --ci=A \
-	--prologue __PACKAGE__::prologue
-
-option --xlate-target --ci=A --face=+E
+	--prologue &__PACKAGE__::prologue
 
 option --xlate \
 	--begin &__PACKAGE__::before \

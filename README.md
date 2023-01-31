@@ -20,8 +20,8 @@ this:
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
 Pattern `^(\w.*\n)+` means consecutive lines starting with
-alpha-numeric character.  This command will find and replace them by
-the **deepl** command output.
+alpha-numeric letter.  This command will find and replace them by the
+**deepl** command output.
 
 Option **--all** is used to produce entire text.
 
@@ -102,12 +102,6 @@ This is a short-cut to specify the pattern matches entire text
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     See the tranlsation result in real time in the STDERR output.
-
-- **--**\[**no-**\]**xlate-join** (Default: True)
-
-    By default, continuous non-space lines are connected together to make
-    a single line paragraph.  If you don't need this operation, use
-    **--no-deepl-join** option.
 
 - **--xlate-fold**
 - **--xlate-fold-width**=_n_ (Default: 70)
