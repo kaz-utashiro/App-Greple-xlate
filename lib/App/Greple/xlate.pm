@@ -28,8 +28,9 @@ Pattern C<^(\w.*\n)+> means consecutive lines starting with
 alpha-numeric letter.  This command show the area to be translated.
 Option B<--all> is used to produce entire text.
 
-=for html
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png"></p>
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
+</p>
 
 Then add C<--xlate> option to translate the selected area.  It will
 find and replace them by the B<deepl> command output.
@@ -39,8 +40,9 @@ marker format compatible with L<git(1)>.  Using C<ifdef> format, you
 can get desired part by L<unifdef(1)> command easily.  Format can be
 specified by B<--deepl-format> option.
 
-=for html
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png"></p>
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
+</p>
 
 If you want to translate entire text, use B<--match-entire> option.
 This is a short-cut to specify the pattern matches entire text
