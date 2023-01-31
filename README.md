@@ -24,7 +24,8 @@ alpha-numeric letter.  This command show the area to be translated.
 Option **--all** is used to produce entire text.
 
 <div>
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png"></p>
+
+    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png"></p>
 </div>
 
 Then add `--xlate` option to translate the selected area.  It will
@@ -36,7 +37,8 @@ can get desired part by [unifdef(1)](http://man.he.net/man1/unifdef) command eas
 specified by **--deepl-format** option.
 
 <div>
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png"></p>
+
+    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png"></p>
 </div>
 
 If you want to translate entire text, use **--match-entire** option.
