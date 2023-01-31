@@ -28,7 +28,7 @@ cover_db/
 
 MYMETA.*
 
-/App-Greple-deepl-*
+/App-Greple-xlate-*
 
 *.xlate-*.json
 .DS_Store
