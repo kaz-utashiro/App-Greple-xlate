@@ -31,3 +31,4 @@ MYMETA.*
 /App-Greple-deepl-*
 
 *.xlate-*.json
+.DS_Store
