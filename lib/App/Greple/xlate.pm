@@ -315,7 +315,9 @@ sub fold_lines {
 	runin     => 4,
 	runout    => 4,
 	);
-    join "\n", $fold->text($_[0])->chops;
+    local $_ = shift;
+    s/(.+)/join "\n", $fold->text($1)->chops/ge;
+    $_;
 }
 
 sub xlate_postgrep {
