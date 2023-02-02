@@ -35,7 +35,7 @@ find and replace them by the **deepl** command output.
 By default, original and translated text is printed in the conflict
 marker format compatible with [git(1)](http://man.he.net/man1/git).  Using `ifdef` format, you
 can get desired part by [unifdef(1)](http://man.he.net/man1/unifdef) command easily.  Format can be
-specified by **--deepl-format** option.
+specified by **--xlate-format** option.
 
 <div>
     <p>
@@ -156,6 +156,10 @@ corresponding cache file does not exist, it does not create it.
 
         By default behavior, unused data is removed from cache file.  If you
         don't want to remove them and keep in the file, use `accumulate`.
+- --xlate-batch-update
+
+    Update cache for all non-existent data in batch mode.  This is much
+    more efficient than normal operation.
 
 # ENVIRONMENT
 
