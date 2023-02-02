@@ -8,8 +8,8 @@ use Data::Dumper;
 
 use App::cdif::Command;
 
-our $lang_from = 'ORIGINAL';
-our $lang_to = 'JA';
+our $lang_from //= 'ORIGINAL';
+our $lang_to   //= 'JA';
 our $auth_key;
 our $max_length = 128 * 1024;
 

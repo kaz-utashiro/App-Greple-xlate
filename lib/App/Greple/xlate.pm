@@ -35,8 +35,8 @@ Option B<--all> is used to produce entire text.
 Then add C<--xlate> option to translate the selected area.  It will
 find and replace them by the B<deepl> command output.
 
-By default, original and translated text is printed in the conflict
-marker format compatible with L<git(1)>.  Using C<ifdef> format, you
+By default, original and translated text is printed in the "conflict
+marker" format compatible with L<git(1)>.  Using C<ifdef> format, you
 can get desired part by L<unifdef(1)> command easily.  Format can be
 specified by B<--xlate-format> option.
 
@@ -174,11 +174,6 @@ don't want to remove them and keep in the file, use C<accumulate>.
 
 =back
 
-=item --xlate-batch-update
-
-Update cache for all non-existent data in batch mode.  This is much
-more efficient than normal operation.
-
 =back
 
 =head1 ENVIRONMENT
@@ -238,7 +233,6 @@ our $xlate_engine;
 our $show_progress = 1;
 our $output_format = 'conflict';
 our $collapse_spaces = 1;
-our $squash_newlines = 1;
 our $lang_from = 'ORIGINAL';
 our $lang_to = 'JA';
 our $fold_line = 0;
@@ -275,7 +269,6 @@ our %formatter = (
 my $old_cache = {};
 my $new_cache = {};
 my $xlate_cache_update;
-my $xlate_called;
 
 sub prologue {
     if (defined $cache_method) {
@@ -306,33 +299,12 @@ sub prologue {
     }
 }
 
-sub translate_anyway {
-    my $from = shift;
-
-    print STDERR "From:\n", $from =~ s/^/\t< /mgr
-	if $show_progress;
-
-    return $from if $dryrun;
-
-    my $to = &XLATE($from);
-
-    print STDERR "To:\n", $to =~ s/^/\t> /mgr, "\n\n"
-	if $show_progress;
-
-    return $to;
-}
-
-sub translate {
-    goto &translate_anyway unless $cache_method;
-    my $text = shift;
-    $new_cache->{$text} //= delete $old_cache->{$text} // do {
-	if ($cache_method eq 'batch') {
-	    '';
-	} else {
-	    $xlate_cache_update++;
-	    translate_anyway $text;
-	}
-    };
+sub normalize {
+    local $_ = shift;
+    s{^.+(?:\n.+)*}{
+	${^MATCH} =~ s/\A\s+|\s+\z//gr =~ s/\s+/ /gr
+    }pmge;
+    $_;
 }
 
 sub fold_lines {
@@ -346,27 +318,54 @@ sub fold_lines {
     join "\n", $fold->text($_[0])->chops;
 }
 
+sub xlate_postgrep {
+    my $grep = shift;
+    my @miss;
+    for my $r ($grep->result) {
+	my($b, @match) = @$r;
+	for my $p (@match) {
+	    my($s, $e) = @$p;
+	    my $matched = substr($_, $s, $e - $s);
+	    my $key = normalize($matched);
+	    $new_cache->{$key} //= delete $old_cache->{$key} // do {
+		push @miss, $key;
+	    };
+	}
+    }
+    cache_update(@miss) if @miss;
+}
+
 sub xlate {
     my %args = @_;
     my $orig = $_;
-    $orig .= "\n" unless $orig =~ /\n\z/;
-
-    my $source = $orig;
-    if ($collapse_spaces) {
-	$source =~ s{^.+(?:\n.+)*}{
-	    ${^MATCH} =~ s/\A\s+|\s+\z//gr =~ s/\s+/ /gr
-	}pmge;
-    }
-
-    $xlate_called++;
-    $_ = translate $source;
-    $_ =~ s/\n\n+/\n/g if $squash_newlines;
-    $_ = fold_lines $_ if $fold_line;
-
+    my $key = normalize($orig);
+    my $s = $new_cache->{$key} // "!!! TRANSLATION ERROR !!!\n";
+    $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
-	return $formatter->($orig, $_);
+	return $formatter->($orig, $s);
     } else {
-	return $_;
+	return $s;
+    }
+}
+
+sub cache_update {
+    my @from = @_;
+
+    print STDERR "From:\n", map s/^/\t< /mgr, @from
+	if $show_progress;
+
+    return @from if $dryrun;
+
+    my @to = &XLATE(@_);
+
+    print STDERR "To:\n", map s/^/\t> /mgr, @to
+	if $show_progress;
+
+    die "Unmatched response: @to" if @_ != @to;
+
+    for my $i (0 .. $#_) {
+	$xlate_cache_update++;
+	$new_cache->{$_[$i]} = $to[$i];
     }
 }
 
@@ -424,34 +423,8 @@ sub before {
     }
 }
 
-sub batch_update {
-
-    my @from = @_;
-
-    print STDERR "From:\n", map s/^/\t< /r, @from
-	if $show_progress;
-
-    my @to = &XLATE(@_);
-
-    print STDERR "To:\n", map s/^/\t> /r, @to
-	if $show_progress;
-
-    die "Unmatched response: @to" if @_ != @to;
-
-    for my $i (0 .. $#_) {
-	$xlate_cache_update++;
-	$new_cache->{$_[$i]} = $to[$i];
-    }
-
-}
-
 sub after {
     if (my $cache = cache_file) {
-	if ($cache_method eq 'batch') {
-	    if (my @from = grep { $new_cache->{$_} eq '' } keys %$new_cache) {
-		batch_update @from;
-	    }
-	}
 	if ($xlate_cache_update or %$old_cache) {
 	    write_cache $cache;
 	}
@@ -479,14 +452,10 @@ option default \
 	--prologue &__PACKAGE__::prologue
 
 option --xlate \
-	--begin &__PACKAGE__::before \
-	--end   &__PACKAGE__::after \
-	--cm    &__PACKAGE__::xlate
-
-option --xlate-batch-update \
-	--xlate-cache=batch \
-	--xlate-format=discard \
-	--xlate
+	--postgrep &__PACKAGE__::xlate_postgrep \
+	--begin    &__PACKAGE__::before \
+	--end      &__PACKAGE__::after \
+	--cm       &__PACKAGE__::xlate
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'
