@@ -54,6 +54,8 @@ C<(?s).*>.
 
 =item B<--xlate>
 
+=item B<--xlate-color>
+
 Invoke the translation process for each matched area.
 
 Without this option, B<greple> behaves as a normal search command.  So
@@ -62,6 +64,8 @@ translation before invoking actual work.
 
 Command result goes to standard out, so redirect to file if necessary,
 or consider to use L<App::Greple::update> module.
+
+B<--xlate> calls B<--xlate-color> option with B<--color=never> option.
 
 =item B<--xlate-engine>=I<engine>
 
@@ -325,12 +329,11 @@ sub xlate_postgrep {
     my @miss;
     for my $r ($grep->result) {
 	my($b, @match) = @$r;
-	for my $p (@match) {
-	    my($s, $e) = @$p;
-	    my $matched = substr($_, $s, $e - $s);
-	    my $key = normalize($matched);
+	for my $m (@match) {
+	    my $key = normalize($grep->cut(@$m));
 	    $new_cache->{$key} //= delete $old_cache->{$key} // do {
 		push @miss, $key;
+		"NOT TRANSLATED YET\n";
 	    };
 	}
     }
@@ -338,17 +341,18 @@ sub xlate_postgrep {
 }
 
 sub xlate {
-    my %args = @_;
-    my $orig = $_;
-    my $key = normalize($orig);
+    my $text = shift;
+    my $key = normalize($text);
     my $s = $new_cache->{$key} // "!!! TRANSLATION ERROR !!!\n";
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
-	return $formatter->($orig, $s);
+	return $formatter->($text, $s);
     } else {
 	return $s;
     }
 }
+sub xlate_colormap { xlate $_ }
+sub xlate_callback { xlate { @_ }->{match} }
 
 sub cache_update {
     my @from = @_;
@@ -358,16 +362,16 @@ sub cache_update {
 
     return @from if $dryrun;
 
-    my @to = &XLATE(@_);
+    my @to = &XLATE(@from);
 
     print STDERR "To:\n", map s/^/\t> /mgr, @to
 	if $show_progress;
 
-    die "Unmatched response: @to" if @_ != @to;
+    die "Unmatched response: @to" if @from != @to;
 
-    for my $i (0 .. $#_) {
+    for my $i (0 .. $#from) {
 	$xlate_cache_update++;
-	$new_cache->{$_[$i]} = $to[$i];
+	$new_cache->{$from[$i]} = $to[$i];
     }
 }
 
@@ -453,11 +457,13 @@ option default \
 	--face +E --ci=A \
 	--prologue &__PACKAGE__::prologue
 
-option --xlate \
+option --xlate-color \
 	--postgrep &__PACKAGE__::xlate_postgrep \
+	--callback &__PACKAGE__::xlate_callback \
 	--begin    &__PACKAGE__::before \
-	--end      &__PACKAGE__::after \
-	--cm       &__PACKAGE__::xlate
+	--end      &__PACKAGE__::after
+
+option --xlate --xlate-color --color=never
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

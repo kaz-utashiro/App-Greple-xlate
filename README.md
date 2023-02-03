@@ -50,6 +50,7 @@ This is a short-cut to specify the pattern matches entire text
 # OPTIONS
 
 - **--xlate**
+- **--xlate-color**
 
     Invoke the translation process for each matched area.
 
@@ -59,6 +60,8 @@ This is a short-cut to specify the pattern matches entire text
 
     Command result goes to standard out, so redirect to file if necessary,
     or consider to use [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) module.
+
+    **--xlate** calls **--xlate-color** option with **--color=never** option.
 
 - **--xlate-engine**=_engine_
 
