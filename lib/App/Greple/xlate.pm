@@ -408,6 +408,7 @@ sub write_cache {
 sub before {
     my %args = @_;
     $current_file = delete $args{&::FILELABEL} or die;
+    s/\z/\n/ if /.\z/;
     $xlate_cache_update = 0;
     if (not defined $xlate_engine) {
 	die "Select translation engine.\n";
