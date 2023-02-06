@@ -6,6 +6,7 @@ use v5.14;
 use warnings;
 use Data::Dumper;
 
+use List::Util qw(sum);
 use App::cdif::Command;
 
 our $lang_from //= 'ORIGINAL';
@@ -23,6 +24,9 @@ sub xlate {
     my @count = map { int tr/\n/\n/ } @from;
     my $to = $deepl->command([@$command, $from])->update->data;
     my @out = $to =~ /.*\n/g;
+    if (@out < sum @count) {
+	die "Unexpected response from deepl command:\n\n$to\n";
+    }
     map { join '', splice @out, 0, $_ } @count;
 }
 
