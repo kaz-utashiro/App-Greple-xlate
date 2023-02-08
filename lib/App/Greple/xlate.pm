@@ -264,7 +264,7 @@ our %formatter = (
     },
     ifdef => sub {
 	join '',
-	    #ifdef $lang_from\n",
+	    "#ifdef $lang_from\n",
 	    $_[0],
 	    "#endif\n",
 	    "#ifdef $lang_to\n",
