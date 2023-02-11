@@ -44,7 +44,9 @@
          "requires" : {
             "App::Greple" : "9.02",
             "App::sdif" : "v4.24.0",
+            "Hash::Util" : "0",
             "JSON" : "0",
+            "List::Util" : "0",
             "Text::ANSI::Fold" : "2.20",
             "perl" : "v5.14.0"
          }
