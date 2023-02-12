@@ -1,0 +1,456 @@
+package App::Greple::xlate;
+
+our $VERSION = "0.07";
+
+=encoding utf-8
+
+=head1 NAME
+
+App::Greple::xlate - модуль поддержки перевода для greple
+
+=head1 SYNOPSIS
+
+    greple -Mxlate::deepl --xlate pattern target-file
+
+=head1 DESCRIPTION
+
+Модуль B<-Greple> B<xlate> находит текстовые блоки и заменяет их переведенным текстом. В настоящее время модулем B<xlate::deepl> поддерживается только сервис DeepL.
+
+Если вы хотите перевести обычный текстовый блок в документе стиля L<pod>, используйте команду B<greple> с модулем C<xlate::deepl> и C<perl> следующим образом:
+
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+
+Шаблон C<^(\w.*\n)+> означает последовательные строки, начинающиеся с буквенно-цифровой буквы. Эта команда показывает область, которая должна быть переведена. Опция B<--all> используется для создания всего текста.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
+</p>
+
+Затем добавьте опцию C<--xlate> для перевода выделенной области. Он найдет и заменит их на вывод команды B<deepl>.
+
+По умолчанию оригинальный и переведенный текст печатается в формате "маркер конфликта", совместимом с L<git(1)>. Используя формат C<ifdef>, вы можете легко получить нужную часть командой L<unifdef(1)>. Формат может быть задан опцией B<--xlate-format>.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
+</p>
+
+Если вы хотите перевести весь текст, используйте опцию B<--match-entire>. Это сокращение для указания соответствия шаблона всему тексту C<(?s).*>.
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<--xlate>
+
+=item B<--xlate-color>
+
+=item B<--xlate-fold>
+
+=item B<--xlate-fold-width>=I<n> (Default: 70)
+
+Запустите процесс перевода для каждой подобранной области.
+
+Без этой опции B<greple> ведет себя как обычная команда поиска. Таким образом, вы можете проверить, какая часть файла будет предметом перевода, прежде чем приступить к работе.
+
+Результат команды попадает в стандартный аут, поэтому при необходимости перенаправьте его в файл, или используйте модуль L<App::Greple::update>.
+
+Опция B<--xlate> вызывает опцию B<--xlate-color> с опцией B<--color=never>.
+
+С опцией B<--xlate-fold> преобразованный текст сворачивается на указанную ширину. Ширина по умолчанию равна 70 и может быть задана опцией B<--xlate-fold-width>. Четыре колонки зарезервированы для обкатки, поэтому в каждой строке может быть не более 74 символов.
+
+=item B<--xlate-engine>=I<engine>
+
+Укажите используемый механизм перевода. Вам не обязательно использовать эту опцию, поскольку модуль C<xlate::deepl> объявляет ее как C<--xlate-engine=deepl>.
+
+=item B<--xlate-to> (Default: C<JA>)
+
+Укажите целевой язык. Вы можете получить доступные языки командой C<deepl languages> при использовании движка B<DeepL>.
+
+=item B<--xlate-format>=I<format> (Default: conflict)
+
+Укажите формат вывода для оригинального и переведенного текста.
+
+=over 4
+
+=item B<conflict>
+
+Вывести оригинальный и переведенный текст в формате L<git(1)> маркеров конфликтов.
+
+    <<<<<<< ORIGINAL
+    original text
+    =======
+    translated Japanese text
+    >>>>>>> JA
+
+Вы можете восстановить исходный файл следующей командой L<sed(1)>.
+
+    sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<ifdef>
+
+Вывести оригинальный и переведенный текст в формате L<cpp(1)> C<#ifdef>.
+
+    #ifdef ORIGINAL
+    original text
+    #endif
+    #ifdef JA
+    translated Japanese text
+    #endif
+
+Вы можете получить только японский текст с помощью команды B<unifdef>:
+
+    unifdef -UORIGINAL -DJA foo.ja.pm
+
+=item B<space>
+
+Выведите оригинальный и переведенный текст, разделенные одной пустой строкой.
+
+=item B<none>
+
+Если формат C<none> или неизвестен, печатается только переведенный текст.
+
+=back
+
+=item B<-->[B<no->]B<xlate-progress> (Default: True)
+
+Просмотреть результат перевода в реальном времени в выводе STDERR.
+
+=item B<--match-entire>
+
+Задайте весь текст файла в качестве целевой области.
+
+=back
+
+=head1 CACHE OPTIONS
+
+Модуль B<xlate> может хранить кэшированный текст перевода для каждого файла и считывать его перед выполнением, чтобы исключить накладные расходы на запрос к серверу. При стратегии кэширования по умолчанию C<auto>, он сохраняет данные кэша только в том случае, если существует файл кэша для целевого файла. Если соответствующий файл кэша не существует, он его не создает.
+
+=over 7
+
+=item --xlate-cache=I<strategy>
+
+=over 4
+
+=item C<auto> (Default)
+
+Сохранять файл кэша, если он существует.
+
+=item C<create>
+
+Создайте пустой файл кэша и выйдите.
+
+=item C<always>, C<yes>, C<1>
+
+Сохранять кэш в любом случае, пока целью является обычный файл.
+
+=item C<never>, C<no>, C<0>
+
+Никогда не используйте кэш-файл, даже если он существует.
+
+=item C<accumulate>
+
+По умолчанию неиспользуемые данные удаляются из кэш-файла. Если вы не хотите удалять их и хранить в файле, используйте C<accumulate>.
+
+=back
+
+=back
+
+=head1 ENVIRONMENT
+
+=over 7
+
+=item DEEPL_AUTH_KEY
+
+Установите ключ аутентификации для службы DeepL.
+
+=back
+
+=head1 SEE ALSO
+
+=over 7
+
+=item L<https://github.com/DeepLcom/deepl-python>
+
+DeepL Библиотека Python и команда CLI.
+
+=item L<App::Greple>
+
+Подробную информацию о шаблоне целевого текста см. в руководстве B<greple>. Используйте опции B<--inside>, B<--outside>, B<--include>, B<--exclude> для ограничения области поиска.
+
+=item L<App::Greple::update>
+
+Вы можете использовать модуль C<-Mupdate> для модификации файлов по результату команды B<greple>.
+
+=item L<App::sdif>
+
+Используйте B<sdif>, чтобы показать формат маркера конфликта бок о бок с опцией B<-V>.
+
+=back
+
+=head1 AUTHOR
+
+Кадзумаса Утасиро
+
+=head1 LICENSE
+
+Copyright ©︎ 2023 Kazumasa Utashiro.
+
+Эта библиотека является свободным программным обеспечением; вы можете распространять ее и/или изменять на тех же условиях, что и сам Perl.
+
+=cut
+
+use v5.14;
+use warnings;
+
+use Data::Dumper;
+
+use JSON;
+use Text::ANSI::Fold ':constants';
+use App::cdif::Command;
+use Hash::Util qw(lock_keys);
+
+my %opt = (
+    engine   => \(our $xlate_engine),
+    progress => \(our $show_progress = 1),
+    format   => \(our $output_format = 'conflict'),
+    collapse => \(our $collapse_spaces = 1),
+    from     => \(our $lang_from = 'ORIGINAL'),
+    to       => \(our $lang_to = 'JA'),
+    fold     => \(our $fold_line = 0),
+    width    => \(our $fold_width = 70),
+    auth_key => \(our $auth_key),
+    method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
+    dryrun   => \(our $dryrun = 0),
+    );
+lock_keys %opt;
+sub opt :lvalue { ${$opt{+shift}} }
+
+my $current_file;
+
+our %formatter = (
+    none => undef,
+    conflict => sub {
+	join '',
+	    "<<<<<<< $lang_from\n",
+	    $_[0],
+	    "=======\n",
+	    $_[1],
+	    ">>>>>>> $lang_to\n";
+    },
+    ifdef => sub {
+	join '',
+	    "#ifdef $lang_from\n",
+	    $_[0],
+	    "#endif\n",
+	    "#ifdef $lang_to\n",
+	    $_[1],
+	    "#endif\n";
+    },
+    space   => sub { join "\n", @_ },
+    discard => sub { '' },
+    );
+
+my $old_cache = {};
+my $new_cache = {};
+my $xlate_cache_update;
+
+sub setup {
+    return if state $once_called++;
+    if (defined $cache_method) {
+	if ($cache_method eq '') {
+	    $cache_method = 'auto';
+	}
+	if (lc $cache_method eq 'accumulate') {
+	    $new_cache = $old_cache;
+	}
+	if ($cache_method =~ /^(no|never)/i) {
+	    $cache_method = '';
+	}
+    }
+    if ($xlate_engine) {
+	my $mod = __PACKAGE__ . "::$xlate_engine";
+	if (eval "require $mod") {
+	    $mod->import;
+	} else {
+	    die "Engine $xlate_engine is not available.\n";
+	}
+	no strict 'refs';
+	${"$mod\::lang_from"} = $lang_from;
+	${"$mod\::lang_to"} = $lang_to;
+	*XLATE = \&{"$mod\::xlate"};
+	if (not defined &XLATE) {
+	    die "No \"xlate\" function in $mod.\n";
+	}
+    }
+}
+
+sub normalize {
+    $_[0] =~ s{^.+(?:\n.+)*}{
+	${^MATCH} =~ s/\A\s+|\s+\z//gr =~ s/\s+/ /gr
+    }pmger;
+}
+
+sub postgrep {
+    my $grep = shift;
+    my @miss;
+    for my $r ($grep->result) {
+	my($b, @match) = @$r;
+	for my $m (@match) {
+	    my $key = normalize $grep->cut(@$m);
+	    $new_cache->{$key} //= delete $old_cache->{$key} // do {
+		push @miss, $key;
+		"NOT TRANSLATED YET\n";
+	    };
+	}
+    }
+    cache_update(@miss) if @miss;
+}
+
+sub cache_update {
+    my @from = @_;
+    print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
+    return @from if $dryrun;
+
+    my @to = &XLATE(@from);
+
+    print STDERR "To:\n", map s/^/\t> /mgr, @to if $show_progress;
+    die "Unmatched response:\n@to" if @from != @to;
+    $xlate_cache_update += @from;
+    @{$new_cache}{@from} = @to;
+}
+
+sub fold_lines {
+    state $fold = Text::ANSI::Fold->new(
+	width     => $fold_width,
+	boundary  => 'word',
+	linebreak => LINEBREAK_ALL,
+	runin     => 4,
+	runout    => 4,
+	);
+    local $_ = shift;
+    s/(.+)/join "\n", $fold->text($1)->chops/ge;
+    $_;
+}
+
+sub xlate {
+    my $text = shift;
+    my $key = normalize $text;
+    my $s = $new_cache->{$key} // "!!! TRANSLATION ERROR !!!\n";
+    $s = fold_lines $s if $fold_line;
+    if (state $formatter = $formatter{$output_format}) {
+	return $formatter->($text, $s);
+    } else {
+	return $s;
+    }
+}
+sub colormap { xlate $_ }
+sub callback { xlate { @_ }->{match} }
+
+sub cache_file {
+    my $file = sprintf("%s.xlate-%s-%s.json",
+		       $current_file, $xlate_engine, $lang_to);
+    if ($cache_method eq 'auto') {
+	-f $file ? $file : undef;
+    } else {
+	if ($cache_method and -f $current_file) {
+	    $file;
+	} else {
+	    undef;
+	}
+    }
+}
+
+sub read_cache {
+    my $file = shift;
+    %$new_cache = %$old_cache = ();
+    if (open my $fh, $file) {
+	my $json = do { local $/; <$fh> };
+	my $hash = $json eq '' ? {} : decode_json $json;
+	%$old_cache = %$hash;
+	warn "read cache from $file\n";
+    }
+}
+
+sub write_cache {
+    return if $dryrun;
+    my $file = shift;
+    if (open my $fh, '>', $file) {
+	my $json = encode_json $new_cache;
+	print $fh $json;
+	warn "write cache to $file\n";
+    }
+}
+
+sub begin {
+    setup if not (state $done++);
+    my %args = @_;
+    $current_file = delete $args{&::FILELABEL} or die;
+    s/\z/\n/ if /.\z/;
+    $xlate_cache_update = 0;
+    if (not defined $xlate_engine) {
+	die "Select translation engine.\n";
+    }
+    if (my $cache = cache_file) {
+	if ($cache_method eq 'create') {
+	    unless (-f $cache) {
+		open my $fh, '>', $cache or die "$cache: $!\n";
+		warn "created $cache\n";
+		print $fh "{}\n";
+	    }
+	    die "skip $current_file";
+	}
+	read_cache $cache;
+    }
+}
+
+sub end {
+    if (my $cache = cache_file) {
+	if ($xlate_cache_update or %$old_cache) {
+	    write_cache $cache;
+	}
+    }
+}
+
+sub setopt {
+    while (my($key, $val) = splice @_, 0, 2) {
+	next if $key eq &::FILELABEL;
+	die "$key: Invalid option.\n" if not exists $opt{$key};
+	opt($key) = $val;
+    }
+}
+
+1;
+
+__DATA__
+
+builtin xlate-progress!    $show_progress
+builtin xlate-format=s     $output_format
+builtin xlate-fold-line!   $fold_line
+builtin xlate-fold-width=i $fold_width
+builtin xlate-from=s       $lang_from
+builtin xlate-to=s         $lang_to
+builtin xlate-cache:s      $cache_method
+builtin xlate-engine=s     $xlate_engine
+builtin xlate-dryrun       $dryrun
+
+builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+
+option default --face +E --ci=A
+
+option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
+
+option --xlate-color \
+	--postgrep &__PACKAGE__::postgrep \
+	--callback &__PACKAGE__::callback \
+	--begin    &__PACKAGE__::begin \
+	--end      &__PACKAGE__::end
+option --xlate --xlate-color --color=never
+option --xlate-fold --xlate --xlate-fold-line
+
+option --match-entire    --re '\A(?s).+\z'
+option --match-paragraph --re '^(.+\n)+'
+option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
+
+option --ifdef-color --re '^#ifdef(?s:.*?)^#endif.*\n'
+
+#  LocalWords:  deepl ifdef unifdef Greple greple perl
