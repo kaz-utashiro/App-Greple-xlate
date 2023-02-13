@@ -1,0 +1,15 @@
+## Languages
+
+- [xlate.DE.md](xlate.DE.md)
+- [xlate.EL.md](xlate.EL.md)
+- [xlate.ET.md](xlate.ET.md)
+- [xlate.FR.md](xlate.FR.md)
+- [xlate.ID.md](xlate.ID.md)
+- [xlate.JA.md](xlate.JA.md)
+- [xlate.KO.md](xlate.KO.md)
+- [xlate.NL.md](xlate.NL.md)
+- [xlate.RO.md](xlate.RO.md)
+- [xlate.RU.md](xlate.RU.md)
+- [xlate.TR.md](xlate.TR.md)
+- [xlate.UK.md](xlate.UK.md)
+- [xlate.ZH.md](xlate.ZH.md)
