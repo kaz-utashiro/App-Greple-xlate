@@ -24,13 +24,12 @@ $(foreach lang,$(LANG),$(eval $(call LANG_PM,$(lang))))
 	pod2markdown $< > $@
 
 README.md: Makefile
-	( \
-	printf '## Languages\n\n'; \
+	exec > $@ && \
+	printf '## Languages\n\n' && \
 	for lang in $(LANG) ; \
 	do \
 	    echo "- [xlate.$$lang.md](xlate.$$lang.md)" ; \
-	done ; \
-	) > $@
+	done
 
 clean:
 	rm -f $(ALL)
