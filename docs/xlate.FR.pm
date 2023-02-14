@@ -6,8 +6,7 @@ our $VERSION = "0.07";
 
 =head1 NAME
 
-App::Greple::xlate - module de support de traduction pour greple
-
+App::Greple::xlate - module d'aide à la traduction pour greple
 
 =head1 SYNOPSIS
 
@@ -15,14 +14,13 @@ App::Greple::xlate - module de support de traduction pour greple
 
 =head1 DESCRIPTION
 
-Le module B<Greple> B<xlate> trouve les blocs de texte et les remplace par le texte traduit. Actuellement, seul le service DeepL est supporté par le module B<xlate::deepl>.
+Le module B<Greple> B<xlate> trouve des blocs de texte et les remplace par le texte traduit. Actuellement, seul le service DeepL est pris en charge par le module B<xlate::deepl>.
 
 Si vous voulez traduire un bloc de texte normal dans un document de style L<pod>, utilisez la commande B<greple> avec le module C<xlate::deepl> et C<perl> comme ceci :
 
-
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Le motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une lettre alpha-numérique. Cette commande indique la zone à traduire. L'option B<--all> est utilisée pour produire un texte entier.
+Le motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une lettre alpha-numérique. Cette commande montre la zone à traduire. L'option B<--all> est utilisée pour produire le texte entier.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -30,14 +28,13 @@ Le motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une let
 
 Ensuite, ajoutez l'option C<--xlate> pour traduire la zone sélectionnée. Elle les trouvera et les remplacera par la sortie de la commande B<deepl>.
 
-Par défaut, les textes originaux et traduits sont imprimés dans le format "marqueur de conflit" compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir facilement la partie souhaitée par la commande L<unifdef(1)>. Le format peut être spécifié par l'option B<--xlate-format>.
+Par défaut, le texte original et traduit est imprimé dans le format "marqueur de conflit" compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir facilement la partie souhaitée par la commande L<unifdef(1)>. Le format peut être spécifié par l'option B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Si vous voulez traduire un texte entier, utilisez l'option B<--match-entire>. C'est un raccourci pour spécifier que le motif correspond au texte entier C<(?s).*>.
-
+Si vous voulez traduire un texte entier, utilisez l'option B<--match-entire>. Il s'agit d'un raccourci pour spécifier que le motif correspond au texte entier C<(?s).*>.
 
 =head1 OPTIONS
 
@@ -51,17 +48,15 @@ Si vous voulez traduire un texte entier, utilisez l'option B<--match-entire>. C'
 
 =item B<--xlate-fold-width>=I<n> (Default: 70)
 
-Lancez le processus de traduction pour chaque zone correspondante.
-
+Invoquez le processus de traduction pour chaque zone appariée.
 
 Sans cette option, B<greple> se comporte comme une commande de recherche normale. Vous pouvez donc vérifier quelle partie du fichier fera l'objet de la traduction avant d'invoquer le travail réel.
 
 Le résultat de la commande va vers la sortie standard, donc redirigez vers le fichier si nécessaire, ou envisagez d'utiliser le module L<App::Greple::update>.
 
-
 L'option B<--xlate> appelle l'option B<--xlate-color> avec l'option B<--color=never>.
 
-Avec l'option B<--xlate-fold>, le texte converti est plié selon la largeur spécifiée. La largeur par défaut est de 70 et peut être définie par l'option B<--xlate-fold-width>. Quatre colonnes sont réservées pour l'opération de rodage, ainsi chaque ligne pourrait contenir 74 caractères au maximum.
+Avec l'option B<--xlate-fold>, le texte converti est plié selon la largeur spécifiée. La largeur par défaut est de 70 et peut être définie par l'option B<--xlate-fold-width>. Quatre colonnes sont réservées à l'opération de rodage, de sorte que chaque ligne peut contenir 74 caractères au maximum.
 
 =item B<--xlate-engine>=I<engine>
 
@@ -75,13 +70,11 @@ Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles par la c
 
 Spécifiez le format de sortie pour le texte original et le texte traduit.
 
-
 =over 4
 
 =item B<conflict>
 
-Imprimer le texte original et le texte traduit au format de marqueur de conflit L<git(1)>.
-
+Imprimez le texte original et traduit au format de marqueur de conflit L<git(1)>.
 
     <<<<<<< ORIGINAL
     original text
@@ -89,15 +82,13 @@ Imprimer le texte original et le texte traduit au format de marqueur de conflit 
     translated Japanese text
     >>>>>>> JA
 
-Vous pouvez récupérer le fichier original par la commande suivante L<sed(1)>.
-
+Vous pouvez récupérer le fichier original par la commande L<sed(1)> suivante.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
 =item B<ifdef>
 
-Imprime le texte original et traduit au format L<cpp(1)> C<#ifdef>.
-
+Impression du texte original et du texte traduit au format C<#ifdef> de L<cpp(1)>.
 
     #ifdef ORIGINAL
     original text
@@ -108,36 +99,31 @@ Imprime le texte original et traduit au format L<cpp(1)> C<#ifdef>.
 
 Vous pouvez récupérer uniquement le texte japonais par la commande B<unifdef> :
 
-
     unifdef -UORIGINAL -DJA foo.ja.pm
 
 =item B<space>
 
 Imprimer le texte original et le texte traduit séparés par une seule ligne blanche.
 
-
 =item B<none>
 
 Si le format est C<none> ou unkown, seul le texte traduit est imprimé.
-
 
 =back
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Voir le résultat de la tranlsation en temps réel dans la sortie STDERR.
-
+Voir le résultat de la traduction en temps réel dans la sortie STDERR.
 
 =item B<--match-entire>
 
 Définissez l'ensemble du texte du fichier comme zone cible.
 
-
 =back
 
 =head1 CACHE OPTIONS
 
-Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données du cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier cache correspondant n'existe pas, il ne le crée pas.
+Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier de cache correspondant n'existe pas, il ne le crée pas.
 
 =over 7
 
@@ -147,26 +133,23 @@ Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque f
 
 =item C<auto> (Default)
 
-Maintien du fichier de cache s'il existe.
-
+Maintient le fichier de cache s'il existe.
 
 =item C<create>
 
 Créer un fichier cache vide et quitter.
 
-
 =item C<always>, C<yes>, C<1>
 
-Maintenir le cache de toute façon dans la mesure où la cible est un fichier normal.
+Maintenir le cache de toute façon tant que la cible est un fichier normal.
 
 =item C<never>, C<no>, C<0>
 
-N'utilisez jamais le fichier cache même s'il existe.
-
+Ne jamais utiliser le fichier cache même s'il existe.
 
 =item C<accumulate>
 
-Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les garder dans le fichier, utilisez C<accumulate>.
+Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les conserver dans le fichier, utilisez C<accumulate>.
 
 =back
 
@@ -180,7 +163,6 @@ Par défaut, les données inutilisées sont supprimées du fichier cache. Si vou
 
 Définissez votre clé d'authentification pour le service DeepL.
 
-
 =back
 
 =head1 SEE ALSO
@@ -191,16 +173,13 @@ Définissez votre clé d'authentification pour le service DeepL.
 
 DeepL Bibliothèque Python et commande CLI.
 
-
 =item L<App::Greple>
 
-Voir le manuel B<greple> pour plus de détails sur le modèle de texte cible. Utilisez les options B<--inside>, B<--outside>, B<--include>, B<--exclude> pour limiter la zone de correspondance.
-
+Voir le manuel B<greple> pour les détails sur le modèle de texte cible. Utilisez les options B<--inside>, B<--outside>, B<--include>, B<--exclude> pour limiter la zone de correspondance.
 
 =item L<App::Greple::update>
 
 Vous pouvez utiliser le module C<-Mupdate> pour modifier les fichiers par le résultat de la commande B<greple>.
-
 
 =item L<App::sdif>
 
@@ -212,14 +191,11 @@ Utilisez B<sdif> pour afficher le format des marqueurs de conflit côte à côte
 
 Kazumasa Utashiro
 
-
 =head1 LICENSE
 
 Copyright ©︎ 2023 Kazumasa Utashiro.
 
-
-Cette bibliothèque est un logiciel libre ; vous pouvez la redistribuer et/ou la modifier selon les mêmes conditions que Perl lui-même.
-
+Cette bibliothèque est un logiciel libre ; vous pouvez la redistribuer et/ou la modifier selon les mêmes termes que Perl lui-même.
 
 =cut
 

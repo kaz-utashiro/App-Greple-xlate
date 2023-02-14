@@ -1,6 +1,6 @@
 # NAME
 
-App::Greple::xlate - module de support de traduction pour greple
+App::Greple::xlate - module d'aide à la traduction pour greple
 
 # SYNOPSIS
 
@@ -8,13 +8,13 @@ App::Greple::xlate - module de support de traduction pour greple
 
 # DESCRIPTION
 
-Le module **Greple** **xlate** trouve les blocs de texte et les remplace par le texte traduit. Actuellement, seul le service DeepL est supporté par le module **xlate::deepl**.
+Le module **Greple** **xlate** trouve des blocs de texte et les remplace par le texte traduit. Actuellement, seul le service DeepL est pris en charge par le module **xlate::deepl**.
 
 Si vous voulez traduire un bloc de texte normal dans un document de style [pod](https://metacpan.org/pod/pod), utilisez la commande **greple** avec le module `xlate::deepl` et `perl` comme ceci :
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lettre alpha-numérique. Cette commande indique la zone à traduire. L'option **--all** est utilisée pour produire un texte entier.
+Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lettre alpha-numérique. Cette commande montre la zone à traduire. L'option **--all** est utilisée pour produire le texte entier.
 
 <div>
     <p>
@@ -24,7 +24,7 @@ Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lett
 
 Ensuite, ajoutez l'option `--xlate` pour traduire la zone sélectionnée. Elle les trouvera et les remplacera par la sortie de la commande **deepl**.
 
-Par défaut, les textes originaux et traduits sont imprimés dans le format "marqueur de conflit" compatible avec [git(1)](http://man.he.net/man1/git). En utilisant le format `ifdef`, vous pouvez obtenir facilement la partie souhaitée par la commande [unifdef(1)](http://man.he.net/man1/unifdef). Le format peut être spécifié par l'option **--xlate-format**.
+Par défaut, le texte original et traduit est imprimé dans le format "marqueur de conflit" compatible avec [git(1)](http://man.he.net/man1/git). En utilisant le format `ifdef`, vous pouvez obtenir facilement la partie souhaitée par la commande [unifdef(1)](http://man.he.net/man1/unifdef). Le format peut être spécifié par l'option **--xlate-format**.
 
 <div>
     <p>
@@ -32,7 +32,7 @@ Par défaut, les textes originaux et traduits sont imprimés dans le format "mar
     </p>
 </div>
 
-Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C'est un raccourci pour spécifier que le motif correspond au texte entier `(?s).*`.
+Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. Il s'agit d'un raccourci pour spécifier que le motif correspond au texte entier `(?s).*`.
 
 # OPTIONS
 
@@ -41,7 +41,7 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
 - **--xlate-fold**
 - **--xlate-fold-width**=_n_ (Default: 70)
 
-    Lancez le processus de traduction pour chaque zone correspondante.
+    Invoquez le processus de traduction pour chaque zone appariée.
 
     Sans cette option, **greple** se comporte comme une commande de recherche normale. Vous pouvez donc vérifier quelle partie du fichier fera l'objet de la traduction avant d'invoquer le travail réel.
 
@@ -49,7 +49,7 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
 
     L'option **--xlate** appelle l'option **--xlate-color** avec l'option **--color=never**.
 
-    Avec l'option **--xlate-fold**, le texte converti est plié selon la largeur spécifiée. La largeur par défaut est de 70 et peut être définie par l'option **--xlate-fold-width**. Quatre colonnes sont réservées pour l'opération de rodage, ainsi chaque ligne pourrait contenir 74 caractères au maximum.
+    Avec l'option **--xlate-fold**, le texte converti est plié selon la largeur spécifiée. La largeur par défaut est de 70 et peut être définie par l'option **--xlate-fold-width**. Quatre colonnes sont réservées à l'opération de rodage, de sorte que chaque ligne peut contenir 74 caractères au maximum.
 
 - **--xlate-engine**=_engine_
 
@@ -65,7 +65,7 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
 
     - **conflict**
 
-        Imprimer le texte original et le texte traduit au format de marqueur de conflit [git(1)](http://man.he.net/man1/git).
+        Imprimez le texte original et traduit au format de marqueur de conflit [git(1)](http://man.he.net/man1/git).
 
             <<<<<<< ORIGINAL
             original text
@@ -73,13 +73,13 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
             translated Japanese text
             >>>>>>> JA
 
-        Vous pouvez récupérer le fichier original par la commande suivante [sed(1)](http://man.he.net/man1/sed).
+        Vous pouvez récupérer le fichier original par la commande [sed(1)](http://man.he.net/man1/sed) suivante.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
     - **ifdef**
 
-        Imprime le texte original et traduit au format [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
+        Impression du texte original et du texte traduit au format `#ifdef` de [cpp(1)](http://man.he.net/man1/cpp).
 
             #ifdef ORIGINAL
             original text
@@ -102,7 +102,7 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Voir le résultat de la tranlsation en temps réel dans la sortie STDERR.
+    Voir le résultat de la traduction en temps réel dans la sortie STDERR.
 
 - **--match-entire**
 
@@ -110,12 +110,12 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. C
 
 # CACHE OPTIONS
 
-Le module **xlate** peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut `auto`, il maintient les données du cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier cache correspondant n'existe pas, il ne le crée pas.
+Le module **xlate** peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut `auto`, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier de cache correspondant n'existe pas, il ne le crée pas.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
 
-        Maintien du fichier de cache s'il existe.
+        Maintient le fichier de cache s'il existe.
 
     - `create`
 
@@ -123,15 +123,15 @@ Le module **xlate** peut stocker le texte de la traduction en cache pour chaque 
 
     - `always`, `yes`, `1`
 
-        Maintenir le cache de toute façon dans la mesure où la cible est un fichier normal.
+        Maintenir le cache de toute façon tant que la cible est un fichier normal.
 
     - `never`, `no`, `0`
 
-        N'utilisez jamais le fichier cache même s'il existe.
+        Ne jamais utiliser le fichier cache même s'il existe.
 
     - `accumulate`
 
-        Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les garder dans le fichier, utilisez `accumulate`.
+        Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les conserver dans le fichier, utilisez `accumulate`.
 
 # ENVIRONMENT
 
@@ -147,7 +147,7 @@ Le module **xlate** peut stocker le texte de la traduction en cache pour chaque 
 
 - [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
 
-    Voir le manuel **greple** pour plus de détails sur le modèle de texte cible. Utilisez les options **--inside**, **--outside**, **--include**, **--exclude** pour limiter la zone de correspondance.
+    Voir le manuel **greple** pour les détails sur le modèle de texte cible. Utilisez les options **--inside**, **--outside**, **--include**, **--exclude** pour limiter la zone de correspondance.
 
 - [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
 
@@ -165,4 +165,4 @@ Kazumasa Utashiro
 
 Copyright ©︎ 2023 Kazumasa Utashiro.
 
-Cette bibliothèque est un logiciel libre ; vous pouvez la redistribuer et/ou la modifier selon les mêmes conditions que Perl lui-même.
+Cette bibliothèque est un logiciel libre ; vous pouvez la redistribuer et/ou la modifier selon les mêmes termes que Perl lui-même.

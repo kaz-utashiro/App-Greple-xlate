@@ -10,3 +10,7 @@ requires 'Text::ANSI::Fold', '2.20';
 on 'test' => sub {
     requires 'Test::More', '0.98';
 };
+
+on 'develop' => sub {
+    recommends 'Pod::Markdown';
+};
