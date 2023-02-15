@@ -1,20 +1,18 @@
-vpath %.pm ../lib/App/Greple
-
-PM = xlate.pm
-
+PM   := xlate.pm
+LIB  := ../lib/App/Greple
 LANG := DE EL ET FR ID JA KO NL RO RU TR UK ZH
-
-PMS = $(foreach lang,$(LANG),$(patsubst %.pm,%.$(lang).pm,$(PM)))
-MDS = $(patsubst %.pm,%.md,$(PMS))
-
-ALL = $(PMS) $(MDS) README.md
+PMS  := $(foreach lang,$(LANG),$(patsubst %.pm,%.$(lang).pm,$(PM)))
+MDS  := $(patsubst %.pm,%.md,$(PMS))
+ALL  := $(PM) $(PMS) $(MDS) README.md
 
 all: $(ALL)
 
-XLATE = greple -Mxlate::deepl --match-podtext --xlate-format=none --xlate --all
+$(foreach pm,$(PM),$(eval $(pm): $(LIB)/$(pm); cp $$< $$@))
+
+XLATE := greple -Mxlate::deepl --match-podtext --xlate-format=none --xlate --all
 
 define LANG_PM
-%.$(1).pm: %.pm
+%.$(1).pm: %.pm Makefile
 	$$(XLATE) --xlate-to $(1) $$< > $$@
 endef
 

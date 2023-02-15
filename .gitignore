@@ -30,5 +30,5 @@ MYMETA.*
 
 /App-Greple-xlate-*
 
-*.xlate-*.json
+lib/**/*.xlate-*.json
 .DS_Store
