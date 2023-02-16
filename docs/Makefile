@@ -12,8 +12,8 @@ $(foreach pm,$(PM),$(eval $(pm): $(LIB)/$(pm); cp $$< $$@))
 XLATE := greple -Mxlate::deepl --match-podtext --xlate-format=none --xlate --all
 
 define LANG_PM
-%.$(1).pm: %.pm Makefile
-	$$(XLATE) --xlate-to $(1) $$< > $$@
+%.$1.pm: %.pm Makefile
+	$$(XLATE) --xlate-to $1 $$< > $$@
 endef
 
 $(foreach lang,$(LANG),$(eval $(call LANG_PM,$(lang))))
