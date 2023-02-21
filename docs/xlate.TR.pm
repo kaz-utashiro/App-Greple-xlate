@@ -54,13 +54,13 @@ Bu seçenek olmadan, B<greple> normal bir arama komutu gibi davranır. Böylece,
 
 Komut sonucu standart çıkışa gider, bu nedenle gerekirse dosyaya yönlendirin veya L<App::Greple::update> modülünü kullanmayı düşünün.
 
-B<--xlate> seçeneği, B<--color=never> seçeneği ile B<--xlate-color> seçeneğini çağırır.
+B<--xlate> seçeneği B<--color=never> seçeneği ile B<--xlate-color> seçeneğini çağırır.
 
-B<--xlate-fold> seçeneği ile, dönüştürülen metin belirtilen genişlikte katlanır. Varsayılan genişlik 70'tir ve B<--xlate-fold-width> seçeneği ile ayarlanabilir. Çalıştırma işlemi için dört sütun ayrılmıştır, bu nedenle her satır en fazla 74 karakter içerebilir.
+B<--xlate-fold> seçeneği ile, dönüştürülen metin belirtilen genişlikte katlanır. Varsayılan genişlik 70'tir ve B<--xlate-fold-width> seçeneği ile ayarlanabilir. Çalıştırma işlemi için dört sütun ayrılmıştır, bu nedenle her satır en fazla 74 karakter alabilir.
 
 =item B<--xlate-engine>=I<engine>
 
-Kullanılacak çeviri motorunu belirtin. C<xlate::deepl> modülü bunu C<--xlate-engine=deepl> olarak bildirdiği için bu seçeneği kullanmak zorunda değilsiniz.
+Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değilsiniz çünkü C<xlate::deepl> modülü bunu C<--xlate-engine=deepl> olarak bildirir.
 
 =item B<--xlate-to> (Default: C<JA>)
 
@@ -123,7 +123,7 @@ Dosyanın tüm metnini hedef alan olarak ayarlayın.
 
 =head1 CACHE OPTIONS
 
-B<xlate> modülü her dosya için çeviri metnini önbellekte saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
+B<xlate> modülü her dosya için önbelleğe alınmış çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
 
 =over 7
 

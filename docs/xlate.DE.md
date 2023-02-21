@@ -8,13 +8,13 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 # DESCRIPTION
 
-**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Zur Zeit wird nur der DeepL Dienst vom **xlate::deepl** Modul unterstützt.
+**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit wird nur der DeepL Service vom **xlate::deepl** Modul unterstützt.
 
 Wenn Sie einen normalen Textblock in einem Dokument im Stil von [pod](https://metacpan.org/pod/pod) übersetzen wollen, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Das Muster `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option **--all** wird verwendet, um den gesamten Text auszugeben.
+Pattern `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option **--all** wird verwendet, um den gesamten Text zu übersetzen.
 
 <div>
     <p>
@@ -22,9 +22,9 @@ Das Muster `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alpha
     </p>
 </div>
 
-Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Es findet und ersetzt sie durch die Ausgabe des Befehls **deepl**.
+Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Sie werden gefunden und durch die Ausgabe des Befehls **deepl** ersetzt.
 
-Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "Konfliktmarker" gedruckt, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Wenn Sie das Format `ifdef` verwenden, können Sie den gewünschten Teil mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) leicht erhalten. Das Format kann mit der Option **--xlate-format** angegeben werden.
+Standardmäßig werden der ursprüngliche und der übersetzte Text im Format der "Konfliktmarkierung" ausgegeben, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Wenn Sie das Format `ifdef` verwenden, können Sie den gewünschten Teil mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) leicht erhalten. Das Format kann mit der Option **--xlate-format** angegeben werden.
 
 <div>
     <p>
@@ -45,7 +45,7 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
     Ohne diese Option verhält sich **greple** wie ein normaler Suchbefehl. Sie können also prüfen, welcher Teil der Datei Gegenstand der Übersetzung sein wird, bevor Sie die eigentliche Arbeit aufrufen.
 
-    Das Ergebnis des Befehls geht an den Standardausgang, also leiten Sie es in eine Datei um, falls nötig, oder erwägen Sie die Verwendung des Moduls [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate).
+    Das Ergebnis des Befehls wird im Standard-Output ausgegeben, also leiten Sie es bei Bedarf in eine Datei um oder verwenden Sie das Modul [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate).
 
     Die Option **--xlate** ruft die Option **--xlate-color** mit der Option **--color=never** auf.
 
@@ -57,7 +57,7 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
 - **--xlate-to** (Default: `JA`)
 
-    Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl `deepl languages` abrufen, wenn Sie das Modul **DeepL** verwenden.
+    Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl `deepl languages` abrufen, wenn Sie die Engine **DeepL** verwenden.
 
 - **--xlate-format**=_format_ (Default: conflict)
 
@@ -79,7 +79,7 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
     - **ifdef**
 
-        Original und übersetzter Text im Format [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` ausgeben.
+        Druckt den originalen und übersetzten Text im Format [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
 
             #ifdef ORIGINAL
             original text
@@ -88,13 +88,13 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
             translated Japanese text
             #endif
 
-        Mit dem Befehl **unifdef** können Sie nur japanischen Text abrufen:
+        Mit dem Befehl **unifdef** können Sie nur den japanischen Text wiederherstellen:
 
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
 
-        Druckt den Originaltext und den übersetzten Text getrennt durch eine einzelne Leerzeile.
+        Original und übersetzten Text durch eine einzelne Leerzeile getrennt ausgeben.
 
     - **none**
 
@@ -102,7 +102,7 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Das Übersetzungsergebnis wird in Echtzeit in der STDERR-Ausgabe angezeigt.
+    Sehen Sie das Ergebnis der Übersetzung in Echtzeit in der STDERR-Ausgabe.
 
 - **--match-entire**
 
@@ -110,24 +110,24 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
 # CACHE OPTIONS
 
-Das Modul **xlate** kann den Text der Übersetzung für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch die Anfrage an den Server zu vermeiden. Bei der Standard-Cache-Strategie `auto` werden die Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie auch nicht erstellt.
+Das Modul **xlate** kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie `auto` werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie nicht erstellt.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
 
-        Behalten Sie die Cache-Datei bei, falls sie existiert.
+        Cache-Datei beibehalten, wenn sie existiert.
 
     - `create`
 
-        Leere Cache-Datei erstellen und beenden.
+        Leere Cachedatei erstellen und beenden.
 
     - `always`, `yes`, `1`
 
-        Behalten Sie den Cache bei, sofern das Ziel eine normale Datei ist.
+        Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.
 
     - `never`, `no`, `0`
 
-        Benutze niemals eine Cache-Datei, selbst wenn sie existiert.
+        Niemals die Cache-Datei verwenden, selbst wenn sie vorhanden ist.
 
     - `accumulate`
 
@@ -147,11 +147,11 @@ Das Modul **xlate** kann den Text der Übersetzung für jede Datei im Cache spei
 
 - [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
 
-    Siehe das **greple**-Handbuch für Details über Zieltextmuster. Verwenden Sie die Optionen **--inside**, **--outside**, **--include**, **--exclude**, um den passenden Bereich einzuschränken.
+    Lesen Sie das Handbuch **greple** für Details über Zieltextmuster. Verwenden Sie die Optionen **--inside**, **--outside**, **--include**, **--exclude**, um den Suchbereich einzuschränken.
 
 - [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
 
-    Sie können das Modul `-Mupdate` verwenden, um Dateien anhand des Ergebnisses des Befehls **greple** zu verändern.
+    Sie können das Modul `-Mupdate` verwenden, um Dateien anhand des Ergebnisses des Befehls **greple** zu ändern.
 
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
@@ -163,6 +163,6 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Urheberrecht ©︎ 2023 Kazumasa Utashiro.
 
 Diese Bibliothek ist freie Software; Sie können sie unter den gleichen Bedingungen wie Perl selbst weitergeben und/oder verändern.

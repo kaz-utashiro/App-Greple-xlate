@@ -47,9 +47,9 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
 
     Käsu tulemus läheb standardväljundisse, nii et vajadusel suunake see faili ümber või kaaluge mooduli [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) kasutamist.
 
-    Valik **--xlate** kutsub **--xlate-color** valikuga **--color=never**.
+    Valik **--xlate** kutsub **--xlate-color** valiku **--color=never** valikul.
 
-    Valikuga **--xlate-fold** volditakse teisendatud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga **--xlate-fold-width**. Neli veergu on reserveeritud sisselülitamiseks, nii et iga rida võib sisaldada maksimaalselt 74 märki.
+    Valikuga **--xlate-fold** volditakse konverteeritud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga **--xlate-fold-width**. Neli veergu on reserveeritud sisselülitamiseks, nii et iga rida võib sisaldada maksimaalselt 74 märki.
 
 - **--xlate-engine**=_engine_
 
@@ -106,7 +106,7 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
 
 - **--match-entire**
 
-    Määrake kogu faili tekst sihtala.
+    Määrake kogu faili tekst sihtkohaks.
 
 # CACHE OPTIONS
 

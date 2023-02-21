@@ -14,21 +14,21 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Zur Zeit wird nur der DeepL Dienst vom B<xlate::deepl> Modul unterstützt.
+B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit wird nur der DeepL Service vom B<xlate::deepl> Modul unterstützt.
 
 Wenn Sie einen normalen Textblock in einem Dokument im Stil von L<pod> übersetzen wollen, verwenden Sie den Befehl B<greple> mit dem Modul C<xlate::deepl> und C<perl> wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Das Muster C<^(\w.*\n)+> bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option B<--all> wird verwendet, um den gesamten Text auszugeben.
+Pattern C<^(\w.*\n)+> bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option B<--all> wird verwendet, um den gesamten Text zu übersetzen.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Es findet und ersetzt sie durch die Ausgabe des Befehls B<deepl>.
+Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Sie werden gefunden und durch die Ausgabe des Befehls B<deepl> ersetzt.
 
-Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "Konfliktmarker" gedruckt, das mit L<git(1)> kompatibel ist. Wenn Sie das Format C<ifdef> verwenden, können Sie den gewünschten Teil mit dem Befehl L<unifdef(1)> leicht erhalten. Das Format kann mit der Option B<--xlate-format> angegeben werden.
+Standardmäßig werden der ursprüngliche und der übersetzte Text im Format der "Konfliktmarkierung" ausgegeben, das mit L<git(1)> kompatibel ist. Wenn Sie das Format C<ifdef> verwenden, können Sie den gewünschten Teil mit dem Befehl L<unifdef(1)> leicht erhalten. Das Format kann mit der Option B<--xlate-format> angegeben werden.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
@@ -52,7 +52,7 @@ Rufen Sie den Übersetzungsprozess für jeden übereinstimmenden Bereich auf.
 
 Ohne diese Option verhält sich B<greple> wie ein normaler Suchbefehl. Sie können also prüfen, welcher Teil der Datei Gegenstand der Übersetzung sein wird, bevor Sie die eigentliche Arbeit aufrufen.
 
-Das Ergebnis des Befehls geht an den Standardausgang, also leiten Sie es in eine Datei um, falls nötig, oder erwägen Sie die Verwendung des Moduls L<App::Greple::update>.
+Das Ergebnis des Befehls wird im Standard-Output ausgegeben, also leiten Sie es bei Bedarf in eine Datei um oder verwenden Sie das Modul L<App::Greple::update>.
 
 Die Option B<--xlate> ruft die Option B<--xlate-color> mit der Option B<--color=never> auf.
 
@@ -64,7 +64,7 @@ Geben Sie die zu verwendende Übersetzungsmaschine an. Sie brauchen diese Option
 
 =item B<--xlate-to> (Default: C<JA>)
 
-Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl C<deepl languages> abrufen, wenn Sie das Modul B<DeepL> verwenden.
+Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl C<deepl languages> abrufen, wenn Sie die Engine B<DeepL> verwenden.
 
 =item B<--xlate-format>=I<format> (Default: conflict)
 
@@ -88,7 +88,7 @@ Sie können die Originaldatei mit dem nächsten Befehl L<sed(1)> wiederherstelle
 
 =item B<ifdef>
 
-Original und übersetzter Text im Format L<cpp(1)> C<#ifdef> ausgeben.
+Druckt den originalen und übersetzten Text im Format L<cpp(1)> C<#ifdef>.
 
     #ifdef ORIGINAL
     original text
@@ -97,13 +97,13 @@ Original und übersetzter Text im Format L<cpp(1)> C<#ifdef> ausgeben.
     translated Japanese text
     #endif
 
-Mit dem Befehl B<unifdef> können Sie nur japanischen Text abrufen:
+Mit dem Befehl B<unifdef> können Sie nur den japanischen Text wiederherstellen:
 
     unifdef -UORIGINAL -DJA foo.ja.pm
 
 =item B<space>
 
-Druckt den Originaltext und den übersetzten Text getrennt durch eine einzelne Leerzeile.
+Original und übersetzten Text durch eine einzelne Leerzeile getrennt ausgeben.
 
 =item B<none>
 
@@ -113,7 +113,7 @@ Wenn das Format C<none> oder unbekannt ist, wird nur der übersetzte Text gedruc
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Das Übersetzungsergebnis wird in Echtzeit in der STDERR-Ausgabe angezeigt.
+Sehen Sie das Ergebnis der Übersetzung in Echtzeit in der STDERR-Ausgabe.
 
 =item B<--match-entire>
 
@@ -123,7 +123,7 @@ Legen Sie den gesamten Text der Datei als Zielbereich fest.
 
 =head1 CACHE OPTIONS
 
-Das Modul B<xlate> kann den Text der Übersetzung für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch die Anfrage an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie auch nicht erstellt.
+Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie nicht erstellt.
 
 =over 7
 
@@ -133,19 +133,19 @@ Das Modul B<xlate> kann den Text der Übersetzung für jede Datei im Cache speic
 
 =item C<auto> (Default)
 
-Behalten Sie die Cache-Datei bei, falls sie existiert.
+Cache-Datei beibehalten, wenn sie existiert.
 
 =item C<create>
 
-Leere Cache-Datei erstellen und beenden.
+Leere Cachedatei erstellen und beenden.
 
 =item C<always>, C<yes>, C<1>
 
-Behalten Sie den Cache bei, sofern das Ziel eine normale Datei ist.
+Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.
 
 =item C<never>, C<no>, C<0>
 
-Benutze niemals eine Cache-Datei, selbst wenn sie existiert.
+Niemals die Cache-Datei verwenden, selbst wenn sie vorhanden ist.
 
 =item C<accumulate>
 
@@ -175,11 +175,11 @@ DeepL Python-Bibliothek und CLI-Befehl.
 
 =item L<App::Greple>
 
-Siehe das B<greple>-Handbuch für Details über Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den passenden Bereich einzuschränken.
+Lesen Sie das Handbuch B<greple> für Details über Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den Suchbereich einzuschränken.
 
 =item L<App::Greple::update>
 
-Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu verändern.
+Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu ändern.
 
 =item L<App::sdif>
 
@@ -193,7 +193,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Urheberrecht ©︎ 2023 Kazumasa Utashiro.
 
 Diese Bibliothek ist freie Software; Sie können sie unter den gleichen Bedingungen wie Perl selbst weitergeben und/oder verändern.
 

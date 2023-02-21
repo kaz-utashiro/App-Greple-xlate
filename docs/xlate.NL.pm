@@ -54,9 +54,9 @@ Zonder deze optie gedraagt B<greple> zich als een normaal zoekcommando. U kunt d
 
 Commandoresultaat gaat naar standaard out, dus redirect naar bestand indien nodig, of overweeg L<App::Greple::update> module te gebruiken.
 
-Optie B<--xlate> roept optie B<--xlate-kleur> op met optie B<--color=never>.
+Optie B<--xlate> roept B<--xlate-kleur> aan met B<--color=never> optie.
 
-Met de optie B<--xlate-fold> wordt geconverteerde tekst gevouwen met de opgegeven breedte. De standaardbreedte is 70 en kan worden ingesteld met de optie B<--xlate-fold-width>. Vier kolommen zijn gereserveerd voor de inloop, zodat elke regel maximaal 74 tekens kan bevatten.
+Met de optie B<--xlate-fold> wordt geconverteerde tekst gevouwen met de opgegeven breedte. De standaardbreedte is 70 en kan worden ingesteld met de optie B<--xlate-fold-width>. Vier kolommen zijn gereserveerd voor inloopoperaties, zodat elke regel maximaal 74 tekens kan bevatten.
 
 =item B<--xlate-engine>=I<engine>
 

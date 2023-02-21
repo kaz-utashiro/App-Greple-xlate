@@ -47,13 +47,13 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-entire** seçeneğini
 
     Komut sonucu standart çıkışa gider, bu nedenle gerekirse dosyaya yönlendirin veya [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate) modülünü kullanmayı düşünün.
 
-    **--xlate** seçeneği, **--color=never** seçeneği ile **--xlate-color** seçeneğini çağırır.
+    **--xlate** seçeneği **--color=never** seçeneği ile **--xlate-color** seçeneğini çağırır.
 
-    **--xlate-fold** seçeneği ile, dönüştürülen metin belirtilen genişlikte katlanır. Varsayılan genişlik 70'tir ve **--xlate-fold-width** seçeneği ile ayarlanabilir. Çalıştırma işlemi için dört sütun ayrılmıştır, bu nedenle her satır en fazla 74 karakter içerebilir.
+    **--xlate-fold** seçeneği ile, dönüştürülen metin belirtilen genişlikte katlanır. Varsayılan genişlik 70'tir ve **--xlate-fold-width** seçeneği ile ayarlanabilir. Çalıştırma işlemi için dört sütun ayrılmıştır, bu nedenle her satır en fazla 74 karakter alabilir.
 
 - **--xlate-engine**=_engine_
 
-    Kullanılacak çeviri motorunu belirtin. `xlate::deepl` modülü bunu `--xlate-engine=deepl` olarak bildirdiği için bu seçeneği kullanmak zorunda değilsiniz.
+    Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değilsiniz çünkü `xlate::deepl` modülü bunu `--xlate-engine=deepl` olarak bildirir.
 
 - **--xlate-to** (Default: `JA`)
 
@@ -110,7 +110,7 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-entire** seçeneğini
 
 # CACHE OPTIONS
 
-**xlate** modülü her dosya için çeviri metnini önbellekte saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi `auto` ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
+**xlate** modülü her dosya için önbelleğe alınmış çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi `auto` ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)

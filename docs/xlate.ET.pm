@@ -54,9 +54,9 @@ Ilma selle valikuta käitub B<greple> nagu tavaline otsingukäsklus. Seega saate
 
 Käsu tulemus läheb standardväljundisse, nii et vajadusel suunake see faili ümber või kaaluge mooduli L<App::Greple::update> kasutamist.
 
-Valik B<--xlate> kutsub B<--xlate-color> valikuga B<--color=never>.
+Valik B<--xlate> kutsub B<--xlate-color> valiku B<--color=never> valikul.
 
-Valikuga B<--xlate-fold> volditakse teisendatud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga B<--xlate-fold-width>. Neli veergu on reserveeritud sisselülitamiseks, nii et iga rida võib sisaldada maksimaalselt 74 märki.
+Valikuga B<--xlate-fold> volditakse konverteeritud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga B<--xlate-fold-width>. Neli veergu on reserveeritud sisselülitamiseks, nii et iga rida võib sisaldada maksimaalselt 74 märki.
 
 =item B<--xlate-engine>=I<engine>
 
@@ -117,7 +117,7 @@ Näete tõlkimise tulemust reaalajas STDERR-väljundist.
 
 =item B<--match-entire>
 
-Määrake kogu faili tekst sihtala.
+Määrake kogu faili tekst sihtkohaks.
 
 =back
 

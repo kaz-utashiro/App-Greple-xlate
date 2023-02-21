@@ -106,7 +106,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-entire**. Ini
 
 - **--match-entire**
 
-    Tetapkan seluruh teks file sebagai area target.
+    Mengatur seluruh teks file sebagai area target.
 
 # CACHE OPTIONS
 

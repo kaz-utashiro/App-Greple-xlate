@@ -117,7 +117,7 @@ Lihat hasil terjemahan secara real time dalam output STDERR.
 
 =item B<--match-entire>
 
-Tetapkan seluruh teks file sebagai area target.
+Mengatur seluruh teks file sebagai area target.
 
 =back
 

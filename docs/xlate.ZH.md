@@ -45,11 +45,11 @@ App::Greple::xlate - greple的翻译支持模块
 
     如果没有这个选项，**greple**的行为就像一个普通的搜索命令。所以你可以在调用实际工作之前检查文件的哪一部分将成为翻译的对象。
 
-    命令的结果会转到标准输出，所以如果有必要，可以重定向到文件，或者考虑使用[App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)模块。
+    命令的结果会进入标准输出，所以如果需要的话，可以重定向到文件，或者考虑使用[App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)模块。
 
     选项**--xlate**调用**--xlate-color**选项与**--color=never**选项。
 
-    使用**--xlate-fold**选项，转换后的文本将按指定的宽度折叠。默认宽度为70，可以通过**--xlate-fold-width**选项设置。四列保留给磨合操作，所以每行最多可以容纳74个字符。
+    使用**--xlate-fold**选项，转换后的文本将按指定的宽度进行折叠。默认宽度为70，可以通过**--xlate-fold-width**选项设置。四列是为磨合操作保留的，所以每行最多可以容纳74个字符。
 
 - **--xlate-engine**=_engine_
 
@@ -102,7 +102,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    在STDERR输出中看到实时的转换结果。
+    在STDERR输出中可以看到实时的翻译结果。
 
 - **--match-entire**
 
@@ -110,7 +110,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # CACHE OPTIONS
 
-**xlate**模块可以为每个文件存储缓存的翻译文本，并在执行前读取，以消除向服务器请求的开销。在默认的缓存策略`auto`中，只有当目标文件的缓存文件存在时，它才维护缓存数据。如果相应的缓存文件不存在，它不会创建它。
+**xlate**模块可以存储每个文件的翻译缓存文本，并在执行前读取它，以消除向服务器请求的开销。在默认的缓存策略`auto`中，只有当目标文件的缓存文件存在时，它才维护缓存数据。如果相应的缓存文件不存在，它不会创建它。
 
 - --xlate-cache=_strategy_
     - `auto` (Default)

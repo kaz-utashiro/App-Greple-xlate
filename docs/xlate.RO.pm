@@ -54,13 +54,13 @@ Fără această opțiune, B<greple> se comportă ca o comandă de căutare norma
 
 Rezultatul comenzii merge la ieșire standard, deci redirecționați-l către fișier dacă este necesar sau luați în considerare utilizarea modulului L<App::Greple::update>.
 
-Opțiunea B<--xlate> apelează opțiunea B<--xlate-color> cu opțiunea B<--color=niciodată>.
+Opțiunea B<--xlate> apelează opțiunea B<--xlate-color> cu opțiunea B<--color=never>.
 
 Cu opțiunea B<--xlate-fold>, textul convertit este pliat cu lățimea specificată. Lățimea implicită este 70 și poate fi stabilită prin opțiunea B<--xlate-fold-width>. Patru coloane sunt rezervate pentru operațiunea de rulare, astfel încât fiecare linie poate conține cel mult 74 de caractere.
 
 =item B<--xlate-engine>=I<engine>
 
-Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul C<xlate::deepl> o declară ca fiind C<--xlate-engine=depl>.
+Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul C<xlate::deepl> o declară ca fiind C<--xlate-engine=deepl>.
 
 =item B<--xlate-to> (Default: C<JA>)
 
@@ -123,7 +123,7 @@ Setați întregul text al fișierului ca zonă țintă.
 
 =head1 CACHE OPTIONS
 
-Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție, pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache C<auto>, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
+Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache C<auto>, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
 
 =over 7
 

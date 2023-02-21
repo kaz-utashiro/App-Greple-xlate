@@ -47,13 +47,13 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-enti
 
     Rezultatul comenzii merge la ieșire standard, deci redirecționați-l către fișier dacă este necesar sau luați în considerare utilizarea modulului [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate).
 
-    Opțiunea **--xlate** apelează opțiunea **--xlate-color** cu opțiunea **--color=niciodată**.
+    Opțiunea **--xlate** apelează opțiunea **--xlate-color** cu opțiunea **--color=never**.
 
     Cu opțiunea **--xlate-fold**, textul convertit este pliat cu lățimea specificată. Lățimea implicită este 70 și poate fi stabilită prin opțiunea **--xlate-fold-width**. Patru coloane sunt rezervate pentru operațiunea de rulare, astfel încât fiecare linie poate conține cel mult 74 de caractere.
 
 - **--xlate-engine**=_engine_
 
-    Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul `xlate::deepl` o declară ca fiind `--xlate-engine=depl`.
+    Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul `xlate::deepl` o declară ca fiind `--xlate-engine=deepl`.
 
 - **--xlate-to** (Default: `JA`)
 
@@ -110,7 +110,7 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-enti
 
 # CACHE OPTIONS
 
-Modulul **xlate** poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție, pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache `auto`, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
+Modulul **xlate** poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache `auto`, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
