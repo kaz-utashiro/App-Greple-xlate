@@ -240,6 +240,7 @@ use JSON;
 use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
 use Hash::Util qw(lock_keys);
+use Unicode::EastAsianWidth;
 
 my %opt = (
     engine   => \(our $xlate_engine),
@@ -318,8 +319,13 @@ sub setup {
 
 sub normalize {
     $_[0] =~ s{^.+(?:\n.+)*}{
-	${^MATCH} =~ s/\A\s+|\s+\z//gr =~ s/\s+/ /gr
+	${^MATCH}
+	    =~ s/\A\s+|\s+\z//gr
+	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
+	    =~ s/\s+/ /gr
     }pmger;
+
+
 }
 
 sub postgrep {
