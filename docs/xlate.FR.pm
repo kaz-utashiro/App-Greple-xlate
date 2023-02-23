@@ -193,7 +193,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Copyright © 2023 Kazumasa Utashiro.
 
 Cette bibliothèque est un logiciel libre ; vous pouvez la redistribuer et/ou la modifier selon les mêmes termes que Perl lui-même.
 

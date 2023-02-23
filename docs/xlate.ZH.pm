@@ -193,7 +193,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Copyright © 2023年宇都宫一正。
 
 这个库是自由软件；你可以根据与Perl本身相同的条款重新发布它和/或修改它。
 

@@ -163,6 +163,6 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Copyright © 2023 Kazumasa Utashiro.
 
 Αυτή η βιβλιοθήκη είναι ελεύθερο λογισμικό- μπορείτε να την αναδιανείμετε ή/και να την τροποποιήσετε με τους ίδιους όρους που ισχύουν για την ίδια την Perl.

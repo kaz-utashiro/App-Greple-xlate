@@ -193,7 +193,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Telif hakkı ©︎ 2023 Kazumasa Utashiro.
+Telif Hakkı © 2023 Kazumasa Utashiro.
 
 Bu kütüphane özgür yazılımdır; Perl'ün kendisi ile aynı koşullar altında yeniden dağıtabilir ve/veya değiştirebilirsiniz.
 

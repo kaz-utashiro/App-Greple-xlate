@@ -163,6 +163,6 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # LICENSE
 
-Copyright ©︎ 2023 歌代和正(Kazumasa Utashiro).
+Copyright © 2023 歌代和正.
 
-本ライブラリはフリーソフトウェアです。Perl と同じ条件で再配布、改変することができます。
+本ライブラリはフリーソフトウェアです。あなたはPerlと同じ条件のもとで再配布や改変をすることができます。

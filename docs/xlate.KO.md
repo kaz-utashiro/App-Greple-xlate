@@ -163,6 +163,6 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+저작권 © 2023 카즈마사 우타시로.
 
 이 라이브러리는 자유 소프트웨어이므로 Perl 자체와 동일한 조건에 따라 재배포 및/또는 수정할 수 있습니다.

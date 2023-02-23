@@ -163,6 +163,6 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # LICENSE
 
-Copyright ©︎ 2023 Kazumasa Utashiro.
+Copyright © 2023 Kazumasa Utashiro.
 
 Эта библиотека является свободным программным обеспечением; вы можете распространять ее и/или изменять на тех же условиях, что и сам Perl.
