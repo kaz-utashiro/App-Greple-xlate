@@ -2,6 +2,7 @@
 
 - [xlate.DE.md](xlate.DE.md)
 - [xlate.EL.md](xlate.EL.md)
+- [xlate.ES.md](xlate.ES.md)
 - [xlate.ET.md](xlate.ET.md)
 - [xlate.FR.md](xlate.FR.md)
 - [xlate.ID.md](xlate.ID.md)
