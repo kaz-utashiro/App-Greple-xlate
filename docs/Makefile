@@ -2,27 +2,30 @@ LANGS    := DE EL ET FR ID JA KO NL RO RU TR UK ZH
 RM_LANGS := DE EL ET FR ID JA KO NL RO RU TR UK ZH
 IGNORE   := AUTHOR LICENSE
 
-LIB    := ../lib/App/Greple
-SRCDIR := src
+MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
+MOD_PATH := ../lib/$(subst -,/,$(MOD_NAME)).pm
+MOD_FILE := $(notdir $(MOD_PATH))
+MOD_DIR  := $(dir $(MOD_PATH))
+MOD_NAME := $(MOD_FILE:.pm=)
+SRC_DIR  := src
 
-MODS   := $(wildcard $(LIB)/*.pm)
-PM     := $(notdir $(MODS))
-NAME   := $(patsubst %.pm,%,$(firstword $(PM)))
-SRC    := $(PM:%=$(if $(SRCDIR),$(SRCDIR)/,)%)
-PMS    := $(foreach lang,$(LANGS),$(SRC:.pm=.$(lang).pm))
-MDS    := $(foreach lang,$(LANGS),$(PM:.pm=.$(lang).md))
-RM_MDS := $(RM_LANGS:%=../README.%.md)
-ALL    := $(PMS) $(MDS) README.md $(RM_MDS)
+ORIGIN   := $(wildcard $(MOD_DIR)*.pm)
+PM       := $(notdir $(ORIGIN))
+SRC      := $(PM:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
+PMS      := $(foreach lang,$(LANGS),$(SRC:.pm=.$(lang).pm))
+MDS      := $(foreach lang,$(LANGS),$(PM:.pm=.$(lang).md))
+READMES  := $(RM_LANGS:%=../README.%.md)
+ALL      := $(PMS) $(MDS) README.md $(READMES)
 
 all: $(ALL)
 
-ifdef SRCDIR
-  $(SRCDIR):
-	mkdir -p $(SRCDIR)
+ifdef SRC_DIR
+  $(SRC_DIR):
+	mkdir -p $(SRC_DIR)
 endif
-SRCPATH := $(if $(SRCDIR),$(SRCDIR)/,)
+SRCPATH := $(if $(SRC_DIR),$(SRC_DIR)/,)
 
-$(foreach mod,$(MODS),$(eval $(SRCPATH)$(notdir $(mod)): $(mod); cp $$< $(if $(SRCPATH),$(SRCPATH),.) ))
+$(foreach mod,$(ORIGIN),$(eval $(SRCPATH)$(notdir $(mod)): $(mod); cp $$< $(if $(SRCPATH),$(SRCPATH),.)))
 
 XLATE := greple -Mxlate::deepl --match-podtext --xlate-format=none --xlate --xlate-cache=yes --all
 
@@ -54,7 +57,7 @@ $(foreach lang,$(LANGS),$(eval $(call LANG_PM,$(lang))))
 	pod2markdown $< > $@
 
 define LANG_README
-  ../README.$1.md: $(NAME).$1.md
+  ../README.$1.md: $(MOD_NAME).$1.md
 	cp $$< $$@
 endef
 
