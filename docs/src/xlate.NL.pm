@@ -62,6 +62,10 @@ Met de optie B<--xlate-fold> wordt geconverteerde tekst gevouwen met de opgegeve
 
 Specificeer de te gebruiken vertaalmachine. U hoeft deze optie niet te gebruiken omdat module C<xlate::deepl> deze verklaart als C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor werkt. Na het voorbereiden van te vertalen tekst, worden ze gekopieerd naar het klembord. Van u wordt verwacht dat u ze in het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando C<deepl languages> wanneer u de engine B<DeepL> gebruikt.
@@ -123,9 +127,13 @@ Stel de hele tekst van het bestand in als doelgebied.
 
 =head1 CACHE OPTIONS
 
-De module B<xlate> kan de tekst van de vertaling voor elk bestand in de cache opslaan en lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cachestrategie C<auto> worden cachegegevens alleen onderhouden als het cachebestand voor het doelbestand bestaat. Als het corresponderende cachebestand niet bestaat, wordt het niet aangemaakt.
+De module B<xlate> kan de tekst van de vertaling voor elk bestand in de cache opslaan en lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cache strategie C<auto>, onderhoudt het alleen cache gegevens wanneer het cache bestand bestaat voor het doelbestand.
 
 =over 7
+
+=item --refresh
+
+De optie <-verversen> kan worden gebruikt om cachebeheer te starten of om alle bestaande cache-gegevens te verversen. Eenmaal uitgevoerd met deze optie, wordt een nieuw cache-bestand aangemaakt als er geen bestaat en daarna automatisch onderhouden.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Maak een leeg cache bestand en sluit af.
 =item C<always>, C<yes>, C<1>
 
 Cache-bestand toch behouden voor zover het doelbestand een normaal bestand is.
+
+=item C<refresh>
+
+Cache onderhouden maar bestaande niet lezen.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

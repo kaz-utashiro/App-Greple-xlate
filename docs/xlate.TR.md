@@ -55,6 +55,10 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-entire** seçeneğini
 
     Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değilsiniz çünkü `xlate::deepl` modülü bunu `--xlate-engine=deepl` olarak bildirir.
 
+- **--xlate-labor**
+
+    Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
+
 - **--xlate-to** (Default: `JA`)
 
     Hedef dili belirtin. **DeepL** motorunu kullanırken `deepl languages` komutu ile mevcut dilleri alabilirsiniz.
@@ -110,7 +114,11 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-entire** seçeneğini
 
 # CACHE OPTIONS
 
-**xlate** modülü her dosya için önbelleğe alınmış çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi `auto` ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
+**xlate** modülü her dosya için önbellekte çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi `auto` ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar.
+
+- --refresh
+
+    <--refresh> seçeneği önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, mevcut değilse yeni bir önbellek dosyası oluşturulacak ve daha sonra otomatik olarak korunacaktır.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-entire** seçeneğini
     - `always`, `yes`, `1`
 
         Hedef normal dosya olduğu sürece önbelleği yine de korur.
+
+    - `refresh`
+
+        Önbelleği koru ancak mevcut olanı okuma.
 
     - `never`, `no`, `0`
 

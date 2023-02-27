@@ -62,6 +62,10 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 指定要使用的翻译引擎。你不必使用这个选项，因为模块C<xlate::deepl>将它声明为C<--xlate-engine=deepl>。
 
+=item B<--xlate-labor>
+
+与其说是调用翻译引擎，不如说是希望你能为之工作。在准备好要翻译的文本后，它们被复制到剪贴板上。你应该把它们粘贴到表格中，把结果复制到剪贴板上，然后点击返回。
+
 =item B<--xlate-to> (Default: C<JA>)
 
 指定目标语言。当使用B<DeepL>引擎时，你可以通过C<deepl languages>命令获得可用语言。
@@ -123,9 +127,13 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 =head1 CACHE OPTIONS
 
-B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读取它，以消除向服务器请求的开销。在默认的缓存策略C<auto>中，只有当目标文件的缓存文件存在时，它才维护缓存数据。如果相应的缓存文件不存在，它不会创建它。
+B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读取它，以消除向服务器请求的开销。在默认的缓存策略C<auto>下，它只在目标文件的缓存文件存在时才维护缓存数据。
 
 =over 7
+
+=item --refresh
+
+<--刷新>选项可用于启动缓存管理或刷新所有现有缓存数据。一旦用这个选项执行，如果不存在一个新的缓存文件，就会创建一个新的缓存文件，之后自动维护。
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 =item C<always>, C<yes>, C<1>
 
 只要目标文件是正常文件，就维持缓存。
+
+=item C<refresh>
+
+维护缓存但不读取现有的缓存。
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

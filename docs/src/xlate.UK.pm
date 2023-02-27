@@ -62,6 +62,10 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 Вкажіть рушій перекладу, який буде використано. Вам не потрібно використовувати цей параметр, оскільки модуль C<xlate::deepl> оголошує його як C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+Замість того, щоб викликати рушій перекладу, ви маєте працювати з ним. Після підготовки тексту для перекладу він копіюється в буфер обміну. Ви маєте вставити його у форму, скопіювати результат у буфер обміну і натиснути клавішу return.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Вкажіть цільову мову. Доступні мови можна отримати за допомогою команди C<deepl languages> у разі використання рушія B<DeepL>.
@@ -123,9 +127,13 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =head1 CACHE OPTIONS
 
-Модуль B<xlate> може зберігати кешований текст перекладу для кожного файлу і зчитувати його перед виконанням, щоб усунути накладні витрати на запити до сервера. При стандартній стратегії кешування C<auto> він зберігає кешовані дані лише тоді, коли для цільового файлу існує файл кешу. Якщо відповідний файл кешу не існує, він не створюється.
+Модуль B<xlate> може зберігати кешований текст перекладу для кожного файлу і зчитувати його перед виконанням, щоб усунути накладні витрати на запити до сервера. За замовчуванням стратегія кешування C<auto> зберігає кешовані дані лише тоді, коли для цільового файлу існує файл кешу.
 
 =over 7
+
+=item --refresh
+
+За допомогою команди <--refresh> можна ініціювати керування кешем або оновити всі наявні дані кешу. Після виконання цієї опції буде створено новий файл кешу, якщо його не існує, а потім він буде автоматично підтримуватися.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ App::Greple::xlate - модуль підтримки перекладу для g
 =item C<always>, C<yes>, C<1>
 
 Зберігати кеш у будь-якому випадку, якщо цільовий файл є нормальним.
+
+=item C<refresh>
+
+Обслуговувати кеш, але не читати наявний.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

@@ -62,6 +62,10 @@ Cu opțiunea B<--xlate-fold>, textul convertit este pliat cu lățimea specifica
 
 Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul C<xlate::deepl> o declară ca fiind C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+În loc să apelați motorul de traducere, se așteaptă să lucrați pentru. După pregătirea textului care urmează să fie tradus, acestea sunt copiate în clipboard. Se așteaptă să le lipiți în formular, să copiați rezultatul în clipboard și să apăsați return.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Specificați limba țintă. Puteți obține limbile disponibile prin comanda C<deepl languages> atunci când se utilizează motorul B<DeepL>.
@@ -123,9 +127,13 @@ Setați întregul text al fișierului ca zonă țintă.
 
 =head1 CACHE OPTIONS
 
-Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache C<auto>, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
+Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție, pentru a elimina costurile suplimentare de solicitare a serverului. Cu strategia implicită de cache C<auto>, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă.
 
 =over 7
+
+=item --refresh
+
+Opțiunea <--refresh> poate fi utilizată pentru a iniția gestionarea cache-ului sau pentru a reîmprospăta toate datele existente în cache. Odată executat cu această opțiune, se va crea un nou fișier cache dacă nu există unul și apoi va fi menținut automat după aceea.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Creează un fișier cache gol și iese.
 =item C<always>, C<yes>, C<1>
 
 Menține oricum memoria cache în măsura în care fișierul țintă este un fișier normal.
+
+=item C<refresh>
+
+Menține memoria cache, dar nu o citește pe cea existentă.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

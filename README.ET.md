@@ -55,6 +55,10 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
 
     Määrake kasutatav tõlkemootor. Seda valikut ei pea kasutama, sest moodul `xlate::deepl` deklareerib seda kui `--xlate-engine=deepl`.
 
+- **--xlate-labor**
+
+    Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
+
 - **--xlate-to** (Default: `JA`)
 
     Määrake sihtkeel. **DeepL** mootori kasutamisel saate saadaval olevad keeled kätte käsuga `deepl languages`.
@@ -110,7 +114,11 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
 
 # CACHE OPTIONS
 
-**xlate** moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia `auto` puhul säilitab see vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas. Kui vastavat vahemälufaili ei ole olemas, ei loo ta seda.
+**xlate** moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia `auto` puhul säilitab ta vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas.
+
+- --refresh
+
+    Valikut <--refresh> saab kasutada vahemälu haldamise algatamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole olemas, ja seejärel hooldatakse seda automaatselt.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
     - `always`, `yes`, `1`
 
         Säilitab vahemälu andmed niikuinii, kui sihtfail on tavaline fail.
+
+    - `refresh`
+
+        Säilitada vahemälu, kuid mitte lugeda olemasolevat.
 
     - `never`, `no`, `0`
 

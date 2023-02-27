@@ -62,6 +62,10 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 사용할 번역 엔진을 지정합니다. 모듈 C<xlate::deep>은 C<--xlate-engine=deepl>로 선언하므로 이 옵션을 사용할 필요가 없습니다.
 
+=item B<--xlate-labor>
+
+번역 엔진을 호출하는 대신 작업할 것으로 예상됩니다. 번역할 텍스트를 준비한 후 클립보드에 복사합니다. 양식에 붙여넣고 결과를 클립보드에 복사한 후 Return 키를 눌러야 합니다.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 대상 언어를 지정합니다. B<DeepL> 엔진을 사용할 때 C<deepl languages> 명령으로 사용 가능한 언어를 가져올 수 있습니다.
@@ -123,9 +127,13 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 =head1 CACHE OPTIONS
 
-B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시에 저장하고 실행 전에 읽어와 서버에 요청하는 오버헤드를 없앨 수 있습니다. 기본 캐시 전략인 C<auto>에서는 대상 파일에 대한 캐시 파일이 존재할 때만 캐시 데이터를 유지합니다. 해당 캐시 파일이 존재하지 않으면 캐시 파일을 생성하지 않습니다.
+B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하여 저장하고 실행 전에 읽어들여 서버에 요청하는 오버헤드를 없앨 수 있습니다. 기본 캐시 전략 C<auto>를 사용하면 대상 파일에 대한 캐시 파일이 존재할 때만 캐시 데이터를 유지합니다.
 
 =over 7
+
+=item --refresh
+
+<-- 새로 고침> 옵션은 캐시 관리를 시작하거나 기존의 모든 캐시 데이터를 새로 고치는 데 사용할 수 있습니다. 이 옵션을 실행하면 캐시 파일이 없는 경우 새 캐시 파일이 생성되고 이후에는 자동으로 유지 관리됩니다.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시에 
 =item C<always>, C<yes>, C<1>
 
 타겟이 정상 파일인 한 캐시를 유지합니다.
+
+=item C<refresh>
+
+캐시는 유지하되 기존 캐시는 읽지 않습니다.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

@@ -62,6 +62,10 @@ Valikuga B<--xlate-fold> volditakse konverteeritud tekst määratud laiusega. Va
 
 Määrake kasutatav tõlkemootor. Seda valikut ei pea kasutama, sest moodul C<xlate::deepl> deklareerib seda kui C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Määrake sihtkeel. B<DeepL> mootori kasutamisel saate saadaval olevad keeled kätte käsuga C<deepl languages>.
@@ -123,9 +127,13 @@ Määrake kogu faili tekst sihtkohaks.
 
 =head1 CACHE OPTIONS
 
-B<xlate> moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia C<auto> puhul säilitab see vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas. Kui vastavat vahemälufaili ei ole olemas, ei loo ta seda.
+B<xlate> moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia C<auto> puhul säilitab ta vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas.
 
 =over 7
+
+=item --refresh
+
+Valikut <--refresh> saab kasutada vahemälu haldamise algatamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole olemas, ja seejärel hooldatakse seda automaatselt.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Loob tühja vahemälufaili ja väljub.
 =item C<always>, C<yes>, C<1>
 
 Säilitab vahemälu andmed niikuinii, kui sihtfail on tavaline fail.
+
+=item C<refresh>
+
+Säilitada vahemälu, kuid mitte lugeda olemasolevat.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

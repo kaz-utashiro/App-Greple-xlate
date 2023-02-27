@@ -60,7 +60,11 @@ Con la opción B<--xlate-fold>, el texto convertido se dobla por el ancho especi
 
 =item B<--xlate-engine>=I<engine>
 
-Especifique el motor de traducción a utilizar. No es necesario utilizar esta opción porque el módulo C<xlate::deepl> lo declara como C<--xlate-engine=deepl>.
+Especifique el motor de traducción que se utilizará. No es necesario utilizar esta opción porque el módulo C<xlate::deepl> lo declara como C<--xlate-engine=deepl>.
+
+=item B<--xlate-labor>
+
+En lugar de llamar al motor de traducción, se espera que trabaje para. Después de preparar el texto a traducir, se copian en el portapapeles. Se espera que los pegue en el formulario, copie el resultado en el portapapeles y pulse Retorno.
 
 =item B<--xlate-to> (Default: C<JA>)
 
@@ -74,7 +78,7 @@ Especifique el formato de salida del texto original y traducido.
 
 =item B<conflict>
 
-Imprime el texto original y traducido en formato de marcador de conflicto L<git(1)>.
+Imprima el texto original y traducido en formato de marcador de conflicto L<git(1)>.
 
     <<<<<<< ORIGINAL
     original text
@@ -113,7 +117,7 @@ Si el formato es C<ninguno> o desconocido, sólo se imprime el texto traducido.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Vea el resultado de la traducción en tiempo real en la salida STDERR.
+Ver el resultado de la traducción en tiempo real en la salida STDERR.
 
 =item B<--match-entire>
 
@@ -123,9 +127,13 @@ Establece todo el texto del fichero como área de destino.
 
 =head1 CACHE OPTIONS
 
-El módulo B<xlate> puede almacenar en caché el texto traducido de cada fichero y leerlo antes de la ejecución para eliminar la sobrecarga de preguntar al servidor. Con la estrategia de caché por defecto C<auto>, mantiene los datos de caché sólo cuando el archivo de caché existe para el archivo de destino. Si no existe el archivo de caché correspondiente, no lo crea.
+El módulo B<xlate> puede almacenar en caché el texto traducido de cada fichero y leerlo antes de la ejecución para eliminar la sobrecarga de preguntar al servidor. Con la estrategia de caché por defecto C<auto>, mantiene los datos de caché sólo cuando el archivo de caché existe para el archivo de destino.
 
 =over 7
+
+=item --refresh
+
+La opción <--refresh> puede utilizarse para iniciar la gestión de la caché o para refrescar todos los datos de caché existentes. Una vez ejecutada esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +149,11 @@ Crear un archivo de caché vacío y salir.
 
 =item C<always>, C<yes>, C<1>
 
-Mantener la caché siempre que el destino sea un fichero normal.
+Mantener caché de todos modos hasta que el destino sea un archivo normal.
+
+=item C<refresh>
+
+Mantener la caché pero no leer la existente.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

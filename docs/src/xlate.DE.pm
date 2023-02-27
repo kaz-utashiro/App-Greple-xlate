@@ -62,6 +62,10 @@ Mit der Option B<--xlate-fold> wird der konvertierte Text um die angegebene Brei
 
 Geben Sie die zu verwendende Übersetzungsmaschine an. Sie brauchen diese Option nicht zu verwenden, da das Modul C<xlate::deepl> sie als C<--xlate-engine=deepl> deklariert.
 
+=item B<--xlate-labor>
+
+Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie für arbeiten. Nachdem der zu übersetzende Text vorbereitet wurde, wird er in die Zwischenablage kopiert. Es wird erwartet, dass Sie sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und die Eingabetaste drücken.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl C<deepl languages> abrufen, wenn Sie die Engine B<DeepL> verwenden.
@@ -123,9 +127,13 @@ Legen Sie den gesamten Text der Datei als Zielbereich fest.
 
 =head1 CACHE OPTIONS
 
-Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie nicht erstellt.
+Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur beibehalten, wenn die Cache-Datei für die Zieldatei existiert.
 
 =over 7
+
+=item --refresh
+
+Die Option <--refresh> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Nach der Ausführung dieser Option wird eine neue Cachedatei erstellt, falls noch keine vorhanden ist, und anschließend automatisch gepflegt.
 
 =item --xlate-cache=I<strategy>
 
@@ -133,7 +141,7 @@ Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern
 
 =item C<auto> (Default)
 
-Cache-Datei beibehalten, wenn sie existiert.
+Cache-Datei beibehalten, wenn sie vorhanden ist.
 
 =item C<create>
 
@@ -143,9 +151,13 @@ Leere Cachedatei erstellen und beenden.
 
 Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.
 
+=item C<refresh>
+
+Cache beibehalten, aber vorhandene Datei nicht lesen.
+
 =item C<never>, C<no>, C<0>
 
-Niemals die Cache-Datei verwenden, selbst wenn sie vorhanden ist.
+Cache-Datei nie verwenden, auch wenn sie vorhanden ist.
 
 =item C<accumulate>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

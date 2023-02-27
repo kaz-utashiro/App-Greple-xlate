@@ -55,6 +55,10 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
     Geben Sie die zu verwendende Übersetzungsmaschine an. Sie brauchen diese Option nicht zu verwenden, da das Modul `xlate::deepl` sie als `--xlate-engine=deepl` deklariert.
 
+- **--xlate-labor**
+
+    Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie für arbeiten. Nachdem der zu übersetzende Text vorbereitet wurde, wird er in die Zwischenablage kopiert. Es wird erwartet, dass Sie sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und die Eingabetaste drücken.
+
 - **--xlate-to** (Default: `JA`)
 
     Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl `deepl languages` abrufen, wenn Sie die Engine **DeepL** verwenden.
@@ -110,12 +114,16 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
 # CACHE OPTIONS
 
-Das Modul **xlate** kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie `auto` werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert. Wenn die entsprechende Cachedatei nicht existiert, wird sie nicht erstellt.
+Das Modul **xlate** kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie `auto` werden die Cache-Daten nur beibehalten, wenn die Cache-Datei für die Zieldatei existiert.
+
+- --refresh
+
+    Die Option <--refresh> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Nach der Ausführung dieser Option wird eine neue Cachedatei erstellt, falls noch keine vorhanden ist, und anschließend automatisch gepflegt.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
 
-        Cache-Datei beibehalten, wenn sie existiert.
+        Cache-Datei beibehalten, wenn sie vorhanden ist.
 
     - `create`
 
@@ -125,9 +133,13 @@ Das Modul **xlate** kann den übersetzten Text für jede Datei im Cache speicher
 
         Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.
 
+    - `refresh`
+
+        Cache beibehalten, aber vorhandene Datei nicht lesen.
+
     - `never`, `no`, `0`
 
-        Niemals die Cache-Datei verwenden, selbst wenn sie vorhanden ist.
+        Cache-Datei nie verwenden, auch wenn sie vorhanden ist.
 
     - `accumulate`
 

@@ -55,6 +55,10 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-enti
 
     Specificați motorul de traducere care urmează să fie utilizat. Nu este necesar să utilizați această opțiune deoarece modulul `xlate::deepl` o declară ca fiind `--xlate-engine=deepl`.
 
+- **--xlate-labor**
+
+    În loc să apelați motorul de traducere, se așteaptă să lucrați pentru. După pregătirea textului care urmează să fie tradus, acestea sunt copiate în clipboard. Se așteaptă să le lipiți în formular, să copiați rezultatul în clipboard și să apăsați return.
+
 - **--xlate-to** (Default: `JA`)
 
     Specificați limba țintă. Puteți obține limbile disponibile prin comanda `deepl languages` atunci când se utilizează motorul **DeepL**.
@@ -110,7 +114,11 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-enti
 
 # CACHE OPTIONS
 
-Modulul **xlate** poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina cheltuielile de solicitare a serverului. Cu strategia implicită de cache `auto`, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă. În cazul în care fișierul cache corespunzător nu există, acesta nu este creat.
+Modulul **xlate** poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție, pentru a elimina costurile suplimentare de solicitare a serverului. Cu strategia implicită de cache `auto`, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă.
+
+- --refresh
+
+    Opțiunea <--refresh> poate fi utilizată pentru a iniția gestionarea cache-ului sau pentru a reîmprospăta toate datele existente în cache. Odată executat cu această opțiune, se va crea un nou fișier cache dacă nu există unul și apoi va fi menținut automat după aceea.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ Modulul **xlate** poate stoca în memoria cache textul traducerii pentru fiecare
     - `always`, `yes`, `1`
 
         Menține oricum memoria cache în măsura în care fișierul țintă este un fișier normal.
+
+    - `refresh`
+
+        Menține memoria cache, dar nu o citește pe cea existentă.
 
     - `never`, `no`, `0`
 

@@ -62,6 +62,10 @@ Dengan opsi B<--xlate-fold>, teks yang dikonversi akan dilipat dengan lebar yang
 
 Tentukan mesin penerjemahan yang akan digunakan. Anda tidak perlu menggunakan opsi ini karena modul C<xlate::deepl> mendeklarasikannya sebagai C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+Setelah memanggil mesin penerjemahan, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan return.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perintah C<deepl languages> ketika menggunakan mesin B<DeepL>.
@@ -123,9 +127,13 @@ Mengatur seluruh teks file sebagai area target.
 
 =head1 CACHE OPTIONS
 
-Modul B<xlate> dapat menyimpan teks terjemahan yang di-cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead meminta ke server. Dengan strategi cache default C<auto>, modul ini mempertahankan data cache hanya ketika file cache ada untuk file target. Jika file cache yang sesuai tidak ada, ia tidak akan membuatnya.
+Modul B<xlate> dapat menyimpan teks terjemahan dalam cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead dari permintaan ke server. Dengan strategi cache default C<auto>, modul ini mempertahankan data cache hanya ketika file cache ada untuk file target.
 
 =over 7
+
+=item --refresh
+
+Opsi <--refresh> dapat digunakan untuk memulai manajemen cache atau menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Buat file cache kosong dan keluar.
 =item C<always>, C<yes>, C<1>
 
 Pertahankan cache sejauh targetnya adalah file normal.
+
+=item C<refresh>
+
+Mempertahankan cache tetapi tidak membaca cache yang sudah ada.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

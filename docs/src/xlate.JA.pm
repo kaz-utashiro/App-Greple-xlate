@@ -14,27 +14,27 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> モジュールは、テキストブロックを見つけ、翻訳されたテキストに置き換える。現在、B<xlate::deepl>モジュールが対応しているのはDeepLサービスのみである。
+B<Greple> B<xlate> モジュールは、テキストブロックを見つけ、翻訳されたテキストに置き換えます。現在、B<xlate::deepl>モジュールが対応しているのはDeepLサービスのみです。
 
-L<pod>形式の文書中の通常のテキストブロックを翻訳したい場合は、B<greple>コマンドとC<xlate::deepl>モジュール、C<perl>モジュールを使って、以下のようにする。
+L<pod>形式の文書中の通常のテキストブロックを翻訳したい場合は、B<greple>コマンドとC<xlate::deepl>モジュール、C<perl>モジュールを使って、以下のようにします。
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-パターン C<^(\w.*n)+> は、英数字で始まる連続した行を意味する。このコマンドは、翻訳される領域を表示する。オプションB<--all>は、テキスト全体を翻訳するために使用する。
+パターン C<^(\w.*n)+> は、英数字で始まる連続した行を意味します。このコマンドは、翻訳される領域を表示します。オプションB<--all>は、テキスト全体を翻訳するために使用します。
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-次に、C<--xlate>オプションを追加して、選択された領域を翻訳する。これは、B<deepl>コマンドの出力でそれらを見つけて置き換える。
+次に、C<--xlate>オプションを追加して、選択された領域を翻訳します。これは、B<deepl>コマンドの出力でそれらを見つけて置き換えます。
 
-デフォルトでは、原文と訳文が L<git(1)> と互換性のある "conflict marker" フォーマットで出力される。C<ifdef> 形式を用いると、L<unifdef(1)> コマンドで簡単に目的の部分を得ることができる。B<--xlate-format>オプションでフォーマットを指定することができる。
+デフォルトでは、原文と訳文が L<git(1)> と互換性のある "conflict marker" フォーマットで出力されます。C<ifdef> 形式を用いると、L<unifdef(1)> コマンドで簡単に目的の部分を得ることができます。B<--xlate-format>オプションでフォーマットを指定することができます。
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-テキスト全体を翻訳したい場合は、B<--match-entire>オプションを使用する。これは、C<(?s).*>というテキスト全体にマッチするパターンを指定するためのショートカットである。
+テキスト全体を翻訳したい場合は、B<--match-entire>オプションを使用します。これは、C<(?s).*>というテキスト全体にマッチするパターンを指定するためのショートカットです。
 
 =head1 OPTIONS
 
@@ -48,33 +48,37 @@ L<pod>形式の文書中の通常のテキストブロックを翻訳したい�
 
 =item B<--xlate-fold-width>=I<n> (Default: 70)
 
-マッチした部分ごとに翻訳処理を起動する。
+マッチした部分ごとに翻訳処理を起動します。
 
-このオプションがない場合、B<greple>は通常の検索コマンドとして動作する。したがって、ファイルのどの部分が翻訳の対象となるかを、実際の作業を始める前に確認することができる。
+このオプションがない場合、B<greple>は通常の検索コマンドとして動作します。したがって、ファイルのどの部分が翻訳の対象となるかを、実際の作業を始める前に確認することができます。
 
 コマンドの結果は標準出力されますので、必要に応じてファイルにリダイレクトするか、L<App::Greple::update>モジュールの使用を検討してください。
 
-B<--xlate>オプションは、B<--xlate-color>オプションをB<--color=never>オプションで呼び出する。
+B<--xlate>オプションは、B<--xlate-color>オプションをB<--color=never>オプションで呼び出します。
 
-B<--xlate-fold>オプションでは、変換されたテキストを指定した幅で折り返す。デフォルトの幅は70で、B<--xlate-fold-width>オプションで設定することができる。ランイン動作のために4列が確保されているので、1行には最大で74文字が格納できる。
+B<--xlate-fold>オプションでは、変換されたテキストを指定した幅で折り返す。デフォルトの幅は70で、B<--xlate-fold-width>オプションで設定することができます。ランイン動作のために4列が確保されているので、1行には最大で74文字が格納できます。
 
 =item B<--xlate-engine>=I<engine>
 
-使用する翻訳エンジンを指定する。モジュールC<xlate::deepl>でC<--xlate-engine=deepl>として宣言されているので、このオプションを使う必要はない。
+使用する翻訳エンジンを指定します。モジュールC<xlate::deepl>でC<--xlate-engine=deepl>と宣言されているので、このオプションを使う必要はないです。
+
+=item B<--xlate-labor>
+
+翻訳エンジンを呼び出す代わりに、あなたが働くことが期待されています。翻訳するテキストを用意すると、それがクリップボードにコピーされます。それをフォームに貼り付け、結果をクリップボードにコピーし、リターンキーを押すことが期待されます。
 
 =item B<--xlate-to> (Default: C<JA>)
 
-ターゲット言語を指定する。B<DeepL>エンジン使用時は、C<deepl languages>コマンドで利用可能な言語を取得できる。
+対象言語を指定します。B<DeepL>エンジンを使っている場合は、C<deepl languages>コマンドで利用可能な言語を得ることができます。
 
 =item B<--xlate-format>=I<format> (Default: conflict)
 
-原文と訳文の出力形式を指定する。
+原文と訳文の出力形式を指定します。
 
 =over 4
 
 =item B<conflict>
 
-原文と訳文をL<git(1)>コンフリクトマーカー形式で出力する。
+原文と訳文をL<git(1)>コンフリクトマーカ形式で出力します。
 
     <<<<<<< ORIGINAL
     original text
@@ -82,13 +86,13 @@ B<--xlate-fold>オプションでは、変換されたテキストを指定し�
     translated Japanese text
     >>>>>>> JA
 
-次のL<sed(1)>コマンドで元のファイルを復元することができる。
+次のL<sed(1)>コマンドで元のファイルを復元することができます。
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
 =item B<ifdef>
 
-原文と訳文をL<cpp(1)> C<#ifdef>形式で出力する。
+原文と訳文をL<cpp(1)> C<#ifdef>形式で出力します。
 
     #ifdef ORIGINAL
     original text
@@ -97,35 +101,39 @@ B<--xlate-fold>オプションでは、変換されたテキストを指定し�
     translated Japanese text
     #endif
 
-B<unifdef>コマンドで日本語テキストのみを取り出すことができる。
+B<unifdef>コマンドで日本語テキストのみを取り出すことができます。
 
     unifdef -UORIGINAL -DJA foo.ja.pm
 
 =item B<space>
 
-原文と訳文を1行の空白で区切って表示する。
+原文と訳文を1行の空白で区切って表示します。
 
 =item B<none>
 
-C<none>またはunknownの場合、翻訳されたテキストのみが表示される。
+C<none>またはunknownの場合、翻訳されたテキストのみが表示されます。
 
 =back
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-翻訳結果はSTDERR出力にリアルタイムで表示される。
+翻訳結果はSTDERR出力にリアルタイムで表示されます。
 
 =item B<--match-entire>
 
-ファイルの全テキストを対象範囲に設定する。
+ファイルの全テキストを対象範囲に設定します。
 
 =back
 
 =head1 CACHE OPTIONS
 
-B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシュしておき、実行前にそれを読むことで、サーバーへの問い合わせのオーバーヘッドをなくすことができる。デフォルトのキャッシュ戦略C<auto>では、対象ファイルに対してキャッシュファイルが存在する場合のみ、キャッシュデータを保持する。対応するキャッシュファイルが存在しない場合は、作成しない。
+B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシュしておき、実行前にそれを読むことで、サーバーへの問い合わせのオーバーヘッドをなくすことができます。デフォルトのキャッシュ戦略C<auto>では、対象ファイルに対してキャッシュファイルが存在する場合のみ、キャッシュデータを保持します。
 
 =over 7
+
+=item --refresh
+
+<--refresh>オプションは、キャッシュ管理を開始するか、既存のキャッシュデータをすべてリフレッシュするために使用されます。このオプションを一度実行すると、キャッシュファイルが存在しない場合は新規に作成され、その後は自動的に維持されます。
 
 =item --xlate-cache=I<strategy>
 
@@ -133,23 +141,27 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 =item C<auto> (Default)
 
-キャッシュファイルが存在する場合は、それを保持する。
+キャッシュファイルが存在すれば、それを維持します。
 
 =item C<create>
 
-空のキャッシュ・ファイルを作成して終了する。
+空のキャッシュファイルを作成し、終了します。
 
 =item C<always>, C<yes>, C<1>
 
-対象が通常ファイルである限り、とにかくキャッシュを維持する。
+ターゲットが通常のファイルである限り、とにかくキャッシュを維持します。
+
+=item C<refresh>
+
+キャッシュは維持するが、既存のキャッシュは読み込まないです。
 
 =item C<never>, C<no>, C<0>
 
-キャッシュ・ファイルが存在しても、決して使用しない。
+キャッシュファイルが存在しても使用しないです。
 
 =item C<accumulate>
 
-デフォルトの動作では、未使用のデータはキャッシュファイルから削除される。削除せずに保持する場合は、C<蓄積>を使用してください。
+デフォルトの動作では、未使用のデータはキャッシュファイルから削除されます。削除せず、ファイルに残しておきたい場合は、C<蓄積>を使用してください。
 
 =back
 
@@ -161,7 +173,7 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 =item DEEPL_AUTH_KEY
 
-DeepLサービス用の認証キーを設定する。
+DeepLサービス用の認証キーを設定します。
 
 =back
 
@@ -171,7 +183,7 @@ DeepLサービス用の認証キーを設定する。
 
 =item L<https://github.com/DeepLcom/deepl-python>
 
-DeepL PythonライブラリとCLIコマンドを使用する。
+DeepL PythonライブラリとCLIコマンドを使用します。
 
 =item L<App::Greple>
 
@@ -179,11 +191,11 @@ DeepL PythonライブラリとCLIコマンドを使用する。
 
 =item L<App::Greple::update>
 
-C<-Mupdate>モジュールを用いると、B<greple>コマンドの結果をもとにファイルを修正することができる。
+C<-Mupdate>モジュールを用いると、B<greple>コマンドの結果をもとにファイルを修正することができます。
 
 =item L<App::sdif>
 
-B<sdif>を使用すると、B<-V>オプションと並べてコンフリクトマーカのフォーマットを表示することができる。
+B<sdif>を使用すると、B<-V>オプションでコンフリクトマーカー形式を並べて表示することができます。
 
 =back
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

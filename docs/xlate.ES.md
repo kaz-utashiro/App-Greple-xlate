@@ -53,7 +53,11 @@ Si desea traducir todo el texto, utilice la opción **--match-entire**. Se trata
 
 - **--xlate-engine**=_engine_
 
-    Especifique el motor de traducción a utilizar. No es necesario utilizar esta opción porque el módulo `xlate::deepl` lo declara como `--xlate-engine=deepl`.
+    Especifique el motor de traducción que se utilizará. No es necesario utilizar esta opción porque el módulo `xlate::deepl` lo declara como `--xlate-engine=deepl`.
+
+- **--xlate-labor**
+
+    En lugar de llamar al motor de traducción, se espera que trabaje para. Después de preparar el texto a traducir, se copian en el portapapeles. Se espera que los pegue en el formulario, copie el resultado en el portapapeles y pulse Retorno.
 
 - **--xlate-to** (Default: `JA`)
 
@@ -65,7 +69,7 @@ Si desea traducir todo el texto, utilice la opción **--match-entire**. Se trata
 
     - **conflict**
 
-        Imprime el texto original y traducido en formato de marcador de conflicto [git(1)](http://man.he.net/man1/git).
+        Imprima el texto original y traducido en formato de marcador de conflicto [git(1)](http://man.he.net/man1/git).
 
             <<<<<<< ORIGINAL
             original text
@@ -102,7 +106,7 @@ Si desea traducir todo el texto, utilice la opción **--match-entire**. Se trata
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Vea el resultado de la traducción en tiempo real en la salida STDERR.
+    Ver el resultado de la traducción en tiempo real en la salida STDERR.
 
 - **--match-entire**
 
@@ -110,7 +114,11 @@ Si desea traducir todo el texto, utilice la opción **--match-entire**. Se trata
 
 # CACHE OPTIONS
 
-El módulo **xlate** puede almacenar en caché el texto traducido de cada fichero y leerlo antes de la ejecución para eliminar la sobrecarga de preguntar al servidor. Con la estrategia de caché por defecto `auto`, mantiene los datos de caché sólo cuando el archivo de caché existe para el archivo de destino. Si no existe el archivo de caché correspondiente, no lo crea.
+El módulo **xlate** puede almacenar en caché el texto traducido de cada fichero y leerlo antes de la ejecución para eliminar la sobrecarga de preguntar al servidor. Con la estrategia de caché por defecto `auto`, mantiene los datos de caché sólo cuando el archivo de caché existe para el archivo de destino.
+
+- --refresh
+
+    La opción <--refresh> puede utilizarse para iniciar la gestión de la caché o para refrescar todos los datos de caché existentes. Una vez ejecutada esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -123,7 +131,11 @@ El módulo **xlate** puede almacenar en caché el texto traducido de cada ficher
 
     - `always`, `yes`, `1`
 
-        Mantener la caché siempre que el destino sea un fichero normal.
+        Mantener caché de todos modos hasta que el destino sea un archivo normal.
+
+    - `refresh`
+
+        Mantener la caché pero no leer la existente.
 
     - `never`, `no`, `0`
 

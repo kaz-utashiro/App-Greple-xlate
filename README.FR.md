@@ -55,6 +55,10 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. I
 
     Spécifiez le moteur de traduction à utiliser. Vous n'avez pas à utiliser cette option car le module `xlate::deepl` le déclare comme `--xlate-engine=deepl`.
 
+- **--xlate-labor**
+
+    Au lieu d'appeler le moteur de traduction, vous êtes censé travailler pour. Après avoir préparé les textes à traduire, ils sont copiés dans le presse-papiers. Vous êtes censé les coller dans le formulaire, copier le résultat dans le presse-papiers et appuyer sur la touche retour.
+
 - **--xlate-to** (Default: `JA`)
 
     Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles par la commande `deepl languages` lorsque vous utilisez le moteur **DeepL**.
@@ -110,7 +114,11 @@ Si vous voulez traduire un texte entier, utilisez l'option **--match-entire**. I
 
 # CACHE OPTIONS
 
-Le module **xlate** peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut `auto`, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier de cache correspondant n'existe pas, il ne le crée pas.
+Le module **xlate** peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution pour éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut `auto`, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible.
+
+- --refresh
+
+    L'option <--refresh> peut être utilisée pour lancer la gestion du cache ou pour rafraîchir toutes les données du cache existantes. Une fois exécutée avec cette option, un nouveau fichier de cache sera créé s'il n'en existe pas, puis automatiquement maintenu par la suite.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ Le module **xlate** peut stocker le texte de la traduction en cache pour chaque 
     - `always`, `yes`, `1`
 
         Maintenir le cache de toute façon tant que la cible est un fichier normal.
+
+    - `refresh`
+
+        Maintenir le cache mais ne pas lire celui existant.
 
     - `never`, `no`, `0`
 

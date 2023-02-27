@@ -62,6 +62,10 @@ Avec l'option B<--xlate-fold>, le texte converti est plié selon la largeur spé
 
 Spécifiez le moteur de traduction à utiliser. Vous n'avez pas à utiliser cette option car le module C<xlate::deepl> le déclare comme C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+Au lieu d'appeler le moteur de traduction, vous êtes censé travailler pour. Après avoir préparé les textes à traduire, ils sont copiés dans le presse-papiers. Vous êtes censé les coller dans le formulaire, copier le résultat dans le presse-papiers et appuyer sur la touche retour.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles par la commande C<deepl languages> lorsque vous utilisez le moteur B<DeepL>.
@@ -123,9 +127,13 @@ Définissez l'ensemble du texte du fichier comme zone cible.
 
 =head1 CACHE OPTIONS
 
-Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution afin d'éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible. Si le fichier de cache correspondant n'existe pas, il ne le crée pas.
+Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution pour éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible.
 
 =over 7
+
+=item --refresh
+
+L'option <--refresh> peut être utilisée pour lancer la gestion du cache ou pour rafraîchir toutes les données du cache existantes. Une fois exécutée avec cette option, un nouveau fichier de cache sera créé s'il n'en existe pas, puis automatiquement maintenu par la suite.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Créer un fichier cache vide et quitter.
 =item C<always>, C<yes>, C<1>
 
 Maintenir le cache de toute façon tant que la cible est un fichier normal.
+
+=item C<refresh>
+
+Maintenir le cache mais ne pas lire celui existant.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

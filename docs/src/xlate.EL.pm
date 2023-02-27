@@ -62,6 +62,10 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 Καθορίστε τη μηχανή μετάφρασης που θα χρησιμοποιηθεί. Δεν χρειάζεται να χρησιμοποιήσετε αυτή την επιλογή επειδή η ενότητα C<xlate::deepl> τη δηλώνει ως C<--xlate-engine=deepl>.
 
+=item B<--xlate-labor>
+
+Αντί να καλείτε μηχανή μετάφρασης, αναμένεται να εργαστείτε για. Μετά την προετοιμασία του προς μετάφραση κειμένου, αντιγράφονται στο πρόχειρο. Αναμένεται να τα επικολλήσετε στη φόρμα, να αντιγράψετε το αποτέλεσμα στο πρόχειρο και να πατήσετε return.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Καθορίστε τη γλώσσα-στόχο. Μπορείτε να λάβετε τις διαθέσιμες γλώσσες με την εντολή C<deepl languages> όταν χρησιμοποιείτε τη μηχανή B<DeepL>.
@@ -123,9 +127,13 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 CACHE OPTIONS
 
-Η ενότητα B<xlate> μπορεί να αποθηκεύσει το κείμενο της μετάφρασης για κάθε αρχείο και να το διαβάσει πριν από την εκτέλεση για να εξαλείψει την επιβάρυνση από την ερώτηση στον διακομιστή. Με την προεπιλεγμένη στρατηγική κρυφής μνήμης C<auto>, διατηρεί δεδομένα κρυφής μνήμης μόνο όταν υπάρχει το αρχείο κρυφής μνήμης για το αρχείο-στόχο. Εάν το αντίστοιχο αρχείο κρυφής μνήμης δεν υπάρχει, δεν το δημιουργεί.
+Η ενότητα B<xlate> μπορεί να αποθηκεύσει το αποθηκευμένο κείμενο της μετάφρασης για κάθε αρχείο και να το διαβάσει πριν από την εκτέλεση, ώστε να εξαλειφθεί η επιβάρυνση από την ερώτηση στον διακομιστή. Με την προεπιλεγμένη στρατηγική κρυφής μνήμης C<auto>, διατηρεί τα δεδομένα της κρυφής μνήμης μόνο όταν το αρχείο κρυφής μνήμης υπάρχει για το αρχείο-στόχο.
 
 =over 7
+
+=item --refresh
+
+Η επιλογή <--ανανέωση> μπορεί να χρησιμοποιηθεί για να ξεκινήσει η διαχείριση της κρυφής μνήμης ή για να ανανεωθούν όλα τα υπάρχοντα δεδομένα της κρυφής μνήμης. Μόλις εκτελεστεί με αυτή την επιλογή, θα δημιουργηθεί ένα νέο αρχείο κρυφής μνήμης εάν δεν υπάρχει και στη συνέχεια θα διατηρηθεί αυτόματα.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 =item C<always>, C<yes>, C<1>
 
 Διατηρεί την κρυφή μνήμη ούτως ή άλλως εφόσον ο στόχος είναι κανονικό αρχείο.
+
+=item C<refresh>
+
+Διατήρηση της κρυφής μνήμης αλλά μη ανάγνωση της υπάρχουσας.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

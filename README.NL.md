@@ -55,6 +55,10 @@ Als u de hele tekst wilt vertalen, gebruik dan de optie **--match-entire**. Dit 
 
     Specificeer de te gebruiken vertaalmachine. U hoeft deze optie niet te gebruiken omdat module `xlate::deepl` deze verklaart als `--xlate-engine=deepl`.
 
+- **--xlate-labor**
+
+    In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor werkt. Na het voorbereiden van te vertalen tekst, worden ze gekopieerd naar het klembord. Van u wordt verwacht dat u ze in het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
+
 - **--xlate-to** (Default: `JA`)
 
     Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando `deepl languages` wanneer u de engine **DeepL** gebruikt.
@@ -110,7 +114,11 @@ Als u de hele tekst wilt vertalen, gebruik dan de optie **--match-entire**. Dit 
 
 # CACHE OPTIONS
 
-De module **xlate** kan de tekst van de vertaling voor elk bestand in de cache opslaan en lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cachestrategie `auto` worden cachegegevens alleen onderhouden als het cachebestand voor het doelbestand bestaat. Als het corresponderende cachebestand niet bestaat, wordt het niet aangemaakt.
+De module **xlate** kan de tekst van de vertaling voor elk bestand in de cache opslaan en lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cache strategie `auto`, onderhoudt het alleen cache gegevens wanneer het cache bestand bestaat voor het doelbestand.
+
+- --refresh
+
+    De optie <-verversen> kan worden gebruikt om cachebeheer te starten of om alle bestaande cache-gegevens te verversen. Eenmaal uitgevoerd met deze optie, wordt een nieuw cache-bestand aangemaakt als er geen bestaat en daarna automatisch onderhouden.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ De module **xlate** kan de tekst van de vertaling voor elk bestand in de cache o
     - `always`, `yes`, `1`
 
         Cache-bestand toch behouden voor zover het doelbestand een normaal bestand is.
+
+    - `refresh`
+
+        Cache onderhouden maar bestaande niet lezen.
 
     - `never`, `no`, `0`
 

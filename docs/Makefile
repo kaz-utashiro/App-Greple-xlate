@@ -27,7 +27,10 @@ SRCPATH := $(if $(SRC_DIR),$(SRC_DIR)/,)
 
 $(foreach mod,$(ORIGIN),$(eval $(SRCPATH)$(notdir $(mod)): $(mod); cp $$< $(if $(SRCPATH),$(SRCPATH),.)))
 
-XLATE := greple -Mxlate::deepl --match-podtext --xlate-format=none --xlate --xlate-cache=yes --all
+XLATE := greple -Mxlate::deepl
+XLATE += $(if $(XLATE_LABOR),--xlate-labor,--xlate)
+XLATE += --xlate-cache=$(if $(XLATE_REFRESH),refresh,yes)
+XLATE += --match-podtext --xlate-format=none --all
 
 ifdef IGNORE
 $(foreach ignore,$(IGNORE),$(eval \
@@ -35,7 +38,7 @@ $(foreach ignore,$(IGNORE),$(eval \
 ))
 endif
 
-JA_FORM   ?= dearu
+JA_FORM   ?= desumasu
 JA_DICT   := $(wildcard *.dict)
 JA_FILTER := greple -Mperl -Msubst::desumasu \
 	$(if $(findstring $(JA_FORM).dict,$(JA_DICT)), --dict $(JA_FORM).dict) \

@@ -62,6 +62,10 @@ B<--xlate-fold> seçeneği ile, dönüştürülen metin belirtilen genişlikte k
 
 Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değilsiniz çünkü C<xlate::deepl> modülü bunu C<--xlate-engine=deepl> olarak bildirir.
 
+=item B<--xlate-labor>
+
+Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
+
 =item B<--xlate-to> (Default: C<JA>)
 
 Hedef dili belirtin. B<DeepL> motorunu kullanırken C<deepl languages> komutu ile mevcut dilleri alabilirsiniz.
@@ -123,9 +127,13 @@ Dosyanın tüm metnini hedef alan olarak ayarlayın.
 
 =head1 CACHE OPTIONS
 
-B<xlate> modülü her dosya için önbelleğe alınmış çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar. İlgili önbellek dosyası mevcut değilse, oluşturmaz.
+B<xlate> modülü her dosya için önbellekte çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar.
 
 =over 7
+
+=item --refresh
+
+<--refresh> seçeneği önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, mevcut değilse yeni bir önbellek dosyası oluşturulacak ve daha sonra otomatik olarak korunacaktır.
 
 =item --xlate-cache=I<strategy>
 
@@ -142,6 +150,10 @@ Boş önbellek dosyası oluştur ve çık.
 =item C<always>, C<yes>, C<1>
 
 Hedef normal dosya olduğu sürece önbelleği yine de korur.
+
+=item C<refresh>
+
+Önbelleği koru ancak mevcut olanı okuma.
 
 =item C<never>, C<no>, C<0>
 
@@ -293,8 +305,6 @@ sub normalize {
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	    =~ s/\s+/ /gr
     }pmger;
-
-
 }
 
 sub postgrep {
@@ -406,7 +416,9 @@ sub begin {
 	    }
 	    die "skip $current_file";
 	}
-	read_cache $cache;
+	if ($cache_method ne 'refresh') {
+	    read_cache $cache;
+	}
     }
 }
 
@@ -440,7 +452,8 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 
-builtin deepl-auth-key=s   $__PACKAGE__::deepl::auth_key
+builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
+builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --face +E --ci=A
 
@@ -453,6 +466,9 @@ option --xlate-color \
 	--end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
+option --xlate-labor --xlate --deepl-method=clipboard
+
+option --refresh --xlate-cache=refresh
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

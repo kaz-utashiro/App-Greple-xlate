@@ -55,6 +55,10 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-entire**. Ini
 
     Tentukan mesin penerjemahan yang akan digunakan. Anda tidak perlu menggunakan opsi ini karena modul `xlate::deepl` mendeklarasikannya sebagai `--xlate-engine=deepl`.
 
+- **--xlate-labor**
+
+    Setelah memanggil mesin penerjemahan, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan return.
+
 - **--xlate-to** (Default: `JA`)
 
     Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perintah `deepl languages` ketika menggunakan mesin **DeepL**.
@@ -110,7 +114,11 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-entire**. Ini
 
 # CACHE OPTIONS
 
-Modul **xlate** dapat menyimpan teks terjemahan yang di-cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead meminta ke server. Dengan strategi cache default `auto`, modul ini mempertahankan data cache hanya ketika file cache ada untuk file target. Jika file cache yang sesuai tidak ada, ia tidak akan membuatnya.
+Modul **xlate** dapat menyimpan teks terjemahan dalam cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead dari permintaan ke server. Dengan strategi cache default `auto`, modul ini mempertahankan data cache hanya ketika file cache ada untuk file target.
+
+- --refresh
+
+    Opsi <--refresh> dapat digunakan untuk memulai manajemen cache atau menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -124,6 +132,10 @@ Modul **xlate** dapat menyimpan teks terjemahan yang di-cache untuk setiap file 
     - `always`, `yes`, `1`
 
         Pertahankan cache sejauh targetnya adalah file normal.
+
+    - `refresh`
+
+        Mempertahankan cache tetapi tidak membaca cache yang sudah ada.
 
     - `never`, `no`, `0`
 
