@@ -147,7 +147,7 @@ data only when the cache file exists for target file.
 
 - --refresh
 
-    The <--refresh> option can be used to initiate cache management or to
+    The **--refresh** option can be used to initiate cache management or to
     refresh all existing cache data. Once executed with this option, a new
     cache file will be created if one does not exist and then
     automatically maintained afterward.
