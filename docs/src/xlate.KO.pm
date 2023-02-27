@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 
 =encoding utf-8
 
