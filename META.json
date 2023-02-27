@@ -47,6 +47,7 @@
          "requires" : {
             "App::Greple" : "9.02",
             "App::sdif" : "v4.24.0",
+            "Clipboard" : "0",
             "Hash::Util" : "0",
             "JSON" : "0",
             "List::Util" : "0",
