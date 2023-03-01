@@ -70,7 +70,7 @@ B<--xlate-fold>オプションでは、変換されたテキストを指定し�
 
 対象言語を指定します。B<DeepL>エンジンを使っている場合は、C<deepl languages>コマンドで利用可能な言語を得ることができます。
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 原文と訳文の出力形式を指定します。
 
@@ -131,9 +131,9 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-<--refresh>オプションは、キャッシュ管理を開始するか、既存のキャッシュデータをすべてリフレッシュするために使用されます。このオプションを一度実行すると、キャッシュファイルが存在しない場合は新規に作成され、その後は自動的に維持されます。
+B<--cache-clear>オプションは、キャッシュ管理を開始するため、あるいは既存のキャッシュデータをすべてリフレッシュするために使用することができます。このオプションを一度実行すると、キャッシュファイルが存在しない場合は新しいキャッシュファイルが作成され、その後は自動的にメンテナンスされます。
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 =item C<auto> (Default)
 
-キャッシュファイルが存在すれば、それを維持します。
+キャッシュファイルが存在する場合は、それを維持します。
 
 =item C<create>
 
@@ -151,9 +151,9 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 ターゲットが通常のファイルである限り、とにかくキャッシュを維持します。
 
-=item C<refresh>
+=item C<clear>
 
-キャッシュは維持するが、既存のキャッシュは読み込まないです。
+キャッシュデータを先にクリアします。
 
 =item C<never>, C<no>, C<0>
 
@@ -177,7 +177,15 @@ DeepLサービス用の認証キーを設定します。
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>の場合。
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

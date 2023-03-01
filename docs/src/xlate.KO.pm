@@ -70,7 +70,7 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 대상 언어를 지정합니다. B<DeepL> 엔진을 사용할 때 C<deepl languages> 명령으로 사용 가능한 언어를 가져올 수 있습니다.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 원본 및 번역 텍스트의 출력 형식을 지정합니다.
 
@@ -131,9 +131,9 @@ B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하�
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-<-- 새로 고침> 옵션은 캐시 관리를 시작하거나 기존의 모든 캐시 데이터를 새로 고치는 데 사용할 수 있습니다. 이 옵션을 실행하면 캐시 파일이 없는 경우 새 캐시 파일이 생성되고 이후에는 자동으로 유지 관리됩니다.
+B<--cache-clear> 옵션은 캐시 관리를 시작하거나 기존의 모든 캐시 데이터를 새로 고치는 데 사용할 수 있습니다. 이 옵션을 실행하면 캐시 파일이 없는 경우 새 캐시 파일이 생성되고 이후에는 자동으로 유지 관리됩니다.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하�
 
 =item C<auto> (Default)
 
-캐시 파일이 존재하면 캐시 파일을 유지합니다.
+캐시 파일이 있는 경우 캐시 파일을 유지 관리합니다.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하�
 
 타겟이 정상 파일인 한 캐시를 유지합니다.
 
-=item C<refresh>
+=item C<clear>
 
-캐시는 유지하되 기존 캐시는 읽지 않습니다.
+캐시 데이터를 먼저 지웁니다.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하�
 
 =item C<accumulate>
 
-기본 동작으로 사용하지 않은 데이터는 캐시 파일에서 제거됩니다. 제거하지 않고 파일에 보관하고 싶지 않다면 C<accumulate>를 사용하세요.
+기본 동작에 따라 사용하지 않는 데이터는 캐시 파일에서 제거됩니다. 제거하지 않고 파일에 유지하려면 C<accumulate>를 사용하세요.
 
 =back
 
@@ -177,7 +177,15 @@ DeepL 서비스에 대한 인증 키를 설정합니다.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

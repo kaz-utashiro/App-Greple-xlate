@@ -70,7 +70,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 Καθορίστε τη γλώσσα-στόχο. Μπορείτε να λάβετε τις διαθέσιμες γλώσσες με την εντολή C<deepl languages> όταν χρησιμοποιείτε τη μηχανή B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Καθορίστε τη μορφή εξόδου για το αρχικό και το μεταφρασμένο κείμενο.
 
@@ -131,9 +131,9 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Η επιλογή <--ανανέωση> μπορεί να χρησιμοποιηθεί για να ξεκινήσει η διαχείριση της κρυφής μνήμης ή για να ανανεωθούν όλα τα υπάρχοντα δεδομένα της κρυφής μνήμης. Μόλις εκτελεστεί με αυτή την επιλογή, θα δημιουργηθεί ένα νέο αρχείο κρυφής μνήμης εάν δεν υπάρχει και στη συνέχεια θα διατηρηθεί αυτόματα.
+Η επιλογή B<--cache-clear> μπορεί να χρησιμοποιηθεί για να ξεκινήσει η διαχείριση της κρυφής μνήμης ή για να ανανεωθούν όλα τα υπάρχοντα δεδομένα της κρυφής μνήμης. Μόλις εκτελεστεί με αυτή την επιλογή, θα δημιουργηθεί ένα νέο αρχείο cache αν δεν υπάρχει και στη συνέχεια θα διατηρηθεί αυτόματα.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =item C<auto> (Default)
 
-Διατηρεί το αρχείο κρυφής μνήμης εάν υπάρχει.
+Διατήρηση του αρχείου κρυφής μνήμης εάν υπάρχει.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 Διατηρεί την κρυφή μνήμη ούτως ή άλλως εφόσον ο στόχος είναι κανονικό αρχείο.
 
-=item C<refresh>
+=item C<clear>
 
-Διατήρηση της κρυφής μνήμης αλλά μη ανάγνωση της υπάρχουσας.
+Καθαρίστε πρώτα τα δεδομένα της κρυφής μνήμης.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =item C<accumulate>
 
-Με την προεπιλεγμένη συμπεριφορά, τα αχρησιμοποίητα δεδομένα αφαιρούνται από το αρχείο cache. Αν δεν θέλετε να τα αφαιρέσετε και να τα διατηρήσετε στο αρχείο, χρησιμοποιήστε το C<accumulate>.
+Σύμφωνα με την προεπιλεγμένη συμπεριφορά, τα αχρησιμοποίητα δεδομένα αφαιρούνται από το αρχείο προσωρινής αποθήκευσης. Αν δεν θέλετε να τα αφαιρέσετε και να τα διατηρήσετε στο αρχείο, χρησιμοποιήστε το C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

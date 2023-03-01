@@ -70,7 +70,7 @@ Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değils
 
 Hedef dili belirtin. B<DeepL> motorunu kullanırken C<deepl languages> komutu ile mevcut dilleri alabilirsiniz.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
@@ -131,9 +131,9 @@ B<xlate> modülü her dosya için önbellekte çeviri metnini saklayabilir ve su
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-<--refresh> seçeneği önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, mevcut değilse yeni bir önbellek dosyası oluşturulacak ve daha sonra otomatik olarak korunacaktır.
+B<--cache-clear> seçeneği önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, mevcut değilse yeni bir önbellek dosyası oluşturulacak ve daha sonra otomatik olarak korunacaktır.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ B<xlate> modülü her dosya için önbellekte çeviri metnini saklayabilir ve su
 
 =item C<auto> (Default)
 
-Eğer varsa önbellek dosyasını korur.
+Eğer varsa önbellek dosyasını koruyun.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Boş önbellek dosyası oluştur ve çık.
 
 Hedef normal dosya olduğu sürece önbelleği yine de korur.
 
-=item C<refresh>
+=item C<clear>
 
-Önbelleği koru ancak mevcut olanı okuma.
+Önce önbellek verilerini temizleyin.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Var olsa bile önbellek dosyasını asla kullanmayın.
 
 =item C<accumulate>
 
-Varsayılan davranış olarak, kullanılmayan veriler önbellek dosyasından kaldırılır. Bunları kaldırmak ve dosyada tutmak istemiyorsanız, C<accumulate> kullanın.
+Varsayılan davranışa göre, kullanılmayan veriler önbellek dosyasından kaldırılır. Bunları kaldırmak ve dosyada tutmak istemiyorsanız, C<accumulate> kullanın.
 
 =back
 
@@ -177,7 +177,15 @@ DeepL hizmeti için kimlik doğrulama anahtarınızı ayarlayın.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

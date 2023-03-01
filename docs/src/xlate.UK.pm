@@ -70,7 +70,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 Вкажіть цільову мову. Доступні мови можна отримати за допомогою команди C<deepl languages> у разі використання рушія B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Вкажіть формат виведення оригінального та перекладеного тексту.
 
@@ -131,9 +131,9 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-За допомогою команди <--refresh> можна ініціювати керування кешем або оновити всі наявні дані кешу. Після виконання цієї опції буде створено новий файл кешу, якщо його не існує, а потім він буде автоматично підтримуватися.
+Параметр B<--cache-clear> може бути використано для ініціювання керування кешем або для оновлення усіх наявних даних кешу. Після виконання цього параметра буде створено новий файл кешу, якщо його не існує, а потім автоматично підтримуватиметься.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =item C<auto> (Default)
 
-Зберігати файл кешу, якщо він існує.
+Обслуговувати файл кешу, якщо він існує.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 Зберігати кеш у будь-якому випадку, якщо цільовий файл є нормальним.
 
-=item C<refresh>
+=item C<clear>
 
-Обслуговувати кеш, але не читати наявний.
+Спочатку очистити дані кешу.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =item C<accumulate>
 
-За замовчуванням, невикористані дані видаляються з кеш-файлу. Якщо ви не хочете видаляти їх і зберігати у файлі, використовуйте C<accumulate>.
+За замовчуванням, невикористані дані буде видалено з файлу кешу. Якщо ви не хочете видаляти їх і зберігати у файлі, скористайтеся командою C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

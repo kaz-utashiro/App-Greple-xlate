@@ -25,12 +25,14 @@ ifdef SRC_DIR
 endif
 SRCPATH := $(if $(SRC_DIR),$(SRC_DIR)/,)
 
-$(foreach mod,$(ORIGIN),$(eval $(SRCPATH)$(notdir $(mod)): $(mod); cp $$< $(if $(SRCPATH),$(SRCPATH),.)))
+$(foreach mod,$(ORIGIN),$(eval \
+  $(SRCPATH)$(notdir $(mod)): $(mod) $(SRC_DIR); cp $$< $(if $(SRCPATH),$(SRCPATH),.) \
+))
 
 XLATE := greple -Mxlate::deepl
 XLATE += $(if $(XLATE_LABOR),--xlate-labor,--xlate)
-XLATE += --xlate-cache=$(if $(XLATE_REFRESH),refresh,yes)
-XLATE += --match-podtext --xlate-format=none --all
+XLATE += --xlate-cache=$(if $(XLATE_INIT),clear,yes)
+XLATE += --match-podtext --xlate-format=none --all --need=0
 
 ifdef IGNORE
 $(foreach ignore,$(IGNORE),$(eval \

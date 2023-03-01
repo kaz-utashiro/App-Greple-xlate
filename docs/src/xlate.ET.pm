@@ -70,7 +70,7 @@ Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti e
 
 Määrake sihtkeel. B<DeepL> mootori kasutamisel saate saadaval olevad keeled kätte käsuga C<deepl languages>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Määrake originaal- ja tõlgitud teksti väljundformaat.
 
@@ -131,9 +131,9 @@ B<xlate> moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda sed
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Valikut <--refresh> saab kasutada vahemälu haldamise algatamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole olemas, ja seejärel hooldatakse seda automaatselt.
+Valikut B<--cache-clear> saab kasutada vahemälu haldamise alustamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole veel olemas, ja seejärel hooldatakse seda automaatselt.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ Valikut <--refresh> saab kasutada vahemälu haldamise algatamiseks või kõigi o
 
 =item C<auto> (Default)
 
-Säilitab vahemälufaili, kui see on olemas.
+Säilitada vahemälufaili, kui see on olemas.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Loob tühja vahemälufaili ja väljub.
 
 Säilitab vahemälu andmed niikuinii, kui sihtfail on tavaline fail.
 
-=item C<refresh>
+=item C<clear>
 
-Säilitada vahemälu, kuid mitte lugeda olemasolevat.
+Tühjendage esmalt vahemälu andmed.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Ei kasuta kunagi vahemälufaili, isegi kui see on olemas.
 
 =item C<accumulate>
 
-Vaikimisi käitumine, kasutamata andmed eemaldatakse vahemälufailist. Kui te ei soovi neid eemaldada ja failis hoida, kasutage C<accumulate>.
+Vaikimisi käitumise kohaselt eemaldatakse kasutamata andmed vahemälufailist. Kui te ei soovi neid eemaldada ja failis hoida, kasutage C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ Määrake oma autentimisvõti DeepL teenuse jaoks.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

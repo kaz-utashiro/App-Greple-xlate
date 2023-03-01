@@ -70,7 +70,7 @@ Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie 
 
 Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl C<deepl languages> abrufen, wenn Sie die Engine B<DeepL> verwenden.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Geben Sie das Ausgabeformat für den Originaltext und den übersetzten Text an.
 
@@ -131,9 +131,9 @@ Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Die Option <--refresh> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Nach der Ausführung dieser Option wird eine neue Cachedatei erstellt, falls noch keine vorhanden ist, und anschließend automatisch gepflegt.
+Die Option B<--cache-clear> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Wenn diese Option ausgeführt wird, wird eine neue Cache-Datei erstellt, falls noch keine vorhanden ist, und anschließend automatisch beibehalten.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ Die Option <--refresh> kann verwendet werden, um die Cache-Verwaltung zu starten
 
 =item C<auto> (Default)
 
-Cache-Datei beibehalten, wenn sie vorhanden ist.
+Behalten Sie die Cache-Datei bei, wenn sie vorhanden ist.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Leere Cachedatei erstellen und beenden.
 
 Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.
 
-=item C<refresh>
+=item C<clear>
 
-Cache beibehalten, aber vorhandene Datei nicht lesen.
+Löschen Sie zuerst die Cache-Daten.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Cache-Datei nie verwenden, auch wenn sie vorhanden ist.
 
 =item C<accumulate>
 
-Standardmäßig werden ungenutzte Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten wollen, verwenden Sie C<accumulate>.
+In der Standardeinstellung werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten wollen, verwenden Sie C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ Legen Sie Ihren Authentifizierungsschlüssel für den Dienst DeepL fest.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

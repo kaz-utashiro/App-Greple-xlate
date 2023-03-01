@@ -70,7 +70,7 @@ Specificați motorul de traducere care urmează să fie utilizat. Nu este necesa
 
 Specificați limba țintă. Puteți obține limbile disponibile prin comanda C<deepl languages> atunci când se utilizează motorul B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Specificați formatul de ieșire pentru textul original și cel tradus.
 
@@ -131,9 +131,9 @@ Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare 
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Opțiunea <--refresh> poate fi utilizată pentru a iniția gestionarea cache-ului sau pentru a reîmprospăta toate datele existente în cache. Odată executat cu această opțiune, se va crea un nou fișier cache dacă nu există unul și apoi va fi menținut automat după aceea.
+Opțiunea B<--cache-clear> poate fi utilizată pentru a iniția gestionarea memoriei cache sau pentru a reîmprospăta toate datele existente în memoria cache. Odată executat cu această opțiune, un nou fișier cache va fi creat dacă nu există unul și apoi va fi menținut automat.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ Opțiunea <--refresh> poate fi utilizată pentru a iniția gestionarea cache-ulu
 
 =item C<auto> (Default)
 
-Menține fișierul cache dacă există.
+Menține fișierul cache dacă acesta există.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Creează un fișier cache gol și iese.
 
 Menține oricum memoria cache în măsura în care fișierul țintă este un fișier normal.
 
-=item C<refresh>
+=item C<clear>
 
-Menține memoria cache, dar nu o citește pe cea existentă.
+Ștergeți mai întâi datele din memoria cache.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Nu utilizează niciodată fișierul cache, chiar dacă există.
 
 =item C<accumulate>
 
-Prin comportament implicit, datele neutilizate sunt eliminate din fișierul cache. Dacă nu doriți să le eliminați și să le păstrați în fișier, utilizați C<acumulez>.
+Prin comportament implicit, datele neutilizate sunt eliminate din fișierul cache. Dacă nu doriți să le eliminați și să le păstrați în fișier, utilizați C<acumulare>.
 
 =back
 
@@ -177,7 +177,15 @@ Setați cheia de autentificare pentru serviciul DeepL.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

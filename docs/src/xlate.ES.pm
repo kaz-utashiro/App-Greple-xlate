@@ -70,7 +70,7 @@ En lugar de llamar al motor de traducción, se espera que trabaje para. Después
 
 Especifique el idioma de destino. Puede obtener los idiomas disponibles mediante el comando C<deepl languages> si utiliza el motor B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Especifique el formato de salida del texto original y traducido.
 
@@ -131,9 +131,9 @@ El módulo B<xlate> puede almacenar en caché el texto traducido de cada fichero
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-La opción <--refresh> puede utilizarse para iniciar la gestión de la caché o para refrescar todos los datos de caché existentes. Una vez ejecutada esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
+La opción B<--cache-clear> puede utilizarse para iniciar la gestión de la caché o para refrescar todos los datos de caché existentes. Una vez ejecutada esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
 
 =item --xlate-cache=I<strategy>
 
@@ -151,9 +151,9 @@ Crear un archivo de caché vacío y salir.
 
 Mantener caché de todos modos hasta que el destino sea un archivo normal.
 
-=item C<refresh>
+=item C<clear>
 
-Mantener la caché pero no leer la existente.
+Borrar primero los datos de la caché.
 
 =item C<never>, C<no>, C<0>
 
@@ -177,7 +177,15 @@ Establezca su clave de autenticación para el servicio DeepL.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

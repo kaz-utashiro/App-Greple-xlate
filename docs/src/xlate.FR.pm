@@ -70,7 +70,7 @@ Au lieu d'appeler le moteur de traduction, vous êtes censé travailler pour. Ap
 
 Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles par la commande C<deepl languages> lorsque vous utilisez le moteur B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Spécifiez le format de sortie pour le texte original et le texte traduit.
 
@@ -131,9 +131,9 @@ Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque f
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-L'option <--refresh> peut être utilisée pour lancer la gestion du cache ou pour rafraîchir toutes les données du cache existantes. Une fois exécutée avec cette option, un nouveau fichier de cache sera créé s'il n'en existe pas, puis automatiquement maintenu par la suite.
+L'option B<--cache-clear> peut être utilisée pour initier la gestion du cache ou pour rafraîchir toutes les données du cache existant. Une fois exécutée avec cette option, un nouveau fichier de cache sera créé s'il n'en existe pas, puis automatiquement maintenu par la suite.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ L'option <--refresh> peut être utilisée pour lancer la gestion du cache ou pou
 
 =item C<auto> (Default)
 
-Maintient le fichier de cache s'il existe.
+Maintenir le fichier de cache s'il existe.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Créer un fichier cache vide et quitter.
 
 Maintenir le cache de toute façon tant que la cible est un fichier normal.
 
-=item C<refresh>
+=item C<clear>
 
-Maintenir le cache mais ne pas lire celui existant.
+Effacer d'abord les données du cache.
 
 =item C<never>, C<no>, C<0>
 
@@ -177,7 +177,15 @@ Définissez votre clé d'authentification pour le service DeepL.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

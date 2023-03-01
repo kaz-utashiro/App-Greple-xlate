@@ -70,7 +70,7 @@ In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor we
 
 Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando C<deepl languages> wanneer u de engine B<DeepL> gebruikt.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Specificeer het uitvoerformaat voor originele en vertaalde tekst.
 
@@ -131,9 +131,9 @@ De module B<xlate> kan de tekst van de vertaling voor elk bestand in de cache op
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-De optie <-verversen> kan worden gebruikt om cachebeheer te starten of om alle bestaande cache-gegevens te verversen. Eenmaal uitgevoerd met deze optie, wordt een nieuw cache-bestand aangemaakt als er geen bestaat en daarna automatisch onderhouden.
+De optie B<--cache-clear> kan worden gebruikt om het beheer van de cache te starten of om alle bestaande cache-gegevens te vernieuwen. Eenmaal uitgevoerd met deze optie, wordt een nieuw cachebestand aangemaakt als er geen bestaat en daarna automatisch onderhouden.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ De optie <-verversen> kan worden gebruikt om cachebeheer te starten of om alle b
 
 =item C<auto> (Default)
 
-Onderhoudt het cache bestand als het bestaat.
+Onderhoud het cachebestand als het bestaat.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Maak een leeg cache bestand en sluit af.
 
 Cache-bestand toch behouden voor zover het doelbestand een normaal bestand is.
 
-=item C<refresh>
+=item C<clear>
 
-Cache onderhouden maar bestaande niet lezen.
+Wis eerst de cachegegevens.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Cache-bestand nooit gebruiken, zelfs niet als het bestaat.
 
 =item C<accumulate>
 
-Standaard gedrag, ongebruikte gegevens worden verwijderd uit cache bestand. Als u ze niet wilt verwijderen en in het bestand wilt houden, gebruik dan C<accumuleren>.
+Standaard worden ongebruikte gegevens uit het cachebestand verwijderd. Als u ze niet wilt verwijderen en in het bestand wilt houden, gebruik dan C<accumuleren>.
 
 =back
 
@@ -177,7 +177,15 @@ Stel uw authenticatiesleutel in voor DeepL service.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

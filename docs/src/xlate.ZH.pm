@@ -70,7 +70,7 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 指定目标语言。当使用B<DeepL>引擎时，你可以通过C<deepl languages>命令获得可用语言。
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 指定原始和翻译文本的输出格式。
 
@@ -131,9 +131,9 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-<--刷新>选项可用于启动缓存管理或刷新所有现有缓存数据。一旦用这个选项执行，如果不存在一个新的缓存文件，就会创建一个新的缓存文件，之后自动维护。
+B<--cache-clear>选项可以用来启动缓冲区管理或刷新所有现有的缓冲区数据。一旦用这个选项执行，如果不存在一个新的缓存文件，就会创建一个新的缓存文件，然后自动维护。
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 
 =item C<auto> (Default)
 
-如果缓存文件存在，则维护缓存文件。
+如果缓存文件存在，则维护该文件。
 
 =item C<create>
 
@@ -151,9 +151,9 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 
 只要目标文件是正常文件，就维持缓存。
 
-=item C<refresh>
+=item C<clear>
 
-维护缓存但不读取现有的缓存。
+先清除缓存数据。
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 
 =item C<accumulate>
 
-默认情况下，未使用的数据会从缓存文件中删除。如果你不想删除它们并保留在文件中，使用C<accumulate>。
+根据默认行为，未使用的数据会从缓存文件中删除。如果你不想删除它们并保留在文件中，使用C<accumulate>。
 
 =back
 
@@ -177,7 +177,15 @@ B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

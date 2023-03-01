@@ -70,7 +70,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 Укажите целевой язык. Вы можете получить доступные языки с помощью команды C<deepl languages> при использовании движка B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Укажите формат вывода оригинального и переведенного текста.
 
@@ -131,9 +131,9 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Опция <--refresh> может быть использована для инициирования управления кэшем или для обновления всех существующих данных кэша. После выполнения этой опции будет создан новый файл кэша, если он не существует, а затем он будет автоматически поддерживаться.
+Опция B<--cache-clear> может быть использована для инициирования управления кэшем или для обновления всех существующих данных кэша. После выполнения этой опции будет создан новый файл кэша, если он не существует, а затем автоматически сохранен.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =item C<auto> (Default)
 
-Поддерживать файл кэша, если он существует.
+Сохранять файл кэша, если он существует.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 Сохранять кэш в любом случае, пока целевой файл является обычным файлом.
 
-=item C<refresh>
+=item C<clear>
 
-Поддерживать кэш, но не считывать существующий.
+Сначала очистите данные кэша.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =item C<accumulate>
 
-По умолчанию неиспользуемые данные удаляются из кэш-файла. Если вы не хотите удалять их и хранить в файле, используйте C<accumulate>.
+По умолчанию неиспользуемые данные удаляются из файла кэша. Если вы не хотите удалять их и сохранять в файле, используйте C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L<App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'

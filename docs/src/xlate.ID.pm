@@ -70,7 +70,7 @@ Setelah memanggil mesin penerjemahan, Anda diharapkan untuk bekerja. Setelah men
 
 Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perintah C<deepl languages> ketika menggunakan mesin B<DeepL>.
 
-=item B<--xlate-format>=I<format> (Default: conflict)
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
 
 Tentukan format output untuk teks asli dan terjemahan.
 
@@ -131,9 +131,9 @@ Modul B<xlate> dapat menyimpan teks terjemahan dalam cache untuk setiap file dan
 
 =over 7
 
-=item --refresh
+=item --cache-clear
 
-Opsi <--refresh> dapat digunakan untuk memulai manajemen cache atau menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
+Opsi B<--cache-clear> dapat digunakan untuk memulai manajemen cache atau untuk menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
 
 =item --xlate-cache=I<strategy>
 
@@ -141,7 +141,7 @@ Opsi <--refresh> dapat digunakan untuk memulai manajemen cache atau menyegarkan 
 
 =item C<auto> (Default)
 
-Mempertahankan file cache jika ada.
+Mempertahankan file cache jika sudah ada.
 
 =item C<create>
 
@@ -151,9 +151,9 @@ Buat file cache kosong dan keluar.
 
 Pertahankan cache sejauh targetnya adalah file normal.
 
-=item C<refresh>
+=item C<clear>
 
-Mempertahankan cache tetapi tidak membaca cache yang sudah ada.
+Hapus data cache terlebih dahulu.
 
 =item C<never>, C<no>, C<0>
 
@@ -161,7 +161,7 @@ Jangan pernah menggunakan file cache meskipun ada.
 
 =item C<accumulate>
 
-Secara default, data yang tidak terpakai akan dihapus dari file cache. Jika anda tidak ingin menghapusnya dan tetap menyimpannya di dalam file, gunakan C<accumulate>.
+Secara default, data yang tidak digunakan akan dihapus dari file cache. Jika Anda tidak ingin menghapusnya dan menyimpannya di dalam file, gunakan C<accumulate>.
 
 =back
 
@@ -177,7 +177,15 @@ Tetapkan kunci autentikasi Anda untuk layanan DeepL.
 
 =back
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
 =head1 SEE ALSO
+
+L <App::Greple::xlate>
 
 =over 7
 
@@ -408,17 +416,13 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $cache = cache_file) {
-	if ($cache_method eq 'create') {
-	    unless (-f $cache) {
-		open my $fh, '>', $cache or die "$cache: $!\n";
-		warn "created $cache\n";
-		print $fh "{}\n";
-	    }
-	    die "skip $current_file";
+	if ($cache_method =~ /^(create|clear)/) {
+	    warn "created $cache\n" unless -f $cache;
+	    open my $fh, '>', $cache or die "$cache: $!\n";
+	    print $fh "{}\n";
+	    die "skip $current_file" if $cache_method eq 'create';
 	}
-	if ($cache_method ne 'refresh') {
-	    read_cache $cache;
-	}
+	read_cache $cache;
     }
 }
 
@@ -468,7 +472,7 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 
-option --refresh --xlate-cache=refresh
+option --cache-clear --xlate-cache=clear
 
 option --match-entire    --re '\A(?s).+\z'
 option --match-paragraph --re '^(.+\n)+'
