@@ -93,7 +93,7 @@ This is a short-cut to specify the pattern matches entire text
 
     Specify the output format for original and translated text.
 
-    - **conflict**
+    - **conflict**, **cm**
 
         Print original and translated text in [git(1)](http://man.he.net/man1/git) conflict marker format.
 

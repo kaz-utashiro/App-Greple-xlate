@@ -101,7 +101,7 @@ Specify the output format for original and translated text.
 
 =over 4
 
-=item B<conflict>
+=item B<conflict>, B<cm>
 
 Print original and translated text in L<git(1)> conflict marker format.
 
@@ -295,6 +295,7 @@ our %formatter = (
 	    $_[1],
 	    ">>>>>>> $lang_to\n";
     },
+    cm => 'conflict',
     ifdef => sub {
 	join '',
 	    "#ifdef $lang_from\n",
@@ -307,6 +308,12 @@ our %formatter = (
     space   => sub { join "\n", @_ },
     discard => sub { '' },
     );
+
+# aliases
+for (keys %formatter) {
+    next if ! $formatter{$_} or ref $formatter{$_};
+    $formatter{$_} = $formatter{$formatter{$_}} // die;
+}
 
 my $old_cache = {};
 my $new_cache = {};
@@ -507,6 +514,7 @@ option --xlate-color \
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
+option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
