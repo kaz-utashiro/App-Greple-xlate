@@ -134,9 +134,10 @@ You can retrieve only Japanese text by the B<unifdef> command:
 
 Print original and translated text separated by single blank line.
 
-=item B<none>
+=item B<xtxt>
 
-If the format is C<none> or unkown, only translated text is printed.
+If the format is C<xtxt> (translated text) or unkown, only translated
+text is printed.
 
 =back
 
@@ -286,6 +287,7 @@ sub opt :lvalue { ${$opt{+shift}} }
 my $current_file;
 
 our %formatter = (
+    xtxt => undef,
     none => undef,
     conflict => sub {
 	join '',

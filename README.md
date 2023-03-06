@@ -126,9 +126,10 @@ This is a short-cut to specify the pattern matches entire text
 
         Print original and translated text separated by single blank line.
 
-    - **none**
+    - **xtxt**
 
-        If the format is `none` or unkown, only translated text is printed.
+        If the format is `xtxt` (translated text) or unkown, only translated
+        text is printed.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
