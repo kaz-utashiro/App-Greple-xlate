@@ -1,6 +1,6 @@
 LANGS    := DE EL ES ET FR ID JA KO NL RO RU TR UK ZH
 RM_LANGS := DE EL ES ET FR ID JA KO NL RO RU TR UK ZH
-IGNORE   := AUTHOR LICENSE
+IGNORE   := VERSION AUTHOR LICENSE
 
 MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
 MOD_PATH := ../lib/$(subst -,/,$(MOD_NAME)).pm
@@ -36,14 +36,14 @@ XLATE += --match-podtext --xlate-format=none --all --need=0
 
 ifdef IGNORE
 $(foreach ignore,$(IGNORE),$(eval \
-  XLATE += --exclude '^=head\d[ ]+$(ignore)\b(?s:.*?)(?=^=|\z)'\
+  XLATE += --exclude '^=head\d[ ]+(?i:$(ignore))\b(?s:.*?)(?=^=|\z)'\
 ))
 endif
 
 JA_FORM   ?= desumasu
 JA_DICT   := $(wildcard *.dict)
 JA_FILTER := greple -Mperl -Msubst::desumasu \
-	$(if $(findstring $(JA_FORM).dict,$(JA_DICT)), --dict $(JA_FORM).dict) \
+	$(if $(findstring $(JA_FORM).dict,$(JA_DICT)),--dict $(JA_FORM).dict) \
 	--pod --subst --all --no-color --need=0 \
 	--$(JA_FORM) 
 

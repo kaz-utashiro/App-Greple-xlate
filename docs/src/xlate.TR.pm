@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.09";
+our $VERSION = "0.11";
 
 =encoding utf-8
 
@@ -76,7 +76,7 @@ Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
 =over 4
 
-=item B<conflict>
+=item B<conflict>, B<cm>
 
 Orijinal ve çevrilmiş metni L<git(1)> çakışma işaretleyici biçiminde yazdırın.
 
@@ -109,9 +109,9 @@ B<unifdef> komutu ile sadece Japonca metni alabilirsiniz:
 
 Orijinal ve çevrilmiş metni tek bir boş satırla ayırarak yazdırın.
 
-=item B<none>
+=item B<xtxt>
 
-Eğer format C<none> veya unkown ise, sadece çevrilmiş metin yazdırılır.
+Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş metin yazdırılır.
 
 =back
 
@@ -250,6 +250,7 @@ sub opt :lvalue { ${$opt{+shift}} }
 my $current_file;
 
 our %formatter = (
+    xtxt => undef,
     none => undef,
     conflict => sub {
 	join '',
@@ -259,6 +260,7 @@ our %formatter = (
 	    $_[1],
 	    ">>>>>>> $lang_to\n";
     },
+    cm => 'conflict',
     ifdef => sub {
 	join '',
 	    "#ifdef $lang_from\n",
@@ -271,6 +273,12 @@ our %formatter = (
     space   => sub { join "\n", @_ },
     discard => sub { '' },
     );
+
+# aliases
+for (keys %formatter) {
+    next if ! $formatter{$_} or ref $formatter{$_};
+    $formatter{$_} = $formatter{$formatter{$_}} // die;
+}
 
 my $old_cache = {};
 my $new_cache = {};
@@ -471,6 +479,7 @@ option --xlate-color \
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
+option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 

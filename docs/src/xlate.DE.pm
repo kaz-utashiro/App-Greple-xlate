@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.09";
+our $VERSION = "0.11";
 
 =encoding utf-8
 
@@ -76,7 +76,7 @@ Geben Sie das Ausgabeformat für den Originaltext und den übersetzten Text an.
 
 =over 4
 
-=item B<conflict>
+=item B<conflict>, B<cm>
 
 Drucken Sie den Originaltext und den übersetzten Text im Format L<git(1)> conflict marker.
 
@@ -109,9 +109,9 @@ Mit dem Befehl B<unifdef> können Sie nur den japanischen Text wiederherstellen:
 
 Original und übersetzten Text durch eine einzelne Leerzeile getrennt ausgeben.
 
-=item B<none>
+=item B<xtxt>
 
-Wenn das Format C<none> oder unbekannt ist, wird nur der übersetzte Text gedruckt.
+Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der übersetzte Text gedruckt.
 
 =back
 
@@ -250,6 +250,7 @@ sub opt :lvalue { ${$opt{+shift}} }
 my $current_file;
 
 our %formatter = (
+    xtxt => undef,
     none => undef,
     conflict => sub {
 	join '',
@@ -259,6 +260,7 @@ our %formatter = (
 	    $_[1],
 	    ">>>>>>> $lang_to\n";
     },
+    cm => 'conflict',
     ifdef => sub {
 	join '',
 	    "#ifdef $lang_from\n",
@@ -271,6 +273,12 @@ our %formatter = (
     space   => sub { join "\n", @_ },
     discard => sub { '' },
     );
+
+# aliases
+for (keys %formatter) {
+    next if ! $formatter{$_} or ref $formatter{$_};
+    $formatter{$_} = $formatter{$formatter{$_}} // die;
+}
 
 my $old_cache = {};
 my $new_cache = {};
@@ -471,6 +479,7 @@ option --xlate-color \
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
+option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 

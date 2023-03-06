@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.09";
+our $VERSION = "0.11";
 
 =encoding utf-8
 
@@ -48,7 +48,7 @@ L<pod>形式の文書中の通常のテキストブロックを翻訳したい�
 
 =item B<--xlate-fold-width>=I<n> (Default: 70)
 
-マッチした部分ごとに翻訳処理を起動します。
+マッチした領域ごとに翻訳処理を起動します。
 
 このオプションがない場合、B<greple>は通常の検索コマンドとして動作します。したがって、ファイルのどの部分が翻訳の対象となるかを、実際の作業を始める前に確認することができます。
 
@@ -76,7 +76,7 @@ B<--xlate-fold>オプションでは、変換されたテキストを指定し�
 
 =over 4
 
-=item B<conflict>
+=item B<conflict>, B<cm>
 
 原文と訳文をL<git(1)>コンフリクトマーカ形式で出力します。
 
@@ -109,9 +109,9 @@ B<unifdef>コマンドで日本語テキストのみを取り出すことがで�
 
 原文と訳文を1行の空白で区切って表示します。
 
-=item B<none>
+=item B<xtxt>
 
-C<none>またはunknownの場合、翻訳されたテキストのみが表示されます。
+フォーマットがC<xtxt>（翻訳文）またはunknownの場合、翻訳文のみが印刷されます。
 
 =back
 
@@ -133,7 +133,7 @@ B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシ
 
 =item --cache-clear
 
-B<--cache-clear>オプションは、キャッシュ管理を開始するため、あるいは既存のキャッシュデータをすべてリフレッシュするために使用することができます。このオプションを一度実行すると、キャッシュファイルが存在しない場合は新しいキャッシュファイルが作成され、その後は自動的にメンテナンスされます。
+B<--cache-clear>オプションは、キャッシュ管理を開始するか、既存のキャッシュデータをすべてリフレッシュするために使用されます。このオプションを一度実行すると、キャッシュファイルが存在しない場合は新規に作成され、その後は自動的にメンテナンスされます。
 
 =item --xlate-cache=I<strategy>
 
@@ -149,7 +149,7 @@ B<--cache-clear>オプションは、キャッシュ管理を開始するため�
 
 =item C<always>, C<yes>, C<1>
 
-ターゲットが通常のファイルである限り、とにかくキャッシュを維持します。
+対象が通常ファイルである限り、とにかくキャッシュを維持します。
 
 =item C<clear>
 
@@ -157,11 +157,11 @@ B<--cache-clear>オプションは、キャッシュ管理を開始するため�
 
 =item C<never>, C<no>, C<0>
 
-キャッシュファイルが存在しても使用しないです。
+キャッシュファイルが存在しても決して使用しないです。
 
 =item C<accumulate>
 
-デフォルトの動作では、未使用のデータはキャッシュファイルから削除されます。削除せず、ファイルに残しておきたい場合は、C<蓄積>を使用してください。
+デフォルトの動作では、未使用のデータはキャッシュファイルから削除されます。削除せずに残しておきたい場合は、C<蓄積>を使用してください。
 
 =back
 
@@ -185,17 +185,17 @@ DeepLサービス用の認証キーを設定します。
 
 =head1 SEE ALSO
 
-L<App::Greple::xlate>の場合。
+L<App::Greple::xlate>を使用します。
 
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
 
-DeepL PythonライブラリとCLIコマンドを使用します。
+DeepL の Python ライブラリと CLI コマンド。
 
 =item L<App::Greple>
 
-対象テキストパターンの詳細については、B<greple>のマニュアルを参照してください。B<--inside>, B<--outside>, B<--include>, B<--exclude>オプションでマッチング範囲を限定してください。
+対象テキストパターンの詳細については、B<greple>のマニュアルを参照してください。B<--inside>, B<--outside>, B<--include>, B<--exclude>オプションでマッチング範囲を限定することができます。
 
 =item L<App::Greple::update>
 
@@ -250,6 +250,7 @@ sub opt :lvalue { ${$opt{+shift}} }
 my $current_file;
 
 our %formatter = (
+    xtxt => undef,
     none => undef,
     conflict => sub {
 	join '',
@@ -259,6 +260,7 @@ our %formatter = (
 	    $_[1],
 	    ">>>>>>> $lang_to\n";
     },
+    cm => 'conflict',
     ifdef => sub {
 	join '',
 	    "#ifdef $lang_from\n",
@@ -271,6 +273,12 @@ our %formatter = (
     space   => sub { join "\n", @_ },
     discard => sub { '' },
     );
+
+# aliases
+for (keys %formatter) {
+    next if ! $formatter{$_} or ref $formatter{$_};
+    $formatter{$_} = $formatter{$formatter{$_}} // die;
+}
 
 my $old_cache = {};
 my $new_cache = {};
@@ -471,6 +479,7 @@ option --xlate-color \
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
+option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
