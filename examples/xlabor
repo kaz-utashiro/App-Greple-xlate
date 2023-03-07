@@ -1,0 +1,62 @@
+#!/bin/bash
+
+define() { IFS='\n' read -r -d '' ${1} || true ; }
+
+define help <<END
+
+xlabor - Front-end CLI for Greple::xlate module
+
+Usage: xlabor [ options ] [ module options ] file
+	-h   help
+	-d   debug
+	-c   check translation area
+	-x#  set xlate format (xtxt, cm, ifdef)
+	-f#  from lang
+	-t#  to lang
+	-m#  max length per api call
+END
+
+while getopts "hdcp:x:f:t:" OPT
+do
+    case $OPT in
+	h) echo -n "$help"; exit ;;
+	d) set -x; debug=yes ;;
+	c) check=yes ;;
+	p) pattern="$OPTARG" ;;
+	x) format="$OPTARG" ;;
+	f) from_lang="$OPTARG" ;;
+	t) to_lang="$OPTARG" ;;
+	m) max="$OPTARG" ;;
+    esac
+done	
+shift $((OPTIND - 1))
+
+: ${to_lang:=EN-US}
+: ${format:=xtxt}
+
+declare -a module=(-Mxlate::deepl) 
+declare -a option=(--xlate-to="$to_lang" --xlate-format="$format" --all)
+
+[ "$check"   == "" ] && option+=(--xlate-labor)
+[ "$debug"   != "" ] && option+=(-dmo)
+[ "$pattern" != "" ] && option+=(--re="$pattern")
+[ "$max"     != "" ] && option+=(--xlate-maxlen="$max")
+
+case ${@:$#} in
+    *.pm|*.pod)
+	module+=(-Mperl)
+	option+=(--pod)
+	[ "$pattern" = "" ] && option+=(--re '^(\w.+\n)+')
+	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)')
+	;;
+    *.docx|*.pptx)
+	module+=(-Mmsdoc)
+	option+=(--exclude '^\[.*\b(docx|pptx)\b.*\]\n')
+	[ "$pattern" = "" ] && option+=(--re '^.+\n')
+	;;
+    *)
+	[ "$pattern" = "" ] && option+=(--re '^.+\n')
+	;;
+esac
+
+greple "${module[@]}" "${option[@]}" $*

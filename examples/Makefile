@@ -21,27 +21,11 @@ ALL: $(ALL)
 
 define DEFINE_RULE
 $(basename $3).$1.$2: $3 Makefile
-	$$(XLATE) --xlate-to $1 --xlate-format=$2 $$< > $$@
+	$$(XLATE) -t $1 -x $2 $$< > $$@
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
-XLATE = greple -Mmsdoc -Mxlate::deepl --xlate-labor --all
-
-# pattern
-XLATE += \
-	$(if $(findstring $(suffix $<), .pod .pm .pl ),\
-		--re '^(\w.+\n)+',\
-	--re '^.+\n'\
-	)
-
-# area
-XLATE += \
-	$(if $(findstring $(suffix $<), .docx .pptx ),\
-		--exclude '^\[.*\b(docx|pptx)\b.*\]\n',\
-	$(if $(findstring $(suffix $<), .pod .pm .pl ),\
-		--include '^=\w(?s:.*?)(^=cut|\z)' \
-		--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)',\
-	))
+XLATE = ./xlabor $(if $(DEBUG),-d)
 
 .PHONY: clean
 clean:
