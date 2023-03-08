@@ -58,7 +58,7 @@ sub xlate_each {
 sub xlate {
     my @from = map { /\n\z/ ? $_ : "$_\n" } @_;
     my @to;
-    my $max = $param{$method}->{max} // die;
+    my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
     while (@from) {
 	my @tmp;
 	my $len = 0;
