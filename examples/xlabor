@@ -15,8 +15,8 @@ Usage: $myname [ options ] file [ greple options ]
 	-c   just check translation area
 	-r   refresh cache
 	-s   silent mode
-	-p#  pattern for translation area
-	-w#  wrap lines by # width
+	-p#  pattern to determine translation area
+	-w#  wrap line by # width
 	-x#  set xlate format (xtxt, cm, ifdef)
 	-f#  from lang (ignored)
 	-t#  to lang
@@ -63,24 +63,28 @@ declare -a option=(--xlate-to="$to_lang" --xlate-format="$format" --all)
 [ "$pattern" != ""  ] && option+=(--re="$pattern")
 [ "$max"     != ""  ] && option+=(--xlate-maxlen="$max")
 
-declare -a defpat
+declare -a area
 case $1 in
     *.txt)
-	defpat=(--re '^(.+\n)+')
+	area=(--re '^(.+\n)+')
+	;;
+    *.md)
+	area=(--re '(?x) ^[-+#].*\n | ^(.+\n)+ ')
+	option+=(--exclude '^([ \t]+.*\n)+')
 	;;
     *.pm|*.pod)
 	module+=(-Mperl)
 	option+=(--pod)
 	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)')
-	defpat=(--re '^(\w.+\n)+')
+	area=(--re '^(\w.+\n)+')
 	;;
     *.docx|*.pptx)
 	module+=(-Mmsdoc)
 	option+=(--exclude '^\[.*\b(docx|pptx)\b.*\]\n')
-	defpat=(--re '^.+\n')
+	area=(--re '^.+\n')
 	;;
     *)
-	defpat=(--re '^.+\n')
+	area=(--re '^.+\n')
 	;;
 esac
 
@@ -88,7 +92,7 @@ if [ "$pattern" != "" ]
 then
     option+=(--re "$pattern")
 else
-    option+=("${defpat[@]}")
+    option+=("${area[@]}")
 fi
 
 greple "${module[@]}" "${option[@]}" $*

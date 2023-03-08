@@ -4,10 +4,16 @@
 #
 
 #
-# PARAMETER FILES
+# ENVIRONMENTS
 #
-# If the source file is acompanied with parameter files with 
-# following extension, they are used to override default parameters.
+# DEBUG:  Enable debug output
+# MAXLEN: Set maximum length for API call
+#
+
+#
+# PARAMETER FILES
+#   If the source file is acompanied with parameter files with 
+#   following extension, they are used to override default parameters.
 #
 # .LANG:   Languages translated to
 # .FORMAT: Format of output files
@@ -16,7 +22,8 @@
 XLATE_LANG   ?= $(file < LANG)
 XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm ifdef
-XLATE_FILES  ?= $(wildcard *.docx *.pptx *.txt *.md *.pm)
+XLATE_FILES  ?= $(filter-out README.%.%.md,\
+		$(wildcard *.docx *.pptx *.txt *.md *.pm))
 
 define FOREACH
 $(foreach file,$(XLATE_FILES),
@@ -41,7 +48,10 @@ $(basename $3).$1.$2: $3 Makefile
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
-XLATE = ./xlabor $(if $(DEBUG),-d)
+XLATE = ./xlabor \
+	$(if $(DEBUG),-d) \
+	$(if $(MAXLEN),-m$(MAXLEN)) \
+	$(if $(USEAPI),-a)
 
 .PHONY: clean
 clean:
