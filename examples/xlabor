@@ -2,61 +2,93 @@
 
 define() { IFS='\n' read -r -d '' ${1} || true ; }
 
+myname="$(basename $0)"
+
 define help <<END
 
-xlabor - Front-end CLI for Greple::xlate module
+$myname - Front-end CLI for Greple::xlate module
 
-Usage: xlabor [ options ] [ module options ] file
+Usage: $myname [ options ] file [ greple options ]
 	-h   help
 	-d   debug
-	-c   check translation area
+	-a   use API
+	-c   just check translation area
+	-r   refresh cache
+	-s   silent mode
+	-p#  pattern for translation area
+	-w#  wrap lines by # width
 	-x#  set xlate format (xtxt, cm, ifdef)
-	-f#  from lang
+	-f#  from lang (ignored)
 	-t#  to lang
-	-m#  max length per api call
+	-m#  max length per API call
 END
 
-while getopts "hdcp:x:f:t:" OPT
+while getopts "hdacrsp:w:x:f:t:m:" OPT
 do
     case $OPT in
-	h) echo -n "$help"; exit ;;
-	d) set -x; debug=yes ;;
-	c) check=yes ;;
-	p) pattern="$OPTARG" ;;
-	x) format="$OPTARG" ;;
+	h) exec echo -n "$help" ;;
+	d)     debug=yes ; set -x ;;
+	a)   use_api=yes ;;
+	c)     check=yes ;;
+	r)   refresh=yes ;;
+	s)    silent=yes ;;
+	p)   pattern="$OPTARG" ;;
+	w)      wrap="$OPTARG" ;;
+	x)    format="$OPTARG" ;;
 	f) from_lang="$OPTARG" ;;
-	t) to_lang="$OPTARG" ;;
-	m) max="$OPTARG" ;;
+	t)   to_lang="$OPTARG" ;;
+	m)       max="$OPTARG" ;;
     esac
 done	
 shift $((OPTIND - 1))
 
-: ${to_lang:=EN-US}
+: ${to_lang:=JA}
 : ${format:=xtxt}
+
+if [[ "$format" =~ ^(.+)-fold$ ]]
+then
+    format=${BASH_REMATCH[1]}
+    : ${wrap:=80}
+fi
 
 declare -a module=(-Mxlate::deepl) 
 declare -a option=(--xlate-to="$to_lang" --xlate-format="$format" --all)
 
-[ "$check"   == "" ] && option+=(--xlate-labor)
-[ "$debug"   != "" ] && option+=(-dmo)
-[ "$pattern" != "" ] && option+=(--re="$pattern")
-[ "$max"     != "" ] && option+=(--xlate-maxlen="$max")
+[ "$use_api" == yes ] || use_clipboard=yes
+[ "$check"   == yes ] || option+=(--xlate${use_clipboard:+-labor})
+[ "$wrap"    != ""  ] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
+[ "$debug"   == yes ] && option+=(-dmo)
+[ "$refresh" == yes ] && option+=(--cache-clear)
+[ "$silent"  == yes ] && option+=(--no-xlate-progress)
+[ "$pattern" != ""  ] && option+=(--re="$pattern")
+[ "$max"     != ""  ] && option+=(--xlate-maxlen="$max")
 
-case ${@:$#} in
+declare -a defpat
+case $1 in
+    *.txt)
+	defpat=(--re '^(.+\n)+')
+	;;
     *.pm|*.pod)
 	module+=(-Mperl)
 	option+=(--pod)
-	[ "$pattern" = "" ] && option+=(--re '^(\w.+\n)+')
 	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)')
+	defpat=(--re '^(\w.+\n)+')
 	;;
     *.docx|*.pptx)
 	module+=(-Mmsdoc)
 	option+=(--exclude '^\[.*\b(docx|pptx)\b.*\]\n')
-	[ "$pattern" = "" ] && option+=(--re '^.+\n')
+	defpat=(--re '^.+\n')
 	;;
     *)
-	[ "$pattern" = "" ] && option+=(--re '^.+\n')
+	defpat=(--re '^.+\n')
 	;;
 esac
+
+if [ "$pattern" != "" ]
+then
+    option+=(--re "$pattern")
+else
+    option+=("${defpat[@]}")
+fi
 
 greple "${module[@]}" "${option[@]}" $*

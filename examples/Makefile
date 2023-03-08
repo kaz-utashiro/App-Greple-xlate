@@ -1,11 +1,27 @@
-XLATE_TO     ?= EN-US FR
+#
+# Requires GNU make which can handle "file" function.
+# /usr/bin/make in macOS Monterey is 3.81 but it does not work.
+#
+
+#
+# PARAMETER FILES
+#
+# If the source file is acompanied with parameter files with 
+# following extension, they are used to override default parameters.
+#
+# .LANG:   Languages translated to
+# .FORMAT: Format of output files
+#
+
+XLATE_LANG   ?= $(file < LANG)
+XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm ifdef
 XLATE_FILES  ?= $(wildcard *.docx *.pptx *.txt *.md *.pm)
 
 define FOREACH
-$(foreach lang,$(XLATE_TO),
-$(foreach form,$(XLATE_FORMAT),
 $(foreach file,$(XLATE_FILES),
+$(foreach lang,$(or $(file < $(file).LANG),$(XLATE_LANG)),
+$(foreach form,$(or $(file < $(file).FORMAT),$(XLATE_FORMAT)),
 $(call $1,$(lang),$(form),$(file))
 )))
 endef
