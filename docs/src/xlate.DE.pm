@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ Geben Sie die zu verwendende Übersetzungsmaschine an. Sie brauchen diese Option
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie für arbeiten. Nachdem der zu übersetzende Text vorbereitet wurde, wird er in die Zwischenablage kopiert. Es wird erwartet, dass Sie sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und die Eingabetaste drücken.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ Original und übersetzten Text durch eine einzelne Leerzeile getrennt ausgeben.
 Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der übersetzte Text gedruckt.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen Dienst: 128K für die API (B<--xlate>) und 5000 für die Zwischenablage-Schnittstelle (B<--xlate-labor>). Sie können diese Werte ändern, wenn Sie den Pro-Dienst nutzen.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

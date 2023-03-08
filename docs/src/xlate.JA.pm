@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ B<--xlate-fold>オプションでは、変換されたテキストを指定し�
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 翻訳エンジンを呼び出す代わりに、あなたが働くことが期待されています。翻訳するテキストを用意すると、それがクリップボードにコピーされます。それをフォームに貼り付け、結果をクリップボードにコピーし、リターンキーを押すことが期待されます。
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ B<unifdef>コマンドで日本語テキストのみを取り出すことがで�
 フォーマットがC<xtxt>（翻訳文）またはunknownの場合、翻訳文のみが印刷されます。
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+APIに一度に送信するテキストの最大長を指定します。初期値は、無料アカウントサービスの場合、API（B<--xlate>）は128K、クリップボードインターフェース（B<--xlate-labor>）は5000に設定されています。Proサービスをご利用の場合は、これらの値を変更することができます。
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

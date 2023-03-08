@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ Tentukan mesin penerjemahan yang akan digunakan. Anda tidak perlu menggunakan op
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Setelah memanggil mesin penerjemahan, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan return.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ Mencetak teks asli dan teks terjemahan yang dipisahkan oleh satu baris kosong.
 Jika formatnya adalah C<xtxt> (teks terjemahan) atau tidak diketahui, hanya teks terjemahan yang dicetak.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun gratis: 128K untuk API (B<--xlate>) dan 5000 untuk antarmuka clipboard (B<--xlate-labor>). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

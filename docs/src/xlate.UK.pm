@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Замість того, щоб викликати рушій перекладу, ви маєте працювати з ним. Після підготовки тексту для перекладу він копіюється в буфер обміну. Ви маєте вставити його у форму, скопіювати результат у буфер обміну і натиснути клавішу return.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ App::Greple::xlate - модуль підтримки перекладу для g
 Якщо формат C<xtxt> (перекладений текст) або невідомий, друкується лише перекладений текст.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Вкажіть максимальну довжину тексту, що надсилається до API за один раз. Значення за замовчуванням встановлено як для безкоштовного сервісу: 128K для API (B<--xlate>) і 5000 для інтерфейсу буфера обміну (B<--xlate-labor>). Ви можете змінити ці значення, якщо ви використовуєте Pro сервіс.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ Kullanılacak çeviri motorunu belirtin. Bu seçeneği kullanmak zorunda değils
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ Orijinal ve çevrilmiş metni tek bir boş satırla ayırarak yazdırın.
 Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş metin yazdırılır.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz hesap hizmeti için ayarlanmıştır: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

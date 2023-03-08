@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Αντί να καλείτε μηχανή μετάφρασης, αναμένεται να εργαστείτε για. Μετά την προετοιμασία του προς μετάφραση κειμένου, αντιγράφονται στο πρόχειρο. Αναμένεται να τα επικολλήσετε στη φόρμα, να αντιγράψετε το αποτέλεσμα στο πρόχειρο και να πατήσετε return.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 Εάν η μορφή είναι C<xtxt> (μεταφρασμένο κείμενο) ή άγνωστη, εκτυπώνεται μόνο το μεταφρασμένο κείμενο.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Καθορίστε το μέγιστο μήκος του κειμένου που θα αποστέλλεται στο API ταυτόχρονα. Η προεπιλεγμένη τιμή ορίζεται όπως για την υπηρεσία δωρεάν λογαριασμού: 128K για το API (B<--xlate>) και 5000 για τη διεπαφή πρόχειρου (B<--xlate-labor>). Μπορεί να μπορείτε να αλλάξετε αυτές τις τιμές αν χρησιμοποιείτε την υπηρεσία Pro.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

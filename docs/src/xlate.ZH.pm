@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 与其说是调用翻译引擎，不如说是希望你能为之工作。在准备好要翻译的文本后，它们被复制到剪贴板上。你应该把它们粘贴到表格中，把结果复制到剪贴板上，然后点击返回。
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 如果格式是C<xtxt>（翻译文本）或不知道，则只打印翻译文本。
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+指定一次性发送至API的最大文本长度。默认值设置为免费账户服务：API（B<--xlate>）为128K，剪贴板界面（B<--xlate-labor>）为5000。如果你使用专业服务，你可以改变这些值。
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ Määrake kasutatav tõlkemootor. Seda valikut ei pea kasutama, sest moodul C<xl
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ Prindi originaal- ja tõlgitud tekst ühe tühja reaga eraldatud.
 Kui formaat on C<xtxt> (tõlgitud tekst) või tundmatu, trükitakse ainult tõlgitud tekst.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta kontoteenuse puhul: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidesele (B<--xlate-labor>). Kui kasutate Pro teenust, võite neid väärtusi muuta.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 =encoding utf-8
 
@@ -64,6 +64,8 @@ Specificeer de te gebruiken vertaalmachine. U hoeft deze optie niet te gebruiken
 
 =item B<--xlate-labor>
 
+=item B<--xlabor>
+
 In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor werkt. Na het voorbereiden van te vertalen tekst, worden ze gekopieerd naar het klembord. Van u wordt verwacht dat u ze in het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
 
 =item B<--xlate-to> (Default: C<JA>)
@@ -114,6 +116,10 @@ Originele en vertaalde tekst afdrukken, gescheiden door een enkele lege regel.
 Als het formaat C<xtxt> (vertaalde tekst) of onbekend is, wordt alleen vertaalde tekst afgedrukt.
 
 =back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Specificeer de maximale lengte van de tekst die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis accountdienst: 128K voor de API (B<--xlate>) en 5000 voor de klembordinterface (B<--xlate-labor>). U kunt deze waarde wijzigen als u de Pro-service gebruikt.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
@@ -231,7 +237,7 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
-my %opt = (
+our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -243,6 +249,7 @@ my %opt = (
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
+    maxlen   => \(our $max_length = 0),
     );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -463,6 +470,7 @@ builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
+builtin xlate-maxlen=i     $max_length
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
