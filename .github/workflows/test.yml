@@ -1,13 +1,9 @@
 name: test
 on:
   push:
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
+    paths: [ 'lib/**', 't/**', '.github/workflows/**' ]
   pull_request:
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
+    paths: [ 'lib/**', 't/**', '.github/workflows/**' ]
 jobs:
   build:
     runs-on: ubuntu-latest
