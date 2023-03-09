@@ -48,7 +48,7 @@ shift $((OPTIND - 1))
 if [[ "$format" =~ ^(.+)-fold$ ]]
 then
     format=${BASH_REMATCH[1]}
-    : ${wrap:=80}
+    : ${wrap:=76}
 fi
 
 declare -a module=(-Mxlate::deepl) 

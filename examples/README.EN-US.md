@@ -24,6 +24,10 @@ For example, if you want to translate the file `Document.txt` into Japanese, thr
 
 Three files will be generated: `cm`, `ifdef`, and `cm`. The `xtxt` file contains only the translated text, while the `cm` and `ifdef` files contain both the original and translated text.
 
+## Wrap lines
+
+The format specification with trailing `-fold`, for example `cm-fold`, wraps the output at 80 columns.
+
 ## Control files
 
 If the target file has a file with a specific extension, the translation process can be controlled by its contents. For example, if there is a file called `Document.txt.LANG` along with a file called `Document.txt`, the translation will be done in the language written in the file.
