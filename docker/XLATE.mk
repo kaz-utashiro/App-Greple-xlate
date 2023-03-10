@@ -19,10 +19,9 @@
 # .FORMAT: Format of output files
 #
 
-XLATE_LANG   ?= $(file < LANG)
 XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm ifdef
-XLATE_FILES  ?= $(filter-out README.%.%.md,\
+XLATE_FILES  ?= $(filter-out README.%.md,\
 		$(wildcard *.docx *.pptx *.txt *.md *.pm))
 
 define FOREACH

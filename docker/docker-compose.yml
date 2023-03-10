@@ -4,8 +4,9 @@ services:
   xlate:
     build: .
     volumes:
-      - .:/app
+      - ../examples:/app
     tty: true
     stdin_open: true
     environment:
       - "TZ=Asia/Tokyo"
+    command: shell

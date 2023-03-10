@@ -29,13 +29,17 @@ RUN echo 'root:hasta la vista' | chpasswd
 RUN apt-get -y install \
     git curl gcc make perl cpanminus
 RUN cpanm -n \
+    App::Greple::xlate \
     App::Greple::msdoc \
     App::Greple::xp \
     App::ansicolumn App::ansifold \
     App::sdif
+
+ARG CACHEBUST=1
 RUN cpanm -n \
     https://github.com/kaz-utashiro/App-Greple-xlate.git
-RUN rm -fr $HOME/.cpanm
+
+RUN rm -fr $HOME/.cpanm $HOME/.cache
 
 # Set the working directory
 WORKDIR /app
