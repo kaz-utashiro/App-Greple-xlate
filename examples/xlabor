@@ -51,8 +51,11 @@ then
     : ${wrap:=76}
 fi
 
-declare -a module=(-Mxlate::deepl) 
-declare -a option=(--xlate-to="$to_lang" --xlate-format="$format" --all)
+declare -a module option
+
+module+=(-Mxlate::deepl) 
+option+=(--xlate-to="$to_lang" --xlate-format="$format" --xlate-cache=yes)
+option+=(--all)
 
 [ "$use_api" == yes ] || use_clipboard=yes
 [ "$check"   == yes ] || option+=(--xlate${use_clipboard:+-labor})
