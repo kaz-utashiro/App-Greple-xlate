@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  xlate:
+    build: .
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true
+    environment:
+      - "TZ=Asia/Tokyo"
