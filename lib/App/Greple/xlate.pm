@@ -273,7 +273,6 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
-use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;
@@ -392,6 +391,8 @@ sub postgrep {
 }
 
 sub cache_update {
+    binmode STDERR, ':encoding(utf8)';
+
     my @from = @_;
     print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
     return @from if $dryrun;
