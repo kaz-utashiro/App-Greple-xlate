@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.12";
+our $VERSION = "0.13";
 
 =encoding utf-8
 
@@ -11,6 +11,10 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 =head1 SYNOPSIS
 
     greple -Mxlate::deepl --xlate pattern target-file
+
+=head1 VERSION
+
+Version 0.13
 
 =head1 DESCRIPTION
 
@@ -229,6 +233,7 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
+use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;

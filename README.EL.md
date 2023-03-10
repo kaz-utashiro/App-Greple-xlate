@@ -6,6 +6,10 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 Η ενότητα **Greple** **xlate** βρίσκει μπλοκ κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Επί του παρόντος, μόνο η υπηρεσία DeepL υποστηρίζεται από την ενότητα **xlate::deepl**.

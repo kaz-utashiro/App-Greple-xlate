@@ -6,6 +6,10 @@ App::Greple::xlate - greple的翻译支持模块
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate**模块找到文本块，并用翻译后的文本替换它们。目前**xlate::deepl**模块只支持DeepL 服务。

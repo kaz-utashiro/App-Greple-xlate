@@ -6,6 +6,10 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** module vindt tekstblokken en vervangt ze door de vertaalde tekst. Momenteel wordt alleen DeepL service ondersteund door de **xlate::deepl** module.

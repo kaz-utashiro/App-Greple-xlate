@@ -6,6 +6,10 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 **xlate::deep** 모듈은 DeepL 서비스만 지원합니다.

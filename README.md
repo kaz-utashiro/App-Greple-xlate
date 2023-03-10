@@ -7,6 +7,10 @@ App::Greple::xlate - translation support module for greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** module find text blocks and replace them by the

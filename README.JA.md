@@ -6,6 +6,10 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** モジュールは、テキストブロックを見つけ、翻訳されたテキストに置き換えます。現在、**xlate::deepl**モジュールが対応しているのはDeepLサービスのみです。

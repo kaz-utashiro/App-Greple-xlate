@@ -6,6 +6,10 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu toetab **xlate::deepl** moodul ainult DeepL teenust.

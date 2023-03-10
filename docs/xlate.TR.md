@@ -6,6 +6,10 @@ App::Greple::xlate - greple için çeviri destek modülü
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda sadece DeepL servisi **xlate::deepl** modülü tarafından desteklenmektedir.

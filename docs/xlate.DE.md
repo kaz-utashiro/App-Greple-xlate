@@ -6,6 +6,10 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 **Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit wird nur der DeepL Service vom **xlate::deepl** Modul unterstützt.
