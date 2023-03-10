@@ -269,6 +269,7 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
+use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;
