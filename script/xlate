@@ -104,7 +104,7 @@ then
     do
 	if [ -f "$m" ]
 	then
-	    file="${file:+$file }$m"
+	    file="${file:+$file|||}$m"
 	else
 	    opt+=("$m")
 	fi

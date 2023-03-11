@@ -24,9 +24,11 @@ XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm ifdef
 
 ifeq ($(strip $(XLATE_FILES)),)
-override XLATE_FILES = \
+override XLATE_FILES := \
 	$(filter-out README.%.md,\
 	$(wildcard *.docx *.pptx *.txt *.md *.pm))
+else
+override XLATE_FILES := $(subst |||, ,$(XLATE_FILES))
 endif
 
 define FOREACH
