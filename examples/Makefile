@@ -47,7 +47,7 @@ $(basename $3).$1.$2: $3 Makefile
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
-XLATE = ./xlabor \
+XLATE = xlate \
 	$(if $(DEBUG),-d) \
 	$(if $(MAXLEN),-m$(MAXLEN)) \
 	$(if $(USEAPI),-a)

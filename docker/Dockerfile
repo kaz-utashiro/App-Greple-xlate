@@ -50,8 +50,6 @@ RUN exec > $HOME/.inputrc && \
     echo Control-p: history-search-backward && \
     echo Control-d: delete-char-or-list
 
-COPY xlabor /usr/local/bin/
-RUN  chmod +x /usr/local/bin/xlabor
 COPY XLATE.mk /
 
 ENTRYPOINT [ "make", "-f", "/XLATE.mk" ]
