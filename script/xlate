@@ -23,11 +23,13 @@ Usage: $myname [ options ] file [ greple options ]
 	-m#  max length per API call
 
 	-D   run on the Docker container
+	-M   run semi-automatic make
 END
 
-while getopts :${EXOPT:=DM} OPT
+while getopts :${EXOPT:=dDM} OPT
 do
     case $OPT in
+	d) set -x ;;
 	D)
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
@@ -54,7 +56,7 @@ OPTIND=1
 while getopts "$EXOPT"'hdacrsp:w:x:f:t:m:' OPT
 do
     case $OPT in
-	D|M) ;;
+	[$EXOPT]) ;;
 	d)     debug=yes ; set -x ;;
 	a)   use_api=yes ;;
 	c)     check=yes ;;
