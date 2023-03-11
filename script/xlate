@@ -26,11 +26,13 @@ Usage: $myname [ options ] file [ greple options ]
 	-M   run semi-automatic make
 END
 
-while getopts :${EXOPT:=dD} OPT
+while getopts :${EXOPT:=dI:D} OPT
 do
     case $OPT in
 	d)
 	    debug=yes ; set -x ;;
+	I)
+	    container="$OPTARG" ;;
 	D)
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
@@ -40,7 +42,8 @@ do
 		    -e XLATE_RUNNING_DOCKER=1 \
 		    -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
 		    -e DISPLAY="$ip:0" \
-		    tecolicom/xlate $myname ${1+"$@"}
+		    ${container:-tecolicom/xlate} \
+		    xlate ${1+"$@"}
 	       exit;
 	    fi
 	    ;;
@@ -104,6 +107,8 @@ then
     do
 	if [ -f "$m" ]
 	then
+	    # GNU Make behaves differently in different versions with
+	    # respect to double-quoted strings and spaces within them.
 	    file="${file:+$file|||}$m"
 	else
 	    opt+=("$m")
