@@ -21,11 +21,32 @@ Usage: $myname [ options ] file [ greple options ]
 	-f#  from lang (ignored)
 	-t#  to lang
 	-m#  max length per API call
+
+	-D   use Docker image
 END
 
-while getopts "hdacrsp:w:x:f:t:m:" OPT
+while getopts ":D" OPT
 do
     case $OPT in
+	D)
+	    [ "$XLATE_RUNNING_DOCKER" != "" ] && break
+	    ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+	    exec docker run \
+		 -v $(pwd):/app \
+		 -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
+		 -e DISPLAY="$ip:0" \
+		 -e XLATE_RUNNING_DOCKER=1 \
+		 tecolicom/xlate $myname ${1+"$@"}
+	    exit;
+	    ;;
+    esac
+done
+OPTIND=1
+
+while getopts 'D''hdacrsp:w:x:f:t:m:' OPT
+do
+    case $OPT in
+	D) ;;
 	h) exec echo -n "$help" ;;
 	d)     debug=yes ; set -x ;;
 	a)   use_api=yes ;;
