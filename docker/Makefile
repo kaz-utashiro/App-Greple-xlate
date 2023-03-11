@@ -1,12 +1,12 @@
-TARGET:=docker-xlate
+TARGET:=tecolicom/xlate
 
-.PHONY: build
+.PHONY: build run clean
+
 build:
 	cp ../share/XLATE.mk .
 	docker build --build-arg CACHEBUST=$$(date +%s) -t $(TARGET) .
 	rm -f XLATE.mk
 
-.PHONY: run
 run:
 	ip=`ifconfig en0 | awk '$$1=="inet"{print $$2}'` ; \
 	docker run --rm -it \
@@ -16,7 +16,6 @@ run:
 		$(TARGET) \
 		shell
 
-.PHONY: clean
 clean:
 	@none="$$(docker image ls | awk '$$1~/<none>/{print $$3}')" ; \
 	[ "$$none" != "" ] && docker image rm $$none || :
