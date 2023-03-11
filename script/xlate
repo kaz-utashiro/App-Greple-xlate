@@ -41,7 +41,9 @@ do
 	    ;;
 	M)
 	    shift $((OPTIND - 1))
-	    exec make -f /XLATE.mk ${1+"$@"}
+	    mod=App-Greple-xlate
+	    share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
+	    exec make -f $share/XLATE.mk ${1+"$@"}
 	    ;;
     esac
 done
