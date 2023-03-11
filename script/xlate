@@ -111,6 +111,7 @@ then
     done
     exec make -f $share/XLATE.mk \
 	 ${dryrun:+-n} \
+	 XLATE_LANG=$to_lang \
 	 XLATE_DEBUG=$debug \
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
