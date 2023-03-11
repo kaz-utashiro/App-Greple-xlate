@@ -29,15 +29,17 @@ while getopts :${EXOPT:=DM} OPT
 do
     case $OPT in
 	D)
-	    [ "$XLATE_RUNNING_DOCKER" != "" ] && break
-	    ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
-	    exec docker run \
-		 -v $(pwd):/app \
-		 -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
-		 -e DISPLAY="$ip:0" \
-		 -e XLATE_RUNNING_DOCKER=1 \
-		 tecolicom/xlate $myname ${1+"$@"}
-	    exit;
+	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
+	    then
+	       ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+	       exec docker run --rm -it \
+		    -v $(pwd):/app \
+		    -e XLATE_RUNNING_DOCKER=1 \
+		    -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
+		    -e DISPLAY="$ip:0" \
+		    tecolicom/xlate $myname ${1+"$@"}
+	       exit;
+	    fi
 	    ;;
 	M)
 	    shift $((OPTIND - 1))
