@@ -3,9 +3,7 @@ TARGET:=tecolicom/xlate
 .PHONY: build run clean
 
 build:
-	cp ../share/XLATE.mk .
 	docker build --build-arg CACHEBUST=$$(date +%s) -t $(TARGET) .
-	rm -f XLATE.mk
 
 run:
 	ip=`ifconfig en0 | awk '$$1=="inet"{print $$2}'` ; \

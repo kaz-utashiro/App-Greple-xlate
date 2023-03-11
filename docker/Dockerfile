@@ -49,5 +49,3 @@ RUN exec > $HOME/.inputrc && \
     echo Control-n: history-search-forward && \
     echo Control-p: history-search-backward && \
     echo Control-d: delete-char-or-list
-
-COPY XLATE.mk /XLATE.mk
