@@ -50,6 +50,4 @@ RUN exec > $HOME/.inputrc && \
     echo Control-p: history-search-backward && \
     echo Control-d: delete-char-or-list
 
-COPY XLATE.mk /
-
-ENTRYPOINT [ "make", "-f", "/XLATE.mk" ]
+COPY XLATE.mk /XLATE.mk

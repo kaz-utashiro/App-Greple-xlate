@@ -2,7 +2,9 @@ TARGET:=docker-xlate
 
 .PHONY: build
 build:
+	cp ../share/XLATE.mk .
 	docker build --build-arg CACHEBUST=$$(date +%s) -t $(TARGET) .
+	rm -f XLATE.mk
 
 .PHONY: run
 run:
