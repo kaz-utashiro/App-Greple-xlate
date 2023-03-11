@@ -6,8 +6,9 @@
 #
 # ENVIRONMENTS
 #
-# DEBUG:  Enable debug output
-# MAXLEN: Set maximum length for API call
+# XLATE_DEBUG:  Enable debug output
+# XLATE_MAXLEN: Set maximum length for API call
+# XLATE_USEAPI: Use API
 #
 
 #
@@ -21,11 +22,15 @@
 
 XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm ifdef
-XLATE_FILES  ?= $(filter-out README.%.md,\
-		$(wildcard *.docx *.pptx *.txt *.md *.pm))
+
+ifeq ($(strip $(XLATE_FILES)),)
+override XLATE_FILES = \
+	$(filter-out README.%.md,\
+	$(wildcard *.docx *.pptx *.txt *.md *.pm))
+endif
 
 define FOREACH
-$(foreach file,$(XLATE_FILES),
+$(foreach file,$(subst ",,$(XLATE_FILES)),
 $(foreach lang,$(or $(file < $(file).LANG),$(XLATE_LANG)),
 $(foreach form,$(or $(file < $(file).FORMAT),$(XLATE_FORMAT)),
 $(call $1,$(lang),$(form),$(file))
@@ -48,9 +53,9 @@ endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
 XLATE = xlate \
-	$(if $(DEBUG),-d) \
-	$(if $(MAXLEN),-m$(MAXLEN)) \
-	$(if $(USEAPI),-a)
+	$(if $(XLATE_DEBUG),-d) \
+	$(if $(XLATE_MAXLEN),-m$(XLATE_MAXLEN)) \
+	$(if $(XLATE_USEAPI),-a)
 
 .PHONY: clean
 clean:

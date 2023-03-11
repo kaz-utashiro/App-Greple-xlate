@@ -26,10 +26,11 @@ Usage: $myname [ options ] file [ greple options ]
 	-M   run semi-automatic make
 END
 
-while getopts :${EXOPT:=dDM} OPT
+while getopts :${EXOPT:=dD} OPT
 do
     case $OPT in
-	d) set -x ;;
+	d)
+	    debug=yes ; set -x ;;
 	D)
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
@@ -43,17 +44,11 @@ do
 	       exit;
 	    fi
 	    ;;
-	M)
-	    shift $((OPTIND - 1))
-	    mod=App-Greple-xlate
-	    share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
-	    exec make -f $share/XLATE.mk ${1+"$@"}
-	    ;;
     esac
 done
 OPTIND=1
 
-while getopts "$EXOPT"'hdacrsp:w:x:f:t:m:' OPT
+while getopts "$EXOPT"'hdacrsMnp:w:x:f:t:m:' OPT
 do
     case $OPT in
 	[$EXOPT]) ;;
@@ -62,6 +57,8 @@ do
 	c)     check=yes ;;
 	r)   refresh=yes ;;
 	s)    silent=yes ;;
+	M)  run_make=yes ;;
+	n)    dryrun=yes ;;
 	p)   pattern="$OPTARG" ;;
 	w)      wrap="$OPTARG" ;;
 	x)    format="$OPTARG" ;;
@@ -96,6 +93,32 @@ option+=(--all)
 [ "$silent"  == yes ] && option+=(--no-xlate-progress)
 [ "$pattern" != ""  ] && option+=(--re="$pattern")
 [ "$max"     != ""  ] && option+=(--xlate-maxlen="$max")
+
+: run make
+if [ "$run_make" == yes ]
+then
+    mod="App-Greple-xlate"
+    share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
+    declare opt
+    for m in $*
+    do
+	if [ -f "$m" ]
+	then
+	    file="${file:+$file }$m"
+	else
+	    opt+=("$m")
+	fi
+    done
+    exec make -f $share/XLATE.mk \
+	 ${dryrun:+-n} \
+	 XLATE_DEBUG=$debug \
+	 XLATE_MAXLEN=$max \
+	 XLATE_USEAPI=$use_api \
+	 ${file:+XLATE_FILES=\"$file\"} \
+	 "${opt[@]}"
+    exit 1
+fi
+#	 XLATE_FILES="\"${file[*]}\"" \
 
 declare -a area
 case $1 in
