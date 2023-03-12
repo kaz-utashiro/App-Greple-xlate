@@ -22,9 +22,9 @@ jobs:
           if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]
           then
               echo VERSION="${BASH_REMATCH[1]}"
-              echo GITHUB_REPOSITORY="$GITHUB_REPOSITORY@$VERSION"
+              echo REPOSITORY="$GITHUB_REPOSITORY@$VERSION"
           else
-              echo GITHUB_REPOSITORY="$GITHUB_REPOSITORY"
+              echo REPOSITORY="$GITHUB_REPOSITORY"
           fi >> $GITHUB_ENV
 
       # Build Docker Image
@@ -37,10 +37,10 @@ jobs:
       - uses: docker/build-push-action@v4
         with:
           context: docker
-          platforms: linux/arm64
+          platforms: linux/amd64
           push: true
           build-args: |
-            GITHUB_REPOSITORY=${{ env.GITHUB_REPOSITORY }}
+            REPOSITORY=${{ env.REPOSITORY }}
           tags: |
             ${{ env.PACKAGE }}:latest
             ${{ env.VERSION }}
