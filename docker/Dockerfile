@@ -15,7 +15,7 @@ ARG DEV
 RUN set -x; \
     printenv; \
     if [ "$GITHUB_REPOSITORY" != "" ]; then \
-	cpanm -nf ${GITHUB_REPOSITORY}@${GITHUB_REF##*/} ; \
+	cpanm -nf ${GITHUB_REPOSITORY} ; \
     elif [ "$DEV" != "" ]; then \
 	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
     else \
