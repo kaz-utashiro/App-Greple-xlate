@@ -16,7 +16,7 @@ RUN apt-get -y install xclip socat
 
 RUN apt-get -y install \
     git curl gcc make perl cpanminus
-RUN cpanm -n \
+RUN cpanm -qn \
     App::Greple::xlate \
     App::Greple::msdoc \
     App::Greple::xp \
@@ -37,7 +37,7 @@ RUN cpanm -n \
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
 ARG ORIGIN=1
-RUN cpanm -n \
+RUN cpanm -qn \
     https://github.com/kaz-utashiro/App-Greple-xlate.git
 
 RUN rm -fr $HOME/.cpanm $HOME/.cache
@@ -45,8 +45,12 @@ RUN rm -fr $HOME/.cpanm $HOME/.cache
 # Set the working directory
 WORKDIR /app
 
-# Create .inputrc
-RUN exec > $HOME/.inputrc && \
-    echo Control-n: history-search-forward && \
-    echo Control-p: history-search-backward && \
-    echo Control-d: delete-char-or-list
+# .inputrc
+RUN exec >> $HOME/.inputrc \
+    && echo Control-n: history-search-forward \
+    && echo Control-p: history-search-backward \
+    && echo Control-d: delete-char-or-list
+# .bashrc
+RUN exec >> $HOME/.bashrc \
+    && echo export LESS=-cR \
+    && echo export LESSANSIENDCHARS=mK
