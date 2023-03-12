@@ -12,11 +12,11 @@ RUN apt-get -y install \
     git curl gcc make perl cpanminus
 
 ARG DEV
-ARG REPOSITORY
+ARG REPO_URL
 RUN set -x; \
     printenv; \
-    if [ "$REPOSITORY" != "" ]; then \
-	cpanm -nf ${REPOSITORY} ; \
+    if [ "$REPO_URL" != "" ]; then \
+	cpanm -nf ${REPO_URL} ; \
     elif [ "$DEV" != "" ]; then \
 	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
     else \
