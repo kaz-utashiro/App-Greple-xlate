@@ -28,11 +28,11 @@ override XLATE_FILES := \
 	$(filter-out README.%.md,\
 	$(wildcard *.docx *.pptx *.txt *.md *.pm))
 else
-override XLATE_FILES := $(subst |||, ,$(XLATE_FILES))
+override XLATE_FILES := $(subst |||, ,$(subst ",,$(XLATE_FILES)))
 endif
 
 define FOREACH
-$(foreach file,$(subst ",,$(XLATE_FILES)),
+$(foreach file,$(XLATE_FILES),
 $(foreach lang,$(or $(file < $(file).LANG),$(XLATE_LANG)),
 $(foreach form,$(or $(file < $(file).FORMAT),$(XLATE_FORMAT)),
 $(call $1,$(lang),$(form),$(file))
