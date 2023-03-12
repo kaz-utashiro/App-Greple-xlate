@@ -17,13 +17,14 @@ jobs:
 
       - name: Set Version and Package
         run: |
+          PACKAGE=tecolicom/xlate
           sed 's/^ *//' << END >> $GITHUB_ENV
-              PACKAGE=tecolicom/xlate
+              PACKAGE=$PACKAGE
           END
           if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]
           then
               VERSION="${BASH_REMATCH[1]}"
-              echo VERSION="$VERSION"
+              echo VERSION_TAG="$PACKAGE:$VERSION"
               echo REPO_URL="https://github.com/$GITHUB_REPOSITORY.git@$VERSION"
           else
               echo REPO_URL="https://github.com/$GITHUB_REPOSITORY.git"
@@ -45,4 +46,4 @@ jobs:
             REPO_URL=${{ env.REPO_URL }}
           tags: |
             ${{ env.PACKAGE }}:latest
-            ${{ env.VERSION }}
+            ${{ env.VERSION_TAG }}
