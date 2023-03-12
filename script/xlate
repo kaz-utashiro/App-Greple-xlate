@@ -114,6 +114,7 @@ then
 	    opt+=("$m")
 	fi
     done
+    unset MAKELEVEL
     exec make -f $share/XLATE.mk \
 	 ${dryrun:+-n} \
 	 XLATE_LANG=$to_lang \
