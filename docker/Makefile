@@ -3,7 +3,7 @@ TARGET:=tecolicom/xlate:$(shell git describe --tags --abbrev=0)
 .PHONY: build run clean
 
 build:
-	docker build --build-arg ORIGIN=$$(git rev-parse origin/HEAD) -t $(TARGET) .
+	docker build --build-arg DEV=$$(git rev-parse origin/HEAD) -t $(TARGET) .
 
 run:
 	ip=`ifconfig en0 | awk '$$1=="inet"{print $$2}'` ; \

@@ -3,28 +3,42 @@ FROM ubuntu:latest
 ENV HOME=/root
 
 RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get install -y locales vim \
+    && apt-get -yqq upgrade \
+    && apt-get install -yqq locales vim \
     && locale-gen ja_JP.UTF-8 \
     && echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc
 
-RUN apt-get -y install python3 python3-pip
-RUN pip install --upgrade deepl
-
-RUN apt-get -y install inetutils-ping inetutils-telnet
-RUN apt-get -y install xclip socat
-
-RUN apt-get -y install \
+RUN apt-get -yqq install \
     git curl gcc make perl cpanminus
+
+ARG DEV
+ARG REPO_URL
+RUN set -x; \
+    printenv; \
+    if [ "$REPO_URL" != "" ]; then \
+	cpanm -nf ${REPO_URL} ; \
+    elif [ "$DEV" != "" ]; then \
+	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
+    else \
+	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git ; \
+    fi
+
 RUN cpanm -qn \
-    App::Greple::xlate \
     App::Greple::msdoc \
     App::Greple::xp \
     App::ansicolumn App::ansifold \
     App::sdif
 
-#RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-#RUN apt-get -y install openssh-server
+RUN rm -fr $HOME/.cpanm $HOME/.cache
+
+RUN apt-get -yqq install python3 python3-pip
+RUN pip install --upgrade deepl
+
+RUN apt-get -yqq install inetutils-ping inetutils-telnet
+RUN apt-get -yqq install xclip socat
+
+#RUN DEBIAN_FRONTEND=noninteractive apt-get -yqq install tzdata
+#RUN apt-get -yqq install openssh-server
 #RUN mkdir /var/run/sshd \
 #    && sed -ri.bak \
 #    -e '/^#?PermitRootLogin /        s/.+/PermitRootLogin yes/' \
@@ -35,12 +49,6 @@ RUN cpanm -qn \
 #RUN echo 'root:hasta la vista' | chpasswd
 #EXPOSE 22
 #CMD [ "/usr/sbin/sshd", "-D" ]
-
-ARG ORIGIN=1
-RUN cpanm -qn \
-    https://github.com/kaz-utashiro/App-Greple-xlate.git
-
-RUN rm -fr $HOME/.cpanm $HOME/.cache
 
 # Set the working directory
 WORKDIR /app
