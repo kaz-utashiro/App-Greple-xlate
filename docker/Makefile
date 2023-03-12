@@ -1,4 +1,4 @@
-TARGET:=tecolicom/xlate
+TARGET:=tecolicom/xlate:$(shell git describe --tags --abbrev=0)
 
 .PHONY: build run clean
 
