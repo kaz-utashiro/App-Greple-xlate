@@ -3,12 +3,12 @@ FROM ubuntu:latest
 ENV HOME=/root
 
 RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get install -y locales vim \
+    && apt-get -yqq upgrade \
+    && apt-get install -yqq locales vim \
     && locale-gen ja_JP.UTF-8 \
     && echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc
 
-RUN apt-get -y install \
+RUN apt-get -yqq install \
     git curl gcc make perl cpanminus
 
 ARG DEV
@@ -31,14 +31,14 @@ RUN cpanm -qn \
 
 RUN rm -fr $HOME/.cpanm $HOME/.cache
 
-RUN apt-get -y install python3 python3-pip
+RUN apt-get -yqq install python3 python3-pip
 RUN pip install --upgrade deepl
 
-RUN apt-get -y install inetutils-ping inetutils-telnet
-RUN apt-get -y install xclip socat
+RUN apt-get -yqq install inetutils-ping inetutils-telnet
+RUN apt-get -yqq install xclip socat
 
-#RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-#RUN apt-get -y install openssh-server
+#RUN DEBIAN_FRONTEND=noninteractive apt-get -yqq install tzdata
+#RUN apt-get -yqq install openssh-server
 #RUN mkdir /var/run/sshd \
 #    && sed -ri.bak \
 #    -e '/^#?PermitRootLogin /        s/.+/PermitRootLogin yes/' \
