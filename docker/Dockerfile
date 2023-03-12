@@ -36,9 +36,12 @@ RUN cpanm -qn \
 #EXPOSE 22
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
-ARG ORIGIN=1
-RUN cpanm -qn \
-    https://github.com/kaz-utashiro/App-Greple-xlate.git
+ARG DEV
+RUN if [ "$DEV" != "" ]; then \
+	cpanm -qn https://github.com/kaz-utashiro/App-Greple-xlate.git ; \
+    else \
+	cpanm -qn App::Greple::xlate ; \
+    fi
 
 RUN rm -fr $HOME/.cpanm $HOME/.cache
 
