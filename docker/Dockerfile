@@ -14,18 +14,6 @@ RUN pip install --upgrade deepl
 RUN apt-get -y install inetutils-ping inetutils-telnet
 RUN apt-get -y install xclip socat
 
-#RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-#RUN apt-get -y install openssh-server
-#RUN mkdir /var/run/sshd \
-#    && sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
-#    && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
-#    && sed -ri 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-#RUN systemctl enable ssh
-#EXPOSE 22
-#CMD [ "/usr/sbin/sshd", "-D" ]
-
-RUN echo 'root:hasta la vista' | chpasswd
-
 RUN apt-get -y install \
     git curl gcc make perl cpanminus
 RUN cpanm -n \
@@ -35,7 +23,20 @@ RUN cpanm -n \
     App::ansicolumn App::ansifold \
     App::sdif
 
-ARG CACHEBUST=1
+#RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
+#RUN apt-get -y install openssh-server
+#RUN mkdir /var/run/sshd \
+#    && sed -ri.bak \
+#    -e '/^#?PermitRootLogin /        s/.+/PermitRootLogin yes/' \
+#    -e '/^#?PasswordAuthentication / s/.+/PasswordAuthentication yes/' \
+#    -e '/^#?UsePAM /                 s/.+/UsePAM no/' \
+#    /etc/ssh/sshd_config
+#RUN systemctl enable ssh
+#RUN echo 'root:hasta la vista' | chpasswd
+#EXPOSE 22
+#CMD [ "/usr/sbin/sshd", "-D" ]
+
+ARG ORIGIN=1
 RUN cpanm -n \
     https://github.com/kaz-utashiro/App-Greple-xlate.git
 
