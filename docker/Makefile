@@ -15,5 +15,5 @@ run:
 		shell
 
 clean:
-	@none="$$(docker image ls | awk '$$1~/<none>/{print $$3}')" ; \
+	@none="$$(docker image ls | awk '$$1~/<none>/||$$2~/<none>/{print $$3}')" ; \
 	[ "$$none" != "" ] && docker image rm $$none || :
