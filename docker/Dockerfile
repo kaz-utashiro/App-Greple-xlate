@@ -37,8 +37,10 @@ RUN cpanm -qn \
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
 ARG DEV
-RUN if [ "$DEV" != "" ]; then \
-	cpanm -qn https://github.com/kaz-utashiro/App-Greple-xlate.git ; \
+RUN if [ "$GITHUB_REPOSITORY" != "" ]; then \
+	cpanm -qn ${GITHUB_REPOSITORY}@${GITHUB_REF##*/} ; \
+    elif [ "$DEV" != "" ]; then \
+	cpanm -qn https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
     else \
 	cpanm -qn App::Greple::xlate ; \
     fi
