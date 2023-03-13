@@ -8,7 +8,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.13
+Version 0.14
 
 # DESCRIPTION
 
@@ -64,7 +64,7 @@ Version 0.13
 
     与其说是调用翻译引擎，不如说是希望你能为之工作。在准备好要翻译的文本后，它们被复制到剪贴板上。你应该把它们粘贴到表格中，把结果复制到剪贴板上，然后点击返回。
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     指定目标语言。当使用**DeepL**引擎时，你可以通过`deepl languages`命令获得可用语言。
 

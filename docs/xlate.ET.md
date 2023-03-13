@@ -8,7 +8,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.13
+Version 0.14
 
 # DESCRIPTION
 
@@ -64,7 +64,7 @@ Kui soovite tõlkida kogu teksti, kasutage **--match-entire** valikut. See on l�
 
     Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     Määrake sihtkeel. **DeepL** mootori kasutamisel saate saadaval olevad keeled kätte käsuga `deepl languages`.
 

@@ -8,7 +8,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # VERSION
 
-Version 0.13
+Version 0.14
 
 # DESCRIPTION
 
@@ -64,7 +64,7 @@ Version 0.13
 
     翻訳エンジンを呼び出す代わりに、あなたが働くことが期待されています。翻訳するテキストを用意すると、それがクリップボードにコピーされます。それをフォームに貼り付け、結果をクリップボードにコピーし、リターンキーを押すことが期待されます。
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     対象言語を指定します。**DeepL**エンジンを使っている場合は、`deepl languages`コマンドで利用可能な言語を得ることができます。
 

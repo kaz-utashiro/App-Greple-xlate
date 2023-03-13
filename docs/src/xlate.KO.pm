@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.13";
+our $VERSION = "0.14";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.13
+Version 0.14
 
 =head1 DESCRIPTION
 
@@ -72,7 +72,7 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 번역 엔진을 호출하는 대신 작업할 것으로 예상됩니다. 번역할 텍스트를 준비한 후 클립보드에 복사합니다. 양식에 붙여넣고 결과를 클립보드에 복사한 후 Return 키를 눌러야 합니다.
 
-=item B<--xlate-to> (Default: C<JA>)
+=item B<--xlate-to> (Default: C<EN-US>)
 
 대상 언어를 지정합니다. B<DeepL> 엔진을 사용할 때 C<deepl languages> 명령으로 사용 가능한 언어를 가져올 수 있습니다.
 
@@ -233,7 +233,6 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
-use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;
@@ -248,7 +247,7 @@ our %opt = (
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
-    to       => \(our $lang_to = 'JA'),
+    to       => \(our $lang_to = 'EN-US'),
     fold     => \(our $fold_line = 0),
     width    => \(our $fold_width = 70),
     auth_key => \(our $auth_key),
@@ -352,6 +351,8 @@ sub postgrep {
 }
 
 sub cache_update {
+    binmode STDERR, ':encoding(utf8)';
+
     my @from = @_;
     print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
     return @from if $dryrun;

@@ -8,7 +8,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # VERSION
 
-Version 0.13
+Version 0.14
 
 # DESCRIPTION
 
@@ -64,7 +64,7 @@ Version 0.13
 
     번역 엔진을 호출하는 대신 작업할 것으로 예상됩니다. 번역할 텍스트를 준비한 후 클립보드에 복사합니다. 양식에 붙여넣고 결과를 클립보드에 복사한 후 Return 키를 눌러야 합니다.
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     대상 언어를 지정합니다. **DeepL** 엔진을 사용할 때 `deepl languages` 명령으로 사용 가능한 언어를 가져올 수 있습니다.
 

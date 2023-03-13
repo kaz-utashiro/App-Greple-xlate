@@ -8,7 +8,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.13
+Version 0.14
 
 # DESCRIPTION
 
@@ -64,7 +64,7 @@ Si desea traducir todo el texto, utilice la opción **--match-entire**. Se trata
 
     En lugar de llamar al motor de traducción, se espera que trabaje para. Después de preparar el texto a traducir, se copian en el portapapeles. Se espera que los pegue en el formulario, copie el resultado en el portapapeles y pulse Retorno.
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     Especifique el idioma de destino. Puede obtener los idiomas disponibles mediante el comando `deepl languages` si utiliza el motor **DeepL**.
 

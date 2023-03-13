@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.13";
+our $VERSION = "0.14";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.13
+Version 0.14
 
 =head1 DESCRIPTION
 
@@ -72,7 +72,7 @@ Specificeer de te gebruiken vertaalmachine. U hoeft deze optie niet te gebruiken
 
 In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor werkt. Na het voorbereiden van te vertalen tekst, worden ze gekopieerd naar het klembord. Van u wordt verwacht dat u ze in het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
 
-=item B<--xlate-to> (Default: C<JA>)
+=item B<--xlate-to> (Default: C<EN-US>)
 
 Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando C<deepl languages> wanneer u de engine B<DeepL> gebruikt.
 
@@ -233,7 +233,6 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
-use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;
@@ -248,7 +247,7 @@ our %opt = (
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
-    to       => \(our $lang_to = 'JA'),
+    to       => \(our $lang_to = 'EN-US'),
     fold     => \(our $fold_line = 0),
     width    => \(our $fold_width = 70),
     auth_key => \(our $auth_key),
@@ -352,6 +351,8 @@ sub postgrep {
 }
 
 sub cache_update {
+    binmode STDERR, ':encoding(utf8)';
+
     my @from = @_;
     print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
     return @from if $dryrun;

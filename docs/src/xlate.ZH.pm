@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.13";
+our $VERSION = "0.14";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.13
+Version 0.14
 
 =head1 DESCRIPTION
 
@@ -72,7 +72,7 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 与其说是调用翻译引擎，不如说是希望你能为之工作。在准备好要翻译的文本后，它们被复制到剪贴板上。你应该把它们粘贴到表格中，把结果复制到剪贴板上，然后点击返回。
 
-=item B<--xlate-to> (Default: C<JA>)
+=item B<--xlate-to> (Default: C<EN-US>)
 
 指定目标语言。当使用B<DeepL>引擎时，你可以通过C<deepl languages>命令获得可用语言。
 
@@ -233,7 +233,6 @@ it under the same terms as Perl itself.
 use v5.14;
 use warnings;
 
-use open IO => ':utf8', ':std';
 use Data::Dumper;
 
 use JSON;
@@ -248,7 +247,7 @@ our %opt = (
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
-    to       => \(our $lang_to = 'JA'),
+    to       => \(our $lang_to = 'EN-US'),
     fold     => \(our $fold_line = 0),
     width    => \(our $fold_width = 70),
     auth_key => \(our $auth_key),
@@ -352,6 +351,8 @@ sub postgrep {
 }
 
 sub cache_update {
+    binmode STDERR, ':encoding(utf8)';
+
     my @from = @_;
     print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
     return @from if $dryrun;
