@@ -40,16 +40,16 @@ do
 	D)
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
-	       ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
-	       exec docker run --rm -it \
-		    --hostname xlate \
-		    -v $(pwd):/app \
-		    -e XLATE_RUNNING_DOCKER=1 \
-		    -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
-		    -e DISPLAY="$ip:0" \
-		    ${container:-tecolicom/xlate} \
-		    xlate ${1+"$@"}
-	       exit;
+		ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+		exec docker run --rm -it \
+		     --hostname xlate \
+		     -v $(pwd):/app \
+		     -e XLATE_RUNNING_DOCKER=1 \
+		     -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
+		     -e DISPLAY="$ip:0" \
+		     ${container:-tecolicom/xlate} \
+		     xlate ${1+"$@"}
+		exit;
 	    fi
 	    ;;
     esac
