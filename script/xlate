@@ -4,11 +4,15 @@ define() { IFS='\n' read -r -d '' ${1} || true ; }
 
 myname="$(basename $0)"
 
-define help <<END
+define pod <<"=cut"
 
-$myname - Front-end CLI for Greple::xlate module
+=head1 NAME
 
-Usage: $myname [ options ] file [ greple options ]
+    xlate - Front-end CLI tool for App::Greple::xlate module
+
+=head1 SYNOPSIS
+
+    xlate [ options ] file [ greple options ]
 	-h   help
 	-d   debug
 	-a   use API
@@ -25,10 +29,15 @@ Usage: $myname [ options ] file [ greple options ]
 	-D   run on the Docker container
 	-M   run semi-automatic make
 
-Control Files:
+    Control Files:
 	*.LANG    translation languates
 	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-END
+
+=head1 VERSION
+
+    Version 0.14
+
+=cut
 
 while getopts :${EXOPT:=dI:D} OPT
 do
@@ -73,7 +82,11 @@ do
 	f) from_lang="$OPTARG" ;;
 	t)   to_lang="$OPTARG" ;;
 	m)       max="$OPTARG" ;;
-	h) exec echo -n "$help" ;;
+	h)
+	    help="$(sed -r -e 's/^=[a-z]+[0-9]* *//' <<< "$pod")"
+	    exec echo "$help"
+	    exit
+	    ;;
     esac
 done	
 shift $((OPTIND - 1))
@@ -130,7 +143,6 @@ then
 	 ${opt[@]}
     exit 1
 fi
-#	 XLATE_FILES="\"${file[*]}\"" \
 
 declare -a area
 case $1 in
@@ -164,4 +176,4 @@ else
     option+=("${area[@]}")
 fi
 
-greple "${module[@]}" "${option[@]}" $*
+greple "${module[@]}" "${option[@]}" ${1+"$@"}
