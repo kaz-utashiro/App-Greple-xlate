@@ -8,11 +8,12 @@ build:
 run:
 	ip=`ifconfig en0 | awk '$$1=="inet"{print $$2}'` ; \
 	docker run --rm -it \
+		--hostname xlate \
 		-e DISPLAY=$$ip:0 \
 		-e DEEPL_AUTH_KEY=$$DEEPL_AUTH_KEY \
-		-v `pwd`/../examples:/app \
+		-v $$(pwd)/../examples:/xlate \
 		$(TARGET) \
-		shell
+		bash
 
 clean:
 	@none="$$(docker image ls | awk '$$1~/<none>/||$$2~/<none>/{print $$3}')" ; \

@@ -6,8 +6,9 @@ RUN apt-get update && apt-get -yq upgrade \
     && apt-get install -yq locales vim \
     && locale-gen ja_JP.UTF-8
 
-RUN apt-get -yq install \
-    git curl gcc make perl cpanminus
+RUN apt-get update && apt-get -yq upgrade \
+    && apt-get -yq install \
+       git curl gcc make perl cpanminus
 
 RUN cpanm -qn \
     App::optex::textconv \
@@ -20,8 +21,10 @@ RUN cpanm -qn \
     App::Greple::subst App::Greple::subst::desumasu \
     App::Greple::update App::Greple::type
 
-RUN apt-get -yq install python3 python3-pip
-RUN pip install --upgrade deepl
+RUN apt-get update && apt-get -yq upgrade \
+    && apt-get -yq install \
+       python3 python3-pip \
+    && pip install --upgrade deepl
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
@@ -59,7 +62,7 @@ RUN if [ "$REPO_URL" != "" ]; then \
     fi
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /xlate
 
 COPY ./root /root
 # .inputrc

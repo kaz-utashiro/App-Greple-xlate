@@ -56,7 +56,7 @@ do
 		fi
 		exec docker run --rm -it \
 		     --hostname xlate \
-		     -v $(pwd):/app \
+		     -v $(pwd):/xlate \
 		     -e XLATE_RUNNING_DOCKER=1 \
 		     -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
 		     -e DISPLAY="$ip:0" \
