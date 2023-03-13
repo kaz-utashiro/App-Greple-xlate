@@ -2,28 +2,38 @@ FROM ubuntu:latest
 
 ENV HOME=/root
 
-RUN apt-get update \
-    && apt-get -yq upgrade \
+RUN apt-get update && apt-get -yq upgrade \
     && apt-get install -yq locales vim \
-    && locale-gen ja_JP.UTF-8 \
-    && echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc
+    && locale-gen ja_JP.UTF-8
 
 RUN apt-get -yq install \
     git curl gcc make perl cpanminus
 
 RUN cpanm -qn \
+    App::optex::textconv \
+    App::ansicolumn App::ansifold App::ansiexpand \
+    App::sdif \
     App::Greple::msdoc \
     App::Greple::xp \
-    App::ansicolumn App::ansifold \
-    App::sdif
-
-RUN rm -fr $HOME/.cpanm $HOME/.cache
+    App::Greple::git \
+    App::Greple::frame \
+    App::Greple::subst App::Greple::subst::desumasu \
+    App::Greple::update App::Greple::type
 
 RUN apt-get -yq install python3 python3-pip
 RUN pip install --upgrade deepl
 
-RUN apt-get -yq install inetutils-ping inetutils-telnet
-RUN apt-get -yq install xclip socat
+RUN apt-get update && apt-get -yq upgrade \
+    && apt-get -yq install \
+	inetutils-ping inetutils-telnet \
+	xclip socat \
+	poppler-utils \
+	mecab mecab-ipadic-utf8 \
+	jq
+
+RUN rm -fr \
+	$HOME/.cpanm $HOME/.cache \
+	/var/lib/apt/lists/*
 
 #RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install tzdata
 #RUN apt-get -yq install openssh-server
@@ -51,6 +61,7 @@ RUN if [ "$REPO_URL" != "" ]; then \
 # Set the working directory
 WORKDIR /app
 
+COPY ./root /root
 # .inputrc
 RUN exec >> $HOME/.inputrc \
     && echo Control-n: history-search-forward \
@@ -58,5 +69,6 @@ RUN exec >> $HOME/.inputrc \
     && echo Control-d: delete-char-or-list
 # .bashrc
 RUN exec >> $HOME/.bashrc \
+    && echo export LANG=ja_JP.UTF-8 \
     && echo export LESS=-cR \
     && echo export LESSANSIENDCHARS=mK
