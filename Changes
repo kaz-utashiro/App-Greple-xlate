@@ -2,6 +2,12 @@ Revision history for Perl extension App-Greple-deepl
 
 {{$NEXT}}
 
+0.14 2023-03-13T01:58:23Z
+
+    - release "xlate" command as a front-end cli tool
+    - implement automatic make mechanism
+    - implement companion Docker container (tecolicom/xlate)
+
 0.13 2023-03-10T04:38:06Z
 
     - set STDERR to utf8 to avoid error in docker
