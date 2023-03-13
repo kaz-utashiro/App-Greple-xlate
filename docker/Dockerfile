@@ -40,9 +40,7 @@ RUN apt-get -yq install xclip socat
 
 ARG DEV
 ARG REPO_URL
-RUN set -x; \
-    printenv; \
-    if [ "$REPO_URL" != "" ]; then \
+RUN if [ "$REPO_URL" != "" ]; then \
 	cpanm -nf ${REPO_URL} ; \
     elif [ "$DEV" != "" ]; then \
 	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
