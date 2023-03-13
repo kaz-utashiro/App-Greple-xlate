@@ -50,13 +50,17 @@ do
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
 		ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+		if [[ "$pod" =~ Version\ ([0-9]+.[0-9_]+) ]]
+		then
+		    version=${BASH_REMATCH[1]}
+		fi
 		exec docker run --rm -it \
 		     --hostname xlate \
 		     -v $(pwd):/app \
 		     -e XLATE_RUNNING_DOCKER=1 \
 		     -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
 		     -e DISPLAY="$ip:0" \
-		     ${container:-tecolicom/xlate} \
+		     ${container:-tecolicom/xlate${version:+:$version}} \
 		     xlate ${1+"$@"}
 		exit;
 	    fi
