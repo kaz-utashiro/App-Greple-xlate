@@ -96,7 +96,7 @@ After preparing text to be translated, they are copied to the
 clipboard.  You are expected to paste them to the form, copy the
 result to the clipboard, and hit return.
 
-=item B<--xlate-to> (Default: C<JA>)
+=item B<--xlate-to> (Default: C<EN-US>)
 
 Specify the target language.  You can get available languages by
 C<deepl languages> command when using B<DeepL> engine.
@@ -287,7 +287,7 @@ our %opt = (
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
-    to       => \(our $lang_to = 'JA'),
+    to       => \(our $lang_to = 'EN-US'),
     fold     => \(our $fold_line = 0),
     width    => \(our $fold_width = 70),
     auth_key => \(our $auth_key),

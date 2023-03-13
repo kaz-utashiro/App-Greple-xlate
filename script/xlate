@@ -38,6 +38,7 @@ do
 	    then
 	       ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
 	       exec docker run --rm -it \
+		    --hostname xlate \
 		    -v $(pwd):/app \
 		    -e XLATE_RUNNING_DOCKER=1 \
 		    -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
@@ -73,7 +74,7 @@ do
 done	
 shift $((OPTIND - 1))
 
-: ${to_lang:=JA}
+: ${to_lang:=EN-US}
 : ${format:=xtxt}
 
 if [[ "$format" =~ ^(.+)-fold$ ]]

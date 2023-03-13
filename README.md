@@ -89,7 +89,7 @@ This is a short-cut to specify the pattern matches entire text
     clipboard.  You are expected to paste them to the form, copy the
     result to the clipboard, and hit return.
 
-- **--xlate-to** (Default: `JA`)
+- **--xlate-to** (Default: `EN-US`)
 
     Specify the target language.  You can get available languages by
     `deepl languages` command when using **DeepL** engine.

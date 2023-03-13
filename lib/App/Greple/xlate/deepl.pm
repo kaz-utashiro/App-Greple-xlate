@@ -31,11 +31,12 @@ sub deepl {
 sub clipboard {
     use Clipboard;
     my $from = shift;
+    my $length = length $from;
     Clipboard->copy($from);
     STDERR->printflush(
-	"Stored in clipboard.\n",
-	"Translate it to $lang_to and clip again.\n",
-	"Then hit return: ");
+	"$length characters stored in the clipboard.\n",
+	"Translate it to \"$lang_to\" and clip again.\n",
+	"Then hit enter: ");
     if (open my $fh, "/dev/tty" or die) {
 	my $answer = <$fh>;
     }
