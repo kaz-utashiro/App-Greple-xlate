@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-deepl
 
 {{$NEXT}}
 
+0.15 2023-03-13T09:25:51Z
+
+    - xlate includes container version
+    - container includes standard tools and configuration
+
 0.14 2023-03-13T01:58:23Z
 
     - release "xlate" command as a front-end cli tool

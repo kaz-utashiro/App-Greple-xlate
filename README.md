@@ -9,7 +9,7 @@ App::Greple::xlate - translation support module for greple
 
 # VERSION
 
-Version 0.14
+Version 0.15
 
 # DESCRIPTION
 
