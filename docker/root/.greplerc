@@ -1,0 +1,5 @@
+option default --color=always
+
+autoload -Mdig --dig --git --git-r
+autoload -Mcolors --solarized --solarized-bg --light --dark
+autoload -Mframe --frame --frame-classic --frame-width
