@@ -1,0 +1,27 @@
+[pager]
+	log  = sdif --margin=4 -n | less -cR
+	show = sdif --margin=4 -n | less -cR
+	diff = sdif --margin=4 -n | less -cR
+	blame = greple -Mgit --color-blame-label | less -cR
+	branch =
+	tag =
+	grep =
+	stash =
+	config =
+[tag]
+	sort = creatordate
+[color]
+	diff = never
+	ui = true
+[grep "msdoc"]
+	textconv = optex -Mtextconv cat
+[diff "msdoc"]
+	textconv = optex -Mtextconv cat
+[diff "gpg"]
+	textconv = gpg --quiet --no-mdc-warning --decrypt
+[diff "pdf"]
+	textconv = pdfinfo
+[diff "jpg"]
+	textconv = optex -Mtextconv cat
+[diff "json"]
+	textconv = jq -S .

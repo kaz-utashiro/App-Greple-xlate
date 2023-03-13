@@ -1,0 +1,16 @@
+*.dict   diff=dict
+*.gpg    diff=gpg
+*.docx   diff=msdoc
+*.doc    diff=msdoc
+*.pptx   diff=msdoc
+*.xlsx   diff=msdoc
+*.docx   grep=msdoc
+*.doc    grep=msdoc
+*.pptx   grep=msdoc
+*.xlsx   grep=msdoc
+*.pdf    diff=pdf
+*.jpg    diff=jpg
+*.png    diff=png
+*.gif    diff=gif
+*.sjis   diff=sjis
+*.json   diff=json
