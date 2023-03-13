@@ -24,6 +24,10 @@ Usage: $myname [ options ] file [ greple options ]
 
 	-D   run on the Docker container
 	-M   run semi-automatic make
+
+Control Files:
+	*.LANG    translation languates
+	*.FORMAT  translation foramt (xtxt, cm, ifdef)
 END
 
 while getopts :${EXOPT:=dI:D} OPT
