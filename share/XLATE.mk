@@ -1,9 +1,4 @@
 #
-# Requires GNU make which can handle "file" function.
-# /usr/bin/make in macOS Monterey is 3.81 but it does not work.
-#
-
-#
 # ENVIRONMENTS
 #
 # XLATE_DEBUG:  Enable debug output
@@ -33,8 +28,8 @@ endif
 
 define FOREACH
 $(foreach file,$(XLATE_FILES),
-$(foreach lang,$(or $(file < $(file).LANG),$(XLATE_LANG)),
-$(foreach form,$(or $(file < $(file).FORMAT),$(XLATE_FORMAT)),
+$(foreach lang,$(or $(shell cat $(file).LANG 2> /dev/null),$(XLATE_LANG)),
+$(foreach form,$(or $(shell cat $(file).FORMAT 2> /dev/null),$(XLATE_FORMAT)),
 $(call $1,$(lang),$(form),$(file))
 )))
 endef

@@ -123,7 +123,7 @@ then
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
 	 ${file:+XLATE_FILES=\"$file\"} \
-	 "${opt[@]}"
+	 ${opt[@]}
     exit 1
 fi
 #	 XLATE_FILES="\"${file[*]}\"" \
