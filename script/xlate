@@ -26,8 +26,10 @@ define pod <<"=cut"
 	-t#  to lang
 	-m#  max length per API call
 
-	-D   run on the Docker container
-	-M   run semi-automatic make
+	-M   run make
+	-D   run make on the container
+	-C   run any command on the container
+	-B   run in batch (non-interactive) mode
 
     Control Files:
 	*.LANG    translation languates
@@ -39,14 +41,14 @@ define pod <<"=cut"
 
 =cut
 
-while getopts :${EXOPT:=dI:D} OPT
+interactive=yes
+while getopts :${EXOPT:=dI:BCD} OPT
 do
     case $OPT in
-	d)
-	    debug=yes ; set -x ;;
-	I)
-	    container="$OPTARG" ;;
-	D)
+	d) debug=yes ; set -x ;;
+	B) interactive= ;;
+	I) container="$OPTARG" ;;
+	C|D)
 	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
 	    then
 		ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
@@ -54,14 +56,21 @@ do
 		then
 		    version=${BASH_REMATCH[1]}
 		fi
-		exec docker run --rm -it \
+		declare -a command
+		case "$OPT" in
+		    C) shift $((OPTIND - 1)) ;;
+		    D) command=(xlate) ;;
+		esac
+		command+=(${1+"$@"})
+		exec docker run --rm \
+		     ${interactive:+-it} \
 		     --hostname xlate \
 		     -v $(pwd):/xlate \
 		     -e XLATE_RUNNING_DOCKER=1 \
 		     -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
 		     -e DISPLAY="$ip:0" \
 		     ${container:-tecolicom/xlate${version:+:$version}} \
-		     xlate ${1+"$@"}
+		     "${command[@]}"
 		exit;
 	    fi
 	    ;;
