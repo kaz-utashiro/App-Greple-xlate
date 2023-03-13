@@ -10,6 +10,8 @@ Décision du Conseil stratégique pour la promotion de l'utilisation des donnée
 
 Modifié le 7 juin 2048
 
+Modifié le 15 juin 2021.
+
 Au Japon, à la suite du grand tremblement de terre du Japon oriental du 11 mars 2011, la sensibilisation à la nécessité d'ouvrir et d'utiliser les données détenues par le gouvernement, les autorités locales et les entreprises s'est accrue.
 
 Le gouvernement du Japon a encouragé les initiatives d'ouverture des données sur la base de la "stratégie d'ouverture des données de l'administration électronique" (décidée par le siège stratégique pour la promotion d'une société avancée de réseaux d'information et de communication le 4 juillet 2012), qui reconnaît que les données publiques sont un bien partagé par tous les citoyens.
@@ -62,7 +64,7 @@ En principe, les conditions d'utilisation standard du gouvernement doivent être
 
 (3) Environnement de divulgation publique
 
-Les ministères et agences gouvernementales doivent mettre les données à la disposition du public sur leurs sites web sous une forme qui peut être facilement recherchée et utilisée. Pour les données pour lesquelles on suppose qu'il existe un besoin particulièrement élevé, outre la commodité pour l'utilisateur, du point de vue de la charge et de l'efficacité du système, l'introduction de mécanismes permettant le téléchargement par lots et la fourniture par le biais d'API sera encouragée.
+Les ministères et les agences gouvernementales mettent les données à la disposition du public sur leurs sites web sous une forme qui permet de les rechercher et de les utiliser facilement. En particulier, les données utiles telles que les "données qui ne peuvent être fournies que par les différents ministères et agences", les "données fiables qui peuvent servir de données de base dans divers domaines" ou les "données présentant des caractéristiques en temps réel" sont supposées être très demandées par la société et devraient donc être activement rendues publiques. En outre, du point de vue du confort de l'utilisateur et de la charge et de l'efficacité du système, il convient de promouvoir l'introduction de mécanismes permettant le téléchargement par lots et la mise à disposition par le biais d'API.
 
 En outre, afin de permettre des recherches transversales sur l'ensemble des données ouvertes du gouvernement et de promouvoir l'utilisation des données, des méta-informations telles que le contour et le format des données seront enregistrées sur le site du catalogue de données du gouvernement DATA.GO.JP, traitées en tant que "CC0 1.0 Worldwide" comme défini par Creative Commons, et "JP". JP, et les mettre à la disposition du public.
 
@@ -72,7 +74,9 @@ En principe, les données à publier doivent l'être dans une structure et un fo
 
 En outre, du point de vue de la divulgation d'informations au public, les données continueront à être publiées dans un format adapté à la forme traditionnelle d'utilisation des lecteurs humains, mais même dans ce cas, il doit être possible d'effectuer des recherches et d'extraire du texte.
 
-Le Bureau de la stratégie informatique continuera à promouvoir la normalisation des structures et des formats de données en coopération avec les ministères et les agences concernés. En outre, les données contenant des informations sur les entreprises devraient être accompagnées d'un numéro d'entreprise.
+En principe, les données particulièrement faciles à structurer devraient être publiées dans un format de données plus facile à utiliser, c'est-à-dire "3 étoiles (CSV, XML et autres formats)" ou plus. En outre, des efforts seront déployés pour améliorer l'environnement de divulgation des méta-informations, comme l'utilisation de sites de catalogues de données, afin que toutes les données publiées, y compris celles qui sont difficiles à structurer, puissent être facilement visualisées et que les API puissent être utilisées.
+
+Le bureau de stratégie informatique du secrétariat du cabinet continuera à promouvoir la normalisation des structures et des formats de données en coopération avec les ministères et les agences concernés. En outre, les données contenant des informations sur les entreprises doivent être étiquetées avec un numéro d'entreprise.
 
 (5) Publication limitée de données non publiées
 
@@ -165,6 +169,12 @@ Chaque ministère et agence gouvernementale (y compris les institutions telles q
 
 Règles d'utilisation des sites web des ministères et agences gouvernementales présentées sous forme de modèle unifié dans la perspective de promouvoir l'utilisation secondaire des données publiées sur les sites web des agences gouvernementales. Annexe 1, "Conditions d'utilisation standard du gouvernement (version 2.0)" du "Concept de base sur la publication de données par les ministères et agences pour la promotion de l'utilisation secondaire (Lignes directrices)".
 
+Par exemple, les données statistiques publiées par divers ministères et agences gouvernementales.
+
+Les données qui doivent être mises à jour à intervalles réguliers, telles que les informations sur les événements, les taux d'encombrement des transports publics ou les informations sur les catastrophes et la prévention des catastrophes.
+
+Informations sur les données à publier, en indiquant de quel type de données il s'agit. Par exemple, des informations sur les propriétés telles que le titre, le nom de l'organisme émetteur, le créateur (nom du service), etc. et des mots-clés pour la recherche de données. Pour plus de détails sur les autres éléments, voir "(2) Information sur les métadonnées, etc. fournies sur les sites de catalogues de données" dans Data.go.jp "Information for developers" (https://www.data.go.jp/for-developer/for-developer).
+
 Pour la définition de "CC0 1.0 Worldwide" et d'autres détails, voir le Code juridique de Creative Commons. (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 
 Il existe plusieurs niveaux de "degré d'aptitude à la lecture par machine", en fonction de la quantité de données pouvant être réutilisées par des ordinateurs sans nécessiter d'intervention humaine. Pour qu'un ordinateur puisse réutiliser automatiquement des données, il doit être capable d'identifier (déchiffrer) la structure logique des données concernées et de traiter les valeurs de cette structure (par exemple, des chiffres dans des tableaux, du texte, etc.).
@@ -172,6 +182,12 @@ Il existe plusieurs niveaux de "degré d'aptitude à la lecture par machine", en
 Voir "3 Concept d'expansion de la publication dans des formats de données lisibles par machine" et l'annexe 2 "Points à prendre en considération lors de la préparation des données pour les informations numériques (tableaux), textuelles et géospatiales" dans "Basic Ideas for the Publication of Data by Ministries and Agencies to Promote Secondary Use (Guidelines)".
 
 Indicateur en cinq étapes proposé par Tim Berners-Lee, fondateur du Web, la première étape étant le moment où les données répondent à la licence d'utilisation secondaire, quel que soit le format de fichier, et la troisième étape étant le format csv, qui présente une lisibilité machine relativement élevée. (http://5stardata.info/ja/)
+
+Informations pouvant être exprimées sous forme de matrices et de hiérarchies, telles que les informations statistiques.
+
+Formats (CSV, XML) qui ne sont pas limités à des fonctions spécifiques et peuvent être utilisés couramment.
+
+Si des données contenant des tableaux doivent être publiées en CSV, voir "8.3.2 Guidelines for tabular data" dans le "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 
 Les informations qui ont déjà été rendues publiques, y compris sur papier, y compris les informations divulguées à la demande de l'utilisateur, ne sont pas couvertes. Le concept et le fonctionnement des données faisant l'objet d'une diffusion limitée (par exemple, le processus de décision pour la diffusion limitée et le système de suivi et d'évaluation des progrès) seront examinés plus en détail à l'avenir, si nécessaire.
 

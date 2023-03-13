@@ -36,6 +36,13 @@ Modifié le 7 juin 2048
 #endif
 
 #ifdef ORIGINAL
+令和３年６月15日改正
+#endif
+#ifdef FR
+Modifié le 15 juin 2021.
+#endif
+
+#ifdef ORIGINAL
 　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。
 #endif
 #ifdef FR
@@ -218,10 +225,10 @@ En principe, les conditions d'utilisation standard du gouvernement doivent être
 #endif
 
 #ifdef ORIGINAL
-　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特にニーズが高いと想定されるデータについては、利用者の利便性に加え、システムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
+　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ」、または「リアルタイム性を有するデータ」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
 #endif
 #ifdef FR
-Les ministères et agences gouvernementales doivent mettre les données à la disposition du public sur leurs sites web sous une forme qui peut être facilement recherchée et utilisée. Pour les données pour lesquelles on suppose qu'il existe un besoin particulièrement élevé, outre la commodité pour l'utilisateur, du point de vue de la charge et de l'efficacité du système, l'introduction de mécanismes permettant le téléchargement par lots et la fourniture par le biais d'API sera encouragée.
+Les ministères et les agences gouvernementales mettent les données à la disposition du public sur leurs sites web sous une forme qui permet de les rechercher et de les utiliser facilement. En particulier, les données utiles telles que les "données qui ne peuvent être fournies que par les différents ministères et agences", les "données fiables qui peuvent servir de données de base dans divers domaines" ou les "données présentant des caractéristiques en temps réel" sont supposées être très demandées par la société et devraient donc être activement rendues publiques. En outre, du point de vue du confort de l'utilisateur et de la charge et de l'efficacité du système, il convient de promouvoir l'introduction de mécanismes permettant le téléchargement par lots et la mise à disposition par le biais d'API.
 #endif
 
 #ifdef ORIGINAL
@@ -253,10 +260,17 @@ En outre, du point de vue de la divulgation d'informations au public, les donné
 #endif
 
 #ifdef ORIGINAL
-　IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
+特に構造化しやすいデータはより活用がしやすいデータ形式である「３つ星（CSVやXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
 #endif
 #ifdef FR
-Le Bureau de la stratégie informatique continuera à promouvoir la normalisation des structures et des formats de données en coopération avec les ministères et les agences concernés. En outre, les données contenant des informations sur les entreprises devraient être accompagnées d'un numéro d'entreprise.
+En principe, les données particulièrement faciles à structurer devraient être publiées dans un format de données plus facile à utiliser, c'est-à-dire "3 étoiles (CSV, XML et autres formats)" ou plus. En outre, des efforts seront déployés pour améliorer l'environnement de divulgation des méta-informations, comme l'utilisation de sites de catalogues de données, afin que toutes les données publiées, y compris celles qui sont difficiles à structurer, puissent être facilement visualisées et que les API puissent être utilisées.
+#endif
+
+#ifdef ORIGINAL
+　内閣官房IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
+#endif
+#ifdef FR
+Le bureau de stratégie informatique du secrétariat du cabinet continuera à promouvoir la normalisation des structures et des formats de données en coopération avec les ministères et les agences concernés. En outre, les données contenant des informations sur les entreprises doivent être étiquetées avec un numéro d'entreprise.
 #endif
 
 #ifdef ORIGINAL
@@ -571,6 +585,27 @@ Règles d'utilisation des sites web des ministères et agences gouvernementales 
 #endif
 
 #ifdef ORIGINAL
+ 例えば、各府省庁が公表している統計データ等。
+#endif
+#ifdef FR
+Par exemple, les données statistiques publiées par divers ministères et agences gouvernementales.
+#endif
+
+#ifdef ORIGINAL
+ イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
+#endif
+#ifdef FR
+Les données qui doivent être mises à jour à intervalles réguliers, telles que les informations sur les événements, les taux d'encombrement des transports publics ou les informations sur les catastrophes et la prévention des catastrophes.
+#endif
+
+#ifdef ORIGINAL
+ 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
+#endif
+#ifdef FR
+Informations sur les données à publier, en indiquant de quel type de données il s'agit. Par exemple, des informations sur les propriétés telles que le titre, le nom de l'organisme émetteur, le créateur (nom du service), etc. et des mots-clés pour la recherche de données. Pour plus de détails sur les autres éléments, voir "(2) Information sur les métadonnées, etc. fournies sur les sites de catalogues de données" dans Data.go.jp "Information for developers" (https://www.data.go.jp/for-developer/for-developer).
+#endif
+
+#ifdef ORIGINAL
  「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 #endif
 #ifdef FR
@@ -596,6 +631,27 @@ Voir "3 Concept d'expansion de la publication dans des formats de données lisib
 #endif
 #ifdef FR
 Indicateur en cinq étapes proposé par Tim Berners-Lee, fondateur du Web, la première étape étant le moment où les données répondent à la licence d'utilisation secondaire, quel que soit le format de fichier, et la troisième étape étant le format csv, qui présente une lisibilité machine relativement élevée. (http://5stardata.info/ja/)
+#endif
+
+#ifdef ORIGINAL
+ 統計情報等の行列や階層による表現が可能な情報。
+#endif
+#ifdef FR
+Informations pouvant être exprimées sous forme de matrices et de hiérarchies, telles que les informations statistiques.
+#endif
+
+#ifdef ORIGINAL
+ 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
+#endif
+#ifdef FR
+Formats (CSV, XML) qui ne sont pas limités à des fonctions spécifiques et peuvent être utilisés couramment.
+#endif
+
+#ifdef ORIGINAL
+ 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
+#endif
+#ifdef FR
+Si des données contenant des tableaux doivent être publiées en CSV, voir "8.3.2 Guidelines for tabular data" dans le "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 #endif
 
 #ifdef ORIGINAL
