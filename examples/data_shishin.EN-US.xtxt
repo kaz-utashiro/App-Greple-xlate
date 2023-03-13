@@ -10,6 +10,8 @@ Strategic Council for the Promotion of Public-Private Data Utilization
 
 Amended on June 7, 2027
 
+Amended June 15, 2021
+
 In Japan, since the Great East Japan Earthquake on March 11, 2011, there has been an increased awareness of the need to disclose and utilize data held by the government, local governments, and businesses.
 
 The government has been promoting open data initiatives based on the "e-Government Open Data Strategy" (decided by the Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society on July 4, 2012), which recognizes that public data is a property shared by all citizens.
@@ -62,7 +64,7 @@ In principle, the Government Standard Terms of Use shall be applied to data publ
 
 (3) Public disclosure environment
 
-Each government agency shall release data in a form that can be easily searched and used on its website. For data for which needs are expected to be particularly high, in addition to user convenience, from the perspective of system load and efficiency, a mechanism will be introduced to enable batch downloading, and provision through APIs will be promoted.
+Each government agency shall make data publicly available on its website in a form that can be easily searched and used. In particular, useful data such as "data that can only be provided by each ministry and agency," "highly reliable data that can serve as basic data in various fields," or "data with real-time characteristics" are expected to be in high demand by society and should be actively released. In addition, from the viewpoint of user convenience and system load and efficiency, a mechanism to enable batch downloading and provision through APIs should be promoted.
 
 Furthermore, in order to enable cross-sectional searches of the entire government's open data and promote data utilization, meta-information such as the outline and format of the data will be registered on the government's data catalog site "DATA.GO.JP" after being treated as "CC0 1.0 Worldwide" as defined by Creative Commons, and will be made JP, a government data catalog site, and make it publicly available.
 
@@ -72,7 +74,9 @@ In principle, the data to be released shall be published in a structure and data
 
 From the viewpoint of information disclosure to the public, data will continue to be released in a data format suitable for the traditional form of use of human readers, but even in this case, it must be possible to search and extract text.
 
-The IT Strategy Office will continue to promote standardization of data structures and formats in cooperation with related ministries and agencies. In addition, data containing corporate information should be annotated with a corporate number.
+In particular, data that is easy to structure should, in principle, be released in "3-star (CSV, XML, and other formats)" or higher, a data format that is easier to utilize. In addition, efforts will be made to improve the environment for meta-information disclosure, such as the use of data catalog sites, so that all publicly available data, including data that is difficult to structure, can be easily visualized and APIs can be used.
+
+The Cabinet Secretariat IT Strategy Office will continue to promote standardization of data structures and formats in cooperation with relevant government ministries and agencies. In addition, data containing corporate information shall be annotated with a corporate number.
 
 (5) Limited release of unpublished data
 
@@ -165,6 +169,12 @@ Each government ministry and agency (including organizations belonging to a gove
 
 Rules for the use of the websites of government ministries and agencies, presented as a unified template from the perspective of promoting the secondary use of data published on the websites of government agencies. Attachment 1 "Government Standard Terms of Use (Version 2.0)" of "Basic Idea on Publication of Data by Ministries and Agencies to Promote Secondary Use (Guidelines)".
 
+For example, statistical data published by various government ministries and agencies.
+
+Data that needs to be updated at regular intervals, such as event information, public transportation congestion rates, or disaster/disaster prevention information.
+
+Information on the type of data to be released. For example, property information such as title, name of the public organization, creator (department name), etc., and keywords for data search. For details on other items, see "(2) Information on metadata, etc. provided on the data catalog site" in "Information for Developers" on Data.go.jp (https://www.data.go.jp/for-developer/for-developer).
+
 For the definition of "CC0 1.0 Worldwide," etc., see "Creative Commons Legal Code. (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 
 There are several levels of "machine readability," depending on how much data can be reused by a computer without requiring human intervention. For a computer to automatically reuse data, it must be able to identify (decipher) the logical structure of the data and process the values in the structure (numbers in tables, text, etc.).
@@ -172,6 +182,12 @@ There are several levels of "machine readability," depending on how much data ca
 See "3 Concept of Expanding Publication of Data in Machine-Readable Data Format" and Attachment 2, "Considerations in Preparing Data for Numerical (Tables), Text, and Geospatial Information" in "Basic Idea on Data Publication by Ministries and Agencies to Promote Secondary Use (Guidelines)".
 
 The five-stage index proposed by Tim Berners-Lee, the founder of the Web, is considered to be the first stage if the data meets the license for secondary use regardless of file format, and the third stage for csv format with relatively high machine readability. (http://5stardata.info/ja/)
+
+Information that can be expressed in matrices or hierarchies, such as statistical information.
+
+A format (CSV, XML) that can be used commonly without being limited to specific functions.
+
+When publishing data containing tables in CSV, refer to "8.3.2 Guidelines for Tabular Data" in the "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 
 Information that has already been made publicly available, including information disclosure at the request of users, including paper-based information, is excluded. The concept and operation of data subject to limited release (e.g., the decision-making process for limited release and the system for monitoring and evaluating progress) will be further discussed in the future, as necessary.
 

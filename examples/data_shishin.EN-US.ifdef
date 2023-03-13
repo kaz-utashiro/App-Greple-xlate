@@ -36,6 +36,13 @@ Amended on June 7, 2027
 #endif
 
 #ifdef ORIGINAL
+令和３年６月15日改正
+#endif
+#ifdef EN-US
+Amended June 15, 2021
+#endif
+
+#ifdef ORIGINAL
 　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。
 #endif
 #ifdef EN-US
@@ -218,10 +225,10 @@ In principle, the Government Standard Terms of Use shall be applied to data publ
 #endif
 
 #ifdef ORIGINAL
-　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特にニーズが高いと想定されるデータについては、利用者の利便性に加え、システムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
+　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ」、または「リアルタイム性を有するデータ」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
 #endif
 #ifdef EN-US
-Each government agency shall release data in a form that can be easily searched and used on its website. For data for which needs are expected to be particularly high, in addition to user convenience, from the perspective of system load and efficiency, a mechanism will be introduced to enable batch downloading, and provision through APIs will be promoted.
+Each government agency shall make data publicly available on its website in a form that can be easily searched and used. In particular, useful data such as "data that can only be provided by each ministry and agency," "highly reliable data that can serve as basic data in various fields," or "data with real-time characteristics" are expected to be in high demand by society and should be actively released. In addition, from the viewpoint of user convenience and system load and efficiency, a mechanism to enable batch downloading and provision through APIs should be promoted.
 #endif
 
 #ifdef ORIGINAL
@@ -253,10 +260,17 @@ From the viewpoint of information disclosure to the public, data will continue t
 #endif
 
 #ifdef ORIGINAL
-　IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
+特に構造化しやすいデータはより活用がしやすいデータ形式である「３つ星（CSVやXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
 #endif
 #ifdef EN-US
-The IT Strategy Office will continue to promote standardization of data structures and formats in cooperation with related ministries and agencies. In addition, data containing corporate information should be annotated with a corporate number.
+In particular, data that is easy to structure should, in principle, be released in "3-star (CSV, XML, and other formats)" or higher, a data format that is easier to utilize. In addition, efforts will be made to improve the environment for meta-information disclosure, such as the use of data catalog sites, so that all publicly available data, including data that is difficult to structure, can be easily visualized and APIs can be used.
+#endif
+
+#ifdef ORIGINAL
+　内閣官房IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
+#endif
+#ifdef EN-US
+The Cabinet Secretariat IT Strategy Office will continue to promote standardization of data structures and formats in cooperation with relevant government ministries and agencies. In addition, data containing corporate information shall be annotated with a corporate number.
 #endif
 
 #ifdef ORIGINAL
@@ -571,6 +585,27 @@ Rules for the use of the websites of government ministries and agencies, present
 #endif
 
 #ifdef ORIGINAL
+ 例えば、各府省庁が公表している統計データ等。
+#endif
+#ifdef EN-US
+For example, statistical data published by various government ministries and agencies.
+#endif
+
+#ifdef ORIGINAL
+ イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
+#endif
+#ifdef EN-US
+Data that needs to be updated at regular intervals, such as event information, public transportation congestion rates, or disaster/disaster prevention information.
+#endif
+
+#ifdef ORIGINAL
+ 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
+#endif
+#ifdef EN-US
+Information on the type of data to be released. For example, property information such as title, name of the public organization, creator (department name), etc., and keywords for data search. For details on other items, see "(2) Information on metadata, etc. provided on the data catalog site" in "Information for Developers" on Data.go.jp (https://www.data.go.jp/for-developer/for-developer).
+#endif
+
+#ifdef ORIGINAL
  「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 #endif
 #ifdef EN-US
@@ -596,6 +631,27 @@ See "3 Concept of Expanding Publication of Data in Machine-Readable Data Format"
 #endif
 #ifdef EN-US
 The five-stage index proposed by Tim Berners-Lee, the founder of the Web, is considered to be the first stage if the data meets the license for secondary use regardless of file format, and the third stage for csv format with relatively high machine readability. (http://5stardata.info/ja/)
+#endif
+
+#ifdef ORIGINAL
+ 統計情報等の行列や階層による表現が可能な情報。
+#endif
+#ifdef EN-US
+Information that can be expressed in matrices or hierarchies, such as statistical information.
+#endif
+
+#ifdef ORIGINAL
+ 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
+#endif
+#ifdef EN-US
+A format (CSV, XML) that can be used commonly without being limited to specific functions.
+#endif
+
+#ifdef ORIGINAL
+ 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
+#endif
+#ifdef EN-US
+When publishing data containing tables in CSV, refer to "8.3.2 Guidelines for Tabular Data" in the "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 #endif
 
 #ifdef ORIGINAL
