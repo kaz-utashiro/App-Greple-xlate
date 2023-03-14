@@ -2,6 +2,13 @@ Revision history for Perl extension App-Greple-deepl
 
 {{$NEXT}}
 
+0.16 2023-03-14T09:47:33Z
+
+    - update examples/data_shishin.docx to the latest version
+    - change workdir to /work
+    - introduce -C and -B option
+    - introduce -G option
+
 0.15 2023-03-13T09:25:51Z
 
     - xlate includes container version
