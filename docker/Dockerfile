@@ -62,7 +62,7 @@ RUN if [ "$REPO_URL" != "" ]; then \
     fi
 
 # Set the working directory
-WORKDIR /xlate
+WORKDIR /work
 
 COPY ./root /root
 # .inputrc

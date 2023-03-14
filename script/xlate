@@ -21,15 +21,18 @@ define pod <<"=cut"
 	-s   silent mode
 	-p#  pattern to determine translation area
 	-w#  wrap line by # width
-	-x#  set xlate format (xtxt, cm, ifdef)
+	-o#  output format (xtxt, cm, ifdef)
 	-f#  from lang (ignored)
 	-t#  to lang
 	-m#  max length per API call
+        --   terminate option parsing
 
+    Docker and Make options
 	-M   run make
-	-D   run make on the container
+	-D   run xlate on the container
 	-C   run any command on the container
-	-B   run in batch (non-interactive) mode
+	-G   mount git toplevel directory
+	-B   batch mode (non-interactive)
 
     Control Files:
 	*.LANG    translation languates
@@ -41,57 +44,86 @@ define pod <<"=cut"
 
 =cut
 
+git_topdir() {
+    [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == true ] || return
+    local dir="$(git rev-parse --show-superproject-working-tree)"
+    [ "$dir" ] || dir="$(git rev-parse --show-toplevel)"
+    [ "$dir" ] && echo $dir
+}
+
+env_pattern() {
+    set +x
+    local e
+    # IFS is not good on macOS
+    while (( $# > 0 )); do e=${e:+$e\\|}$1; shift; done
+    echo ${e:+"^\\($e\\)="}
+}
+
 interactive=yes
-while getopts :${EXOPT:=dI:BCD} OPT
+version=
+workdir=/work
+
+while getopts :${EXOPT:=dBI:V:GCD} OPT
 do
     case $OPT in
 	d) debug=yes ; set -x ;;
 	B) interactive= ;;
 	I) container="$OPTARG" ;;
-	C|D)
-	    if [ "$XLATE_RUNNING_DOCKER" == "" ]
+	V) volume="$OPTARG" ;;
+	G)
+	    if [ "${topdir:=$(git_topdir)}" ]
 	    then
-		ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
-		if [[ "$pod" =~ Version\ ([0-9]+.[0-9_]+) ]]
+		if [ "$topdir" != "${PWD:=$(pwd)}" ]
 		then
-		    version=${BASH_REMATCH[1]}
+		    echo "Mount $topdir" >&2
+		    volume=$topdir
+		    cd_path=${PWD#$topdir}
 		fi
-		declare -a command
-		case "$OPT" in
-		    C) shift $((OPTIND - 1)) ;;
-		    D) command=(xlate) ;;
-		esac
-		command+=(${1+"$@"})
-		exec docker run --rm \
-		     ${interactive:+-it} \
-		     --hostname xlate \
-		     -v $(pwd):/xlate \
-		     -e XLATE_RUNNING_DOCKER=1 \
-		     -e DEEPL_AUTH_KEY=$DEEPL_AUTH_KEY \
-		     -e DISPLAY="$ip:0" \
-		     ${container:-tecolicom/xlate${version:+:$version}} \
-		     "${command[@]}"
-		exit;
 	    fi
+	    ;;
+	C|D)
+	    [ "$XLATE_RUNNING_DOCKER" ] && break
+	    ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+	    [[ "$pod" =~ Version\ ([0-9]+.[0-9_]+) ]] && version=:${BASH_REMATCH[1]}
+	    declare -a command
+	    case "$OPT" in
+		C) shift $((OPTIND - 1)) ;;
+		D) command=(xlate) ;;
+	    esac
+	    command+=(${1+"$@"})
+	    ENV=(LANG TZ TERM_PROGRAM TERM_BGCOLOR COLORTERM)
+	    ENV+=(DEEPL_AUTH_KEY)
+	    ENV_PATTERN=$(env_pattern ${ENV[@]})
+	    exec docker run --rm \
+		 ${interactive:+-it} \
+		 --hostname xlate \
+		 -v ${volume:-$(pwd)}:$workdir \
+		 -w $workdir$cd_path \
+		 -v /etc/localtime:/etc/localtime:ro \
+		 -e XLATE_RUNNING_DOCKER=1 \
+		 -e DISPLAY="$ip:0" \
+		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
+		 ${container:-tecolicom/xlate$version} \
+		 "${command[@]}"
+	    exit;
 	    ;;
     esac
 done
 OPTIND=1
 
-while getopts "$EXOPT"'hdacrsMnp:w:x:f:t:m:' OPT
+while getopts "${EXOPT}"'Macrsnp:w:o:f:t:m:h' OPT
 do
     case $OPT in
-	[$EXOPT]) ;;
-	d)     debug=yes ; set -x ;;
+	[$EXOPT]) : ignore ;;
+	M)  run_make=yes ;;
 	a)   use_api=yes ;;
 	c)     check=yes ;;
 	r)   refresh=yes ;;
 	s)    silent=yes ;;
-	M)  run_make=yes ;;
 	n)    dryrun=yes ;;
 	p)   pattern="$OPTARG" ;;
 	w)      wrap="$OPTARG" ;;
-	x)    format="$OPTARG" ;;
+	o)    format="$OPTARG" ;;
 	f) from_lang="$OPTARG" ;;
 	t)   to_lang="$OPTARG" ;;
 	m)       max="$OPTARG" ;;
@@ -133,7 +165,7 @@ if [ "$run_make" == yes ]
 then
     mod="App-Greple-xlate"
     share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
-    declare opt
+    declare -a opt
     for m in $*
     do
 	if [ -f "$m" ]
@@ -182,7 +214,7 @@ case $1 in
 	;;
 esac
 
-if [ "$pattern" != "" ]
+if [ "$pattern" ]
 then
     option+=(--re "$pattern")
 else
