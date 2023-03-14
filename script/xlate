@@ -29,10 +29,10 @@ define pod <<"=cut"
 
     Docker and Make options
 	-M   run make
-	-D   run xlate on the container
-	-C   run any command on the container
 	-G   mount git toplevel directory
 	-B   batch mode (non-interactive)
+	-D   run xlate on the container
+	-C   run any command on the container
 
     Control Files:
 	*.LANG    translation languates
@@ -55,7 +55,7 @@ env_pattern() {
     set +x
     local e
     # IFS is not good on macOS
-    while (( $# > 0 )); do e=${e:+$e\\|}$1; shift; done
+    while (( $# > 0 )); do e+="${e:+\\|}$1"; shift; done
     echo ${e:+"^\\($e\\)="}
 }
 
