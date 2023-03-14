@@ -45,7 +45,7 @@ ALL: $(ALL)
 
 define DEFINE_RULE
 $(basename $3).$1.$2: $3
-	$$(XLATE) -t $1 -x $2 $$< > $$@
+	$$(XLATE) -t $1 -o $2 $$< > $$@
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
