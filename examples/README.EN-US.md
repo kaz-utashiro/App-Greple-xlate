@@ -56,22 +56,24 @@ If you are using a paid account and there is no limit to the number of character
 
 ### Using the DeepL API
 
-To translate using the API, the `deepl` command must be installed. Set the variable `USEAPI` and run make.
+To translate using the API, the `deepl` command must be installed. Set the variable `USEAPI` and run make. However, you do not need the `deepl` command if you run on a Docker container.
 
     make USEAPI=yes
 
 When using the API, the maximum number of characters is set to 128K. The authentication key is set in the environment variable `DEEPL_AUTH_KEY`. Set environment variables such as `DEEPL_SERVER_URL` if necessary.
 
-## Variables used in make
+### Using the Docker container
 
-### DEBUG
+Run make with the variable `DOCKER` enabled.
 
-Turns on debug mode.
+    make DOCKER=yes
 
-### MAXLEN
+### `XLATE_OPT` variable
 
-Set the maximum number of characters to process at one time.
+You can also specify options to give to the `xlate` command.
 
-### USEAPI
+For example, `make XLATE_OPT=-Dam100000' will allow you to run on Docker with the API and a character limit of 100,000 characters.
 
-Translate using the DeepL API.
+## xlate script
+
+Originally, these files were created to be handled by a Makefile, but now the settings used there are more generic and are automatically handled by a script called `xlate`. Thus, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is `. /share/XLATE.mk`.
