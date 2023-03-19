@@ -31,6 +31,7 @@ define pod <<"=cut"
 	-M   run make
 	-G   mount git toplevel directory
 	-B   batch mode (non-interactive)
+	-R   mount read-only
 	-D   run xlate on the container
 	-C   run any command on the container
 
@@ -47,8 +48,8 @@ define pod <<"=cut"
 git_topdir() {
     [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == true ] || return
     local dir="$(git rev-parse --show-superproject-working-tree)"
-    [ "$dir" ] || dir="$(git rev-parse --show-toplevel)"
-    [ "$dir" ] && echo $dir
+    :  ${dir:="$(git rev-parse --show-toplevel)"}
+    echo -n $dir
 }
 
 env_pattern() {
@@ -56,26 +57,34 @@ env_pattern() {
     local e
     # IFS is not good on macOS
     while (( $# > 0 )); do e+="${e:+\\|}$1"; shift; done
-    echo ${e:+"^\\($e\\)="}
+    echo -n ${e:+"^\\($e\\)="}
 }
 
+repository=tecolicom/xlate
+hostname=xlate
 interactive=yes
 version=
 workdir=/work
+mount_mode=rw
+read_only=
+[ -e ${localtime:=/etc/localtime} ] || localtime=
 
-while getopts :${EXOPT:=dBI:V:GCD} OPT
+while getopts :${EXOPT:=dBI:V:T:LRGCD} OPT
 do
     case $OPT in
-	d) debug=yes ; set -x ;;
+	d)       debug=yes ; set -x ;;
 	B) interactive= ;;
-	I) container="$OPTARG" ;;
-	V) volume="$OPTARG" ;;
+	I)   container="$OPTARG" ;;
+	V)      volume="$OPTARG" ;;
+	T)     version=:"$OPTARG" ;;
+	L)     version=:latest ;;
+	R)  mount_mode=ro ;;
 	G)
 	    if [ "${topdir:=$(git_topdir)}" ]
 	    then
 		if [ "$topdir" != "${PWD:=$(pwd)}" ]
 		then
-		    echo "Mount $topdir" >&2
+		    echo "Mount $topdir to $workdir" >&2
 		    volume=$topdir
 		    cd_path=${PWD#$topdir}
 		fi
@@ -84,7 +93,11 @@ do
 	C|D)
 	    [ "$XLATE_RUNNING_DOCKER" ] && break
 	    ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
-	    [[ "$pod" =~ Version\ ([0-9]+.[0-9_]+) ]] && version=:${BASH_REMATCH[1]}
+	    if [ ! "$version" ]
+	    then
+		this=$(awk '$1=="Version"{print $2}' <<< "$pod")
+		[[ "$this" =~ ^[0-9]+\.[0-9_]+$ ]] && version=":$this"
+	    fi
 	    declare -a command
 	    case "$OPT" in
 		C) shift $((OPTIND - 1)) ;;
@@ -95,15 +108,16 @@ do
 	    ENV+=(DEEPL_AUTH_KEY)
 	    ENV_PATTERN=$(env_pattern ${ENV[@]})
 	    exec docker run --rm \
-		 ${interactive:+-it} \
-		 --hostname xlate \
-		 -v ${volume:-$(pwd)}:$workdir \
-		 -w $workdir$cd_path \
-		 -v /etc/localtime:/etc/localtime:ro \
 		 -e XLATE_RUNNING_DOCKER=1 \
+		 ${interactive:+-it} \
+		 ${read_only:+--read-only} \
+		 ${hostname:+--hostname "${hostname}"} \
+		 ${localtime:+-v ${localtime}:/etc/localtime:ro} \
+		 -v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
+		 -w "${workdir}${cd_path}" \
 		 -e DISPLAY="$ip:0" \
 		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
-		 ${container:-tecolicom/xlate$version} \
+		 ${container:-${repository}${version}} \
 		 "${command[@]}"
 	    exit;
 	    ;;
