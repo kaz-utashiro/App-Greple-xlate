@@ -47,9 +47,9 @@ specified by **--xlate-format** option.
     </p>
 </div>
 
-If you want to translate entire text, use **--match-entire** option.
+If you want to translate entire text, use **--match-all** option.
 This is a short-cut to specify the pattern matches entire text
-`(?s).*`.
+`(?s).+`.
 
 # OPTIONS
 
@@ -147,7 +147,7 @@ This is a short-cut to specify the pattern matches entire text
 
     See the tranlsation result in real time in the STDERR output.
 
-- **--match-entire**
+- **--match-all**
 
     Set the whole text of the file as a target area.
 

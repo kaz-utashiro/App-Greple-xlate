@@ -29,7 +29,7 @@ define pod <<"=cut"
 
     Docker and Make options
 	-M   run make
-	-G   mount git toplevel directory
+	-G   mount git top-level directory
 	-B   batch mode (non-interactive)
 	-R   mount read-only
 	-D   run xlate on the container
@@ -47,17 +47,16 @@ define pod <<"=cut"
 
 git_topdir() {
     [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == true ] || return
-    local dir="$(git rev-parse --show-superproject-working-tree)"
-    :  ${dir:="$(git rev-parse --show-toplevel)"}
+    local         dir="$(git rev-parse --show-superproject-working-tree)"
+    [ "$dir" ] || dir="$(git rev-parse --show-toplevel)"
     echo -n $dir
 }
 
 env_pattern() {
     set +x
-    local e
-    # IFS is not good on macOS
-    while (( $# > 0 )); do e+="${e:+\\|}$1"; shift; done
-    echo -n ${e:+"^\\($e\\)="}
+    local name
+    while (( $# > 0 )); do name+="${name:+\\|}$1"; shift; done
+    echo -n ${name:+"^\\($name\\)="}
 }
 
 repository=tecolicom/xlate
