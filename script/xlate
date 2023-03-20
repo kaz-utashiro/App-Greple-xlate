@@ -68,6 +68,11 @@ mount_mode=rw
 read_only=
 [ -e ${localtime:=/etc/localtime} ] || localtime=
 
+define DEFAULT_ENV <<EOF
+LESSANSIENDCHARS=mK
+LESS=-cR
+EOF
+
 while getopts :${EXOPT:=dBI:V:T:LRGCD} OPT
 do
     case $OPT in
@@ -115,6 +120,7 @@ do
 		 -v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
 		 -w "${workdir}${cd_path}" \
 		 -e DISPLAY="$ip:0" \
+		 ${DEFAULT_ENV:+--env-file <(echo "$DEFAULT_ENV")} \
 		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
 		 ${container:-${repository}${version}} \
 		 "${command[@]}"
