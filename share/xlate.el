@@ -15,6 +15,6 @@
     (goto-char begin)
     (shell-command-on-region
      begin end
-     "greple -Mxlate::deepl --no-xlate-progress --xlate-format=conflict --match-entire --xlate-fold --xlate-cache=never --xlate"
+     "xlate -a -s -o cm -w72 -p '(?s).+' -t EN-US"
      t t nil t)
     (goto-char (region-beginning))))
