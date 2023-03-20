@@ -171,7 +171,6 @@ option+=(--all)
 [ "$debug"   == yes ] && option+=(-dmo)
 [ "$refresh" == yes ] && option+=(--cache-clear)
 [ "$silent"  == yes ] && option+=(--no-xlate-progress)
-[ "$pattern" != ""  ] && option+=(--re="$pattern")
 [ "$max"     != ""  ] && option+=(--xlate-maxlen="$max")
 
 : run make
