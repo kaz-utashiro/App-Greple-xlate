@@ -13,18 +13,15 @@
 (defun xlate-region (begin end &optional target-lang)
   "Execute xlate on region with an optional target language.
 If called with a prefix argument (C-u), prompt for the target language."
-  (interactive (let* ((region (list (region-beginning) (region-end)))
-                      (lang (when current-prefix-arg
-                              (read-string (format "Target language (default: %s): "
-						   xlate-default-target-lang)))))
-                 (append region (list lang))))
-  (let ((opoint (point))
-        (lang (or target-lang xlate-default-target-lang)))
-    (set-mark end)
-    (goto-char begin)
+  (interactive
+   (list (region-beginning) (region-end)
+         (if current-prefix-arg
+             (read-string (format "Target language (default: %s): "
+                                  xlate-default-target-lang))
+           nil)))
+  (let ((lang (or target-lang xlate-default-target-lang)))
     (shell-command-on-region
      begin end
      (format "xlate -a -s -o cm -w72 -p '(?s).+' -t %s -" lang)
      t t nil t)
-    (goto-char (region-beginning))
     (setq xlate-default-target-lang lang))) ; Update the default target language
