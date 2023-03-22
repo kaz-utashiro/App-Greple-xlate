@@ -59,6 +59,11 @@ env_pattern() {
     echo -n ${name:+"^\\($name\\)="}
 }
 
+get_ip() {
+    local ip=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | tail -1)
+    echo -n $ip
+}
+
 repository=tecolicom/xlate
 hostname=xlate
 interactive=yes
@@ -66,6 +71,7 @@ version=
 workdir=/work
 mount_mode=rw
 read_only=
+display=
 [ -e ${localtime:=/etc/localtime} ] || localtime=
 
 define DEFAULT_ENV <<EOF
@@ -96,7 +102,10 @@ do
 	    ;;
 	C|D)
 	    [ "$XLATE_RUNNING_DOCKER" ] && break
-	    ip=$(ifconfig | awk '/inet /{print $2}' | tail -1)
+	    if [ "$DISPLAY" ] && [ "${ip:=$(get_ip)}" ]
+	    then
+		display="$ip:0"
+	    fi
 	    if [ ! "$version" ]
 	    then
 		this=$(awk '$1=="Version"{print $2}' <<< "$pod")
@@ -119,7 +128,7 @@ do
 		 ${localtime:+-v ${localtime}:/etc/localtime:ro} \
 		 -v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
 		 -w "${workdir}${cd_path}" \
-		 -e DISPLAY="$ip:0" \
+		 ${display:+-e DISPLAY="$display"} \
 		 ${DEFAULT_ENV:+--env-file <(echo "$DEFAULT_ENV")} \
 		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
 		 ${container:-${repository}${version}} \
