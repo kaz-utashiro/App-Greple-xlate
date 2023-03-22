@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Version 0.18
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Если вы хотите перевести весь текст, используйте опцию B<--match-entire>. Это сокращение для указания шаблона, который соответствует всему тексту C<(?s).*>.
+Если вы хотите перевести весь текст, используйте опцию B<--match-all>. Это сокращение для указания соответствия шаблона всему тексту C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Version 0.18
 
 Результат перевода можно увидеть в реальном времени в выводе STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Установите весь текст файла в качестве целевой области.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

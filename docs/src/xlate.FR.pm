@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Par défaut, le texte original et traduit est imprimé dans le format "marqueur 
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Si vous voulez traduire un texte entier, utilisez l'option B<--match-entire>. Il s'agit d'un raccourci pour spécifier que le motif correspond au texte entier C<(?s).*>.
+Si vous souhaitez traduire un texte entier, utilisez l'option B<--match-all>. Il s'agit d'un raccourci pour spécifier que le motif correspond au texte entier C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Spécifie la longueur maximale du texte à envoyer à l'API en une seule fois. L
 
 Voir le résultat de la traduction en temps réel dans la sortie STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Définissez l'ensemble du texte du fichier comme zone cible.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

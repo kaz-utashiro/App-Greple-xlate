@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Standaard worden originele en vertaalde tekst afgedrukt in het "conflict marker"
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Als u de hele tekst wilt vertalen, gebruik dan de optie B<--match-entire>. Dit is een short-cut om aan te geven dat het patroon overeenkomt met de hele tekst C<(?s).*>.
+Als u de hele tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om aan te geven dat het patroon overeenkomt met de hele tekst C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Specificeer de maximale lengte van de tekst die in één keer naar de API moet w
 
 Zie het resultaat van de vertaling in real time in de STDERR uitvoer.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Stel de hele tekst van het bestand in als doelgebied.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ L<pod>形式の文書中の通常のテキストブロックを翻訳したい�
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-テキスト全体を翻訳したい場合は、B<--match-entire>オプションを使用します。これは、C<(?s).*>というテキスト全体にマッチするパターンを指定するためのショートカットです。
+テキスト全体を翻訳したい場合は、B<--match-all>オプションを使用します。これは、テキスト全体にマッチするパターンを指定するためのショートカットです C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ APIに一度に送信するテキストの最大長を指定します。初期�
 
 翻訳結果はSTDERR出力にリアルタイムで表示されます。
 
-=item B<--match-entire>
+=item B<--match-all>
 
 ファイルの全テキストを対象範囲に設定します。
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

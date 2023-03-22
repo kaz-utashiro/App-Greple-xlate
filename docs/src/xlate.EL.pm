@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Version 0.18
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Αν θέλετε να μεταφράσετε ολόκληρο το κείμενο, χρησιμοποιήστε την επιλογή B<--match-entire>. Αυτή είναι μια σύντομη διαδρομή για να καθορίσετε το μοτίβο που ταιριάζει με ολόκληρο το κείμενο C<(?s).*>.
+Αν θέλετε να μεταφράσετε ολόκληρο το κείμενο, χρησιμοποιήστε την επιλογή B<--match-all>. Αυτή είναι μια συντόμευση για να καθορίσετε το μοτίβο που ταιριάζει σε ολόκληρο το κείμενο C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Version 0.18
 
 Δείτε το αποτέλεσμα της μετάφρασης σε πραγματικό χρόνο στην έξοδο STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Ορίστε ολόκληρο το κείμενο του αρχείου ως περιοχή-στόχο.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

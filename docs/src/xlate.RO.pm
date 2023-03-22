@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Apoi se adaugă opțiunea C<--xlate> pentru a traduce zona selectată. Aceasta l
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Dacă doriți să traduceți întregul text, utilizați opțiunea B<--match-entire>. Aceasta este o prescurtare pentru a specifica modelul se potrivește cu întregul text C<(?s).*>.
+Dacă doriți să traduceți întregul text, utilizați opțiunea B<--match-all>. Aceasta este o prescurtare pentru a specifica că modelul se potrivește cu întregul text C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Specificați lungimea maximă a textului care urmează să fie trimis la API deo
 
 Vedeți rezultatul traducerii în timp real în ieșirea STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Setați întregul text al fișierului ca zonă țintă.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

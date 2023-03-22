@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" 
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-entire>. Ini adalah jalan pintas untuk menentukan pola yang cocok dengan seluruh teks C<(?).*>.
+Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola yang cocok dengan seluruh teks C<(?).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default
 
 Lihat hasil terjemahan secara real time dalam output STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Mengatur seluruh teks file sebagai area target.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-如果你想翻译整个文本，使用B<--match-entire>选项。这是指定模式匹配整个文本的捷径，C<(?s).*>。
+如果你想翻译整个文本，使用B<--match-all>选项。这是指定模式匹配整个文本的捷径，C<(?s).+>。
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ B<Greple> B<xlate>模块找到文本块，并用翻译后的文本替换它们�
 
 在STDERR输出中可以看到实时的翻译结果。
 
-=item B<--match-entire>
+=item B<--match-all>
 
 将文件的整个文本设置为目标区域。
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

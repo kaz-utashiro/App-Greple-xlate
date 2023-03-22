@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ L<pod> 스타일 문서에서 일반 텍스트 블록을 번역하려면 다음�
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-전체 텍스트를 번역하려면 B<--match-entire> 옵션을 사용합니다. 이것은 전체 텍스트 C<(?s).*>와 일치하는 패턴을 지정하는 단축키입니다.
+전체 텍스트를 번역하려면 B<--일치-모두> 옵션을 사용하세요. 이것은 전체 텍스트에 일치하는 패턴을 지정하는 단축키입니다 C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 번역 결과는 STDERR 출력에서 실시간으로 확인할 수 있습니다.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 파일의 전체 텍스트를 대상 영역으로 설정합니다.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

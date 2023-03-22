@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Varsayılan olarak, orijinal ve çevrilmiş metin L<git(1)> ile uyumlu "conflict
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Eğer metnin tamamını çevirmek istiyorsanız, B<--match-entire> seçeneğini kullanın. Bu, C<(?s).*> metninin tamamıyla eşleşen kalıbı belirtmek için bir kısa yoldur.
+Metnin tamamını çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, kalıbın tüm metinle eşleştiğini belirtmek için kısa yoldur C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan
 
 Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Dosyanın tüm metnini hedef alan olarak ayarlayın.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

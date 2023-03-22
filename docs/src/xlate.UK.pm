@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Version 0.18
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Якщо ви хочете перекласти весь текст, використовуйте опцію B<--match-entire>. Це швидкий спосіб вказати, що шаблон збігається з усім текстом C<(?s).*>.
+Якщо ви хочете перекласти весь текст, використовуйте опцію B<--match-all>. Це швидкий спосіб вказати, що шаблон збігається з усім текстом C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Version 0.18
 
 Результат перекладу у реальному часі можна побачити у виводі STDERR.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Встановити весь текст файлу як цільову область.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 

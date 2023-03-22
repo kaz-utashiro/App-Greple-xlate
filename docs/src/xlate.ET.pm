@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.18";
+our $VERSION = "0.19";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ Vaikimisi trükitakse originaal- ja tõlgitud tekst "konfliktimärkide" formaadi
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Kui soovite tõlkida kogu teksti, kasutage B<--match-entire> valikut. See on lühike valik, et määrata muster vastab kogu tekstile C<(?s).*>.
+Kui soovite tõlkida kogu teksti, kasutage valikut B<--match-all>. See on otsetee, et määrata muster vastab kogu tekstile C<(?s).+>.
 
 =head1 OPTIONS
 
@@ -129,7 +129,7 @@ Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on 
 
 Näete tõlkimise tulemust reaalajas STDERR-väljundist.
 
-=item B<--match-entire>
+=item B<--match-all>
 
 Määrake kogu faili tekst sihtkohaks.
 
@@ -497,7 +497,8 @@ option --xlabor --xlate-labor
 
 option --cache-clear --xlate-cache=clear
 
-option --match-entire    --re '\A(?s).+\z'
+option --match-all       --re '\A(?s).+\z'
+option --match-entire    --match-all
 option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 
