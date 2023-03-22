@@ -29,7 +29,7 @@ sub deepl {
 }
 
 sub clipboard {
-    use Clipboard;
+    require Clipboard and import Clipboard unless state $called++;
     my $from = shift;
     my $length = length $from;
     Clipboard->copy($from);
