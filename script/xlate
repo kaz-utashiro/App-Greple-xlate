@@ -173,13 +173,13 @@ then
     mod="App-Greple-xlate"
     share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
     declare -a opt
-    for m in $*
+    for m in "$@"
     do
 	if [ -f "$m" ]
 	then
 	    # GNU Make behaves differently in different versions with
 	    # respect to double-quoted strings and spaces within them.
-	    file="${file:+$file|||}$m"
+	    files="${files:+$files|||}$m"
 	else
 	    opt+=("$m")
 	fi
@@ -187,12 +187,12 @@ then
     unset MAKELEVEL
     exec make -f $share/XLATE.mk \
 	 ${dryrun:+-n} \
-	 XLATE_LANG=$to_lang \
+	 XLATE_LANG=\""$to_lang"\" \
 	 XLATE_DEBUG=$debug \
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
 	 ${format:+XLATE_FORMAT=\""$format"\"} \
-	 ${file:+XLATE_FILES=\"$file\"} \
+	 ${files:+XLATE_FILES=\""$files"\"} \
 	 ${opt[@]}
     exit 1
 fi
