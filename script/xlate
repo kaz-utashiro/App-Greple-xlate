@@ -191,6 +191,7 @@ then
 	 XLATE_DEBUG=$debug \
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
+	 ${format:+XLATE_FORMAT=\""$format"\"} \
 	 ${file:+XLATE_FILES=\"$file\"} \
 	 ${opt[@]}
     exit 1
