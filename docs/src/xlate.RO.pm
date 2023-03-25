@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Prin comportament implicit, datele neutilizate sunt eliminate din fișierul cach
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Puteți utiliza cu ușurință acest modul din linia de comandă folosind comanda C<xlate> inclusă în depozit. Consultați informațiile din ajutorul C<xlate> pentru utilizare.
+
+=head1 EMACS
+
+Încărcați fișierul F<xlate.el> inclus în depozit pentru a utiliza comanda C<xlate> din editorul Emacs. Funcția C<xlate-region> traduce regiunea dată. Limba implicită este C<EN-US> și puteți specifica limba invocând-o cu argumentul prefix.
 
 =head1 ENVIRONMENT
 

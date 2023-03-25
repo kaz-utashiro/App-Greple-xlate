@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ B<--cache-clear> 옵션은 캐시 관리를 시작하거나 기존의 모든 캐
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+리포지토리에 포함된 C<xlate> 명령을 사용하여 명령줄에서 이 모듈을 쉽게 사용할 수 있습니다. 사용법은 C<xlate> 도움말 정보를 참조하세요.
+
+=head1 EMACS
+
+저장소에 포함된 F<xlate.el> 파일을 로드하여 Emacs 편집기에서 C<xlate> 명령을 사용합니다. C<xlate-region> 함수는 지정된 지역을 번역합니다. 기본 언어는 C<EN-US>이며 접두사 인수를 사용하여 호출하는 언어를 지정할 수 있습니다.
 
 =head1 ENVIRONMENT
 

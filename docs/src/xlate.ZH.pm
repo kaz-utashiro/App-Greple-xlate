@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ B<--cache-clear>选项可以用来启动缓冲区管理或刷新所有现有的�
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+你可以通过使用版本库中的C<xlate>命令从命令行轻松使用这个模块。请参阅 C<xlate> 的帮助信息了解用法。
+
+=head1 EMACS
+
+加载存储库中的F<xlate.el>文件，从Emacs编辑器中使用C<xlate>命令。C<xlate-region>函数翻译给定的区域。默认的语言是C<EN-US>，你可以用前缀参数指定调用语言。
 
 =head1 ENVIRONMENT
 

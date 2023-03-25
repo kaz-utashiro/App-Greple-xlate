@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Standaard worden ongebruikte gegevens uit het cachebestand verwijderd. Als u ze 
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+U kunt deze module gemakkelijk gebruiken vanaf de commandoregel met het commando C<xlate> dat in het archief is opgenomen. Zie de C<xlate> help informatie voor gebruik.
+
+=head1 EMACS
+
+Laad het F<xlate.el> bestand in het archief om het C<xlate> commando te gebruiken vanuit de Emacs editor. C<xlate-region> functie vertaalt de gegeven regio. De standaardtaal is C<EN-US> en u kunt de taal specificeren met het prefix argument.
 
 =head1 ENVIRONMENT
 

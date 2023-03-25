@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Varsayılan davranışa göre, kullanılmayan veriler önbellek dosyasından kal
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Bu modülü, depoda bulunan C<xlate> komutunu kullanarak komut satırından kolayca kullanabilirsiniz. Kullanım için C<xlate> yardım bilgisine bakın.
+
+=head1 EMACS
+
+Emacs editöründen C<xlate> komutunu kullanmak için depoda bulunan F<xlate.el> dosyasını yükleyin. C<xlate-region> fonksiyonu verilen bölgeyi çevirir. Varsayılan dil C<EN-US>'dir ve prefix argümanı ile çağırarak dili belirtebilirsiniz.
 
 =head1 ENVIRONMENT
 

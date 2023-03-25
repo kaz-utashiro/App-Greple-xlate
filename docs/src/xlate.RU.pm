@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Version 0.20
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Вы можете легко использовать этот модуль из командной строки с помощью команды C<xlate>, включенной в репозиторий. Информацию об использовании смотрите в справке C<xlate>.
+
+=head1 EMACS
+
+Загрузите файл F<xlate.el>, включенный в репозиторий, чтобы использовать команду C<xlate> из редактора Emacs. Функция C<xlate-region> переводит заданный регион. Язык по умолчанию - C<EN-US>, и вы можете указать язык, вызывая ее с помощью аргумента prefix.
 
 =head1 ENVIRONMENT
 

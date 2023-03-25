@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ B<--cache-clear>オプションは、キャッシュ管理を開始するか、�
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+リポジトリに含まれるC<xlate>コマンドを使用することで、コマンドラインから本モジュールを簡単に使用することができます。使い方については、C<xlate>のヘルプ情報を参照してください。
+
+=head1 EMACS
+
+EmacsエディタからC<xlate>コマンドを使うには、リポジトリに含まれているF<xlate.el>ファイルを読み込んでください。C<xlate-region>関数は、指定された地域を翻訳します。デフォルトの言語はC<EN-US>で、prefix引数で言語を指定することができます。
 
 =head1 ENVIRONMENT
 

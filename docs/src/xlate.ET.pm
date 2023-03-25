@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Vaikimisi käitumise kohaselt eemaldatakse kasutamata andmed vahemälufailist. K
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Seda moodulit saab hõlpsasti kasutada käsurealt, kasutades repositooriumis sisalduvat käsku C<xlate>. Kasutamise kohta vaata C<xlate> abiinfot.
+
+=head1 EMACS
+
+Laadige repositooriumis sisalduv fail F<xlate.el>, et kasutada C<xlate> käsku Emacs redaktorist. C<xlate-region> funktsioon tõlkida antud piirkonda. Vaikimisi keel on C<EN-US> ja te võite määrata keele, kutsudes seda prefix-argumendiga.
 
 =head1 ENVIRONMENT
 

@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ In der Standardeinstellung werden nicht verwendete Daten aus der Cache-Datei ent
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Sie können dieses Modul ganz einfach von der Kommandozeile aus verwenden, indem Sie den Befehl C<xlate> verwenden, der im Repository enthalten ist. Siehe die C<xlate>-Hilfeinformationen zur Verwendung.
+
+=head1 EMACS
+
+Laden Sie die Datei F<xlate.el> aus dem Repository, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt die angegebene Region. Die Standardsprache ist C<EN-US> und Sie können die Sprache mit dem Präfix-Argument angeben.
 
 =head1 ENVIRONMENT
 

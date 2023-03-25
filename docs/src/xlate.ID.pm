@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.20";
+our $VERSION = "0.21";
 
 =encoding utf-8
 
@@ -14,7 +14,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 DESCRIPTION
 
@@ -176,6 +176,14 @@ Secara default, data yang tidak digunakan akan dihapus dari file cache. Jika And
 =back
 
 =back
+
+=head1 COMMAND LINE INTERFACE
+
+Anda dapat dengan mudah menggunakan modul ini dari baris perintah dengan menggunakan perintah C<xlate> yang disertakan dalam repositori. Lihat informasi bantuan C<xlate> untuk penggunaan.
+
+=head1 EMACS
+
+Muat file F<xlate.el> yang disertakan dalam repositori untuk menggunakan perintah C<xlate> dari editor Emacs. Fungsi C<xlate-region> menerjemahkan wilayah tertentu. Bahasa default adalah C<EN-US> dan Anda dapat menentukan bahasa yang digunakan dengan argumen awalan.
 
 =head1 ENVIRONMENT
 
