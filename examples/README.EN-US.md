@@ -72,7 +72,9 @@ Run make with the variable `DOCKER` enabled.
 
 You can also specify options to give to the `xlate` command.
 
-For example, `make XLATE_OPT=-Dam100000' will allow you to run on Docker with the API and a character limit of 100,000 characters.
+    make XLATE_OPT=-Dam100000
+
+would allow the API to run on Docker with a character limit of 100,000 characters.
 
 ## xlate script
 
