@@ -247,9 +247,11 @@ case $1 in
 	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)')
 	area=(--re '^(\w.+\n)+')
 	;;
-    *.docx|*.pptx)
+    *.doc|*.docx|*.pptx|*.xlsx)
 	module+=(-Mmsdoc)
-	option+=(--exclude '^\[.*\b(docx|pptx)\b.*\]\n')
+	;&
+    *.dtxt|*.ptxt|*.etxt)
+	option+=(--exclude '^\[.*\b(doc|docx|pptx|xlsx)\b.*\]\n')
 	area=(--re '^.+\n')
 	;;
     *)

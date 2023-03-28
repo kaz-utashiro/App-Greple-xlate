@@ -50,8 +50,19 @@ ALL := $(TARGET)
 
 ALL: $(ALL)
 
+MSDOC := docx doc pptx xlsx
+define MSTXT
+  $(patsubst %.doc,%.dtxt,
+  $(patsubst %.docx,%.dtxt,
+  $(patsubst %.pptx,%.ptxt,
+  $(patsubst %.xlsx,%.etxt,$1))))
+endef
+
+MSFILES   := $(filter $(MSDOC:%=\%.%),$(XLATE_FILES))
+TEMPFILES += $(foreach file,$(MSFILES),$(call MSTXT,$(file)))
+
 define DEFINE_RULE
-$(basename $3).$1.$2: $3
+$(basename $3).$1.$2: $(call MSTXT,$3)
 	$$(XLATE) -t $1 -o $2 $$< > $$@
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
@@ -61,9 +72,22 @@ XLATE = xlate \
 	$(if $(XLATE_MAXLEN),-m$(XLATE_MAXLEN)) \
 	$(if $(XLATE_USEAPI),-a)
 
+TEXTCONV := optex -Mtc cat
+
+define MAKE_OTXT
+%.otxt: %.$1
+	$(TEXTCONV) $$< > $$@
+endef
+$(foreach suffix,$(MSDOC),$(eval $(call MAKE_OTXT,$(suffix))))
+
+%.dtxt: %.docx ; $(TEXTCONV) $< > $@
+%.dtxt: %.doc  ; $(TEXTCONV) $< > $@
+%.ptxt: %.pptx ; $(TEXTCONV) $< > $@
+%.etxt: %.elsx ; $(TEXTCONV) $< > $@
+
 .PHONY: clean
 clean:
-	rm -fr $(ALL)
+	rm -fr $(ALL) $(TEMPFILES)
 
 .PHONY: shell
 shell:
