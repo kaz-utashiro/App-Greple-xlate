@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.22 2023-03-28T05:44:04Z
+
+    - update JSON cache file format
+    - create temporary text file to process MS document
+
 0.21 2023-03-25T04:12:11Z
 
     - introduce xlate -l option
