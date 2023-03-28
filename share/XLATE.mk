@@ -50,13 +50,9 @@ ALL := $(TARGET)
 
 ALL: $(ALL)
 
-MSDOC := docx doc pptx xlsx
-define MSTXT
-  $(patsubst %.doc,%.dtxt,
-  $(patsubst %.docx,%.dtxt,
-  $(patsubst %.pptx,%.ptxt,
-  $(patsubst %.xlsx,%.etxt,$1))))
-endef
+MSEXT = mstxt
+MSDOC = doc docx pptx xlsx
+MSTXT = $(if $(findstring $(suffix $1),$(MSDOC:%=.%)),$(basename $1).$(MSEXT),$1)
 
 MSFILES   := $(filter $(MSDOC:%=\%.%),$(XLATE_FILES))
 TEMPFILES += $(foreach file,$(MSFILES),$(call MSTXT,$(file)))
@@ -74,16 +70,9 @@ XLATE = xlate \
 
 TEXTCONV := optex -Mtc cat
 
-define MAKE_OTXT
-%.otxt: %.$1
-	$(TEXTCONV) $$< > $$@
-endef
-$(foreach suffix,$(MSDOC),$(eval $(call MAKE_OTXT,$(suffix))))
-
-%.dtxt: %.docx ; $(TEXTCONV) $< > $@
-%.dtxt: %.doc  ; $(TEXTCONV) $< > $@
-%.ptxt: %.pptx ; $(TEXTCONV) $< > $@
-%.etxt: %.elsx ; $(TEXTCONV) $< > $@
+$(foreach ext,$(MSDOC),$(eval \
+  %.$(MSEXT): %.$(ext) ; $$(TEXTCONV) $$< > $$@ \
+))
 
 .PHONY: clean
 clean:

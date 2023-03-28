@@ -250,7 +250,7 @@ case $1 in
     *.doc|*.docx|*.pptx|*.xlsx)
 	module+=(-Mmsdoc)
 	;&
-    *.dtxt|*.ptxt|*.etxt)
+    *.mstxt)
 	option+=(--exclude '^\[.*\b(doc|docx|pptx|xlsx)\b.*\]\n')
 	area=(--re '^.+\n')
 	;;
