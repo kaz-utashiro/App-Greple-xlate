@@ -43,10 +43,10 @@ Amended June 15, 2021
 #endif
 
 #ifdef ORIGINAL
-　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。
+　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。[^2]
 #endif
 #ifdef EN-US
-In Japan, since the Great East Japan Earthquake on March 11, 2011, there has been an increased awareness of the need to disclose and utilize data held by the government, local governments, and businesses.
+In Japan, since the Great East Japan Earthquake on March 11, 2011, there has been an increased awareness of the need to disclose and utilize data held by the government, local governments, and businesses. [^2]]
 #endif
 
 #ifdef ORIGINAL
@@ -71,10 +71,10 @@ The "Basic Act on the Promotion of Public-Private Data Utilization" (hereinafter
 #endif
 
 #ifdef ORIGINAL
-　本文書は、これまでの取組を踏まえ、オープンデータ・バイ・デザインの考えに基づき、今後、国、地方公共団体、事業者が公共データの公開及び活用に取り組む上での基本指針をまとめたものである。
+　本文書は、これまでの取組を踏まえ、オープンデータ・バイ・デザイン[^3]の考えに基づき、今後、国、地方公共団体、事業者が公共データの公開及び活用に取り組む上での基本指針をまとめたものである。
 #endif
 #ifdef EN-US
-This document summarizes the basic guidelines for the national government, local governments, and business operators to open and utilize public data in the future, based on the idea of open data by design, in light of past efforts.
+This document summarizes the basic guidelines for the government, local governments, and businesses to open and utilize public data in the future, based on the idea of open data by design [^3], taking into account the efforts made so far.
 #endif
 
 #ifdef ORIGINAL
@@ -148,10 +148,10 @@ Definition of Open Data
 #endif
 
 #ifdef ORIGINAL
-　国、地方公共団体及び事業者が保有する官民データのうち、国民誰もがインターネット等を通じて容易に利用（加工、編集、再配布等）できるよう、次のいずれの項目にも該当する形で公開されたデータをオープンデータと定義する。
+　国、地方公共団体及び事業者が保有する官民データのうち、国民誰もがインターネット等を通じて容易に利用（加工、編集、再配布等）できるよう、次のいずれの項目にも該当する形で公開されたデータをオープンデータと定義する。[^4]
 #endif
 #ifdef EN-US
-Open data is defined as publicly available public and private data held by the national government, local governments, and businesses that can be easily used (processed, edited, redistributed, etc.) by any citizen via the Internet, etc., in any of the following ways.
+Open data is defined as publicly available public and private data held by the national government, local governments, and business entities that can be easily used (processed, edited, redistributed, etc.) by any citizen via the Internet, etc., in any of the following forms: [^4] "Open data" means data that is publicly available in a form that meets the following criteria. [^4]
 #endif
 
 #ifdef ORIGINAL
@@ -162,17 +162,17 @@ Data to which the rules for secondary use have been applied, whether for commerc
 #endif
 
 #ifdef ORIGINAL
-機械判読に適したもの
+機械判読[^5]に適したもの
 #endif
 #ifdef EN-US
-Suitable for machine-readable data
+Suitable for machine-reading [^5
 #endif
 
 #ifdef ORIGINAL
-無償で利用できるもの
+無償[^6]で利用できるもの
 #endif
 #ifdef EN-US
-Data that can be used free of charge
+Available at no charge [^6].
 #endif
 
 #ifdef ORIGINAL
@@ -190,17 +190,17 @@ Basic rules for open data
 #endif
 
 #ifdef ORIGINAL
-　公共データは国民共有の財産であるとの認識に立ち、政策（法令、予算を含む）の企画・立案の根拠となったデータを含め、各府省庁が保有するデータはすべてオープンデータとして公開することを原則とする。
+　公共データは国民共有の財産であるとの認識に立ち、政策（法令、予算を含む）の企画・立案の根拠となったデータを含め、各府省庁が保有するデータはすべてオープンデータとして公開することを原則とする[^7]。
 #endif
 #ifdef EN-US
-Based on the recognition that public data is property shared by the public, all data held by government ministries and agencies, including data on which policies (including laws, regulations, and budgets) are based for planning and formulation, shall be released as open data in principle.
+Based on the recognition that public data is property shared by the public, all data held by government ministries and agencies, including data on which policies (including laws and regulations and budgets) are based for planning and formulation, shall be released as open data in principle[^7].
 #endif
 
 #ifdef ORIGINAL
-　なお、①個人情報が含まれるもの、②国や公共の安全、秩序の維持に支障を及ぼすおそれがあるもの、③法人や個人の権利利益を害するおそれがあるもの等、公開することが適当ではない情報に対して公開の要望があった場合は、オープンデータとして公開できない理由を公開することを原則とする。
+　なお、①個人情報が含まれるもの、②国や公共の安全、秩序の維持に支障を及ぼすおそれがあるもの、③法人や個人の権利利益を害するおそれがあるもの等、公開することが適当ではない情報に対して公開の要望があった場合は、オープンデータとして公開できない理由を公開する[^8]ことを原則[^9]とする。
 #endif
 #ifdef EN-US
-If there is a request to release information that is not appropriate for release, such as information that (1) contains personal information, (2) could hinder the maintenance of national or public safety or order, or (3) could harm the rights and interests of corporations or individuals, the reason why the information cannot be released as open data should be disclosed. In principle, the reason why the information cannot be released as open data shall be disclosed.
+If there is a request to release information that is not appropriate for release, such as information that (1) contains personal information, (2) could hinder the maintenance of national or public safety or order, or (3) could harm the rights and interests of corporations or individuals, the reason why the information cannot be released as open data will be disclosed[^8]. In principle,[^9] the reason why the information cannot be released as open data shall be made public.
 #endif
 
 #ifdef ORIGINAL
@@ -211,10 +211,10 @@ If there is a request to release information that is not appropriate for release
 #endif
 
 #ifdef ORIGINAL
-各府省庁のウェブサイト上で公開されるデータについては、原則、政府標準利用規約を適用し、具体的かつ合理的な根拠により二次利用が認められないものを除き、公開データの二次利用を積極的に促進する。
+各府省庁のウェブサイト[^10]上で公開されるデータについては、原則、政府標準利用規約[^11]を適用し、具体的かつ合理的な根拠により二次利用が認められないものを除き、公開データの二次利用を積極的に促進する。
 #endif
 #ifdef EN-US
-In principle, the Government Standard Terms of Use shall be applied to data published on the websites of government ministries and agencies, and secondary use of published data shall be actively promoted, except for data for which secondary use is not permitted based on specific and reasonable grounds.
+In principle, the Government Standard Terms of Use[^11] shall be applied to data published on the websites[^10] of government ministries and agencies, and secondary use of published data shall be actively promoted, except for data for which secondary use is not permitted based on specific and reasonable grounds.
 #endif
 
 #ifdef ORIGINAL
@@ -225,17 +225,17 @@ In principle, the Government Standard Terms of Use shall be applied to data publ
 #endif
 
 #ifdef ORIGINAL
-　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ」、または「リアルタイム性を有するデータ」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
+　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ[^12]」、または「リアルタイム性を有するデータ[^13]」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
 #endif
 #ifdef EN-US
-Each government agency shall make data publicly available on its website in a form that can be easily searched and used. In particular, useful data such as "data that can only be provided by each ministry and agency," "highly reliable data that can serve as basic data in various fields," or "data with real-time characteristics" are expected to be in high demand by society and should be actively released. In addition, from the viewpoint of user convenience and system load and efficiency, a mechanism to enable batch downloading and provision through APIs should be promoted.
+Each government agency shall make its data publicly available in a form that can be easily searched and used on its website. In particular, useful data such as "data that can only be provided by each government agency," "highly reliable data that can serve as basic data in various fields[^12]," or "data with real-time characteristics[^13]" are expected to be in high demand by society and should be actively released. In addition, from the perspective of user convenience and system load and efficiency, the introduction of a mechanism that enables batch downloading and provision through APIs should be promoted.
 #endif
 
 #ifdef ORIGINAL
-更に、政府のオープンデータ全体の横断的検索を可能とし、データの活用を促進するため、データの概要及び形式等のメタ情報をクリエイティブ・コモンズで定められている「CC0 1.0 全世界」として取り扱った上で政府のデータカタログサイト「DATA.GO.JP」に登録し、公開する。
+更に、政府のオープンデータ全体の横断的検索を可能とし、データの活用を促進するため、データの概要及び形式等のメタ情報[^14]をクリエイティブ・コモンズで定められている「CC0 1.0 全世界」[^15]として取り扱った上で政府のデータカタログサイト「DATA.GO.JP」に登録し、公開する。
 #endif
 #ifdef EN-US
-Furthermore, in order to enable cross-sectional searches of the entire government's open data and promote data utilization, meta-information such as the outline and format of the data will be registered on the government's data catalog site "DATA.GO.JP" after being treated as "CC0 1.0 Worldwide" as defined by Creative Commons, and will be made JP, a government data catalog site, and make it publicly available.
+Furthermore, in order to enable cross-sectional searches of the entire government's open data and promote data utilization, meta-information[^14] such as the outline and format of the data will be treated as "CC0 1.0 Worldwide"[^15] as defined by Creative Commons and registered on the government data catalog site "DATA.GO JP", the government's data catalog site.
 #endif
 
 #ifdef ORIGINAL
@@ -246,10 +246,10 @@ Furthermore, in order to enable cross-sectional searches of the entire governmen
 #endif
 
 #ifdef ORIGINAL
-　公開するデータについては、機械判読に適した構造及びデータ形式で掲載することを原則とする。共通語彙基盤等やオープンデータの達成度の評価指標として用いられている「５つ星」の指標を参考に、より活用がしやすい用語や形式での公開に努める。
+　公開するデータについては、機械判読に適した[^16]構造及びデータ形式で掲載することを原則とする[^17]。共通語彙基盤等やオープンデータの達成度の評価指標として用いられている「５つ星」[^18]の指標を参考に、より活用がしやすい用語や形式での公開に努める。
 #endif
 #ifdef EN-US
-In principle, the data to be released shall be published in a structure and data format suitable for machine-reading. Efforts will be made to release data in terms and formats that are easier to use, with reference to the "5-star" index used as an evaluation index for the level of achievement of the Common Vocabulary Infrastructure and open data.
+In principle, the data to be released shall be published in a [^16] structure and data format suitable for machine-reading[^17]. Efforts should be made to publish data in terms and formats that are easier to use, with reference to the "5-star"[^18] index used as an evaluation indicator for the level of achievement of the Common Vocabulary Base and other open data.
 #endif
 
 #ifdef ORIGINAL
@@ -260,10 +260,10 @@ From the viewpoint of information disclosure to the public, data will continue t
 #endif
 
 #ifdef ORIGINAL
-特に構造化しやすいデータはより活用がしやすいデータ形式である「３つ星（CSVやXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
+特に構造化しやすいデータ[^19]はより活用がしやすいデータ形式である「３つ星[^20]（CSV[^21]やXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
 #endif
 #ifdef EN-US
-In particular, data that is easy to structure should, in principle, be released in "3-star (CSV, XML, and other formats)" or higher, a data format that is easier to utilize. In addition, efforts will be made to improve the environment for meta-information disclosure, such as the use of data catalog sites, so that all publicly available data, including data that is difficult to structure, can be easily visualized and APIs can be used.
+In particular, data[^19] that is easy to structure should, in principle, be released in "3-star[^20] (CSV[^21], XML, or other formats)" or higher, which is a data format that is easier to use. In addition, all public data, including data that is difficult to be structured, should strive to develop an environment for meta-information disclosure, such as the use of data catalog sites, to facilitate visualization and API use.
 #endif
 
 #ifdef ORIGINAL
@@ -281,10 +281,10 @@ The Cabinet Secretariat IT Strategy Office will continue to promote standardizat
 #endif
 
 #ifdef ORIGINAL
-２．に示したとおり、各府省庁が保有するデータはすべてオープンデータとして公開されることが原則であるが、何らかの理由により即座にオープンデータとして公開することが困難な情報も存在する。現在公開していないデータをオープンデータとして公開することで、市民生活の安全の維持に支障を及ぼすおそれ等がある場合には、公開に先立って効果とリスクの比較検討をすることが求められる。こうしたデータについて、段階的にオープンデータ化を進めていく観点からは、データの利用目的、範囲、提供先などを限定して公開し、その活用を図っていくこと（以下「限定公開」という。）が有効である。なお、限定公開を行う府省庁は、その理由と考え方（限定公開の下、関係者間でデータがどのように活用されるかを示す計画等）をあわせて公開することとする。
+２．に示したとおり、各府省庁が保有するデータはすべてオープンデータとして公開されることが原則であるが、何らかの理由により即座にオープンデータとして公開することが困難な情報[^22]も存在する。現在公開していないデータをオープンデータとして公開することで、市民生活の安全の維持に支障を及ぼすおそれ等がある場合には、公開に先立って効果とリスクの比較検討をすることが求められる。こうしたデータについて、段階的にオープンデータ化を進めていく観点からは、データの利用目的、範囲、提供先などを限定して公開し、その活用を図っていくこと（以下「限定公開」という。）が有効である。なお、限定公開を行う府省庁は、その理由と考え方（限定公開の下、関係者間でデータがどのように活用されるかを示す計画等）をあわせて公開することとする。
 #endif
 #ifdef EN-US
-As indicated in 2. above, in principle, all data held by government ministries and agencies should be released as open data, but there is some information that is difficult to immediately release as open data for some reason. If there is a risk that releasing data that is not currently available to the public as open data may hinder the maintenance of the safety of citizens' lives, etc., a comparative study of the effects and risks must be conducted prior to the release of such data. From the perspective of gradually converting such data to open data, it is effective to limit the purpose, scope, and recipients of use of the data (hereinafter referred to as "limited release") and release the data to the public for their utilization. The limited release of data is effective from the viewpoint of promoting open data in a phased manner. In addition, the government ministries and agencies that conduct limited disclosure should also disclose the reason for such disclosure and their approach (e.g., a plan to show how the data will be utilized among relevant parties under the limited disclosure).
+As indicated in 2. above, in principle, all data held by government ministries and agencies should be released as open data, but there is also information[^22] that is difficult to immediately release as open data for some reason. If there is a risk that releasing data that is not currently available to the public as open data may hinder the maintenance of safety in the lives of citizens, etc., a comparative study of the effects and risks must be conducted prior to the release of such data. From the perspective of gradually converting such data to open data, it is effective to limit the purpose, scope, and recipients of use of the data (hereinafter referred to as "limited release") and to release the data to the public for their utilization. The limited release of data is effective from the viewpoint of promoting open data in a step-by-step manner. In addition, ministries and agencies that conduct limited disclosure should disclose the reason for such disclosure as well as the concept behind it (e.g., a plan showing how the data will be utilized among relevant parties under the limited disclosure).
 #endif
 
 #ifdef ORIGINAL
@@ -323,10 +323,10 @@ Consideration of efforts to increase the number of users and reduce the burden o
 #endif
 
 #ifdef ORIGINAL
-利用者負担での提供とすることが社会的経済的に適当かどうかの再検討
+利用者負担での提供とすることが社会的経済的に適当かどうかの再検討[^23]
 #endif
 #ifdef EN-US
-(6) Reexamination of whether it is socially and economically appropriate to provide data at the user's expense.
+Reconsideration of whether it is socially and economically appropriate to provide data at the user's expense[^23].
 #endif
 
 #ifdef ORIGINAL
@@ -372,10 +372,10 @@ Based on the concept of open data by design, each government agency should take 
 #endif
 
 #ifdef ORIGINAL
-オープンデータの推進に当たっては、利用者ニーズを的確に反映しながら進めることが重要である。このため、各府省庁は保有するデータとその公開状況を整理したリストを公開することで、潜在的なものを含めて利用者ニーズを把握の上、ニーズに即した形でのデータの公開に取り組む。
+オープンデータの推進に当たっては、利用者ニーズを的確に反映しながら進めることが重要である。このため、各府省庁は保有するデータとその公開状況を整理したリストを公開[^24]することで、潜在的なものを含めて利用者ニーズを把握の上、ニーズに即した形でのデータの公開に取り組む。
 #endif
 #ifdef EN-US
-In promoting open data, it is important to accurately reflect user needs. For this purpose, each government agency should release a list of the data it possesses and the status of its release to the public in order to grasp the needs of users, including potential ones, and release the data in a form that meets their needs.
+In promoting open data, it is important to proceed while accurately reflecting the needs of users. For this purpose, each government ministry and agency should release[^24] a list of the data they hold and the status of its release to the public, so that the needs of users, including latent ones, can be grasped, and efforts can be made to release data in a form that meets their needs.
 #endif
 
 #ifdef ORIGINAL
@@ -477,10 +477,10 @@ Article 11, Paragraph 2 of the Public-Private Data Act stipulates that business 
 #endif
 
 #ifdef ORIGINAL
-　独立行政法人や大学等においては、国費によって運営されていること又は実施している事業や研究があることに鑑み、本基本指針に準拠してオープンデータの取組を推進することが望ましい。
+　独立行政法人や大学等においては、国費によって運営されていること又は実施している事業や研究があることに鑑み、本基本指針に準拠してオープンデータの取組を推進することが望ましい[^25]。
 #endif
 #ifdef EN-US
-It is desirable for independent administrative agencies, universities, etc. to promote open data initiatives in accordance with these basic guidelines, in light of the fact that some projects and research are operated or conducted with government funds.
+It is desirable for independent administrative agencies and universities to promote open data initiatives in accordance with these basic guidelines, in light of the fact that they are operated or conduct projects and research funded by the government[^25].
 #endif
 
 #ifdef ORIGINAL
@@ -515,170 +515,170 @@ These Basic Guidelines shall be flexibly revised in response to changes in techn
 [ "data_shishin.docx" word/footnotes.xml ]
 
 #ifdef ORIGINAL
- 震災関連情報の提供に関し、情報の加工が容易なファイル形式による情報提供について協力依頼が行われたほか、事業者が保有する道路の通行情報などが公開・活用された。
+[^2]: 震災関連情報の提供に関し、情報の加工が容易なファイル形式による情報提供について協力依頼が行われたほか、事業者が保有する道路の通行情報などが公開・活用された。
 #endif
 #ifdef EN-US
-Regarding the provision of earthquake-related information, a request was made for cooperation in providing information in a file format that allows easy processing of information, and road traffic information held by businesses was made public and utilized.
+[^2]: Regarding the provision of earthquake-related information, a request was made for cooperation in providing information in a file format that allows easy processing of information, and road traffic information held by businesses was made public and utilized.
 #endif
 
 #ifdef ORIGINAL
- 公共データについて、オープンデータを前提として情報システムや業務プロセス全体の企画、整備及び運用を行うことである。
+[^3]: 公共データについて、オープンデータを前提として情報システムや業務プロセス全体の企画、整備及び運用を行うことである。
 #endif
 #ifdef EN-US
-The public data is the planning, development, and operation of information systems and business processes as a whole on the premise of open data.
+[^3]: Regarding public data, the planning, development, and operation of information systems and business processes as a whole are to be conducted on the premise of open data.
 #endif
 
 #ifdef ORIGINAL
- 但し、セキュリティの理由により、利用者に対し、事前登録を求めたり、データへのアクセス方法に制限を設けたりといった措置が講じられることがあり得る。
+[^4]: 但し、セキュリティの理由により、利用者に対し、事前登録を求めたり、データへのアクセス方法に制限を設けたりといった措置が講じられることがあり得る。
 #endif
 #ifdef EN-US
-However, for security reasons, measures such as requiring users to register in advance and setting restrictions on how to access data may be taken.
+[^4]: However, for security reasons, measures such as requiring users to register in advance or setting restrictions on how data can be accessed may be taken.
 #endif
 
 #ifdef ORIGINAL
- 「機械判読」とは、コンピュータプログラムが自動的にデータを加工、編集等できることを指す。
+[^5]: 「機械判読」とは、コンピュータプログラムが自動的にデータを加工、編集等できることを指す。
 #endif
 #ifdef EN-US
-Machine-readable" means that a computer program can automatically process or edit the data.
+[^5]: "Machine readable" means that a computer program can automatically process, edit, etc. data.
 #endif
 
 #ifdef ORIGINAL
- オープンデータとは言えないものの、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなうケースもある。
+[^6]: オープンデータとは言えないものの、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなうケースもある。
 #endif
 #ifdef EN-US
-In some cases, the cost of maintaining and managing the data provision system is covered by collecting fees from a limited number of users, although this is not open data.
+[^6]: Although not open data, there are cases where the cost of maintaining and administering the data provision system is covered by collecting fees from a limited number of users.
 #endif
 
 #ifdef ORIGINAL
- 今後、行政目的で作成されるデータについては、本指針に基づき、オープンデータとして公開されることを想定してデータ整備がなされることを確保する必要があり、内閣官房IT総合戦略室において、各府省庁の整備状況を把握し、必要な調整を行うことが求められる。
+[^7]: 今後、行政目的で作成されるデータについては、本指針に基づき、オープンデータとして公開されることを想定してデータ整備がなされることを確保する必要があり、内閣官房IT総合戦略室において、各府省庁の整備状況を把握し、必要な調整を行うことが求められる。
 #endif
 #ifdef EN-US
-In the future, it will be necessary to ensure that data created for administrative purposes are developed based on the assumption that they will be released as open data in accordance with these guidelines, and the Cabinet Secretariat's IT Strategy Office is required to grasp the status of development by each government agency and make the necessary adjustments.
+[^7]: In the future, it is necessary to ensure that data created for administrative purposes are developed based on the assumption that they will be released as open data in accordance with these guidelines, and the Cabinet Secretariat's IT Strategy Office is required to grasp the status of development by each government agency and make the necessary adjustments.
 #endif
 
 #ifdef ORIGINAL
- 法令又は合理的な根拠によりオープンデータとして公開できない場合（二次利用に制限がある場合を含む）は、その旨を具体的に示す。
+[^8]: 法令又は合理的な根拠によりオープンデータとして公開できない場合（二次利用に制限がある場合を含む）は、その旨を具体的に示す。
 #endif
 #ifdef EN-US
-In cases where data cannot be released as open data (including cases where there are restrictions on secondary use) due to laws and regulations or reasonable grounds, this should be indicated in detail.
+[^8]: In cases where data cannot be released as open data (including cases where there are restrictions on secondary use) due to laws and regulations or reasonable grounds, this should be indicated in detail.
 #endif
 
 #ifdef ORIGINAL
- 公開できない理由を公開することだけで、公開できない情報（不開示情報）を開示することとなる場合は、理由を公開しないことができる。
+[^9]: 公開できない理由を公開することだけで、公開できない情報（不開示情報）を開示することとなる場合は、理由を公開しないことができる。
 #endif
 #ifdef EN-US
-If disclosing the reason why the information cannot be disclosed alone would result in the disclosure of information that cannot be disclosed (nondisclosure information), the reason may not be disclosed.
+[^9]: If disclosing the reason why the information cannot be disclosed alone would result in the disclosure of information that cannot be disclosed (nondisclosure information), the reason may not be disclosed.
 #endif
 
 #ifdef ORIGINAL
- 各府省庁（施設等機関、地方支分部局等、府省庁に属する組織を含む。）が、その名称において開設しているインターネット上のウェブサイト、データベースサイト、個別業務サイト等を広く含む。
+[^10]: 各府省庁（施設等機関、地方支分部局等、府省庁に属する組織を含む。）が、その名称において開設しているインターネット上のウェブサイト、データベースサイト、個別業務サイト等を広く含む。
 #endif
 #ifdef EN-US
-Each government ministry and agency (including organizations belonging to a government ministry and agency, such as institutions, etc., local branch offices, etc.) (2) The term "government agency" broadly includes websites on the Internet, database sites, individual business sites, etc., established by government agencies (including institutions such as facilities, local branch offices, etc., and organizations belonging to government agencies) in their names.
+[^10]: Each government ministry and agency (including institutions, local branch offices, and other organizations belonging to the government ministries and agencies) [^11]: This broadly includes websites on the Internet, database sites, individual business sites, etc., established by government agencies (including facilities, etc., local branch offices, etc., and organizations belonging to government agencies) in their names.
 #endif
 
 #ifdef ORIGINAL
- 政府機関のウェブサイトで公開されているデータの二次利用を促進する観点から、統一的なひな形として示された各府省庁ウェブサイトの利用に関するルール。「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の別添１「政府標準利用規約(第2.0版)」。
+[^11]: 政府機関のウェブサイトで公開されているデータの二次利用を促進する観点から、統一的なひな形として示された各府省庁ウェブサイトの利用に関するルール。「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の別添１「政府標準利用規約(第2.0版)」。
 #endif
 #ifdef EN-US
-Rules for the use of the websites of government ministries and agencies, presented as a unified template from the perspective of promoting the secondary use of data published on the websites of government agencies. Attachment 1 "Government Standard Terms of Use (Version 2.0)" of "Basic Idea on Publication of Data by Ministries and Agencies to Promote Secondary Use (Guidelines)".
+[^11]: Rules for the use of the websites of government ministries and agencies presented as a unified template from the perspective of promoting the secondary use of data published on the websites of government agencies. Attachment 1 "Government Standard Terms of Use (Version 2.0)" of "Basic Idea on the Publication of Data by Ministries and Agencies for the Promotion of Secondary Use (Guidelines).
 #endif
 
 #ifdef ORIGINAL
- 例えば、各府省庁が公表している統計データ等。
+[^12]: 例えば、各府省庁が公表している統計データ等。
 #endif
 #ifdef EN-US
-For example, statistical data published by various government ministries and agencies.
+[^12]: For example, statistical data published by various government ministries and agencies.
 #endif
 
 #ifdef ORIGINAL
- イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
+[^13]: イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
 #endif
 #ifdef EN-US
-Data that needs to be updated at regular intervals, such as event information, public transportation congestion rates, or disaster/disaster prevention information.
+[^13]: Data that needs to be updated at regular intervals, such as event information, public transportation congestion rates, or disaster/disaster prevention information.
 #endif
 
 #ifdef ORIGINAL
- 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
+[^14]: 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
 #endif
 #ifdef EN-US
-Information on the type of data to be released. For example, property information such as title, name of the public organization, creator (department name), etc., and keywords for data search. For details on other items, see "(2) Information on metadata, etc. provided on the data catalog site" in "Information for Developers" on Data.go.jp (https://www.data.go.jp/for-developer/for-developer).
+[^14]: Information that indicates what kind of data is being released. For example, property information such as title, name of the public organization, creator (department name), etc., and keywords for data search. For details of other items, see "(2) Information on metadata, etc. provided at data catalog sites" in "Information for Developers" on Data.go.jp (https://www.data.go.jp/for-developer/for-developer)
 #endif
 
 #ifdef ORIGINAL
- 「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+[^15]: 「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 #endif
 #ifdef EN-US
-For the definition of "CC0 1.0 Worldwide," etc., see "Creative Commons Legal Code. (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+[^15]: See "Creative Commons Legal Code" for the definition of "CC0 1.0 Worldwide" etc. (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 #endif
 
 #ifdef ORIGINAL
- 「機械判読に適した度合」には、人手をどれだけ要さずに、コンピュータがデータを再利用できるかにより、いくつかの段階がある。コンピュータが自動的にデータを再利用するためには、当該データの論理的な構造を識別（判読）でき、構造中の値（表の中に入っている数値、テキスト等）が処理できるようになっている必要がある。
+[^16]: 「機械判読に適した度合」には、人手をどれだけ要さずに、コンピュータがデータを再利用できるかにより、いくつかの段階がある。コンピュータが自動的にデータを再利用するためには、当該データの論理的な構造を識別（判読）でき、構造中の値（表の中に入っている数値、テキスト等）が処理できるようになっている必要がある。
 #endif
 #ifdef EN-US
-There are several levels of "machine readability," depending on how much data can be reused by a computer without requiring human intervention. For a computer to automatically reuse data, it must be able to identify (decipher) the logical structure of the data and process the values in the structure (numbers in tables, text, etc.).
+[^16]: There are several levels of "degree of suitability for machine readability" depending on how much data can be reused by a computer without requiring human intervention. For a computer to automatically reuse data, it must be able to identify (decipher) the logical structure of the data in question and be able to process the values in the structure (numbers in tables, text, etc.).
 #endif
 
 #ifdef ORIGINAL
- 「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の「３ 機械判読が容易なデータ形式による公開の拡大の考え方」及び別添２「数値（表）、文章、地理空間情報のデータ作成に当たっての留意事項」を参照。
+[^17]: 「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の「３ 機械判読が容易なデータ形式による公開の拡大の考え方」及び別添２「数値（表）、文章、地理空間情報のデータ作成に当たっての留意事項」を参照。
 #endif
 #ifdef EN-US
-See "3 Concept of Expanding Publication of Data in Machine-Readable Data Format" and Attachment 2, "Considerations in Preparing Data for Numerical (Tables), Text, and Geospatial Information" in "Basic Idea on Data Publication by Ministries and Agencies to Promote Secondary Use (Guidelines)".
+[^17]: See "3 Concept of Expanding Publication of Data in Machine-Readable Data Format" and Attachment 2 "Points to Consider when Creating Data for Numerical (Tables), Text, and Geospatial Information" in "Basic Idea on Data Publication by Ministries and Agencies to Promote Secondary Use (Guidelines)."
 #endif
 
 #ifdef ORIGINAL
- Webの創設者Tim Berners-Leeが提唱した５段階の指標で、ファイル形式に関わらず二次利用が可能なライセンスを満たす場合は第１段階、機械判読性の比較的高いcsv 形式は第３段階とされている。（http://5stardata.info/ja/）
+[^18]: Webの創設者Tim Berners-Leeが提唱した５段階の指標で、ファイル形式に関わらず二次利用が可能なライセンスを満たす場合は第１段階、機械判読性の比較的高いcsv 形式は第３段階とされている。（http://5stardata.info/ja/）
 #endif
 #ifdef EN-US
-The five-stage index proposed by Tim Berners-Lee, the founder of the Web, is considered to be the first stage if the data meets the license for secondary use regardless of file format, and the third stage for csv format with relatively high machine readability. (http://5stardata.info/ja/)
+[^18]: A five-step index proposed by Tim Berners-Lee, founder of the Web, with the first step being when a file satisfies a license that allows secondary use regardless of file format, and the third step being the csv format with relatively high machine readability. (http://5stardata.info/ja/)
 #endif
 
 #ifdef ORIGINAL
- 統計情報等の行列や階層による表現が可能な情報。
+[^19]: 統計情報等の行列や階層による表現が可能な情報。
 #endif
 #ifdef EN-US
-Information that can be expressed in matrices or hierarchies, such as statistical information.
+[^19]: Information that can be expressed as a matrix or hierarchy, such as statistical information.
 #endif
 
 #ifdef ORIGINAL
- 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
+[^20]: 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
 #endif
 #ifdef EN-US
-A format (CSV, XML) that can be used commonly without being limited to specific functions.
+[^20]: Formats (CSV, XML) that can be used commonly without being limited to specific functions.
 #endif
 
 #ifdef ORIGINAL
- 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
+[^21]: 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
 #endif
 #ifdef EN-US
-When publishing data containing tables in CSV, refer to "8.3.2 Guidelines for Tabular Data" in the "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
+[^21]: When publishing data containing tables in CSV format, refer to "8.3.2 Guidelines for tabular data" in the "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 #endif
 
 #ifdef ORIGINAL
- 既に紙によるものを含め、利用者の求めに応じて情報公開を含め公開されている情報については対象外とする。なお、限定公開の対象となるデータの考え方や運用（限定公開の決定プロセスや進捗状況を把握・評価する体制等）については必要に応じ、今後さらに検討する。
+[^22]: 既に紙によるものを含め、利用者の求めに応じて情報公開を含め公開されている情報については対象外とする。なお、限定公開の対象となるデータの考え方や運用（限定公開の決定プロセスや進捗状況を把握・評価する体制等）については必要に応じ、今後さらに検討する。
 #endif
 #ifdef EN-US
-Information that has already been made publicly available, including information disclosure at the request of users, including paper-based information, is excluded. The concept and operation of data subject to limited release (e.g., the decision-making process for limited release and the system for monitoring and evaluating progress) will be further discussed in the future, as necessary.
+[^22]: Information that has already been made publicly available, including information release at the request of users, including those on paper, is not covered. The concept and operation of data subject to limited release (e.g., the decision-making process for limited release and the system for monitoring and evaluating progress) will be further discussed in the future, as necessary.
 #endif
 
 #ifdef ORIGINAL
- 例えば、一部のデータは有償だが、残りのデータは無償とすること等も考えらえる。
+[^23]: 例えば、一部のデータは有償だが、残りのデータは無償とすること等も考えらえる。
 #endif
 #ifdef EN-US
-For example, some data may be paid for, but the rest may be free of charge.
+[^23]: For example, some data could be paid for, but the rest could be free of charge.
 #endif
 
 #ifdef ORIGINAL
- このようなリストを作成するため平成29年度中に各府省庁が保有するデータの棚卸しを行い、当該リストを公開した上でニーズの高い分野等について官民（民には、事業者、研究者、市民等を含む）でデータの公開・活用の在り方を対話するラウンドテーブルを開催する試みを実施する。ラウンドテーブルでは、地方公共団体、事業者（独立行政法人を含む）が保有するデータを含め官民データの公開と活用の在り方について議論する。
+[^24]: このようなリストを作成するため平成29年度中に各府省庁が保有するデータの棚卸しを行い、当該リストを公開した上でニーズの高い分野等について官民（民には、事業者、研究者、市民等を含む）でデータの公開・活用の在り方を対話するラウンドテーブルを開催する試みを実施する。ラウンドテーブルでは、地方公共団体、事業者（独立行政法人を含む）が保有するデータを含め官民データの公開と活用の在り方について議論する。
 #endif
 #ifdef EN-US
-In order to create such a list, an inventory of data held by each government ministry and agency will be made public during FY 2009, and an attempt will be made to hold a round table to discuss how data should be disclosed and utilized by the public and private sectors (the private sector includes businesses, researchers, citizens, etc.) in fields where there are high needs, etc. After such a list is made public. The roundtable will discuss how public and private sector data, including data held by local governments and businesses (including independent administrative agencies), should be disclosed and utilized.
+[^24]: In order to create such a list, an inventory of data held by each government ministry and agency will be conducted during FY 2009, and an attempt will be made to publicize the list and hold a roundtable to discuss how data should be disclosed and utilized by the public and private sectors (including businesses, researchers, citizens, etc.) in areas where needs are high. The roundtable will be held in the following manner. The round table will discuss the ideal state of public and private sector data disclosure and utilization, including data held by local governments and businesses (including independent administrative agencies).
 #endif
 
 #ifdef ORIGINAL
- 「我が国におけるオープンサイエンス推進のあり方について」（平成27年３月30日）では、公的研究資金による研究成果のうち、論文および論文のエビデンスとしての研究データは、原則公開とし、その他研究開発成果としての研究データについても可能な範囲で公開することが望ましい。」とされている。
+[^25]: 「我が国におけるオープンサイエンス推進のあり方について」（平成27年３月30日）では、公的研究資金による研究成果のうち、論文および論文のエビデンスとしての研究データは、原則公開とし、その他研究開発成果としての研究データについても可能な範囲で公開することが望ましい。」とされている。
 #endif
 #ifdef EN-US
-According to the "How Open Science should be promoted in Japan" (March 30, 2015), among research results funded by public research funds, research data as evidence for papers and theses should be made public in principle, and other research data as results of research and development should also be made public to the extent possible. It is desirable." The "Publication of Research Data" is a public document.
+[^25]: "On the state of open science promotion in Japan" (March 30, 2015) states that "Among research results funded by public research funds, research data as evidence for papers and articles should, in principle, be made public, and research data as results of other research and development should also be made public to the extent possible. It is also desirable that other research data as research and development results be made public to the extent possible." The "Publication of Research Data as Evidence of Research Papers and Theses" (March 30, 2015)
 #endif
 
