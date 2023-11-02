@@ -9,7 +9,7 @@ MOD_DIR  := $(dir $(MOD_PATH))
 MOD_NAME := $(MOD_FILE:.pm=)
 SRC_DIR  := src
 
-ORIGIN   := $(wildcard $(MOD_DIR)*.pm)
+ORIGIN   := $(wildcard $(MOD_DIR)[a-z]*.pm)
 PM       := $(notdir $(ORIGIN))
 SRC      := $(PM:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
 PMS      := $(foreach lang,$(LANGS),$(SRC:.pm=.$(lang).pm))
@@ -25,8 +25,9 @@ ifdef SRC_DIR
 endif
 SRCPATH := $(if $(SRC_DIR),$(SRC_DIR)/,)
 
+PODIFY := greple -Mperl --nocolor --le :pod
 $(foreach mod,$(ORIGIN),$(eval \
-  $(SRCPATH)$(notdir $(mod)): $(mod) $(SRC_DIR); cp $$< $(if $(SRCPATH),$(SRCPATH),.) \
+  $(SRCPATH)$(notdir $(mod)): $(mod) $(SRC_DIR) Makefile; $(PODIFY) $$< > $$@ \
 ))
 
 XLATE := greple -Mxlate::deepl
