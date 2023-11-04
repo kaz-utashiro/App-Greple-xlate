@@ -25,12 +25,14 @@ ifdef SRC_DIR
 endif
 SRCPATH := $(if $(SRC_DIR),$(SRC_DIR)/,)
 
-PODIFY := greple -Mperl --nocolor --le :pod
+GREPLE := perl -I../lib -S greple
+
+PODIFY := $(GREPLE) -Mperl --nocolor --le :pod
 $(foreach mod,$(ORIGIN),$(eval \
   $(SRCPATH)$(notdir $(mod)): $(mod) $(SRC_DIR) Makefile; $(PODIFY) $$< > $$@ \
 ))
 
-XLATE := greple -Mxlate::deepl
+XLATE := $(GREPLE) -Mxlate::deepl
 XLATE += $(if $(XLATE_LABOR),--xlate-labor,--xlate)
 XLATE += --xlate-cache=$(if $(XLATE_INIT),clear,yes)
 XLATE += --match-podtext --xlate-format=none --all --need=0
@@ -43,7 +45,7 @@ endif
 
 JA_FORM   ?= desumasu
 JA_DICT   := $(wildcard *.dict)
-JA_FILTER := greple -Mperl -Msubst::desumasu \
+JA_FILTER := $(GREPLE) -Mperl -Msubst::desumasu \
 	$(if $(findstring $(JA_FORM).dict,$(JA_DICT)),--dict $(JA_FORM).dict) \
 	--pod --subst --all --no-color --need=0 \
 	--$(JA_FORM) 

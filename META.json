@@ -4,7 +4,7 @@
       "Kazumasa Utashiro"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.21, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.23, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
@@ -33,6 +33,7 @@
       },
       "develop" : {
          "recommends" : {
+            "App::Greple::subst::desumasu" : "0",
             "App::Greple::xp" : "0.04",
             "Pod::Markdown" : "0"
          },
@@ -54,7 +55,7 @@
             "File::Share" : "0",
             "Hash::Util" : "0",
             "JSON" : "0",
-            "List::Util" : "0",
+            "List::Util" : "1.56",
             "Text::ANSI::Fold" : "2.20",
             "perl" : "v5.14.0"
          }

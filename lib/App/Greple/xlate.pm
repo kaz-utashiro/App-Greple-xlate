@@ -288,7 +288,6 @@ use warnings;
 
 use Data::Dumper;
 
-use JSON;
 use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
 use Hash::Util qw(lock_keys);
@@ -344,18 +343,13 @@ for (keys %formatter) {
     $formatter{$_} = $formatter{$formatter{$_}} // die;
 }
 
-my $old_cache = {};
-my $new_cache = {};
-my $xlate_cache_update;
+my %cache;
 
 sub setup {
     return if state $once_called++;
     if (defined $cache_method) {
 	if ($cache_method eq '') {
 	    $cache_method = 'auto';
-	}
-	if (lc $cache_method eq 'accumulate') {
-	    $new_cache = $old_cache;
 	}
 	if ($cache_method =~ /^(no|never)/i) {
 	    $cache_method = '';
@@ -394,10 +388,7 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my $key = normalize $grep->cut(@$m);
-	    $new_cache->{$key} //= delete $old_cache->{$key} // do {
-		push @miss, $key;
-		"NOT TRANSLATED YET\n";
-	    };
+	    push @miss, $key if not defined $cache{$key};
 	}
     }
     cache_update(@miss) if @miss;
@@ -414,8 +405,7 @@ sub cache_update {
 
     print STDERR "To:\n", map s/^/\t> /mgr, @to if $show_progress;
     die "Unmatched response:\n@to" if @from != @to;
-    $xlate_cache_update += @from;
-    @{$new_cache}{@from} = @to;
+    @cache{@from} = @to;
 }
 
 sub fold_lines {
@@ -434,7 +424,7 @@ sub fold_lines {
 sub xlate {
     my $text = shift;
     my $key = normalize $text;
-    my $s = $new_cache->{$key} // "!!! TRANSLATION ERROR !!!\n";
+    my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
 	return $formatter->($text, $s);
@@ -459,56 +449,26 @@ sub cache_file {
     }
 }
 
-my $json_obj = JSON->new->utf8->canonical->pretty;
-
-sub read_cache {
-    my $file = shift;
-    %$new_cache = %$old_cache = ();
-    if (open my $fh, $file) {
-	my $json = do { local $/; <$fh> };
-	my $hash = $json eq '' ? {} : $json_obj->decode($json);
-	%$old_cache = %$hash;
-	warn "read cache from $file\n";
-    }
-}
-
-sub write_cache {
-    return if $dryrun;
-    my $file = shift;
-    if (open my $fh, '>', $file) {
-	my $json = $json_obj->encode($new_cache);
-	print $fh $json;
-	warn "write cache to $file\n";
-    }
-}
-
 sub begin {
     setup if not (state $done++);
     my %args = @_;
     $current_file = delete $args{&::FILELABEL} or die;
     s/\z/\n/ if /.\z/;
-    $xlate_cache_update = 0;
     if (not defined $xlate_engine) {
 	die "Select translation engine.\n";
     }
-    if (my $cache = cache_file) {
+    if (my $file = cache_file) {
+	my @policy;
 	if ($cache_method =~ /^(create|clear)/) {
-	    warn "created $cache\n" unless -f $cache;
-	    open my $fh, '>', $cache or die "$cache: $!\n";
-	    print $fh "{}\n";
-	    die "skip $current_file" if $cache_method eq 'create';
+	    @policy = (clear => 1);
 	}
-	read_cache $cache;
+	require App::Greple::xlate::Cache;
+	tie %cache, 'App::Greple::xlate::Cache', $file, @policy;
+	die "skip $current_file" if $cache_method eq 'create';
     }
 }
 
-sub end {
-    if (my $cache = cache_file) {
-	if ($xlate_cache_update or %$old_cache) {
-	    write_cache $cache;
-	}
-    }
-}
+sub end {}
 
 sub setopt {
     while (my($key, $val) = splice @_, 0, 2) {
