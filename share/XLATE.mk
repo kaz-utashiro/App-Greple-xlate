@@ -71,6 +71,7 @@ $(eval $(call FOREACH,DEFINE_RULE))
 
 XLATE = xlate \
 	$(if $(XLATE_DEBUG),-d) \
+	$(if $(XLATE_ENGINE),-e $(XLATE_ENGINE)) \
 	$(if $(XLATE_MAXLEN),-m$(XLATE_MAXLEN)) \
 	$(if $(XLATE_USEAPI),-a)
 
