@@ -10,13 +10,14 @@ MOD_DIR  := $(dir $(MOD_PATH))
 MOD_NAME := $(MOD_FILE:.pm=)
 SRC_DIR  := src
 
-ORIGIN   := $(wildcard $(MOD_DIR)[a-z]*.pm)
+ORIGIN   := $(MOD_PATH)
 PM       := $(notdir $(ORIGIN))
-SRC      := $(PM:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
-PMS      := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(SRC:.pm=.$(engin)-$(lang).pm)))
+POD      := $(PM:.pm=.pod)
+SRC      := $(POD:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
+PODS     := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
 MDS      := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(PM:.pm=.$(engin)-$(lang).md)))
 READMES  := $(foreach engin,$(ENGINES),$(RM_LANGS:%=../README.$(engin)-%.md))
-ALL      := $(PMS) $(MDS) README.md $(READMES)
+ALL      := $(PODS) $(MDS) README.md $(READMES)
 
 all: $(ALL)
 
@@ -30,7 +31,7 @@ GREPLE := perl -I../lib -S greple
 
 PODIFY := $(GREPLE) -Mperl --nocolor --le :pod
 $(foreach mod,$(ORIGIN),$(eval \
-  $(SRCPATH)$(notdir $(mod)): $(mod) $(SRC_DIR) Makefile; $(PODIFY) $$< > $$@ \
+  $(SRCPATH)$(subst .pm,.pod,$(notdir $(mod))): $(mod) $(SRC_DIR) Makefile; $(PODIFY) $$< > $$@ \
 ))
 
 XLATE := $(GREPLE) -Mxlate
@@ -51,8 +52,8 @@ deepl_JA_FILTER := $(GREPLE) -Mperl -Msubst::desumasu \
 	--pod --subst --all --no-color --need=0 \
 	--$(deepl_JA_FORM) 
 
-define LANG_PM
-  $(SRCPATH)%.$2-$1.pm: $(SRCPATH)%.pm Makefile
+define LANG_POD
+  $(SRCPATH)%.$2-$1.pod: $(SRCPATH)%.pod Makefile
   ifdef $2_$1_FILTER
 	$$(XLATE) --xlate-engine=$2 --xlate-to $1 $$< | $$($2_$1_FILTER) > $$@
   else
@@ -60,9 +61,9 @@ define LANG_PM
   endif
 endef
 
-$(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(eval $(call LANG_PM,$(lang),$(engin)))))
+$(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(eval $(call LANG_POD,$(lang),$(engin)))))
 
-%.md: $(SRCPATH)%.pm
+%.md: $(SRCPATH)%.pod
 	pod2markdown $< > $@
 
 define LANG_README
