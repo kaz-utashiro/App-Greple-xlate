@@ -24,7 +24,9 @@ RUN cpanm -qn \
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        python3 python3-pip \
-    && pip install --upgrade deepl
+    && pip install --upgrade \
+       deepl \
+       git+https://github.com/tecolicom/App-gpty.git
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \

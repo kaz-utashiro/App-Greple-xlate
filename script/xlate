@@ -19,9 +19,10 @@ define pod <<"=cut"
 	-c   just check translation area
 	-r   refresh cache
 	-s   silent mode
+	-e#  translation engine (default deepl, or gpt3)
 	-p#  pattern to determine translation area
 	-w#  wrap line by # width
-	-o#  output format (xtxt, cm, ifdef)
+	-o#  output format (default xtxt, or cm, ifdef)
 	-f#  from lang (ignored)
 	-t#  to lang
 	-m#  max length per API call
@@ -121,7 +122,7 @@ do
 	    esac
 	    command+=(${1+"$@"})
 	    ENV=(LANG TZ TERM_PROGRAM TERM_BGCOLOR COLORTERM)
-	    ENV+=(DEEPL_AUTH_KEY)
+	    ENV+=(DEEPL_AUTH_KEY OPENAI_API_KEY)
 	    ENV_PATTERN=$(env_pattern ${ENV[@]})
 	    exec docker run --rm \
 		 -e XLATE_RUNNING_DOCKER=1 \
@@ -145,7 +146,7 @@ OPTIND=1
 mod="App-Greple-xlate"
 share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
 
-while getopts "${EXOPT}"'Macrsnp:w:o:f:t:m:l:h' OPT
+while getopts "${EXOPT}"'Macrsne:p:w:o:f:t:m:l:h' OPT
 do
     case $OPT in
 	[$EXOPT]) : ignore ;;
@@ -155,6 +156,7 @@ do
 	r)   refresh=yes ;;
 	s)    silent=yes ;;
 	n)    dryrun=yes ;;
+	e)    engine="$OPTARG" ;;
 	p)   pattern="$OPTARG" ;;
 	w)      wrap="$OPTARG" ;;
 	o)    format="$OPTARG" ;;
@@ -212,6 +214,7 @@ then
 fi
 
 : ${format:=xtxt}
+: ${engine:=deepl}
 
 if [[ "$format" =~ ^(.+)-fold$ ]]
 then
@@ -221,7 +224,8 @@ fi
 
 declare -a module option
 
-module+=(-Mxlate::deepl) 
+module+=(-Mxlate) 
+option+=(--xlate-engine="$engine")
 option+=(--xlate-to="$to_lang" --xlate-format="$format" --xlate-cache=yes)
 option+=(--all)
 
