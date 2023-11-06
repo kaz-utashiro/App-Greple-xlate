@@ -10,6 +10,8 @@ App::Greple::xlate - translation support module for greple
 
 =head1 SYNOPSIS
 
+    greple -Mxlate -e ENGINE --xlate pattern target-file
+
     greple -Mxlate::deepl --xlate pattern target-file
 
 =head1 VERSION
@@ -19,8 +21,8 @@ Version 0.25
 =head1 DESCRIPTION
 
 B<Greple> B<xlate> module find text blocks and replace them by the
-translated text.  Currently only DeepL service is supported by the
-B<xlate::deepl> module.
+translated text.  Include DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>)
+module for back-end engine.
 
 If you want to translate normal text block in L<pod> style document,
 use B<greple> command with C<xlate::deepl> and C<perl> module like
@@ -83,9 +85,9 @@ could hold 74 characters at most.
 
 =item B<--xlate-engine>=I<engine>
 
-Specify the translation engine to be used.  You don't have to use this
-option because module C<xlate::deepl> declares it as
-C<--xlate-engine=deepl>.
+Specifies the translation engine to be used. If you specify the engine
+module directly, such as C<-Mxlate::deepl>, you do not need to use
+this option.
 
 =item B<--xlate-labor>
 
@@ -234,6 +236,10 @@ language invoking it with prefix argument.
 
 Set your authentication key for DeepL service.
 
+=item OPENAI_API_KEY
+
+OpenAI authentication key.
+
 =back
 
 =head1 INSTALL
@@ -242,15 +248,35 @@ Set your authentication key for DeepL service.
 
     $ cpanm App::Greple::xlate
 
+=head2 TOOLS
+
+You have to install command line tools for DeepL and ChatGPT.
+
+L<https://github.com/DeepLcom/deepl-python>
+
+L<https://github.com/tecolicom/App-gpty>
+
 =head1 SEE ALSO
 
 L<App::Greple::xlate>
+
+L<App::Greple::xlate::deepl>
+
+L<App::Greple::xlate::gpt3>
 
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python library and CLI command.
+
+=item L<https://github.com/openai/openai-python>
+
+OpenAI Python Library
+
+=item L<https://github.com/tecolicom/App-gpty>
+
+OpenAI command line interface
 
 =item L<App::Greple>
 
