@@ -504,7 +504,11 @@ sub begin {
     }
 }
 
-sub end {}
+sub end {
+    if (my $obj = tied %cache) {
+	$obj->update;
+    }
+}
 
 sub setopt {
     while (my($key, $val) = splice @_, 0, 2) {

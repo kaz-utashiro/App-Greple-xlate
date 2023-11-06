@@ -24,10 +24,10 @@ sub STORE {
     $obj->set($key, $val);
 }
 
-sub DESTROY {
-    my $obj = shift;
-    $obj->update;
-}
+#sub DESTROY {
+#    my $obj = shift;
+#    $obj->update;
+#}
 
 my %default = (
     name => '',
