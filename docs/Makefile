@@ -15,7 +15,7 @@ SRC      := $(PM:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
 PMS      := $(foreach lang,$(LANGS),$(SRC:.pm=.$(lang).pm))
 MDS      := $(foreach lang,$(LANGS),$(PM:.pm=.$(lang).md))
 READMES  := $(RM_LANGS:%=../README.%.md)
-ALL      := $(PMS) $(MDS) README.md $(READMES)
+ALL      := $(PMS) $(MDS) README.md
 
 all: $(ALL)
 
