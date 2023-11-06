@@ -34,6 +34,7 @@ my %default = (
     saved => undef,
     current => undef,
     clear => 0,
+    force_update => 0,
     updated => 0,
     );
 
@@ -101,7 +102,7 @@ sub open {
 sub update {
     my $obj = shift;
     my $file = $obj->name || return;
-    if ($obj->updated == 0) {
+    if (not $obj->force_update and $obj->updated == 0) {
 	if (%{$obj->saved} == 0) {
 	    return;
 	} elsif ($obj->accumulate) {

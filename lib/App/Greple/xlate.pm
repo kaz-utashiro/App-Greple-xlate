@@ -293,6 +293,9 @@ use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
+use Exporter 'import';
+our @EXPORT_OK = qw(&opt);
+
 our %opt = (
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
@@ -388,22 +391,29 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my $key = normalize $grep->cut(@$m);
-	    push @miss, $key if not defined $cache{$key};
+	    if (not defined $cache{$key}) {
+		$cache{$key} = 'DUMMY';
+		push @miss, $key;
+	    }
 	}
     }
     cache_update(@miss) if @miss;
+}
+
+sub _progress {
+    print STDERR @_ if opt('progress');
 }
 
 sub cache_update {
     binmode STDERR, ':encoding(utf8)';
 
     my @from = @_;
-    print STDERR "From:\n", map s/^/\t< /mgr, @from if $show_progress;
+    # _progress("From:\n", map s/^/\t< /mgr, @from);
     return @from if $dryrun;
 
     my @to = &XLATE(@from);
 
-    print STDERR "To:\n", map s/^/\t> /mgr, @to if $show_progress;
+    # _progress("To:\n", map s/^/\t> /mgr, @to);
     die "Unmatched response:\n@to" if @from != @to;
     @cache{@from} = @to;
 }
