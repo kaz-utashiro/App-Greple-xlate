@@ -1,0 +1,261 @@
+=encoding utf-8
+
+=head1 NAME
+
+App::Greple::xlate - vertaalondersteuningsmodule voor greple
+
+=head1 SYNOPSIS
+
+    greple -Mxlate -e ENGINE --xlate pattern target-file
+
+    greple -Mxlate::deepl --xlate pattern target-file
+
+=head1 VERSION
+
+Version 0.25
+
+=head1 DESCRIPTION
+
+B<Greple> B<xlate> module vindt tekstblokken en vervangt ze door de vertaalde tekst. Inclusief DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) module voor de back-end engine.
+
+Als je een normaal tekstblok in een L<pod>-stijl document wilt vertalen, gebruik dan het B<greple> commando met de C<xlate::deepl> en C<perl> module als volgt:
+
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+
+Patroon C<^(\w.*\n)+> betekent opeenvolgende regels die beginnen met een alfanumeriek teken. Dit commando toont het gebied dat vertaald moet worden. Optie B<--all> wordt gebruikt om de volledige tekst te produceren.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
+</p>
+
+Voeg vervolgens de optie C<--xlate> toe om het geselecteerde gebied te vertalen. Het zal ze vinden en vervangen door de uitvoer van het B<deepl> commando.
+
+Standaard wordt de oorspronkelijke en vertaalde tekst afgedrukt in het formaat van het "conflict marker" dat compatibel is met L<git(1)>. Met behulp van het C<ifdef>-formaat kunt u het gewenste deel krijgen met het L<unifdef(1)> commando. Het formaat kan worden gespecificeerd met de optie B<--xlate-format>.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
+</p>
+
+Als u de volledige tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om het patroon te specificeren dat overeenkomt met de volledige tekst C<(?s).+>.
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<--xlate>
+
+=item B<--xlate-color>
+
+=item B<--xlate-fold>
+
+=item B<--xlate-fold-width>=I<n> (Default: 70)
+
+Roep het vertaalproces aan voor elk overeenkomend gebied.
+
+Zonder deze optie gedraagt B<greple> zich als een normaal zoekcommando. U kunt dus controleren welk deel van het bestand onderwerp zal zijn van de vertaling voordat u daadwerkelijk aan het werk gaat.
+
+Het resultaat van het commando wordt naar standaarduitvoer gestuurd, dus leid het om naar een bestand indien nodig, of overweeg het gebruik van de L<App::Greple::update> module.
+
+Optie B<--xlate> roept de optie B<--xlate-color> aan met de optie B<--color=never>.
+
+Met de optie B<--xlate-fold> wordt de geconverteerde tekst gevouwen volgens de opgegeven breedte. De standaardbreedte is 70 en kan worden ingesteld met de optie B<--xlate-fold-width>. Vier kolommen zijn gereserveerd voor de run-in bewerking, zodat elke regel maximaal 74 tekens kan bevatten.
+
+=item B<--xlate-engine>=I<engine>
+
+Specificeert de te gebruiken vertaalmotor. Als je de engine module direct specificeert, zoals C<-Mxlate::deepl>, hoef je deze optie niet te gebruiken.
+
+=item B<--xlate-labor>
+
+=item B<--xlabor>
+
+In plaats van de vertaalmotor te bellen, wordt van u verwacht dat u werkt. Nadat u de tekst hebt voorbereid om te vertalen, wordt deze gekopieerd naar het klembord. U wordt verwacht deze tekst in het formulier te plakken, het resultaat naar het klembord te kopiëren en op Enter te drukken.
+
+=item B<--xlate-to> (Default: C<EN-US>)
+
+Specificeer de doeltaal. U kunt de beschikbare talen krijgen met het C<deepl languages> commando wanneer u de B<DeepL> motor gebruikt.
+
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
+
+Specificeer het uitvoerformaat voor de oorspronkelijke en vertaalde tekst.
+
+=over 4
+
+=item B<conflict>, B<cm>
+
+Druk de oorspronkelijke en vertaalde tekst af in het formaat van het L<git(1)> conflict marker.
+
+    <<<<<<< ORIGINAL
+    original text
+    =======
+    translated Japanese text
+    >>>>>>> JA
+
+U kunt het oorspronkelijke bestand herstellen met het volgende L<sed(1)> commando.
+
+    sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<ifdef>
+
+Druk de oorspronkelijke en vertaalde tekst af in het L<cpp(1)> C<#ifdef> formaat.
+
+    #ifdef ORIGINAL
+    original text
+    #endif
+    #ifdef JA
+    translated Japanese text
+    #endif
+
+U kunt alleen de Japanse tekst ophalen met het B<unifdef> commando:
+
+    unifdef -UORIGINAL -DJA foo.ja.pm
+
+=item B<space>
+
+Druk de oorspronkelijke en vertaalde tekst af gescheiden door een enkele lege regel.
+
+=item B<xtxt>
+
+Als het formaat C<xtxt> (vertaalde tekst) of onbekend is, wordt alleen de vertaalde tekst afgedrukt.
+
+=back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Specificeer de maximale lengte van de tekst die in één keer naar de API wordt verzonden. De standaardwaarde is ingesteld voor de gratis account service: 128K voor de API (B<--xlate>) en 5000 voor de klembordinterface (B<--xlate-labor>). U kunt deze waarden mogelijk wijzigen als u de Pro-service gebruikt.
+
+=item B<-->[B<no->]B<xlate-progress> (Default: True)
+
+Bekijk het vertaalresultaat in realtime in de STDERR-uitvoer.
+
+=item B<--match-all>
+
+Stel de volledige tekst van het bestand in als een doelgebied.
+
+=back
+
+=head1 CACHE OPTIONS
+
+De B<xlate> module kan gecachte tekst van vertaling voor elk bestand opslaan en deze lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cache-strategie C<auto> wordt de cache alleen behouden wanneer het cachebestand bestaat voor het doelbestand.
+
+=over 7
+
+=item --cache-clear
+
+De optie B<--cache-clear> kan worden gebruikt om het cachebeheer te starten of om alle bestaande cachegegevens te vernieuwen. Zodra deze optie is uitgevoerd, wordt er een nieuw cachebestand gemaakt als dit nog niet bestaat en vervolgens automatisch onderhouden.
+
+=item --xlate-cache=I<strategy>
+
+=over 4
+
+=item C<auto> (Default)
+
+Onderhoud het cachebestand als het bestaat.
+
+=item C<create>
+
+Maak een leeg cachebestand aan en stop.
+
+=item C<always>, C<yes>, C<1>
+
+Onderhoud de cache hoe dan ook zolang het doel een normaal bestand is.
+
+=item C<clear>
+
+Wis eerst de cachegegevens.
+
+=item C<never>, C<no>, C<0>
+
+Gebruik nooit het cachebestand, zelfs als het bestaat.
+
+=item C<accumulate>
+
+Standaardgedrag is dat ongebruikte gegevens uit het cachebestand worden verwijderd. Als u ze niet wilt verwijderen en in het bestand wilt bewaren, gebruik dan C<accumulate>.
+
+=back
+
+=back
+
+=head1 COMMAND LINE INTERFACE
+
+Je kunt deze module gemakkelijk gebruiken vanaf de commandoregel door het C<xlate> commando te gebruiken dat is opgenomen in de repository. Zie de C<xlate> helpinformatie voor het gebruik.
+
+=head1 EMACS
+
+Laad het bestand F<xlate.el> dat is opgenomen in de repository om het C<xlate> commando te gebruiken vanuit de Emacs-editor. De functie C<xlate-region> vertaalt het opgegeven gedeelte. De standaardtaal is C<EN-US> en je kunt de taal specificeren door het aan te roepen met een voorvoegselargument.
+
+=head1 ENVIRONMENT
+
+=over 7
+
+=item DEEPL_AUTH_KEY
+
+Stel je authenticatiesleutel in voor de DeepL-service.
+
+=item OPENAI_API_KEY
+
+OpenAI authenticatiesleutel.
+
+=back
+
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
+=head2 TOOLS
+
+Je moet command line tools installeren voor DeepL en ChatGPT.
+
+L<https://github.com/DeepLcom/deepl-python>
+
+L<https://github.com/tecolicom/App-gpty>
+
+=head1 SEE ALSO
+
+L<App::Greple::xlate>
+
+L<App::Greple::xlate::deepl>
+
+L<App::Greple::xlate::gpt3>
+
+=over 7
+
+=item L<https://github.com/DeepLcom/deepl-python>
+
+DeepL Python-bibliotheek en CLI-commando.
+
+=item L<https://github.com/openai/openai-python>
+
+OpenAI Python-bibliotheek
+
+=item L<https://github.com/tecolicom/App-gpty>
+
+OpenAI command line interface
+
+=item L<App::Greple>
+
+Zie de handleiding van B<greple> voor meer informatie over het doelpatroon van de tekst. Gebruik de opties B<--inside>, B<--outside>, B<--include>, B<--exclude> om het overeenkomende gebied te beperken.
+
+=item L<App::Greple::update>
+
+Je kunt de module C<-Mupdate> gebruiken om bestanden te wijzigen op basis van het resultaat van het B<greple> commando.
+
+=item L<App::sdif>
+
+Gebruik B<sdif> om het conflictmarkeringsformaat zij aan zij weer te geven met de optie B<-V>.
+
+=back
+
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
+=head1 LICENSE
+
+Copyright © 2023 Kazumasa Utashiro.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

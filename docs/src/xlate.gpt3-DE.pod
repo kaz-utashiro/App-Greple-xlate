@@ -1,0 +1,261 @@
+=encoding utf-8
+
+=head1 NAME
+
+App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
+
+=head1 SYNOPSIS
+
+    greple -Mxlate -e ENGINE --xlate pattern target-file
+
+    greple -Mxlate::deepl --xlate pattern target-file
+
+=head1 VERSION
+
+Version 0.25
+
+=head1 DESCRIPTION
+
+B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Es beinhaltet das DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) Modul als Backend-Engine.
+
+Wenn Sie einen normalen Textblock in einem L<pod>-Dokument übersetzen möchten, verwenden Sie den B<greple>-Befehl mit dem C<xlate::deepl>- und C<perl>-Modul wie folgt:
+
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+
+Das Muster C<^(\w.*\n)+> bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option B<--all> wird verwendet, um den gesamten Text zu erzeugen.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
+</p>
+
+Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Es wird sie finden und durch die Ausgabe des B<deepl>-Befehls ersetzen.
+
+Standardmäßig wird der ursprüngliche und übersetzte Text im "Konfliktmarker"-Format gedruckt, das mit L<git(1)> kompatibel ist. Mit dem C<ifdef>-Format können Sie den gewünschten Teil leicht mit dem Befehl L<unifdef(1)> erhalten. Das Format kann mit der Option B<--xlate-format> angegeben werden.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
+</p>
+
+Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die Option B<--match-all>. Dies ist eine Abkürzung, um das Muster anzugeben, das den gesamten Text C<(?s).+> abdeckt.
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<--xlate>
+
+=item B<--xlate-color>
+
+=item B<--xlate-fold>
+
+=item B<--xlate-fold-width>=I<n> (Default: 70)
+
+Rufen Sie den Übersetzungsprozess für jeden übereinstimmenden Bereich auf.
+
+Ohne diese Option verhält sich B<greple> wie ein normaler Suchbefehl. Sie können also überprüfen, welcher Teil der Datei vor dem Aufrufen der eigentlichen Arbeit übersetzt wird.
+
+Das Befehlsergebnis wird auf die Standardausgabe geschrieben, also leiten Sie es bei Bedarf um oder verwenden Sie das Modul L<App::Greple::update>.
+
+Die Option B<--xlate> ruft die Option B<--xlate-color> mit der Option B<--color=never> auf.
+
+Mit der Option B<--xlate-fold> wird der konvertierte Text auf die angegebene Breite gefaltet. Die Standardbreite beträgt 70 und kann mit der Option B<--xlate-fold-width> festgelegt werden. Vier Spalten sind für den Run-in-Betrieb reserviert, so dass jede Zeile maximal 74 Zeichen enthalten kann.
+
+=item B<--xlate-engine>=I<engine>
+
+Spezifiziert die zu verwendende Übersetzungs-Engine. Wenn Sie das Engine-Modul direkt angeben, z.B. C<-Mxlate::deepl>, müssen Sie diese Option nicht verwenden.
+
+=item B<--xlate-labor>
+
+=item B<--xlabor>
+
+Anstatt den Übersetzungsmotor aufzurufen, wird erwartet, dass Sie daran arbeiten. Nachdem Sie den zu übersetzenden Text vorbereitet haben, werden sie in die Zwischenablage kopiert. Sie sollten sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und die Eingabetaste drücken.
+
+=item B<--xlate-to> (Default: C<EN-US>)
+
+Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befehl C<deepl languages> abrufen, wenn Sie den B<DeepL>-Motor verwenden.
+
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
+
+Geben Sie das Ausgabeformat für den ursprünglichen und übersetzten Text an.
+
+=over 4
+
+=item B<conflict>, B<cm>
+
+Drucken Sie den ursprünglichen und übersetzten Text im L<git(1)> Konfliktmarker-Format.
+
+    <<<<<<< ORIGINAL
+    original text
+    =======
+    translated Japanese text
+    >>>>>>> JA
+
+Sie können die ursprüngliche Datei mit dem nächsten L<sed(1)>-Befehl wiederherstellen.
+
+    sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<ifdef>
+
+Drucken Sie den ursprünglichen und übersetzten Text im L<cpp(1)> C<#ifdef>-Format.
+
+    #ifdef ORIGINAL
+    original text
+    #endif
+    #ifdef JA
+    translated Japanese text
+    #endif
+
+Sie können nur den japanischen Text mit dem Befehl B<unifdef> abrufen:
+
+    unifdef -UORIGINAL -DJA foo.ja.pm
+
+=item B<space>
+
+Drucken Sie den ursprünglichen und übersetzten Text, getrennt durch eine einzelne Leerzeile.
+
+=item B<xtxt>
+
+Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der übersetzte Text gedruckt.
+
+=back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist für den kostenlosen Kontoservice festgelegt: 128K für die API (B<--xlate>) und 5000 für die Zwischenablichnittstelle (B<--xlate-labor>). Sie können diese Werte möglicherweise ändern, wenn Sie den Pro-Service verwenden.
+
+=item B<-->[B<no->]B<xlate-progress> (Default: True)
+
+Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe.
+
+=item B<--match-all>
+
+Setzen Sie den gesamten Text der Datei als Zielbereich.
+
+=back
+
+=head1 CACHE OPTIONS
+
+Das B<xlate>-Modul kann den zwischengespeicherten Text der Übersetzung für jede Datei speichern und vor der Ausführung lesen, um den Overhead des Serveranfragen zu eliminieren. Mit der Standard-Cache-Strategie C<auto> werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei vorhanden ist.
+
+=over 7
+
+=item --cache-clear
+
+Die Option B<--cache-clear> kann verwendet werden, um das Cache-Management zu initiieren oder alle vorhandenen Cache-Daten zu aktualisieren. Sobald sie mit dieser Option ausgeführt wird, wird eine neue Cache-Datei erstellt, wenn sie nicht vorhanden ist, und danach automatisch gewartet.
+
+=item --xlate-cache=I<strategy>
+
+=over 4
+
+=item C<auto> (Default)
+
+Die Cache-Datei beibehalten, wenn sie vorhanden ist.
+
+=item C<create>
+
+Leere Cache-Datei erstellen und beenden.
+
+=item C<always>, C<yes>, C<1>
+
+Cache-Datei beibehalten, solange das Ziel eine normale Datei ist.
+
+=item C<clear>
+
+Löschen Sie zuerst die Cache-Daten.
+
+=item C<never>, C<no>, C<0>
+
+Verwenden Sie niemals die Cache-Datei, auch wenn sie vorhanden ist.
+
+=item C<accumulate>
+
+Standardmäßig werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten möchten, verwenden Sie C<accumulate>.
+
+=back
+
+=back
+
+=head1 COMMAND LINE INTERFACE
+
+Sie können dieses Modul ganz einfach über die Befehlszeile verwenden, indem Sie den Befehl C<xlate> verwenden, der im Repository enthalten ist. Weitere Informationen zur Verwendung finden Sie in der Hilfe von C<xlate>.
+
+=head1 EMACS
+
+Laden Sie die Datei F<xlate.el> aus dem Repository, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt den angegebenen Bereich. Die Standardsprache ist C<EN-US>, und Sie können die Sprache mit einem Präfixargument angeben.
+
+=head1 ENVIRONMENT
+
+=over 7
+
+=item DEEPL_AUTH_KEY
+
+Legen Sie Ihren Authentifizierungsschlüssel für den DeepL-Dienst fest.
+
+=item OPENAI_API_KEY
+
+OpenAI-Authentifizierungsschlüssel.
+
+=back
+
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
+=head2 TOOLS
+
+Sie müssen die Befehlszeilentools für DeepL und ChatGPT installieren.
+
+L<https://github.com/DeepLcom/deepl-python>
+
+L<https://github.com/tecolicom/App-gpty>
+
+=head1 SEE ALSO
+
+L<App::Greple::xlate>
+
+L<App::Greple::xlate::deepl>
+
+L<App::Greple::xlate::gpt3>
+
+=over 7
+
+=item L<https://github.com/DeepLcom/deepl-python>
+
+DeepL Python-Bibliothek und CLI-Befehl.
+
+=item L<https://github.com/openai/openai-python>
+
+OpenAI Python-Bibliothek
+
+=item L<https://github.com/tecolicom/App-gpty>
+
+OpenAI-Befehlszeilenschnittstelle
+
+=item L<App::Greple>
+
+Weitere Informationen zum Zieltextmuster finden Sie im Handbuch von B<greple>. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include> und B<--exclude>, um den Übereinstimmungsbereich einzuschränken.
+
+=item L<App::Greple::update>
+
+Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu ändern.
+
+=item L<App::sdif>
+
+Verwenden Sie B<sdif>, um das Konfliktmarkerformat mit der Option B<-V> nebeneinander anzuzeigen.
+
+=back
+
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
+=head1 LICENSE
+
+Copyright © 2023 Kazumasa Utashiro.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

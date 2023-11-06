@@ -1,0 +1,261 @@
+=encoding utf-8
+
+=head1 NAME
+
+App::Greple::xlate - tõlketoe moodul greple jaoks
+
+=head1 SYNOPSIS
+
+    greple -Mxlate -e ENGINE --xlate pattern target-file
+
+    greple -Mxlate::deepl --xlate pattern target-file
+
+=head1 VERSION
+
+Version 0.25
+
+=head1 DESCRIPTION
+
+B<Greple> B<xlate> moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Sisaldab DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodulit tagapõhja mootori jaoks.
+
+Kui soovite tõlkida tavalist tekstiplokki L<pod> stiilis dokumendis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
+
+    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+
+Muster C<^(\w.*\n)+> tähendab järjestikuseid ridu, mis algavad alfa-numbrilise tähega. See käsk näitab tõlgitavat ala. Valik B<--all> kasutatakse kogu teksti tootmiseks.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
+</p>
+
+Seejärel lisage C<--xlate> valik valitud ala tõlkimiseks. See leiab ja asendab need B<deepl> käsu väljundiga.
+
+Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, mis on ühilduv L<git(1)>-ga. Kasutades C<ifdef> formaati, saate soovitud osa L<unifdef(1)> käsu abil hõlpsasti kätte. Vormingut saab määrata valikuga B<--xlate-format>.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
+</p>
+
+Kui soovite tõlkida kogu teksti, kasutage valikut B<--match-all>. See on otsetee, et määrata mustri vastavus kogu tekstile C<(?s).+>.
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<--xlate>
+
+=item B<--xlate-color>
+
+=item B<--xlate-fold>
+
+=item B<--xlate-fold-width>=I<n> (Default: 70)
+
+Käivitage tõlkimisprotsess iga sobiva ala jaoks.
+
+Ilma selle valikuta käitub B<greple> nagu tavaline otsingukäsk. Seega saate enne tegeliku töö käivitamist kontrollida, milline osa failist saab tõlkeobjektiks.
+
+Käsu tulemus läheb standardväljundisse, nii et suunake see vajadusel faili või kaaluge L<App::Greple::update> mooduli kasutamist.
+
+Valik B<--xlate> kutsub välja valiku B<--xlate-color> koos valikuga B<--color=never>.
+
+Valikuga B<--xlate-fold> volditakse teisendatud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga B<--xlate-fold-width>. Neli veergu on reserveeritud run-in toimingu jaoks, nii et iga rida võib sisaldada kõige rohkem 74 tähemärki.
+
+=item B<--xlate-engine>=I<engine>
+
+Määrab kasutatava tõlke mootori. Kui määrate mootori mooduli otse, näiteks C<-Mxlate::deepl>, siis pole selle valiku kasutamine vajalik.
+
+=item B<--xlate-labor>
+
+=item B<--xlabor>
+
+Selle asemel, et kutsuda tõlke mootorit, oodatakse, et töötaksite. Pärast tõlgitava teksti ettevalmistamist kopeeritakse see lõikelauale. Oodatakse, et kleepite selle vormi, kopeerite tulemuse lõikelauale ja vajutate sisestusklahvi.
+
+=item B<--xlate-to> (Default: C<EN-US>)
+
+Määrake sihtkeel. Saate saada saadaolevad keeled käsu C<deepl languages> abil, kui kasutate B<DeepL> mootorit.
+
+=item B<--xlate-format>=I<format> (Default: C<conflict>)
+
+Määrake algse ja tõlgitud teksti väljundi vorming.
+
+=over 4
+
+=item B<conflict>, B<cm>
+
+Prindi algne ja tõlgitud tekst L<git(1)> konfliktimärgendi vormingus.
+
+    <<<<<<< ORIGINAL
+    original text
+    =======
+    translated Japanese text
+    >>>>>>> JA
+
+Saate algse faili taastada järgmise L<sed(1)> käsu abil.
+
+    sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<ifdef>
+
+Prindi algne ja tõlgitud tekst L<cpp(1)> C<#ifdef> vormingus.
+
+    #ifdef ORIGINAL
+    original text
+    #endif
+    #ifdef JA
+    translated Japanese text
+    #endif
+
+Saate ainult jaapani keelse teksti kätte B<unifdef> käsu abil:
+
+    unifdef -UORIGINAL -DJA foo.ja.pm
+
+=item B<space>
+
+Prindi algne ja tõlgitud tekst eraldatuna ühe tühja reaga.
+
+=item B<xtxt>
+
+Kui vorming on C<xtxt> (tõlgitud tekst) või tundmatu, prinditakse ainult tõlgitud tekst.
+
+=back
+
+=item B<--xlate-maxlen>=I<chars> (Default: 0)
+
+Määrake korraga API-le saadetava teksti maksimaalne pikkus. Vaikimisi väärtus on seatud tasuta konto teenuse jaoks: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidese jaoks (B<--xlate-labor>). Kui kasutate Pro teenust, võite neid väärtusi muuta.
+
+=item B<-->[B<no->]B<xlate-progress> (Default: True)
+
+Vaadake tõlke tulemust reaalajas STDERR väljundis.
+
+=item B<--match-all>
+
+Määrake faili kogu tekst sihtalaks.
+
+=back
+
+=head1 CACHE OPTIONS
+
+B<xlate> moodul saab salvestada tõlke teksti vahemällu iga faili jaoks ja lugeda selle enne täitmist, et kõrvaldada päringu ülekoormus. Vaikimisi vahemälu strateegia C<auto> korral hoitakse vahemälu andmeid ainult siis, kui sihtfaili jaoks on olemas vahemälu fail.
+
+=over 7
+
+=item --cache-clear
+
+Võite kasutada valikut B<--cache-clear> vahemälu haldamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälu fail, kui ühtegi pole olemas, ja seejärel hoitakse seda automaatselt.
+
+=item --xlate-cache=I<strategy>
+
+=over 4
+
+=item C<auto> (Default)
+
+Hoia vahemälu faili, kui see on olemas.
+
+=item C<create>
+
+Loo tühi vahemälu fail ja välju.
+
+=item C<always>, C<yes>, C<1>
+
+Hoia vahemälu igal juhul, kui sihtfail on tavaline fail.
+
+=item C<clear>
+
+Kustuta kõigepealt vahemälu andmed.
+
+=item C<never>, C<no>, C<0>
+
+Ära kasuta vahemälu faili isegi siis, kui see on olemas.
+
+=item C<accumulate>
+
+Vaikimisi käitumise korral eemaldatakse kasutamata andmed vahemälu failist. Kui te ei soovi neid eemaldada ja soovite neid failis hoida, kasutage C<accumulate>.
+
+=back
+
+=back
+
+=head1 COMMAND LINE INTERFACE
+
+Saate seda moodulit hõlpsasti kasutada käsurealt, kasutades hõlpsasti kasutatavat C<xlate> käsku, mis on kaasasolevas hoidlas. Vaadake C<xlate> kasutusjuhendit lisateabe saamiseks.
+
+=head1 EMACS
+
+Laadige C<xlate.el> fail, mis on kaasasolevas hoidlas, et kasutada C<xlate> käsku Emacs redaktorist. C<xlate-region> funktsioon tõlgib antud piirkonna. Vaikimisi keel on C<EN-US> ja saate keele määrata eesliiteargumendiga.
+
+=head1 ENVIRONMENT
+
+=over 7
+
+=item DEEPL_AUTH_KEY
+
+Seadistage oma autentimisvõti DeepL-teenuse jaoks.
+
+=item OPENAI_API_KEY
+
+OpenAI autentimisvõti.
+
+=back
+
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::xlate
+
+=head2 TOOLS
+
+Peate installima käsurea tööriistad DeepL ja ChatGPT jaoks.
+
+L<https://github.com/DeepLcom/deepl-python>
+
+L<https://github.com/tecolicom/App-gpty>
+
+=head1 SEE ALSO
+
+L<App::Greple::xlate>
+
+L<App::Greple::xlate::deepl>
+
+L<App::Greple::xlate::gpt3>
+
+=over 7
+
+=item L<https://github.com/DeepLcom/deepl-python>
+
+DeepL Pythoni teek ja käsurea käsk.
+
+=item L<https://github.com/openai/openai-python>
+
+OpenAI Pythoni teek
+
+=item L<https://github.com/tecolicom/App-gpty>
+
+OpenAI käsurealiides
+
+=item L<App::Greple>
+
+Vaadake B<greple> käsiraamatut sihtteksti mustrite üksikasjade kohta. Piirake vastavust B<--inside>, B<--outside>, B<--include>, B<--exclude> valikutega.
+
+=item L<App::Greple::update>
+
+Saate kasutada C<-Mupdate> moodulit failide muutmiseks B<greple> käsu tulemuse põhjal.
+
+=item L<App::sdif>
+
+Kasutage B<sdif> konfliktimärgendi vormingu kuvamiseks kõrvuti B<-V> valikuga.
+
+=back
+
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
+=head1 LICENSE
+
+Copyright © 2023 Kazumasa Utashiro.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
