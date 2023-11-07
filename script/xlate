@@ -244,7 +244,7 @@ case $1 in
 	area=(--re '^(.+\n)+')
 	;;
     *.md)
-	area=(--re '(?x) ^[-+#].*\n | ^[\t ]+\K.*\n | ^(.+\n)+ ')
+	area=(--re '(?x) ^[-+#].*\n | ^(\S.*\n)+ ')
 	;;
     *.pm|*.pod)
 	module+=(-Mperl)
