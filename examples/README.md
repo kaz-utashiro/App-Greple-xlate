@@ -24,9 +24,9 @@
 
 たとえば、`Document.txt` というファイルを日本語に翻訳する場合、
 
-    Document.txt.JA.xtxt
-    Document.txt.JA.cm
-    Document.txt.JA.ifdef
+    Document.txt.deepl-JA.xtxt
+    Document.txt.deepl-JA.cm
+    Document.txt.deepl-JA.ifdef
 
 という3つのファイルが生成されます。`xtxt` ファイルには、翻訳文章のみ、
 `cm` と `ifdef` には原文と訳文の両方が含まれます。
@@ -42,6 +42,10 @@
 訳処理を制御することができます。たとえば、`Document.txt` というファイ
 ルと共に `Document.txt.LANG` というファイルがあれば、その中に書かれて
 いる言語に翻訳します。
+
+### .ENGINE
+
+翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定可能。
 
 ### .LANG
 
