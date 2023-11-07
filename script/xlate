@@ -19,14 +19,14 @@ define pod <<"=cut"
 	-c   just check translation area
 	-r   refresh cache
 	-s   silent mode
-	-e#  translation engine (default deepl, or gpt3)
-	-p#  pattern to determine translation area
-	-w#  wrap line by # width
-	-o#  output format (default xtxt, or cm, ifdef)
-	-f#  from lang (ignored)
-	-t#  to lang
-	-m#  max length per API call
-	-l#  show library files (XLATE.mk, xlate.el)
+	-e # translation engine (default deepl, or gpt3)
+	-p # pattern to determine translation area
+	-w # wrap line by # width
+	-o # output format (default xtxt, or cm, ifdef)
+	-f # from lang (ignored)
+	-t # to lang
+	-m # max length per API call
+	-l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
 	-M   run make
@@ -35,8 +35,8 @@ define pod <<"=cut"
 	-G   mount git top-level directory
 	-B   run in non-interactive (batch) mode
 	-R   mount read-only
-	-D   run xlate on the container
-	-C   run any command on the container
+	-D * run xlate on the container with the rest parameters
+	-C * run following command on the container, or run shell
 
     Control Files:
 	*.LANG    translation languates
