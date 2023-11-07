@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.26";
+our $VERSION = "0.27";
 
 =encoding utf-8
 
@@ -16,7 +16,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.26
+Version 0.27
 
 =head1 DESCRIPTION
 
@@ -320,7 +320,8 @@ use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 
 use Exporter 'import';
-our @EXPORT_OK = qw(&opt);
+our @EXPORT_OK = qw($VERSION &opt);
+our @EXPORT_TAGS = ( all => [ qw($VERSION) ] );
 
 our %opt = (
     engine   => \(our $xlate_engine),

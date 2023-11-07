@@ -9,7 +9,8 @@ static_install = "auto"
 [release]
 branch = "main"
 hooks = [
-    "cd docs; make",
+    "make -C docs",
+    "perl -Ilib -MApp::Greple::xlate=\$VERSION -i -pE 's/^\s*Version \K([\d.]+)/$App::Greple::xlate::VERSION/' script/xlate"
 ]
 
 [FileGatherer]

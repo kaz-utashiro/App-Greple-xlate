@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.27 2023-11-07T15:57:53Z
+
+    - use monotone colormap
+    - add Minilla release.hooks
+
 0.26 2023-11-07T10:22:47Z
 
     - support ChatGPT-3.5 (gpt3) translation engine

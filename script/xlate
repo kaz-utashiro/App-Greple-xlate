@@ -44,7 +44,7 @@ define pod <<"=cut"
 
 =head1 VERSION
 
-    Version 0.25
+    Version 0.27
 
 =cut
 
