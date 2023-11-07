@@ -25,7 +25,7 @@ my %param = (
 sub gpty {
     state $gpty = App::cdif::Command->new;
     my $param = $param{$method};
-    my $prompt = sprintf("Translate following text into %s.",
+    my $prompt = sprintf("Translate following text into %s, line-by-line.",
 			 $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n");
     my @command = (
 	'gpty',

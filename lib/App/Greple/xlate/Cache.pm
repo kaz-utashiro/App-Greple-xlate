@@ -34,9 +34,10 @@ my %default = (
     saved => undef,
     current => undef,
     clear => 0,
+    accumulate => 0,
     force_update => 0,
     updated => 0,
-    );
+);
 
 for my $key (keys %default) {
     no strict 'refs';

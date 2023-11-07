@@ -335,7 +335,7 @@ our %opt = (
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
     maxlen   => \(our $max_length = 0),
-    );
+);
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
 
@@ -364,7 +364,7 @@ our %formatter = (
     },
     space   => sub { join "\n", @_ },
     discard => sub { '' },
-    );
+);
 
 # aliases
 for (keys %formatter) {
@@ -451,7 +451,7 @@ sub fold_lines {
 	linebreak => LINEBREAK_ALL,
 	runin     => 4,
 	runout    => 4,
-	);
+    );
     local $_ = shift;
     s/(.+)/join "\n", $fold->text($1)->chops/ge;
     $_;
@@ -494,12 +494,15 @@ sub begin {
 	die "Select translation engine.\n";
     }
     if (my $file = cache_file) {
-	my @policy;
-	if ($cache_method =~ /^(create|clear)/) {
-	    @policy = (clear => 1);
+	my @opt;
+	if ($cache_method =~ /create|clear/i) {
+	    push @opt, clear => 1;
+	}
+	if ($cache_method =~ /accumulate/i) {
+	    push @opt, accumulate => 1;
 	}
 	require App::Greple::xlate::Cache;
-	tie %cache, 'App::Greple::xlate::Cache', $file, @policy;
+	tie %cache, 'App::Greple::xlate::Cache', $file, @opt;
 	die "skip $current_file" if $cache_method eq 'create';
     }
 }
