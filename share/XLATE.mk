@@ -17,6 +17,7 @@
 
 XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm
+XLATE_ENGINE ?= deepl
 
 ifeq ($(strip $(XLATE_FILES)),)
 override XLATE_FILES := \
@@ -37,12 +38,13 @@ define FOREACH
 $(foreach file,$(XLATE_FILES),
 $(foreach lang,$(or $(shell cat $(file).LANG 2> /dev/null),$(XLATE_LANG)),
 $(foreach form,$(or $(shell cat $(file).FORMAT 2> /dev/null),$(XLATE_FORMAT)),
-$(call $1,$(lang),$(form),$(file))
-)))
+$(foreach engn,$(or $(shell cat $(file).ENGINE 2> /dev/null),$(XLATE_ENGINE)),
+$(call $1,$(lang),$(form),$(file),$(engn))
+))))
 endef
 
 define ADD_TARGET
-  TARGET += $$(addsuffix .$1.$2,$$(basename $3))
+  TARGET += $$(addsuffix .$4-$1.$2,$$(basename $3))
 endef
 $(eval $(call FOREACH,ADD_TARGET))
 
@@ -64,14 +66,13 @@ SRC = $(or $(call TMP,$1),$1)
 TEMPFILES += $(foreach file,$(XLATE_FILES),$(call TMP,$(file)))
 
 define DEFINE_RULE
-$(basename $3).$1.$2: $(call SRC,$3)
-	$$(XLATE) -t $1 -o $2 $$< > $$@
+$(basename $3).$4-$1.$2: $(call SRC,$3)
+	$$(XLATE) -e $4 -t $1 -o $2 $$< > $$@
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
 
 XLATE = xlate \
 	$(if $(XLATE_DEBUG),-d) \
-	$(if $(XLATE_ENGINE),-e $(XLATE_ENGINE)) \
 	$(if $(XLATE_MAXLEN),-m$(XLATE_MAXLEN)) \
 	$(if $(XLATE_USEAPI),-a)
 
