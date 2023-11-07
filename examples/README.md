@@ -111,3 +111,28 @@ API を利用する場合は、最大文字数は 128K に設定されます。�
 リプトで自動的に処理するようにしてあります。ですから、現在の Makefile
 は、単に `xlate` コマンドを呼び出すだけのものになっています。`xlate`
 が使用する Makefile は `../share/XLATE.mk` にあります。
+
+### `xlate -M`
+
+make を実行します。
+
+### `xlate -D`
+
+Docker 環境で xlate コマンドを実行します。
+
+### `xlate -C`
+
+Docker 環境でコマンドを実行します。
+
+#### `xlate -G`
+
+Docker 環境を構築する際に、現在の git リポジトリのトップディレクトリを
+マウントします。
+
+#### `xlate -GDM`
+
+現在の git リポジトリをマウントして、Docker 環境で make を実行します。
+
+#### `xlate -GC`
+
+Docker 環境でシェルを立ち上げます。

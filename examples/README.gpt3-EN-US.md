@@ -83,3 +83,27 @@ make XLATE_OPT=-Dam100000
 ## xlate Script
 
 Initially, these files were designed to be processed by a Makefile, but now the settings used there have been made more generic and automated using a script called `xlate`. Therefore, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is located in `../share/XLATE.mk`.
+
+### `xlate -M`
+
+Execute the command "make".
+
+### `xlate -D`
+
+Run the `xlate` command in a Docker environment.
+
+### `xlate -C`
+
+Execute the command in a Docker environment.
+
+#### `xlate -G`
+
+When setting up the Docker environment, mount the current top directory of the git repository.
+
+#### `xlate -GDM`
+
+Mount the current git repository and execute "make" in a Docker environment.
+
+#### `xlate -GC`
+
+Launch a shell in the Docker environment.

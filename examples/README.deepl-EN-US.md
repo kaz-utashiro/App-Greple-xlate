@@ -83,3 +83,27 @@ would allow the API to run on Docker with a character limit of 100,000 character
 ## xlate script
 
 Originally, these files were created to be handled by a Makefile, but now the settings used there are more generic and are automatically handled by a script called `xlate`. Thus, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is `. /share/XLATE.mk`.
+
+### `xlate -M`.
+
+Run make.
+
+### `xlate -D`
+
+Run the xlate command in the Docker environment.
+
+### `xlate -C`
+
+Run the command in the Docker environment.
+
+#### `xlate -G`
+
+Mount the top directory of the current git repository in the Docker environment.
+
+#### `xlate -GDM`
+
+Mount the current git repository and run make in the Docker environment.
+
+#### `xlate -GC`
+
+Launch a shell in the Docker environment.
