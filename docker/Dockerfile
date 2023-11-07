@@ -25,8 +25,10 @@ RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        python3 python3-pip \
     && pip install --upgrade \
-       deepl \
+       packaging deepl \
        git+https://github.com/tecolicom/App-gpty.git
+RUN deepl --version
+RUN gpty --version
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
