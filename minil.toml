@@ -8,6 +8,9 @@ static_install = "auto"
 
 [release]
 branch = "main"
+hooks = [
+    "cd docs; make",
+]
 
 [FileGatherer]
 exclude_match = [ '^images/.*' ]
