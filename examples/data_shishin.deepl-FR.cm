@@ -1,0 +1,587 @@
+[ "data_shishin.docx" word/document.xml ]
+
+<<<<<<< ORIGINAL
+オープンデータ基本指針
+=======
+Lignes directrices de base pour les données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+平成29年５月30日
+=======
+30 mai 2017.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+高度情報通信ネットワーク社会推進戦略本部・
+=======
+Siège stratégique pour la promotion d'une société de l'information et des réseaux de communication avancée/.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+官民データ活用推進戦略会議決定
+=======
+Décision du Conseil stratégique pour la promotion de l'utilisation des données publiques-privées.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+令和元年６月７日改正
+=======
+Modifié le 7 juin 2048
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+令和３年６月15日改正
+=======
+Modifié le 15 juin 2021.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。[^2]
+=======
+Au Japon, depuis le grand tremblement de terre du 11 mars 2011, la publication et l'utilisation des données détenues par le gouvernement, les autorités locales et les entreprises ont fait l'objet d'une sensibilisation accrue. [^2]
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　政府においては、公共データは国民共有の財産であるとの認識を示した「電子行政オープンデータ戦略」（平成24年７月４日 高度情報通信ネットワーク社会推進戦略本部決定）等に基づき、オープンデータの取組を推進してきた。
+=======
+Le gouvernement japonais a encouragé les initiatives en matière de données ouvertes sur la base de la "stratégie de données ouvertes de l'administration en ligne" (décidée par le siège stratégique pour la promotion d'une société avancée de l'information et des réseaux de communication le 4 juillet 2012), qui reconnaît que les données publiques sont une propriété partagée par tous les citoyens.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　「新たなオープンデータの展開に向けて」（平成27年６月30日 高度情報通信ネットワーク社会推進戦略本部決定）及び「オープンデータ2.0」（平成28年５月20日 高度情報通信ネットワーク社会推進戦略本部決定）では、データの公開を中心とした取組から、データの活用を前提とした「課題解決型のオープンデータの推進」に発想を転換するという方向が示された。
+=======
+Les initiatives "Vers le développement de nouvelles données ouvertes" (décidées par le siège stratégique pour la promotion d'une société avancée de réseaux d'information et de communication le 30 juin 2015) et "Open data 2.0" (décidées par le siège stratégique pour la promotion d'une société avancée de réseaux d'information et de communication le 20 mai 2016) sont passées d'initiatives axées sur la publication de données à des "données ouvertes de résolution de problèmes", qui sont basées sur l'utilisation des données. L'orientation de la décision était de faire passer le concept d'initiatives axées sur la libération des données à la "promotion de la résolution des problèmes liés aux données ouvertes", qui est fondée sur l'utilisation des données.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　平成28年12月14日に公布・施行された「官民データ活用推進基本法」（以下「官民データ法」と言う。）は、官民データ活用の推進により国民が安全で安心して暮らせる社会及び快適な生活環境の実現に寄与することを目的としており、国、地方公共団体、事業者が保有する官民データの容易な利用等について規定されている。
+=======
+La loi fondamentale sur la promotion de l'utilisation des données publiques-privées (ci-après dénommée "loi sur les données publiques-privées"), qui a été promulguée et mise en application le 14 décembre 2016. L'objectif de la loi est de contribuer à la réalisation d'une société dans laquelle les citoyens peuvent vivre en toute sécurité et d'un cadre de vie confortable en promouvant l'utilisation des données publiques et privées, et stipule des questions telles que l'utilisation facile des données publiques et privées détenues par l'État, les gouvernements locaux et les entreprises.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　本文書は、これまでの取組を踏まえ、オープンデータ・バイ・デザイン[^3]の考えに基づき、今後、国、地方公共団体、事業者が公共データの公開及び活用に取り組む上での基本指針をまとめたものである。
+=======
+Le présent document résume les lignes directrices de base pour la publication et l'utilisation futures des données publiques par le gouvernement national, les autorités locales et les entreprises, sur la base de l'idée de l'ouverture des données dès la conception [^3], en tenant compte des efforts déployés à ce jour.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+１．オープンデータの意義
+=======
+1. signification des données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　公共データの二次利用可能な形での公開とその活用を促進する意義・目的は、次のとおりである。
+=======
+L'importance et l'objectif de la promotion de la publication et de l'utilisation des données publiques sous une forme qui peut être utilisée à des fins secondaires sont les suivants.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（１）国民参加・官民協働の推進を通じた諸課題の解決、経済活性化
+=======
+(1) Résoudre divers problèmes et stimuler l'économie par la promotion de la participation publique et de la collaboration public-privé.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　広範な主体による公共データの活用が進展することで、創意工夫を活かした多様なサービスの迅速かつ効率的な提供、官民の協働による公共サービスの提供や改善が実現し、ニーズや価値観の多様化、技術革新等の環境変化への適切な対応とともに、厳しい財政状況、急速な少子高齢化の進展等の我が国が直面する諸課題の解決に貢献することができる。
+=======
+Les progrès réalisés dans l'utilisation des données publiques par un large éventail d'acteurs permettront la fourniture rapide et efficace d'une variété de services faisant appel à l'originalité et à l'ingéniosité, ainsi que la fourniture et l'amélioration des services publics par le biais d'une collaboration entre les secteurs public et privé, et permettront d'apporter des réponses appropriées aux changements environnementaux tels que la diversification des besoins et des valeurs et l'innovation technologique, ainsi que la résolution de divers problèmes auxquels le Japon est confronté, notamment la situation budgétaire grave et la baisse rapide des taux de natalité et le vieillissement de la société. Le projet peut contribuer à la résolution de divers problèmes auxquels le Japon est confronté, tels que la grave situation financière, le déclin rapide de la natalité et le vieillissement de la population.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　また、ベンチャー企業等による多様な新サービスやビジネスの創出、企業活動の効率化等が促され、我が国全体の経済活性化にもつながる。
+=======
+Il encouragera également la création de divers nouveaux services et entreprises par des sociétés à risque, etc., et la rationalisation des activités commerciales, contribuant ainsi à la revitalisation économique du Japon dans son ensemble.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（２）行政の高度化・効率化
+=======
+(2) Progrès et efficacité de l'administration publique
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　国や地方公共団体においてデータ活用により得られた情報を根拠として政策や施策の企画及び立案が行われることで（ＥＢＰＭ：Evidence Based Policy Making）、効果的かつ効率的な行政の推進につながる。
+=======
+La planification et la formulation de politiques et de mesures par les gouvernements nationaux et locaux sur la base d'informations obtenues par l'utilisation de données (EBPM : Evidence Based Policy Making) conduiront à la promotion d'une administration publique efficace et efficiente.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（３）透明性・信頼の向上
+=======
+(3) Amélioration de la transparence et de la confiance
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　政策立案等に用いられた公共データが公開されることで、国民は政策等に関して十分な分析、判断を行うことが可能になり、行政の透明性、行政に対する国民の信頼が高まる。
+=======
+La publication des données publiques utilisées pour la planification des politiques, etc., permet au public d'analyser et de juger pleinement les politiques, etc. et augmente la transparence de l'administration publique et la confiance du public en elle.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+２．オープンデータの定義
+=======
+Définition des données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　国、地方公共団体及び事業者が保有する官民データのうち、国民誰もがインターネット等を通じて容易に利用（加工、編集、再配布等）できるよう、次のいずれの項目にも該当する形で公開されたデータをオープンデータと定義する。[^4]
+=======
+Parmi les données publiques et privées détenues par l'État, les collectivités locales et les entreprises, les données ouvertes sont définies comme des données qui ont été rendues publiques sous l'une des formes suivantes, de sorte que tout citoyen peut facilement les utiliser (les traiter, les éditer, les redistribuer, etc.) via l'internet, etc. [^4]
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+営利目的、非営利目的を問わず二次利用可能なルールが適用されたもの
+=======
+Données auxquelles les règles d'utilisation secondaire ont été appliquées, qu'elles soient destinées à des fins commerciales ou non commerciales.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+機械判読[^5]に適したもの
+=======
+Adapté à la lecture automatique [^5].
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+無償[^6]で利用できるもの
+=======
+utilisables gratuitement [^6].
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+３．オープンデータに関する基本的ルール
+=======
+3. Règles de base pour les données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（１）行政保有データのオープンデータ公開の原則
+=======
+(1) Principes de la publication de données ouvertes des données détenues par le gouvernement
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　公共データは国民共有の財産であるとの認識に立ち、政策（法令、予算を含む）の企画・立案の根拠となったデータを含め、各府省庁が保有するデータはすべてオープンデータとして公開することを原則とする[^7]。
+=======
+Partant du principe que les données publiques sont des biens partagés par le public, toutes les données détenues par les ministères et les agences gouvernementales, y compris les données sur lesquelles les politiques (y compris les lois, les règlements et les budgets) sont planifiées et formulées, doivent être publiées en tant que données ouvertes [^7] en principe.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　なお、①個人情報が含まれるもの、②国や公共の安全、秩序の維持に支障を及ぼすおそれがあるもの、③法人や個人の権利利益を害するおそれがあるもの等、公開することが適当ではない情報に対して公開の要望があった場合は、オープンデータとして公開できない理由を公開する[^8]ことを原則[^9]とする。
+=======
+En cas de demande de publication d'informations qui ne sont pas appropriées, telles que les informations qui (i) contiennent des informations personnelles, (ii) peuvent entraver le maintien de la sécurité ou de l'ordre national ou public, ou (iii) peuvent porter atteinte aux droits et aux intérêts de personnes morales ou physiques, la raison pour laquelle les informations ne peuvent pas être publiées en tant que données ouvertes doit être divulguée[^8]. En principe,[^9] cela doit être fait.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（２）公開データの二次利用に関するルール
+=======
+(2) Règles sur l'utilisation secondaire des données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+各府省庁のウェブサイト[^10]上で公開されるデータについては、原則、政府標準利用規約[^11]を適用し、具体的かつ合理的な根拠により二次利用が認められないものを除き、公開データの二次利用を積極的に促進する。
+=======
+En principe, les conditions d'utilisation standard du gouvernement[^11] sont appliquées aux données publiées sur les sites web[^10] des ministères et des agences gouvernementales, et l'utilisation secondaire des données publiées est activement encouragée, sauf pour les données dont l'utilisation secondaire n'est pas autorisée pour des raisons spécifiques et raisonnables.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（３）公開環境
+=======
+(3) Environnement de divulgation publique
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ[^12]」、または「リアルタイム性を有するデータ[^13]」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
+=======
+Les ministères et les agences gouvernementales mettent leurs données à la disposition du public sous une forme qui permet de les rechercher et de les utiliser facilement sur leurs sites web. En particulier, les données utiles telles que les "données qui ne peuvent être fournies que par les différents ministères et agences", les "données hautement fiables qui peuvent servir de données de base dans divers domaines[^12]" ou les "données présentant des caractéristiques en temps réel[^13]" sont supposées répondre à des besoins sociaux importants et doivent donc être activement diffusées. En outre, du point de vue du confort de l'utilisateur et de la charge et de l'efficacité du système, l'introduction de mécanismes permettant le téléchargement par lots et la mise à disposition par l'intermédiaire d'API sera encouragée.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+更に、政府のオープンデータ全体の横断的検索を可能とし、データの活用を促進するため、データの概要及び形式等のメタ情報[^14]をクリエイティブ・コモンズで定められている「CC0 1.0 全世界」[^15]として取り扱った上で政府のデータカタログサイト「DATA.GO.JP」に登録し、公開する。
+=======
+En outre, afin de permettre des recherches transversales sur l'ensemble des données ouvertes du gouvernement et de promouvoir l'utilisation des données, les méta-informations[^14] telles que les grandes lignes et le format des données devraient être traitées comme "CC0 1.0 Worldwide"[^15] selon la définition de Creative Commons et enregistrées sur le site du catalogue des données du gouvernement "DATA.GO .JP", le site du catalogue de données du gouvernement, après avoir traité les données comme "CC0 1.0 All World" [^15].
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（４）公開データの形式等
+=======
+(4) Format des données publiées
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　公開するデータについては、機械判読に適した[^16]構造及びデータ形式で掲載することを原則とする[^17]。共通語彙基盤等やオープンデータの達成度の評価指標として用いられている「５つ星」[^18]の指標を参考に、より活用がしやすい用語や形式での公開に努める。
+=======
+En principe, les données à publier doivent l'être dans une [^16] structure et un format de données adaptés à la lecture automatique[^17]. Des efforts sont faits pour publier les données dans des termes et des formats plus faciles à utiliser, en référence à l'indice "5 étoiles"[^18] utilisé comme indicateur d'évaluation du niveau de réalisation de la base de vocabulaire commune, etc. et des données ouvertes.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+なお、国民への情報公開の観点から、人が読むという従来からの利用形態に適したデータ形式での公開も継続するが、この場合であってもテキスト検索や抽出ができることが必要である。
+=======
+En outre, du point de vue de la divulgation d'informations au public, les données continueront à être publiées dans un format adapté à la forme traditionnelle d'utilisation des lecteurs humains, mais même dans ce cas, il doit être possible d'effectuer des recherches et d'extraire du texte.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+特に構造化しやすいデータ[^19]はより活用がしやすいデータ形式である「３つ星[^20]（CSV[^21]やXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
+=======
+En particulier, les données faciles à structurer[^19] devraient, en principe, être diffusées dans un format de données plus facile à utiliser, tel que "3 étoiles[^20]" (CSV[^21], XML ou autres formats) ou plus. En outre, des efforts seront déployés pour améliorer l'environnement de divulgation des méta-informations, comme l'utilisation de sites de catalogues de données, afin que toutes les données publiées, y compris celles qui sont difficiles à structurer, puissent être facilement visualisées et utilisées à l'aide d'API.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　内閣官房IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
+=======
+Le bureau de stratégie informatique du secrétariat du cabinet continuera à promouvoir la normalisation des structures et des formats de données en coopération avec les ministères et les agences concernés. En outre, les données contenant des informations sur les entreprises doivent être étiquetées avec un numéro d'entreprise.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（５）未公開データの限定公開
+=======
+(5) Publication limitée de données non publiées
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+２．に示したとおり、各府省庁が保有するデータはすべてオープンデータとして公開されることが原則であるが、何らかの理由により即座にオープンデータとして公開することが困難な情報[^22]も存在する。現在公開していないデータをオープンデータとして公開することで、市民生活の安全の維持に支障を及ぼすおそれ等がある場合には、公開に先立って効果とリスクの比較検討をすることが求められる。こうしたデータについて、段階的にオープンデータ化を進めていく観点からは、データの利用目的、範囲、提供先などを限定して公開し、その活用を図っていくこと（以下「限定公開」という。）が有効である。なお、限定公開を行う府省庁は、その理由と考え方（限定公開の下、関係者間でデータがどのように活用されるかを示す計画等）をあわせて公開することとする。
+=======
+Comme indiqué au point 2.2, le principe est que toutes les données détenues par les ministères et les agences gouvernementales devraient être publiées en tant que données ouvertes, mais il existe également des informations[^22] qu'il est difficile de publier immédiatement en tant que données ouvertes pour une raison ou une autre. S'il existe un risque, par exemple, que la publication de données qui ne sont pas actuellement ouvertes au public en tant que données ouvertes puisse entraver le maintien de la sécurité de la vie des citoyens, une étude comparative des effets et des risques est nécessaire avant la publication des données. Dans la perspective d'une conversion progressive de ces données en données ouvertes, il est efficace de limiter la finalité, la portée et les destinataires de l'utilisation des données et de mettre les données à la disposition du public (ci-après dénommée "publication limitée"). La publication limitée des données est un moyen efficace de promouvoir l'utilisation des données. En outre, les ministères et les agences qui procèdent à une publication limitée doivent également en publier les raisons et leur approche (par exemple, un plan montrant comment les données seront utilisées par les parties concernées dans le cadre de la publication limitée).
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+この検討は、当該データの利用目的等を特定するなど必要な条件を付し、信頼しうる関係者内において、インカメラ等のクローズドな環境で行われることが適当である。限定公開は、将来的なオープンデータ化を見据えて行われることが望ましいが、検討の結果、オープンデータ化に問題があるとされた場合には、その理由を公開することを原則とする。
+=======
+Il est approprié que cette réflexion soit menée dans un environnement fermé, par exemple à huis clos, au sein de parties de confiance, avec les conditions nécessaires, telles que la spécification de la finalité de l'utilisation des données concernées. (5) Une publication limitée doit de préférence être effectuée en vue de la conversion future en données ouvertes, mais si, à la suite de l'examen, la conversion en données ouvertes pose des problèmes, les raisons de cette situation doivent, en principe, être rendues publiques.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（６）有償データの公開に係る原則
+=======
+(6) Principes de diffusion des données payantes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　２．に示した定義のとおり、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなう場合は、オープンデータとは言えないが、その取扱いに準じ、二次利用可能なルールを適用することが望ましい（具体的かつ合理的な根拠により二次利用が認められないものを除く）。また、当該料金については、提供に係る経費の算出根拠と一定の検討のタイミングを明示した上で、以下のような観点で、見直しを図ることとする。
+=======
+Conformément à la définition donnée au point 2.2, si les coûts d'entretien et de gestion du système de fourniture de données sont couverts par la perception de droits auprès d'un nombre limité d'utilisateurs, on ne peut pas dire qu'il s'agit de données ouvertes, mais il est souhaitable d'appliquer des règles d'utilisation secondaire conformément au traitement de ces données (l'utilisation secondaire n'est pas autorisée sur la base de motifs concrets et raisonnables (sauf pour ceux qui ne le sont pas). En outre, ces frais devraient être examinés sous les angles suivants, en indiquant clairement la base de calcul des coûts de mise à disposition et le calendrier de certaines considérations.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+安価かつ安全な最新技術を活用することによる、提供に係る経費の低減化の検討
+=======
+Envisager de réduire les coûts liés à la fourniture en utilisant les dernières technologies peu coûteuses et sûres.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+利用者を増加させ、個別の利用者の負担額を低減する取組の検討
+=======
+l'examen d'initiatives visant à accroître le nombre d'utilisateurs et à réduire la charge pesant sur les utilisateurs individuels.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+利用者負担での提供とすることが社会的経済的に適当かどうかの再検討[^23]
+=======
+Réexamen de la question de savoir s'il est socialement et économiquement approprié de fournir les données aux frais de l'utilisateur [^23].
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（７）公開済みデータの更新
+=======
+(7) Mise à jour des données publiées
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　データの迅速な公開やその鮮度の維持が重要なデータについては、可能な限り迅速に公開するとともに適時適切な更新を行う。また、データ更新の周期等を明示し、利用者が予め更新の時期を把握できるようにしていく。
+=======
+En ce qui concerne les données pour lesquelles la publication rapide des données et le maintien de leur fraîcheur sont importants, les données doivent être publiées aussi rapidement que possible et mises à jour de manière opportune et appropriée. En outre, le cycle de mise à jour des données sera clairement indiqué afin que les utilisateurs puissent comprendre à l'avance le moment de la mise à jour.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+４．オープンデータの公開・活用を促す仕組み
+=======
+4. mécanismes pour promouvoir la publication et l'utilisation des données ouvertes
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（１）オープンデータ・バイ・デザインの推進
+=======
+(1) Promotion des données ouvertes par conception
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+各府省庁は、オープンデータ・バイ・デザインの考えに基づき、行政保有データを利用者が活用しやすい形で公開するために行政手続き及び情報システムの企画・設計段階から必要な措置を講じる。内閣官房IT総合戦略室は政府CIOの下、各府省庁の取組について必要な助言を行う。
+=======
+Sur la base de l'idée d'ouverture des données dès la conception, chaque ministère et agence gouvernementale doit prendre les mesures nécessaires dès la phase de planification et de conception des procédures administratives et des systèmes d'information pour publier les données appartenant au gouvernement sous une forme facile à utiliser par les utilisateurs. Le Bureau de la stratégie informatique du Secrétariat du Cabinet fournit les conseils nécessaires sur les mesures prises par chaque ministère et agence gouvernementale sous la direction du DPI du gouvernement.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（２）利用者ニーズの反映
+=======
+(2) Prise en compte des besoins des utilisateurs
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+オープンデータの推進に当たっては、利用者ニーズを的確に反映しながら進めることが重要である。このため、各府省庁は保有するデータとその公開状況を整理したリストを公開[^24]することで、潜在的なものを含めて利用者ニーズを把握の上、ニーズに即した形でのデータの公開に取り組む。
+=======
+Dans le cadre de la promotion des données ouvertes, il est important de procéder en reflétant précisément les besoins des utilisateurs. À cette fin, chaque ministère et agence gouvernementale devrait publier une liste[^24] des données qu'il détient et de l'état de leur publication, afin que les besoins des utilisateurs, y compris les utilisateurs potentiels, puissent être appréhendés et que des efforts puissent être faits pour publier les données sous une forme qui réponde à leurs besoins.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+５．推進体制
+=======
+5. système de promotion
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（１）相談窓口の設置
+=======
+(1) Mise en place d'un service de consultation
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　オープンデータに係る利用者のニーズ（要望）・意見を積極的に収集・把握し、政府一体となった取組に反映するため、内閣官房IT総合戦略室にオープンデータに関する総合的な相談窓口を設置する。また、各府省庁においても、相談窓口を設置し、利用者からのオープンデータに関する個別の問い合わせ等に積極的に対応する。
+=======
+Afin de collecter et de comprendre activement les besoins (demandes) et les opinions des utilisateurs de données ouvertes, et de les refléter dans les initiatives gouvernementales, un service de consultation complet sur les données ouvertes sera établi dans le Bureau de la stratégie informatique du Secrétariat du Cabinet. En outre, chaque ministère et agence gouvernementale mettra également en place un service de consultation et répondra activement aux demandes individuelles, etc. des utilisateurs concernant les données ouvertes.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（２）推進体制
+=======
+(2) Système de promotion
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　内閣官房IT総合戦略室は政府CIOの下、各府省庁と連携し政府全体のオープンデータに関する企画立案・総合調整を行うとともに、各府省庁によるオープンデータ化の公開状況を含め各施策のレビュー、フォローアップを実施するなど、政府一体となったオープンデータの取組を推進する。また、内閣官房IT総合戦略室は関係府省庁と協力し、地方公共団体における取組を促進する。
+=======
+Le Bureau de la stratégie informatique du Secrétariat du Cabinet, sous la direction du DSI du gouvernement, travaillera avec les ministères et les agences gouvernementales pour planifier et coordonner les données ouvertes pour l'ensemble du gouvernement, et promouvoir les initiatives de données ouvertes à l'échelle du gouvernement en examinant et en suivant diverses mesures, y compris le statut de la publication des données ouvertes par chaque ministère et agence gouvernementale. Le gouvernement examinera et suivra également chaque politique, y compris le statut de la divulgation des données ouvertes par les ministères du gouvernement. En outre, le Bureau de la stratégie informatique du Secrétariat du Cabinet encouragera les initiatives des gouvernements locaux en coopération avec les ministères et agences concernés.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　各府省情報化統括責任者（府省CIO）は、府省庁内におけるオープンデータの取組を推進するとともに、独立行政法人、公益事業者等によるオープンデータの取組を促進する。また、各府省情報化専任審議官等（府省副CIO）は府省CIOを補佐し、オープンデータ施策に関する府省庁内の指揮監督にあたるものとする。
+=======
+Le directeur de l'information (CIO) de chaque ministère et agence doit promouvoir les initiatives de données ouvertes au sein du ministère et des agences, et également promouvoir les initiatives de données ouvertes par les agences administratives indépendantes, les fournisseurs de services publics, etc. En outre, les DSI adjoints du ministère doivent aider les DSI du ministère à diriger et à superviser les mesures d'ouverture des données du ministère.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+６．地方公共団体、独立行政法人、事業者におけるオープンデータの取組
+=======
+6. initiatives de données ouvertes dans les collectivités locales, les agences administratives indépendantes et les entreprises
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（１）地方公共団体
+=======
+(1) Collectivités locales
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　官民データ法第11条第1項では、地方公共団体は、国と同様に、保有するデータを国民が容易に利用できるよう必要な措置を講ずるものとされている。
+=======
+L'article 11(1) de la loi sur les données publiques-privées stipule que les gouvernements locaux, ainsi que le gouvernement national, doivent prendre les mesures nécessaires pour rendre les données qu'ils détiennent facilement accessibles au public.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　地方公共団体は、官民データ法の趣旨及び本基本指針を踏まえてオープンデータを推進することが求められる。
+=======
+Les collectivités locales sont tenues de promouvoir l'open data sur la base des objectifs de la loi sur les données publiques-privées et des présentes lignes directrices de base.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　推進に際しては、国や地方公共団体が公開するデータを横断的に活用することができるよう、標準的な形式及びルールに基づいた公開に努めることが望ましい。また、複数団体が共同でオープンデータポータルサイトを立ち上げるといった取組も有効である。
+=======
+Dans le cadre de cette promotion, il est souhaitable de s'efforcer de publier les données sur la base de règles et de formats standard, afin que les données publiées par l'État et les collectivités locales puissent être utilisées de manière générale. En outre, des initiatives telles que la création d'un site portail de données ouvertes conjointement par plusieurs organisations peuvent également être efficaces.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+政府は、オープンデータに関する専門家等の派遣、地方公共団体において特に公開が望まれる分野やデータ項目の提示、先進的な取組事例集や手引き等の提供、人材育成ツールの提供などを通じ、地方公共団体におけるオープンデータの取組を積極的に支援する。
+=======
+Le gouvernement du Japon soutient activement les initiatives de données ouvertes des autorités locales en envoyant des experts en données ouvertes, en présentant les domaines et les éléments de données que les autorités locales souhaitent particulièrement publier, en fournissant des études de cas et des conseils sur les initiatives avancées, et en fournissant des outils de développement des ressources humaines.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（２）事業者
+=======
+(2) Opérateurs
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　官民データ法第11条第２項では、事業者（独立行政法人を含む）は、公益の増進に資するデータを国民が容易に利用できるよう必要な措置を講ずるよう努めるものとされている。
+=======
+L'article 11, paragraphe 2 de la loi sur les données publiques-privées stipule que les opérateurs commerciaux (y compris les agences administratives indépendantes) s'efforcent de prendre les mesures nécessaires pour rendre les données qui contribuent à la promotion de l'intérêt public facilement accessibles au public.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　独立行政法人や大学等においては、国費によって運営されていること又は実施している事業や研究があることに鑑み、本基本指針に準拠してオープンデータの取組を推進することが望ましい[^25]。
+=======
+Dans les institutions administratives indépendantes et les universités, il est souhaitable de promouvoir les initiatives en matière de données ouvertes conformément à ces lignes directrices de base, compte tenu du fait qu'il existe des projets et des études qui sont exploités ou menés à l'aide de fonds publics [^25].
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　また、電力・ガス、通信・放送、交通等の公益事業分野の事業者については、その公益性に鑑み、本基本指針及び利用者ニーズを踏まえてオープンデータを推進することが望ましい。
+=======
+En outre, il est souhaitable que les opérateurs du secteur des services publics, tels que l'électricité et le gaz, les télécommunications et la radiodiffusion, et les transports, promeuvent les données ouvertes sur la base des présentes lignes directrices de base et des besoins des utilisateurs, compte tenu de leur nature d'intérêt public.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+７．本基本指針の見直し
+=======
+7.7 Révision des présentes lignes directrices de base
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+　本基本指針は、各種施策の成果や国民・事業者等の意見要望等を踏まえつつ、技術動向、国際環境等の状況変化に応じ柔軟に見直しを行うものとする。
+=======
+Les présentes Lignes directrices de base seront réexaminées avec souplesse en fonction de l'évolution des tendances technologiques, de l'environnement international et d'autres circonstances, tout en tenant compte des résultats de diverses mesures et des avis et demandes du public, des opérateurs économiques et autres.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+（以上）
+=======
+(plus haut).
+>>>>>>> FR
+
+
+[ "data_shishin.docx" word/footnotes.xml ]
+
+<<<<<<< ORIGINAL
+[^2]: 震災関連情報の提供に関し、情報の加工が容易なファイル形式による情報提供について協力依頼が行われたほか、事業者が保有する道路の通行情報などが公開・活用された。
+=======
+[En ce qui concerne la fourniture d'informations relatives aux tremblements de terre, une demande de coopération a été formulée pour la fourniture d'informations dans un format de fichier qui facilite le traitement des informations, et les informations sur le trafic routier détenues par les entreprises ont été rendues publiques et utilisées.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^3]: 公共データについて、オープンデータを前提として情報システムや業務プロセス全体の企画、整備及び運用を行うことである。
+=======
+[En ce qui concerne les données publiques, la planification, le développement et l'exploitation de systèmes d'information et de processus commerciaux complets reposent sur le principe de l'ouverture des données.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^4]: 但し、セキュリティの理由により、利用者に対し、事前登録を求めたり、データへのアクセス方法に制限を設けたりといった措置が講じられることがあり得る。
+=======
+[Toutefois, pour des raisons de sécurité, des mesures telles que l'obligation pour les utilisateurs de s'enregistrer au préalable ou la mise en place de restrictions sur la manière d'accéder aux données peuvent être prises.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^5]: 「機械判読」とは、コンピュータプログラムが自動的にデータを加工、編集等できることを指す。
+=======
+[^5] : La "lecture automatique" désigne la capacité des programmes informatiques à traiter, éditer, etc. des données de manière automatique.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^6]: オープンデータとは言えないものの、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなうケースもある。
+=======
+[Dans certains cas, bien qu'il ne s'agisse pas de données ouvertes, les coûts de maintenance et de gestion du système de fourniture de données sont couverts par la perception de droits auprès d'un nombre limité d'utilisateurs.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^7]: 今後、行政目的で作成されるデータについては、本指針に基づき、オープンデータとして公開されることを想定してデータ整備がなされることを確保する必要があり、内閣官房IT総合戦略室において、各府省庁の整備状況を把握し、必要な調整を行うことが求められる。
+=======
+[Pour les données créées à des fins administratives à l'avenir, il est nécessaire de s'assurer que les données sont développées en partant du principe qu'elles seront publiées en tant que données ouvertes conformément aux présentes lignes directrices, et le Bureau de stratégie informatique du Secrétariat du Cabinet est tenu d'évaluer l'état de développement de chaque ministère et agence gouvernementale et de procéder aux ajustements nécessaires.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^8]: 法令又は合理的な根拠によりオープンデータとして公開できない場合（二次利用に制限がある場合を含む）は、その旨を具体的に示す。
+=======
+[Si les données ne peuvent pas être publiées en tant que données ouvertes en vertu de la loi ou pour des raisons raisonnables (y compris les cas où il y a des restrictions sur l'utilisation secondaire), cela doit être indiqué en détail.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^9]: 公開できない理由を公開することだけで、公開できない情報（不開示情報）を開示することとなる場合は、理由を公開しないことができる。
+=======
+[Si la divulgation de la raison pour laquelle les informations ne peuvent pas être rendues publiques entraînerait à elle seule la divulgation d'informations qui ne peuvent pas être rendues publiques (informations non divulguées), la raison ne peut pas être divulguée.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^10]: 各府省庁（施設等機関、地方支分部局等、府省庁に属する組織を含む。）が、その名称において開設しているインターネット上のウェブサイト、データベースサイト、個別業務サイト等を広く含む。
+=======
+[^10] : Chaque ministère et agence gouvernementale (y compris les institutions telles que les établissements, les antennes locales et autres organisations appartenant aux ministères et agences gouvernementales) Cela inclut largement les sites Internet, les sites de bases de données, les sites commerciaux individuels, etc., créés par les ministères et les agences (y compris les institutions, etc., les antennes locales, etc., et les organisations appartenant aux ministères et aux agences) en leur nom propre.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^11]: 政府機関のウェブサイトで公開されているデータの二次利用を促進する観点から、統一的なひな形として示された各府省庁ウェブサイトの利用に関するルール。「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の別添１「政府標準利用規約(第2.0版)」。
+=======
+[^11] : Règles relatives à l'utilisation des sites web des ministères et des agences gouvernementales présentées sous la forme d'un modèle unifié dans la perspective de promouvoir l'utilisation secondaire des données publiées sur les sites web des agences gouvernementales. Annexe 1, "Conditions d'utilisation standard du gouvernement (version 2.0)" des "Idées de base sur la publication de données par les ministères et les agences pour la promotion de l'utilisation secondaire (lignes directrices)".
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^12]: 例えば、各府省庁が公表している統計データ等。
+=======
+[^12] : par exemple, les données statistiques publiées par divers ministères et agences gouvernementales.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^13]: イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
+=======
+[^13] : Données qui doivent être mises à jour à intervalles réguliers, par exemple des informations sur des événements, des taux d'encombrement des transports publics ou des informations sur les catastrophes et la prévention des catastrophes.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^14]: 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
+=======
+[^14] : Informations sur le type de données à publier. Par exemple, des informations sur la propriété telles que le titre, le nom de l'organisme émetteur, le créateur (nom du service), etc. et des mots-clés pour la recherche de données. Pour plus de détails sur les autres éléments, voir "(2) Information sur les métadonnées, etc. fournies sur les sites de catalogues de données" dans Data.go.jp "Information pour les développeurs" (https://www.data.go.jp/for-developer/for-developer).
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^15]: 「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+=======
+[^15] : Pour la définition de "CC0 1.0 Worldwide", etc., voir "Creative Commons Legal Code". (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^16]: 「機械判読に適した度合」には、人手をどれだけ要さずに、コンピュータがデータを再利用できるかにより、いくつかの段階がある。コンピュータが自動的にデータを再利用するためには、当該データの論理的な構造を識別（判読）でき、構造中の値（表の中に入っている数値、テキスト等）が処理できるようになっている必要がある。
+=======
+[^16] : Le "degré d'aptitude à la lisibilité par machine" comporte plusieurs étapes, qui dépendent de la mesure dans laquelle les données peuvent être réutilisées par les ordinateurs sans nécessiter d'intervention humaine. Pour qu'un ordinateur puisse réutiliser automatiquement des données, il doit être capable d'identifier (déchiffrer) la structure logique des données en question et de traiter les valeurs de la structure (nombres dans des tableaux, texte, etc.).
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^17]: 「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の「３ 機械判読が容易なデータ形式による公開の拡大の考え方」及び別添２「数値（表）、文章、地理空間情報のデータ作成に当たっての留意事項」を参照。
+=======
+[^17] : Voir "3 Concept de publication élargie dans des formats de données lisibles par machine" et l'annexe 2 "Points à considérer lors de la préparation de données numériques (tableaux), textuelles et géospatiales" dans "Idées de base sur la publication de données par les ministères et les agences pour promouvoir l'utilisation secondaire (lignes directrices)".
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^18]: Webの創設者Tim Berners-Leeが提唱した５段階の指標で、ファイル形式に関わらず二次利用が可能なライセンスを満たす場合は第１段階、機械判読性の比較的高いcsv 形式は第３段階とされている。（http://5stardata.info/ja/）
+=======
+[^18] : indice en cinq étapes proposé par Tim Berners-Lee, fondateur du Web, la première étape étant le moment où un fichier satisfait à la licence d'utilisation secondaire, quel que soit le format du fichier, et la troisième étape étant le format csv avec une lisibilité relativement élevée de la machine. (http://5stardata.info/ja/)
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^19]: 統計情報等の行列や階層による表現が可能な情報。
+=======
+[Les informations qui peuvent être exprimées sous forme de matrices ou de hiérarchies, telles que les informations statistiques.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^20]: 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
+=======
+[^20] : Formats (CSV, XML) qui ne sont pas limités à des fonctions spécifiques et peuvent être utilisés couramment.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^21]: 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
+=======
+[^21] : Si des données contenant des tableaux doivent être publiées en CSV, voir "8.3.2 Lignes directrices pour les données tabulaires" dans l'Open Data Guide Version 2.1 (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^22]: 既に紙によるものを含め、利用者の求めに応じて情報公開を含め公開されている情報については対象外とする。なお、限定公開の対象となるデータの考え方や運用（限定公開の決定プロセスや進捗状況を把握・評価する体制等）については必要に応じ、今後さらに検討する。
+=======
+[^22] : Les informations qui ont déjà été rendues publiques, y compris sur papier, y compris la diffusion d'informations à la demande de l'utilisateur, sont exclues. Le concept et le fonctionnement des données faisant l'objet d'une diffusion limitée (par exemple, le processus décisionnel pour la diffusion limitée, le système de suivi et d'évaluation des progrès, etc.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^23]: 例えば、一部のデータは有償だが、残りのデータは無償とすること等も考えらえる。
+=======
+[Par exemple, certaines données pourraient être payantes, mais le reste pourrait être gratuit.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^24]: このようなリストを作成するため平成29年度中に各府省庁が保有するデータの棚卸しを行い、当該リストを公開した上でニーズの高い分野等について官民（民には、事業者、研究者、市民等を含む）でデータの公開・活用の在り方を対話するラウンドテーブルを開催する試みを実施する。ラウンドテーブルでは、地方公共団体、事業者（独立行政法人を含む）が保有するデータを含め官民データの公開と活用の在り方について議論する。
+=======
+[Afin de créer une telle liste, un inventaire des données détenues par chaque ministère et agence gouvernementale sera rendu public en 2009, et une tentative sera faite pour organiser une table ronde afin de tenir un dialogue entre les secteurs public et privé (le secteur privé comprend les entreprises, les chercheurs et les citoyens) sur la façon dont les données devraient être divulguées et utilisées dans les domaines où les besoins sont importants, etc. après avoir rendu cette liste publique. La table ronde doit être mise en œuvre. La table ronde discutera de la manière dont les données des secteurs public et privé, y compris les données détenues par les autorités locales et les entreprises (y compris les institutions administratives indépendantes), devraient être divulguées et utilisées.
+>>>>>>> FR
+
+<<<<<<< ORIGINAL
+[^25]: 「我が国におけるオープンサイエンス推進のあり方について」（平成27年３月30日）では、公的研究資金による研究成果のうち、論文および論文のエビデンスとしての研究データは、原則公開とし、その他研究開発成果としての研究データについても可能な範囲で公開することが望ましい。」とされている。
+=======
+[^25] : "On the state of open science promotion in Japan" (30 mars 2015) indique que, parmi les résultats de recherche financés par des fonds de recherche publics, les données de recherche servant de preuves pour les thèses et les mémoires devraient, en principe, être rendues publiques, et que d'autres données de recherche en tant que résultats de R&D devraient également être rendues publiques dans la mesure du possible. C'est souhaitable". La loi stipule que.
+>>>>>>> FR
+
