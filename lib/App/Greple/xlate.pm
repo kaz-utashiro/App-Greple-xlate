@@ -539,7 +539,7 @@ builtin xlate-maxlen=i     $max_length
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --face +E --ci=A
+option default --ci=A --cm=/L22E,/L24E
 
 option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
 
