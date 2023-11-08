@@ -14,6 +14,11 @@ sub TIEHASH {
     $obj;
 }
 
+sub EXISTS {
+    my($obj, $key) = @_;
+    exists $obj->current->{$key} or exists $obj->saved->{$key};
+}
+
 sub FETCH {
     my($obj, $key) = @_;
     $obj->get($key);
@@ -24,10 +29,10 @@ sub STORE {
     $obj->set($key, $val);
 }
 
-#sub DESTROY {
-#    my $obj = shift;
-#    $obj->update;
-#}
+sub DESTROY {
+    my $obj = shift;
+    $obj->update;
+}
 
 my %default = (
     name => '',
@@ -66,7 +71,7 @@ sub set {
 	    @$a == @$b or die;
 	    $obj->set(mesh $a, $b);
 	} else {
-	    my $c = $obj->current->{$a};
+	    my $c = $obj->current->{$a} //= delete $obj->saved->{$a};
 	    if (not defined $c or $c ne $b) {
 		$obj->current->{$a} = $b;
 		$obj->updated++;
@@ -112,9 +117,11 @@ sub update {
 	    }
 	}
     }
-    # For some reason, using the same object causes an error when
-    # executed from DESTROY.
-    my $json_obj //= &json;
+    while (my($k, $v) = each %{$obj->current}) {
+	delete $obj->current->{$k} if not defined $v;
+    }
+    %{$obj->current} > 0 or return;
+    my $json_obj //= &json; # this is necessary to be called from DESTROY
     if (CORE::open my $fh, '>', $file) {
 	my $json = $json_obj->encode($obj->current);
 	print $fh $json;

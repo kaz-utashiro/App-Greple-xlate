@@ -418,8 +418,8 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my $key = normalize $grep->cut(@$m);
-	    if (not defined $cache{$key}) {
-		$cache{$key} = 'DUMMY';
+	    if (not exists $cache{$key}) {
+		$cache{$key} = undef;
 		push @miss, $key;
 	    }
 	}
@@ -509,9 +509,9 @@ sub begin {
 }
 
 sub end {
-    if (my $obj = tied %cache) {
-	$obj->update;
-    }
+#    if (my $obj = tied %cache) {
+#	$obj->update;
+#    }
 }
 
 sub setopt {
@@ -540,7 +540,7 @@ builtin xlate-maxlen=i     $max_length
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --ci=A --cm=/L22E,/L24E
+option default --ci=A --cm=/544E,/454E,/445E,/455E,/545E,/554E
 
 option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
 

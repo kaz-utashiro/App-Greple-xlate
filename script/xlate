@@ -41,6 +41,7 @@ define pod <<"=cut"
     Control Files:
 	*.LANG    translation languates
 	*.FORMAT  translation foramt (xtxt, cm, ifdef)
+	*.ENGINE  translation engine (deepl or gpt3)
 
 =head1 VERSION
 

@@ -22,7 +22,7 @@ XLATE_ENGINE ?= deepl
 ifeq ($(strip $(XLATE_FILES)),)
 override XLATE_FILES := \
 	$(filter-out README.%.md,\
-	$(wildcard *.docx *.pptx *.txt *.md *.pm))
+	$(wildcard *.docx *.pptx *.txt *.md *.pm *.pod))
 else
 override XLATE_FILES := $(subst |||, ,$(XLATE_FILES))
 endif
