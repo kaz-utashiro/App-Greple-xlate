@@ -31,7 +31,7 @@ GREPLE := perl -I../lib -S greple
 
 PODIFY := $(GREPLE) -Mperl --nocolor --le :pod
 $(foreach mod,$(ORIGIN),$(eval \
-  $(SRCPATH)$(subst .pm,.pod,$(notdir $(mod))): $(mod) $(SRC_DIR) Makefile; $(PODIFY) $$< > $$@ \
+  $(SRCPATH)$(subst .pm,.pod,$(notdir $(mod))): $(mod) Makefile; $(PODIFY) $$< > $$@ \
 ))
 
 XLATE := $(GREPLE) -Mxlate
