@@ -15,7 +15,6 @@
 # .FORMAT: Format of output files
 #
 
-XLATE_LANG   ?= JA
 XLATE_FORMAT ?= xtxt cm
 XLATE_ENGINE ?= deepl
 
@@ -26,6 +25,9 @@ override XLATE_FILES := \
 else
 override XLATE_FILES := $(subst |||, ,$(XLATE_FILES))
 endif
+
+comma:=,
+override XLATE_LANG := $(subst $(comma), ,$(XLATE_LANG))
 
 # GNU Make treat strings containing double quotes differently on versions
 define REMOVE_QUOTE

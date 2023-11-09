@@ -68,7 +68,6 @@ get_ip() {
     echo -n $ip
 }
 
-default_lang=EN-US
 repository=tecolicom/xlate
 hostname=xlate
 interactive=yes
@@ -106,7 +105,7 @@ do
 	    fi
 	    ;;
 	C|D)
-	    [ "$XLATE_RUNNING_DOCKER" ] && break
+	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
 	    if [ "$DISPLAY" ] && [ "${ip:=$(get_ip)}" ]
 	    then
 		display="$ip:0"
@@ -126,7 +125,7 @@ do
 	    ENV+=(DEEPL_AUTH_KEY OPENAI_API_KEY)
 	    ENV_PATTERN=$(env_pattern ${ENV[@]})
 	    exec docker run --rm \
-		 -e XLATE_RUNNING_DOCKER=1 \
+		 -e XLATE_RUNNING_ON_DOCKER=1 \
 		 ${interactive:+-it} \
 		 ${read_only:+--read-only} \
 		 ${hostname:+--hostname "${hostname}"} \
@@ -184,7 +183,11 @@ do
 done	
 shift $((OPTIND - 1))
 
-: ${to_lang:="$default_lang"}
+if [ ! "$to_lang" ]
+then
+    echo "-t option is required."
+    exit 1
+fi
 
 : run make
 if [ "$run_make" == yes ]
