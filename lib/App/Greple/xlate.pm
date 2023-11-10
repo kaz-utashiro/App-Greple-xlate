@@ -21,12 +21,12 @@ Version 0.27
 =head1 DESCRIPTION
 
 B<Greple> B<xlate> module find text blocks and replace them by the
-translated text.  Include DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>)
-module for back-end engine.
+translated text.  Currently DeepL (F<deepl.pm>) and ChatGPT
+(F<gpt3.pm>) module are implemeted as a back-end engine.
 
-If you want to translate normal text block in L<pod> style document,
-use B<greple> command with C<xlate::deepl> and C<perl> module like
-this:
+If you want to translate normal text blocks written in the L<pod>
+style, use B<greple> command with C<xlate::deepl> and C<perl> module
+like this:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -43,16 +43,16 @@ find and replace them by the B<deepl> command output.
 
 By default, original and translated text is printed in the "conflict
 marker" format compatible with L<git(1)>.  Using C<ifdef> format, you
-can get desired part by L<unifdef(1)> command easily.  Format can be
-specified by B<--xlate-format> option.
+can get desired part by L<unifdef(1)> command easily.  Output format
+can be specified by B<--xlate-format> option.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-If you want to translate entire text, use B<--match-all> option.
-This is a short-cut to specify the pattern matches entire text
-C<(?s).+>.
+If you want to translate entire text, use B<--match-all> option.  This
+is a short-cut to specify the pattern C<(?s).+> which matches entire
+text.
 
 =head1 OPTIONS
 
@@ -152,9 +152,10 @@ text is printed.
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Specify the maximum length of text to be sent to the API at once.
-Default value is set as for free account service: 128K for the API
-(B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>).
-You may be able to change these value if you are using Pro service.
+Default value is set as for free DeepL account service: 128K for the
+API (B<--xlate>) and 5000 for the clipboard interface
+(B<--xlate-labor>).  You may be able to change these value if you are
+using Pro service.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
