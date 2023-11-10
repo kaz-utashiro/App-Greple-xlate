@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.27
+Version 0.28
 
 # DESCRIPTION
 

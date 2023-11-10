@@ -2,6 +2,16 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.28 2023-11-10T06:32:41Z
+
+    - update cache management strategy
+    - make -t option and XLATE_LANG required
+    - make -n works for normal execution
+    - make .stxt file for .docx and such
+    - do not process -G option on docker
+    - add xlate -v option
+    - add --xlate-debug option
+
 0.27 2023-11-07T15:57:53Z
 
     - use monotone colormap
