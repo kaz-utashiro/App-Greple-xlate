@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-Modulul B<Greple> B<xlate> găsește blocurile de text și le înlocuiește cu textul tradus. Include modulul DeepL (F<deepl.pm>) și modulul ChatGPT (F<gpt3.pm>) pentru motorul din spate.
+Modulul B<xlate> din B<Greple> găsește blocuri de text și le înlocuiește cu textul tradus. În prezent, modulul DeepL (F<deepl.pm>) și modulul ChatGPT (F<gpt3.pm>) sunt implementate ca motoare de fundal.
 
-Dacă doriți să traduceți un bloc de text normal într-un document de stil L<pod>, utilizați comanda B<greple> cu modulul C<xlate::deepl> și modulul C<perl> în felul următor:
+Dacă doriți să traduceți blocuri normale de text scrise în stilul L<pod>, utilizați comanda B<greple> cu modulul C<xlate::deepl> și modulul C<perl> în felul următor:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Modelul C<^(\w.*\n)+> înseamnă linii consecutive care încep cu o literă alfa
 
 Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Aceasta va găsi și înlocui textul cu ieșirea comenzii B<deepl>.
 
-În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu L<git(1)>. Utilizând formatul C<ifdef>, puteți obține partea dorită cu ușurință folosind comanda L<unifdef(1)>. Formatul poate fi specificat prin opțiunea B<--xlate-format>.
+În mod implicit, textul original și textul tradus sunt afișate în formatul "conflict marker", compatibil cu L<git(1)>. Utilizând formatul C<ifdef>, puteți obține partea dorită cu ușurință folosind comanda L<unifdef(1)>. Formatul de ieșire poate fi specificat prin opțiunea B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Dacă doriți să traduceți întregul text, utilizați opțiunea B<--match-all>. Aceasta este o scurtătură pentru a specifica modelul care se potrivește cu întregul text C<(?s).+>.
+Dacă doriți să traduceți întregul text, utilizați opțiunea B<--match-all>. Aceasta este o scurtătură pentru a specifica modelul C<(?s).+> care se potrivește cu întregul text.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Dacă formatul este C<xtxt> (text tradus) sau necunoscut, se tipărește doar te
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Specificați lungimea maximă a textului care va fi trimis la API odată. Valoarea implicită este setată pentru serviciul de cont gratuit: 128K pentru API (B<--xlate>) și 5000 pentru interfața clipboardului (B<--xlate-labor>). Este posibil să puteți schimba aceste valori dacă utilizați serviciul Pro.
+Traduceți următorul text în limba română, linie cu linie.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

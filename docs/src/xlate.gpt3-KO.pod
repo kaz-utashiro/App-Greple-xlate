@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 번역 엔진으로 DeepL (F<deepl.pm>)과 ChatGPT (F<gpt3.pm>) 모듈을 포함합니다.
+B<Greple> B<xlate> 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (F<deepl.pm>)과 ChatGPT (F<gpt3.pm>) 모듈이 백엔드 엔진으로 구현되어 있습니다.
 
-L<pod> 스타일 문서에서 일반 텍스트 블록을 번역하려면 B<greple> 명령과 C<xlate::deepl> 및 C<perl> 모듈을 다음과 같이 사용하십시오:
+L<pod> 스타일로 작성된 일반 텍스트 블록을 번역하려면 다음과 같이 C<xlate::deepl>과 C<perl> 모듈을 사용하는 B<greple> 명령을 사용하십시오:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ L<pod> 스타일 문서에서 일반 텍스트 블록을 번역하려면 B<grepl
 
 그런 다음 선택한 영역을 번역하기 위해 C<--xlate> 옵션을 추가하십시오. 이 옵션은 B<deepl> 명령의 출력으로 찾아서 대체합니다.
 
-기본적으로 원본 및 번역된 텍스트는 L<git(1)>과 호환되는 "충돌 마커" 형식으로 출력됩니다. B<--xlate-format> 옵션으로 형식을 지정할 수 있습니다.
+기본적으로 원본 및 번역된 텍스트는 L<git(1)>과 호환되는 "충돌 마커" 형식으로 출력됩니다. C<ifdef> 형식을 사용하면 L<unifdef(1)> 명령을 사용하여 원하는 부분을 쉽게 얻을 수 있습니다. 출력 형식은 B<--xlate-format> 옵션으로 지정할 수 있습니다.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-전체 텍스트를 번역하려면 B<--match-all> 옵션을 사용하십시오. 이는 패턴이 전체 텍스트 C<(?s).+>와 일치하는 것을 지정하는 단축키입니다.
+전체 텍스트를 번역하려면 B<--match-all> 옵션을 사용하십시오. 이는 전체 텍스트와 일치하는 C<(?s).+> 패턴을 지정하는 단축키입니다.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ B<unifdef> 명령으로 일본어 텍스트만 검색할 수 있습니다:
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-한 번에 API로 보낼 텍스트의 최대 길이를 지정합니다. 기본값은 무료 계정 서비스에 대해 설정된 값입니다: API에 대해 128K, 클립보드 인터페이스에 대해 5000입니다. Pro 서비스를 사용하는 경우 이러한 값을 변경할 수 있습니다.
+다음 텍스트를 한국어로 번역하십시오. 한 번에 API에 보낼 수 있는 텍스트의 최대 길이를 지정하십시오. 기본값은 무료 DeepL 계정 서비스에 대해 128K로 설정되어 있으며, 클립보드 인터페이스에 대해서는 5000으로 설정되어 있습니다. Pro 서비스를 사용하는 경우 이 값을 변경할 수 있을 수도 있습니다.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

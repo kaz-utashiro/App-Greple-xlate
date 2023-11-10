@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> モジュールはテキストブロックを見つけ、翻訳されたテキストに置き換えます。バックエンドエンジンに DeepL (F<deepl.pm>) と ChatGPT (F<gpt3.pm>) モジュールを含めます。
+B<Greple> B<xlate>モジュールはテキストブロックを見つけ、翻訳されたテキストに置き換えます。現在、DeepL (F<deepl.pm>) と ChatGPT (F<gpt3.pm>) モジュールがバックエンドエンジンとして実装されています。
 
-L<pod>形式の文書中の通常のテキストブロックを翻訳したい場合は、B<greple>コマンドとC<xlate::deepl>モジュール、C<perl>モジュールを使って、以下のようにします。
+L<pod>スタイルで書かれた通常のテキストブロックを翻訳したい場合は、このようにC<xlate::deepl>とC<perl>モジュールでB<greple>コマンドを使います：
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ L<pod>形式の文書中の通常のテキストブロックを翻訳したい�
 
 次に、C<--xlate>オプションを追加して、選択された領域を翻訳します。これは、B<deepl>コマンドの出力でそれらを見つけて置き換えます。
 
-デフォルトでは、原文と訳文が L<git(1)> と互換性のある "conflict marker" フォーマットで出力されます。C<ifdef> 形式を用いると、L<unifdef(1)> コマンドで簡単に目的の部分を得ることができます。B<--xlate-format>オプションでフォーマットを指定することができます。
+デフォルトでは、原文と翻訳文は L<git(1)> と互換性のある "conflict marker" フォーマットで出力されます。C<ifdef>形式を使えば、L<unifdef(1)>コマンドで簡単に目的の部分を取得できます。出力形式はB<--xlate-format>オプションで指定できます。
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-テキスト全体を翻訳したい場合は、B<--match-all>オプションを使用します。これは、テキスト全体にマッチするパターンを指定するためのショートカットです C<(?s).+>.
+テキスト全体を翻訳したい場合は、B<--match-all>オプションを使います。これはテキスト全体にマッチするパターンC<(?s).+>を指定するショートカットです。
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ B<unifdef>コマンドで日本語テキストのみを取り出すことがで�
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-APIに一度に送信するテキストの最大長を指定します。初期値は、無料アカウントサービスの場合、API（B<--xlate>）は128K、クリップボードインターフェース（B<--xlate-labor>）は5000に設定されています。Proサービスをご利用の場合は、これらの値を変更することができます。
+APIに一度に送信するテキストの最大長を指定します。既定値は、無料の DeepL アカウント・サービスと同じように、API (B<--xlate>) では 128K、クリップボード・インタフェース (B<--xlate-labor>) では 5000 に設定されています。Pro サービスを使用している場合は、これらの値を変更できます。
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

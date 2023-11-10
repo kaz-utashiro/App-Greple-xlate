@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Es beinhaltet das DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) Modul als Backend-Engine.
+B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) Module als Backend-Engine implementiert.
 
-Wenn Sie einen normalen Textblock in einem L<pod>-Dokument übersetzen möchten, verwenden Sie den B<greple>-Befehl mit dem C<xlate::deepl>- und C<perl>-Modul wie folgt:
+Wenn Sie normale Textblöcke im L<pod>-Stil übersetzen möchten, verwenden Sie den B<greple>-Befehl mit dem C<xlate::deepl> und C<perl> Modul wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Das Muster C<^(\w.*\n)+> bedeutet aufeinanderfolgende Zeilen, die mit einem alph
 
 Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Es wird sie finden und durch die Ausgabe des B<deepl>-Befehls ersetzen.
 
-Standardmäßig wird der ursprüngliche und übersetzte Text im "Konfliktmarker"-Format gedruckt, das mit L<git(1)> kompatibel ist. Mit dem C<ifdef>-Format können Sie den gewünschten Teil leicht mit dem Befehl L<unifdef(1)> erhalten. Das Format kann mit der Option B<--xlate-format> angegeben werden.
+Standardmäßig wird der Original- und übersetzte Text im "Konfliktmarker"-Format ausgegeben, das mit L<git(1)> kompatibel ist. Mit dem C<ifdef>-Format können Sie den gewünschten Teil leicht mit dem B<unifdef(1)> Befehl erhalten. Das Ausgabeformat kann mit der B<--xlate-format> Option festgelegt werden.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die Option B<--match-all>. Dies ist eine Abkürzung, um das Muster anzugeben, das den gesamten Text C<(?s).+> abdeckt.
+Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die B<--match-all> Option. Dies ist eine Abkürzung, um das Muster C<(?s).+> anzugeben, das den gesamten Text abdeckt.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der üb
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist für den kostenlosen Kontoservice festgelegt: 128K für die API (B<--xlate>) und 5000 für die Zwischenablichnittstelle (B<--xlate-labor>). Sie können diese Werte möglicherweise ändern, wenn Sie den Pro-Service verwenden.
+Übersetzen Sie den folgenden Text Zeile für Zeile ins Deutsche.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

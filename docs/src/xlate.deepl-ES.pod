@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-El módulo B<Greple> B<xlate> encuentra bloques de texto y los reemplaza por el texto traducido. Incluye los módulos DeepL (F<deepl.pm>) y ChatGPT (F<gpt3.pm>) para el motor de traducción.
+El módulo B<Greple> B<xlate> encuentra bloques de texto y los sustituye por el texto traducido. Actualmente DeepL (F<deepl.pm>) y el módulo ChatGPT (F<gpt3.pm>) están implementados como motor back-end.
 
-Si desea traducir un bloque de texto normal en un documento de estilo L<pod>, utilice el comando B<greple> con el módulo C<xlate::deepl> y C<perl> de la siguiente manera:
+Si desea traducir bloques de texto normales escritos en el estilo L<pod>, utilice el comando B<greple> con el módulo C<xlate::deepl> y C<perl> de esta forma:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ El patrón C<^(\w.*\n)+> significa líneas consecutivas que comienzan con una le
 
 A continuación, añada la opción C<--xlate> para traducir el área seleccionada. Las encontrará y reemplazará por la salida del comando B<deepl>.
 
-Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con L<git(1)>. Usando el formato C<ifdef>, puede obtener fácilmente la parte deseada mediante el comando L<unifdef(1)>. El formato puede especificarse mediante la opción B<--xlate-format>.
+Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con L<git(1)>. Usando el formato C<ifdef>, puede obtener la parte deseada mediante el comando L<unifdef(1)> fácilmente. El formato de salida puede especificarse mediante la opción B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Si desea traducir todo el texto, utilice la opción B<--match-all>. Es un atajo para especificar que el patrón coincide con todo el texto C<(?s).+>.
+Si desea traducir todo el texto, utilice la opción B<--match-all>. Es un atajo para especificar el patrón C<(?s).+> que coincide con todo el texto.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Si el formato es C<xtxt> (texto traducido) o desconocido, sólo se imprime el te
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Especifique la longitud máxima del texto que se enviará a la API de una sola vez. El valor predeterminado es el mismo que para el servicio de cuenta gratuita: 128K para la API (B<--xlate>) y 5000 para la interfaz del portapapeles (B<--xlate-labor>). Puede cambiar estos valores si utiliza el servicio Pro.
+Especifique la longitud máxima del texto que se enviará a la API de una sola vez. El valor predeterminado es el mismo que para el servicio gratuito de cuenta DeepL: 128K para la API (B<--xlate>) y 5000 para la interfaz del portapapeles (B<--xlate-labor>). Puede cambiar estos valores si utiliza el servicio Pro.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

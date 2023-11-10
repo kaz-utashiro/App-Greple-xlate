@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-El módulo **Greple** **xlate** encuentra bloques de texto y los reemplaza por el texto traducido. Incluye los módulos DeepL (`deepl.pm`) y ChatGPT (`gpt3.pm`) para el motor de traducción.
+El módulo **Greple** **xlate** encuentra bloques de texto y los sustituye por el texto traducido. Actualmente DeepL (`deepl.pm`) y el módulo ChatGPT (`gpt3.pm`) están implementados como motor back-end.
 
-Si desea traducir un bloque de texto normal en un documento de estilo [pod](https://metacpan.org/pod/pod), utilice el comando **greple** con el módulo `xlate::deepl` y `perl` de la siguiente manera:
+Si desea traducir bloques de texto normales escritos en el estilo [pod](https://metacpan.org/pod/pod), utilice el comando **greple** con el módulo `xlate::deepl` y `perl` de esta forma:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ El patrón `^(\w.*\n)+` significa líneas consecutivas que comienzan con una let
 
 A continuación, añada la opción `--xlate` para traducir el área seleccionada. Las encontrará y reemplazará por la salida del comando **deepl**.
 
-Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con [git(1)](http://man.he.net/man1/git). Usando el formato `ifdef`, puede obtener fácilmente la parte deseada mediante el comando [unifdef(1)](http://man.he.net/man1/unifdef). El formato puede especificarse mediante la opción **--xlate-format**.
+Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con [git(1)](http://man.he.net/man1/git). Usando el formato `ifdef`, puede obtener la parte deseada mediante el comando [unifdef(1)](http://man.he.net/man1/unifdef) fácilmente. El formato de salida puede especificarse mediante la opción **--xlate-format**.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Por defecto, el texto original y traducido se imprime en el formato "marcador de
     </p>
 </div>
 
-Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo para especificar que el patrón coincide con todo el texto `(?s).+`.
+Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo para especificar el patrón `(?s).+` que coincide con todo el texto.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Especifique la longitud máxima del texto que se enviará a la API de una sola vez. El valor predeterminado es el mismo que para el servicio de cuenta gratuita: 128K para la API (**--xlate**) y 5000 para la interfaz del portapapeles (**--xlate-labor**). Puede cambiar estos valores si utiliza el servicio Pro.
+    Especifique la longitud máxima del texto que se enviará a la API de una sola vez. El valor predeterminado es el mismo que para el servicio gratuito de cuenta DeepL: 128K para la API (**--xlate**) y 5000 para la interfaz del portapapeles (**--xlate-labor**). Puede cambiar estos valores si utiliza el servicio Pro.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

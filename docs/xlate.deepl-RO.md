@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-Modulul **Greple** **xlate** găsește blocurile de text și le înlocuiește cu textul tradus. Includeți modulul DeepL (`deepl.pm`) și ChatGPT (`gpt3.pm`) pentru motorul back-end.
+Modulul **Greple** **xlate** găsește blocurile de text și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și ChatGPT (`gpt3.pm`) sunt implementate ca motor de back-end.
 
-Dacă doriți să traduceți un bloc de text normal într-un document în stil [pod](https://metacpan.org/pod/pod), utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` astfel:
+Dacă doriți să traduceți blocuri de text normale scrise în stilul [pod](https://metacpan.org/pod/pod), utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` astfel:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Modelul `^(\w.*\n)+` înseamnă linii consecutive care încep cu o literă alfan
 
 Apoi se adaugă opțiunea `--xlate` pentru a traduce zona selectată. Aceasta le va găsi și le va înlocui cu ieșirea comenzii **deepl**.
 
-În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu [git(1)](http://man.he.net/man1/git). Utilizând formatul `ifdef`, puteți obține cu ușurință partea dorită prin comanda [unifdef(1)](http://man.he.net/man1/unifdef). Formatul poate fi specificat prin opțiunea **--xlate-format**.
+În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu [git(1)](http://man.he.net/man1/git). Utilizând formatul `ifdef`, puteți obține cu ușurință partea dorită prin comanda [unifdef(1)](http://man.he.net/man1/unifdef). Formatul de ieșire poate fi specificat prin opțiunea **--xlate-format**.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Apoi se adaugă opțiunea `--xlate` pentru a traduce zona selectată. Aceasta le
     </p>
 </div>
 
-Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-all**. Aceasta este o prescurtare pentru a specifica că modelul se potrivește cu întregul text `(?s).+`.
+Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-all**. Aceasta este o scurtătură pentru a specifica modelul `(?s).+` care se potrivește cu întregul text.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-all*
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Specificați lungimea maximă a textului care urmează să fie trimis la API deodată. Valoarea implicită este setată ca pentru serviciul de cont gratuit: 128K pentru API (**--xlate**) și 5000 pentru interfața clipboard (**--xlate-labor**). Este posibil să puteți modifica aceste valori dacă utilizați serviciul Pro.
+    Specificați lungimea maximă a textului care urmează să fie trimis la API deodată. Valoarea implicită este setată ca pentru serviciul de cont gratuit DeepL: 128K pentru API (**--xlate**) și 5000 pentru interfața clipboard (**--xlate-labor**). Este posibil să puteți modifica aceste valori dacă utilizați serviciul Pro.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

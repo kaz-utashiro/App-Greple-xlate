@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Es beinhaltet das DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) Modul als Backend-Engine.
+**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) Module als Backend-Engine implementiert.
 
-Wenn Sie einen normalen Textblock in einem [pod](https://metacpan.org/pod/pod)-Dokument übersetzen möchten, verwenden Sie den **greple**-Befehl mit dem `xlate::deepl`- und `perl`-Modul wie folgt:
+Wenn Sie normale Textblöcke im [pod](https://metacpan.org/pod/pod)-Stil übersetzen möchten, verwenden Sie den **greple**-Befehl mit dem `xlate::deepl` und `perl` Modul wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Das Muster `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alpha
 
 Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Es wird sie finden und durch die Ausgabe des **deepl**-Befehls ersetzen.
 
-Standardmäßig wird der ursprüngliche und übersetzte Text im "Konfliktmarker"-Format gedruckt, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Mit dem `ifdef`-Format können Sie den gewünschten Teil leicht mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) erhalten. Das Format kann mit der Option **--xlate-format** angegeben werden.
+Standardmäßig wird der Original- und übersetzte Text im "Konfliktmarker"-Format ausgegeben, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Mit dem `ifdef`-Format können Sie den gewünschten Teil leicht mit dem **unifdef(1)** Befehl erhalten. Das Ausgabeformat kann mit der **--xlate-format** Option festgelegt werden.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Standardmäßig wird der ursprüngliche und übersetzte Text im "Konfliktmarker"
     </p>
 </div>
 
-Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die Option **--match-all**. Dies ist eine Abkürzung, um das Muster anzugeben, das den gesamten Text `(?s).+` abdeckt.
+Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die **--match-all** Option. Dies ist eine Abkürzung, um das Muster `(?s).+` anzugeben, das den gesamten Text abdeckt.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die Option **--ma
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist für den kostenlosen Kontoservice festgelegt: 128K für die API (**--xlate**) und 5000 für die Zwischenablichnittstelle (**--xlate-labor**). Sie können diese Werte möglicherweise ändern, wenn Sie den Pro-Service verwenden.
+    Übersetzen Sie den folgenden Text Zeile für Zeile ins Deutsche.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

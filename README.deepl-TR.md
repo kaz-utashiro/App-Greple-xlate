@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Arka uç motoru için DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülünü dahil edin.
+**Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülü bir arka uç motoru olarak uygulanmaktadır.
 
-[pod](https://metacpan.org/pod/pod) stili belgede normal metin bloğunu çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile aşağıdaki gibi kullanın:
+[pod](https://metacpan.org/pod/pod) stilinde yazılmış normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile bu şekilde kullanın:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Version 0.27
 
 Daha sonra seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. **deepl** komut çıktısı ile bunları bulacak ve değiştirecektir.
 
-Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "conflict marker" formatında yazdırılır. `ifdef` formatını kullanarak, [unifdef(1)](http://man.he.net/man1/unifdef) komutu ile istediğiniz kısmı kolayca elde edebilirsiniz. Biçim **--xlate-format** seçeneği ile belirtilebilir.
+Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "conflict marker" biçiminde yazdırılır. `ifdef` formatını kullanarak, [unifdef(1)](http://man.he.net/man1/unifdef) komutu ile istediğiniz kısmı kolayca alabilirsiniz. Çıktı biçimi **--xlate-format** seçeneği ile belirtilebilir.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man
     </p>
 </div>
 
-Metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini kullanın. Bu, kalıbın tüm metinle eşleştiğini belirtmek için kısa yoldur `(?s).+`.
+Eğer metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini kullanın. Bu, metnin tamamıyla eşleşen `(?s).+` kalıbını belirtmek için kısa yoldur.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini kullanı
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz hesap hizmeti için ayarlanmıştır: API için 128K (**--xlate**) ve pano arayüzü için 5000 (**--xlate-labor**). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+    API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz DeepL hesap hizmeti için ayarlanmıştır: API için 128K (**--xlate**) ve pano arayüzü için 5000 (**--xlate-labor**). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

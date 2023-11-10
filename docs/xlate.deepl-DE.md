@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Einbindung der Module DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) für die Backend-Engine.
+**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) als Backend-Engine implementiert.
 
-Wenn Sie einen normalen Textblock in einem Dokument im Stil von [pod](https://metacpan.org/pod/pod) übersetzen wollen, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
+Wenn Sie normale, im [pod](https://metacpan.org/pod/pod)-Stil geschriebene Textblöcke übersetzen wollen, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Pattern `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanum
 
 Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Sie werden gefunden und durch die Ausgabe des Befehls **deepl** ersetzt.
 
-Standardmäßig werden der ursprüngliche und der übersetzte Text im Format der "Konfliktmarkierung" ausgegeben, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Wenn Sie das Format `ifdef` verwenden, können Sie den gewünschten Teil mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) leicht erhalten. Das Format kann mit der Option **--xlate-format** angegeben werden.
+Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "conflict marker" gedruckt, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Wenn Sie das `ifdef`-Format verwenden, können Sie den gewünschten Teil mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) leicht erhalten. Das Ausgabeformat kann mit der Option **--xlate-format** festgelegt werden.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Standardmäßig werden der ursprüngliche und der übersetzte Text im Format der
     </p>
 </div>
 
-Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--match-all**. Dies ist eine Abkürzung, um das Muster für den gesamten Text `(?s).+` anzugeben.
+Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--match-all**. Dies ist eine Abkürzung zur Angabe des Musters `(?s).+`, das auf den gesamten Text passt.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option **--matc
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen Dienst: 128K für die API (**--xlate**) und 5000 für die Zwischenablage-Schnittstelle (**--xlate-labor**). Sie können diese Werte ändern, wenn Sie den Pro-Dienst nutzen.
+    Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen DeepL account service: 128K für die API (**--xlate**) und 5000 für die Zwischenablage-Schnittstelle (**--xlate-labor**). Sie können diese Werte ändern, wenn Sie den Pro-Dienst verwenden.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

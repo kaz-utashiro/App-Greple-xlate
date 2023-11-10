@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module vindt tekstblokken en vervangt ze door de vertaalde tekst. Neem DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) module op voor back-end engine.
+De module B<Greple> B<xlate> vindt tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) module geïmplementeerd als een back-end engine.
 
-Als je normale tekstblokken in L<pod> style document wilt vertalen, gebruik dan B<greple> commando met C<xlate::deepl> en C<perl> module zoals dit:
+Als je normale tekstblokken wilt vertalen die geschreven zijn in de L<pod> stijl, gebruik dan het B<greple> commando met C<xlate::deepl> en C<perl> module zoals dit:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Patroon C<^(\w.*\n)+> betekent opeenvolgende regels die beginnen met een alfa-nu
 
 Voeg dan de optie C<--xlate> toe om het geselecteerde gebied te vertalen. Het zal ze vinden en vervangen door de uitvoer van het B<deepl> commando.
 
-Standaard worden originele en vertaalde tekst afgedrukt in het "conflict marker" formaat dat compatibel is met L<git(1)>. Door C<ifdef> formaat te gebruiken, kunt u gemakkelijk het gewenste deel krijgen met het L<unifdef(1)> commando. Het formaat kan gespecificeerd worden met de optie B<--xlate-format>.
+Standaard wordt originele en vertaalde tekst afgedrukt in het "conflict marker" formaat dat compatibel is met L<git(1)>. Door C<ifdef> formaat te gebruiken, kun je gemakkelijk het gewenste deel krijgen met L<unifdef(1)> commando. Uitvoerformaat kan gespecificeerd worden met B<--xlate-format> optie.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Als u de hele tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om aan te geven dat het patroon overeenkomt met de hele tekst C<(?s).+>.
+Als je de hele tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om het patroon C<(?s).+> op te geven dat overeenkomt met de hele tekst.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Als het formaat C<xtxt> (vertaalde tekst) of onbekend is, wordt alleen vertaalde
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Specificeer de maximale lengte van de tekst die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis accountdienst: 128K voor de API (B<--xlate>) en 5000 voor de klembordinterface (B<--xlate-labor>). U kunt deze waarde wijzigen als u de Pro-service gebruikt.
+Geef de maximale lengte van de tekst op die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis DeepL account service: 128K voor de API (B<--xlate>) en 5000 voor de klembordinterface (B<--xlate-labor>). U kunt deze waarden wijzigen als u Pro-service gebruikt.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-Le module B<Greple> B<xlate> trouve des blocs de texte et les remplace par le texte traduit. Incluez les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) pour le moteur en arrière-plan.
+Le module B<Greple> B<xlate> trouve des blocs de texte et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur de back-end.
 
-Si vous souhaitez traduire un bloc de texte normal dans un document de style L<pod>, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme ceci :
+Si vous souhaitez traduire des blocs de texte normaux écrits dans le style L<pod>, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme ceci :
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Le motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une let
 
 Ensuite, ajoutez l'option C<--xlate> pour traduire la zone sélectionnée. Il la trouvera et la remplacera par la sortie de la commande B<deepl>.
 
-Par défaut, le texte original et traduit est imprimé dans le format "conflict marker" compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir la partie souhaitée avec la commande L<unifdef(1)> facilement. Le format peut être spécifié par l'option B<--xlate-format>.
+Par défaut, le texte original et traduit est affiché dans le format "conflict marker" compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir la partie souhaitée avec la commande L<unifdef(1)> facilement. Le format de sortie peut être spécifié avec l'option B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Si vous souhaitez traduire l'intégralité du texte, utilisez l'option B<--match-all>. Il s'agit d'un raccourci pour spécifier le motif correspondant à l'intégralité du texte C<(?s).+>.
+Si vous souhaitez traduire l'intégralité du texte, utilisez l'option B<--match-all>. Il s'agit d'un raccourci pour spécifier le motif C<(?s).+> qui correspond à l'ensemble du texte.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Si le format est C<xtxt> (texte traduit) ou inconnu, seul le texte traduit est i
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Spécifiez la longueur maximale du texte à envoyer à l'API en une seule fois. La valeur par défaut est définie pour le service gratuit : 128K pour l'API (B<--xlate>) et 5000 pour l'interface du presse-papiers (B<--xlate-labor>). Vous pouvez peut-être modifier ces valeurs si vous utilisez le service Pro.
+Traduisez le texte suivant en français, ligne par ligne.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

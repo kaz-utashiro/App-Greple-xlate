@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Arka uç motoru için DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülünü dahil edin.
+B<Greple> B<xlate> modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülü bir arka uç motoru olarak uygulanmaktadır.
 
-L<pod> stili belgede normal metin bloğunu çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile aşağıdaki gibi kullanın:
+L<pod> stilinde yazılmış normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile bu şekilde kullanın:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ C<^(\w.*\n)+> kalıbı alfa-nümerik harfle başlayan ardışık satırlar anlam
 
 Daha sonra seçilen alanı çevirmek için C<--xlate> seçeneğini ekleyin. B<deepl> komut çıktısı ile bunları bulacak ve değiştirecektir.
 
-Varsayılan olarak, orijinal ve çevrilmiş metin L<git(1)> ile uyumlu "conflict marker" formatında yazdırılır. C<ifdef> formatını kullanarak, L<unifdef(1)> komutu ile istediğiniz kısmı kolayca elde edebilirsiniz. Biçim B<--xlate-format> seçeneği ile belirtilebilir.
+Varsayılan olarak, orijinal ve çevrilmiş metin L<git(1)> ile uyumlu "conflict marker" biçiminde yazdırılır. C<ifdef> formatını kullanarak, L<unifdef(1)> komutu ile istediğiniz kısmı kolayca alabilirsiniz. Çıktı biçimi B<--xlate-format> seçeneği ile belirtilebilir.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Metnin tamamını çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, kalıbın tüm metinle eşleştiğini belirtmek için kısa yoldur C<(?s).+>.
+Eğer metnin tamamını çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, metnin tamamıyla eşleşen C<(?s).+> kalıbını belirtmek için kısa yoldur.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş meti
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz hesap hizmeti için ayarlanmıştır: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz DeepL hesap hizmeti için ayarlanmıştır: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

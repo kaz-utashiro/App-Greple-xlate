@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** 模块查找文本块并用翻译文本替换它们。后端引擎包括 DeepL (`deepl.pm`) 和 ChatGPT (`gpt3.pm`) 模块。
+**Greple** **xlate** 模块可查找文本块并将其替换为翻译文本。目前，DeepL (`deepl.pm`) 和 ChatGPT (`gpt3.pm`) 模块作为后端引擎实现。
 
-如果你想翻译[pod](https://metacpan.org/pod/pod)风格文档中的普通文本块，可以像这样使用**greple**命令与`xlate::deepl`和`perl`模块。
+如果要翻译以 [pod](https://metacpan.org/pod/pod) 风格编写的普通文本块，可使用 **greple** 命令和 `xlate::deepl` 及 `perl` 模块，就像这样：
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Version 0.27
 
 然后添加`--xlate`选项来翻译选定的区域。它将找到并替换为**-deepl**命令的输出。
 
-默认情况下，原始文本和翻译文本是以与[git(1)](http://man.he.net/man1/git)兼容的 "冲突标记 "格式打印的。使用 `ifdef` 格式，你可以通过 [unifdef(1)](http://man.he.net/man1/unifdef) 命令轻松获得所需的部分。格式可以由**--xlate-format**选项指定。
+默认情况下，原文和译文以与 [git(1)](http://man.he.net/man1/git) 兼容的 "冲突标记 "格式打印。使用 `ifdef` 格式，可以通过 [unifdef(1)](http://man.he.net/man1/unifdef) 命令轻松获得所需的部分。输出格式可以通过 **--xlate-format** 选项指定。
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Version 0.27
     </p>
 </div>
 
-如果你想翻译整个文本，使用**--match-all**选项。这是指定模式匹配整个文本的捷径，`(?s).+`。
+如果要翻译整个文本，请使用 **--match-all** 选项。这是指定匹配整个文本的模式 `(?s).+` 的快捷方式。
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Version 0.27
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    指定一次性发送至API的最大文本长度。默认值设置为免费账户服务：API（**--xlate**）为128K，剪贴板界面（**--xlate-labor**）为5000。如果你使用专业服务，你可以改变这些值。
+    指定一次发送到 API 的最大文本长度。默认值与 DeepL 免费账户服务一样：API (**--xlate**) 为 128K，剪贴板界面 (**--xlate-labor**) 为 5000。如果使用专业版服务，您可以更改这些值。
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

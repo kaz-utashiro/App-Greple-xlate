@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Sisaldab DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodulit tagapõhja mootori jaoks.
+**Greple** **xlate** moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodul.
 
-Kui soovite tõlkida tavalist tekstiplokki [pod](https://metacpan.org/pod/pod) stiilis dokumendis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
+Kui soovite tõlkida tavalisi tekstiplokke, mis on kirjutatud [pod](https://metacpan.org/pod/pod) stiilis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Muster `^(\w.*\n)+` tähendab järjestikuseid ridu, mis algavad alfa-numbrilise 
 
 Seejärel lisage `--xlate` valik valitud ala tõlkimiseks. See leiab ja asendab need **deepl** käsu väljundiga.
 
-Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, mis on ühilduv [git(1)](http://man.he.net/man1/git)-ga. Kasutades `ifdef` formaati, saate soovitud osa [unifdef(1)](http://man.he.net/man1/unifdef) käsu abil hõlpsasti kätte. Vormingut saab määrata valikuga **--xlate-format**.
+Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, mis on ühilduv [git(1)](http://man.he.net/man1/git)-ga. Kasutades `ifdef` formaati, saate soovitud osa hõlpsasti kätte [unifdef(1)](http://man.he.net/man1/unifdef) käsu abil. Väljundi formaati saab määrata **--xlate-format** valikuga.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, m
     </p>
 </div>
 
-Kui soovite tõlkida kogu teksti, kasutage valikut **--match-all**. See on otsetee, et määrata mustri vastavus kogu tekstile `(?s).+`.
+Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otsetee, et määrata mustrit `(?s).+`, mis sobib tervele tekstile.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Kui soovite tõlkida kogu teksti, kasutage valikut **--match-all**. See on otset
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Määrake korraga API-le saadetava teksti maksimaalne pikkus. Vaikimisi väärtus on seatud tasuta konto teenuse jaoks: 128K API jaoks (**--xlate**) ja 5000 lõikelaua liidese jaoks (**--xlate-labor**). Kui kasutate Pro teenust, võite neid väärtusi muuta.
+    Tõlgi järgnev tekst eesti keelde, rida-realt.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

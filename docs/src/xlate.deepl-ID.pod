@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-Modul B<Greple> B<xlate> menemukan blok teks dan menggantinya dengan teks terjemahan. Sertakan modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) untuk mesin back-end.
+Modul B<Greple> B<xlate> menemukan blok teks dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin back-end.
 
-Jika Anda ingin menerjemahkan blok teks normal dalam dokumen gaya L<pod>, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal yang ditulis dengan gaya L<pod>, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Pola C<^(\w.*\n)+> berarti baris berurutan yang dimulai dengan huruf alfanumerik
 
 Kemudian tambahkan opsi C<--xlate> untuk menerjemahkan area yang dipilih. Ini akan menemukan dan menggantinya dengan keluaran perintah B<deepl>.
 
-Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan L<git(1)>. Dengan menggunakan format C<ifdef>, Anda dapat memperoleh bagian yang diinginkan dengan perintah L<unifdef(1)> dengan mudah. Format dapat ditentukan dengan opsi B<--xlate-format>.
+Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan L<git(1)>. Dengan menggunakan format C<ifdef>, Anda dapat memperoleh bagian yang diinginkan dengan perintah L<unifdef(1)> dengan mudah. Format keluaran dapat ditentukan dengan opsi B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola yang cocok dengan seluruh teks C<(?).+>.
+Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola C<(?s).+> yang cocok dengan seluruh teks.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Jika formatnya adalah C<xtxt> (teks terjemahan) atau tidak diketahui, hanya teks
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun gratis: 128K untuk API (B<--xlate>) dan 5000 untuk antarmuka clipboard (B<--xlate-labor>). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
+Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun DeepL gratis: 128K untuk API (B<--xlate>) dan 5000 untuk antarmuka clipboard (B<--xlate-labor>). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

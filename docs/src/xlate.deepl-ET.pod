@@ -16,9 +16,9 @@ Version 0.27
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Lisada DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodul tagasiside mootori jaoks.
+B<Greple> B<xlate> moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagasiside mootorina rakendatud DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodul.
 
-Kui soovite L<pod> stiilis dokumendis tavalist tekstiplokki tõlkida, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga niimoodi:
+Kui soovite tõlkida tavalisi tekstiplokke, mis on kirjutatud L<pod> stiilis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga niimoodi:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,13 +30,13 @@ Muster C<^(\w.*\n)+> tähendab järjestikuseid ridu, mis algavad tähtnumbrilise
 
 Seejärel lisage valik C<--xlate>, et tõlkida valitud ala. See leiab ja asendab need käsu B<deepl> väljundiga.
 
-Vaikimisi trükitakse originaal- ja tõlgitud tekst "konfliktimärkide" formaadis, mis on ühilduv L<git(1)>. Kasutades C<ifdef> formaati, saate soovitud osa hõlpsasti kätte käsuga L<unifdef(1)>. Formaat saab määrata B<--xlate-format> valikuga.
+Vaikimisi trükitakse algne ja tõlgitud tekst L<git(1)>-ga ühilduvas "konfliktimärkide" formaadis. Kasutades C<ifdef> formaati, saab soovitud osa hõlpsasti kätte käsuga L<unifdef(1)>. Väljundi formaati saab määrata valikuga B<--xlate-format>.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
 </p>
 
-Kui soovite tõlkida kogu teksti, kasutage valikut B<--match-all>. See on otsetee, et määrata muster vastab kogu tekstile C<(?s).+>.
+Kui soovite tõlkida kogu teksti, kasutage valikut B<--match-all>. See on otsetee, et määrata muster C<(?s).+>, mis vastab kogu tekstile.
 
 =head1 OPTIONS
 
@@ -121,7 +121,7 @@ Kui formaat on C<xtxt> (tõlgitud tekst) või tundmatu, trükitakse ainult tõlg
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta kontoteenuse puhul: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidesele (B<--xlate-labor>). Kui kasutate Pro teenust, võite neid väärtusi muuta.
+Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta DeepL kontoteenuse puhul: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidesele (B<--xlate-labor>). Saate neid väärtusi muuta, kui kasutate Pro teenust.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

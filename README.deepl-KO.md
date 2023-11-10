@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**그레이플** **엑스레이트** 모듈은 텍스트 블록을 찾아 번역된 텍스트로 바꿉니다. 백엔드 엔진용 DeepL(`deepl.pm`) 및 ChatGPT(`gpt3.pm`) 모듈을 포함합니다.
+**그레이플** **엑스레이트** 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (`deepl.pm`) 및 ChatGPT (`gpt3.pm`) 모듈이 백엔드 엔진으로 구현되어 있습니다.
 
-[pod](https://metacpan.org/pod/pod) 스타일 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 **greple** 명령어를 `xlate::deepl` 및 `perl` 모듈과 함께 사용합니다:
+[pod](https://metacpan.org/pod/pod) 스타일로 작성된 일반 텍스트 블록을 번역하려면 다음과 같이 **greple** 명령어와 `xlate::deep` 및 `perl` 모듈을 함께 사용하면 됩니다:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Version 0.27
 
 그런 다음 `--엑스레이트` 옵션을 추가하여 선택한 영역을 번역합니다. **딥** 명령 출력으로 해당 영역을 찾아서 대체합니다.
 
-기본적으로 원본 텍스트와 번역된 텍스트는 [git(1)](http://man.he.net/man1/git)과 호환되는 "충돌 마커" 형식으로 인쇄됩니다. `ifdef` 형식을 사용하면 [unifdef(1)](http://man.he.net/man1/unifdef) 명령으로 원하는 부분을 쉽게 얻을 수 있습니다. 형식은 **--xlate-format** 옵션으로 지정할 수 있습니다.
+기본적으로 원본 및 번역된 텍스트는 [git(1)](http://man.he.net/man1/git)과 호환되는 "충돌 마커" 형식으로 인쇄됩니다. `ifdef` 형식을 사용하면 [unifdef(1)](http://man.he.net/man1/unifdef) 명령으로 원하는 부분을 쉽게 얻을 수 있습니다. 출력 형식은 **--xlate-format** 옵션으로 지정할 수 있습니다.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Version 0.27
     </p>
 </div>
 
-전체 텍스트를 번역하려면 **--일치-모두** 옵션을 사용하세요. 이것은 전체 텍스트에 일치하는 패턴을 지정하는 단축키입니다 `(?s).+`.
+전체 텍스트를 번역하려면 **--match-all** 옵션을 사용합니다. 이는 전체 텍스트와 일치하는 `(?s).+` 패턴을 지정하는 단축키입니다.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Version 0.27
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    한 번에 API로 전송할 텍스트의 최대 길이를 지정합니다. 기본값은 무료 계정 서비스의 경우 API(**--xlate**)의 경우 128K, 클립보드 인터페이스(**--xlate-labor**)의 경우 5000으로 설정되어 있습니다. Pro 서비스를 사용하는 경우 이 값을 변경할 수 있습니다.
+    한 번에 API로 전송할 텍스트의 최대 길이를 지정합니다. 기본값은 무료 DeepL 계정 서비스의 경우 API의 경우 128K(**--xlate**), 클립보드 인터페이스의 경우 5000(**--xlate-labor**)으로 설정되어 있습니다. Pro 서비스를 사용하는 경우 이 값을 변경할 수 있습니다.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

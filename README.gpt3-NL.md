@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** module vindt tekstblokken en vervangt ze door de vertaalde tekst. Inclusief DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) module voor de back-end engine.
+**Greple** **xlate** module vindt tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) modules geïmplementeerd als een back-end engine.
 
-Als je een normaal tekstblok in een [pod](https://metacpan.org/pod/pod)-stijl document wilt vertalen, gebruik dan het **greple** commando met de `xlate::deepl` en `perl` module als volgt:
+Als je normale tekstblokken wilt vertalen die zijn geschreven in de [pod](https://metacpan.org/pod/pod) stijl, gebruik dan het **greple** commando met de `xlate::deepl` en `perl` module als volgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Patroon `^(\w.*\n)+` betekent opeenvolgende regels die beginnen met een alfanume
 
 Voeg vervolgens de optie `--xlate` toe om het geselecteerde gebied te vertalen. Het zal ze vinden en vervangen door de uitvoer van het **deepl** commando.
 
-Standaard wordt de oorspronkelijke en vertaalde tekst afgedrukt in het formaat van het "conflict marker" dat compatibel is met [git(1)](http://man.he.net/man1/git). Met behulp van het `ifdef`-formaat kunt u het gewenste deel krijgen met het [unifdef(1)](http://man.he.net/man1/unifdef) commando. Het formaat kan worden gespecificeerd met de optie **--xlate-format**.
+Standaard worden het oorspronkelijke en vertaalde tekst afgedrukt in het formaat van de "conflict marker" dat compatibel is met [git(1)](http://man.he.net/man1/git). Met behulp van het `ifdef` formaat kun je het gewenste deel krijgen met het [unifdef(1)](http://man.he.net/man1/unifdef) commando. De uitvoerindeling kan worden gespecificeerd met de **--xlate-format** optie.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Standaard wordt de oorspronkelijke en vertaalde tekst afgedrukt in het formaat v
     </p>
 </div>
 
-Als u de volledige tekst wilt vertalen, gebruik dan de optie **--match-all**. Dit is een snelkoppeling om het patroon te specificeren dat overeenkomt met de volledige tekst `(?s).+`.
+Als je de hele tekst wilt vertalen, gebruik dan de **--match-all** optie. Dit is een snelkoppeling om het patroon `(?s).+` te specificeren dat de hele tekst matcht.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Als u de volledige tekst wilt vertalen, gebruik dan de optie **--match-all**. Di
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Specificeer de maximale lengte van de tekst die in één keer naar de API wordt verzonden. De standaardwaarde is ingesteld voor de gratis account service: 128K voor de API (**--xlate**) en 5000 voor de klembordinterface (**--xlate-labor**). U kunt deze waarden mogelijk wijzigen als u de Pro-service gebruikt.
+    Vertaal de volgende tekst naar het Nederlands, regel voor regel.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

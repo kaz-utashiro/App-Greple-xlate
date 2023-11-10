@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-Le module **Greple** **xlate** trouve des blocs de texte et les remplace par le texte traduit. Incluez les modules DeepL (`deepl.pm`) et ChatGPT (`gpt3.pm`) pour le moteur en arrière-plan.
+Le module **Greple** **xlate** trouve des blocs de texte et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et ChatGPT (`gpt3.pm`) sont implémentés en tant que moteur de back-end.
 
-Si vous souhaitez traduire un bloc de texte normal dans un document de style [pod](https://metacpan.org/pod/pod), utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` comme ceci :
+Si vous souhaitez traduire des blocs de texte normaux écrits dans le style [pod](https://metacpan.org/pod/pod), utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` comme ceci :
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lett
 
 Ensuite, ajoutez l'option `--xlate` pour traduire la zone sélectionnée. Il la trouvera et la remplacera par la sortie de la commande **deepl**.
 
-Par défaut, le texte original et traduit est imprimé dans le format "conflict marker" compatible avec [git(1)](http://man.he.net/man1/git). En utilisant le format `ifdef`, vous pouvez obtenir la partie souhaitée avec la commande [unifdef(1)](http://man.he.net/man1/unifdef) facilement. Le format peut être spécifié par l'option **--xlate-format**.
+Par défaut, le texte original et traduit est affiché dans le format "conflict marker" compatible avec [git(1)](http://man.he.net/man1/git). En utilisant le format `ifdef`, vous pouvez obtenir la partie souhaitée avec la commande [unifdef(1)](http://man.he.net/man1/unifdef) facilement. Le format de sortie peut être spécifié avec l'option **--xlate-format**.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Par défaut, le texte original et traduit est imprimé dans le format "conflict 
     </p>
 </div>
 
-Si vous souhaitez traduire l'intégralité du texte, utilisez l'option **--match-all**. Il s'agit d'un raccourci pour spécifier le motif correspondant à l'intégralité du texte `(?s).+`.
+Si vous souhaitez traduire l'intégralité du texte, utilisez l'option **--match-all**. Il s'agit d'un raccourci pour spécifier le motif `(?s).+` qui correspond à l'ensemble du texte.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Si vous souhaitez traduire l'intégralité du texte, utilisez l'option **--match
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Spécifiez la longueur maximale du texte à envoyer à l'API en une seule fois. La valeur par défaut est définie pour le service gratuit : 128K pour l'API (**--xlate**) et 5000 pour l'interface du presse-papiers (**--xlate-labor**). Vous pouvez peut-être modifier ces valeurs si vous utilisez le service Pro.
+    Traduisez le texte suivant en français, ligne par ligne.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

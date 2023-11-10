@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-Modul **Greple** **xlate** menemukan blok teks dan menggantinya dengan teks terjemahan. Sertakan modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) untuk mesin back-end.
+Modul **Greple** **xlate** menemukan blok teks dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin back-end.
 
-Jika Anda ingin menerjemahkan blok teks normal dalam dokumen gaya [pod](https://metacpan.org/pod/pod), gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal yang ditulis dengan gaya [pod](https://metacpan.org/pod/pod), gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Pola `^(\w.*\n)+` berarti baris berurutan yang dimulai dengan huruf alfanumerik.
 
 Kemudian tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Ini akan menemukan dan menggantinya dengan keluaran perintah **deepl**.
 
-Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan [git(1)](http://man.he.net/man1/git). Dengan menggunakan format `ifdef`, Anda dapat memperoleh bagian yang diinginkan dengan perintah [unifdef(1)](http://man.he.net/man1/unifdef) dengan mudah. Format dapat ditentukan dengan opsi **--xlate-format**.
+Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan [git(1)](http://man.he.net/man1/git). Dengan menggunakan format `ifdef`, Anda dapat memperoleh bagian yang diinginkan dengan perintah [unifdef(1)](http://man.he.net/man1/unifdef) dengan mudah. Format keluaran dapat ditentukan dengan opsi **--xlate-format**.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" 
     </p>
 </div>
 
-Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini adalah jalan pintas untuk menentukan pola yang cocok dengan seluruh teks `(?).+`.
+Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini adalah jalan pintas untuk menentukan pola `(?s).+` yang cocok dengan seluruh teks.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini ad
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun gratis: 128K untuk API (**--xlate**) dan 5000 untuk antarmuka clipboard (**--xlate-labor**). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
+    Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun DeepL gratis: 128K untuk API (**--xlate**) dan 5000 untuk antarmuka clipboard (**--xlate-labor**). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** モジュールはテキストブロックを見つけ、翻訳されたテキストに置き換えます。バックエンドエンジンに DeepL (`deepl.pm`) と ChatGPT (`gpt3.pm`) モジュールを含めます。
+**Greple** **xlate**モジュールはテキストブロックを見つけ、翻訳されたテキストに置き換えます。現在、DeepL (`deepl.pm`) と ChatGPT (`gpt3.pm`) モジュールがバックエンドエンジンとして実装されています。
 
-[pod](https://metacpan.org/pod/pod)形式の文書中の通常のテキストブロックを翻訳したい場合は、**greple**コマンドと`xlate::deepl`モジュール、`perl`モジュールを使って、以下のようにします。
+[pod](https://metacpan.org/pod/pod)スタイルで書かれた通常のテキストブロックを翻訳したい場合は、このように`xlate::deepl`と`perl`モジュールで**greple**コマンドを使います：
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Version 0.27
 
 次に、`--xlate`オプションを追加して、選択された領域を翻訳します。これは、**deepl**コマンドの出力でそれらを見つけて置き換えます。
 
-デフォルトでは、原文と訳文が [git(1)](http://man.he.net/man1/git) と互換性のある "conflict marker" フォーマットで出力されます。`ifdef` 形式を用いると、[unifdef(1)](http://man.he.net/man1/unifdef) コマンドで簡単に目的の部分を得ることができます。**--xlate-format**オプションでフォーマットを指定することができます。
+デフォルトでは、原文と翻訳文は [git(1)](http://man.he.net/man1/git) と互換性のある "conflict marker" フォーマットで出力されます。`ifdef`形式を使えば、[unifdef(1)](http://man.he.net/man1/unifdef)コマンドで簡単に目的の部分を取得できます。出力形式は**--xlate-format**オプションで指定できます。
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Version 0.27
     </p>
 </div>
 
-テキスト全体を翻訳したい場合は、**--match-all**オプションを使用します。これは、テキスト全体にマッチするパターンを指定するためのショートカットです `(?s).+`.
+テキスト全体を翻訳したい場合は、**--match-all**オプションを使います。これはテキスト全体にマッチするパターン`(?s).+`を指定するショートカットです。
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Version 0.27
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    APIに一度に送信するテキストの最大長を指定します。初期値は、無料アカウントサービスの場合、API（**--xlate**）は128K、クリップボードインターフェース（**--xlate-labor**）は5000に設定されています。Proサービスをご利用の場合は、これらの値を変更することができます。
+    APIに一度に送信するテキストの最大長を指定します。既定値は、無料の DeepL アカウント・サービスと同じように、API (**--xlate**) では 128K、クリップボード・インタフェース (**--xlate-labor**) では 5000 に設定されています。Pro サービスを使用している場合は、これらの値を変更できます。
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

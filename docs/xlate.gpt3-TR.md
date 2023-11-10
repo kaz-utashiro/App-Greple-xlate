@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Arka uç motoru için DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülünü içerir.
+**Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülleri arka uç motoru olarak uygulanmıştır.
 
-[pod](https://metacpan.org/pod/pod) stili belgede normal metin bloğunu çevirmek isterseniz, şu şekilde `xlate::deepl` ve `perl` modülü ile **greple** komutunu kullanın:
+[pod](https://metacpan.org/pod/pod) stiliyle yazılmış normal metin bloklarını çevirmek isterseniz, şu şekilde **greple** komutunu `xlate::deepl` ve `perl` modülü ile kullanın:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Desen `^(\w.*\n)+`, alfanümerik harfle başlayan ardışık satırları ifade e
 
 Ardından seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. Bu, **deepl** komutunun çıktısıyla bulup değiştirir.
 
-Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "çakışma işaretçisi" formatında yazdırılır. **--xlate-format** seçeneğiyle format belirtilebilir.
+Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "çatışma işaretçisi" formatında yazdırılır. `ifdef` formatını kullanarak, istediğiniz bölümü [unifdef(1)](http://man.he.net/man1/unifdef) komutuyla kolayca alabilirsiniz. Çıktı formatı **--xlate-format** seçeneğiyle belirtilebilir.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man
     </p>
 </div>
 
-Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, desenin tüm metni eşleştirdiğini belirtmek için bir kısayoldur `(?s).+`.
+Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tüm metni eşleştiren `(?s).+` desenini belirtmek için bir kısayoldur.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, des
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    API'ye bir seferde gönderilecek metnin maksimum uzunluğunu belirtin. Varsayılan değer ücretsiz hesap hizmeti için ayarlanmıştır: API için 128K (**--xlate**) ve panoya arayüzü için 5000 (**--xlate-labor). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.**
+    Aşağıdaki metni Türkçe'ye satır satır çevirin.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
@@ -230,11 +230,3 @@ Copyright © 2023 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-# POD ERRORS
-
-Hey! **The above document had some coding errors, which are explained below:**
-
-- Around line 124:
-
-    Unterminated B<...> sequence

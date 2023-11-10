@@ -14,9 +14,9 @@ Version 0.27
 
 # DESCRIPTION
 
-**Greple** **xlate** 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 번역 엔진으로 DeepL (`deepl.pm`)과 ChatGPT (`gpt3.pm`) 모듈을 포함합니다.
+**Greple** **xlate** 모듈은 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (`deepl.pm`)과 ChatGPT (`gpt3.pm`) 모듈이 백엔드 엔진으로 구현되어 있습니다.
 
-[pod](https://metacpan.org/pod/pod) 스타일 문서에서 일반 텍스트 블록을 번역하려면 **greple** 명령과 `xlate::deepl` 및 `perl` 모듈을 다음과 같이 사용하십시오:
+[pod](https://metacpan.org/pod/pod) 스타일로 작성된 일반 텍스트 블록을 번역하려면 다음과 같이 `xlate::deepl`과 `perl` 모듈을 사용하는 **greple** 명령을 사용하십시오:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
@@ -30,7 +30,7 @@ Version 0.27
 
 그런 다음 선택한 영역을 번역하기 위해 `--xlate` 옵션을 추가하십시오. 이 옵션은 **deepl** 명령의 출력으로 찾아서 대체합니다.
 
-기본적으로 원본 및 번역된 텍스트는 [git(1)](http://man.he.net/man1/git)과 호환되는 "충돌 마커" 형식으로 출력됩니다. **--xlate-format** 옵션으로 형식을 지정할 수 있습니다.
+기본적으로 원본 및 번역된 텍스트는 [git(1)](http://man.he.net/man1/git)과 호환되는 "충돌 마커" 형식으로 출력됩니다. `ifdef` 형식을 사용하면 [unifdef(1)](http://man.he.net/man1/unifdef) 명령을 사용하여 원하는 부분을 쉽게 얻을 수 있습니다. 출력 형식은 **--xlate-format** 옵션으로 지정할 수 있습니다.
 
 <div>
     <p>
@@ -38,7 +38,7 @@ Version 0.27
     </p>
 </div>
 
-전체 텍스트를 번역하려면 **--match-all** 옵션을 사용하십시오. 이는 패턴이 전체 텍스트 `(?s).+`와 일치하는 것을 지정하는 단축키입니다.
+전체 텍스트를 번역하려면 **--match-all** 옵션을 사용하십시오. 이는 전체 텍스트와 일치하는 `(?s).+` 패턴을 지정하는 단축키입니다.
 
 # OPTIONS
 
@@ -113,7 +113,7 @@ Version 0.27
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    한 번에 API로 보낼 텍스트의 최대 길이를 지정합니다. 기본값은 무료 계정 서비스에 대해 설정된 값입니다: API에 대해 128K, 클립보드 인터페이스에 대해 5000입니다. Pro 서비스를 사용하는 경우 이러한 값을 변경할 수 있습니다.
+    다음 텍스트를 한국어로 번역하십시오. 한 번에 API에 보낼 수 있는 텍스트의 최대 길이를 지정하십시오. 기본값은 무료 DeepL 계정 서비스에 대해 128K로 설정되어 있으며, 클립보드 인터페이스에 대해서는 5000으로 설정되어 있습니다. Pro 서비스를 사용하는 경우 이 값을 변경할 수 있을 수도 있습니다.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
