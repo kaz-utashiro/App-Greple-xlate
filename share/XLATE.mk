@@ -62,13 +62,11 @@ $(foreach ext,$(CONVERT),$(eval \
   %.$(SRCEXT): %.$(ext) ; $$(TEXTCONV) $$< > $$@ \
 ))
 
-TMP = $(if $(findstring $(suffix $1),$(CONVERT:%=.%)),$(basename $1).$(SRCEXT))
-SRC = $(or $(call TMP,$1),$1)
-
-TEMPFILES += $(foreach file,$(XLATE_FILES),$(call TMP,$(file)))
+STXT = $(if $(findstring $(suffix $1),$(CONVERT:%=.%)),$(basename $1).$(SRCEXT))
+TEMPFILES += $(foreach file,$(XLATE_FILES),$(call STXT,$(file)))
 
 define DEFINE_RULE
-$(basename $3).$4-$1.$2: $(call SRC,$3)
+$(basename $3).$4-$1.$2: $3 $(call STXT,$3)
 	$$(XLATE) -e $4 -t $1 -o $2 $$< > $$@
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
