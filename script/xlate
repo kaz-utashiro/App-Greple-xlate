@@ -94,6 +94,7 @@ do
 	L)     version=:latest ;;
 	R)  mount_mode=ro ;;
 	G)
+	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
 	    if [ "${topdir:=$(git_topdir)}" ]
 	    then
 		if [ "$topdir" != "${PWD:=$(pwd)}" ]
