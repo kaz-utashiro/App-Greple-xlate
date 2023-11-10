@@ -324,6 +324,7 @@ our @EXPORT_OK = qw($VERSION &opt);
 our @EXPORT_TAGS = ( all => [ qw($VERSION) ] );
 
 our %opt = (
+    debug    => \(our $debug = 0),
     engine   => \(our $xlate_engine),
     progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
@@ -526,6 +527,7 @@ sub setopt {
 
 __DATA__
 
+builtin xlate-debug!       $debug
 builtin xlate-progress!    $show_progress
 builtin xlate-format=s     $output_format
 builtin xlate-fold-line!   $fold_line

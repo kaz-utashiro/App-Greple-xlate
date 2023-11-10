@@ -4,6 +4,7 @@ our $VERSION = "0.27";
 
 use v5.14;
 use warnings;
+use utf8;
 use Encode;
 use Data::Dumper;
 
@@ -33,6 +34,7 @@ sub gpty {
 	-t => $param->{temp},
 	$prompt, '-',
     );
+    warn Dumper \@command if opt('debug');
     $gpty->command(\@command)->setstdin(+shift)->update->data;
 }
 
