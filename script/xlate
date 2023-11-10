@@ -15,6 +15,7 @@ define pod <<"=cut"
     xlate [ options ] file [ greple options ]
 	-h   help
 	-d   debug
+	-n   dry-run
 	-a   use API
 	-c   just check translation area
 	-r   refresh cache
@@ -30,7 +31,6 @@ define pod <<"=cut"
         --   terminate option parsing
     Make options
 	-M   run make
-	-n   run make with -n dry-run option
     Docker options
 	-G   mount git top-level directory
 	-B   run in non-interactive (batch) mode
@@ -183,12 +183,6 @@ do
 done	
 shift $((OPTIND - 1))
 
-if [ ! "$to_lang" ]
-then
-    echo "-t option is required."
-    exit 1
-fi
-
 : run make
 if [ "$run_make" == yes ]
 then
@@ -215,6 +209,12 @@ then
 	 ${format:+XLATE_FORMAT=\""$format"\"} \
 	 ${files:+XLATE_FILES=\""$files"\"} \
 	 ${opt[@]}
+    exit 1
+fi
+
+if [ ! "$to_lang" ]
+then
+    echo "-t option is required."
     exit 1
 fi
 
@@ -275,4 +275,11 @@ else
     option+=("${area[@]}")
 fi
 
-greple "${module[@]}" "${option[@]}" ${1+"$@"}
+exec=(greple "${module[@]}" "${option[@]}" ${1+"$@"})
+
+if [ "$dryrun" ]
+then
+    echo "${exec[@]}"
+else
+    "${exec[@]}"
+fi
