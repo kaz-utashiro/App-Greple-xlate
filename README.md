@@ -239,6 +239,8 @@ You have to install command line tools for DeepL and ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL Python library and CLI command.
@@ -266,6 +268,20 @@ You have to install command line tools for DeepL and ChatGPT.
 
     Use **sdif** to show conflict marker format side by side with **-V**
     option.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Generating documents in 15 languages with DeepL API module (in Japanese)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Automatic translation Docker environment with DeepL API (in Japanese)
 
 # AUTHOR
 
