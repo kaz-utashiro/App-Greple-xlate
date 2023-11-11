@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-Modulul B<Greple> B<xlate> găsește blocurile de text și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca motor de back-end.
+Modulul B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca motor de back-end.
 
-Dacă doriți să traduceți blocuri de text normale scrise în stilul L<pod>, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> astfel:
+Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul Perl's pod, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> astfel:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Modelul C<^(\w.*\n)+> înseamnă linii consecutive care încep cu o literă alfanumerică. Această comandă arată zona care urmează să fie tradusă. Opțiunea B<--all> este utilizată pentru a produce întregul text.
+În această comandă, șirul de modele C<^(\w.*\n)+> înseamnă linii consecutive care încep cu o literă alfanumerică. Această comandă arată zona care urmează să fie tradusă evidențiată. Opțiunea B<--all> este utilizată pentru a produce întregul text.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Apoi se adaugă opțiunea C<--xlate> pentru a traduce zona selectată. Aceasta le va găsi și le va înlocui cu ieșirea comenzii B<deepl>.
+Apoi se adaugă opțiunea C<--xlate> pentru a traduce zona selectată. Apoi, se vor găsi secțiunile dorite și se vor înlocui cu ieșirea comenzii B<deepl>.
 
 În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu L<git(1)>. Utilizând formatul C<ifdef>, puteți obține cu ușurință partea dorită prin comanda L<unifdef(1)>. Formatul de ieșire poate fi specificat prin opțiunea B<--xlate-format>.
 

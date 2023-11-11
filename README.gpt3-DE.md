@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) Module als Backend-Engine implementiert.
+**Greple** **xlate** Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Back-End-Engines DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) implementiert.
 
-Wenn Sie normale Textblöcke im [pod](https://metacpan.org/pod/pod)-Stil übersetzen möchten, verwenden Sie den **greple**-Befehl mit dem `xlate::deepl` und `perl` Modul wie folgt:
+Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den **greple**-Befehl mit dem `xlate::deepl`- und `perl`-Modul wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Das Muster `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option **--all** wird verwendet, um den gesamten Text zu erzeugen.
+In diesem Befehl bedeutet das Musterzeichenfolge `^(\w.*\n)+` aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option **--all** wird verwendet, um den gesamten Text zu erzeugen.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Das Muster `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alpha
     </p>
 </div>
 
-Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Es wird sie finden und durch die Ausgabe des **deepl**-Befehls ersetzen.
+Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Anschließend findet es die gewünschten Abschnitte und ersetzt sie durch die Ausgabe des **deepl**-Befehls.
 
 Standardmäßig wird der Original- und übersetzte Text im "Konfliktmarker"-Format ausgegeben, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Mit dem `ifdef`-Format können Sie den gewünschten Teil leicht mit dem **unifdef(1)** Befehl erhalten. Das Ausgabeformat kann mit der **--xlate-format** Option festgelegt werden.
 

@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** module vindt tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) modules geïmplementeerd als een back-end engine.
+**Greple** **xlate** module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) modules geïmplementeerd als backend-engine.
 
-Als je normale tekstblokken wilt vertalen die zijn geschreven in de [pod](https://metacpan.org/pod/pod) stijl, gebruik dan het **greple** commando met de `xlate::deepl` en `perl` module als volgt:
+Als je normale tekstblokken wilt vertalen in een document dat is geschreven in de Perl's pod-stijl, gebruik dan het **greple** commando met de `xlate::deepl` en `perl` module als volgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Patroon `^(\w.*\n)+` betekent opeenvolgende regels die beginnen met een alfanumeriek teken. Dit commando toont het gebied dat vertaald moet worden. Optie **--all** wordt gebruikt om de volledige tekst te produceren.
+In dit commando betekent het patroon `^(\w.*\n)+` opeenvolgende regels die beginnen met een alfanumeriek teken. Dit commando laat het te vertalen gebied markeren. De optie **--all** wordt gebruikt om de volledige tekst te produceren.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Patroon `^(\w.*\n)+` betekent opeenvolgende regels die beginnen met een alfanume
     </p>
 </div>
 
-Voeg vervolgens de optie `--xlate` toe om het geselecteerde gebied te vertalen. Het zal ze vinden en vervangen door de uitvoer van het **deepl** commando.
+Voeg vervolgens de optie `--xlate` toe om het geselecteerde gebied te vertalen. Het zal dan de gewenste secties vinden en ze vervangen door de uitvoer van het **deepl** commando.
 
 Standaard worden het oorspronkelijke en vertaalde tekst afgedrukt in het formaat van de "conflict marker" dat compatibel is met [git(1)](http://man.he.net/man1/git). Met behulp van het `ifdef` formaat kun je het gewenste deel krijgen met het [unifdef(1)](http://man.he.net/man1/unifdef) commando. De uitvoerindeling kan worden gespecificeerd met de **--xlate-format** optie.
 

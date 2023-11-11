@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) als Backend-Engine implementiert.
+B<Greple> B<xlate> Modul findet die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) als Back-End-Engine implementiert.
 
-Wenn Sie normale, im L<pod>-Stil geschriebene Textblöcke übersetzen wollen, verwenden Sie den Befehl B<greple> mit dem Modul C<xlate::deepl> und C<perl> wie folgt:
+Wenn Sie normale Textblöcke in einem Dokument übersetzen wollen, das im Pod-Stil von Perl geschrieben ist, verwenden Sie den Befehl B<greple> mit dem Modul C<xlate::deepl> und C<perl> wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pattern C<^(\w.*\n)+> bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option B<--all> wird verwendet, um den gesamten Text zu übersetzen.
+In diesem Befehl bedeutet die Zeichenkette C<^(\w.*\n)+> aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option B<--all> wird verwendet, um den gesamten Text zu erzeugen.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Sie werden gefunden und durch die Ausgabe des Befehls B<deepl> ersetzt.
+Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe des Befehls B<deepl> ersetzt.
 
 Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "conflict marker" gedruckt, das mit L<git(1)> kompatibel ist. Wenn Sie das C<ifdef>-Format verwenden, können Sie den gewünschten Teil mit dem Befehl L<unifdef(1)> leicht erhalten. Das Ausgabeformat kann mit der Option B<--xlate-format> festgelegt werden.
 

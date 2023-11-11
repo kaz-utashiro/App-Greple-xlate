@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülü bir arka uç motoru olarak uygulanmaktadır.
+B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülü bir arka uç motoru olarak uygulanmaktadır.
 
-L<pod> stilinde yazılmış normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile bu şekilde kullanın:
+Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile aşağıdaki gibi kullanın:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-C<^(\w.*\n)+> kalıbı alfa-nümerik harfle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı gösterir. B<--all> seçeneği tüm metni üretmek için kullanılır.
+Bu komutta, C<^(\w.*\n)+> kalıp dizesi alfa-sayısal harfle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. B<--all> seçeneği metnin tamamını üretmek için kullanılır.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Daha sonra seçilen alanı çevirmek için C<--xlate> seçeneğini ekleyin. B<deepl> komut çıktısı ile bunları bulacak ve değiştirecektir.
+Daha sonra seçilen alanı çevirmek için C<--xlate> seçeneğini ekleyin. Ardından, istenen bölümleri bulacak ve bunları B<deepl> komut çıktısı ile değiştirecektir.
 
 Varsayılan olarak, orijinal ve çevrilmiş metin L<git(1)> ile uyumlu "conflict marker" biçiminde yazdırılır. C<ifdef> formatını kullanarak, L<unifdef(1)> komutu ile istediğiniz kısmı kolayca alabilirsiniz. Çıktı biçimi B<--xlate-format> seçeneği ile belirtilebilir.
 

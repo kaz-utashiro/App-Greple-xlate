@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodul.
+B<Greple> B<xlate> moodul otsib soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodulid.
 
-Kui soovite tõlkida tavalisi tekstiplokke, mis on kirjutatud L<pod> stiilis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
+Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Muster C<^(\w.*\n)+> tähendab järjestikuseid ridu, mis algavad alfa-numbrilise tähega. See käsk näitab tõlgitavat ala. Valik B<--all> kasutatakse kogu teksti tootmiseks.
+Selles käskluses tähendab mustristring C<^(\w.*\n)+> järjestikuseid ridu, mis algavad alfa-numbrilise tähega. See käsklus näitab tõlgitavat ala esile tõstetult. Valik B<--all> kasutatakse kogu teksti tootmiseks.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Seejärel lisage C<--xlate> valik valitud ala tõlkimiseks. See leiab ja asendab need B<deepl> käsu väljundiga.
+Seejärel lisage C<--xlate> valik, et tõlkida valitud ala. Seejärel otsib see soovitud jaotised üles ning asendab need B<deepl> käsu väljundiga.
 
 Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, mis on ühilduv L<git(1)>-ga. Kasutades C<ifdef> formaati, saate soovitud osa hõlpsasti kätte L<unifdef(1)> käsu abil. Väljundi formaati saab määrata B<--xlate-format> valikuga.
 

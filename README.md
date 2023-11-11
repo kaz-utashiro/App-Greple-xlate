@@ -15,19 +15,20 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** module find text blocks and replace them by the
-translated text.  Currently DeepL (`deepl.pm`) and ChatGPT
+**Greple** **xlate** module find desired text blocks and replace them by
+the translated text.  Currently DeepL (`deepl.pm`) and ChatGPT
 (`gpt3.pm`) module are implemeted as a back-end engine.
 
-If you want to translate normal text blocks written in the [pod](https://metacpan.org/pod/pod)
-style, use **greple** command with `xlate::deepl` and `perl` module
-like this:
+If you want to translate normal text blocks in a document written in
+the [pod](https://metacpan.org/pod/pod) style, use **greple** command with `xlate::deepl` and
+`perl` module like this:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pattern `^(\w.*\n)+` means consecutive lines starting with
-alpha-numeric letter.  This command show the area to be translated.
-Option **--all** is used to produce entire text.
+In this command, pattern string `^(\w.*\n)+` means consecutive lines
+starting with alpha-numeric letter.  This command show the area to be
+translated highlighted.  Option **--all** is used to produce entire
+text.
 
 <div>
     <p>
@@ -35,8 +36,9 @@ Option **--all** is used to produce entire text.
     </p>
 </div>
 
-Then add `--xlate` option to translate the selected area.  It will
-find and replace them by the **deepl** command output.
+Then add `--xlate` option to translate the selected area.  Then, it
+will find the desired sections and replace them by the **deepl**
+command output.
 
 By default, original and translated text is printed in the "conflict
 marker" format compatible with [git(1)](http://man.he.net/man1/git).  Using `ifdef` format, you

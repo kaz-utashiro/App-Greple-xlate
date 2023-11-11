@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate**模块可以找到文本块并用翻译后的文本替换它们。目前实现了DeepL（`deepl.pm`）和ChatGPT（`gpt3.pm`）模块作为后端引擎。
+**Greple** **xlate**模块可以找到所需的文本块，并用翻译后的文本替换它们。目前已实现了DeepL（`deepl.pm`）和ChatGPT（`gpt3.pm`）模块作为后端引擎。
 
-如果您想要翻译以[pod](https://metacpan.org/pod/pod)风格编写的普通文本块，请使用以下命令：**greple**命令与`xlate::deepl`和`perl`模块一起使用，如下所示：
+如果您想要将Perl的pod样式文档中的普通文本块翻译成中文，请使用以下命令：**greple**，并结合`xlate::deepl`和`perl`模块，如下所示：
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-模式`^(\w.*\n)+`表示以字母数字字符开头的连续行。此命令显示要翻译的区域。选项**--all**用于生成整个文本。
+在这个命令中，模式字符串`^(\w.*\n)+`表示以字母数字字符开头的连续行。这个命令会突出显示要翻译的区域。选项**--all**用于生成整个文本。
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Version 0.28
     </p>
 </div>
 
-然后添加`--xlate`选项来翻译所选区域。它将找到并用**deepl**命令的输出替换它们。
+然后添加`--xlate`选项来翻译所选区域。然后，它会找到所需的部分，并用**deepl**命令的输出替换它们。
 
 默认情况下，原始文本和翻译后的文本以与[git(1)](http://man.he.net/man1/git)兼容的"冲突标记"格式打印。使用`ifdef`格式，您可以通过[unifdef(1)](http://man.he.net/man1/unifdef)命令轻松获取所需部分。输出格式可以通过**--xlate-format**选项指定。
 

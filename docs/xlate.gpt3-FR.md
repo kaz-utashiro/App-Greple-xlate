@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-Le module **Greple** **xlate** trouve des blocs de texte et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et ChatGPT (`gpt3.pm`) sont implémentés en tant que moteur de back-end.
+Le module **xlate** de **greple** trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et ChatGPT (`gpt3.pm`) sont implémentés en tant que moteur de back-end.
 
-Si vous souhaitez traduire des blocs de texte normaux écrits dans le style [pod](https://metacpan.org/pod/pod), utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` comme ceci :
+Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` de cette manière :
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande affiche la zone à traduire. L'option **--all** est utilisée pour produire l'intégralité du texte.
+Dans cette commande, la chaîne de motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande affiche la zone à traduire mise en évidence. L'option **--all** est utilisée pour produire l'intégralité du texte.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Le motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lett
     </p>
 </div>
 
-Ensuite, ajoutez l'option `--xlate` pour traduire la zone sélectionnée. Il la trouvera et la remplacera par la sortie de la commande **deepl**.
+Ensuite, ajoutez l'option `--xlate` pour traduire la zone sélectionnée. Ensuite, il trouvera les sections souhaitées et les remplacera par la sortie de la commande **deepl**.
 
 Par défaut, le texte original et traduit est affiché dans le format "conflict marker" compatible avec [git(1)](http://man.he.net/man1/git). En utilisant le format `ifdef`, vous pouvez obtenir la partie souhaitée avec la commande [unifdef(1)](http://man.he.net/man1/unifdef) facilement. Le format de sortie peut être spécifié avec l'option **--xlate-format**.
 

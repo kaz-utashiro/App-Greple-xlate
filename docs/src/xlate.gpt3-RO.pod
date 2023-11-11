@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-Modulul B<xlate> din B<Greple> găsește blocuri de text și le înlocuiește cu textul tradus. În prezent, modulul DeepL (F<deepl.pm>) și modulul ChatGPT (F<gpt3.pm>) sunt implementate ca motoare de fundal.
+Modulul B<xlate> din cadrul B<greple> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulul DeepL (F<deepl.pm>) și modulul ChatGPT (F<gpt3.pm>) sunt implementate ca motoare de fundal.
 
-Dacă doriți să traduceți blocuri normale de text scrise în stilul L<pod>, utilizați comanda B<greple> cu modulul C<xlate::deepl> și modulul C<perl> în felul următor:
+Dacă doriți să traduceți blocurile de text normale dintr-un document scris în stilul pod al Perl, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> în felul următor:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Modelul C<^(\w.*\n)+> înseamnă linii consecutive care încep cu o literă alfanumerică. Această comandă arată zona care trebuie tradusă. Opțiunea B<--all> este folosită pentru a produce întregul text.
+În această comandă, șirul de tipar C<^(\w.*\n)+> înseamnă linii consecutive care încep cu litere alfanumerice. Această comandă arată zona care urmează să fie tradusă evidențiată. Opțiunea B<--all> este utilizată pentru a produce întregul text.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Aceasta va găsi și înlocui textul cu ieșirea comenzii B<deepl>.
+Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Apoi, va găsi secțiunile dorite și le va înlocui cu rezultatul comenzii B<deepl>.
 
 În mod implicit, textul original și textul tradus sunt afișate în formatul "conflict marker", compatibil cu L<git(1)>. Utilizând formatul C<ifdef>, puteți obține partea dorită cu ușurință folosind comanda L<unifdef(1)>. Formatul de ieșire poate fi specificat prin opțiunea B<--xlate-format>.
 

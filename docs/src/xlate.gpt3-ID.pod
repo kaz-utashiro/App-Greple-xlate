@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-Modul B<Greple> B<xlate> mencari blok teks dan menggantinya dengan teks yang diterjemahkan. Saat ini, modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin backend.
+Modul B<Greple> B<xlate> mencari blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin backend.
 
-Jika Anda ingin menerjemahkan blok teks normal yang ditulis dalam gaya L<pod>, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pola C<^(\w.*\n)+> berarti baris-baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menampilkan area yang akan diterjemahkan. Opsi B<--all> digunakan untuk menghasilkan seluruh teks.
+Pada perintah ini, string pola C<^(\w.*\n)+> berarti baris-baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menampilkan area yang akan diterjemahkan yang di-highlight. Opsi B<--all> digunakan untuk menghasilkan seluruh teks.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Kemudian tambahkan opsi C<--xlate> untuk menerjemahkan area yang dipilih. Ini akan mencari dan menggantinya dengan output perintah B<deepl>.
+Kemudian tambahkan opsi C<--xlate> untuk menerjemahkan area yang dipilih. Kemudian, akan mencari bagian yang diinginkan dan menggantinya dengan output perintah B<deepl>.
 
 Secara default, teks asli dan diterjemahkan dicetak dalam format "conflict marker" yang kompatibel dengan L<git(1)>. Dengan menggunakan format C<ifdef>, Anda dapat mendapatkan bagian yang diinginkan dengan mudah menggunakan perintah L<unifdef(1)>. Format output dapat ditentukan dengan opsi B<--xlate-format>.
 

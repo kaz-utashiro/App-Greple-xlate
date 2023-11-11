@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagasiside mootorina rakendatud DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodul.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagasiside mootorina rakendatud DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodul.
 
-Kui soovite tõlkida tavalisi tekstiplokke, mis on kirjutatud [pod](https://metacpan.org/pod/pod) stiilis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga niimoodi:
+Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku **greple** koos `xlate::deepl` ja `perl` mooduliga niimoodi:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Muster `^(\w.*\n)+` tähendab järjestikuseid ridu, mis algavad tähtnumbrilise tähega. See käsk näitab tõlgitavat ala. Valikut **--all** kasutatakse kogu teksti koostamiseks.
+Selles käsus tähendab musterjada `^(\w.*\n)+` järjestikuseid ridu, mis algavad tähtnumbrilise tähega. See käsk näitab tõlgitavat ala esile tõstetud kujul. Valikut **--all** kasutatakse kogu teksti koostamiseks.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Muster `^(\w.*\n)+` tähendab järjestikuseid ridu, mis algavad tähtnumbrilise 
     </p>
 </div>
 
-Seejärel lisage valik `--xlate`, et tõlkida valitud ala. See leiab ja asendab need käsu **deepl** väljundiga.
+Seejärel lisatakse valik `--xlate`, et tõlkida valitud ala. Seejärel leitakse soovitud lõigud ja asendatakse need käsu **deepl** väljundiga.
 
 Vaikimisi trükitakse algne ja tõlgitud tekst [git(1)](http://man.he.net/man1/git)-ga ühilduvas "konfliktimärkide" formaadis. Kasutades `ifdef` formaati, saab soovitud osa hõlpsasti kätte käsuga [unifdef(1)](http://man.he.net/man1/unifdef). Väljundi formaati saab määrata valikuga **--xlate-format**.
 

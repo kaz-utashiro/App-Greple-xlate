@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-Modul **Greple** **xlate** mencari blok teks dan menggantinya dengan teks yang diterjemahkan. Saat ini, modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin backend.
+Modul **Greple** **xlate** mencari blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin backend.
 
-Jika Anda ingin menerjemahkan blok teks normal yang ditulis dalam gaya [pod](https://metacpan.org/pod/pod), gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pola `^(\w.*\n)+` berarti baris-baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menampilkan area yang akan diterjemahkan. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
+Pada perintah ini, string pola `^(\w.*\n)+` berarti baris-baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menampilkan area yang akan diterjemahkan yang di-highlight. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Pola `^(\w.*\n)+` berarti baris-baris berurutan yang dimulai dengan huruf alfanu
     </p>
 </div>
 
-Kemudian tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Ini akan mencari dan menggantinya dengan output perintah **deepl**.
+Kemudian tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Kemudian, akan mencari bagian yang diinginkan dan menggantinya dengan output perintah **deepl**.
 
 Secara default, teks asli dan diterjemahkan dicetak dalam format "conflict marker" yang kompatibel dengan [git(1)](http://man.he.net/man1/git). Dengan menggunakan format `ifdef`, Anda dapat mendapatkan bagian yang diinginkan dengan mudah menggunakan perintah [unifdef(1)](http://man.he.net/man1/unifdef). Format output dapat ditentukan dengan opsi **--xlate-format**.
 

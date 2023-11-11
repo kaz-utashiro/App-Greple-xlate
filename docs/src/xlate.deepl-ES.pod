@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-El módulo B<Greple> B<xlate> encuentra bloques de texto y los sustituye por el texto traducido. Actualmente DeepL (F<deepl.pm>) y el módulo ChatGPT (F<gpt3.pm>) están implementados como motor back-end.
+El módulo B<Greple> B<xlate> encuentra los bloques de texto deseados y los sustituye por el texto traducido. Actualmente se implementan los módulos DeepL (F<deepl.pm>) y ChatGPT (F<gpt3.pm>) como motor back-end.
 
-Si desea traducir bloques de texto normales escritos en el estilo L<pod>, utilice el comando B<greple> con el módulo C<xlate::deepl> y C<perl> de esta forma:
+Si desea traducir bloques de texto normal en un documento escrito en el estilo vaina de Perl, utilice el comando B<greple> con el módulo C<xlate::deepl> y C<perl> de la siguiente manera:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-El patrón C<^(\w.*\n)+> significa líneas consecutivas que comienzan con una letra alfanumérica. Este comando muestra el área a traducir. La opción B<--all> se utiliza para producir el texto completo.
+En este comando, la cadena patrón C<^(\w.*\n)+> significa líneas consecutivas que comienzan con una letra alfanumérica. Este comando muestra el área a traducir resaltada. La opción B<--all> se utiliza para producir el texto completo.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-A continuación, añada la opción C<--xlate> para traducir el área seleccionada. Las encontrará y reemplazará por la salida del comando B<deepl>.
+A continuación, añada la opción C<--xlate> para traducir el área seleccionada. Entonces, encontrará las secciones deseadas y las reemplazará por la salida del comando B<deepl>.
 
 Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con L<git(1)>. Usando el formato C<ifdef>, puede obtener la parte deseada mediante el comando L<unifdef(1)> fácilmente. El formato de salida puede especificarse mediante la opción B<--xlate-format>.
 

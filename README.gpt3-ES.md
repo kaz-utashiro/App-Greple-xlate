@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-El módulo **xlate** de **Greple** encuentra bloques de texto y los reemplaza por el texto traducido. Actualmente, los motores de traducción utilizados son DeepL (`deepl.pm`) y ChatGPT (`gpt3.pm`).
+El módulo **xlate** de **Greple** encuentra los bloques de texto deseados y los reemplaza por el texto traducido. Actualmente, los módulos DeepL (`deepl.pm`) y ChatGPT (`gpt3.pm`) están implementados como motores de backend.
 
-Si deseas traducir bloques de texto normales escritos en el estilo [pod](https://metacpan.org/pod/pod), utiliza el comando **greple** con los módulos `xlate::deepl` y `perl` de la siguiente manera:
+Si quieres traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, utiliza el comando **greple** con los módulos `xlate::deepl` y `perl` de la siguiente manera:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-El patrón `^(\w.*\n)+` significa líneas consecutivas que comienzan con una letra alfanumérica. Este comando muestra el área que se va a traducir. La opción **--all** se utiliza para producir todo el texto.
+En este comando, la cadena de patrón `^(\w.*\n)+` significa líneas consecutivas que comienzan con una letra alfanumérica. Este comando muestra el área que se va a traducir resaltada. La opción **--all** se utiliza para producir todo el texto.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ El patrón `^(\w.*\n)+` significa líneas consecutivas que comienzan con una let
     </p>
 </div>
 
-Luego, agregue la opción `--xlate` para traducir el área seleccionada. Encontrará y reemplazará los bloques por la salida del comando **deepl**.
+Luego agregue la opción `--xlate` para traducir el área seleccionada. Luego, encontrará las secciones deseadas y las reemplazará por la salida del comando **deepl**.
 
 Por defecto, el texto original y traducido se imprime en el formato de "marcador de conflicto" compatible con [git(1)](http://man.he.net/man1/git). Utilizando el formato `ifdef`, puedes obtener la parte deseada fácilmente con el comando [unifdef(1)](http://man.he.net/man1/unifdef). El formato de salida se puede especificar con la opción **--xlate-format**.
 

@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülü bir arka uç motoru olarak uygulanmaktadır.
+**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülü bir arka uç motoru olarak uygulanmaktadır.
 
-[pod](https://metacpan.org/pod/pod) stilinde yazılmış normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile bu şekilde kullanın:
+Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile aşağıdaki gibi kullanın:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-`^(\w.*\n)+` kalıbı alfa-nümerik harfle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı gösterir. **--all** seçeneği tüm metni üretmek için kullanılır.
+Bu komutta, `^(\w.*\n)+` kalıp dizesi alfa-sayısal harfle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. **--all** seçeneği metnin tamamını üretmek için kullanılır.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Version 0.28
     </p>
 </div>
 
-Daha sonra seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. **deepl** komut çıktısı ile bunları bulacak ve değiştirecektir.
+Daha sonra seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. Ardından, istenen bölümleri bulacak ve bunları **deepl** komut çıktısı ile değiştirecektir.
 
 Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "conflict marker" biçiminde yazdırılır. `ifdef` formatını kullanarak, [unifdef(1)](http://man.he.net/man1/unifdef) komutu ile istediğiniz kısmı kolayca alabilirsiniz. Çıktı biçimi **--xlate-format** seçeneği ile belirtilebilir.
 

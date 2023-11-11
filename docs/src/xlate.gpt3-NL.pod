@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module vindt tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als een back-end engine.
+B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als backend-engine.
 
-Als je normale tekstblokken wilt vertalen die zijn geschreven in de L<pod> stijl, gebruik dan het B<greple> commando met de C<xlate::deepl> en C<perl> module als volgt:
+Als je normale tekstblokken wilt vertalen in een document dat is geschreven in de Perl's pod-stijl, gebruik dan het B<greple> commando met de C<xlate::deepl> en C<perl> module als volgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Patroon C<^(\w.*\n)+> betekent opeenvolgende regels die beginnen met een alfanumeriek teken. Dit commando toont het gebied dat vertaald moet worden. Optie B<--all> wordt gebruikt om de volledige tekst te produceren.
+In dit commando betekent het patroon C<^(\w.*\n)+> opeenvolgende regels die beginnen met een alfanumeriek teken. Dit commando laat het te vertalen gebied markeren. De optie B<--all> wordt gebruikt om de volledige tekst te produceren.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Voeg vervolgens de optie C<--xlate> toe om het geselecteerde gebied te vertalen. Het zal ze vinden en vervangen door de uitvoer van het B<deepl> commando.
+Voeg vervolgens de optie C<--xlate> toe om het geselecteerde gebied te vertalen. Het zal dan de gewenste secties vinden en ze vervangen door de uitvoer van het B<deepl> commando.
 
 Standaard worden het oorspronkelijke en vertaalde tekst afgedrukt in het formaat van de "conflict marker" dat compatibel is met L<git(1)>. Met behulp van het C<ifdef> formaat kun je het gewenste deel krijgen met het L<unifdef(1)> commando. De uitvoerindeling kan worden gespecificeerd met de B<--xlate-format> optie.
 

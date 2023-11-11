@@ -16,19 +16,19 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-Le module B<Greple> B<xlate> trouve des blocs de texte et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur de back-end.
+Le module B<xlate> de B<greple> trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur de back-end.
 
-Si vous souhaitez traduire des blocs de texte normaux écrits dans le style L<pod>, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme ceci :
+Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> de cette manière :
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Le motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande affiche la zone à traduire. L'option B<--all> est utilisée pour produire l'intégralité du texte.
+Dans cette commande, la chaîne de motif C<^(\w.*\n)+> signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande affiche la zone à traduire mise en évidence. L'option B<--all> est utilisée pour produire l'intégralité du texte.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Ensuite, ajoutez l'option C<--xlate> pour traduire la zone sélectionnée. Il la trouvera et la remplacera par la sortie de la commande B<deepl>.
+Ensuite, ajoutez l'option C<--xlate> pour traduire la zone sélectionnée. Ensuite, il trouvera les sections souhaitées et les remplacera par la sortie de la commande B<deepl>.
 
 Par défaut, le texte original et traduit est affiché dans le format "conflict marker" compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir la partie souhaitée avec la commande L<unifdef(1)> facilement. Le format de sortie peut être spécifié avec l'option B<--xlate-format>.
 

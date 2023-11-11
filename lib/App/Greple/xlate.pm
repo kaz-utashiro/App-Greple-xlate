@@ -20,26 +20,28 @@ Version 0.28
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module find text blocks and replace them by the
-translated text.  Currently DeepL (F<deepl.pm>) and ChatGPT
+B<Greple> B<xlate> module find desired text blocks and replace them by
+the translated text.  Currently DeepL (F<deepl.pm>) and ChatGPT
 (F<gpt3.pm>) module are implemeted as a back-end engine.
 
-If you want to translate normal text blocks written in the L<pod>
-style, use B<greple> command with C<xlate::deepl> and C<perl> module
-like this:
+If you want to translate normal text blocks in a document written in
+the Perl's pod style, use B<greple> command with C<xlate::deepl> and
+C<perl> module like this:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pattern C<^(\w.*\n)+> means consecutive lines starting with
-alpha-numeric letter.  This command show the area to be translated.
-Option B<--all> is used to produce entire text.
+In this command, pattern string C<^(\w.*\n)+> means consecutive lines
+starting with alpha-numeric letter.  This command show the area to be
+translated highlighted.  Option B<--all> is used to produce entire
+text.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Then add C<--xlate> option to translate the selected area.  It will
-find and replace them by the B<deepl> command output.
+Then add C<--xlate> option to translate the selected area.  Then, it
+will find the desired sections and replace them by the B<deepl>
+command output.
 
 By default, original and translated text is printed in the "conflict
 marker" format compatible with L<git(1)>.  Using C<ifdef> format, you

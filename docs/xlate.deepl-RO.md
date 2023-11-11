@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-Modulul **Greple** **xlate** găsește blocurile de text și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și ChatGPT (`gpt3.pm`) sunt implementate ca motor de back-end.
+Modulul **Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și ChatGPT (`gpt3.pm`) sunt implementate ca motor de back-end.
 
-Dacă doriți să traduceți blocuri de text normale scrise în stilul [pod](https://metacpan.org/pod/pod), utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` astfel:
+Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul Perl's pod, utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` astfel:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Modelul `^(\w.*\n)+` înseamnă linii consecutive care încep cu o literă alfanumerică. Această comandă arată zona care urmează să fie tradusă. Opțiunea **--all** este utilizată pentru a produce întregul text.
+În această comandă, șirul de modele `^(\w.*\n)+` înseamnă linii consecutive care încep cu o literă alfanumerică. Această comandă arată zona care urmează să fie tradusă evidențiată. Opțiunea **--all** este utilizată pentru a produce întregul text.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Modelul `^(\w.*\n)+` înseamnă linii consecutive care încep cu o literă alfan
     </p>
 </div>
 
-Apoi se adaugă opțiunea `--xlate` pentru a traduce zona selectată. Aceasta le va găsi și le va înlocui cu ieșirea comenzii **deepl**.
+Apoi se adaugă opțiunea `--xlate` pentru a traduce zona selectată. Apoi, se vor găsi secțiunile dorite și se vor înlocui cu ieșirea comenzii **deepl**.
 
 În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu [git(1)](http://man.he.net/man1/git). Utilizând formatul `ifdef`, puteți obține cu ușurință partea dorită prin comanda [unifdef(1)](http://man.he.net/man1/unifdef). Formatul de ieșire poate fi specificat prin opțiunea **--xlate-format**.
 

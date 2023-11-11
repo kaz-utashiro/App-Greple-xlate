@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-Modul **Greple** **xlate** menemukan blok teks dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin back-end.
+Modul **Greple** **xlate** menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin back-end.
 
-Jika Anda ingin menerjemahkan blok teks normal yang ditulis dengan gaya [pod](https://metacpan.org/pod/pod), gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pola `^(\w.*\n)+` berarti baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menunjukkan area yang akan diterjemahkan. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
+Dalam perintah ini, string pola `^(\w.*\n)+` berarti baris berurutan yang dimulai dengan huruf alfanumerik. Perintah ini menunjukkan area yang akan diterjemahkan disorot. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Pola `^(\w.*\n)+` berarti baris berurutan yang dimulai dengan huruf alfanumerik.
     </p>
 </div>
 
-Kemudian tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Ini akan menemukan dan menggantinya dengan keluaran perintah **deepl**.
+Kemudian tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Kemudian, ia akan menemukan bagian yang diinginkan dan menggantinya dengan keluaran perintah **deepl**.
 
 Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan [git(1)](http://man.he.net/man1/git). Dengan menggunakan format `ifdef`, Anda dapat memperoleh bagian yang diinginkan dengan perintah [unifdef(1)](http://man.he.net/man1/unifdef) dengan mudah. Format keluaran dapat ditentukan dengan opsi **--xlate-format**.
 

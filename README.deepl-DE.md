@@ -14,13 +14,13 @@ Version 0.28
 
 # DESCRIPTION
 
-**Greple** **xlate** Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) als Backend-Engine implementiert.
+**Greple** **xlate** Modul findet die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) als Back-End-Engine implementiert.
 
-Wenn Sie normale, im [pod](https://metacpan.org/pod/pod)-Stil geschriebene Textblöcke übersetzen wollen, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
+Wenn Sie normale Textblöcke in einem Dokument übersetzen wollen, das im Pod-Stil von Perl geschrieben ist, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
 
-Pattern `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich an. Die Option **--all** wird verwendet, um den gesamten Text zu übersetzen.
+In diesem Befehl bedeutet die Zeichenkette `^(\w.*\n)+` aufeinanderfolgende Zeilen, die mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option **--all** wird verwendet, um den gesamten Text zu erzeugen.
 
 <div>
     <p>
@@ -28,7 +28,7 @@ Pattern `^(\w.*\n)+` bedeutet aufeinanderfolgende Zeilen, die mit einem alphanum
     </p>
 </div>
 
-Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Sie werden gefunden und durch die Ausgabe des Befehls **deepl** ersetzt.
+Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe des Befehls **deepl** ersetzt.
 
 Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "conflict marker" gedruckt, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Wenn Sie das `ifdef`-Format verwenden, können Sie den gewünschten Teil mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) leicht erhalten. Das Ausgabeformat kann mit der Option **--xlate-format** festgelegt werden.
 
