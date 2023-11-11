@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ DeepL βιβλιοθήκη Python και εντολή CLI.
 =item L<App::sdif>
 
 Χρησιμοποιήστε την εντολή B<sdif> για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή B<-V>.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Μονάδα Greple για τη μετάφραση και την αντικατάσταση μόνο των απαραίτητων τμημάτων με το DeepL API (στα ιαπωνικά)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Δημιουργία εγγράφων σε 15 γλώσσες με την ενότητα DeepL API (στα ιαπωνικά)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Αυτόματη μετάφραση περιβάλλοντος Docker με DeepL API (στα ιαπωνικά)
 
 =back
 

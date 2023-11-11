@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ Anda dapat menggunakan modul C<-Mupdate> untuk memodifikasi file berdasarkan has
 =item L<App::sdif>
 
 Gunakan B<sdif> untuk menampilkan format penanda konflik berdampingan dengan opsi B<-V>.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Modul Greple untuk menerjemahkan dan mengganti bagian yang diperlukan saja dengan DeepL API (dalam bahasa Jepang)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Menghasilkan dokumen dalam 15 bahasa dengan modul API DeepL (dalam bahasa Jepang)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Lingkungan Docker terjemahan otomatis dengan DeepL API (dalam bahasa Jepang)
 
 =back
 

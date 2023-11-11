@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - module d'aide à la traduction pour greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Traduction automatique de l'environnement Docker avec DeepL API (en japonais)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "Le module B<Greple> B<xlate> recherche les blocs de texte et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur dorsal.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution pour éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les conserver dans le fichier, utilisez C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Le résultat de la commande va vers la sortie standard, donc redirigez vers le fichier si nécessaire, ou envisagez d'utiliser le module L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Créer un fichier cache vide et quitter.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Bibliothèque Python et commande CLI.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Génération de documents en 15 langues avec le module DeepL API (en japonais)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Module Greple pour traduire et remplacer uniquement les parties nécessaires avec DeepL API (en japonais)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Si le format est C<xtxt> (texte traduit) ou inconnu, seul le texte traduit est imprimé.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Si vous souhaitez traduire un texte entier, utilisez l'option B<--match-all>. Il s'agit d'un raccourci pour spécifier le modèle C<(?s).+> qui correspond à un texte entier.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Si vous souhaitez traduire des blocs de texte normaux écrits dans le style L<pod>, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme ceci :\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Chargez le fichier F<xlate.el> inclus dans le dépôt pour utiliser la commande C<xlate> à partir de l'éditeur Emacs. La fonction C<xlate-region> traduit la région donnée. La langue par défaut est C<EN-US> et vous pouvez spécifier la langue en l'invoquant avec l'argument prefix.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Maintenir le cache de toute façon tant que la cible est un fichier normal.\n",
    "Maintain the cache file if it exists.\n" : "Maintenir le fichier de cache s'il existe.\n",

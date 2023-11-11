@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ B<greple>コマンドの結果を使用してファイルを変更するため�
 =item L<App::sdif>
 
 B<-V>オプションとともに、衝突マーカーフォーマットを並べて表示するためにB<sdif>を使用してください。
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+DeepL APIを使用して必要な部分のみを翻訳および置換するためのGrepleモジュール（日本語）
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+DeepL APIモジュールを使用して15言語でドキュメントを生成する（日本語）
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+DeepL APIを使用した自動翻訳Docker環境（日本語）
 
 =back
 

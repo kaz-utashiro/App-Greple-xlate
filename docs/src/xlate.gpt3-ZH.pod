@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ DeepL Python 库和 CLI 命令。
 =item L<App::sdif>
 
 您可以使用 C<-Mupdate> 模块根据 B<greple> 命令的结果修改文件。
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+使用DeepL API进行翻译和替换仅必要的部分的Greple模块（日语）
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+使用DeepL API模块在15种语言中生成文档（日语）
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+带有DeepL API的自动翻译Docker环境（日语）
 
 =back
 

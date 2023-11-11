@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - greple için çeviri destek modülü\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "DeepL API ile otomatik çeviri Docker ortamı (Japonca)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate> modülü metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülü bir arka uç motoru olarak uygulanmaktadır.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "B<xlate> modülü her dosya için önbellekte çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Varsayılan davranışa göre, kullanılmayan veriler önbellek dosyasından kaldırılır. Bunları kaldırmak ve dosyada tutmak istemiyorsanız, C<accumulate> kullanın.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Komut sonucu standart çıkışa gider, bu nedenle gerekirse dosyaya yönlendirin veya L<App::Greple::update> modülünü kullanmayı düşünün.\n",
    "Create empty cache file and exit.\n" : "Boş önbellek dosyası oluştur ve çık.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Python kütüphanesi ve CLI komutu.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "DeepL API modülü ile 15 dilde belge oluşturma (Japonca)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Sadece gerekli kısımları çevirmek ve değiştirmek için Greple modülü DeepL API (Japonca)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş metin yazdırılır.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Eğer metnin tamamını çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, metnin tamamıyla eşleşen C<(?s).+> kalıbını belirtmek için kısa yoldur.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "L<pod> stilinde yazılmış normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile bu şekilde kullanın:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Emacs editöründen C<xlate> komutunu kullanmak için depoda bulunan F<xlate.el> dosyasını yükleyin. C<xlate-region> fonksiyonu verilen bölgeyi çevirir. Varsayılan dil C<EN-US>'dir ve prefix argümanı ile çağırarak dili belirtebilirsiniz.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Hedef normal dosya olduğu sürece önbelleği yine de korur.\n",
    "Maintain the cache file if it exists.\n" : "Eğer varsa önbellek dosyasını koruyun.\n",

@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ Puteți utiliza modulul C<-Mupdate> pentru a modifica fișierele în funcție de
 =item L<App::sdif>
 
 Utilizați B<sdif> pentru a afișa formatul markerului de conflict alături de opțiunea B<-V>.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Modulul Greple pentru a traduce și înlocui doar părțile necesare cu ajutorul API-ului DeepL (în japoneză)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Generarea documentelor în 15 limbi cu modulul DeepL API (în japoneză)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Mediu Docker de traducere automată cu ajutorul API-ului DeepL (în japoneză)
 
 =back
 

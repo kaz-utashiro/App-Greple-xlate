@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -yq upgrade \
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
-       git curl gcc make perl cpanminus
+       git curl gcc make perl perl-doc cpanminus
 
 RUN cpanm -qn \
     App::optex::textconv \
@@ -36,7 +36,8 @@ RUN apt-get update && apt-get -yq upgrade \
 	xclip socat \
 	poppler-utils \
 	mecab mecab-ipadic-utf8 \
-	jq
+	jq \
+	diffutils
 
 RUN rm -fr \
 	$HOME/.cpanm $HOME/.cache \

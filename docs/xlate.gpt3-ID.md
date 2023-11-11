@@ -196,6 +196,8 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     Pustaka DeepL Python dan perintah CLI.
@@ -219,6 +221,20 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Gunakan **sdif** untuk menampilkan format penanda konflik berdampingan dengan opsi **-V**.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Modul Greple untuk menerjemahkan dan mengganti hanya bagian yang diperlukan dengan API DeepL (dalam bahasa Jepang)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Menghasilkan dokumen dalam 15 bahasa dengan modul API DeepL (dalam bahasa Jepang)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Lingkungan Docker terjemahan otomatis dengan API DeepL (dalam bahasa Jepang)
 
 # AUTHOR
 

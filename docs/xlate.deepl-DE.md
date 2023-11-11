@@ -196,6 +196,8 @@ Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL Python-Bibliothek und CLI-Befehl.
@@ -219,6 +221,20 @@ Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Verwenden Sie **sdif**, um das Format der Konfliktmarkierung zusammen mit der Option **-V** anzuzeigen.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Greple-Modul zum Übersetzen und Ersetzen nur der notwendigen Teile mit DeepL API (auf Japanisch)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Generierung von Dokumenten in 15 Sprachen mit dem Modul DeepL API (auf Japanisch)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Automatische Übersetzung der Docker-Umgebung mit DeepL API (auf Japanisch)
 
 # AUTHOR
 

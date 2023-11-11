@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ C<-Mupdate> 모듈을 사용하여 B<greple> 명령의 결과에 따라 파일�
 =item L<App::sdif>
 
 충돌 마커 형식을 B<-V> 옵션과 함께 나란히 표시하려면 B<에스디프>를 사용합니다.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+필요한 부분만 번역하고 DeepL API(일본어)로 대체하는 Greple 모듈 (일본어)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+DeepL API 모듈로 15개 언어로 문서 생성 (일본어)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+DeepL API를 사용한 자동 번역 도커 환경 (일본어)
 
 =back
 

@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate> - L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ Saate kasutada C<-Mupdate> moodulit failide muutmiseks B<greple> käsu tulemuse 
 =item L<App::sdif>
 
 Kasutage B<sdif> konfliktimärgendi vormingu kuvamiseks kõrvuti B<-V> valikuga.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Greple moodul tõlkimiseks ja asendamiseks ainult vajalike osadega DeepL API abil (jaapani keeles)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Dokumentide genereerimine 15 keeles DeepL API mooduliga (jaapani keeles)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Automaatse tõlke Dockeri keskkond DeepL API abil (jaapani keeles)
 
 =back
 

@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Automatische Übersetzung der Docker-Umgebung mit DeepL API (auf Japanisch)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate> Modul findet Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die Module DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) als Backend-Engine implementiert.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur beibehalten, wenn die Cache-Datei für die Zieldatei existiert.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "In der Standardeinstellung werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten wollen, verwenden Sie C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Das Ergebnis des Befehls wird im Standard-Output ausgegeben, also leiten Sie es bei Bedarf in eine Datei um oder verwenden Sie das Modul L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Leere Cachedatei erstellen und beenden.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Python-Bibliothek und CLI-Befehl.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Generierung von Dokumenten in 15 Sprachen mit dem Modul DeepL API (auf Japanisch)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Greple-Modul zum Übersetzen und Ersetzen nur der notwendigen Teile mit DeepL API (auf Japanisch)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der übersetzte Text gedruckt.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option B<--match-all>. Dies ist eine Abkürzung zur Angabe des Musters C<(?s).+>, das auf den gesamten Text passt.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Wenn Sie normale, im L<pod>-Stil geschriebene Textblöcke übersetzen wollen, verwenden Sie den Befehl B<greple> mit dem Modul C<xlate::deepl> und C<perl> wie folgt:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Laden Sie die Datei F<xlate.el> aus dem Repository, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt die angegebene Region. Die Standardsprache ist C<EN-US> und Sie können die Sprache mit dem Präfix-Argument angeben.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Cache trotzdem beibehalten, sofern das Ziel eine normale Datei ist.\n",
    "Maintain the cache file if it exists.\n" : "Behalten Sie die Cache-Datei bei, wenn sie vorhanden ist.\n",

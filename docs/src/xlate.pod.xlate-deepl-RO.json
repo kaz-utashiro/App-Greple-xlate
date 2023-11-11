@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - modul de suport pentru traducere pentru Greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Traducerea automată a mediului Docker cu DeepL API (în japoneză)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "Modulul B<Greple> B<xlate> găsește blocurile de text și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca motor de back-end.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Modulul B<xlate> poate stoca în memoria cache textul traducerii pentru fiecare fișier și îl poate citi înainte de execuție, pentru a elimina costurile suplimentare de solicitare a serverului. Cu strategia implicită de cache C<auto>, acesta păstrează datele din cache numai atunci când fișierul cache există pentru fișierul țintă.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Prin comportament implicit, datele neutilizate sunt eliminate din fișierul cache. Dacă nu doriți să le eliminați și să le păstrați în fișier, utilizați C<acumulare>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Rezultatul comenzii merge la ieșire standard, deci redirecționați-l către fișier dacă este necesar sau luați în considerare utilizarea modulului L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Creează un fișier cache gol și iese.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Biblioteca Python și comanda CLI.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Generarea de documente în 15 limbi cu modulul DeepL API (în japoneză)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Modul Greple pentru a traduce și a înlocui doar părțile necesare cu DeepL API (în japoneză)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Dacă formatul este C<xtxt> (text tradus) sau necunoscut, se tipărește numai textul tradus.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Dacă doriți să traduceți întregul text, utilizați opțiunea B<--match-all>. Aceasta este o scurtătură pentru a specifica modelul C<(?s).+> care se potrivește cu întregul text.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Dacă doriți să traduceți blocuri de text normale scrise în stilul L<pod>, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> astfel:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Încărcați fișierul F<xlate.el> inclus în depozit pentru a utiliza comanda C<xlate> din editorul Emacs. Funcția C<xlate-region> traduce regiunea dată. Limba implicită este C<EN-US> și puteți specifica limba invocând-o cu argumentul prefix.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Menține oricum memoria cache în măsura în care fișierul țintă este un fișier normal.\n",
    "Maintain the cache file if it exists.\n" : "Menține fișierul cache dacă acesta există.\n",

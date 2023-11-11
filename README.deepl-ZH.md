@@ -196,6 +196,8 @@ Version 0.28
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL Python库和CLI命令。
@@ -219,6 +221,20 @@ Version 0.28
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     使用**sdif**与**-V**选项并列显示冲突标记格式。
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    使用 DeepL API（日语）翻译并仅替换必要部分的 Greple 模块
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    利用 DeepL API 模块生成 15 种语言的文档（日语）
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    利用 DeepL API 自动翻译 Docker 环境（日语）
 
 # AUTHOR
 

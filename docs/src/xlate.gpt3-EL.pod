@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ L<App::Greple::xlate::gpt3>
 =item L<App::sdif>
 
 Χρησιμοποιήστε το B<sdif> για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή B<-V>.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Μεταφράστε το παρακάτω κείμενο στα Ελληνικά, γραμμή προς γραμμή.
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Μονάδα Greple για μετάφραση και αντικατάσταση μόνο των απαραίτητων τμημάτων με το API του DeepL (στα Ιαπωνικά)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Δημιουργία εγγράφων σε 15 γλώσσες με τη μονάδα DeepL API (στα Ιαπωνικά)
 
 =back
 

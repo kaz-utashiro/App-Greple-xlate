@@ -196,6 +196,8 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL Biblioteca Python și comanda CLI.
@@ -219,6 +221,20 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Folosiți **sdif** pentru a afișa formatul markerilor de conflict unul lângă altul cu opțiunea **-V**.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Modul Greple pentru a traduce și a înlocui doar părțile necesare cu DeepL API (în japoneză)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Generarea de documente în 15 limbi cu modulul DeepL API (în japoneză)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Traducerea automată a mediului Docker cu DeepL API (în japoneză)
 
 # AUTHOR
 

@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ OpenAI 命令行界面
 =item L<App::sdif>
 
 使用B<sdif>与B<-V>选项并列显示冲突标记格式。
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+使用 DeepL API（日语）翻译并仅替换必要部分的 Greple 模块
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+利用 DeepL API 模块生成 15 种语言的文档（日语）
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+利用 DeepL API 自动翻译 Docker 环境（日语）
 
 =back
 

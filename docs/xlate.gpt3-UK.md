@@ -196,6 +196,8 @@ Version 0.28
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     Бібліотека DeepL для Python та командний рядок.
@@ -219,6 +221,20 @@ Version 0.28
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Використовуйте **sdif**, щоб показати формат маркера конфлікту поруч з опцією **-V**.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Модуль Greple для перекладу та заміни лише необхідних частин за допомогою API DeepL (японською мовою)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Створення документів на 15 мовах за допомогою модуля DeepL API (японською мовою)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Автоматичне перекладання середовища Docker з використанням API DeepL (японською мовою)
 
 # AUTHOR
 

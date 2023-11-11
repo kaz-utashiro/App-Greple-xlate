@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - модуль підтримки перекладу для greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Автоматичний переклад середовища Docker за допомогою API DeepL (японською мовою)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "Модулі B<Greple> B<xlate> знаходять текстові блоки і замінюють їх перекладеним текстом. Наразі в якості бекенд-рушія реалізовано модулі DeepL (F<deepl.pm>) та ChatGPT (F<gpt3.pm>).\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Модуль B<xlate> може зберігати кешований текст перекладу для кожного файлу і зчитувати його перед виконанням, щоб усунути накладні витрати на запити до сервера. За замовчуванням стратегія кешування C<auto> зберігає кешовані дані лише тоді, коли для цільового файлу існує файл кешу.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "За замовчуванням, невикористані дані буде видалено з файлу кешу. Якщо ви не хочете видаляти їх і зберігати у файлі, скористайтеся командою C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Результат команди буде виведено у стандартний вивід, тому за потреби переспрямуйте його на файл або скористайтеся модулем L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Створити порожній файл кешу і вийти.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Бібліотека Python і команда CLI.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Генерація документів 15 мовами за допомогою модуля DeepL API (японською мовою)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Модуль Greple для перекладу та заміни лише необхідних частин за допомогою API DeepL (японською мовою)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Якщо формат C<xtxt> (перекладений текст) або невідомий, друкується лише перекладений текст.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Якщо ви хочете перекласти весь текст, використовуйте опцію B<--match-all>. Це швидкий спосіб вказати шаблон C<(?s).+>, який збігається з усім текстом.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Якщо ви хочете перекласти звичайні текстові блоки, написані у стилі L<pod>, використовуйте команду B<greple> з модулем C<xlate::deepl> та C<perl> таким чином:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Для використання команди C<xlate> з редактора Emacs завантажте файл F<xlate.el>, що входить до складу репозиторію. Функція C<xlate-region> перекладає заданий регіон. За замовчуванням використовується мова C<EN-US>, але ви можете вказати мову виклику за допомогою аргументу префікса.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Зберігати кеш у будь-якому випадку, якщо цільовий файл є нормальним.\n",
    "Maintain the cache file if it exists.\n" : "Обслуговувати файл кешу, якщо він існує.\n",

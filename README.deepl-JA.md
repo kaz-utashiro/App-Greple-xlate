@@ -196,6 +196,8 @@ DeepLおよびChatGPT用のコマンドラインツールをインストール�
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3) をインストールしてください。
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL の Python ライブラリと CLI コマンド。
@@ -219,6 +221,20 @@ DeepLおよびChatGPT用のコマンドラインツールをインストール�
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     **sdif**を使用すると、**-V**オプションでコンフリクトマーカー形式を並べて表示することができます。
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    DeepL APIで必要な部分だけを翻訳して置き換えるGrepleモジュール
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    DeepL APIモジュールによる15言語のドキュメント生成
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    DeepL APIによる自動翻訳Docker環境
 
 # AUTHOR
 

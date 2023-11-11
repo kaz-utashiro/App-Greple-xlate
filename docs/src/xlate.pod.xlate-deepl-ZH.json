@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - greple的翻译支持模块\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "利用 DeepL API 自动翻译 Docker 环境（日语）\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate> 模块可查找文本块并将其替换为翻译文本。目前，DeepL (F<deepl.pm>) 和 ChatGPT (F<gpt3.pm>) 模块作为后端引擎实现。\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读取它，以消除向服务器请求的开销。在默认的缓存策略C<auto>下，它只在目标文件的缓存文件存在时才维护缓存数据。\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "根据默认行为，未使用的数据会从缓存文件中删除。如果你不想删除它们并保留在文件中，使用C<accumulate>。\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "命令的结果会进入标准输出，所以如果需要的话，可以重定向到文件，或者考虑使用L<App::Greple::update>模块。\n",
    "Create empty cache file and exit.\n" : "创建空缓存文件并退出。\n",
    "DeepL Python library and CLI command.\n" : "DeepL Python库和CLI命令。\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "利用 DeepL API 模块生成 15 种语言的文档（日语）\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "使用 DeepL API（日语）翻译并仅替换必要部分的 Greple 模块\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "如果格式是C<xtxt>（翻译文本）或不知道，则只打印翻译文本。\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "如果要翻译整个文本，请使用 B<--match-all> 选项。这是指定匹配整个文本的模式 C<(?s).+> 的快捷方式。\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "如果要翻译以 L<pod> 风格编写的普通文本块，可使用 B<greple> 命令和 C<xlate::deepl> 及 C<perl> 模块，就像这样：\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "加载存储库中的F<xlate.el>文件，从Emacs编辑器中使用C<xlate>命令。C<xlate-region>函数翻译给定的区域。默认的语言是C<EN-US>，你可以用前缀参数指定调用语言。\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "只要目标文件是正常文件，就维持缓存。\n",
    "Maintain the cache file if it exists.\n" : "如果缓存文件存在，则维护该文件。\n",

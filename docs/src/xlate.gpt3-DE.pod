@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses d
 =item L<App::sdif>
 
 Verwenden Sie B<sdif>, um das Konfliktmarkerformat mit der Option B<-V> nebeneinander anzuzeigen.
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+Greple-Modul zum Übersetzen und Ersetzen nur der notwendigen Teile mit der DeepL API (auf Japanisch)
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+Generieren von Dokumenten in 15 Sprachen mit dem DeepL API-Modul (auf Japanisch)
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+Automatische Übersetzungsumgebung für Docker mit der DeepL API (auf Japanisch)
 
 =back
 

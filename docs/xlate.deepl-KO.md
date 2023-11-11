@@ -196,6 +196,8 @@ DeepL 및 ChatGPT용 명령줄 도구를 설치해야 합니다.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL 파이썬 라이브러리 및 CLI 명령.
@@ -219,6 +221,20 @@ DeepL 및 ChatGPT용 명령줄 도구를 설치해야 합니다.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     충돌 마커 형식을 **-V** 옵션과 함께 나란히 표시하려면 **에스디프**를 사용합니다.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    필요한 부분만 번역하고 DeepL API(일본어)로 대체하는 Greple 모듈 (일본어)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    DeepL API 모듈로 15개 언어로 문서 생성 (일본어)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    DeepL API를 사용한 자동 번역 도커 환경 (일본어)
 
 # AUTHOR
 

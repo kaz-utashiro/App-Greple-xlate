@@ -219,6 +219,8 @@ L<App::Greple::xlate::deepl>をインストールします。
 
 L<App::Greple::xlate::gpt3> をインストールしてください。
 
+L<https://hub.docker.com/r/tecolicom/xlate>
+
 =over 7
 
 =item L<https://github.com/DeepLcom/deepl-python>
@@ -244,6 +246,24 @@ C<-Mupdate>モジュールを用いると、B<greple>コマンドの結果をも
 =item L<App::sdif>
 
 B<sdif>を使用すると、B<-V>オプションでコンフリクトマーカー形式を並べて表示することができます。
+
+=back
+
+=head2 ARTICLES
+
+=over 2
+
+=item * L<https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250>
+
+DeepL APIで必要な部分だけを翻訳して置き換えるGrepleモジュール
+
+=item * L<https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6>
+
+DeepL APIモジュールによる15言語のドキュメント生成
+
+=item * L<https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd>
+
+DeepL APIによる自動翻訳Docker環境
 
 =back
 

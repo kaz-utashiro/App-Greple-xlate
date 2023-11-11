@@ -196,6 +196,8 @@ Version 0.28
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     [App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
@@ -219,6 +221,20 @@ Version 0.28
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     您可以使用 `-Mupdate` 模块根据 **greple** 命令的结果修改文件。
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    使用DeepL API进行翻译和替换仅必要的部分的Greple模块（日语）
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    使用DeepL API模块在15种语言中生成文档（日语）
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    带有DeepL API的自动翻译Docker环境（日语）
 
 # AUTHOR
 

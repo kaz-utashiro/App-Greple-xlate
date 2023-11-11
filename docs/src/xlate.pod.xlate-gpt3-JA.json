@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - grepleの翻訳サポートモジュール\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "DeepL APIを使用した自動翻訳Docker環境（日本語）\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate>モジュールは、テキストブロックを検索し、翻訳されたテキストで置き換えます。現在、DeepL（F<deepl.pm>）とChatGPT（F<gpt3.pm>）モジュールがバックエンドエンジンとして実装されています。\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "B<xlate>モジュールは、各ファイルの翻訳のキャッシュテキストを保存し、実行前にそれを読み込んでサーバーへの問い合わせのオーバーヘッドを排除することができます。デフォルトのキャッシュ戦略C<auto>では、対象ファイルのキャッシュファイルが存在する場合にのみキャッシュデータを保持します。\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "デフォルトの動作では、キャッシュファイルから未使用のデータが削除されます。それらを削除せずにファイルに保持したい場合は、C<accumulate>を使用してください。\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "コマンドの結果は標準出力に表示されるため、必要に応じてファイルにリダイレクトするか、L<App::Greple::update>モジュールを使用することを検討してください。\n",
    "Create empty cache file and exit.\n" : "空のキャッシュファイルを作成して終了します。\n",
    "DeepL Python library and CLI command.\n" : "DeepL PythonライブラリとCLIコマンドです。\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "DeepL APIモジュールを使用して15言語でドキュメントを生成する（日本語）\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "DeepL APIを使用して必要な部分のみを翻訳および置換するためのGrepleモジュール（日本語）\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "形式がC<xtxt>（翻訳されたテキスト）または不明な場合、翻訳されたテキストのみが表示されます。\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "テキスト全体を翻訳したい場合は、B<--match-all>オプションを使用してください。これは、テキスト全体にマッチするパターンC<(?s).+>を指定するためのショートカットです。\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "L<pod>スタイルで書かれた通常のテキストブロックを翻訳したい場合は、次のようにB<greple>コマンドとC<xlate::deepl>およびC<perl>モジュールを使用してください：\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "EmacsエディタからC<xlate>コマンドを使用するには、リポジトリに含まれるF<xlate.el>ファイルをロードしてください。C<xlate-region>関数は指定された領域を翻訳します。デフォルトの言語はC<EN-US>であり、プレフィックス引数を使用して言語を指定することができます。\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "対象が通常のファイルである限り、常にキャッシュをメンテナンスします。\n",
    "Maintain the cache file if it exists.\n" : "キャッシュファイルが存在する場合はメンテナンスします。\n",

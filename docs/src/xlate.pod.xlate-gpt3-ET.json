@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - tõlketoe moodul greple jaoks\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Automaatse tõlke Dockeri keskkond DeepL API abil (jaapani keeles)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate> moodul leiab tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodul.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "B<xlate> moodul saab salvestada tõlke teksti vahemällu iga faili jaoks ja lugeda selle enne täitmist, et kõrvaldada päringu ülekoormus. Vaikimisi vahemälu strateegia C<auto> korral hoitakse vahemälu andmeid ainult siis, kui sihtfaili jaoks on olemas vahemälu fail.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Vaikimisi käitumise korral eemaldatakse kasutamata andmed vahemälu failist. Kui te ei soovi neid eemaldada ja soovite neid failis hoida, kasutage C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Käsu tulemus läheb standardväljundisse, nii et suunake see vajadusel faili või kaaluge L<App::Greple::update> mooduli kasutamist.\n",
    "Create empty cache file and exit.\n" : "Loo tühi vahemälu fail ja välju.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Pythoni teek ja käsurea käsk.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Dokumentide genereerimine 15 keeles DeepL API mooduliga (jaapani keeles)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Greple moodul tõlkimiseks ja asendamiseks ainult vajalike osadega DeepL API abil (jaapani keeles)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Kui vorming on C<xtxt> (tõlgitud tekst) või tundmatu, prinditakse ainult tõlgitud tekst.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Kui soovite tõlkida terve teksti, kasutage B<--match-all> valikut. See on otsetee, et määrata mustrit C<(?s).+>, mis sobib tervele tekstile.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Kui soovite tõlkida tavalisi tekstiplokke, mis on kirjutatud L<pod> stiilis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate> - L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Laadige C<xlate.el> fail, mis on kaasasolevas hoidlas, et kasutada C<xlate> käsku Emacs redaktorist. C<xlate-region> funktsioon tõlgib antud piirkonna. Vaikimisi keel on C<EN-US> ja saate keele määrata eesliiteargumendiga.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Hoia vahemälu igal juhul, kui sihtfail on tavaline fail.\n",
    "Maintain the cache file if it exists.\n" : "Hoia vahemälu faili, kui see on olemas.\n",

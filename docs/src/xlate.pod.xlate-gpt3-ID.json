@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - modul dukungan terjemahan untuk greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Lingkungan Docker terjemahan otomatis dengan API DeepL (dalam bahasa Jepang)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "Modul B<Greple> B<xlate> mencari blok teks dan menggantinya dengan teks yang diterjemahkan. Saat ini, modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin backend.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Modul B<xlate> dapat menyimpan teks terjemahan yang di-cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead meminta ke server. Dengan strategi cache default C<auto>, ia hanya mempertahankan data cache ketika file cache ada untuk file target.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Dengan perilaku default, data yang tidak digunakan dihapus dari file cache. Jika Anda tidak ingin menghapusnya dan tetap di file, gunakan C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Hasil perintah ditampilkan di stdout, jadi alihkan ke file jika perlu, atau pertimbangkan untuk menggunakan modul L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Buat file cache kosong dan keluar.\n",
    "DeepL Python library and CLI command.\n" : "Pustaka DeepL Python dan perintah CLI.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Menghasilkan dokumen dalam 15 bahasa dengan modul API DeepL (dalam bahasa Jepang)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Modul Greple untuk menerjemahkan dan mengganti hanya bagian yang diperlukan dengan API DeepL (dalam bahasa Jepang)\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Jika formatnya adalah C<xtxt> (teks terjemahan) atau tidak diketahui, hanya teks terjemahan yang dicetak.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah pintasan untuk menentukan pola C<(?s).+> yang cocok dengan seluruh teks.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Jika Anda ingin menerjemahkan blok teks normal yang ditulis dalam gaya L<pod>, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Muat file F<xlate.el> yang disertakan dalam repositori untuk menggunakan perintah C<xlate> dari editor Emacs. Fungsi C<xlate-region> menerjemahkan wilayah yang diberikan. Bahasa default adalah C<EN-US> dan Anda dapat menentukan bahasa dengan memanggilnya dengan argumen awalan.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Pertahankan cache apa pun selama target adalah file normal.\n",
    "Maintain the cache file if it exists.\n" : "Pertahankan file cache jika ada.\n",

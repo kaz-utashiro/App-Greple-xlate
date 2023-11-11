@@ -1,5 +1,6 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - μονάδα υποστήριξης μετάφρασης για το greple\n",
+   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Δημιουργία εγγράφων σε 15 γλώσσες με τη μονάδα DeepL API (στα Ιαπωνικά)\n",
    "B<Greple> B<xlate> module find text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> Το μοντούλο B<xlate> εντοπίζει τα τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Αυτή τη στιγμή, τα μοντούλα DeepL (F<deepl.pm>) και ChatGPT (F<gpt3.pm>) υλοποιούνται ως μηχανή πίσω από το σύστημα.\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Το πρόσθετο B<xlate> μπορεί να αποθηκεύει το μεταφρασμένο κείμενο για κάθε αρχείο και να το διαβάζει πριν από την εκτέλεση για να εξαλείψει τον χρόνο που απαιτείται για την επικοινωνία με τον διακομιστή. Με την προεπιλεγμένη στρατηγική προσωρινής αποθήκευσης C<auto>, διατηρεί τα δεδομένα προσωρινής αποθήκευσης μόνο όταν το αρχείο προσωρινής αποθήκευσης υπάρχει για το συγκεκριμένο αρχείο στόχο.\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "Από προεπιλογή, τα αχρησιμοποίητα δεδομένα αφαιρούνται από το αρχείο της προσωρινής μνήμης. Εάν δεν θέλετε να τα αφαιρέσετε και να τα κρατήσετε στο αρχείο, χρησιμοποιήστε την επιλογή C<accumulate>.\n",
@@ -8,6 +9,8 @@
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Το αποτέλεσμα της εντολής πηγαίνει στην τυπική έξοδο, οπότε αν χρειάζεται ανακατεύθυνση σε αρχείο, ή σκεφτείτε να χρησιμοποιήσετε το πρόσθετο L<App::Greple::update>.\n",
    "Create empty cache file and exit.\n" : "Δημιουργήστε ένα κενό αρχείο προσωρινής αποθήκευσης και τερματίστε.\n",
    "DeepL Python library and CLI command.\n" : "Βιβλιοθήκη DeepL Python και εντολή CLI.\n",
+   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Μονάδα Greple για μετάφραση και αντικατάσταση μόνο των απαραίτητων τμημάτων με το API του DeepL (στα Ιαπωνικά)\n",
+   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Μεταφράστε το παρακάτω κείμενο στα Ελληνικά, γραμμή προς γραμμή.\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Εάν η μορφή είναι C<xtxt> (μεταφρασμένο κείμενο) ή άγνωστη, εκτυπώνεται μόνο το μεταφρασμένο κείμενο.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Εάν θέλετε να μεταφράσετε ολόκληρο το κείμενο, χρησιμοποιήστε την επιλογή B<--match-all>. Αυτό είναι ένας συντομευμένος τρόπος για να καθορίσετε το πρότυπο C<(?s).+> που ταιριάζει με ολόκληρο το κείμενο.\n",
    "If you want to translate normal text blocks written in the L<pod> style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Εάν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου που έχουν γραφεί στο στυλ L<pod>, χρησιμοποιήστε την εντολή B<greple> με τα μοντούλα C<xlate::deepl> και C<perl> όπως εξής:\n",
@@ -18,6 +21,7 @@
    "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
    "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
    "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
+   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
    "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Φορτώστε το αρχείο F<xlate.el> που περιλαμβάνεται στο αποθετήριο για να χρησιμοποιήσετε την εντολή C<xlate> από τον επεξεργαστή Emacs. Η συνάρτηση C<xlate-region> μεταφράζει την δοθείσα περιοχή. Η προεπιλεγμένη γλώσσα είναι η C<EN-US> και μπορείτε να καθορίσετε τη γλώσσα καλώντας την με πρόθεμα.\n",
    "Maintain cache anyway as far as the target is normal file.\n" : "Διατηρήστε την προσωρινή μνήμη ούτως ή άλλως, όσο το προορισμένο αρχείο είναι κανονικό αρχείο.\n",
    "Maintain the cache file if it exists.\n" : "Διατηρήστε το αρχείο προσωρινής αποθήκευσης αν υπάρχει.\n",

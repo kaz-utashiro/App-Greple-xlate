@@ -196,6 +196,8 @@ Version 0.28
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL βιβλιοθήκη Python και εντολή CLI.
@@ -219,6 +221,20 @@ Version 0.28
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Χρησιμοποιήστε την εντολή **sdif** για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή **-V**.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Μονάδα Greple για τη μετάφραση και την αντικατάσταση μόνο των απαραίτητων τμημάτων με το DeepL API (στα ιαπωνικά)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Δημιουργία εγγράφων σε 15 γλώσσες με την ενότητα DeepL API (στα ιαπωνικά)
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Αυτόματη μετάφραση περιβάλλοντος Docker με DeepL API (στα ιαπωνικά)
 
 # AUTHOR
 

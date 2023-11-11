@@ -196,6 +196,8 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
+[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
     DeepL Pythoni raamatukogu ja CLI käsk.
@@ -219,6 +221,20 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Kasutage **sdif**, et näidata konfliktimärkide formaati kõrvuti valikuga **-V**.
+
+## ARTICLES
+
+- [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
+
+    Greple moodul tõlkida ja asendada ainult vajalikud osad DeepL API (jaapani keeles)
+
+- [https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6](https://qiita.com/kaz-utashiro/items/a5e19736416ca183ecf6)
+
+    Dokumentide genereerimine 15 keeles DeepL API mooduliga (jaapani keeles).
+
+- [https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd](https://qiita.com/kaz-utashiro/items/1b9e155d6ae0620ab4dd)
+
+    Automaatne tõlkekeskkond Docker koos DeepL API-ga (jaapani keeles)
 
 # AUTHOR
 
