@@ -20,7 +20,7 @@ the translated text.  Currently DeepL (`deepl.pm`) and ChatGPT
 (`gpt3.pm`) module are implemeted as a back-end engine.
 
 If you want to translate normal text blocks in a document written in
-the [pod](https://metacpan.org/pod/pod) style, use **greple** command with `xlate::deepl` and
+the Perl's pod style, use **greple** command with `xlate::deepl` and
 `perl` module like this:
 
     greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
@@ -104,7 +104,8 @@ text.
 
     - **conflict**, **cm**
 
-        Print original and translated text in [git(1)](http://man.he.net/man1/git) conflict marker format.
+        Original and translated text is printed in [git(1)](http://man.he.net/man1/git) conflict marker
+        format.
 
             <<<<<<< ORIGINAL
             original text
@@ -118,7 +119,8 @@ text.
 
     - **ifdef**
 
-        Print original and translated text in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` format.
+        Original and translated text are printed in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`
+        format.
 
             #ifdef ORIGINAL
             original text
@@ -133,7 +135,8 @@ text.
 
     - **space**
 
-        Print original and translated text separated by single blank line.
+        Original and translated text are printed separated by single blank
+        line.
 
     - **xtxt**
 

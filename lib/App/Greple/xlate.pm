@@ -113,7 +113,8 @@ Specify the output format for original and translated text.
 
 =item B<conflict>, B<cm>
 
-Print original and translated text in L<git(1)> conflict marker format.
+Original and converted text are printed in L<git(1)> conflict marker
+format.
 
     <<<<<<< ORIGINAL
     original text
@@ -127,7 +128,8 @@ You can recover the original file by next L<sed(1)> command.
 
 =item B<ifdef>
 
-Print original and translated text in L<cpp(1)> C<#ifdef> format.
+Original and converted text are printed in L<cpp(1)> C<#ifdef>
+format.
 
     #ifdef ORIGINAL
     original text
@@ -142,7 +144,8 @@ You can retrieve only Japanese text by the B<unifdef> command:
 
 =item B<space>
 
-Print original and translated text separated by single blank line.
+Original and converted text are printed separated by single blank
+line.
 
 =item B<xtxt>
 
