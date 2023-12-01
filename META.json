@@ -47,16 +47,16 @@
       },
       "runtime" : {
          "requires" : {
-            "App::Greple" : "9.02",
+            "App::Greple" : "9.0902",
             "App::Greple::msdoc" : "1.05",
             "App::optex::textconv" : "1.04",
-            "App::sdif" : "v4.24.0",
+            "App::sdif" : "4.29",
             "Clipboard" : "0",
             "File::Share" : "0",
             "Hash::Util" : "0",
             "JSON" : "0",
             "List::Util" : "1.56",
-            "Text::ANSI::Fold" : "2.20",
+            "Text::ANSI::Fold" : "2.2104",
             "perl" : "v5.14.0"
          }
       },
