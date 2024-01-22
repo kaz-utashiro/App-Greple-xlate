@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini ad
 
     - **conflict**, **cm**
 
-        Cetak teks asli dan terjemahan dalam format penanda konflik [git(1)](http://man.he.net/man1/git).
+        Teks asli dan terjemahan dicetak dalam format penanda konflik [git(1)](http://man.he.net/man1/git).
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini ad
 
     - **ifdef**
 
-        Cetak teks asli dan terjemahan dalam format [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
+        Teks asli dan terjemahan dicetak dalam format [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini ad
 
     - **space**
 
-        Cetak teks asli dan terjemahan yang dipisahkan oleh satu baris kosong.
+        Teks asli dan terjemahan dicetak terpisah oleh satu baris kosong.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

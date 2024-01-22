@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ B<--xlate-fold>オプションを使用すると、変換されたテキスト�
 
 =item B<conflict>, B<cm>
 
-元のテキストと翻訳されたテキストをL<git(1)>の競合マーカー形式で表示します。
+オリジナルと変換されたテキストは、L<git(1)>の競合マーカーフォーマットで印刷されます。
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ B<--xlate-fold>オプションを使用すると、変換されたテキスト�
 
 =item B<ifdef>
 
-元のテキストと翻訳されたテキストをL<cpp(1)>のC<#ifdef>形式で表示します。
+オリジナルと変換されたテキストは、L<cpp(1)>のC<#ifdef>フォーマットで印刷されます。
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ B<unifdef>コマンドで日本語のテキストのみを取得できます：
 
 =item B<space>
 
-元のテキストと翻訳されたテキストを1つの空白行で区切って表示します。
+オリジナルと変換されたテキストは、1つの空白行で区切られて印刷されます。
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

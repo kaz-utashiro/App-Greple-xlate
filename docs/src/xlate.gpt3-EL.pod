@@ -12,7 +12,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ B<Greple> Το μοντούλο B<xlate> εντοπίζει τα επιθυμη�
 
 =item B<conflict>, B<cm>
 
-Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο σε μορφή συγκρουόμενου δείκτη L<git(1)>.
+Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή δείκτη σύγκρουσης L<git(1)>.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ B<Greple> Το μοντούλο B<xlate> εντοπίζει τα επιθυμη�
 
 =item B<ifdef>
 
-Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο σε μορφή C<#ifdef> του L<cpp(1)>.
+Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή L<cpp(1)> C<#ifdef>.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ B<Greple> Το μοντούλο B<xlate> εντοπίζει τα επιθυμη�
 
 =item B<space>
 
-Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο χωρισμένα από μία κενή γραμμή.
+Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται χωρισμένοι από μια μόνο κενή γραμμή.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

@@ -10,7 +10,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 
     - **conflict**, **cm**
 
-        원본 텍스트와 번역 텍스트를 [git(1)](http://man.he.net/man1/git) 충돌 마커 형식으로 인쇄합니다.
+        원본 텍스트와 변환된 텍스트는 [git(1)](http://man.he.net/man1/git) 충돌 마커 형식으로 인쇄됩니다.
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 
     - **ifdef**
 
-        원본 텍스트와 번역 텍스트를 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 형식으로 인쇄합니다.
+        원본 텍스트와 변환된 텍스트는 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 형식으로 인쇄됩니다.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 
     - **space**
 
-        원본 텍스트와 번역 텍스트를 빈 줄로 구분하여 인쇄합니다.
+        원본 텍스트와 변환된 텍스트는 하나의 빈 줄로 구분하여 인쇄됩니다.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

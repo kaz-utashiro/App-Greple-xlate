@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Geben Sie das Ausgabeformat für den Originaltext und den übersetzten Text an.
 
 =item B<conflict>, B<cm>
 
-Drucken Sie den Originaltext und den übersetzten Text im Format L<git(1)> conflict marker.
+Original und konvertierter Text werden im Format L<git(1)> conflict marker gedruckt.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Sie können die Originaldatei mit dem nächsten Befehl L<sed(1)> wiederherstelle
 
 =item B<ifdef>
 
-Druckt den originalen und übersetzten Text im Format L<cpp(1)> C<#ifdef>.
+Original und konvertierter Text werden im L<cpp(1)> C<#ifdef> Format gedruckt.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ Mit dem Befehl B<unifdef> können Sie nur den japanischen Text wiederherstellen:
 
 =item B<space>
 
-Original und übersetzten Text durch eine einzelne Leerzeile getrennt ausgeben.
+Original und konvertierter Text werden durch eine einzelne Leerzeile getrennt gedruckt.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

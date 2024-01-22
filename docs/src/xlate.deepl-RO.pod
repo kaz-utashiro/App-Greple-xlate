@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Specificați formatul de ieșire pentru textul original și cel tradus.
 
 =item B<conflict>, B<cm>
 
-Tipăriți textul original și tradus în formatul de marcare a conflictului L<git(1)>.
+Textul original și cel convertit sunt tipărite în formatul de marker de conflict L<git(1)>.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Puteți recupera fișierul original prin următoarea comandă L<sed(1)>.
 
 =item B<ifdef>
 
-Tipăriți textul original și tradus în formatul L<cpp(1)> C<#ifdef>.
+Textul original și cel convertit sunt tipărite în formatul L<cpp(1)> C<#ifdef>.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ Puteți recupera doar textul japonez prin comanda B<unifdef>:
 
 =item B<space>
 
-Tipăriți textul original și tradus separate de o singură linie albă.
+Textul original și textul convertit sunt tipărite separate de o singură linie albă.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

@@ -12,7 +12,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Määrake algse ja tõlgitud teksti väljundi vorming.
 
 =item B<conflict>, B<cm>
 
-Prindi algne ja tõlgitud tekst L<git(1)> konfliktimärgendi vormingus.
+Originaal- ja tõlgitud tekst on trükitud L<git(1)> konfliktimärgendi formaadis.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Saate algse faili taastada järgmise L<sed(1)> käsu abil.
 
 =item B<ifdef>
 
-Prindi algne ja tõlgitud tekst L<cpp(1)> C<#ifdef> vormingus.
+Originaal- ja tõlgitud tekst on trükitud L<cpp(1)> C<#ifdef> formaadis.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ Saate ainult jaapani keelse teksti kätte B<unifdef> käsu abil:
 
 =item B<space>
 
-Prindi algne ja tõlgitud tekst eraldatuna ühe tühja reaga.
+Originaal- ja tõlgitud tekst on eraldatud ühe tühja reaga.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

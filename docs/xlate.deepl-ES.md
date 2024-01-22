@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo
 
     - **conflict**, **cm**
 
-        Imprima el texto original y traducido en formato de marcador de conflicto [git(1)](http://man.he.net/man1/git).
+        El texto original y el convertido se imprimen en formato de marcador de conflicto [git(1)](http://man.he.net/man1/git).
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo
 
     - **ifdef**
 
-        Imprime el texto original y traducido en formato [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
+        El texto original y el convertido se imprimen en formato [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo
 
     - **space**
 
-        Imprime el texto original y el traducido separados por una sola línea en blanco.
+        El texto original y el convertido se imprimen separados por una sola línea en blanco.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

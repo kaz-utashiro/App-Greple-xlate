@@ -12,7 +12,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ B<Greple> B<xlate> 模块可找到所需的文本块，并将其替换为翻译�
 
 =item B<conflict>, B<cm>
 
-以L<git(1)>冲突标记格式打印原始和翻译文本。
+原始文本和转换后的文本以 L<git(1)> 冲突标记格式打印。
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ B<Greple> B<xlate> 模块可找到所需的文本块，并将其替换为翻译�
 
 =item B<ifdef>
 
-以 L<cpp(1)> C<#ifdef> 格式打印原始和翻译文本。
+原始文本和转换后的文本以 L<cpp(1)> C<#ifdef> 格式打印。
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ B<Greple> B<xlate> 模块可找到所需的文本块，并将其替换为翻译�
 
 =item B<space>
 
-打印原始文本和翻译文本，用单个空行分开。
+原始文本和转换后的文本以单行空行分隔打印。
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

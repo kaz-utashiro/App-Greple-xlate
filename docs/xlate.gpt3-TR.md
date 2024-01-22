@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 
     - **conflict**, **cm**
 
-        Orijinal ve çevrilmiş metni [git(1)](http://man.he.net/man1/git) çakışma işaretçisi formatında yazdırın.
+        Orjinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) çakışma işaretçisi formatında yazdırılır.
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 
     - **ifdef**
 
-        Orijinal ve çevrilmiş metni [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` formatında yazdırın.
+        Orjinal ve çevrilmiş metin [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` formatında yazdırılır.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 
     - **space**
 
-        Orijinal ve çevrilmiş metni tek boş satırla ayrı ayrı yazdırın.
+        Orjinal ve çevrilmiş metin tek boş satır ile ayrılmış olarak yazdırılır.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Version 0.28
 
     - **conflict**, **cm**
 
-        원본 및 번역된 텍스트를 [git(1)](http://man.he.net/man1/git) 충돌 마커 형식으로 출력합니다.
+        원본과 변환된 텍스트는 [git(1)](http://man.he.net/man1/git) 충돌 표시자 형식으로 출력됩니다.
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Version 0.28
 
     - **ifdef**
 
-        원본 및 번역된 텍스트를 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 형식으로 출력합니다.
+        원본과 변환된 텍스트는 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 형식으로 출력됩니다.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Version 0.28
 
     - **space**
 
-        원본 및 번역된 텍스트를 빈 줄로 구분하여 출력합니다.
+        원본과 변환된 텍스트는 한 줄의 공백으로 구분되어 출력됩니다.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

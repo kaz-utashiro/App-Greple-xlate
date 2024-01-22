@@ -12,7 +12,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Version 0.28
 
 =item B<conflict>, B<cm>
 
-Вивести оригінальний і перекладений текст у форматі конфліктних маркерів L<git(1)>.
+Вихідний і перетворений текст виводиться у форматі L<git(1)> з маркерами конфліктів.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Version 0.28
 
 =item B<ifdef>
 
-Вивести оригінальний та перекладений текст у форматі L<cpp(1)> C<#ifdef>.
+Вихідний та перетворений текст виводиться у форматі L<cpp(1)> C<#ifdef>.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ Version 0.28
 
 =item B<space>
 
-Вивести текст оригіналу та перекладу, розділені одним порожнім рядком.
+Вихідний та перетворений текст виводиться через один порожній рядок.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

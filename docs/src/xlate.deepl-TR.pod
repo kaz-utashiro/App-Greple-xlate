@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
 =item B<conflict>, B<cm>
 
-Orijinal ve çevrilmiş metni L<git(1)> çakışma işaretleyici biçiminde yazdırın.
+Orijinal ve dönüştürülmüş metin L<git(1)> çakışma işaretleyici biçiminde yazdırılır.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Bir sonraki L<sed(1)> komutu ile orijinal dosyayı kurtarabilirsiniz.
 
 =item B<ifdef>
 
-Orijinal ve çevrilmiş metni L<cpp(1)> C<#ifdef> biçiminde yazdırın.
+Orijinal ve dönüştürülmüş metin L<cpp(1)> C<#ifdef> biçiminde yazdırılır.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ B<unifdef> komutu ile sadece Japonca metni alabilirsiniz:
 
 =item B<space>
 
-Orijinal ve çevrilmiş metni tek bir boş satırla ayırarak yazdırın.
+Orijinal ve dönüştürülmüş metin tek bir boş satırla ayrılarak yazdırılır.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

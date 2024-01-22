@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     - **conflict**, **cm**
 
-        元のテキストと翻訳されたテキストを[git(1)](http://man.he.net/man1/git)の競合マーカー形式で表示します。
+        オリジナルと変換されたテキストは、[git(1)](http://man.he.net/man1/git)の競合マーカーフォーマットで印刷されます。
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     - **ifdef**
 
-        元のテキストと翻訳されたテキストを[cpp(1)](http://man.he.net/man1/cpp)の`#ifdef`形式で表示します。
+        オリジナルと変換されたテキストは、[cpp(1)](http://man.he.net/man1/cpp)の`#ifdef`フォーマットで印刷されます。
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     - **space**
 
-        元のテキストと翻訳されたテキストを1つの空白行で区切って表示します。
+        オリジナルと変換されたテキストは、1つの空白行で区切られて印刷されます。
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

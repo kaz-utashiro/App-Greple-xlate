@@ -10,7 +10,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Version 0.28
 
     - **conflict**, **cm**
 
-        Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο σε μορφή συγκρουόμενου δείκτη [git(1)](http://man.he.net/man1/git).
+        Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή δείκτη σύγκρουσης [git(1)](http://man.he.net/man1/git).
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Version 0.28
 
     - **ifdef**
 
-        Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο σε μορφή `#ifdef` του [cpp(1)](http://man.he.net/man1/cpp).
+        Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Version 0.28
 
     - **space**
 
-        Εκτυπώστε το αρχικό και το μεταφρασμένο κείμενο χωρισμένα από μία κενή γραμμή.
+        Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται χωρισμένοι από μια μόνο κενή γραμμή.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

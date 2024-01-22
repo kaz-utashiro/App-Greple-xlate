@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Specificeer het uitvoerformaat voor de oorspronkelijke en vertaalde tekst.
 
 =item B<conflict>, B<cm>
 
-Druk de oorspronkelijke en vertaalde tekst af in het formaat van het L<git(1)> conflict marker.
+Originele en geconverteerde tekst worden afgedrukt in L<git(1)> conflict marker formaat.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ U kunt het oorspronkelijke bestand herstellen met het volgende L<sed(1)> command
 
 =item B<ifdef>
 
-Druk de oorspronkelijke en vertaalde tekst af in het L<cpp(1)> C<#ifdef> formaat.
+Originele en geconverteerde tekst worden afgedrukt in L<cpp(1)> C<#ifdef> formaat.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ U kunt alleen de Japanse tekst ophalen met het B<unifdef> commando:
 
 =item B<space>
 
-Druk de oorspronkelijke en vertaalde tekst af gescheiden door een enkele lege regel.
+Originele en geconverteerde tekst worden gescheiden door een enkele lege regel.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

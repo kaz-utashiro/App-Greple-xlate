@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otse
 
     - **conflict**, **cm**
 
-        Prindi algne ja tõlgitud tekst [git(1)](http://man.he.net/man1/git) konfliktimärgendi vormingus.
+        Originaal- ja tõlgitud tekst on trükitud [git(1)](http://man.he.net/man1/git) konfliktimärgendi formaadis.
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otse
 
     - **ifdef**
 
-        Prindi algne ja tõlgitud tekst [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` vormingus.
+        Originaal- ja tõlgitud tekst on trükitud [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` formaadis.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otse
 
     - **space**
 
-        Prindi algne ja tõlgitud tekst eraldatuna ühe tühja reaga.
+        Originaal- ja tõlgitud tekst on eraldatud ühe tühja reaga.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

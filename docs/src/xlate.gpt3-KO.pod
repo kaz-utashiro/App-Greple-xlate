@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ B<--xlate-fold> 옵션으로 변환된 텍스트를 지정된 너비로 접힙�
 
 =item B<conflict>, B<cm>
 
-원본 및 번역된 텍스트를 L<git(1)> 충돌 마커 형식으로 출력합니다.
+원본과 변환된 텍스트는 L<git(1)> 충돌 표시자 형식으로 출력됩니다.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ B<--xlate-fold> 옵션으로 변환된 텍스트를 지정된 너비로 접힙�
 
 =item B<ifdef>
 
-원본 및 번역된 텍스트를 L<cpp(1)> C<#ifdef> 형식으로 출력합니다.
+원본과 변환된 텍스트는 L<cpp(1)> C<#ifdef> 형식으로 출력됩니다.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ B<unifdef> 명령으로 일본어 텍스트만 검색할 수 있습니다:
 
 =item B<space>
 
-원본 및 번역된 텍스트를 빈 줄로 구분하여 출력합니다.
+원본과 변환된 텍스트는 한 줄의 공백으로 구분되어 출력됩니다.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

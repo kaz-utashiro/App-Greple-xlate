@@ -11,7 +11,7 @@ App::Greple::xlate - translation support module for greple
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -104,7 +104,7 @@ text.
 
     - **conflict**, **cm**
 
-        Original and translated text is printed in [git(1)](http://man.he.net/man1/git) conflict marker
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) conflict marker
         format.
 
             <<<<<<< ORIGINAL
@@ -119,7 +119,7 @@ text.
 
     - **ifdef**
 
-        Original and translated text are printed in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`
+        Original and converted text are printed in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`
         format.
 
             #ifdef ORIGINAL
@@ -135,7 +135,7 @@ text.
 
     - **space**
 
-        Original and translated text are printed separated by single blank
+        Original and converted text are printed separated by single blank
         line.
 
     - **xtxt**
@@ -294,7 +294,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

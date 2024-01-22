@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Version 0.28
 
     - **conflict**, **cm**
 
-        以[git(1)](http://man.he.net/man1/git)冲突标记格式打印原始和翻译文本。
+        原始文本和转换后的文本以 [git(1)](http://man.he.net/man1/git) 冲突标记格式打印。
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Version 0.28
 
     - **ifdef**
 
-        以 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 格式打印原始和翻译文本。
+        原始文本和转换后的文本以 [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` 格式打印。
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Version 0.28
 
     - **space**
 
-        打印原始文本和翻译文本，用单个空行分开。
+        原始文本和转换后的文本以单行空行分隔打印。
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

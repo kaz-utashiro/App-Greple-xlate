@@ -12,7 +12,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 VERSION
 
-Version 0.28
+Version 0.29
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ Version 0.28
 
 =item B<conflict>, B<cm>
 
-Εκτυπώστε το πρωτότυπο και το μεταφρασμένο κείμενο σε μορφή δείκτη σύγκρουσης L<git(1)>.
+Το αρχικό και το μετατρεπόμενο κείμενο εκτυπώνονται σε μορφή δείκτη σύγκρουσης L<git(1)>.
 
     <<<<<<< ORIGINAL
     original text
@@ -96,7 +96,7 @@ Version 0.28
 
 =item B<ifdef>
 
-Εκτύπωση πρωτότυπου και μεταφρασμένου κειμένου σε μορφή L<cpp(1)> C<#ifdef>.
+Το αρχικό και το μετατρεπόμενο κείμενο εκτυπώνονται σε μορφή L<cpp(1)> C<#ifdef>.
 
     #ifdef ORIGINAL
     original text
@@ -111,7 +111,7 @@ Version 0.28
 
 =item B<space>
 
-Εκτύπωση του πρωτότυπου και του μεταφρασμένου κειμένου χωρισμένα με μία μόνο κενή γραμμή.
+Το αρχικό και το μετασχηματισμένο κείμενο εκτυπώνονται χωριστά με μία κενή γραμμή.
 
 =item B<xtxt>
 
@@ -273,7 +273,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

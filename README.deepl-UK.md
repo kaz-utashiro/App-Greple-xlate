@@ -10,7 +10,7 @@ App::Greple::xlate - модуль підтримки перекладу для g
 
 # VERSION
 
-Version 0.28
+Version 0.29
 
 # DESCRIPTION
 
@@ -76,7 +76,7 @@ Version 0.28
 
     - **conflict**, **cm**
 
-        Вивести оригінальний і перекладений текст у форматі конфліктних маркерів [git(1)](http://man.he.net/man1/git).
+        Вихідний і перетворений текст виводиться у форматі [git(1)](http://man.he.net/man1/git) з маркерами конфліктів.
 
             <<<<<<< ORIGINAL
             original text
@@ -90,7 +90,7 @@ Version 0.28
 
     - **ifdef**
 
-        Вивести оригінальний та перекладений текст у форматі [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
+        Вихідний та перетворений текст виводиться у форматі [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`.
 
             #ifdef ORIGINAL
             original text
@@ -105,7 +105,7 @@ Version 0.28
 
     - **space**
 
-        Вивести текст оригіналу та перекладу, розділені одним порожнім рядком.
+        Вихідний та перетворений текст виводиться через один порожній рядок.
 
     - **xtxt**
 
@@ -242,7 +242,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023 Kazumasa Utashiro.
+Copyright © 2023-2024 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
