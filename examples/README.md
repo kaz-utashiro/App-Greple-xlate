@@ -19,17 +19,31 @@
 
 ## 生成ファイル
 
+### 単一 ENGINE の場合
+
 特に指定がない場合には、翻訳対象言語毎に `xtxt`, `cm`, `ifdef` の3種類
 のファイルが作られます。
 
 たとえば、`Document.txt` というファイルを日本語に翻訳する場合、
 
-    Document.txt.deepl-JA.xtxt
-    Document.txt.deepl-JA.cm
-    Document.txt.deepl-JA.ifdef
+    Document.txt.JA.xtxt
+    Document.txt.JA.cm
+    Document.txt.JA.ifdef
 
 という3つのファイルが生成されます。`xtxt` ファイルには、翻訳文章のみ、
 `cm` と `ifdef` には原文と訳文の両方が含まれます。
+
+### 複数 ENGINE の場合
+
+ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次のようにエ
+ンジン名を含むファイルを生成します。
+
+    Document.txt.deepl-JA.xtxt
+    Document.txt.deepl-JA.cm
+    Document.txt.deepl-JA.ifdef
+    Document.txt.gpt3-JA.xtxt
+    Document.txt.gpt3-JA.cm
+    Document.txt.gpt3-JA.ifdef
 
 ## 行の折り返し
 
@@ -45,7 +59,8 @@
 
 ### .ENGINE
 
-翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定可能。
+翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定できます。
+デフォルトは `deepl` です。
 
 ### .LANG
 
@@ -112,6 +127,8 @@ API を利用する場合は、最大文字数は 128K に設定されます。�
 は、単に `xlate` コマンドを呼び出すだけのものになっています。`xlate`
 が使用する Makefile は `../share/XLATE.mk` にあります。
 
+ヘルプを見るためには `xlate -h` を実行してください。
+
 ### `xlate -M`
 
 make を実行します。
@@ -133,6 +150,13 @@ Docker 環境を構築する際に、現在の git リポジトリのトップ�
 
 現在の git リポジトリをマウントして、Docker 環境で make を実行します。
 
+どのようなコマンドを実行するか確認した場合には `xlate -nGDM` のように
+`-n` オプションを指定することができます。
+
 #### `xlate -GC`
 
 Docker 環境でシェルを立ち上げます。
+
+Git やその他のツールが一式インストールしてあるので、そのまま作業するこ
+とができます。作業ディレクトリをマウントするので、そこで行った修正は元
+のファイルに反映されることに注意してください。

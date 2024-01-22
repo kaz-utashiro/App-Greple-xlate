@@ -14,15 +14,28 @@ Simply place the document file to be translated and execute the make command to 
 
 ## Generated files
 
+### For a single ENGINE
+
 If not specified, three types of files, `xtxt`, `cm`, and `ifdef`, will be generated for each target language.
 
 For example, if you want to translate the file `Document.txt` into Japanese, three files named
 
+    Document.txt.JA.xtxt
+    Document.txt.JA.cm
+    Document.txt.JA.ifdef
+
+Three files will be generated: `cm`, `ifdef`, and `cm`. The `xtxt` file contains only the translated text, while the `cm` and `ifdef` files contain both the original and translated text.
+
+### For multiple ENGINE
+
+If two ENGINEs, `deepl` and `gpt3`, are specified, a file containing the engine name is generated as follows.
+
     Document.txt.deepl-JA.xtxt
     Document.txt.deepl-JA.cm
     Document.txt.deepl-JA.ifdef
-
-Three files will be generated: `cm`, `ifdef`, and `cm`. The `xtxt` file contains only the translated text, while the `cm` and `ifdef` files contain both the original and translated text.
+    Document.txt.gpt3-JA.xtxt
+    Document.txt.gpt3-JA.cm
+    Document.txt.gpt3-JA.ifdef
 
 ## Wrap lines
 
@@ -34,7 +47,7 @@ If the target file has a file with a specific extension, the translation process
 
 ### .ENGINE
 
-Specifies the translation engine. The default `deepl` and `gpt3` can be specified.
+Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.
 
 ### .LANG
 
@@ -84,6 +97,8 @@ would allow the API to run on Docker with a character limit of 100,000 character
 
 Originally, these files were created to be handled by a Makefile, but now the settings used there are more generic and are automatically handled by a script called `xlate`. Thus, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is `. /share/XLATE.mk`.
 
+To get help, run `xlate -h`.
+
 ### `xlate -M`.
 
 Run make.
@@ -104,6 +119,10 @@ Mount the top directory of the current git repository in the Docker environment.
 
 Mount the current git repository and run make in the Docker environment.
 
+If you are sure what command you want to run, you can specify the `-n` option, like `xlate -nGDM`.
+
 #### `xlate -GC`
 
 Launch a shell in the Docker environment.
+
+Git and a set of other tools are installed, so you can work straight through. Note that it mounts your working directory, so any modifications you make there will be reflected in the original files.

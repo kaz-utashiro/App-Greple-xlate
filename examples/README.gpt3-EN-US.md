@@ -14,15 +14,28 @@ Simply place the document file you want to translate and execute the make comman
 
 ## Generated Files
 
+### For a single ENGINE
+
 If not specified otherwise, three types of files will be created for each target language: `xtxt`, `cm`, and `ifdef`.
 
 For example, if you want to translate a file named `Document.txt` into Japanese, the following three files will be generated:
 
+    Document.txt.EN.xtxt
+    Document.txt.EN.cm
+    Document.txt.EN.ifdef
+
+The `xtxt` file contains only the translated text, while both the original text and the translated text are included in the `cm` and `ifdef` files.
+
+### Multiple ENGINES
+
+If two ENGINEs, `deepl` and `gpt3`, are specified, the following files will be generated with the engine name included:
+
     Document.txt.deepl-JA.xtxt
     Document.txt.deepl-JA.cm
     Document.txt.deepl-JA.ifdef
-
-The `xtxt` file contains only the translated text, while both the original text and the translated text are included in the `cm` and `ifdef` files.
+    Document.txt.gpt3-EN.xtxt
+    Document.txt.gpt3-EN.cm
+    Document.txt.gpt3-EN.ifdef
 
 ## Line Wrapping
 
@@ -34,7 +47,7 @@ If there is a file with a specific extension accompanying the target file, you c
 
 ### .ENGINE
 
-Translation engine selection. Default options are `deepl` and `gpt3`.
+Specify the translation engine. The default options are `deepl` and `gpt3`. The default is `deepl`.
 
 ### .LANG
 
@@ -84,6 +97,8 @@ make XLATE_OPT=-Dam100000
 
 Initially, these files were designed to be processed by a Makefile, but now the settings used there have been made more generic and automated using a script called `xlate`. Therefore, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is located in `../share/XLATE.mk`.
 
+To view the help, please execute `xlate -h`.
+
 ### `xlate -M`
 
 Execute the command "make".
@@ -104,6 +119,10 @@ When setting up the Docker environment, mount the current top directory of the g
 
 Mount the current git repository and execute "make" in a Docker environment.
 
+If you want to confirm what command to execute, you can specify the `-n` option like `xlate -nGDM`.
+
 #### `xlate -GC`
 
 Launch a shell in the Docker environment.
+
+Git and other tools are already installed, so you can proceed with the work as is. Please note that modifications made in the working directory will be reflected in the original files as it is mounted there.
