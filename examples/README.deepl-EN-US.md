@@ -111,18 +111,24 @@ Run the xlate command in the Docker environment.
 
 Run the command in the Docker environment.
 
+If you specify `-C` followed by a command, it will execute that command. If nothing is specified, a shell will be launched.
+
+By default, the current directory is mounted in the `/work` directory; if you want to use the git environment, use the following `-G` option.
+
+If you want to mount read-only, use the `-R` option.
+
 #### `xlate -G`
 
 Mount the top directory of the current git repository in the Docker environment.
 
-#### `xlate -GDM`
+#### `xlate -GM`
 
 Mount the current git repository and run make in the Docker environment.
 
-If you are sure what command you want to run, you can specify the `-n` option, like `xlate -nGDM`.
+You can specify the `-n` option, like `xlate -GMn` if you want to see what command to run.
 
 #### `xlate -GC`
 
-Launch a shell in the Docker environment.
+Mount the Git repository and launch a shell in the Docker environment.
 
 Git and a set of other tools are installed, so you can work straight through. Note that it mounts your working directory, so any modifications you make there will be reflected in the original files.
