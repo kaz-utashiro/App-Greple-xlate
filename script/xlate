@@ -271,7 +271,7 @@ case $1 in
 	area=(--re '^.+\n')
 	;;
     *)
-	area=(--re '^.+\n')
+	area=(--re '^(.+\n)+')
 	;;
 esac
 
