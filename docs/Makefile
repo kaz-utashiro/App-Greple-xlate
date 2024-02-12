@@ -1,7 +1,9 @@
 LANGS    := DE EL ES ET FR ID JA KO NL RO RU TR UK ZH
-RM_LANGS := DE EL ES ET FR ID JA KO NL RO RU TR UK ZH
+RM_LANGS := DE FR JA KO RU UK ZH
 IGNORE   := VERSION AUTHOR LICENSE
 ENGINES  := deepl gpt3
+XLANGS   := JA
+XENGINES := gpt4
 
 MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
 MOD_PATH := ../lib/$(subst -,/,$(MOD_NAME)).pm
@@ -17,6 +19,13 @@ SRC      := $(POD:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
 PODS     := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
 MDS      := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(PM:.pm=.$(engin)-$(lang).md)))
 READMES  := $(foreach engin,$(ENGINES),$(RM_LANGS:%=../README.$(engin)-%.md))
+###########
+# Translate only JA by gpt-4
+#----------
+PODS     += $(foreach engin,$(XENGINES),$(foreach lang,$(XRM_LANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
+MDS      += $(foreach engin,$(XENGINES),$(foreach lang,$(XRM_LANGS),$(PM:.pm=.$(engin)-$(lang).md)))
+READMES  += $(foreach engin,$(XENGINES),$(XLANGS:%=../README.$(engin)-%.md))
+###########
 ALL      := $(PODS) $(MDS) README.md $(READMES)
 
 all: $(ALL)
@@ -61,6 +70,7 @@ define LANG_POD
   endif
 endef
 
+ENGINES+=$(XENGINES)
 $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(eval $(call LANG_POD,$(lang),$(engin)))))
 
 %.md: $(SRCPATH)%.pod
