@@ -1,4 +1,4 @@
-name: Build docker image for texolicom/xlate
+name: Build docker image for tecolicom/xlate
 on:
   push:
     branches: main
