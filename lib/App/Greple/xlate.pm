@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.29";
+our $VERSION = "0.30";
 
 =encoding utf-8
 
@@ -16,7 +16,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.29
+Version 0.30
 
 =head1 DESCRIPTION
 
