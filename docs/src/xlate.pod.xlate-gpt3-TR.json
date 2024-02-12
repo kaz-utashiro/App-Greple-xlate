@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Orjinal ve çevrilmiş metin L<cpp(1)> C<#ifdef> formatında yazdırılır.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Orjinal ve çevrilmiş metin L<git(1)> çakışma işaretçisi formatında yazdırılır.\n",
    "Original and converted text are printed separated by single blank line.\n" : "Orjinal ve çevrilmiş metin tek boş satır ile ayrılmış olarak yazdırılır.\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "Ayrıntılar için L<SEE ALSO/ARTICLES> bölümündeki Japon makalesini okuyun.\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Ayrıntılar için L</DAHA FAZLASI> bölümündeki Japonca makaleyi okuyun.\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "C<xlate -GC> gibi çalıştırırsanız, mevcut çalışma dizinine bağlı olan bir kabuk başlatılır.\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "Hedef metin deseni hakkında ayrıntılar için B<greple> kılavuzuna bakın. Eşleşme alanını sınırlamak için B<--inside>, B<--outside>, B<--include>, B<--exclude> seçeneklerini kullanın.\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "STDERR çıktısında gerçek zamanlı çeviri sonucunu görün.\n",

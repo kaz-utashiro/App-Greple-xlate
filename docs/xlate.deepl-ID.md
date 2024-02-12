@@ -168,7 +168,7 @@ Anda juga dapat menggabungkan opsi Docker dan make sehingga Anda dapat menjalank
 
 Menjalankan seperti `xlate -GC` akan meluncurkan sebuah shell dengan repositori git yang sedang berjalan.
 
-Baca artikel bahasa Jepang di bagian ["ARTIKULAS" in LIHAT JUGA](https://metacpan.org/pod/LIHAT%20JUGA#ARTIKULAS) untuk detailnya.
+Baca artikel bahasa Jepang di bagian ["LIHAT JUGA"](#lihat-juga) untuk detailnya.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

@@ -168,7 +168,7 @@ Version 0.30
 
 像 `xlate -GC` 这样运行，会启动一个挂载了当前工作 git 仓库的 shell。
 
-详情请阅读 ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) 部分的日文文章。
+详情请阅读 ["SEE ALSO"](#see-also) 部分的日文文章。
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

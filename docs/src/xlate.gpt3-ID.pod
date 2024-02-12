@@ -187,7 +187,7 @@ Anda juga dapat menggabungkan opsi Docker dan make sehingga Anda dapat menjalank
 
 Menjalankan seperti C<xlate -GC> akan meluncurkan shell dengan repositori git kerja saat ini dipasang.
 
-Baca artikel Jepang di bagian L<SEE ALSO/ARTICLES> untuk detailnya.
+Baca artikel Jepang di bagian L</LIHAT JUGA> untuk detailnya.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

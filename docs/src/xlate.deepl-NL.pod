@@ -187,7 +187,7 @@ Je kunt ook de Docker en make opties combineren zodat je make in een Docker omge
 
 Door te draaien als C<xlate -GC> wordt een shell gestart met de huidige werkende git repository aangekoppeld.
 
-Lees het Japanse artikel in de sectie L<SEE ALSO/ARTICLES> voor meer informatie.
+Lees het Japanse artikel in de L</SEE ALSO> sectie voor meer informatie.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

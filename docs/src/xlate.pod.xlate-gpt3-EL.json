@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή L<cpp(1)> C<#ifdef>.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται σε μορφή δείκτη σύγκρουσης L<git(1)>.\n",
    "Original and converted text are printed separated by single blank line.\n" : "Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται χωρισμένοι από μια μόνο κενή γραμμή.\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "Διαβάστε το άρθρο στα Ιαπωνικά στην ενότητα L<SEE ALSO/ARTICLES> για λεπτομέρειες.\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Διαβάστε το ιαπωνικό άρθρο στην ενότητα L</ΔΕΙΤΕ ΕΠΙΣΗΣ> για λεπτομέρειες.\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "Η εκτέλεση όπως η C<xlate -GC> θα εκκινήσει ένα κέλυφος με το τρέχον αποθετήριο git που έχει προσαρτηθεί.\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "Δείτε το εγχειρίδιο B<greple> για λεπτομέρειες σχετικά με το πρότυπο κειμένου προορισμού. Χρησιμοποιήστε τις επιλογές B<--inside>, B<--outside>, B<--include>, B<--exclude> για να περιορίσετε την περιοχή της αντιστοίχισης.\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "Δείτε το αποτέλεσμα της μετάφρασης σε πραγματικό χρόνο στην έξοδο STDERR.\n",

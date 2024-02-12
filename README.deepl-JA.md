@@ -168,7 +168,7 @@ Dockerオプションとmakeオプションを組み合わせて、Docker環境�
 
 `xlate -GC`のように実行すると、現在作業中のgitリポジトリがマウントされたシェルが起動します。
 
-詳しくは["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES)セクションの日本語記事を読んでほしい。
+詳しくは["SEE ALSO"](#see-also)セクションの日本語記事をお読みください。
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

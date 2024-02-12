@@ -187,7 +187,7 @@ Puteți combina și opțiunile Docker și make astfel încât să puteți rula m
 
 Rularea ca C<xlate -GC> va lansa un shell cu depozitul git de lucru curent montat.
 
-Citiți articolul în limba japoneză din secțiunea L<SEE ALSO/ARTICLES> pentru detalii.
+Citiți articolul în limba japoneză din secțiunea "VEZI ȘI" pentru detalii.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

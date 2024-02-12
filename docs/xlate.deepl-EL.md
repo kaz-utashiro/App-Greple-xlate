@@ -168,7 +168,7 @@ Version 0.30
 
 Εκτελώντας το όπως το `xlate -GC` θα ξεκινήσει ένα κέλυφος με το τρέχον αποθετήριο git που λειτουργεί συνδεδεμένο.
 
-Διαβάστε το ιαπωνικό άρθρο στην ενότητα ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) για λεπτομέρειες.
+Διαβάστε το ιαπωνικό άρθρο στην ενότητα ["SEE ALSO"](#see-also) για λεπτομέρειες.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

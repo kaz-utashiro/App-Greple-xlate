@@ -168,7 +168,7 @@ Dockerとメイクオプションを組み合わせることもでき、Docker�
 
 `xlate -GC`のように実行すると、現在の作業ディレクトリがマウントされたシェルが起動します。
 
-詳細については、["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES)セクションの日本語の記事を参照してください。
+詳細については、["関連記事"](#関連記事)セクションの日本語の記事を読んでください。
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

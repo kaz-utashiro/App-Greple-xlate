@@ -168,7 +168,7 @@ Version 0.30
 
 Выполнение команды `xlate -GC` запустит оболочку с подключенным текущим рабочим git-репозиторием.
 
-Подробнее читайте японскую статью в разделе ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES).
+Подробности читайте в японской статье в разделе ["SEE ALSO"](#see-also).
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

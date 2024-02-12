@@ -187,7 +187,7 @@ C<xlate>命令与Docker环境配合使用，因此即使您手头没有安装任
 
 像C<xlate -GC>这样运行将启动一个带有当前工作git存储库挂载的shell。
 
-详细信息请参阅L<SEE ALSO/ARTICLES>部分中的日文文章。
+请阅读L</SEE ALSO>部分的日文文章以获取详细信息。
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

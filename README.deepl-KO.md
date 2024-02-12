@@ -168,7 +168,7 @@ Docker 환경에서도 make를 실행할 수 있도록 Docker와 make 옵션을 
 
 `xlate -GC`처럼 실행하면 현재 작업 중인 git 리포지토리가 마운트된 셸이 실행됩니다.
 
-자세한 내용은 ["다른 문서 보기"](#다른-문서-보기) 섹션의 일본어 문서를 참조하세요.
+자세한 내용은 ["또는 참조"](#또는-참조) 섹션의 일본어 기사를 참조하세요.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

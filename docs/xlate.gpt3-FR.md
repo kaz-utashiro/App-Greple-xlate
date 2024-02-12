@@ -168,7 +168,7 @@ Vous pouvez également combiner les options Docker et make afin de pouvoir exéc
 
 En lançant la commande `xlate -GC`, vous ouvrirez un shell avec le dépôt git de travail actuel monté.
 
-Consultez l'article en japonais dans la section ["ARTICLES" in VOIR AUSSI](https://metacpan.org/pod/VOIR%20AUSSI#ARTICLES) pour plus de détails.
+Lisez l'article japonais dans la section ["VOIR AUSSI"](#voir-aussi) pour plus de détails.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

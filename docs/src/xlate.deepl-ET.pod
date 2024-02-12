@@ -187,7 +187,7 @@ Saate ka Dockeri ja make'i valikuid kombineerida, nii et saate make'i käivitada
 
 Käivitamine nagu C<xlate -GC> käivitab shell'i, kuhu on paigaldatud praegune töötav git-repositoorium.
 
-Lugege Jaapani artiklit L<SEE ALSO/ARTIKLID> jaotises üksikasjalikult.
+Lugege üksikasjalikult Jaapani artiklit L</SEE ALSO> osas.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

@@ -187,7 +187,7 @@ Vous pouvez également combiner les options Docker et make afin de pouvoir exéc
 
 L'exécution de C<xlate -GC> lancera un shell avec le dépôt git actuel monté.
 
-Lisez l'article japonais dans la section L<SEE ALSO/ARTICLES> pour plus de détails.
+Lire l'article japonais dans la section L</SEE ALSO> pour plus de détails.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

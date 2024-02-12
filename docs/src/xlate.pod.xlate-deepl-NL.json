@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Originele en geconverteerde tekst worden afgedrukt in L<cpp(1)> C<#ifdef> formaat.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Originele en geconverteerde tekst worden afgedrukt in L<git(1)> conflictmarkeerder formaat.\n",
    "Original and converted text are printed separated by single blank line.\n" : "Originele en geconverteerde tekst worden gescheiden door een enkele lege regel afgedrukt.\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "Lees het Japanse artikel in de sectie L<SEE ALSO/ARTICLES> voor meer informatie.\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Lees het Japanse artikel in de L</SEE ALSO> sectie voor meer informatie.\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "Door te draaien als C<xlate -GC> wordt een shell gestart met de huidige werkende git repository aangekoppeld.\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "Zie de B<greple> handleiding voor de details over het doeltekstpatroon. Gebruik B<--inside>, B<--outside>, B<--include>, B<--exclude> opties om het overeenkomende gebied te beperken.\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "Zie het resultaat van de vertaling in real time in de STDERR uitvoer.\n",

@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Teks asli dan terjemahan dicetak dalam format L<cpp(1)> C<#ifdef>.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Teks asli dan terjemahan dicetak dalam format penanda konflik L<git(1)>.\n",
    "Original and converted text are printed separated by single blank line.\n" : "Teks asli dan terjemahan dicetak terpisah oleh satu baris kosong.\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "Baca artikel Jepang di bagian L<SEE ALSO/ARTICLES> untuk detailnya.\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Baca artikel Jepang di bagian L</LIHAT JUGA> untuk detailnya.\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "Menjalankan seperti C<xlate -GC> akan meluncurkan shell dengan repositori git kerja saat ini dipasang.\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "Lihat panduan B<greple> untuk detail tentang pola teks target. Gunakan opsi B<--inside>, B<--outside>, B<--include>, B<--exclude> untuk membatasi area pencocokan.\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "Lihat hasil terjemahan secara real time dalam output STDERR.\n",

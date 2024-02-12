@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "원본과 변환된 텍스트는 L<cpp(1)> C<#ifdef> 형식으로 출력됩니다.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "원본과 변환된 텍스트는 L<git(1)> 충돌 표시자 형식으로 출력됩니다.\n",
    "Original and converted text are printed separated by single blank line.\n" : "원본과 변환된 텍스트는 한 줄의 공백으로 구분되어 출력됩니다.\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "자세한 내용은 L<SEE ALSO/ARTICLES> 섹션의 일본어 문서를 참조하십시오.\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "자세한 내용은 L</SEE ALSO> 섹션에 있는 일본어 기사를 읽어보세요.\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "C<xlate -GC>와 같이 실행하면 현재 작업 중인 git 저장소가 마운트된 셸이 시작됩니다.\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "대상 텍스트 패턴에 대한 자세한 내용은 B<greple> 매뉴얼을 참조하십시오. 일치하는 영역을 제한하려면 B<--inside>, B<--outside>, B<--include>, B<--exclude> 옵션을 사용하십시오.\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "STDERR 출력에서 실시간으로 번역 결과를 확인합니다.\n",

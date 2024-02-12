@@ -168,7 +168,7 @@ Docker와 make 옵션을 결합하여 Docker 환경에서 make를 실행할 수�
 
 `xlate -GC`와 같이 실행하면 현재 작업 중인 git 저장소가 마운트된 셸이 시작됩니다.
 
-자세한 내용은 ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) 섹션의 일본어 문서를 참조하십시오.
+자세한 내용은 ["SEE ALSO"](#see-also) 섹션에 있는 일본어 기사를 읽어보세요.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

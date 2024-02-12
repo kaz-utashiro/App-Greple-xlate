@@ -168,7 +168,7 @@ Docker ve make seçeneklerini birleştirerek make'i Docker ortamında çalışt�
 
 `xlate -GC` gibi çalıştırırsanız, mevcut çalışma dizinine bağlı olan bir kabuk başlatılır.
 
-Ayrıntılar için ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) bölümündeki Japon makalesini okuyun.
+Ayrıntılar için ["DAHA FAZLASI"](#daha-fazlasi) bölümündeki Japonca makaleyi okuyun.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

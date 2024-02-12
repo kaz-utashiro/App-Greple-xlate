@@ -168,7 +168,7 @@ También puedes combinar las opciones Docker y make para poder ejecutar make en 
 
 Ejecutando como `xlate -GC` lanzará un shell con el repositorio git de trabajo actual montado.
 
-Lee el artículo japonés en la sección ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) para más detalles.
+Lea el artículo japonés en la sección ["SEE TAMBIÉN"](#see-también) para más detalles.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

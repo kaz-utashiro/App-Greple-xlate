@@ -168,7 +168,7 @@ Saate ka Dockeri ja make'i valikuid kombineerida, nii et saate make'i käivitada
 
 Käivitamine nagu `xlate -GC` käivitab shell'i, kuhu on paigaldatud praegune töötav git-repositoorium.
 
-Lugege Jaapani artiklit ["ARTIKLID" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTIKLID) jaotises üksikasjalikult.
+Lugege üksikasjalikult Jaapani artiklit ["SEE ALSO"](#see-also) osas.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

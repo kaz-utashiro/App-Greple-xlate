@@ -168,7 +168,7 @@ Sie können auch die Optionen Docker und make kombinieren, so dass Sie make in e
 
 Ein Aufruf wie `xlate -GC` startet eine Shell mit dem aktuellen Git-Repository.
 
-Lesen Sie den japanischen Artikel im Abschnitt ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) für weitere Details.
+Lesen Sie den japanischen Artikel im Abschnitt ["SEE ALSO"](#see-also) für weitere Einzelheiten.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

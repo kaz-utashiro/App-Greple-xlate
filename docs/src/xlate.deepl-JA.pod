@@ -187,7 +187,7 @@ Dockerオプションとmakeオプションを組み合わせて、Docker環境�
 
 C<xlate -GC>のように実行すると、現在作業中のgitリポジトリがマウントされたシェルが起動します。
 
-詳しくはL<SEE ALSO/ARTICLES>セクションの日本語記事を読んでほしい。
+詳しくはL</SEE ALSO>セクションの日本語記事をお読みください。
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

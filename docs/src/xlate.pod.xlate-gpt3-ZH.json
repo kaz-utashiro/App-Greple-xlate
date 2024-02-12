@@ -35,7 +35,7 @@
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "原始文本和转换后的文本以L<cpp(1)> C<#ifdef>格式打印。\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "原始文本和转换后的文本以L<git(1)>冲突标记格式打印。\n",
    "Original and converted text are printed separated by single blank line.\n" : "原始文本和转换后的文本之间以单个空行分隔。\n",
-   "Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.\n" : "详细信息请参阅L<SEE ALSO/ARTICLES>部分中的日文文章。\n",
+   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "请阅读L</SEE ALSO>部分的日文文章以获取详细信息。\n",
    "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "像C<xlate -GC>这样运行将启动一个带有当前工作git存储库挂载的shell。\n",
    "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "DeepL Python 库和 CLI 命令。\n",
    "See the tranlsation result in real time in the STDERR output.\n" : "将以下文本翻译成中文。\n",

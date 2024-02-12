@@ -168,7 +168,7 @@ Version 0.30
 
 像`xlate -GC`这样运行将启动一个带有当前工作git存储库挂载的shell。
 
-详细信息请参阅["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES)部分中的日文文章。
+请阅读["SEE ALSO"](#see-also)部分的日文文章以获取详细信息。
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

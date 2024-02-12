@@ -168,7 +168,7 @@ Saate ka Dockeri ja make valikuid kombineerida, et saaksite make käivitada Dock
 
 Käivitades näiteks `xlate -GC`, käivitatakse käskluskonsool, kus on praegune töötav git-i hoidla ühendatud.
 
-Lisateabe saamiseks lugege jaapani keelseid artikleid ["ARTIKLID" in VAATA KA](https://metacpan.org/pod/VAATA%20KA#ARTIKLID) jaotisest.
+Lugege jaapani keelse artikli üksikasjade kohta ["VAATA KA"](#vaata-ka) jaotises.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

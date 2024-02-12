@@ -238,7 +238,7 @@ make in a Docker environment.
 Running like C<xlate -GC> will launch a shell with the current working
 git repository mounted.
 
-Read Japanese article in L<SEE ALSO/ARTICLES> section for detail.
+Read Japanese article in L</SEE ALSO> section for detail.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help

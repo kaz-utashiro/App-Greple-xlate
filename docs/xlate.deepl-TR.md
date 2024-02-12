@@ -168,7 +168,7 @@ Docker ve make seçeneklerini birleştirerek make'i Docker ortamında da çalı�
 
 `xlate -GC` gibi çalıştırmak, mevcut çalışan git deposunun bağlı olduğu bir kabuk başlatacaktır.
 
-Ayrıntılar için ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) bölümündeki Japonca makaleyi okuyun.
+Ayrıntılar için ["SEE ALSO"](#see-also) bölümündeki Japonca makaleyi okuyun.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

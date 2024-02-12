@@ -168,7 +168,7 @@ De asemenea, puteți combina opțiunile Docker și make, astfel încât să pute
 
 Rularea ca `xlate -GC` va lansa un shell cu depozitul git de lucru curent montat.
 
-Citiți articolul japonez din secțiunea ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) pentru detalii.
+Citiți articolul japonez din secțiunea ["SEE ALSO"](#see-also) pentru detalii.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help

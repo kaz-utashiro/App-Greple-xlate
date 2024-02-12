@@ -168,7 +168,7 @@ Docker とメイクのオプションを組み合わせることで、Docker 環
 
 `xlate -GC` のように実行すると、現在の作業中の git リポジトリがマウントされたシェルが起動します。
 
-詳細については ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) セクションの日本語記事を読んでください。
+詳細については、下記の「参照」セクションにある日本語の記事をお読みください。
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help
