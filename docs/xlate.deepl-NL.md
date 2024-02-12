@@ -158,7 +158,52 @@ De module **xlate** kan de tekst van de vertaling voor elk bestand in de cache o
 
 # COMMAND LINE INTERFACE
 
-U kunt deze module gemakkelijk gebruiken vanaf de commandoregel met het commando `xlate` dat in het archief is opgenomen. Zie de `xlate` help informatie voor gebruik.
+Je kunt deze module eenvoudig vanaf de commandoregel gebruiken met het commando `xlate` dat bij de distributie zit. Zie de `xlate` helpinformatie voor gebruik.
+
+Het `xlate` commando werkt samen met de Docker omgeving, dus zelfs als je niets geïnstalleerd hebt, kun je het gebruiken zolang Docker beschikbaar is. Gebruik de optie `-D` of `-C`.
+
+Omdat er makefiles voor verschillende documentstijlen worden meegeleverd, is vertaling naar andere talen mogelijk zonder speciale specificaties. Gebruik de optie `-M`.
+
+Je kunt ook de Docker en make opties combineren zodat je make in een Docker omgeving kunt draaien.
+
+Door te draaien als `xlate -GC` wordt een shell gestart met de huidige werkende git repository aangekoppeld.
+
+Lees het Japanse artikel in de sectie ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) voor meer informatie.
+
+    xlate [ options ] -t lang file [ greple options ]
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
+        --   terminate option parsing
+    Make options
+        -M   run make
+        -n   dry-run
+    Docker options
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+
+    Control Files:
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 # EMACS
 

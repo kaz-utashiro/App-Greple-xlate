@@ -177,7 +177,53 @@ Por defecto, los datos no utilizados se eliminan del archivo de caché. Si no de
 
 =head1 COMMAND LINE INTERFACE
 
-Puedes usar fácilmente este módulo desde la línea de comandos utilizando el comando C<xlate> incluido en el repositorio. Consulta la información de ayuda de C<xlate> para ver cómo se utiliza.
+Puedes usar fácilmente este módulo desde la línea de comandos utilizando el comando C<xlate> incluido en la distribución. Consulta la información de ayuda de C<xlate> para ver cómo se utiliza.
+
+El comando C<xlate> funciona en conjunto con el entorno Docker, por lo que incluso si no tienes nada instalado, puedes usarlo siempre que Docker esté disponible. Utiliza la opción C<-D> o C<-C>.
+
+Además, dado que se proporcionan makefiles para varios estilos de documentos, es posible realizar traducciones a otros idiomas sin especificaciones especiales. Utiliza la opción C<-M>.
+
+También puedes combinar las opciones de Docker y make para ejecutar make en un entorno Docker.
+
+Ejecutar algo como C<xlate -GC> abrirá una terminal con el repositorio git de trabajo actual montado.
+
+Lee el artículo en japonés en la sección L<SEE ALSO/ARTICLES> para más detalles.
+
+    xlate [ options ] -t lang file [ greple options ]
+	-h   help
+	-v   show version
+	-d   debug
+	-n   dry-run
+	-a   use API
+	-c   just check translation area
+	-r   refresh cache
+	-s   silent mode
+	-e # translation engine (default "deepl")
+	-p # pattern to determine translation area
+	-w # wrap line by # width
+	-o # output format (default "xtxt", or "cm", "ifdef")
+	-f # from lang (ignored)
+	-t # to lang (required, no default)
+	-m # max length per API call
+	-l # show library files (XLATE.mk, xlate.el)
+        --   terminate option parsing
+    Make options
+	-M   run make
+	-n   dry-run
+    Docker options
+	-G   mount git top-level directory
+	-B   run in non-interactive (batch) mode
+	-R   mount read-only
+	-E * specify environment variable to be inherited
+	-I * specify altanative docker image (default: tecolicom/xlate:version)
+	-D * run xlate on the container with the rest parameters
+	-C * run following command on the container, or run shell
+
+    Control Files:
+	*.LANG    translation languates
+	*.FORMAT  translation foramt (xtxt, cm, ifdef)
+	*.ENGINE  translation engine (deepl or gpt3)
+
 
 =head1 EMACS
 

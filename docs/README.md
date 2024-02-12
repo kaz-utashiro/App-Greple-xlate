@@ -12,7 +12,6 @@
 - [xlate.deepl-RO.md](xlate.deepl-RO.md)
 - [xlate.deepl-RU.md](xlate.deepl-RU.md)
 - [xlate.deepl-TR.md](xlate.deepl-TR.md)
-- [xlate.deepl-UK.md](xlate.deepl-UK.md)
 - [xlate.deepl-ZH.md](xlate.deepl-ZH.md)
 - [xlate.gpt3-DE.md](xlate.gpt3-DE.md)
 - [xlate.gpt3-EL.md](xlate.gpt3-EL.md)
@@ -26,5 +25,4 @@
 - [xlate.gpt3-RO.md](xlate.gpt3-RO.md)
 - [xlate.gpt3-RU.md](xlate.gpt3-RU.md)
 - [xlate.gpt3-TR.md](xlate.gpt3-TR.md)
-- [xlate.gpt3-UK.md](xlate.gpt3-UK.md)
 - [xlate.gpt3-ZH.md](xlate.gpt3-ZH.md)

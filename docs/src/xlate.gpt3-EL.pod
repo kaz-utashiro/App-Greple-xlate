@@ -177,7 +177,53 @@ Version 0.30
 
 =head1 COMMAND LINE INTERFACE
 
-Μπορείτε εύκολα να χρησιμοποιήσετε αυτήν την ενότητα από τη γραμμή εντολών χρησιμοποιώντας την εντολή C<xlate> που περιλαμβάνεται στο αποθετήριο. Δείτε τις πληροφορίες βοήθειας της εντολής C<xlate> για τη χρήση.
+Μπορείτε εύκολα να χρησιμοποιήσετε αυτήν την ενότητα από τη γραμμή εντολών χρησιμοποιώντας την εντολή C<xlate> που περιλαμβάνεται στη διανομή. Δείτε τις πληροφορίες βοήθειας της εντολής C<xlate> για τη χρήση.
+
+Η εντολή C<xlate> λειτουργεί σε συνεργασία με το περιβάλλον Docker, οπότε ακόμα κι αν δεν έχετε κάτι εγκατεστημένο στο χέρι, μπορείτε να το χρησιμοποιήσετε όσον ο Docker είναι διαθέσιμος. Χρησιμοποιήστε την επιλογή C<-D> ή C<-C>.
+
+Επίσης, εφόσον παρέχονται αρχεία makefiles για διάφορα στυλ εγγράφου, είναι δυνατή η μετάφραση σε άλλες γλώσσες χωρίς ειδική προδιαγραφή. Χρησιμοποιήστε την επιλογή C<-M>.
+
+Μπορείτε επίσης να συνδυάσετε τις επιλογές Docker και make έτσι ώστε να μπορείτε να εκτελέσετε την εντολή make σε ένα περιβάλλον Docker.
+
+Η εκτέλεση όπως η C<xlate -GC> θα εκκινήσει ένα κέλυφος με το τρέχον αποθετήριο git που έχει προσαρτηθεί.
+
+Διαβάστε το άρθρο στα Ιαπωνικά στην ενότητα L<SEE ALSO/ARTICLES> για λεπτομέρειες.
+
+    xlate [ options ] -t lang file [ greple options ]
+	-h   help
+	-v   show version
+	-d   debug
+	-n   dry-run
+	-a   use API
+	-c   just check translation area
+	-r   refresh cache
+	-s   silent mode
+	-e # translation engine (default "deepl")
+	-p # pattern to determine translation area
+	-w # wrap line by # width
+	-o # output format (default "xtxt", or "cm", "ifdef")
+	-f # from lang (ignored)
+	-t # to lang (required, no default)
+	-m # max length per API call
+	-l # show library files (XLATE.mk, xlate.el)
+        --   terminate option parsing
+    Make options
+	-M   run make
+	-n   dry-run
+    Docker options
+	-G   mount git top-level directory
+	-B   run in non-interactive (batch) mode
+	-R   mount read-only
+	-E * specify environment variable to be inherited
+	-I * specify altanative docker image (default: tecolicom/xlate:version)
+	-D * run xlate on the container with the rest parameters
+	-C * run following command on the container, or run shell
+
+    Control Files:
+	*.LANG    translation languates
+	*.FORMAT  translation foramt (xtxt, cm, ifdef)
+	*.ENGINE  translation engine (deepl or gpt3)
+
 
 =head1 EMACS
 
