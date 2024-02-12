@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülleri arka uç motoru olarak uygulanmıştır.
+**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilen metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülleri bir arka uç motoru olarak uygulanmıştır.
 
 Eğer Perl'in pod stiliyle yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, şu şekilde **greple** komutunu `xlate::deepl` ve `perl` modülü ile kullanın:
 
@@ -64,7 +64,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 - **--xlate-labor**
 - **--xlabor**
 
-    Çeviri motorunu çağırmak yerine, çalışmanız beklenir. Çevrilecek metni hazırladıktan sonra, panoya kopyalanır. Forma yapıştırmanız, sonucu panoya kopyalamanız ve enter tuşuna basmanız beklenir.
+    Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenmektedir. Çevrilecek metni hazırladıktan sonra, metin panosuna kopyalanır. Metni forma yapıştırmanız, sonucu metin panosuna kopyalamanız ve enter tuşuna basmanız beklenmektedir.
 
 - **--xlate-to** (Default: `EN-US`)
 

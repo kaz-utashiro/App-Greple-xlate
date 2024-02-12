@@ -64,7 +64,7 @@ Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini ad
 - **--xlate-labor**
 - **--xlabor**
 
-    Alih-alih memanggil mesin terjemahan, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, salin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasil ke clipboard, dan menekan enter.
+    Alih-alih memanggil mesin terjemahan, Anda diharapkan untuk bekerja sendiri. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut akan disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan tombol enter.
 
 - **--xlate-to** (Default: `EN-US`)
 

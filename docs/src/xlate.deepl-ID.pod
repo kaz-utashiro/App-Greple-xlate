@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-Modul B<Greple> B<xlate> menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin back-end.
+Modul B<Greple> B<xlate> menemukan blok teks yang diinginkan dan menggantinya dengan teks yang telah diterjemahkan. Saat ini modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin back-end.
 
 Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
 
@@ -68,7 +68,7 @@ Menentukan mesin penerjemahan yang akan digunakan. Jika Anda menentukan modul me
 
 =item B<--xlabor>
 
-Setelah memanggil mesin penerjemahan, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan return.
+Alih-alih memanggil mesin penerjemah, Anda diharapkan untuk bekerja. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke clipboard. Anda diharapkan untuk menempelkannya ke formulir, menyalin hasilnya ke clipboard, dan menekan return.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

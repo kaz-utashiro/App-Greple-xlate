@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul otsib soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodulid.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodul.
 
 Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
 
@@ -64,7 +64,7 @@ Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otse
 - **--xlate-labor**
 - **--xlabor**
 
-    Selle asemel, et kutsuda tõlke mootorit, oodatakse, et töötaksite. Pärast tõlgitava teksti ettevalmistamist kopeeritakse see lõikelauale. Oodatakse, et kleepite selle vormi, kopeerite tulemuse lõikelauale ja vajutate sisestusklahvi.
+    Tõlke mootori kutsumise asemel oodatakse, et te töötaksite ise. Pärast teksti ettevalmistamist tõlkimiseks kopeeritakse need lõikelauale. Oodatakse, et kleepiksite need vormi, kopeeriksite tulemuse lõikelauale ja vajutaksite tagastusklahvi.
 
 - **--xlate-to** (Default: `EN-US`)
 

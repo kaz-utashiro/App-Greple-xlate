@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-Le module B<Greple> B<xlate> recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur dorsal.
+Le module B<Greple> B<xlate> recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont mis en œuvre en tant que moteur dorsal.
 
 Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style Perl's pod, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme suit :
 
@@ -68,7 +68,7 @@ Spécifie le moteur de traduction à utiliser. Si vous spécifiez directement le
 
 =item B<--xlabor>
 
-Au lieu d'appeler le moteur de traduction, vous êtes censé travailler pour. Après avoir préparé les textes à traduire, ils sont copiés dans le presse-papiers. Vous êtes censé les coller dans le formulaire, copier le résultat dans le presse-papiers et appuyer sur la touche retour.
+Au lieu d'appeler le moteur de traduction, vous êtes censé travailler pour lui. Après avoir préparé le texte à traduire, il est copié dans le presse-papiers. Vous devez les coller dans le formulaire, copier le résultat dans le presse-papiers et appuyer sur la touche retour.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

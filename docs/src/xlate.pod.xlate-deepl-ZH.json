@@ -1,7 +1,7 @@
 {
    "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - greple的翻译支持模块\n",
    "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "利用 DeepL API 自动翻译 Docker 环境（日语）\n",
-   "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemeted as a back-end engine.\n" : "B<Greple> B<xlate> 模块可找到所需的文本块，并将其替换为翻译文本。目前，DeepL（F<deepl.pm>）和 ChatGPT（F<gpt3.pm>）模块是作为后端引擎实现的。\n",
+   "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemented as a back-end engine.\n" : "B<Greple> B<xlate> 模块查找所需的文本块，并用翻译文本替换它们。目前，DeepL (F<deepl.pm>) 和 ChatGPT (F<gpt3.pm>) 模块是作为后端引擎实现的。\n",
    "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "B<xlate>模块可以存储每个文件的翻译缓存文本，并在执行前读取它，以消除向服务器请求的开销。在默认的缓存策略C<auto>下，它只在目标文件的缓存文件存在时才维护缓存数据。\n",
    "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "根据默认行为，未使用的数据会从缓存文件中删除。如果你不想删除它们并保留在文件中，使用C<accumulate>。\n",
    "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n" : "默认情况下，原文和译文以与 L<git(1)> 兼容的 \"冲突标记 \"格式打印。使用 C<ifdef> 格式，可以通过 L<unifdef(1)> 命令轻松获得所需的部分。输出格式可以通过 B<--xlate-format> 选项指定。\n",
@@ -15,7 +15,7 @@
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "如果要翻译整个文本，请使用 B<--match-all> 选项。这是指定匹配整个文本的模式 C<(?s).+> 的快捷方式。\n",
    "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "如果要翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 B<greple> 命令，并像这样使用 C<xlate::deepl> 和 C<perl> 模块：\n",
    "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n" : "在该命令中，模式字符串 C<^(\\w.*\\n)+> 表示以字母数字开头的连续行。该命令高亮显示要翻译的区域。选项 B<--all> 用于生成整个文本。\n",
-   "Insted of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n" : "与其说是调用翻译引擎，不如说是希望你能为之工作。在准备好要翻译的文本后，它们被复制到剪贴板上。你应该把它们粘贴到表格中，把结果复制到剪贴板上，然后点击返回。\n",
+   "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n" : "您需要做的不是调用翻译引擎，而是为其工作。准备好要翻译的文本后，它们会被复制到剪贴板。您需要将它们粘贴到表单中，将结果复制到剪贴板，然后点击回车键。\n",
    "Invoke the translation process for each matched area.\n" : "对每个匹配的区域调用翻译过程。\n",
    "L<App::Greple::xlate::deepl>\n" : "L<App::Greple::xlate::deepl>\n",
    "L<App::Greple::xlate::gpt3>\n" : "L<App::Greple::xlate::gpt3>\n",

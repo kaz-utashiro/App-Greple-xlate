@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-Modulul **xlate** din cadrul **greple** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulul DeepL (`deepl.pm`) și modulul ChatGPT (`gpt3.pm`) sunt implementate ca motoare de fundal.
+Modulul **Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulul DeepL (`deepl.pm`) și modulul ChatGPT (`gpt3.pm`) sunt implementate ca motoare de fundal.
 
 Dacă doriți să traduceți blocurile de text normale dintr-un document scris în stilul pod al Perl, utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` în felul următor:
 
@@ -64,7 +64,7 @@ Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-all*
 - **--xlate-labor**
 - **--xlabor**
 
-    În loc să apelați motorul de traducere, se așteaptă să lucrați pentru el. După pregătirea textului de tradus, acesta este copiat în clipboard. Se așteaptă să îl lipiți în formular, să copiați rezultatul în clipboard și să apăsați Enter.
+    În loc să apelați motorul de traducere, se așteaptă să lucrați pentru el. După ce ați pregătit textul pentru a fi tradus, acesta este copiat în clipboard. Se așteaptă să îl lipiți în formular, să copiați rezultatul în clipboard și să apăsați Enter.
 
 - **--xlate-to** (Default: `EN-US`)
 

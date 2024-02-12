@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülleri arka uç motoru olarak uygulanmıştır.
+B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilen metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülleri bir arka uç motoru olarak uygulanmıştır.
 
 Eğer Perl'in pod stiliyle yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, şu şekilde B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile kullanın:
 
@@ -68,7 +68,7 @@ Kullanılacak çeviri motorunu belirtir. C<-Mxlate::deepl> gibi doğrudan motor 
 
 =item B<--xlabor>
 
-Çeviri motorunu çağırmak yerine, çalışmanız beklenir. Çevrilecek metni hazırladıktan sonra, panoya kopyalanır. Forma yapıştırmanız, sonucu panoya kopyalamanız ve enter tuşuna basmanız beklenir.
+Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenmektedir. Çevrilecek metni hazırladıktan sonra, metin panosuna kopyalanır. Metni forma yapıştırmanız, sonucu metin panosuna kopyalamanız ve enter tuşuna basmanız beklenmektedir.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

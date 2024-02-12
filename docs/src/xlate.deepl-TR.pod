@@ -68,7 +68,7 @@ Kullanılacak çeviri motorunu belirtir. Motor modülünü C<-Mxlate::deepl> gib
 
 =item B<--xlabor>
 
-Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
+Çeviri motorunu çağırmak yerine sizin çalışmanız beklenmektedir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

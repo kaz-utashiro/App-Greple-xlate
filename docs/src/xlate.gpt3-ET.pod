@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul otsib soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodulid.
+B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina kasutusel DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodul.
 
 Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
 
@@ -68,7 +68,7 @@ Määrab kasutatava tõlke mootori. Kui määrate mootori mooduli otse, näiteks
 
 =item B<--xlabor>
 
-Selle asemel, et kutsuda tõlke mootorit, oodatakse, et töötaksite. Pärast tõlgitava teksti ettevalmistamist kopeeritakse see lõikelauale. Oodatakse, et kleepite selle vormi, kopeerite tulemuse lõikelauale ja vajutate sisestusklahvi.
+Tõlke mootori kutsumise asemel oodatakse, et te töötaksite ise. Pärast teksti ettevalmistamist tõlkimiseks kopeeritakse need lõikelauale. Oodatakse, et kleepiksite need vormi, kopeeriksite tulemuse lõikelauale ja vajutaksite tagastusklahvi.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

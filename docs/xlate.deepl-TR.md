@@ -64,7 +64,7 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini ku
 - **--xlate-labor**
 - **--xlabor**
 
-    Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
+    Çeviri motorunu çağırmak yerine sizin çalışmanız beklenmektedir. Çevrilecek metin hazırlandıktan sonra panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve return tuşuna basmanız beklenir.
 
 - **--xlate-to** (Default: `EN-US`)
 

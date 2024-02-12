@@ -64,7 +64,7 @@ Kui soovite tõlkida kogu teksti, kasutage valikut **--match-all**. See on otset
 - **--xlate-labor**
 - **--xlabor**
 
-    Insted kutsudes tõlkemootor, siis oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
+    Selle asemel, et kutsuda tõlkemootorit, oodatakse tööd. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikelauale. Eeldatakse, et te kleebite need vormi, kopeerite tulemuse lõikelauale ja vajutate return.
 
 - **--xlate-to** (Default: `EN-US`)
 

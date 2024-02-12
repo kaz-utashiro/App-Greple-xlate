@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als backend-engine.
+Het B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als back-end engine.
 
 Als je normale tekstblokken wilt vertalen in een document dat is geschreven in de Perl's pod-stijl, gebruik dan het B<greple> commando met de C<xlate::deepl> en C<perl> module als volgt:
 
@@ -68,7 +68,7 @@ Specificeert de te gebruiken vertaalmotor. Als je de engine module direct specif
 
 =item B<--xlabor>
 
-In plaats van de vertaalmotor te bellen, wordt van u verwacht dat u werkt. Nadat u de tekst hebt voorbereid om te vertalen, wordt deze gekopieerd naar het klembord. U wordt verwacht deze tekst in het formulier te plakken, het resultaat naar het klembord te kopiëren en op Enter te drukken.
+In plaats van de vertaalmotor aan te roepen, wordt er van jou verwacht dat je het werk doet. Nadat de tekst is voorbereid om te worden vertaald, wordt deze gekopieerd naar het klembord. Je wordt verwacht om ze in het formulier te plakken, het resultaat naar het klembord te kopiëren en op enter te drukken.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 

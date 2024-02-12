@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-De module **Greple** **xlate** vindt de gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) module geïmplementeerd als een back-end engine.
+De module **Greple** **xlate** vindt de gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) modules geïmplementeerd als een back-end engine.
 
 Als je normale tekstblokken wilt vertalen in een document dat geschreven is in de pod-stijl van Perl, gebruik dan het commando **greple** met de module `xlate::deepl` en `perl` als volgt:
 
@@ -64,7 +64,7 @@ Als je de hele tekst wilt vertalen, gebruik dan de optie **--match-all**. Dit is
 - **--xlate-labor**
 - **--xlabor**
 
-    In plaats van de vertaalmachine op te roepen, wordt van u verwacht dat u voor werkt. Na het voorbereiden van te vertalen tekst, worden ze gekopieerd naar het klembord. Van u wordt verwacht dat u ze in het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
+    In plaats van de vertaalmachine op te roepen, wordt er van je verwacht dat je zelf aan de slag gaat. Na het voorbereiden van tekst die vertaald moet worden, worden ze gekopieerd naar het klembord. Er wordt van je verwacht dat je ze op het formulier plakt, het resultaat naar het klembord kopieert en op return drukt.
 
 - **--xlate-to** (Default: `EN-US`)
 
