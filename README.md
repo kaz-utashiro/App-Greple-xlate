@@ -220,7 +220,7 @@ make in a Docker environment.
 Running like `xlate -GC` will launch a shell with the current working
 git repository mounted.
 
-Read Japanese article in ["ARTICLES" in SEE ALSO](https://metacpan.org/pod/SEE%20ALSO#ARTICLES) section for detail.
+Read Japanese article in ["SEE ALSO"](#see-also) section for detail.
 
     xlate [ options ] -t lang file [ greple options ]
         -h   help
