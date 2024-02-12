@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-Le module B<Greple> B<xlate> trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur de back-end.
+Le module B<Greple> B<xlate> trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et ChatGPT (F<gpt3.pm>) sont implémentés en tant que moteur de back-end. Un support expérimental pour gpt-4 est également inclus.
 
 Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> de cette manière :
 

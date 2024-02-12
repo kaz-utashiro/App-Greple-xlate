@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-**Greple** **xlate**模块可以找到所需的文本块并用翻译后的文本替换它们。目前已经实现了DeepL（`deepl.pm`）和ChatGPT（`gpt3.pm`）模块作为后端引擎。
+**Greple** **xlate** 模块可以找到所需的文本块并用翻译后的文本替换它们。目前已实现了 DeepL (`deepl.pm`) 和 ChatGPT (`gpt3.pm`) 模块作为后端引擎。还包括对 gpt-4 的实验性支持。
 
 如果您想要将Perl的pod样式文档中的普通文本块翻译成中文，请使用以下命令：**greple**，并结合`xlate::deepl`和`perl`模块，如下所示：
 

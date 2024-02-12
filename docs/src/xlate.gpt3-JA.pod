@@ -16,7 +16,7 @@ Version 0.29
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate>モジュールは、目的のテキストブロックを見つけて、それらを翻訳されたテキストで置き換えます。現在、DeepL（F<deepl.pm>）とChatGPT（F<gpt3.pm>）モジュールがバックエンドエンジンとして実装されています。
+B<Greple> B<xlate>モジュールは、目的のテキストブロックを見つけて、それらを翻訳されたテキストで置き換えます。現在、DeepL（F<deepl.pm>）とChatGPT（F<gpt3.pm>）モジュールがバックエンドエンジンとして実装されています。gpt-4の実験的なサポートも含まれています。
 
 Perlのpodスタイルで書かれたドキュメント内の通常のテキストブロックを翻訳したい場合は、次のようにC<xlate::deepl>とC<perl>モジュールを使用したB<greple>コマンドを使用してください。
 

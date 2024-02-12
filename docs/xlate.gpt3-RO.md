@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-Modulul **Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulul DeepL (`deepl.pm`) și modulul ChatGPT (`gpt3.pm`) sunt implementate ca motoare de fundal.
+Modulul **Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, motorul DeepL (`deepl.pm`) și motorul ChatGPT (`gpt3.pm`) sunt implementate ca motoare de fundal. De asemenea, este inclus și suport experimental pentru gpt-4.
 
 Dacă doriți să traduceți blocurile de text normale dintr-un document scris în stilul pod al Perl, utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` în felul următor:
 

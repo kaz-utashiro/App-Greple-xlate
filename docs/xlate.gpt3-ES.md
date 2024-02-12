@@ -14,7 +14,7 @@ Version 0.29
 
 # DESCRIPTION
 
-El módulo **Greple** **xlate** encuentra los bloques de texto deseados y los reemplaza por el texto traducido. Actualmente, los módulos DeepL (`deepl.pm`) y ChatGPT (`gpt3.pm`) están implementados como motores de backend.
+El módulo **Greple** **xlate** encuentra bloques de texto deseados y los reemplaza por el texto traducido. Actualmente, se implementan los motores de traducción de DeepL (`deepl.pm`) y ChatGPT (`gpt3.pm`) como motores de backend. También se incluye soporte experimental para gpt-4.
 
 Si quieres traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, utiliza el comando **greple** con los módulos `xlate::deepl` y `perl` de la siguiente manera:
 
