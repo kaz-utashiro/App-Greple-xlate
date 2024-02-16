@@ -96,17 +96,16 @@ read_only=
 display=
 [ -e ${localtime:=/etc/localtime} ] || localtime=
 
-define DEFAULT_ENV <<EOF
-LESSANSIENDCHARS=mK
-LESS=-cR
-LANG
-TZ
-TERM_PROGRAM
-TERM_BGCOLOR
-COLORTERM
-DEEPL_AUTH_KEY
-OPENAI_API_KEY
+DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
+	LANG TZ
+	LESS=-cR LESSANSIENDCHARS=mK
+	HTTP_PROXY HTTPS_PROXY
+	http_proxy https_proxy
+	TERM_PROGRAM TERM_BGCOLOR COLORTERM
+	DEEPL_AUTH_KEY
+	OPENAI_API_KEY
 EOF
+)"
 
 declare -a ENV
 
@@ -121,7 +120,7 @@ do
 	L)     version=:latest ;;
 	R)  mount_mode=ro ;;
 	E)
-	    DEFAULT_ENV+="$OPTARG"$'\n' ;;
+	    DEFAULT_ENV+=$'\n'"$OPTARG" ;;
 	G)
 	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
 	    if [ "${topdir:=$(git_topdir)}" ]
