@@ -416,6 +416,7 @@ our %opt = (
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
     maxlen   => \(our $max_length = 0),
+    prompt   => \(our $prompt),
 );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -617,6 +618,7 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 builtin xlate-maxlen=i     $max_length
+builtin xlate-prompt=s     $prompt
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
