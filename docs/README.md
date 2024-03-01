@@ -26,3 +26,4 @@
 - [xlate.gpt3-RU.md](xlate.gpt3-RU.md)
 - [xlate.gpt3-TR.md](xlate.gpt3-TR.md)
 - [xlate.gpt3-ZH.md](xlate.gpt3-ZH.md)
+- [xlate.gpt4-JA.md](xlate.gpt4-JA.md)

@@ -24,8 +24,8 @@ READMES  := $(foreach engin,$(ENGINES),$(RM_LANGS:%=../README.$(engin)-%.md))
 ###########
 # Translate only JA by gpt-4
 #----------
-PODS     += $(foreach engin,$(XENGINES),$(foreach lang,$(XRM_LANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
-MDS      += $(foreach engin,$(XENGINES),$(foreach lang,$(XRM_LANGS),$(PM:.pm=.$(engin)-$(lang).md)))
+PODS     += $(foreach engin,$(XENGINES),$(foreach lang,$(XLANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
+MDS      += $(foreach engin,$(XENGINES),$(foreach lang,$(XLANGS),$(PM:.pm=.$(engin)-$(lang).md)))
 READMES  += $(foreach engin,$(XENGINES),$(XLANGS:%=../README.$(engin)-%.md))
 ###########
 ALL      := $(PODS) $(MDS) README.md $(READMES)
