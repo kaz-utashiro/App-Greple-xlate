@@ -12,7 +12,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 VERSION
 
-Version 0.30
+Version 0.31
 
 =head1 DESCRIPTION
 
