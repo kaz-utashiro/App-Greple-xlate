@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" 
 </p>
 
 Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola C<(?s).+> yang cocok dengan seluruh teks.
+
+Data format penanda konflik dapat dilihat dalam gaya berdampingan dengan perintah C<sdif> dengan opsi C<-V>. Karena tidak masuk akal untuk membandingkan per string, opsi C<--no-cdif> direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan C<--no-color> atau C<--cm 'TEXT*='>.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.31
+Version 0.3101
 
 # DESCRIPTION
 
@@ -39,6 +39,16 @@ Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man
 </div>
 
 Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tüm metni eşleştiren `(?s).+` desenini belirtmek için bir kısayoldur.
+
+Çatışma işaretçisi biçim veri, `-V` seçeneği ile `sdif` komutu kullanılarak yan yana stilinde görüntülenebilir. Dize bazında karşılaştırma yapmanın anlamsız olduğu için `--no-cdif` seçeneği önerilir. Metni renklendirmenize gerek yoksa, `--no-color` veya `--cm 'METİN*='` belirtin.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+    </p>
+</div>
 
 # OPTIONS
 

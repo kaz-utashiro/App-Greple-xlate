@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Standaard wordt originele en vertaalde tekst afgedrukt in het "conflict marker" 
 </p>
 
 Als je de hele tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om het patroon C<(?s).+> op te geven dat overeenkomt met de hele tekst.
+
+Gegevens in conflictmarkeringsformaat kunnen naast elkaar worden bekeken met het commando C<sdif> met de optie C<-V>. Aangezien het geen zin heeft om per string te vergelijken, wordt de optie C<--no-cdif> aangeraden. Als je de tekst niet hoeft te kleuren, geef dan C<--no-color> of C<--cm 'TEXT*='> op.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

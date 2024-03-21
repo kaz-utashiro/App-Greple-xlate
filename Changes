@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.3101 2024-03-21T03:43:52Z
+
+    - fix bug in xlate.el
+    - include sdif output in README
+
 0.31 2024-03-01T10:33:50Z
 
     - introduce --prompt option

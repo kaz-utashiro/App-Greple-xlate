@@ -10,7 +10,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.31
+Version 0.3101
 
 # DESCRIPTION
 
@@ -39,6 +39,16 @@ Vaikimisi trükitakse algne ja tõlgitud tekst [git(1)](http://man.he.net/man1/g
 </div>
 
 Kui soovite tõlkida kogu teksti, kasutage valikut **--match-all**. See on otsetee, et määrata muster `(?s).+`, mis vastab kogu tekstile.
+
+Konfliktimärgistuse formaadis andmeid saab vaadata külg-üles stiilis käsuga `sdif` koos valikuga `-V`. Kuna stringide kaupa võrdlemisel ei ole mõtet, on soovitatav kasutada valikut `--no-cdif`. Kui teil ei ole vaja teksti värvida, määrake `--no-color` või `--cm 'TEXT*='`.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+    </p>
+</div>
 
 # OPTIONS
 

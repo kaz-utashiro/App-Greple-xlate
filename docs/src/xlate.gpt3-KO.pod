@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ B<Greple> B<xlate> 모듈은 원하는 텍스트 블록을 찾아 번역된 텍�
 </p>
 
 전체 텍스트를 번역하려면 B<--match-all> 옵션을 사용하십시오. 이는 전체 텍스트와 일치하는 C<(?s).+> 패턴을 지정하는 단축키입니다.
+
+충돌 표시자 형식 데이터는 C<sdif> 명령어와 C<-V> 옵션을 사용하여 측면별 스타일로 볼 수 있습니다. 문자열 단위로 비교하는 것은 의미가 없으므로 C<--no-cdif> 옵션이 권장됩니다. 텍스트에 색상을 입힐 필요가 없다면 C<--no-color> 또는 C<--cm 'TEXT*='>를 지정하십시오.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

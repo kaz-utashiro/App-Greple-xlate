@@ -12,7 +12,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Por defecto, el texto original y traducido se imprime en el formato de "marcador
 </p>
 
 Si deseas traducir todo el texto, utiliza la opción B<--match-all>. Esto es un atajo para especificar el patrón C<(?s).+> que coincide con todo el texto.
+
+El formato de datos de marcador de conflicto se puede ver en estilo lado a lado con el comando C<sdif> con la opción C<-V>. Dado que no tiene sentido comparar en base a cada cadena, se recomienda la opción C<--no-cdif>. Si no necesitas colorear el texto, especifica C<--no-color> o C<--cm 'TEXTO*='>.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

@@ -12,7 +12,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, m
 </p>
 
 Kui soovite tõlkida terve teksti, kasutage B<--match-all> valikut. See on otsetee, et määrata mustrit C<(?s).+>, mis sobib tervele tekstile.
+
+Konfliktimärgise vormingu andmeid saab vaadata kõrvuti stiilis C<sdif> käsu abil C<-V> valikuga. Kuna pole mõtet võrrelda iga stringi alusel, soovitatakse kasutada C<--no-cdif> valikut. Kui te ei vaja teksti värvimist, määrake C<--no-color> või C<--cm 'TEXT*='>.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

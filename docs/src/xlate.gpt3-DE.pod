@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Standardmäßig wird der Original- und übersetzte Text im "Konfliktmarker"-Form
 </p>
 
 Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die B<--match-all> Option. Dies ist eine Abkürzung, um das Muster C<(?s).+> anzugeben, das den gesamten Text abdeckt.
+
+Konfliktmarkierungsformatdaten können im Seit-an-Seit-Stil mit dem Befehl C<sdif> und der Option C<-V> angezeigt werden. Da ein Vergleich auf Zeichenfolgenbasis keinen Sinn macht, wird die Option C<--no-cdif> empfohlen. Wenn Sie den Text nicht einfärben müssen, geben Sie C<--no-color> oder C<--cm 'TEXT*='> an.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

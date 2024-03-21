@@ -8,6 +8,7 @@
    "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n" : "기본적으로 원본 및 번역된 텍스트는 L<git(1)>과 호환되는 \"충돌 마커\" 형식으로 출력됩니다. C<ifdef> 형식을 사용하면 L<unifdef(1)> 명령을 사용하여 원하는 부분을 쉽게 얻을 수 있습니다. 출력 형식은 B<--xlate-format> 옵션으로 지정할 수 있습니다.\n",
    "Clear the cache data first.\n" : "먼저 캐시 데이터를 지웁니다.\n",
    "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "명령 결과는 표준 출력으로 전달되므로 필요한 경우 파일로 리디렉션하거나 L<App::Greple::update> 모듈을 사용하는 것을 고려하십시오.\n",
+   "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-color> or C<--cm 'TEXT*='>.\n" : "충돌 표시자 형식 데이터는 C<sdif> 명령어와 C<-V> 옵션을 사용하여 측면별 스타일로 볼 수 있습니다. 문자열 단위로 비교하는 것은 의미가 없으므로 C<--no-cdif> 옵션이 권장됩니다. 텍스트에 색상을 입힐 필요가 없다면 C<--no-color> 또는 C<--cm 'TEXT*='>를 지정하십시오.\n",
    "Create empty cache file and exit.\n" : "빈 캐시 파일을 생성하고 종료합니다.\n",
    "DeepL Python library and CLI command.\n" : "DeepL Python 라이브러리 및 CLI 명령입니다.\n",
    "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "DeepL API 모듈을 사용하여 15개 언어로 문서 생성 (일본어로)\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Perlのポッドスタイルで書かれた文書中の通常のテキストブ�
 </p>
 
 テキスト全体を翻訳したい場合は、B<--match-all>オプションを使います。これはテキスト全体にマッチするパターンC<(?s).+>を指定するショートカットです。
+
+コンフリクトマーカー形式のデータは、C<sdif>コマンドにC<-V>オプションを付けることで、並べて表示することができます。文字列単位で比較するのは意味がないので、C<--no-cdif>オプションを推奨します。テキストに色を付ける必要がない場合は、C<--no-color> または C<--cm 'TEXT*='> を指定してください。
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 

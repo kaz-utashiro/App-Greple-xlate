@@ -10,7 +10,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # VERSION
 
-Version 0.31
+Version 0.3101
 
 # DESCRIPTION
 
@@ -39,6 +39,16 @@ Version 0.31
 </div>
 
 Αν θέλετε να μεταφράσετε ολόκληρο το κείμενο, χρησιμοποιήστε την επιλογή **--match-all**. Αυτή είναι μια σύντομη διαδρομή για να καθορίσετε το μοτίβο `(?s).+` που ταιριάζει σε ολόκληρο το κείμενο.
+
+Τα δεδομένα μορφής δείκτη σύγκρουσης μπορούν να προβληθούν σε στυλ side-by-side με την εντολή `sdif` με την επιλογή `-V`. Δεδομένου ότι δεν έχει νόημα η σύγκριση ανά συμβολοσειρά, συνιστάται η επιλογή `--no-cdif`. Εάν δεν χρειάζεται να χρωματίσετε το κείμενο, καθορίστε την εντολή `--no-color` ή `--cm 'TEXT*='`.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+    </p>
+</div>
 
 # OPTIONS
 

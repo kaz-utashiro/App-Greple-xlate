@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.31
+Version 0.3101
 
 # DESCRIPTION
 
@@ -39,6 +39,16 @@ Standaard worden het oorspronkelijke en vertaalde tekst afgedrukt in het formaat
 </div>
 
 Als je de hele tekst wilt vertalen, gebruik dan de **--match-all** optie. Dit is een snelkoppeling om het patroon `(?s).+` te specificeren dat de hele tekst matcht.
+
+Conflict marker formaatgegevens kunnen worden bekeken in een zij-aan-zij stijl met het `sdif` commando met de `-V` optie. Aangezien het geen zin heeft om op basis van elke string te vergelijken, wordt de `--no-cdif` optie aanbevolen. Als je de tekst niet hoeft te kleuren, geef dan `--no-color` of `--cm 'TEKST*='` op.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+    </p>
+</div>
 
 # OPTIONS
 

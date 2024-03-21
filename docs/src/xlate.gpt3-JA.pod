@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.31
+Version 0.3101
 
 =head1 DESCRIPTION
 
@@ -37,6 +37,14 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 </p>
 
 テキスト全体を翻訳したい場合は、B<--match-all>オプションを使用してください。これは、テキスト全体にマッチするパターンC<(?s).+>を指定するためのショートカットです。
+
+衝突マーカーフォーマットデータは、C<sdif>コマンドにC<-V>オプションを付けてサイドバイサイドスタイルで表示できます。文字列ごとに比較する意味がないため、C<--no-cdif>オプションが推奨されています。テキストに色を付ける必要がない場合は、C<--no-color>またはC<--cm 'TEXT*='>を指定してください。
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
 
 =head1 OPTIONS
 
