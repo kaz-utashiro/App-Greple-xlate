@@ -57,6 +57,18 @@ If you want to translate entire text, use B<--match-all> option.  This
 is a short-cut to specify the pattern C<(?s).+> which matches entire
 text.
 
+Conflict marker format data can be viewed in side-by-side style by
+C<sdif> command with C<-V> option.  Since it makes no sense to compare
+on a per-string basis, the C<--no-cdif> option is recommended.  If you
+do not need to color the text, specify C<--no-color> or C<--cm
+'TEXT*='>.
+
+    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
+</p>
+
 =head1 OPTIONS
 
 =over 7
