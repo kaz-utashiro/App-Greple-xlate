@@ -287,7 +287,7 @@ case $1 in
     *.pm|*.pod)
 	module+=(-Mperl)
 	option+=(--pod)
-	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE).*\n(?s:.*?)(?=^=|\z)')
+	option+=(--exclude '^=head\d +(VERSION|AUTHOR|LICENSE|COPYRIGHT|SEE.?ALSO).*\n(?s:.*?)(?=^=|\z)')
 	area=(--re '^(\w.+\n)+')
 	;;
     *.doc|*.docx|*.pptx|*.xlsx)
