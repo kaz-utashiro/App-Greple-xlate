@@ -551,10 +551,17 @@ sub fold_lines {
     $_;
 }
 
+sub _spaces {
+    my $s = shift;
+    sub {
+	($s =~ /\A(\s+)/ ? $1 : '') . $_[0] . ($s =~ /(\h+)$/ ? $1 : '')
+    };
+}
 sub xlate {
-    my $text = shift;
+    my $param = { @_ };
+    my($index, $text) = @{$param}{qw(index match)};
     my $key = normalize $text;
-    my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
+    my $s = _spaces($text)->($cache{$key} // "!!! TRANSLATION ERROR !!!\n");
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
 	return $formatter->($text, $s);
@@ -562,8 +569,7 @@ sub xlate {
 	return $s;
     }
 }
-sub colormap { xlate $_ }
-sub callback { xlate { @_ }->{match} }
+sub callback { goto &xlate }
 
 sub cache_file {
     my $file = sprintf("%s.xlate-%s-%s.json",
