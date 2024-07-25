@@ -60,14 +60,50 @@ text.
 Conflict marker format data can be viewed in side-by-side style by
 C<sdif> command with C<-V> option.  Since it makes no sense to compare
 on a per-string basis, the C<--no-cdif> option is recommended.  If you
-do not need to color the text, specify C<--no-color> or C<--cm
-'TEXT*='>.
+do not need to color the text, specify C<--no-textcolor> (or
+C<--no-tc>).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+Processing is done in specified units, but in the case of a sequence
+of multiple lines of non-empty text, they are converted together into
+a single line.  This operation is performed as follows:
+
+=over
+
+=item *
+
+Remove white space at the beginning and end of each line.
+
+=item *
+
+If a line ends with a full-width character and the next line begins
+with a full-width character, concatenate the lines.
+
+=item *
+
+If either the end or the beginning of a line is not a full-width
+character, concatenate them by inserting a space character.
+
+=back
+
+Cache data is managed based on the normalized text, so even if
+modifications are made that do not affect the normalization results,
+the cached translation data will still be effective.
+
+This normalization process is performed only for the even-numbered
+pattern.  Thus, if two patterns are specified as follows, the text
+matching the first pattern will be processed after normalization, and
+no normalization process will be performed on the text matching the
+second pattern.
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 
@@ -496,10 +532,14 @@ sub setup {
 }
 
 sub normalize {
-    $_[0] =~ s{^.+(?:\n.+)*}{
+    local $_ = shift;
+    s{^.+(?:\n.+)*}{
 	${^MATCH}
+	# remove leading/trailing spaces
 	    =~ s/\A\s+|\s+\z//gr
+	# join Japanese lines without space
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
+	# join ASCII lines with single space
 	    =~ s/\s+/ /gr
     }pmger;
 }
@@ -510,7 +550,8 @@ sub postgrep {
     for my $r ($grep->result) {
 	my($b, @match) = @$r;
 	for my $m (@match) {
-	    my $key = normalize $grep->cut(@$m);
+	    my($s, $e, $i) = @$m;
+	    my $key = normalize $grep->cut(@$m), $i;
 	    if (not exists $cache{$key}) {
 		$cache{$key} = undef;
 		push @miss, $key;
@@ -551,17 +592,43 @@ sub fold_lines {
     $_;
 }
 
-sub _spaces {
-    my $s = shift;
+sub strip {
+    my @text = $_[0] =~ /.*\n?/g;
+    my @space = ( [] ) x @text;
+    while (my($i, $l) = each @text) {
+	$space[$i]->[0] = $l =~ s/\A(\s+)// ? $1 : '' ;
+	$space[$i]->[1] = $l =~ s/(\h+)$//  ? $1 : '' ;
+    }
+    $_[0] = join '', @text;
     sub {
-	($s =~ /\A(\s+)/ ? $1 : '') . $_[0] . ($s =~ /(\h+)$/ ? $1 : '')
+	my @text = $_[0] =~ /.*\n?/g;
+	while (my($i, $l) = each @text) {
+	    my($head, $tail) = @{$space[$i]};
+	    s/\A/$head/ if length $head > 0;
+	    s/\Z/$tail/ if length $tail > 0;
+	}
+	$_[0] = join '', @text;
+    };
+}
+sub single_strip {
+    local *_ = \$_[0];
+    my $head = s/\A(\s+)// ? $1 : '' ;
+    my $tail = s/(\h+)$//  ? $1 : '' ;
+    sub {
+	local *_ = \$_[0];
+	s/\A/$head/ if length $head;
+	s/$/$tail/ if length $tail;
     };
 }
 sub xlate {
     my $param = { @_ };
     my($index, $text) = @{$param}{qw(index match)};
-    my $key = normalize $text;
-    my $s = _spaces($text)->($cache{$key} // "!!! TRANSLATION ERROR !!!\n");
+    my $unstrip = strip $text;
+    my $key = $text;
+    $key = normalize $key if $index % 2 == 0;
+    my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
+    $unstrip->($text);
+    $unstrip->($s);
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
 	return $formatter->($text, $s);
@@ -641,7 +708,7 @@ builtin xlate-prompt=s     $prompt
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --ci=A --cm=/544E,/454E,/445E,/455E,/545E,/554E
+option default --cm=/544E,/454E,/445E,/455E,/545E,/554E
 
 option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
 
