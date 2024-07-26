@@ -40,15 +40,29 @@ Standaard worden het oorspronkelijke en vertaalde tekst afgedrukt in het formaat
 
 Als je de hele tekst wilt vertalen, gebruik dan de **--match-all** optie. Dit is een snelkoppeling om het patroon `(?s).+` te specificeren dat de hele tekst matcht.
 
-Conflict marker formaatgegevens kunnen worden bekeken in een zij-aan-zij stijl met het `sdif` commando met de `-V` optie. Aangezien het geen zin heeft om op basis van elke string te vergelijken, wordt de `--no-cdif` optie aanbevolen. Als je de tekst niet hoeft te kleuren, geef dan `--no-color` of `--cm 'TEKST*='` op.
+Conflict marker formaatgegevens kunnen worden bekeken in een zij-aan-zij stijl met het `sdif` commando met de `-V` optie. Aangezien het geen zin heeft om op basis van elke string te vergelijken, wordt de `--no-cdif` optie aanbevolen. Als je de tekst niet hoeft te kleuren, geef dan `--no-textcolor` (of `--no-tc`) op.
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+Verwerking gebeurt in opgegeven eenheden, maar in het geval van een reeks van meerdere regels met niet-lege tekst, worden ze samen omgezet in één regel. Deze bewerking wordt als volgt uitgevoerd:
+
+- Verwijder witruimte aan het begin en einde van elke regel.
+- Als een regel eindigt met een volledig breedte karakter en de volgende regel begint met een volledig breedte karakter, voeg dan de regels samen.
+- Als het einde of het begin van een regel geen volledig breedte karakter is, voeg ze dan samen door een spatiekarakter in te voegen.
+
+Cachegegevens worden beheerd op basis van de genormaliseerde tekst, dus zelfs als er wijzigingen worden aangebracht die de normalisatieresultaten niet beïnvloeden, blijven de gecachte vertaalgegevens effectief.
+
+Dit normalisatieproces wordt alleen uitgevoerd voor het even genummerde patroon. Dus als twee patronen als volgt zijn gespecificeerd, zal de tekst die overeenkomt met het eerste patroon worden verwerkt na normalisatie, en er zal geen normalisatieproces worden uitgevoerd op de tekst die overeenkomt met het tweede patroon.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

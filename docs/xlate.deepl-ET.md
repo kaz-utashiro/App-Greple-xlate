@@ -40,15 +40,29 @@ Vaikimisi trükitakse algne ja tõlgitud tekst [git(1)](http://man.he.net/man1/g
 
 Kui soovite tõlkida kogu teksti, kasutage valikut **--match-all**. See on otsetee, et määrata muster `(?s).+`, mis vastab kogu tekstile.
 
-Konfliktimärgistuse formaadis andmeid saab vaadata külg-üles stiilis käsuga `sdif` koos valikuga `-V`. Kuna stringide kaupa võrdlemisel ei ole mõtet, on soovitatav kasutada valikut `--no-cdif`. Kui teil ei ole vaja teksti värvida, määrake `--no-color` või `--cm 'TEXT*='`.
+Konfliktimärgistuse formaadis andmeid saab vaadata külg-üles stiilis käsuga `sdif` koos valikuga `-V`. Kuna sõnepõhiselt pole mõtet võrrelda, on soovitatav kasutada valikut `--no-cdif`. Kui teil ei ole vaja teksti värvida, määrake `--no-textcolor` (või `--no-tc`).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+Töötlemine toimub kindlaksmääratud ühikutes, kuid mitme mittetäieliku tekstirea järjestuse korral teisendatakse need kokku üheks reaks. See operatsioon toimub järgmiselt:
+
+- Eemaldatakse valge tühik iga rea alguses ja lõpus.
+- Kui rida lõpeb täies laiuses märgiga ja järgmine rida algab täies laiuses märgiga, ühendatakse read.
+- Kui rea lõpp või algus ei ole täies laiuses märk, ühendage need, lisades tühiku.
+
+Vahemälu andmeid hallatakse normaliseeritud teksti alusel, nii et isegi kui tehakse muudatusi, mis ei mõjuta normaliseerimise tulemusi, on vahemälus olevad tõlkeandmed ikkagi tõhusad.
+
+See normaliseerimisprotsess toimub ainult paarisnumbriliste mustrite puhul. Seega, kui kaks mustrit on määratud järgmiselt, töödeldakse pärast normaliseerimist esimesele mustrile vastavat teksti ja teisele mustrile vastavat teksti ei normaliseerita.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

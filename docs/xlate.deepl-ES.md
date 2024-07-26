@@ -40,15 +40,29 @@ Por defecto, el texto original y traducido se imprime en el formato "marcador de
 
 Si desea traducir todo el texto, utilice la opción **--match-all**. Es un atajo para especificar el patrón `(?s).+` que coincide con todo el texto.
 
-Los datos en formato de marcador de conflicto pueden visualizarse en estilo lado a lado mediante el comando `sdif` con la opción `-V`. Dado que no tiene sentido comparar por cadena, se recomienda la opción `--no-cdif`. Si no necesita colorear el texto, especifique `--no-color` o `--cm 'TEXT*='`.
+Los datos en formato de marcador de conflicto pueden visualizarse en estilo lado a lado mediante el comando `sdif` con la opción `-V`. Dado que no tiene sentido comparar por cadena, se recomienda la opción `--no-cdif`. Si no necesita colorear el texto, especifique `--no-textcolor` (o `--no-tc`).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+El procesamiento se realiza en unidades especificadas, pero en el caso de una secuencia de varias líneas de texto no vacías, se convierten juntas en una sola línea. Esta operación se realiza del siguiente modo:
+
+- Se eliminan los espacios en blanco al principio y al final de cada línea.
+- Si una línea termina con un carácter de ancho completo y la línea siguiente comienza con un carácter de ancho completo, concatene las líneas.
+- Si el final o el principio de una línea no es un carácter de ancho completo, concaténelas insertando un carácter de espacio.
+
+Los datos de la caché se gestionan en función del texto normalizado, por lo que aunque se realicen modificaciones que no afecten a los resultados de la normalización, los datos de traducción almacenados en la caché seguirán siendo efectivos.
+
+Este proceso de normalización se realiza sólo para el patrón par. Así, si se especifican dos patrones como los siguientes, el texto que coincida con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincida con el segundo patrón.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

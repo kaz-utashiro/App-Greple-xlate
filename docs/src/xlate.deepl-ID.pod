@@ -38,13 +38,39 @@ Secara default, teks asli dan terjemahan dicetak dalam format "penanda konflik" 
 
 Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola C<(?s).+> yang cocok dengan seluruh teks.
 
-Data format penanda konflik dapat dilihat dalam gaya berdampingan dengan perintah C<sdif> dengan opsi C<-V>. Karena tidak masuk akal untuk membandingkan per string, opsi C<--no-cdif> direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan C<--no-color> atau C<--cm 'TEXT*='>.
+Data format penanda konflik dapat dilihat dalam gaya berdampingan dengan perintah C<sdif> dengan opsi C<-V>. Karena tidak masuk akal untuk membandingkan per string, opsi C<--no-cdif> direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan C<--no-textcolor> (atau C<--no-tc>).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+Pemrosesan dilakukan dalam unit yang ditentukan, tetapi dalam kasus urutan beberapa baris teks yang tidak kosong, teks-teks tersebut dikonversi bersama menjadi satu baris. Operasi ini dilakukan sebagai berikut:
+
+=over
+
+=item *
+
+Menghilangkan spasi pada awal dan akhir setiap baris.
+
+=item *
+
+Jika sebuah baris diakhiri dengan karakter dengan lebar penuh dan baris berikutnya dimulai dengan karakter dengan lebar penuh, gabungkan kedua baris tersebut.
+
+=item *
+
+Jika akhir atau awal baris bukan merupakan karakter dengan lebar penuh, gabungkan keduanya dengan menyisipkan karakter spasi.
+
+=back
+
+Data cache dikelola berdasarkan teks yang dinormalisasi, sehingga meskipun ada modifikasi yang dilakukan yang tidak memengaruhi hasil normalisasi, data terjemahan yang ditembolok akan tetap efektif.
+
+Proses normalisasi ini dilakukan hanya untuk pola bernomor genap. Dengan demikian, jika dua pola ditentukan sebagai berikut, teks yang cocok dengan pola pertama akan diproses setelah normalisasi, dan tidak ada proses normalisasi yang dilakukan pada teks yang cocok dengan pola kedua.
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 

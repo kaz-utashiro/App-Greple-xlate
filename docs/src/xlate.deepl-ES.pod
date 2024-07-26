@@ -38,13 +38,39 @@ Por defecto, el texto original y traducido se imprime en el formato "marcador de
 
 Si desea traducir todo el texto, utilice la opción B<--match-all>. Es un atajo para especificar el patrón C<(?s).+> que coincide con todo el texto.
 
-Los datos en formato de marcador de conflicto pueden visualizarse en estilo lado a lado mediante el comando C<sdif> con la opción C<-V>. Dado que no tiene sentido comparar por cadena, se recomienda la opción C<--no-cdif>. Si no necesita colorear el texto, especifique C<--no-color> o C<--cm 'TEXT*='>.
+Los datos en formato de marcador de conflicto pueden visualizarse en estilo lado a lado mediante el comando C<sdif> con la opción C<-V>. Dado que no tiene sentido comparar por cadena, se recomienda la opción C<--no-cdif>. Si no necesita colorear el texto, especifique C<--no-textcolor> (o C<--no-tc>).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+El procesamiento se realiza en unidades especificadas, pero en el caso de una secuencia de varias líneas de texto no vacías, se convierten juntas en una sola línea. Esta operación se realiza del siguiente modo:
+
+=over
+
+=item *
+
+Se eliminan los espacios en blanco al principio y al final de cada línea.
+
+=item *
+
+Si una línea termina con un carácter de ancho completo y la línea siguiente comienza con un carácter de ancho completo, concatene las líneas.
+
+=item *
+
+Si el final o el principio de una línea no es un carácter de ancho completo, concaténelas insertando un carácter de espacio.
+
+=back
+
+Los datos de la caché se gestionan en función del texto normalizado, por lo que aunque se realicen modificaciones que no afecten a los resultados de la normalización, los datos de traducción almacenados en la caché seguirán siendo efectivos.
+
+Este proceso de normalización se realiza sólo para el patrón par. Así, si se especifican dos patrones como los siguientes, el texto que coincida con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincida con el segundo patrón.
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 

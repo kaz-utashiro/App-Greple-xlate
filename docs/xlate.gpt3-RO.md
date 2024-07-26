@@ -40,15 +40,29 @@ Apoi adăugați opțiunea `--xlate` pentru a traduce zona selectată. Apoi, va g
 
 Dacă doriți să traduceți întregul text, utilizați opțiunea **--match-all**. Aceasta este o scurtătură pentru a specifica modelul `(?s).+` care se potrivește cu întregul text.
 
-Formatul datelor pentru marcatorii de conflict poate fi vizualizat în stilul side-by-side folosind comanda `sdif` cu opțiunea `-V`. Deoarece nu are sens să comparăm pe baza fiecărui șir de caractere, este recomandată opțiunea `--no-cdif`. Dacă nu aveți nevoie de culori pentru text, specificați `--no-color` sau `--cm 'TEXT*='`.
+Formatul datelor pentru markerul de conflict poate fi vizualizat în stil side-by-side folosind comanda `sdif` cu opțiunea `-V`. Deoarece nu are sens să comparăm pe baza fiecărui șir de caractere, se recomandă opțiunea `--no-cdif`. Dacă nu aveți nevoie să colorați textul, specificați `--no-textcolor` (sau `--no-tc`).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+Procesarea se face în unități specificate, dar în cazul unei secvențe de mai multe linii de text ne-gol, acestea sunt convertite împreună într-o singură linie. Această operație se efectuează astfel:
+
+- Se elimină spațiile albe de la început și sfârșitul fiecărei linii.
+- Dacă o linie se termină cu un caracter de lățime completă și linia următoare începe cu un caracter de lățime completă, se concatenează liniile.
+- Dacă fie sfârșitul sau începutul unei linii nu este un caracter de lățime completă, acestea sunt concatenate prin inserarea unui caracter spațiu.
+
+Datele cache sunt gestionate pe baza textului normalizat, astfel încât chiar dacă se fac modificări care nu afectează rezultatele normalizării, datele de traducere cache vor fi în continuare eficiente.
+
+Acest proces de normalizare se efectuează doar pentru modelul cu număr par. Astfel, dacă sunt specificate două modele după cum urmează, textul care se potrivește cu primul model va fi procesat după normalizare, iar niciun proces de normalizare nu va fi efectuat pe textul care se potrivește cu al doilea model.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

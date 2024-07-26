@@ -38,13 +38,39 @@ B<Greple> B<xlate> 模块查找所需的文本块，并用翻译文本替换它�
 
 如果要翻译整个文本，请使用 B<--match-all> 选项。这是指定匹配整个文本的模式 C<(?s).+> 的快捷方式。
 
-冲突标记格式数据可以通过带有 C<-V> 选项的 C<sdif> 命令并排查看。由于按字符串进行比较毫无意义，因此建议使用 C<--no-cdif> 选项。如果不需要给文本着色，可指定 C<--no-color> 或 C<--cm 'TEXT*='>。
+冲突标记格式数据可以通过带有 C<-V> 选项的 C<sdif> 命令并排查看。由于按字符串进行比较毫无意义，因此建议使用 C<--no-cdif> 选项。如果不需要给文本着色，可指定 C<--no-textcolor>（或 C<--no-tc>）。
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+处理是以指定单位进行的，但如果是多行非空文本序列，则会一起转换为单行。具体操作如下
+
+=over
+
+=item *
+
+删除每行开头和结尾的空白。
+
+=item *
+
+如果一行以全角字符结束，而下一行以全角字符开始，则将这两行连接起来。
+
+=item *
+
+如果一行的末尾或开头不是全宽字符，则通过插入空格字符将它们连接起来。
+
+=back
+
+缓存数据是根据规范化文本进行管理的，因此即使进行了不影响规范化结果的修改，缓存的翻译数据仍然有效。
+
+此规范化过程只针对偶数模式执行。因此，如果指定了以下两个模式，则将在规范化后处理与第一个模式匹配的文本，而不会对与第二个模式匹配的文本执行规范化处理。
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 

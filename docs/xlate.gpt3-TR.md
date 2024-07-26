@@ -40,15 +40,29 @@ Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man
 
 Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tüm metni eşleştiren `(?s).+` desenini belirtmek için bir kısayoldur.
 
-Çatışma işaretçisi biçim veri, `-V` seçeneği ile `sdif` komutu kullanılarak yan yana stilinde görüntülenebilir. Dize bazında karşılaştırma yapmanın anlamsız olduğu için `--no-cdif` seçeneği önerilir. Metni renklendirmenize gerek yoksa, `--no-color` veya `--cm 'METİN*='` belirtin.
+Çatışma işaretçisi biçim veri, `-V` seçeneği ile `sdif` komutuyla yan yana stilinde görüntülenebilir. Satır bazında karşılaştırma yapmanın anlamsız olduğu için `--no-cdif` seçeneği önerilir. Metni renklendirmeniz gerekmiyorsa, `--no-textcolor` (veya `--no-tc`) belirtin.
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+İşleme belirtilen birimlerde yapılır, ancak birden fazla satırın ardışık olarak işlenmesi durumunda, bunlar birlikte tek bir satıra dönüştürülür. Bu işlem şu şekilde gerçekleştirilir:
+
+- Her satırın başında ve sonundaki boşlukları kaldırın.
+- Bir satır tam genişlikli bir karakterle biterse ve bir sonraki satır tam genişlikli bir karakterle başlarsa, satırları birleştirin.
+- Bir satırın sonu veya başı tam genişlikli bir karakter değilse, aralarına bir boşluk karakteri ekleyerek birleştirin.
+
+Önbellek verileri, normalize edilmiş metne dayalı olarak yönetilir, bu nedenle normalleştirme sonuçlarını etkilemeyen değişiklikler yapılsa bile, önbelleğe alınan çeviri verileri hala etkilidir.
+
+Bu normalleştirme işlemi yalnızca çift numaralı desenler için yapılır. Dolayısıyla, iki desen aşağıdaki gibi belirtildiğinde, ilk desene uyan metin normalleştirmenin ardından işlenir ve ikinci desene uyan metin üzerinde normalleştirme işlemi gerçekleştirilmez.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

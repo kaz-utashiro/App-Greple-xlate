@@ -38,13 +38,39 @@ Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, m
 
 Kui soovite tõlkida terve teksti, kasutage B<--match-all> valikut. See on otsetee, et määrata mustrit C<(?s).+>, mis sobib tervele tekstile.
 
-Konfliktimärgise vormingu andmeid saab vaadata kõrvuti stiilis C<sdif> käsu abil C<-V> valikuga. Kuna pole mõtet võrrelda iga stringi alusel, soovitatakse kasutada C<--no-cdif> valikut. Kui te ei vaja teksti värvimist, määrake C<--no-color> või C<--cm 'TEXT*='>.
+Konfliktimärgistuse vormingu andmeid saab vaadata kõrvuti stiilis C<sdif> käsu abil C<-V> valikuga. Kuna mõttekas pole võrrelda iga stringi alusel, soovitatakse kasutada valikut C<--no-cdif>. Kui te ei vaja teksti värvimist, määrake C<--no-textcolor> (või C<--no-tc>).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+Töötlemine toimub määratletud üksustes, kuid mitme rea järjestikuse mitte-tühja teksti korral teisendatakse need koos üheks reaks. See toiming viiakse läbi järgmiselt:
+
+=over
+
+=item *
+
+Eemaldatakse tühikud iga rea algusest ja lõpust.
+
+=item *
+
+Kui rida lõpeb täislaia tähemärgiga ja järgmine rida algab täislaia tähemärgiga, ühendatakse read.
+
+=item *
+
+Kui rea lõpus või alguses pole täislaia tähemärki, ühendatakse nad, sisestades tühikumärgi.
+
+=back
+
+Vahemälu andmeid haldab normaliseeritud teksti põhjal, seega isegi kui tehakse muudatusi, mis normaliseerimistulemusi ei mõjuta, jäävad vahemälus olevad tõlkeandmed endiselt kehtima.
+
+See normaliseerimisprotsess viiakse läbi ainult paarisarvulise mustri korral. Seega, kui kaks mustrit on määratletud järgmiselt, töödeldakse esimese mustrile vastav tekst pärast normaliseerimist ning teisele mustrile vastav tekst ei läbi normaliseerimisprotsessi.
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 

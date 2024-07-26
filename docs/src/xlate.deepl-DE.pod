@@ -30,7 +30,7 @@ In diesem Befehl bedeutet die Zeichenkette C<^(\w.*\n)+> aufeinanderfolgende Zei
 
 Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe des Befehls B<deepl> ersetzt.
 
-Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "conflict marker" gedruckt, das mit L<git(1)> kompatibel ist. Wenn Sie das C<ifdef>-Format verwenden, können Sie den gewünschten Teil mit dem Befehl L<unifdef(1)> leicht erhalten. Das Ausgabeformat kann mit der Option B<--xlate-format> festgelegt werden.
+Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "Konfliktmarkierung" ausgegeben, das mit L<git(1)> kompatibel ist. Wenn Sie das Format C<ifdef> verwenden, können Sie den gewünschten Teil mit dem Befehl L<unifdef(1)> leicht erhalten. Das Ausgabeformat kann mit der Option B<--xlate-format> festgelegt werden.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/format-conflict.png">
@@ -38,13 +38,39 @@ Standardmäßig werden der ursprüngliche und der übersetzte Text im Format "co
 
 Wenn Sie den gesamten Text übersetzen wollen, verwenden Sie die Option B<--match-all>. Dies ist eine Abkürzung zur Angabe des Musters C<(?s).+>, das auf den gesamten Text passt.
 
-Daten im Konfliktmarkierungsformat können mit dem Befehl C<sdif> mit der Option C<-V> nebeneinander angezeigt werden. Da es keinen Sinn macht, die Daten pro Zeichenfolge zu vergleichen, wird die Option C<--no-cdif> empfohlen. Wenn Sie den Text nicht einfärben wollen, geben Sie C<--no-color> oder C<--cm 'TEXT*='> an.
+Daten im Konfliktmarkerformat können mit dem Befehl C<sdif> und der Option C<-V> nebeneinander angezeigt werden. Da es keinen Sinn macht, die Daten pro Zeichenfolge zu vergleichen, wird die Option C<--no-cdif> empfohlen. Wenn Sie den Text nicht einfärben müssen, geben Sie C<--no-textcolor> (oder C<--no-tc>) an.
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
 </p>
+
+=head1 NORMALIZATION
+
+Die Verarbeitung erfolgt in den angegebenen Einheiten, aber im Falle einer Folge von mehreren nicht leeren Textzeilen werden diese zusammen in eine einzige Zeile umgewandelt. Dieser Vorgang wird wie folgt durchgeführt:
+
+=over
+
+=item *
+
+Am Anfang und am Ende jeder Zeile wird der Leerraum entfernt.
+
+=item *
+
+Wenn eine Zeile mit einem Zeichen voller Breite endet und die nächste Zeile mit einem Zeichen voller Breite beginnt, werden die Zeilen verkettet.
+
+=item *
+
+Wenn entweder das Ende oder der Anfang einer Zeile kein Zeichen mit voller Breite ist, verketten Sie sie durch Einfügen eines Leerzeichens.
+
+=back
+
+Die Cache-Daten werden auf der Grundlage des normalisierten Textes verwaltet. Selbst wenn Änderungen vorgenommen werden, die sich nicht auf die Normalisierungsergebnisse auswirken, sind die im Cache gespeicherten Übersetzungsdaten weiterhin gültig.
+
+Dieser Normalisierungsprozess wird nur für die geradzahligen Muster durchgeführt. Wenn also zwei Muster wie folgt angegeben werden, wird der Text, der mit dem ersten Muster übereinstimmt, nach der Normalisierung verarbeitet, und für den Text, der mit dem zweiten Muster übereinstimmt, wird kein Normalisierungsprozess durchgeführt.
+
+    greple Mxlate --re normalized --re not-normalized
 
 =head1 OPTIONS
 
@@ -60,7 +86,7 @@ Daten im Konfliktmarkierungsformat können mit dem Befehl C<sdif> mit der Option
 
 Rufen Sie den Übersetzungsprozess für jeden übereinstimmenden Bereich auf.
 
-Ohne diese Option verhält sich B<greple> wie ein normaler Suchbefehl. Sie können also prüfen, welcher Teil der Datei Gegenstand der Übersetzung sein wird, bevor Sie die eigentliche Arbeit aufrufen.
+Ohne diese Option verhält sich B<greple> wie ein normaler Suchbefehl. Sie können also überprüfen, welcher Teil der Datei Gegenstand der Übersetzung sein wird, bevor Sie die eigentliche Arbeit aufrufen.
 
 Das Ergebnis des Befehls wird im Standard-Output ausgegeben, also leiten Sie es bei Bedarf in eine Datei um oder verwenden Sie das Modul L<App::Greple::update>.
 
@@ -70,13 +96,13 @@ Mit der Option B<--xlate-fold> wird der konvertierte Text um die angegebene Brei
 
 =item B<--xlate-engine>=I<engine>
 
-Gibt die zu verwendende Übersetzungs-Engine an. Wenn Sie das Engine-Modul direkt angeben, wie z.B. C<-Mxlate::deepl>, brauchen Sie diese Option nicht zu verwenden.
+Gibt das zu verwendende Übersetzungsmodul an. Wenn Sie das Modul direkt angeben, z. B. C<-Mxlate::deepl>, müssen Sie diese Option nicht verwenden.
 
 =item B<--xlate-labor>
 
 =item B<--xlabor>
 
-Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie für sie arbeiten. Nachdem der zu übersetzende Text vorbereitet wurde, wird er in die Zwischenablage kopiert. Es wird erwartet, dass Sie sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und Return drücken.
+Anstatt die Übersetzungsmaschine aufzurufen, wird von Ihnen erwartet, dass Sie für arbeiten. Nachdem Sie den zu übersetzenden Text vorbereitet haben, wird er in die Zwischenablage kopiert. Es wird erwartet, dass Sie sie in das Formular einfügen, das Ergebnis in die Zwischenablage kopieren und die Eingabetaste drücken.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
@@ -84,13 +110,13 @@ Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befe
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
-Geben Sie das Ausgabeformat für den Originaltext und den übersetzten Text an.
+Legen Sie das Ausgabeformat für den ursprünglichen und den übersetzten Text fest.
 
 =over 4
 
 =item B<conflict>, B<cm>
 
-Original und konvertierter Text werden im Format L<git(1)> conflict marker gedruckt.
+Original und konvertierter Text werden im Format L<git(1)> conflict marker ausgegeben.
 
     <<<<<<< ORIGINAL
     original text
@@ -104,7 +130,7 @@ Sie können die Originaldatei mit dem nächsten Befehl L<sed(1)> wiederherstelle
 
 =item B<ifdef>
 
-Original und konvertierter Text werden im L<cpp(1)> C<#ifdef> Format gedruckt.
+Original und konvertierter Text werden im Format L<cpp(1)> C<#ifdef> ausgedruckt.
 
     #ifdef ORIGINAL
     original text
@@ -113,7 +139,7 @@ Original und konvertierter Text werden im L<cpp(1)> C<#ifdef> Format gedruckt.
     translated Japanese text
     #endif
 
-Mit dem Befehl B<unifdef> können Sie nur den japanischen Text wiederherstellen:
+Mit dem Befehl B<unifdef> können Sie nur japanischen Text wiederherstellen:
 
     unifdef -UORIGINAL -DJA foo.ja.pm
 
@@ -129,11 +155,11 @@ Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der üb
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen DeepL account service: 128K für die API (B<--xlate>) und 5000 für die Zwischenablage-Schnittstelle (B<--xlate-labor>). Sie können diese Werte ändern, wenn Sie den Pro-Dienst verwenden.
+Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen DeepL account service eingestellt: 128K für die API (B<--xlate>) und 5000 für die Zwischenablage-Schnittstelle (B<--xlate-labor>). Sie können diese Werte ändern, wenn Sie den Pro-Service nutzen.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Sehen Sie das Ergebnis der Übersetzung in Echtzeit in der STDERR-Ausgabe.
+Sie können das Ergebnis der Übertragung in Echtzeit in der STDERR-Ausgabe sehen.
 
 =item B<--match-all>
 
@@ -143,13 +169,13 @@ Legen Sie den gesamten Text der Datei als Zielbereich fest.
 
 =head1 CACHE OPTIONS
 
-Das Modul B<xlate> kann den übersetzten Text für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch Anfragen an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur beibehalten, wenn die Cache-Datei für die Zieldatei existiert.
+Das Modul B<xlate> kann den Text der Übersetzung für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch die Anfrage an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert.
 
 =over 7
 
 =item --cache-clear
 
-Die Option B<--cache-clear> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Wenn diese Option ausgeführt wird, wird eine neue Cache-Datei erstellt, falls noch keine vorhanden ist, und anschließend automatisch beibehalten.
+Die Option B<--cache-clear> kann verwendet werden, um die Cache-Verwaltung zu starten oder um alle vorhandenen Cache-Daten zu aktualisieren. Nach der Ausführung dieser Option wird eine neue Cachedatei erstellt, falls noch keine vorhanden ist, und anschließend automatisch beibehalten.
 
 =item --xlate-cache=I<strategy>
 
@@ -157,7 +183,7 @@ Die Option B<--cache-clear> kann verwendet werden, um die Cache-Verwaltung zu st
 
 =item C<auto> (Default)
 
-Behalten Sie die Cache-Datei bei, wenn sie vorhanden ist.
+Cache-Datei beibehalten, wenn sie vorhanden ist.
 
 =item C<create>
 
@@ -173,11 +199,11 @@ Löschen Sie zuerst die Cache-Daten.
 
 =item C<never>, C<no>, C<0>
 
-Cache-Datei nie verwenden, auch wenn sie vorhanden ist.
+Niemals die Cache-Datei verwenden, selbst wenn sie vorhanden ist.
 
 =item C<accumulate>
 
-In der Standardeinstellung werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten wollen, verwenden Sie C<accumulate>.
+Standardmäßig werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten wollen, verwenden Sie C<accumulate>.
 
 =back
 
@@ -185,17 +211,17 @@ In der Standardeinstellung werden nicht verwendete Daten aus der Cache-Datei ent
 
 =head1 COMMAND LINE INTERFACE
 
-Sie können dieses Modul einfach von der Kommandozeile aus verwenden, indem Sie den in der Distribution enthaltenen Befehl C<xlate> benutzen. Informationen zur Verwendung finden Sie in der C<xlate>-Hilfe.
+Sie können dieses Modul ganz einfach von der Kommandozeile aus benutzen, indem Sie den Befehl C<xlate> verwenden, der in der Distribution enthalten ist. Siehe die C<xlate>-Hilfeinformationen zur Verwendung.
 
-Der Befehl C<xlate> arbeitet mit der Docker-Umgebung zusammen, d.h. selbst wenn Sie nichts installiert haben, können Sie ihn verwenden, solange Docker verfügbar ist. Verwenden Sie die Option C<-D> oder C<-C>.
+Der Befehl C<xlate> arbeitet mit der Docker-Umgebung zusammen, d. h. selbst wenn Sie nichts installiert haben, können Sie ihn verwenden, solange Docker verfügbar ist. Verwenden Sie die Option C<-D> oder C<-C>.
 
-Da Makefiles für verschiedene Dokumentstile zur Verfügung gestellt werden, ist auch die Übersetzung in andere Sprachen ohne besondere Angaben möglich. Verwenden Sie die Option C<-M>.
+Da Makefiles für verschiedene Dokumentstile zur Verfügung gestellt werden, ist auch eine Übersetzung in andere Sprachen ohne besondere Angaben möglich. Verwenden Sie die Option C<-M>.
 
 Sie können auch die Optionen Docker und make kombinieren, so dass Sie make in einer Docker-Umgebung ausführen können.
 
-Ein Aufruf wie C<xlate -GC> startet eine Shell mit dem aktuellen Git-Repository.
+Mit C<xlate -GC> wird eine Shell gestartet, in der das aktuelle Git-Repository eingebunden ist.
 
-Lesen Sie den japanischen Artikel im Abschnitt L</SEE ALSO> für weitere Einzelheiten.
+Lesen Sie den japanischen Artikel im Abschnitt L</SEE ALSO> für weitere Details.
 
     xlate [ options ] -t lang file [ greple options ]
 	-h   help
@@ -235,7 +261,7 @@ Lesen Sie den japanischen Artikel im Abschnitt L</SEE ALSO> für weitere Einzelh
 
 =head1 EMACS
 
-Laden Sie die Datei F<xlate.el> aus dem Repository, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt die angegebene Region. Die Standardsprache ist C<EN-US> und Sie können die Sprache mit dem Präfix-Argument angeben.
+Laden Sie die im Repository enthaltene Datei F<xlate.el>, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt die angegebene Region. Die Standardsprache ist C<EN-US> und Sie können die Sprache mit dem Präfix-Argument angeben.
 
 =head1 ENVIRONMENT
 
@@ -259,7 +285,7 @@ OpenAI-Authentifizierungsschlüssel.
 
 =head2 TOOLS
 
-Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
+Sie müssen die Befehlszeilentools für DeepL und ChatGPT installieren.
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -271,7 +297,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<Anwendung::Greple::xlate::gpt3>
 
 L<https://hub.docker.com/r/tecolicom/xlate>
 
@@ -291,7 +317,7 @@ OpenAI Kommandozeilen-Schnittstelle
 
 =item L<App::Greple>
 
-Lesen Sie das Handbuch B<greple> für Details über Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den Suchbereich einzuschränken.
+Siehe das B<greple>-Handbuch für Details über Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den passenden Bereich einzuschränken.
 
 =item L<App::Greple::update>
 

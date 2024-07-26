@@ -40,15 +40,29 @@ Standardmäßig wird der Original- und übersetzte Text im "Konfliktmarker"-Form
 
 Wenn Sie den gesamten Text übersetzen möchten, verwenden Sie die **--match-all** Option. Dies ist eine Abkürzung, um das Muster `(?s).+` anzugeben, das den gesamten Text abdeckt.
 
-Konfliktmarkierungsformatdaten können im Seit-an-Seit-Stil mit dem Befehl `sdif` und der Option `-V` angezeigt werden. Da ein Vergleich auf Zeichenfolgenbasis keinen Sinn macht, wird die Option `--no-cdif` empfohlen. Wenn Sie den Text nicht einfärben müssen, geben Sie `--no-color` oder `--cm 'TEXT*='` an.
+Konfliktmarker-Formatdaten können im Seit-an-Seit-Stil mit dem Befehl `sdif` und der Option `-V` angezeigt werden. Da ein Vergleich auf Zeichenfolgenbasis keinen Sinn macht, wird die Option `--no-cdif` empfohlen. Wenn Sie den Text nicht einfärben möchten, geben Sie `--no-textcolor` (oder `--no-tc`) an.
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+Die Verarbeitung erfolgt in festgelegten Einheiten, aber im Fall einer Sequenz von mehreren Zeilen mit nicht-leerem Text werden sie zusammen in eine einzige Zeile umgewandelt. Diese Operation wird wie folgt durchgeführt:
+
+- Entfernen Sie Leerzeichen am Anfang und Ende jeder Zeile.
+- Wenn eine Zeile mit einem Vollbreitenzeichen endet und die nächste Zeile mit einem Vollbreitenzeichen beginnt, werden die Zeilen zusammengefügt.
+- Wenn entweder das Ende oder der Anfang einer Zeile kein Vollbreitenzeichen ist, werden sie durch Einfügen eines Leerzeichens zusammengefügt.
+
+Cache-Daten werden basierend auf dem normalisierten Text verwaltet, sodass auch bei Änderungen, die die Normalisierungsergebnisse nicht beeinflussen, die zwischengespeicherten Übersetzungsdaten weiterhin wirksam sind.
+
+Dieser Normalisierungsprozess wird nur für das gerade nummerierte Muster durchgeführt. Wenn also zwei Muster wie folgt angegeben sind, wird der Text, der dem ersten Muster entspricht, nach der Normalisierung verarbeitet, und es wird kein Normalisierungsprozess für den Text durchgeführt, der dem zweiten Muster entspricht.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 

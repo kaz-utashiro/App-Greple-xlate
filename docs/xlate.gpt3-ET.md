@@ -40,15 +40,29 @@ Vaikimisi prinditakse algne ja tõlgitud tekst "konfliktimärgendi" formaadis, m
 
 Kui soovite tõlkida terve teksti, kasutage **--match-all** valikut. See on otsetee, et määrata mustrit `(?s).+`, mis sobib tervele tekstile.
 
-Konfliktimärgise vormingu andmeid saab vaadata kõrvuti stiilis `sdif` käsu abil `-V` valikuga. Kuna pole mõtet võrrelda iga stringi alusel, soovitatakse kasutada `--no-cdif` valikut. Kui te ei vaja teksti värvimist, määrake `--no-color` või `--cm 'TEXT*='`.
+Konfliktimärgistuse vormingu andmeid saab vaadata kõrvuti stiilis `sdif` käsu abil `-V` valikuga. Kuna mõttekas pole võrrelda iga stringi alusel, soovitatakse kasutada valikut `--no-cdif`. Kui te ei vaja teksti värvimist, määrake `--no-textcolor` (või `--no-tc`).
 
-    sdif -V --cm '*TEXT=' --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>
     <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/sdif-cm-view.png">
     </p>
 </div>
+
+# NORMALIZATION
+
+Töötlemine toimub määratletud üksustes, kuid mitme rea järjestikuse mitte-tühja teksti korral teisendatakse need koos üheks reaks. See toiming viiakse läbi järgmiselt:
+
+- Eemaldatakse tühikud iga rea algusest ja lõpust.
+- Kui rida lõpeb täislaia tähemärgiga ja järgmine rida algab täislaia tähemärgiga, ühendatakse read.
+- Kui rea lõpus või alguses pole täislaia tähemärki, ühendatakse nad, sisestades tühikumärgi.
+
+Vahemälu andmeid haldab normaliseeritud teksti põhjal, seega isegi kui tehakse muudatusi, mis normaliseerimistulemusi ei mõjuta, jäävad vahemälus olevad tõlkeandmed endiselt kehtima.
+
+See normaliseerimisprotsess viiakse läbi ainult paarisarvulise mustri korral. Seega, kui kaks mustrit on määratletud järgmiselt, töödeldakse esimese mustrile vastav tekst pärast normaliseerimist ning teisele mustrile vastav tekst ei läbi normaliseerimisprotsessi.
+
+    greple Mxlate --re normalized --re not-normalized
 
 # OPTIONS
 
