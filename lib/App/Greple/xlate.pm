@@ -593,21 +593,25 @@ sub fold_lines {
 }
 
 sub strip {
-    my @text = $_[0] =~ /.*\n?/g;
-    my @space = ( [] ) x @text;
-    while (my($i, $l) = each @text) {
-	$space[$i]->[0] = $l =~ s/\A(\s+)// ? $1 : '' ;
-	$space[$i]->[1] = $l =~ s/(\h+)$//  ? $1 : '' ;
+    my @text = $_[0] =~ /.*\n|.+\z/g;
+    my @space;
+    for (@text) {
+	push @space, \my @sp;
+	$sp[0] = s/\A(\s+)// ? $1 : '' ;
+	$sp[1] = s/(\h+)$//  ? $1 : '' ;
     }
     $_[0] = join '', @text;
-    sub {
-	my @text = $_[0] =~ /.*\n?/g;
-	while (my($i, $l) = each @text) {
-	    my($head, $tail) = @{$space[$i]};
-	    s/\A/$head/ if length $head > 0;
-	    s/\Z/$tail/ if length $tail > 0;
+    sub { # unstrip
+	for (@_) {
+	    my @text = /.*\n|.+\z/g;
+	    die "UNMATCH:\n".Dumper(\@text, \@space) if @text != @space;
+	    for my $i (keys @text) {
+		my($head, $tail) = @{$space[$i]};
+		$text[$i] =~ s/\A/$head/ if length $head > 0;
+		$text[$i] =~ s/\Z/$tail/ if length $tail > 0;
+	    }
+	    $_ = join '', @text;
 	}
-	$_[0] = join '', @text;
     };
 }
 sub single_strip {
@@ -615,20 +619,20 @@ sub single_strip {
     my $head = s/\A(\s+)// ? $1 : '' ;
     my $tail = s/(\h+)$//  ? $1 : '' ;
     sub {
-	local *_ = \$_[0];
-	s/\A/$head/ if length $head;
-	s/$/$tail/ if length $tail;
+	for (@_) {
+	    s/\A/$head/ if length $head;
+	    s/\Z/$tail/ if length $tail;
+	}
     };
 }
 sub xlate {
     my $param = { @_ };
     my($index, $text) = @{$param}{qw(index match)};
-    my $unstrip = strip $text;
-    my $key = $text;
-    $key = normalize $key if $index % 2 == 0;
+    my $normalize = $index % 2 == 0;
+    my $unstrip = $normalize ? single_strip($text) : strip($text);
+    my $key     = $normalize ? normalize($text)    : $text;
     my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
-    $unstrip->($text);
-    $unstrip->($s);
+    $unstrip->($text, $s);
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
 	return $formatter->($text, $s);
