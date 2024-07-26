@@ -438,6 +438,7 @@ it under the same terms as Perl itself.
 
 use v5.14;
 use warnings;
+use utf8;
 
 use Data::Dumper;
 
@@ -453,7 +454,7 @@ our @EXPORT_TAGS = ( all => [ qw($VERSION) ] );
 our %opt = (
     debug    => \(our $debug = 0),
     engine   => \(our $xlate_engine),
-    progress => \(our $show_progress = 1),
+    progress => \(our $show_progress = 0),
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
@@ -533,6 +534,14 @@ sub setup {
 
 sub normalize {
     local $_ = shift;
+    my $nojoin = shift;
+    if ($nojoin) {
+	return
+	s{^.+}{
+	    ${^MATCH}
+		=~ s/\A\s+|\s+\z//gr
+	}pmger;
+    }
     s{^.+(?:\n.+)*}{
 	${^MATCH}
 	# remove leading/trailing spaces
@@ -551,7 +560,7 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my($s, $e, $i) = @$m;
-	    my $key = normalize $grep->cut(@$m), $i;
+	    my $key = normalize $grep->cut(@$m), $i % 2;
 	    if (not exists $cache{$key}) {
 		$cache{$key} = undef;
 		push @miss, $key;
@@ -562,19 +571,28 @@ sub postgrep {
 }
 
 sub _progress {
-    print STDERR @_ if opt('progress');
+    my $opt = ref $_[0] ? shift : {};
+    opt('progress') or return;
+    if (my $label = $opt->{label}) { print STDERR "[xlate.pm] $label:\n" }
+    for (my @s = @_) {
+	my $i =()= /^/mg;
+	my @m = ($i == 1 ? '╶' : '│') x $i ;
+	@m[0,-1] = qw(┌ └) if $i > 1;
+	s/^/sprintf "%7s ", shift(@m)/mge;
+	print STDERR $_;
+    }
 }
 
 sub cache_update {
     binmode STDERR, ':encoding(utf8)';
 
     my @from = @_;
-    # _progress("From:\n", map s/^/\t< /mgr, @from);
+    _progress({label => "From"}, @from);
     return @from if $dryrun;
 
     my @to = &XLATE(@from);
 
-    # _progress("To:\n", map s/^/\t> /mgr, @to);
+    _progress({label => "To"}, @to);
     die "Unmatched response:\n@to" if @from != @to;
     @cache{@from} = @to;
 }
@@ -630,7 +648,7 @@ sub xlate {
     my($index, $text) = @{$param}{qw(index match)};
     my $normalize = $index % 2 == 0;
     my $unstrip = $normalize ? single_strip($text) : strip($text);
-    my $key     = $normalize ? normalize($text)    : $text;
+    my $key = normalize($text, $index % 2);
     my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
     $unstrip->($text, $s);
     $s = fold_lines $s if $fold_line;
@@ -712,7 +730,7 @@ builtin xlate-prompt=s     $prompt
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --cm=/544E,/454E,/445E,/455E,/545E,/554E
+option default --need=1 --cm=/544E,/454E,/445E,/455E,/545E,/554E
 
 option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
 
