@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.32
+Version 0.3201
 
 # DESCRIPTION
 

@@ -5,7 +5,7 @@ requires 'List::Util', '1.56';
 requires 'Hash::Util';
 requires 'Clipboard';
 requires 'File::Share';
-requires 'App::Greple', '9.14';
+requires 'App::Greple', '9.15';
 requires 'App::Greple::msdoc', '1.05';
 requires 'App::optex::textconv', '1.04';
 requires 'App::sdif', '4.29';
