@@ -60,9 +60,11 @@ Töötlemine toimub kindlaksmääratud ühikutes, kuid mitme mittetäieliku teks
 
 Vahemälu andmeid hallatakse normaliseeritud teksti alusel, nii et isegi kui tehakse muudatusi, mis ei mõjuta normaliseerimise tulemusi, on vahemälus olevad tõlkeandmed ikkagi tõhusad.
 
-See normaliseerimisprotsess toimub ainult paarisnumbriliste mustrite puhul. Seega, kui kaks mustrit on määratud järgmiselt, töödeldakse pärast normaliseerimist esimesele mustrile vastavat teksti ja teisele mustrile vastavat teksti ei normaliseerita.
+See normaliseerimisprotsess viiakse läbi ainult esimese (0.) ja paarisnumbrilise mustri puhul. Seega, kui kaks mustrit on määratud järgmiselt, töödeldakse pärast normaliseerimist esimesele mustrile vastavat teksti ja teisele mustrile vastavat teksti ei normaliseerita.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Seetõttu kasutage esimest mustrit teksti puhul, mida tuleb töödelda mitme rea ühendamise teel üheks reaks, ja teist mustrit eelvormindatud teksti puhul. Kui esimeses mustris ei ole sobivat teksti, siis kasutage mustrit, mis ei vasta millelegi, näiteks `(?!)`.
 
 # OPTIONS
 

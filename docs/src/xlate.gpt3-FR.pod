@@ -68,9 +68,11 @@ Si la fin ou le début d'une ligne n'est pas un caractère pleine largeur, les c
 
 Les données du cache sont gérées en fonction du texte normalisé, donc même si des modifications sont apportées qui n'affectent pas les résultats de normalisation, les données de traduction mises en cache resteront efficaces.
 
-Ce processus de normalisation est effectué uniquement pour le motif de numéro pair. Ainsi, si deux motifs sont spécifiés comme suit, le texte correspondant au premier motif sera traité après normalisation, et aucun processus de normalisation ne sera effectué sur le texte correspondant au deuxième motif.
+Ce processus de normalisation est effectué uniquement pour le premier (0e) et le motif de numéro pair. Ainsi, si deux motifs sont spécifiés comme suit, le texte correspondant au premier motif sera traité après la normalisation, et aucun processus de normalisation ne sera effectué sur le texte correspondant au deuxième motif.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Par conséquent, utilisez le premier motif pour le texte qui doit être traité en combinant plusieurs lignes en une seule ligne, et utilisez le deuxième motif pour le texte préformaté. S'il n'y a pas de texte à faire correspondre dans le premier motif, utilisez un motif qui ne correspond à rien, tel que C<(?!)>.
 
 =head1 OPTIONS
 

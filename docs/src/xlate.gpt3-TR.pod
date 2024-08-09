@@ -68,9 +68,11 @@ Bir satırın sonu veya başı tam genişlikli bir karakter değilse, aralarına
 
 Önbellek verileri, normalize edilmiş metne dayalı olarak yönetilir, bu nedenle normalleştirme sonuçlarını etkilemeyen değişiklikler yapılsa bile, önbelleğe alınan çeviri verileri hala etkilidir.
 
-Bu normalleştirme işlemi yalnızca çift numaralı desenler için yapılır. Dolayısıyla, iki desen aşağıdaki gibi belirtildiğinde, ilk desene uyan metin normalleştirmenin ardından işlenir ve ikinci desene uyan metin üzerinde normalleştirme işlemi gerçekleştirilmez.
+Bu normalleştirme işlemi sadece ilk (0'ıncı) ve çift numaralı desen için gerçekleştirilir. Dolayısıyla, iki desen şu şekilde belirlenmişse, ilk desene uyan metin normalleştirmenin ardından işlenecek ve ikinci desene uyan metin üzerinde herhangi bir normalleştirme işlemi gerçekleştirilmeyecektir.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Bu nedenle, birden fazla satırı tek bir satıra birleştirerek işlenmesi gereken metinler için ilk deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer ilk desene uyan bir metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin C<(?!)> desenini.
 
 =head1 OPTIONS
 

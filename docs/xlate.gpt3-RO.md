@@ -60,9 +60,11 @@ Procesarea se face în unități specificate, dar în cazul unei secvențe de ma
 
 Datele cache sunt gestionate pe baza textului normalizat, astfel încât chiar dacă se fac modificări care nu afectează rezultatele normalizării, datele de traducere cache vor fi în continuare eficiente.
 
-Acest proces de normalizare se efectuează doar pentru modelul cu număr par. Astfel, dacă sunt specificate două modele după cum urmează, textul care se potrivește cu primul model va fi procesat după normalizare, iar niciun proces de normalizare nu va fi efectuat pe textul care se potrivește cu al doilea model.
+Acest proces de normalizare este efectuat doar pentru primul (0-lea) și pentru modelul cu număr par. Prin urmare, dacă sunt specificate două modele după cum urmează, textul care se potrivește cu primul model va fi procesat după normalizare, iar niciun proces de normalizare nu va fi efectuat pe textul care se potrivește cu al doilea model.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Prin urmare, folosiți primul model pentru textul care trebuie procesat prin combinarea mai multor linii într-o singură linie, și folosiți al doilea model pentru textul pre-formatat. Dacă nu există text de potrivit în primul model, atunci folosiți un model care nu se potrivește cu nimic, cum ar fi `(?!)`.
 
 # OPTIONS
 

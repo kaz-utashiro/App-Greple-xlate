@@ -60,9 +60,11 @@ Verwerking gebeurt in opgegeven eenheden, maar in het geval van een reeks van me
 
 Cachegegevens worden beheerd op basis van de genormaliseerde tekst, dus zelfs als er wijzigingen worden aangebracht die de normalisatieresultaten niet beïnvloeden, blijven de gecachte vertaalgegevens effectief.
 
-Dit normalisatieproces wordt alleen uitgevoerd voor het even genummerde patroon. Dus als twee patronen als volgt zijn gespecificeerd, zal de tekst die overeenkomt met het eerste patroon worden verwerkt na normalisatie, en er zal geen normalisatieproces worden uitgevoerd op de tekst die overeenkomt met het tweede patroon.
+Dit normalisatieproces wordt alleen uitgevoerd voor het eerste (0e) en even genummerde patroon. Als er dus twee patronen worden gespecificeerd zoals volgt, zal de tekst die overeenkomt met het eerste patroon worden verwerkt na normalisatie, en er zal geen normalisatieproces worden uitgevoerd op de tekst die overeenkomt met het tweede patroon.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Gebruik daarom het eerste patroon voor tekst die moet worden verwerkt door meerdere regels te combineren tot één regel, en gebruik het tweede patroon voor vooraf opgemaakte tekst. Als er geen tekst overeenkomt met het eerste patroon, gebruik dan een patroon dat niets overeenkomt, zoals `(?!)`.
 
 # OPTIONS
 

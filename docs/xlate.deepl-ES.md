@@ -60,9 +60,11 @@ El procesamiento se realiza en unidades especificadas, pero en el caso de una se
 
 Los datos de la caché se gestionan en función del texto normalizado, por lo que aunque se realicen modificaciones que no afecten a los resultados de la normalización, los datos de traducción almacenados en la caché seguirán siendo efectivos.
 
-Este proceso de normalización se realiza sólo para el patrón par. Así, si se especifican dos patrones como los siguientes, el texto que coincida con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincida con el segundo patrón.
+Este proceso de normalización sólo se realiza para el primer patrón (0) y los patrones pares. Por lo tanto, si se especifican dos patrones como los siguientes, el texto que coincida con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincida con el segundo patrón.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Por lo tanto, utilice el primer patrón para el texto que deba procesarse combinando varias líneas en una sola, y utilice el segundo patrón para el texto preformateado. Si no hay texto que coincida con el primer patrón, entonces un patrón que no coincida con nada, como `(?!)`.
 
 # OPTIONS
 

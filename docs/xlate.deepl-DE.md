@@ -60,9 +60,11 @@ Die Verarbeitung erfolgt in den angegebenen Einheiten, aber im Falle einer Folge
 
 Die Cache-Daten werden auf der Grundlage des normalisierten Textes verwaltet. Selbst wenn Änderungen vorgenommen werden, die sich nicht auf die Normalisierungsergebnisse auswirken, sind die im Cache gespeicherten Übersetzungsdaten weiterhin gültig.
 
-Dieser Normalisierungsprozess wird nur für die geradzahligen Muster durchgeführt. Wenn also zwei Muster wie folgt angegeben werden, wird der Text, der mit dem ersten Muster übereinstimmt, nach der Normalisierung verarbeitet, und für den Text, der mit dem zweiten Muster übereinstimmt, wird kein Normalisierungsprozess durchgeführt.
+Dieser Normalisierungsprozess wird nur für das erste (0.) und geradzahlige Muster durchgeführt. Wenn also zwei Muster wie folgt angegeben werden, wird der Text, der dem ersten Muster entspricht, nach der Normalisierung verarbeitet, und für den Text, der dem zweiten Muster entspricht, wird kein Normalisierungsprozess durchgeführt.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Verwenden Sie daher das erste Muster für Text, der durch Kombination mehrerer Zeilen in einer einzigen Zeile verarbeitet werden soll, und das zweite Muster für vorformatierten Text. Wenn das erste Muster keinen Text enthält, der übereinstimmt, wird ein Muster verwendet, das mit nichts übereinstimmt, wie z. B. `(?!)`.
 
 # OPTIONS
 

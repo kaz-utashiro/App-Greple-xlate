@@ -60,9 +60,11 @@ Pemrosesan dilakukan dalam unit yang ditentukan, tetapi dalam kasus urutan beber
 
 Data cache dikelola berdasarkan teks yang dinormalisasi, sehingga meskipun ada modifikasi yang dilakukan yang tidak memengaruhi hasil normalisasi, data terjemahan yang ditembolok akan tetap efektif.
 
-Proses normalisasi ini dilakukan hanya untuk pola bernomor genap. Dengan demikian, jika dua pola ditentukan sebagai berikut, teks yang cocok dengan pola pertama akan diproses setelah normalisasi, dan tidak ada proses normalisasi yang dilakukan pada teks yang cocok dengan pola kedua.
+Proses normalisasi ini dilakukan hanya untuk pola pertama (ke-0) dan pola bernomor genap. Dengan demikian, jika dua pola ditentukan sebagai berikut, teks yang cocok dengan pola pertama akan diproses setelah normalisasi, dan tidak ada proses normalisasi yang dilakukan pada teks yang cocok dengan pola kedua.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Oleh karena itu, gunakan pola pertama untuk teks yang akan diproses dengan menggabungkan beberapa baris menjadi satu baris, dan gunakan pola kedua untuk teks yang telah diformat sebelumnya. Jika tidak ada teks yang cocok dengan pola pertama, gunakan pola yang tidak cocok dengan apa pun, seperti `(?!)`.
 
 # OPTIONS
 
