@@ -16,8 +16,6 @@ jobs:
             "5.30",
             "5.26",
             "5.18",
-            "5.16",
-            "5.14",
           ]
     name: Perl ${{ matrix.perl }}
     steps:

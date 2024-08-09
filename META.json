@@ -57,7 +57,7 @@
             "JSON" : "0",
             "List::Util" : "1.56",
             "Text::ANSI::Fold" : "2.2104",
-            "perl" : "v5.14.0"
+            "perl" : "v5.18.2"
          }
       },
       "test" : {
