@@ -86,13 +86,19 @@ Cache data is managed based on the normalized text, so even if
 modifications are made that do not affect the normalization results,
 the cached translation data will still be effective.
 
-This normalization process is performed only for the even-numbered
-pattern.  Thus, if two patterns are specified as follows, the text
-matching the first pattern will be processed after normalization, and
-no normalization process will be performed on the text matching the
-second pattern.
+This normalization process is performed only for the first (0th) and
+even-numbered pattern.  Thus, if two patterns are specified as
+follows, the text matching the first pattern will be processed after
+normalization, and no normalization process will be performed on the
+text matching the second pattern.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Therefore, use the first pattern for text that is to be processed by
+combining multiple lines into a single line, and use the second
+pattern for pre-formatted text.  If there is no text to match in the
+first pattern, then a pattern that does not match anything, such as
+`(?!)`.
 
 # OPTIONS
 

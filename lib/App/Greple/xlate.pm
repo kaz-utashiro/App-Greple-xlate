@@ -97,13 +97,19 @@ Cache data is managed based on the normalized text, so even if
 modifications are made that do not affect the normalization results,
 the cached translation data will still be effective.
 
-This normalization process is performed only for the even-numbered
-pattern.  Thus, if two patterns are specified as follows, the text
-matching the first pattern will be processed after normalization, and
-no normalization process will be performed on the text matching the
-second pattern.
+This normalization process is performed only for the first (0th) and
+even-numbered pattern.  Thus, if two patterns are specified as
+follows, the text matching the first pattern will be processed after
+normalization, and no normalization process will be performed on the
+text matching the second pattern.
 
-    greple Mxlate --re normalized --re not-normalized
+    greple Mxlate -E normalized -E not-normalized
+
+Therefore, use the first pattern for text that is to be processed by
+combining multiple lines into a single line, and use the second
+pattern for pre-formatted text.  If there is no text to match in the
+first pattern, then a pattern that does not match anything, such as
+C<(?!)>.
 
 =head1 OPTIONS
 
@@ -454,7 +460,7 @@ our @EXPORT_TAGS = ( all => [ qw($VERSION) ] );
 our %opt = (
     debug    => \(our $debug = 0),
     engine   => \(our $xlate_engine),
-    progress => \(our $show_progress = 0),
+    progress => \(our $show_progress = 1),
     format   => \(our $output_format = 'conflict'),
     collapse => \(our $collapse_spaces = 1),
     from     => \(our $lang_from = 'ORIGINAL'),
@@ -534,8 +540,8 @@ sub setup {
 
 sub normalize {
     local $_ = shift;
-    my $nojoin = shift;
-    if ($nojoin) {
+    my $paragraph = shift;
+    if (not $paragraph) {
 	return
 	s{^.+}{
 	    ${^MATCH}
@@ -560,7 +566,7 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my($s, $e, $i) = @$m;
-	    my $key = normalize $grep->cut(@$m), $i % 2;
+	    my $key = normalize $grep->cut(@$m), $i % 2 == 0;
 	    if (not exists $cache{$key}) {
 		$cache{$key} = undef;
 		push @miss, $key;
@@ -611,17 +617,19 @@ sub fold_lines {
 }
 
 sub strip {
-    my @text = $_[0] =~ /.*\n|.+\z/g;
-    my @space;
-    for (@text) {
-	push @space, \my @sp;
-	$sp[0] = s/\A(\s+)// ? $1 : '' ;
-	$sp[1] = s/(\h+)$//  ? $1 : '' ;
-    }
+    my($text, $paragraph) = @_;
+    goto &paragraph_strip if $paragraph;
+    my @text = $text =~ /.*\n|.+\z/g;
+    my @space = map {
+	[ s/\A(\s+)// ? $1 : '', s/(\h+)$//  ? $1 : ''  ]
+    } @text;
     $_[0] = join '', @text;
     sub { # unstrip
 	for (@_) {
 	    my @text = /.*\n|.+\z/g;
+	    if (@space == @text + 1) {
+		push @text, '';
+	    }
 	    die "UNMATCH:\n".Dumper(\@text, \@space) if @text != @space;
 	    for my $i (keys @text) {
 		my($head, $tail) = @{$space[$i]};
@@ -632,23 +640,23 @@ sub strip {
 	}
     };
 }
-sub single_strip {
+sub paragraph_strip {
     local *_ = \$_[0];
     my $head = s/\A(\s+)// ? $1 : '' ;
     my $tail = s/(\h+)$//  ? $1 : '' ;
     sub {
 	for (@_) {
-	    s/\A/$head/ if length $head;
-	    s/\Z/$tail/ if length $tail;
+	    s/\A/$head/ if length $head > 0;
+	    s/\Z/$tail/ if length $tail > 0;
 	}
     };
 }
 sub xlate {
     my $param = { @_ };
     my($index, $text) = @{$param}{qw(index match)};
-    my $normalize = $index % 2 == 0;
-    my $unstrip = $normalize ? single_strip($text) : strip($text);
-    my $key = normalize($text, $index % 2);
+    my $paragraph = $index % 2 == 0;
+    my $unstrip = strip($text, $paragraph);
+    my $key = normalize($text, $paragraph);
     my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
     $unstrip->($text, $s);
     $s = fold_lines $s if $fold_line;
@@ -730,7 +738,7 @@ builtin xlate-prompt=s     $prompt
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --need=1 --cm=/544E,/454E,/445E,/455E,/545E,/554E
+option default --need=1 --no-regioncolor --cm=/544E,/454E,/533E,/353E
 
 option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
 

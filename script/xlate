@@ -274,7 +274,6 @@ option+=(--all)
 
 [ "$use_api" == yes ] || use_clipboard=yes
 [ "$check"   == yes ] || option+=(--xlate${use_clipboard:+-labor})
-[ "$check"   == yes ] && option+=(--ci=A)
 [ "$wrap"    != ""  ] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
 [ "$debug"   == yes ] && option+=(-dmo)
 [ "$refresh" == yes ] && option+=(--cache-clear)

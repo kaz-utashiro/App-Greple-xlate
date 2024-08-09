@@ -47,7 +47,7 @@
       },
       "runtime" : {
          "requires" : {
-            "App::Greple" : "9.0902",
+            "App::Greple" : "9.14",
             "App::Greple::msdoc" : "1.05",
             "App::optex::textconv" : "1.04",
             "App::sdif" : "4.29",
