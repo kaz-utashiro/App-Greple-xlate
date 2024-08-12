@@ -75,7 +75,7 @@ Processing is done in specified units, but in the case of a sequence
 of multiple lines of non-empty text, they are converted together into
 a single line.  This operation is performed as follows:
 
-=over
+=over 2
 
 =item *
 
@@ -103,7 +103,7 @@ follows, the text matching the first pattern will be processed after
 normalization, and no normalization process will be performed on the
 text matching the second pattern.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Therefore, use the first pattern for text that is to be processed by
 combining multiple lines into a single line, and use the second
