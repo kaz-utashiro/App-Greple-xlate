@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Datele din cache sunt gestionate pe baza textului normalizat, astfel încât, ch
 
 Acest proces de normalizare se efectuează numai pentru primul model (al 0-lea) și pentru cel cu număr par. Astfel, dacă sunt specificate două modele după cum urmează, textul care corespunde primului model va fi prelucrat după normalizare și nu va fi efectuat niciun proces de normalizare pentru textul care corespunde celui de-al doilea model.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Prin urmare, utilizați primul model pentru textul care urmează să fie prelucrat prin combinarea mai multor linii într-o singură linie și utilizați al doilea model pentru textul preformattat. Dacă nu există text care să se potrivească în primul model, atunci se utilizează un model care nu se potrivește cu nimic, cum ar fi `(?!)`.
 

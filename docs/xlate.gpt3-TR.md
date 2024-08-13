@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 
 Bu normalleştirme işlemi sadece ilk (0'ıncı) ve çift numaralı desen için gerçekleştirilir. Dolayısıyla, iki desen şu şekilde belirlenmişse, ilk desene uyan metin normalleştirmenin ardından işlenecek ve ikinci desene uyan metin üzerinde herhangi bir normalleştirme işlemi gerçekleştirilmeyecektir.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Bu nedenle, birden fazla satırı tek bir satıra birleştirerek işlenmesi gereken metinler için ilk deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer ilk desene uyan bir metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin `(?!)` desenini.
 

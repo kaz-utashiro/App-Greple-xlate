@@ -12,7 +12,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.3201
+Version 0.3202
 
 =head1 DESCRIPTION
 
@@ -50,7 +50,7 @@ B<Greple> B<xlate> 模块可以找到所需的文本块并用翻译后的文本�
 
 处理是按指定单位进行的，但在多行非空文本序列的情况下，它们会一起转换为单行。此操作执行如下：
 
-=over
+=over 2
 
 =item *
 
@@ -70,7 +70,7 @@ B<Greple> B<xlate> 模块可以找到所需的文本块并用翻译后的文本�
 
 这个规范化过程仅针对第一个（0号）和偶数编号的模式执行。因此，如果指定了两个模式如下，匹配第一个模式的文本将在规范化后进行处理，而匹配第二个模式的文本将不会进行规范化处理。
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 因此，使用第一个模式来处理将多行合并为单行的文本，并使用第二个模式来处理预格式化文本。如果第一个模式中没有要匹配的文本，则使用不匹配任何内容的模式，如C<(?!)>。
 

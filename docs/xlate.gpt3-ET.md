@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Vahemälu andmeid haldab normaliseeritud teksti põhjal, seega isegi kui tehakse
 
 See normaliseerimisprotsess viiakse läbi ainult esimese (0.) ja paarisarvulise mustri jaoks. Seega, kui kaks mustrit on määratud järgmiselt, siis esimesele mustrile vastava teksti töödeldakse pärast normaliseerimist ning teisele mustrile vastava teksti puhul normaliseerimisprotsessi ei teostata.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Seega kasuta esimest mustrit teksti jaoks, mis tuleb töödelda mitme rea ühendamisega üheks reaks, ning kasuta teist mustrit eelvormindatud teksti jaoks. Kui esimesele mustrile vastavat teksti ei ole, siis kasuta mustrit, mis ei vasta millelegi, näiteks `(?!)`.
 

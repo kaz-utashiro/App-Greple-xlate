@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 =head1 VERSION
 
-Version 0.3201
+Version 0.3202
 
 =head1 DESCRIPTION
 
@@ -50,7 +50,7 @@ Tüm metni çevirmek isterseniz, B<--match-all> seçeneğini kullanın. Bu, tüm
 
 İşleme belirtilen birimlerde yapılır, ancak birden fazla satırın ardışık olarak işlenmesi durumunda, bunlar birlikte tek bir satıra dönüştürülür. Bu işlem şu şekilde gerçekleştirilir:
 
-=over
+=over 2
 
 =item *
 
@@ -70,7 +70,7 @@ Bir satırın sonu veya başı tam genişlikli bir karakter değilse, aralarına
 
 Bu normalleştirme işlemi sadece ilk (0'ıncı) ve çift numaralı desen için gerçekleştirilir. Dolayısıyla, iki desen şu şekilde belirlenmişse, ilk desene uyan metin normalleştirmenin ardından işlenecek ve ikinci desene uyan metin üzerinde herhangi bir normalleştirme işlemi gerçekleştirilmeyecektir.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Bu nedenle, birden fazla satırı tek bir satıra birleştirerek işlenmesi gereken metinler için ilk deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer ilk desene uyan bir metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin C<(?!)> desenini.
 

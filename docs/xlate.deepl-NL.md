@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Cachegegevens worden beheerd op basis van de genormaliseerde tekst, dus zelfs al
 
 Dit normalisatieproces wordt alleen uitgevoerd voor het eerste (0e) en even genummerde patroon. Dus als twee patronen als volgt worden gespecificeerd, wordt de tekst die overeenkomt met het eerste patroon verwerkt na normalisatie en wordt er geen normalisatieproces uitgevoerd op de tekst die overeenkomt met het tweede patroon.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Gebruik daarom het eerste patroon voor tekst die verwerkt moet worden door meerdere regels samen te voegen tot een enkele regel, en gebruik het tweede patroon voor voorgeformatteerde tekst. Als er geen overeenkomende tekst is in het eerste patroon, gebruik dan een patroon dat nergens mee overeenkomt, zoals `(?!)`.
 

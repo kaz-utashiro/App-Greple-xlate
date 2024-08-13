@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini ku
 
 Bu normalleştirme işlemi yalnızca ilk (0.) ve çift numaralı kalıp için gerçekleştirilir. Bu nedenle, aşağıdaki gibi iki kalıp belirtilirse, ilk kalıpla eşleşen metin normalleştirmeden sonra işlenecek ve ikinci kalıpla eşleşen metin üzerinde normalleştirme işlemi yapılmayacaktır.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Bu nedenle, birden fazla satırı tek bir satırda birleştirerek işlenecek metin için ilk kalıbı kullanın ve önceden biçimlendirilmiş metin için ikinci kalıbı kullanın. İlk kalıpta eşleşecek metin yoksa, `(?!)` gibi hiçbir şeyle eşleşmeyen bir kalıp kullanın.
 

@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Data cache dikelola berdasarkan teks yang dinormalisasi, sehingga meskipun ada m
 
 Proses normalisasi ini dilakukan hanya untuk pola pertama (ke-0) dan pola bernomor genap. Dengan demikian, jika dua pola ditentukan sebagai berikut, teks yang cocok dengan pola pertama akan diproses setelah normalisasi, dan tidak ada proses normalisasi yang dilakukan pada teks yang cocok dengan pola kedua.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Oleh karena itu, gunakan pola pertama untuk teks yang akan diproses dengan menggabungkan beberapa baris menjadi satu baris, dan gunakan pola kedua untuk teks yang telah diformat sebelumnya. Jika tidak ada teks yang cocok dengan pola pertama, gunakan pola yang tidak cocok dengan apa pun, seperti `(?!)`.
 

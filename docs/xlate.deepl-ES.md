@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.3201
+Version 0.3202
 
 # DESCRIPTION
 
@@ -62,7 +62,7 @@ Los datos de la caché se gestionan en función del texto normalizado, por lo qu
 
 Este proceso de normalización sólo se realiza para el primer patrón (0) y los patrones pares. Por lo tanto, si se especifican dos patrones como los siguientes, el texto que coincida con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincida con el segundo patrón.
 
-    greple Mxlate -E normalized -E not-normalized
+    greple -Mxlate -E normalized -E not-normalized
 
 Por lo tanto, utilice el primer patrón para el texto que deba procesarse combinando varias líneas en una sola, y utilice el segundo patrón para el texto preformateado. Si no hay texto que coincida con el primer patrón, entonces un patrón que no coincida con nada, como `(?!)`.
 
