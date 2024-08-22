@@ -100,6 +100,23 @@ pattern for pre-formatted text.  If there is no text to match in the
 first pattern, then a pattern that does not match anything, such as
 `(?!)`.
 
+# MASKING
+
+Occasionally, there are parts of text that you do not want translated.
+For example, tags in markdown files. DeepL suggests that in such
+cases, the part of the text to be excluded be converted to XML tags,
+translated, and then restored after the translation is complete.  To
+support this, it is possible to specify the parts to be masked from
+translation.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+This will interpret each line of the file \`MASKPATTERN\` as a regular
+expression, translate strings matching it, and revert after
+processing.  Lines beginning with `#` are ignored.
+
+This interface is experimental and subject to change in the future.
+
 # OPTIONS
 
 - **--xlate**

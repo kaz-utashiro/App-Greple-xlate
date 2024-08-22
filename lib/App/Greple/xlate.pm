@@ -111,6 +111,23 @@ pattern for pre-formatted text.  If there is no text to match in the
 first pattern, then a pattern that does not match anything, such as
 C<(?!)>.
 
+=head1 MASKING
+
+Occasionally, there are parts of text that you do not want translated.
+For example, tags in markdown files. DeepL suggests that in such
+cases, the part of the text to be excluded be converted to XML tags,
+translated, and then restored after the translation is complete.  To
+support this, it is possible to specify the parts to be masked from
+translation.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+This will interpret each line of the file `MASKPATTERN` as a regular
+expression, translate strings matching it, and revert after
+processing.  Lines beginning with C<#> are ignored.
+
+This interface is experimental and subject to change in the future.
+
 =head1 OPTIONS
 
 =over 7
@@ -472,6 +489,8 @@ our %opt = (
     dryrun   => \(our $dryrun = 0),
     maxlen   => \(our $max_length = 0),
     prompt   => \(our $prompt),
+    mask     => \(our $mask),
+    maskfile => \(our $maskfile),
 );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -511,6 +530,9 @@ for (keys %formatter) {
 
 my %cache;
 
+use App::Greple::xlate::Mask;
+my $maskobj;
+
 sub setup {
     return if state $once_called++;
     if (defined $cache_method) {
@@ -535,6 +557,12 @@ sub setup {
 	if (not defined &XLATE) {
 	    die "No \"xlate\" function in $mod.\n";
 	}
+    }
+    if (my $pat = opt('mask')) {
+	$maskobj = App::Greple::xlate::Mask->new(pattern => $pat);
+    }
+    if (my $patfile = opt('maskfile')) {
+	$maskobj = App::Greple::xlate::Mask->new(file => $patfile);
     }
 }
 
@@ -585,6 +613,7 @@ sub _progress {
 	my @m = ($i == 1 ? '╶' : '│') x $i ;
 	@m[0,-1] = qw(┌ └) if $i > 1;
 	s/^/sprintf "%7s ", shift(@m)/mge;
+	s/(?<!\n)\z/\n/;
 	print STDERR $_;
     }
 }
@@ -596,11 +625,15 @@ sub cache_update {
     _progress({label => "From"}, @from);
     return @from if $dryrun;
 
+    $maskobj->mask(@from) if $maskobj;
+    my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
     my @to = &XLATE(@from);
+    chop @to[@chop];
+    $maskobj->unmask(@to) if $maskobj;
 
     _progress({label => "To"}, @to);
     die "Unmatched response:\n@to" if @from != @to;
-    @cache{@from} = @to;
+    @cache{@_} = @to;
 }
 
 sub fold_lines {
@@ -710,7 +743,7 @@ sub end {
 #    }
 }
 
-sub setopt {
+sub set {
     while (my($key, $val) = splice @_, 0, 2) {
 	next if $key eq &::FILELABEL;
 	die "$key: Invalid option.\n" if not exists $opt{$key};
@@ -740,7 +773,7 @@ builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
 option default --need=1 --no-regioncolor --cm=/544E,/454E,/533E,/353E
 
-option --xlate-setopt --prologue &__PACKAGE__::setopt($<shift>)
+option --xlate-setopt --prologue &__PACKAGE__::set($<shift>)
 
 option --xlate-color \
 	--postgrep &__PACKAGE__::postgrep \

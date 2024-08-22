@@ -8,6 +8,7 @@ use_ok $_ for qw(
     App::Greple::xlate::gpt3
     App::Greple::xlate::gpt4
     App::Greple::xlate::Cache
+    App::Greple::xlate::Mask
 );
 
 done_testing;
