@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.3202
+Version 0.33
 
 =head1 DESCRIPTION
 
@@ -73,6 +73,16 @@ Dit normalisatieproces wordt alleen uitgevoerd voor het eerste (0e) en even genu
     greple -Mxlate -E normalized -E not-normalized
 
 Gebruik daarom het eerste patroon voor tekst die moet worden verwerkt door meerdere regels te combineren tot één regel, en gebruik het tweede patroon voor vooraf opgemaakte tekst. Als er geen tekst overeenkomt met het eerste patroon, gebruik dan een patroon dat niets overeenkomt, zoals C<(?!)>.
+
+=head1 MASKING
+
+Af en toe zijn er delen van tekst die je niet vertaald wilt hebben. Bijvoorbeeld tags in markdown-bestanden. DeepL suggereert dat in dergelijke gevallen het te negeren deel van de tekst wordt omgezet naar XML-tags, vertaald en vervolgens wordt hersteld nadat de vertaling is voltooid. Om dit te ondersteunen, is het mogelijk om de delen die niet vertaald moeten worden te specificeren.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Dit zal elke regel van het bestand `MASKPATTERN` interpreteren als een reguliere expressie, strings die eraan voldoen vertalen en na verwerking terugdraaien. Regels die beginnen met C<#> worden genegeerd.
+
+Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
 
 =head1 OPTIONS
 

@@ -12,7 +12,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 =head1 VERSION
 
-Version 0.3202
+Version 0.33
 
 =head1 DESCRIPTION
 
@@ -73,6 +73,16 @@ Ce processus de normalisation n'est effectué que pour le premier (0e) motif et 
     greple -Mxlate -E normalized -E not-normalized
 
 Par conséquent, il convient d'utiliser le premier motif pour le texte qui doit être traité en combinant plusieurs lignes en une seule et d'utiliser le second motif pour le texte préformaté. S'il n'y a pas de texte à faire correspondre au premier motif, alors un motif qui ne correspond à rien, tel que C<( ?!)>.
+
+=head1 MASKING
+
+Il arrive que des parties de texte ne soient pas traduites. Par exemple, les balises dans les fichiers markdown. DeepL suggère que dans de tels cas, la partie du texte à exclure soit convertie en balises XML, traduite, puis restaurée une fois la traduction terminée. Pour ce faire, il est possible de spécifier les parties à masquer de la traduction.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Chaque ligne du fichier `MASKPATTERN` sera interprétée comme une expression régulière, traduira les chaînes de caractères qui y correspondent et reviendra en arrière après le traitement. Les lignes commençant par C<#> sont ignorées.
+
+Cette interface est expérimentale et peut être modifiée à l'avenir.
 
 =head1 OPTIONS
 

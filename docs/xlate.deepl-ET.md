@@ -10,7 +10,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.3202
+Version 0.33
 
 # DESCRIPTION
 
@@ -65,6 +65,16 @@ See normaliseerimisprotsess viiakse läbi ainult esimese (0.) ja paarisnumbrilis
     greple -Mxlate -E normalized -E not-normalized
 
 Seetõttu kasutage esimest mustrit teksti puhul, mida tuleb töödelda mitme rea ühendamise teel üheks reaks, ja teist mustrit eelvormindatud teksti puhul. Kui esimeses mustris ei ole sobivat teksti, siis kasutage mustrit, mis ei vasta millelegi, näiteks `(?!)`.
+
+# MASKING
+
+Mõnikord on tekstiosasid, mida te ei soovi tõlkida. Näiteks markdown-failide sildid. DeepL soovitab sellistel juhtudel konverteerida välja jäetav tekstiosa XML-tähtedeks, tõlkida ja pärast tõlkimise lõpetamist taastada. Selle toetamiseks on võimalik määrata osad, mis tuleb tõlkimisest välja jätta.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+See tõlgendab iga rida failis \`MASKPATTERN\` regulaaravaldisena, tõlgib sellele vastavad stringid ja taastab pärast töötlemist. `#`-ga algavaid ridu ignoreeritakse.
+
+See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 # OPTIONS
 

@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.33 2024-08-22T01:38:55Z
+
+    - introduce experimental data masking capability
+
 0.3202 2024-08-13T12:24:41Z
 
     - fix a bug of --xlate-labor option not to work

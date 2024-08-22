@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.3202
+Version 0.33
 
 =head1 DESCRIPTION
 
@@ -73,6 +73,16 @@ Proses normalisasi ini dilakukan hanya untuk pola pertama (0) dan pola dengan no
     greple -Mxlate -E normalized -E not-normalized
 
 Oleh karena itu, gunakan pola pertama untuk teks yang akan diproses dengan menggabungkan beberapa baris menjadi satu baris, dan gunakan pola kedua untuk teks yang sudah diformat sebelumnya. Jika tidak ada teks yang cocok dengan pola pertama, maka gunakan pola yang tidak cocok dengan apa pun, seperti C<(?!)>.
+
+=head1 MASKING
+
+Kadang-kadang, ada bagian teks yang tidak ingin Anda terjemahkan. Misalnya, tag dalam file markdown. DeepL menyarankan bahwa dalam kasus seperti itu, bagian teks yang akan dikecualikan dikonversi menjadi tag XML, diterjemahkan, dan kemudian dikembalikan setelah terjemahan selesai. Untuk mendukung hal ini, memungkinkan untuk menentukan bagian yang akan disembunyikan dari terjemahan.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Ini akan menginterpretasikan setiap baris dari file `MASKPATTERN` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan C<#> diabaikan.
+
+Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
 =head1 OPTIONS
 

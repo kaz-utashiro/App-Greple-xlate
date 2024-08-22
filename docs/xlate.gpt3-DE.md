@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.3202
+Version 0.33
 
 # DESCRIPTION
 
@@ -65,6 +65,16 @@ Dieser Normalisierungsprozess wird nur für das erste (0.) und für gerade numme
     greple -Mxlate -E normalized -E not-normalized
 
 Verwenden Sie daher das erste Muster für Text, der verarbeitet werden soll, indem mehrere Zeilen zu einer einzigen Zeile kombiniert werden, und verwenden Sie das zweite Muster für vorformatierten Text. Wenn es keinen Text gibt, der dem ersten Muster entspricht, dann ein Muster, das nichts entspricht, wie z.B. `(?!)`.
+
+# MASKING
+
+Gelegentlich gibt es Teile von Text, die nicht übersetzt werden sollen. Zum Beispiel Tags in Markdown-Dateien. DeepL schlägt vor, dass in solchen Fällen der nicht zu übersetzende Teil in XML-Tags umgewandelt, übersetzt und dann nach Abschluss der Übersetzung wiederhergestellt wird. Um dies zu unterstützen, ist es möglich, die zu maskierenden Teile der Übersetzung anzugeben.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Dies wird jede Zeile der Datei \`MASKPATTERN\` als regulären Ausdruck interpretieren, Zeichenfolgen übersetzen, die ihm entsprechen, und nach der Verarbeitung zurücksetzen. Zeilen, die mit `#` beginnen, werden ignoriert.
+
+Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
 # OPTIONS
 

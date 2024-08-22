@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.3202
+Version 0.33
 
 # DESCRIPTION
 
@@ -65,6 +65,16 @@ Bu normalleştirme işlemi sadece ilk (0'ıncı) ve çift numaralı desen için 
     greple -Mxlate -E normalized -E not-normalized
 
 Bu nedenle, birden fazla satırı tek bir satıra birleştirerek işlenmesi gereken metinler için ilk deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer ilk desene uyan bir metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin `(?!)` desenini.
+
+# MASKING
+
+Ara sıra, çevrilmesini istemediğiniz metin parçaları olabilir. Örneğin, markdown dosyalarındaki etiketler. DeepL, bu tür durumlarda çevrilmemesi gereken metin parçasının dışlanacak kısmının XML etiketlerine dönüştürülmesini, çevirilmesini ve ardından çeviri işlemi tamamlandıktan sonra geri yüklenmesini önerir. Bunu desteklemek için çeviriden saklanacak kısımların belirtilebilmesi mümkündür.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Bu, \`MASKPATTERN\` dosyasının her satırını bir düzenli ifade olarak yorumlayacak, eşleşen dizeleri çevirecek ve işlem sonrasında geri dönecektir. `#` ile başlayan satırlar görmezden gelinir.
+
+Bu arayüz deneyseldir ve gelecekte değişebilir.
 
 # OPTIONS
 

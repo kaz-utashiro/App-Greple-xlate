@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 # VERSION
 
-Version 0.3202
+Version 0.33
 
 # DESCRIPTION
 
@@ -65,6 +65,16 @@ Acest proces de normalizare se efectuează numai pentru primul model (al 0-lea) 
     greple -Mxlate -E normalized -E not-normalized
 
 Prin urmare, utilizați primul model pentru textul care urmează să fie prelucrat prin combinarea mai multor linii într-o singură linie și utilizați al doilea model pentru textul preformattat. Dacă nu există text care să se potrivească în primul model, atunci se utilizează un model care nu se potrivește cu nimic, cum ar fi `(?!)`.
+
+# MASKING
+
+Ocazional, există părți de text pe care nu le doriți traduse. De exemplu, etichetele din fișierele markdown. DeepL sugerează ca, în astfel de cazuri, partea de text care trebuie exclusă să fie convertită în etichete XML, tradusă și apoi restaurată după finalizarea traducerii. Pentru a sprijini acest lucru, este posibil să se specifice părțile care urmează să fie mascate de la traducere.
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+Aceasta va interpreta fiecare linie din fișierul \`MASKPATTERN\` ca o expresie regulată, va traduce șirurile care corespund acesteia și va reveni după procesare. Liniile care încep cu `#` sunt ignorate.
+
+Această interfață este experimentală și poate fi modificată în viitor.
 
 # OPTIONS
 

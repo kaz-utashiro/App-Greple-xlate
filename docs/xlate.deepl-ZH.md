@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.3202
+Version 0.33
 
 # DESCRIPTION
 
@@ -65,6 +65,16 @@ Version 0.3202
     greple -Mxlate -E normalized -E not-normalized
 
 因此，对于要将多行合并为一行进行处理的文本，请使用第一个模式，而对于预格式化文本，请使用第二个模式。如果第一种模式中没有要匹配的文本，那么就使用不匹配任何内容的模式，如 `(?!)`。
+
+# MASKING
+
+有时，您不希望翻译文本中的某些部分。例如，markdown 文件中的标记。DeepL 建议在这种情况下，将不需要翻译的文本部分转换为 XML 标记，然后进行翻译，翻译完成后再还原。为了支持这一点，可以指定要屏蔽翻译的部分。
+
+    --xlate-setopt maskfile=MASKPATTERN
+
+这将把文件 \`MASKPATTERN\` 的每一行都解释为正则表达式，翻译与之匹配的字符串，并在处理后还原。以 `#` 开头的行将被忽略。
+
+此接口为试验性接口，将来可能会更改。
 
 # OPTIONS
 
