@@ -23,8 +23,10 @@ my %param = (
     gpt3 => { engine => 'gpt-3.5-turbo', temp => '0.0', max => 3000, sub => \&gpty,
 	      prompt => 'Translate following entire text into %s, line-by-line.',
 	  },
-    gpt4 => { engine => 'gpt-4-1106-preview', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => 'Translate following entire text into %s, line-by-line.',
+    gpt4 => { engine => 'gpt-4o-mini', temp => '0.0', max => 3000, sub => \&gpty,
+	      prompt => "Translate following entire text into %s, line-by-line.\n"
+		      . "Leave <m id=# /> style tag as it is.\n"
+		      ,
 	  },
 );
 
