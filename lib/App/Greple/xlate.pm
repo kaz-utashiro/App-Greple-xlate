@@ -234,6 +234,13 @@ API (B<--xlate>) and 5000 for the clipboard interface
 (B<--xlate-labor>).  You may be able to change these value if you are
 using Pro service.
 
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Specify the maximum lines of text to be sent to the API at once.
+
+Set this value to 1 if you want to translate one line at a time.  This
+option takes precedence over the C<--xlate-maxlen> option.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
@@ -488,6 +495,7 @@ our %opt = (
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
     dryrun   => \(our $dryrun = 0),
     maxlen   => \(our $max_length = 0),
+    maxline  => \(our $max_line = 0),
     prompt   => \(our $prompt),
     mask     => \(our $mask),
     maskfile => \(our $maskfile),
@@ -766,6 +774,7 @@ builtin xlate-cache:s      $cache_method
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 builtin xlate-maxlen=i     $max_length
+builtin xlate-maxline=i    $max_line
 builtin xlate-prompt=s     $prompt
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key

@@ -213,6 +213,13 @@ This interface is experimental and subject to change in the future.
     (**--xlate-labor**).  You may be able to change these value if you are
     using Pro service.
 
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Specify the maximum lines of text to be sent to the API at once.
+
+    Set this value to 1 if you want to translate one line at a time.  This
+    option takes precedence over the `--xlate-maxlen` option.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     See the tranlsation result in real time in the STDERR output.
