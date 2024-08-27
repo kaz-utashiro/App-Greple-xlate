@@ -164,6 +164,11 @@ This interface is experimental and subject to change in the future.
 
     Specify the output format for original and translated text.
 
+    The following formats other than `xtxt` assume that the part to be
+    translated is a collection of lines.  In fact, it is possible to
+    translate only a portion of a line, and specifying a format other than
+    `xtxt` will not produce meaningful results.
+
     - **conflict**, **cm**
 
         Original and converted text are printed in [git(1)](http://man.he.net/man1/git) conflict marker
