@@ -110,6 +110,8 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 
     Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
+    `xtxt` dışındaki aşağıdaki formatlar, çevrilecek kısmın bir dizi satır olduğunu varsayar. Aslında, bir satırın sadece bir kısmını çevirmek mümkündür ve `xtxt` dışındaki bir format belirtmek anlamlı sonuçlar üretmeyecektir.
+
     - **conflict**, **cm**
 
         Orjinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) çakışma işaretçisi formatında yazdırılır.
@@ -150,6 +152,12 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Aşağıdaki metni Türkçe'ye satır satır çevirin.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    API'ye aynı anda gönderilecek maksimum satır sayısını belirtin.
+
+    Eğer bir seferde sadece bir satır çevirmek istiyorsanız, bu değeri 1 olarak ayarlayın. Bu seçenek, `--xlate-maxlen` seçeneğinden önceliklidir.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

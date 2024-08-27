@@ -110,6 +110,8 @@ Cette interface est expérimentale et peut être modifiée à l'avenir.
 
     Spécifiez le format de sortie pour le texte original et le texte traduit.
 
+    Les formats suivants, autres que `xtxt`, supposent que la partie à traduire est une collection de lignes. En fait, il est possible de ne traduire qu'une partie d'une ligne, et la spécification d'un format autre que `xtxt` ne produira pas de résultats significatifs.
+
     - **conflict**, **cm**
 
         Le texte original et le texte converti sont imprimés au format [git(1)](http://man.he.net/man1/git) marqueur de conflit.
@@ -150,6 +152,12 @@ Cette interface est expérimentale et peut être modifiée à l'avenir.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Spécifiez la longueur maximale du texte à envoyer à l'API en une seule fois. La valeur par défaut est la même que pour le service de compte gratuit DeepL : 128K pour l'API (**--xlate**) et 5000 pour l'interface du presse-papiers (**--xlate-labor**). Vous pouvez modifier ces valeurs si vous utilisez le service Pro.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Indiquez le nombre maximal de lignes de texte à envoyer à l'API en une seule fois.
+
+    Définissez cette valeur sur 1 si vous souhaitez traduire une ligne à la fois. Cette option est prioritaire sur l'option `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

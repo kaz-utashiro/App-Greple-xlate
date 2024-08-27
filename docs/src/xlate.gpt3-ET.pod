@@ -124,6 +124,8 @@ Määrake sihtkeel. Saate saada saadaolevad keeled käsu C<deepl languages> abil
 
 Määrake algse ja tõlgitud teksti väljundi vorming.
 
+Järgmised vormingud peale C<xtxt> eeldavad, et tõlgitav osa koosneb ridadest. Tegelikult on võimalik tõlkida ainult osa reast ning muu vormingu määramine peale C<xtxt> ei anna mõistlikke tulemusi.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Kui vorming on C<xtxt> (tõlgitud tekst) või tundmatu, prinditakse ainult tõlg
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Tõlgi järgnev tekst eesti keelde, rida-realt.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Määrake korraga API-le saadetavate tekstiridade maksimaalne arv.
+
+Seadke see väärtus 1, kui soovite tõlkida ühe rea korraga. See valik on prioriteetsem kui C<--xlate-maxlen> valik.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

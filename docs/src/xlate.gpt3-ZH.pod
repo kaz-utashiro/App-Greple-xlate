@@ -124,6 +124,8 @@ B<Greple> B<xlate> 模块可以找到所需的文本块并用翻译后的文本�
 
 指定原始和翻译文本的输出格式。
 
+除了C<xtxt>之外的以下格式假定要翻译的部分是一系列行。实际上，可以只翻译一行的一部分，并且指定除C<xtxt>之外的格式不会产生有意义的结果。
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ B<Greple> B<xlate> 模块可以找到所需的文本块并用翻译后的文本�
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 将以下文本逐行翻译成中文。
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+指定一次发送到API的最大文本行数。
+
+如果要逐行翻译，请将此值设置为1。此选项优先于C<--xlate-maxlen>选项。
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

@@ -110,6 +110,8 @@ Această interfață este experimentală și poate fi modificată în viitor.
 
     Specificați formatul de ieșire pentru textul original și cel tradus.
 
+    Următoarele formate, altele decât `xtxt`, presupun că partea care urmează să fie tradusă este o colecție de linii. De fapt, este posibil să se traducă doar o parte a unei linii, iar specificarea unui alt format decât `xtxt` nu va produce rezultate semnificative.
+
     - **conflict**, **cm**
 
         Textul original și cel convertit sunt tipărite în formatul de marker de conflict [git(1)](http://man.he.net/man1/git).
@@ -150,6 +152,12 @@ Această interfață este experimentală și poate fi modificată în viitor.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Specificați lungimea maximă a textului care urmează să fie trimis la API deodată. Valoarea implicită este setată ca pentru serviciul de cont gratuit DeepL: 128K pentru API (**--xlate**) și 5000 pentru interfața clipboard (**--xlate-labor**). Este posibil să puteți modifica aceste valori dacă utilizați serviciul Pro.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Specificați numărul maxim de linii de text care urmează să fie trimise simultan către API.
+
+    Setați această valoare la 1 dacă doriți să traduceți un rând pe rând. Această opțiune are prioritate față de opțiunea `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

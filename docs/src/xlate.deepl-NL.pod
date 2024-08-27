@@ -124,6 +124,8 @@ Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando C<deep
 
 Specificeer het uitvoerformaat voor originele en vertaalde tekst.
 
+De volgende indelingen anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan C<xtxt> zal geen zinvolle resultaten opleveren.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Als het formaat C<xtxt> (vertaalde tekst) of onbekend is, wordt alleen vertaalde
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Geef de maximale lengte van de tekst op die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis DeepL account service: 128K voor de API (B<--xlate>) en 5000 voor de klembordinterface (B<--xlate-labor>). U kunt deze waarden wijzigen als u Pro-service gebruikt.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Geef het maximum aantal regels tekst op dat in één keer naar de API moet worden gestuurd.
+
+Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie heeft voorrang op de C<--xlate-maxlen> optie.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

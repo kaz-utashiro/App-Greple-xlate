@@ -110,6 +110,8 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
+    `xtxt` dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir bölümünü çevirmek mümkündür ve `xtxt` dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
+
     - **conflict**, **cm**
 
         Orijinal ve dönüştürülmüş metin [git(1)](http://man.he.net/man1/git) çakışma işaretleyici biçiminde yazdırılır.
@@ -150,6 +152,12 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz DeepL hesap hizmeti için ayarlanmıştır: API için 128K (**--xlate**) ve pano arayüzü için 5000 (**--xlate-labor**). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    API'ye bir kerede gönderilecek maksimum metin satırını belirtin.
+
+    Her seferinde bir satır çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek `--xlate-maxlen` seçeneğine göre önceliklidir.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

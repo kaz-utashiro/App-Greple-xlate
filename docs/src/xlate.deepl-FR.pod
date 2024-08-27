@@ -124,6 +124,8 @@ Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles par la c
 
 Spécifiez le format de sortie pour le texte original et le texte traduit.
 
+Les formats suivants, autres que C<xtxt>, supposent que la partie à traduire est une collection de lignes. En fait, il est possible de ne traduire qu'une partie d'une ligne, et la spécification d'un format autre que C<xtxt> ne produira pas de résultats significatifs.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Si le format est C<xtxt> (texte traduit) ou inconnu, seul le texte traduit est i
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Spécifiez la longueur maximale du texte à envoyer à l'API en une seule fois. La valeur par défaut est la même que pour le service de compte gratuit DeepL : 128K pour l'API (B<--xlate>) et 5000 pour l'interface du presse-papiers (B<--xlate-labor>). Vous pouvez modifier ces valeurs si vous utilisez le service Pro.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Indiquez le nombre maximal de lignes de texte à envoyer à l'API en une seule fois.
+
+Définissez cette valeur sur 1 si vous souhaitez traduire une ligne à la fois. Cette option est prioritaire sur l'option C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

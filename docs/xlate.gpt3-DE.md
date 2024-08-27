@@ -110,6 +110,8 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
     Geben Sie das Ausgabeformat für den ursprünglichen und übersetzten Text an.
 
+    Die folgenden Formate außer `xtxt` gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines Formats außer `xtxt` wird keine sinnvollen Ergebnisse liefern.
+
     - **conflict**, **cm**
 
         Original und konvertierter Text werden im [git(1)](http://man.he.net/man1/git) Konfliktmarker-Format gedruckt.
@@ -150,6 +152,12 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Übersetzen Sie den folgenden Text Zeile für Zeile ins Deutsche.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Legen Sie die maximale Anzahl von Textzeilen fest, die gleichzeitig an die API gesendet werden sollen.
+
+    Setzen Sie diesen Wert auf 1, wenn Sie jeweils eine Zeile übersetzen möchten. Diese Option hat Vorrang vor der Option `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

@@ -110,6 +110,8 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
     Legen Sie das Ausgabeformat für den ursprünglichen und den übersetzten Text fest.
 
+    Die folgenden Formate mit Ausnahme von `xtxt` gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines anderen Formats als `xtxt` liefert keine sinnvollen Ergebnisse.
+
     - **conflict**, **cm**
 
         Original und konvertierter Text werden im Format [git(1)](http://man.he.net/man1/git) conflict marker ausgegeben.
@@ -150,6 +152,12 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Geben Sie die maximale Länge des Textes an, der auf einmal an die API gesendet werden soll. Der Standardwert ist wie beim kostenlosen DeepL account service eingestellt: 128K für die API (**--xlate**) und 5000 für die Zwischenablage-Schnittstelle (**--xlate-labor**). Sie können diese Werte ändern, wenn Sie den Pro-Service nutzen.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Geben Sie die maximale Anzahl von Textzeilen an, die auf einmal an die API gesendet werden sollen.
+
+    Setzen Sie diesen Wert auf 1, wenn Sie jeweils nur eine Zeile übersetzen wollen. Diese Option hat Vorrang vor der Option `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

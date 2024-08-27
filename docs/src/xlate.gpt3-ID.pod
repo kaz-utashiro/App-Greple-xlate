@@ -124,6 +124,8 @@ Tentukan bahasa target. Anda dapat mendapatkan bahasa yang tersedia dengan perin
 
 Tentukan format output untuk teks asli dan terjemahan.
 
+Format-format berikut selain C<xtxt> mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Sebenarnya, memungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, dan menentukan format selain C<xtxt> tidak akan menghasilkan hasil yang bermakna.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Jika formatnya adalah C<xtxt> (teks terjemahan) atau tidak diketahui, hanya teks
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Terjemahkan teks berikut ke dalam bahasa Indonesia, baris per baris.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Tentukan jumlah maksimum baris teks yang akan dikirim ke API sekaligus.
+
+Atur nilai ini menjadi 1 jika Anda ingin menerjemahkan satu baris setiap kali. Pilihan ini lebih diutamakan daripada opsi C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

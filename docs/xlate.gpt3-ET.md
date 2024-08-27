@@ -110,6 +110,8 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     Määrake algse ja tõlgitud teksti väljundi vorming.
 
+    Järgmised vormingud peale `xtxt` eeldavad, et tõlgitav osa koosneb ridadest. Tegelikult on võimalik tõlkida ainult osa reast ning muu vormingu määramine peale `xtxt` ei anna mõistlikke tulemusi.
+
     - **conflict**, **cm**
 
         Originaal- ja tõlgitud tekst on trükitud [git(1)](http://man.he.net/man1/git) konfliktimärgendi formaadis.
@@ -150,6 +152,12 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Tõlgi järgnev tekst eesti keelde, rida-realt.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Määrake korraga API-le saadetavate tekstiridade maksimaalne arv.
+
+    Seadke see väärtus 1, kui soovite tõlkida ühe rea korraga. See valik on prioriteetsem kui `--xlate-maxlen` valik.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

@@ -110,6 +110,8 @@ Version 0.33
 
     指定原始和翻译文本的输出格式。
 
+    除 `xtxt` 以外的下列格式假定要翻译的部分是行的集合。事实上，有可能只翻译一行的一部分，因此指定 `xtxt` 以外的格式不会产生有意义的结果。
+
     - **conflict**, **cm**
 
         原始文本和转换后的文本以 [git(1)](http://man.he.net/man1/git) 冲突标记格式打印。
@@ -150,6 +152,12 @@ Version 0.33
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     指定一次发送到 API 的最大文本长度。默认值与 DeepL 免费账户服务一样：API (**--xlate**) 为 128K，剪贴板界面 (**--xlate-labor**) 为 5000。如果使用专业版服务，您可以更改这些值。
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    指定一次发送到 API 的最大文本行数。
+
+    如果想一次翻译一行，则将该值设为 1。该选项优先于 `--xlate-maxlen` 选项。
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

@@ -110,6 +110,8 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     Specificeer het uitvoerformaat voor originele en vertaalde tekst.
 
+    De volgende indelingen anders dan `xtxt` gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan `xtxt` zal geen zinvolle resultaten opleveren.
+
     - **conflict**, **cm**
 
         Originele en geconverteerde tekst worden afgedrukt in [git(1)](http://man.he.net/man1/git) conflictmarkeerder formaat.
@@ -150,6 +152,12 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Geef de maximale lengte van de tekst op die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis DeepL account service: 128K voor de API (**--xlate**) en 5000 voor de klembordinterface (**--xlate-labor**). U kunt deze waarden wijzigen als u Pro-service gebruikt.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Geef het maximum aantal regels tekst op dat in één keer naar de API moet worden gestuurd.
+
+    Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie heeft voorrang op de `--xlate-maxlen` optie.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

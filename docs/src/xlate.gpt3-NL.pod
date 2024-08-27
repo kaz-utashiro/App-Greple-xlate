@@ -124,6 +124,8 @@ Specificeer de doeltaal. U kunt de beschikbare talen krijgen met het C<deepl lan
 
 Specificeer het uitvoerformaat voor de oorspronkelijke en vertaalde tekst.
 
+De volgende formaten anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan C<xtxt> zal geen zinvolle resultaten opleveren.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Als het formaat C<xtxt> (vertaalde tekst) of onbekend is, wordt alleen de vertaa
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Vertaal de volgende tekst naar het Nederlands, regel voor regel.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Specificeer het maximale aantal regels tekst dat tegelijk naar de API wordt verzonden.
+
+Stel deze waarde in op 1 als je regel voor regel wilt vertalen. Deze optie heeft voorrang op de C<--xlate-maxlen> optie.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

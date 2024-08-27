@@ -110,6 +110,8 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 
     Specificați formatul de ieșire pentru textul original și cel tradus.
 
+    Formatele următoare, în afara `xtxt`, presupun că partea de tradus este o colecție de linii. De fapt, este posibil să traduci doar o porțiune dintr-o linie, iar specificarea unui format diferit de `xtxt` nu va produce rezultate semnificative.
+
     - **conflict**, **cm**
 
         Textul original și cel convertit sunt tipărite în formatul de marcare a conflictelor [git(1)](http://man.he.net/man1/git).
@@ -150,6 +152,12 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Traduceți următorul text în limba română, linie cu linie.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Specifică numărul maxim de linii de text care vor fi trimise la API odată.
+
+    Setează această valoare la 1 dacă vrei să traduci câte o linie pe rând. Această opțiune primește prioritate față de opțiunea `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

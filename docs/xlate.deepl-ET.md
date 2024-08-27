@@ -110,6 +110,8 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     Määrake originaal- ja tõlgitud teksti väljundformaat.
 
+    Järgmised vormingud, välja arvatud `xtxt`, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast ja muu formaadi kui `xtxt` määramine ei anna mõttekaid tulemusi.
+
     - **conflict**, **cm**
 
         Algne ja teisendatud tekst trükitakse [git(1)](http://man.he.net/man1/git) konfliktimärgistuse formaadis.
@@ -150,6 +152,12 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta DeepL kontoteenuse puhul: 128K API jaoks (**--xlate**) ja 5000 lõikelaua liidesele (**--xlate-labor**). Saate neid väärtusi muuta, kui kasutate Pro teenust.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Määrake API-le korraga saadetava teksti maksimaalne ridade arv.
+
+    Määrake selle väärtuseks 1, kui soovite tõlkida ühe rea korraga. See valik on ülimuslik valikust `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

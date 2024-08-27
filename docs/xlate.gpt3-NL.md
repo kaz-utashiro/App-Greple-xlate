@@ -110,6 +110,8 @@ Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
 
     Specificeer het uitvoerformaat voor de oorspronkelijke en vertaalde tekst.
 
+    De volgende formaten anders dan `xtxt` gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan `xtxt` zal geen zinvolle resultaten opleveren.
+
     - **conflict**, **cm**
 
         Originele en geconverteerde tekst worden afgedrukt in [git(1)](http://man.he.net/man1/git) conflict marker formaat.
@@ -150,6 +152,12 @@ Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Vertaal de volgende tekst naar het Nederlands, regel voor regel.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Specificeer het maximale aantal regels tekst dat tegelijk naar de API wordt verzonden.
+
+    Stel deze waarde in op 1 als je regel voor regel wilt vertalen. Deze optie heeft voorrang op de `--xlate-maxlen` optie.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

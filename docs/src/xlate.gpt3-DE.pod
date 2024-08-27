@@ -124,6 +124,8 @@ Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befe
 
 Geben Sie das Ausgabeformat für den ursprünglichen und übersetzten Text an.
 
+Die folgenden Formate außer C<xtxt> gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines Formats außer C<xtxt> wird keine sinnvollen Ergebnisse liefern.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der üb
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Übersetzen Sie den folgenden Text Zeile für Zeile ins Deutsche.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Legen Sie die maximale Anzahl von Textzeilen fest, die gleichzeitig an die API gesendet werden sollen.
+
+Setzen Sie diesen Wert auf 1, wenn Sie jeweils eine Zeile übersetzen möchten. Diese Option hat Vorrang vor der Option C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

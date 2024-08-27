@@ -110,6 +110,8 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     Tentukan format output untuk teks asli dan terjemahan.
 
+    Format berikut ini selain `xtxt` mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, dan menentukan format selain `xtxt` tidak akan menghasilkan hasil yang berarti.
+
     - **conflict**, **cm**
 
         Teks asli dan teks yang dikonversi dicetak dalam format penanda konflik [git(1)](http://man.he.net/man1/git).
@@ -150,6 +152,12 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan untuk layanan akun DeepL gratis: 128K untuk API (**--xlate**) dan 5000 untuk antarmuka clipboard (**--xlate-labor**). Anda mungkin dapat mengubah nilai ini jika Anda menggunakan layanan Pro.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Tentukan jumlah maksimum baris teks yang akan dikirim ke API sekaligus.
+
+    Tetapkan nilai ini ke 1 jika Anda ingin menerjemahkan satu baris dalam satu waktu. Opsi ini lebih diutamakan daripada opsi `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

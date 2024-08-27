@@ -124,6 +124,8 @@ Määrake sihtkeel. B<DeepL> mootori kasutamisel saate saadaval olevad keeled k�
 
 Määrake originaal- ja tõlgitud teksti väljundformaat.
 
+Järgmised vormingud, välja arvatud C<xtxt>, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast ja muu formaadi kui C<xtxt> määramine ei anna mõttekaid tulemusi.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Kui formaat on C<xtxt> (tõlgitud tekst) või tundmatu, trükitakse ainult tõlg
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta DeepL kontoteenuse puhul: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidesele (B<--xlate-labor>). Saate neid väärtusi muuta, kui kasutate Pro teenust.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Määrake API-le korraga saadetava teksti maksimaalne ridade arv.
+
+Määrake selle väärtuseks 1, kui soovite tõlkida ühe rea korraga. See valik on ülimuslik valikust C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

@@ -124,6 +124,8 @@ Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles avec la 
 
 Spécifiez le format de sortie pour le texte original et traduit.
 
+Les formats suivants autres que C<xtxt> supposent que la partie à traduire est une collection de lignes. En fait, il est possible de traduire seulement une partie d'une ligne, et spécifier un format autre que C<xtxt> ne produira pas de résultats significatifs.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Si le format est C<xtxt> (texte traduit) ou inconnu, seul le texte traduit est i
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Traduisez le texte suivant en français, ligne par ligne.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Spécifiez le nombre maximum de lignes de texte à envoyer à l'API à la fois.
+
+Définissez cette valeur sur 1 si vous souhaitez traduire une ligne à la fois. Cette option a la priorité sur l'option C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

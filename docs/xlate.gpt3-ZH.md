@@ -110,6 +110,8 @@ Version 0.33
 
     指定原始和翻译文本的输出格式。
 
+    除了`xtxt`之外的以下格式假定要翻译的部分是一系列行。实际上，可以只翻译一行的一部分，并且指定除`xtxt`之外的格式不会产生有意义的结果。
+
     - **conflict**, **cm**
 
         原始文本和转换后的文本以[git(1)](http://man.he.net/man1/git)冲突标记格式打印。
@@ -150,6 +152,12 @@ Version 0.33
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     将以下文本逐行翻译成中文。
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    指定一次发送到API的最大文本行数。
+
+    如果要逐行翻译，请将此值设置为1。此选项优先于`--xlate-maxlen`选项。
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

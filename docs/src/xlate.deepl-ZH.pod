@@ -124,6 +124,8 @@ B<Greple> B<xlate> 模块查找所需的文本块，并用翻译文本替换它�
 
 指定原始和翻译文本的输出格式。
 
+除 C<xtxt> 以外的下列格式假定要翻译的部分是行的集合。事实上，有可能只翻译一行的一部分，因此指定 C<xtxt> 以外的格式不会产生有意义的结果。
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ B<Greple> B<xlate> 模块查找所需的文本块，并用翻译文本替换它�
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 指定一次发送到 API 的最大文本长度。默认值与 DeepL 免费账户服务一样：API (B<--xlate>) 为 128K，剪贴板界面 (B<--xlate-labor>) 为 5000。如果使用专业版服务，您可以更改这些值。
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+指定一次发送到 API 的最大文本行数。
+
+如果想一次翻译一行，则将该值设为 1。该选项优先于 C<--xlate-maxlen> 选项。
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

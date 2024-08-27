@@ -124,6 +124,8 @@ Hedef dili belirtin. B<DeepL> motorunu kullanırken C<deepl languages> komutu il
 
 Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
+C<xtxt> dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir bölümünü çevirmek mümkündür ve C<xtxt> dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş meti
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz DeepL hesap hizmeti için ayarlanmıştır: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+API'ye bir kerede gönderilecek maksimum metin satırını belirtin.
+
+Her seferinde bir satır çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek C<--xlate-maxlen> seçeneğine göre önceliklidir.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

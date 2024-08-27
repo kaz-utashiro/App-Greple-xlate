@@ -124,6 +124,8 @@ Specificați limba țintă. Puteți obține limbile disponibile prin comanda C<d
 
 Specificați formatul de ieșire pentru textul original și cel tradus.
 
+Formatele următoare, în afara C<xtxt>, presupun că partea de tradus este o colecție de linii. De fapt, este posibil să traduci doar o porțiune dintr-o linie, iar specificarea unui format diferit de C<xtxt> nu va produce rezultate semnificative.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Dacă formatul este C<xtxt> (text tradus) sau necunoscut, se tipărește doar te
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Traduceți următorul text în limba română, linie cu linie.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+Specifică numărul maxim de linii de text care vor fi trimise la API odată.
+
+Setează această valoare la 1 dacă vrei să traduci câte o linie pe rând. Această opțiune primește prioritate față de opțiunea C<--xlate-maxlen>.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 

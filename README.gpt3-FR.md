@@ -110,6 +110,8 @@ Cette interface est expérimentale et sujette à modification à l'avenir.
 
     Spécifiez le format de sortie pour le texte original et traduit.
 
+    Les formats suivants autres que `xtxt` supposent que la partie à traduire est une collection de lignes. En fait, il est possible de traduire seulement une partie d'une ligne, et spécifier un format autre que `xtxt` ne produira pas de résultats significatifs.
+
     - **conflict**, **cm**
 
         Original et texte converti sont imprimés au format de marqueur de conflit [git(1)](http://man.he.net/man1/git).
@@ -150,6 +152,12 @@ Cette interface est expérimentale et sujette à modification à l'avenir.
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
     Traduisez le texte suivant en français, ligne par ligne.
+
+- **--xlate-maxline**=_n_ (Default: 0)
+
+    Spécifiez le nombre maximum de lignes de texte à envoyer à l'API à la fois.
+
+    Définissez cette valeur sur 1 si vous souhaitez traduire une ligne à la fois. Cette option a la priorité sur l'option `--xlate-maxlen`.
 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 

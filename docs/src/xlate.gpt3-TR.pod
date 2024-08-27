@@ -124,6 +124,8 @@ Hedef dilini belirtin. B<DeepL> motorunu kullanırken C<deepl languages> komutuy
 
 Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
+C<xtxt> dışındaki aşağıdaki formatlar, çevrilecek kısmın bir dizi satır olduğunu varsayar. Aslında, bir satırın sadece bir kısmını çevirmek mümkündür ve C<xtxt> dışındaki bir format belirtmek anlamlı sonuçlar üretmeyecektir.
+
 =over 4
 
 =item B<conflict>, B<cm>
@@ -168,6 +170,12 @@ Format C<xtxt> (çevrilmiş metin) veya bilinmeyen ise, yalnızca çevrilmiş me
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Aşağıdaki metni Türkçe'ye satır satır çevirin.
+
+=item B<--xlate-maxline>=I<n> (Default: 0)
+
+API'ye aynı anda gönderilecek maksimum satır sayısını belirtin.
+
+Eğer bir seferde sadece bir satır çevirmek istiyorsanız, bu değeri 1 olarak ayarlayın. Bu seçenek, C<--xlate-maxlen> seçeneğinden önceliklidir.
 
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
