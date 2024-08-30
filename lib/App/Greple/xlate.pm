@@ -504,6 +504,7 @@ our %opt = (
     prompt   => \(our $prompt),
     mask     => \(our $mask),
     maskfile => \(our $maskfile),
+    glossary => \(our $glossary),
 );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -781,6 +782,7 @@ builtin xlate-dryrun       $dryrun
 builtin xlate-maxlen=i     $max_length
 builtin xlate-maxline=i    $max_line
 builtin xlate-prompt=s     $prompt
+builtin xlate-glossary=s   $glossary
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

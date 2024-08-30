@@ -25,9 +25,15 @@ my %param = (
 
 sub deepl {
     state $deepl = App::cdif::Command->new;
-    state $command = [ 'deepl', 'text',
-		       '--to' => $lang_to,
-		       $auth_key ? ('--auth-key' => $auth_key) : () ];
+    state $command = do {
+	my $glossary = $App::Greple::xlate::glossary;
+	my   @c = ('deepl', 'text');
+	push @c,  ('--to', $lang_to);
+	push @c,  ('--from', $lang_from) if $lang_from ne 'ORIGINAL';
+	push @c,  ('--auth-key', $auth_key) if $auth_key;
+	push @c,  ('--glossary-id', $glossary) if $glossary;
+	\@c;
+    };
     $deepl->command([@$command, +shift])->update->data;
 }
 
