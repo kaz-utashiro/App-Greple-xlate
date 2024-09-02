@@ -18,7 +18,7 @@ Version 0.33
 **Greple** **xlate** module find desired text blocks and replace them by
 the translated text.  Currently DeepL (`deepl.pm`) and ChatGPT
 (`gpt3.pm`) module are implemented as a back-end engine.
-Experimental support for gpt-4 is also included.
+Experimental support for gpt-4 and gpt-4o are also included.
 
 If you want to translate normal text blocks in a document written in
 the Perl's pod style, use **greple** command with `xlate::deepl` and
@@ -148,6 +148,16 @@ This interface is experimental and subject to change in the future.
     Specifies the translation engine to be used. If you specify the engine
     module directly, such as `-Mxlate::deepl`, you do not need to use
     this option.
+
+    At this time, the following engines are available
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        **gpt-4o**'s interface is unstable and cannot be guaranteed to work
+        correctly at the moment.
 
 - **--xlate-labor**
 - **--xlabor**

@@ -1,4 +1,4 @@
-package App::Greple::xlate::gpt4;
+package App::Greple::xlate::gpt4o;
 
 our $VERSION = "0.33";
 
@@ -20,13 +20,10 @@ our $auth_key;
 our $method = __PACKAGE__ =~ s/.*://r;
 
 my %param = (
-    gpt3 => { engine => 'gpt-3.5-turbo', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => 'Translate following entire text into %s, line-by-line.',
-	  },
-    gpt4 => { engine => 'gpt-4-turbo', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => "Translate following entire text into %s, line-by-line.\n"
-		      . "Leave XML style tag as it is.\n"
-		      ,
+    gpt4o => { engine => 'gpt-4o-mini', temp => '0.0', max => 3000, sub => \&gpty,
+	       prompt => "Translate following entire text into %s, line-by-line.\n"
+		       . "Leave XML style tag as it is.\n"
+		       ,
 	  },
 );
 
@@ -66,12 +63,17 @@ sub _progress {
 sub xlate_each {
     my $call = $param{$method}->{sub} // die;
     my @count = map { int tr/\n/\n/ } @_;
+    my $lines = sum @count;
     _progress("From:\n", map s/^/\t< /mgr, @_);
     my $to = $call->(join '', @_);
     my @out = $to =~ /^.+\n/mg;
     _progress("To:\n", map s/^/\t> /mgr, @out);
-    if (@out < sum @count) {
-	die "Unexpected response:\n\n$to\n";
+    if ($lines == 1 and @out > 1) {
+	@out = ( join "", splice @out );
+    }
+    if (@out != $lines) {
+	die sprintf("\nUnexpected response: [ %d != %d ]\n\n%s\n",
+		    @out+0, $lines, $to);
     }
     map { join '', splice @out, 0, $_ } @count;
 }
@@ -79,20 +81,22 @@ sub xlate_each {
 sub xlate {
     my @from = map { /\n\z/ ? $_ : "$_\n" } @_;
     my @to;
-    my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
-    if (my @len = grep { $_ > $max } map length, @from) {
-	die "Contain lines longer than max length (@len > $max).\n";
+    my $maxsize = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
+    my $maxline = $App::Greple::xlate::max_line;
+    if (my @len = grep { $_ > $maxsize } map length, @from) {
+	die "Contain lines longer than max length (@len > $maxsize).\n";
     }
     while (@from) {
 	my @tmp;
 	my $len = 0;
 	while (@from) {
 	    my $next = length $from[0];
-	    last if $len + $next > $max;
+	    last if $len + $next > $maxsize;
 	    $len += $next;
 	    push @tmp, shift @from;
+	    last if $maxline > 0 and @tmp >= $maxline;
 	}
-	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
+	@tmp > 0 or die "Probably text is longer than max length ($maxsize).\n";
 	push @to, xlate_each @tmp;
     }
     @to;
