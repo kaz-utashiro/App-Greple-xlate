@@ -3,9 +3,12 @@
 LANGS    := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 RM_LANGS := DE FR JA KO RU ZH
 IGNORE   := VERSION AUTHOR LICENSE
-ENGINES  := deepl gpt3
-XLANGS   := JA
-XENGINES := gpt4
+
+ENGINES     := deepl gpt3 gpt4 gpt4o
+LANGS_deepl := DE EL ES ET FR ID JA KO NL RO RU TR ZH
+LANGS_gpt3  := DE EL ES ET FR ID JA KO NL RO RU TR ZH
+LANGS_gpt4  := JA
+LANGS_gpt4o := JA
 
 MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
 MOD_PATH := ../lib/$(subst -,/,$(MOD_NAME)).pm
@@ -18,15 +21,13 @@ ORIGIN   := $(MOD_PATH)
 PM       := $(notdir $(ORIGIN))
 POD      := $(PM:.pm=.pod)
 SRC      := $(POD:%=$(if $(SRC_DIR),$(SRC_DIR)/,)%)
-PODS     := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
-MDS      := $(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(PM:.pm=.$(engin)-$(lang).md)))
-READMES  := $(foreach engin,$(ENGINES),$(RM_LANGS:%=../README.$(engin)-%.md))
 ###########
-# Translate only JA by gpt-4
-#----------
-PODS     += $(foreach engin,$(XENGINES),$(foreach lang,$(XLANGS),$(SRC:.pod=.$(engin)-$(lang).pod)))
-MDS      += $(foreach engin,$(XENGINES),$(foreach lang,$(XLANGS),$(PM:.pm=.$(engin)-$(lang).md)))
-READMES  += $(foreach engin,$(XENGINES),$(XLANGS:%=../README.$(engin)-%.md))
+$(foreach E,$(ENGINES),\
+$(foreach L,$(LANGS_$E),\
+  $(eval PODS    += $(SRC:.pod=.$E-$L.pod))\
+  $(eval MDS     += $(PM:.pm=.$E-$L.md))\
+  $(eval READMES += $(if $(filter $L,$(RM_LANGS)),../README.$E-$L.md))\
+))
 ###########
 ALL      := $(PODS) $(MDS) README.md $(READMES)
 
@@ -72,8 +73,7 @@ define LANG_POD
   endif
 endef
 
-ENGINES+=$(XENGINES)
-$(foreach engin,$(ENGINES),$(foreach lang,$(LANGS),$(eval $(call LANG_POD,$(lang),$(engin)))))
+$(foreach E,$(ENGINES),$(foreach L,$(LANGS),$(eval $(call LANG_POD,$L,$E))))
 
 %.md: $(SRCPATH)%.pod
 	pod2markdown $< > $@
@@ -83,7 +83,10 @@ define LANG_README
 	cp $$< $$@
 endef
 
-$(foreach engin,$(ENGINES),$(foreach lang,$(RM_LANGS),$(eval $(call LANG_README,$(lang),$(engin)))))
+$(foreach E,$(ENGINES),\
+$(foreach L,$(LANGS),\
+  $(eval $(call LANG_README,$L,$E))\
+))
 
 README.md: Makefile
 	exec > $@ && \
