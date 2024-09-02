@@ -10,11 +10,11 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-**Greple** **xlate** 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (`deepl.pm`)과 ChatGPT (`gpt3.pm`) 모듈이 백엔드 엔진으로 구현되어 있습니다. gpt-4에 대한 실험적인 지원도 포함되어 있습니다.
+**Greple** **xlate** 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (`deepl.pm`) 및 ChatGPT (`gpt3.pm`) 모듈이 백엔드 엔진으로 구현되어 있습니다. 실험적으로 gpt-4 및 gpt-4o를 지원하고 있습니다.
 
 만약 Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 `xlate::deepl`과 `perl` 모듈을 사용하는 **greple** 명령을 사용하십시오.
 
@@ -97,6 +97,15 @@ Version 0.33
 - **--xlate-engine**=_engine_
 
     사용할 번역 엔진을 지정합니다. `-Mxlate::deepl`과 같이 엔진 모듈을 직접 지정하는 경우에는 이 옵션을 사용할 필요가 없습니다.
+
+    현재 사용 가능한 엔진은 다음과 같습니다.
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        **gpt-4o**의 인터페이스는 현재 불안정하며 올바르게 작동할 수 없음을 보장할 수 없습니다.
 
 - **--xlate-labor**
 - **--xlabor**

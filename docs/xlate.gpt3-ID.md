@@ -10,11 +10,11 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-Modul **Greple** **xlate** mencari blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin backend. Dukungan eksperimental untuk gpt-4 juga telah disertakan.
+Modul **Greple** **xlate** mencari blok teks yang diinginkan dan menggantinya dengan teks yang diterjemahkan. Saat ini modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) diimplementasikan sebagai mesin backend. Dukungan eksperimental untuk gpt-4 dan gpt-4o juga disertakan.
 
 Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
@@ -97,6 +97,15 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 - **--xlate-engine**=_engine_
 
     Menentukan mesin terjemahan yang akan digunakan. Jika Anda menentukan modul mesin secara langsung, seperti `-Mxlate::deepl`, Anda tidak perlu menggunakan opsi ini.
+
+    Pada saat ini, mesin berikut tersedia
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin akan berfungsi dengan benar saat ini.
 
 - **--xlate-labor**
 - **--xlabor**

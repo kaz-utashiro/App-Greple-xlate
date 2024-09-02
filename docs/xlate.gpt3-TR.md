@@ -10,11 +10,11 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülleri bir arka uç motoru olarak uygulanmıştır. Ayrıca gpt-4 için deneysel destek de bulunmaktadır.
+**Greple** **xlate** modülü istenilen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT (`gpt3.pm`) modülleri arka uç motor olarak uygulanmıştır. Ayrıca gpt-4 ve gpt-4o için deneysel destek de bulunmaktadır.
 
 Eğer Perl'in pod stiliyle yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, şu şekilde **greple** komutunu `xlate::deepl` ve `perl` modülü ile kullanın:
 
@@ -97,6 +97,15 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 - **--xlate-engine**=_engine_
 
     Kullanılacak çeviri motorunu belirtir. `-Mxlate::deepl` gibi doğrudan motor modülünü belirtirseniz, bu seçeneği kullanmanıza gerek yoktur.
+
+    Şu anda, aşağıdaki motorlar mevcuttur
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        **gpt-4o**'nun arayüzü şu anda kararlı değildir ve doğru çalışacağı garanti edilemez.
 
 - **--xlate-labor**
 - **--xlabor**

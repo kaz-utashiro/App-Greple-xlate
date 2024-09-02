@@ -10,11 +10,11 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-**Greple** **xlate** 模块可以找到所需的文本块并用翻译后的文本替换它们。目前已实现了 DeepL (`deepl.pm`) 和 ChatGPT (`gpt3.pm`) 模块作为后端引擎。还包括对 gpt-4 的实验性支持。
+**Greple** **xlate** 模块查找所需的文本块，并用翻译后的文本替换它们。目前作为后端引擎实现的有 DeepL（`deepl.pm`）和 ChatGPT（`gpt3.pm`）模块。还包括对 gpt-4 和 gpt-4o 的实验性支持。
 
 如果您想要将Perl的pod样式文档中的普通文本块翻译成中文，请使用以下命令：**greple**，并结合`xlate::deepl`和`perl`模块，如下所示：
 
@@ -97,6 +97,15 @@ Version 0.33
 - **--xlate-engine**=_engine_
 
     指定要使用的翻译引擎。如果直接指定引擎模块，如`-Mxlate::deepl`，则不需要使用此选项。
+
+    目前，可用的引擎如下：
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        **gpt-4o** 的接口不稳定，目前无法保证能正常工作。
 
 - **--xlate-labor**
 - **--xlabor**

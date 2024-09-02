@@ -12,11 +12,11 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.33
+Version 0.34
 
 =head1 DESCRIPTION
 
-Modul B<Greple> B<xlate> mencari blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin backend. Dukungan eksperimental untuk gpt-4 juga telah disertakan.
+Modul B<Greple> B<xlate> mencari blok teks yang diinginkan dan menggantinya dengan teks yang diterjemahkan. Saat ini modul DeepL (F<deepl.pm>) dan ChatGPT (F<gpt3.pm>) diimplementasikan sebagai mesin backend. Dukungan eksperimental untuk gpt-4 dan gpt-4o juga disertakan.
 
 Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
 
@@ -113,6 +113,22 @@ Dengan opsi B<--xlate-fold>, teks yang dikonversi dilipat dengan lebar yang dite
 =item B<--xlate-engine>=I<engine>
 
 Menentukan mesin terjemahan yang akan digunakan. Jika Anda menentukan modul mesin secara langsung, seperti C<-Mxlate::deepl>, Anda tidak perlu menggunakan opsi ini.
+
+Pada saat ini, mesin berikut tersedia
+
+=over 2
+
+=item * B<deepl>: DeepL API
+
+=item * B<gpt3>: gpt-3.5-turbo
+
+=item * B<gpt4>: gpt-4-turbo
+
+=item * B<gpt4o>: gpt-4o-mini
+
+Antarmuka B<gpt-4o> tidak stabil dan tidak dapat dijamin akan berfungsi dengan benar saat ini.
+
+=back
 
 =item B<--xlate-labor>
 

@@ -10,11 +10,11 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-Das **Greple** **xlate** Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) Module als Backend-Engine implementiert. Experimentelle Unterstützung für gpt-4 ist ebenfalls enthalten.
+Das **Greple** **xlate** Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind die DeepL (`deepl.pm`) und ChatGPT (`gpt3.pm`) Module als Backend-Engine implementiert. Experimentelle Unterstützung für gpt-4 und gpt-4o ist ebenfalls enthalten.
 
 Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den **greple**-Befehl mit dem `xlate::deepl`- und `perl`-Modul wie folgt:
 
@@ -97,6 +97,15 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 - **--xlate-engine**=_engine_
 
     Spezifiziert die zu verwendende Übersetzungs-Engine. Wenn Sie das Engine-Modul direkt angeben, z.B. `-Mxlate::deepl`, müssen Sie diese Option nicht verwenden.
+
+    Zu diesem Zeitpunkt stehen folgende Engines zur Verfügung:
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        Die Schnittstelle von **gpt-4o** ist instabil und kann momentan nicht garantiert korrekt funktionieren.
 
 - **--xlate-labor**
 - **--xlabor**

@@ -12,11 +12,11 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.33
+Version 0.34
 
 =head1 DESCRIPTION
 
-Modulul B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca motor back-end. De asemenea, este inclus suportul experimental pentru gpt-4.
+Modulul B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulul DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca un motor back-end. Suportul experimental pentru gpt-4 și gpt-4o este, de asemenea, inclus.
 
 Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul Perl's pod, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> astfel:
 
@@ -113,6 +113,22 @@ Cu opțiunea B<--xlate-fold>, textul convertit este pliat cu lățimea specifica
 =item B<--xlate-engine>=I<engine>
 
 Specifică motorul de traducere care urmează să fie utilizat. Dacă specificați direct modulul motorului, cum ar fi C<-Mxlate::deepl>, nu este necesar să utilizați această opțiune.
+
+În acest moment, sunt disponibile următoarele motoare
+
+=over 2
+
+=item * B<deepl>: DeepL API
+
+=item * B<gpt3>: gpt-3.5-turbo
+
+=item * B<gpt4>: gpt-4-turbo
+
+=item * B<gpt4o>: gpt-4o-mini
+
+Interfața lui B<gpt-4o> este instabilă și nu se poate garanta că funcționează corect în acest moment.
+
+=back
 
 =item B<--xlate-labor>
 

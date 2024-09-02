@@ -10,11 +10,11 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.33
+Version 0.34
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagurpidi mootorina rakendatud DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodulid. Katsetav tugi gpt-4 jaoks on samuti lisatud.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on tagumise mootorina kasutusel DeepL (`deepl.pm`) ja ChatGPT (`gpt3.pm`) moodul. Katseversioonid gpt-4 ja gpt-4o toetusest on samuti saadaval.
 
 Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
 
@@ -97,6 +97,15 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--xlate-engine**=_engine_
 
     Määrab kasutatava tõlke mootori. Kui määrate mootori mooduli otse, näiteks `-Mxlate::deepl`, siis pole selle valiku kasutamine vajalik.
+
+    Sel hetkel on saadaval järgmised mootorid
+
+    - **deepl**: DeepL API
+    - **gpt3**: gpt-3.5-turbo
+    - **gpt4**: gpt-4-turbo
+    - **gpt4o**: gpt-4o-mini
+
+        **gpt-4o** liides on ebastabiilne ega pruugi hetkel korralikult töötada.
 
 - **--xlate-labor**
 - **--xlabor**

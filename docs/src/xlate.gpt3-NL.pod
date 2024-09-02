@@ -12,11 +12,11 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.33
+Version 0.34
 
 =head1 DESCRIPTION
 
-Het B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als back-end engine. Experimentele ondersteuning voor gpt-4 is ook inbegrepen.
+Het B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>) en ChatGPT (F<gpt3.pm>) modules geïmplementeerd als back-end engine. Experimentele ondersteuning voor gpt-4 en gpt-4o is ook inbegrepen.
 
 Als je normale tekstblokken wilt vertalen in een document dat is geschreven in de Perl's pod-stijl, gebruik dan het B<greple> commando met de C<xlate::deepl> en C<perl> module als volgt:
 
@@ -113,6 +113,22 @@ Met de optie B<--xlate-fold> wordt de geconverteerde tekst gevouwen volgens de o
 =item B<--xlate-engine>=I<engine>
 
 Specificeert de te gebruiken vertaalmotor. Als je de engine module direct specificeert, zoals C<-Mxlate::deepl>, hoef je deze optie niet te gebruiken.
+
+Op dit moment zijn de volgende engines beschikbaar
+
+=over 2
+
+=item * B<deepl>: DeepL API
+
+=item * B<gpt3>: gpt-3.5-turbo
+
+=item * B<gpt4>: gpt-4-turbo
+
+=item * B<gpt4o>: gpt-4o-mini
+
+De interface van B<gpt-4o> is instabiel en kan op dit moment niet worden gegarandeerd correct te werken.
+
+=back
 
 =item B<--xlate-labor>
 
