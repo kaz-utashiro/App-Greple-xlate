@@ -77,6 +77,8 @@ of multiple lines of non-empty text, they are converted together into
 a single line.  This operation is performed as follows:
 
 - Remove white space at the beginning and end of each line.
+- If a line ends with a full-width punctuation character, concatenate
+with next line.
 - If a line ends with a full-width character and the next line begins
 with a full-width character, concatenate the lines.
 - If either the end or the beginning of a line is not a full-width

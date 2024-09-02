@@ -83,6 +83,11 @@ Remove white space at the beginning and end of each line.
 
 =item *
 
+If a line ends with a full-width punctuation character, concatenate
+with next line.
+
+=item *
+
 If a line ends with a full-width character and the next line begins
 with a full-width character, concatenate the lines.
 
@@ -594,6 +599,8 @@ sub normalize {
 	${^MATCH}
 	# remove leading/trailing spaces
 	    =~ s/\A\s+|\s+\z//gr
+	# remove newline after Japanese Punct char
+	    =~ s/(?<=\p{InFullwidth})(?<=\pP)\n//gr
 	# join Japanese lines without space
 	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
 	# join ASCII lines with single space
