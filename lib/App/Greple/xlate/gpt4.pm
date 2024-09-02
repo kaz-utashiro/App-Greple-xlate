@@ -25,7 +25,7 @@ my %param = (
 	  },
     gpt4 => { engine => 'gpt-4o-mini', temp => '0.0', max => 3000, sub => \&gpty,
 	      prompt => "Translate following entire text into %s, line-by-line.\n"
-		      . "Leave <m id=# /> style tag as it is.\n"
+		      . "Leave XML style tag as it is.\n"
 		      ,
 	  },
 );
