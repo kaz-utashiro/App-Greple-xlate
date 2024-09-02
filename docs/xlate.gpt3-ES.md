@@ -55,6 +55,7 @@ El formato de datos de marcador de conflicto se puede ver en estilo lado a lado 
 El procesamiento se realiza en unidades especificadas, pero en el caso de una secuencia de múltiples líneas de texto no vacías, se convierten juntas en una sola línea. Esta operación se realiza de la siguiente manera:
 
 - Eliminar los espacios en blanco al principio y al final de cada línea.
+- Si una línea termina con un carácter de puntuación de ancho completo, concaténala con la siguiente línea.
 - Si una línea termina con un carácter de ancho completo y la siguiente línea comienza con un carácter de ancho completo, concatenar las líneas.
 - Si el final o el principio de una línea no es un carácter de ancho completo, concatenarlos insertando un carácter de espacio.
 

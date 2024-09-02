@@ -58,6 +58,10 @@ Eemaldatakse tühikud iga rea algusest ja lõpust.
 
 =item *
 
+Kui rida lõpeb täispikkusega kirjavahemärgiga, siis ühenda see järgmise reaga.
+
+=item *
+
 Kui rida lõpeb täislaia tähemärgiga ja järgmine rida algab täislaia tähemärgiga, ühendatakse read.
 
 =item *

@@ -55,6 +55,7 @@ Gegevens in conflictmarkerformaat kunnen naast elkaar worden bekeken met het com
 De verwerking wordt gedaan in gespecificeerde eenheden, maar in het geval van een opeenvolging van meerdere regels niet-lege tekst, worden ze samen omgezet in een enkele regel. Deze bewerking wordt als volgt uitgevoerd:
 
 - Verwijder witruimte aan het begin en einde van elke regel.
+- Als een regel eindigt met een leesteken over de hele breedte, aaneenschakelen met de volgende regel.
 - Als een regel eindigt met een teken van volledige breedte en de volgende regel begint met een teken van volledige breedte, worden de regels aan elkaar gekoppeld.
 - Als het einde of het begin van een regel geen teken voor de volledige breedte is, voeg ze dan samen door een spatieteken in te voegen.
 

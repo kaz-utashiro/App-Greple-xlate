@@ -55,6 +55,7 @@ Konfliktimärgistuse formaadis andmeid saab vaadata külg-üles stiilis käsuga 
 Töötlemine toimub kindlaksmääratud ühikutes, kuid mitme mittetäieliku tekstirea järjestuse korral teisendatakse need kokku üheks reaks. See operatsioon toimub järgmiselt:
 
 - Eemaldatakse valge tühik iga rea alguses ja lõpus.
+- Kui rida lõpeb täies laiuses kirjavahemärgiga, ühendage see järgmise reaga.
 - Kui rida lõpeb täies laiuses märgiga ja järgmine rida algab täies laiuses märgiga, ühendatakse read.
 - Kui rea lõpp või algus ei ole täies laiuses märk, ühendage need, lisades tühiku.
 

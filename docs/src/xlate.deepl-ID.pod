@@ -58,6 +58,10 @@ Menghilangkan spasi pada awal dan akhir setiap baris.
 
 =item *
 
+Jika sebuah baris diakhiri dengan karakter tanda baca dengan lebar penuh, gabungkan dengan baris berikutnya.
+
+=item *
+
 Jika sebuah baris diakhiri dengan karakter dengan lebar penuh dan baris berikutnya dimulai dengan karakter dengan lebar penuh, gabungkan kedua baris tersebut.
 
 =item *

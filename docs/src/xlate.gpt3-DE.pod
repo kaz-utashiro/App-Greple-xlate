@@ -58,6 +58,10 @@ Entfernen Sie Leerzeichen am Anfang und Ende jeder Zeile.
 
 =item *
 
+Wenn eine Zeile mit einem Vollbreiten-Satzzeichen endet, verknüpfen Sie sie mit der nächsten Zeile.
+
+=item *
+
 Wenn eine Zeile mit einem Vollbreitenzeichen endet und die nächste Zeile mit einem Vollbreitenzeichen beginnt, werden die Zeilen zusammengefügt.
 
 =item *

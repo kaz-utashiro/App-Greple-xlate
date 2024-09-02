@@ -55,6 +55,7 @@ Tüm metni çevirmek isterseniz, **--match-all** seçeneğini kullanın. Bu, tü
 İşleme belirtilen birimlerde yapılır, ancak birden fazla satırın ardışık olarak işlenmesi durumunda, bunlar birlikte tek bir satıra dönüştürülür. Bu işlem şu şekilde gerçekleştirilir:
 
 - Her satırın başında ve sonundaki boşlukları kaldırın.
+- Eğer bir satır tam genişlikte bir noktalama işareti karakteri ile biterse, bir sonraki satırla birleştirin.
 - Bir satır tam genişlikli bir karakterle biterse ve bir sonraki satır tam genişlikli bir karakterle başlarsa, satırları birleştirin.
 - Bir satırın sonu veya başı tam genişlikli bir karakter değilse, aralarına bir boşluk karakteri ekleyerek birleştirin.
 

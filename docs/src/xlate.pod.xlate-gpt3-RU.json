@@ -15,6 +15,7 @@
    "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Генерация документов на 15 языках с помощью модуля DeepL API (на японском)\n",
    "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Модуль Greple для перевода и замены только необходимых частей с использованием API DeepL (на японском)\n",
    "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n" : "Если строка заканчивается полноширинным символом, а следующая строка начинается с полноширинного символа, объединить строки.\n",
+   "If a line ends with a full-width punctuation character, concatenate with next line.\n" : "Если строка заканчивается символом пунктуации полной ширины, объедините ее с следующей строкой.\n",
    "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n" : "Если конец или начало строки не является полноширинным символом, объединить их, вставив пробел.\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Если формат - C<xtxt> (переведенный текст) или неизвестный, будет выведен только переведенный текст.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Если вы хотите перевести весь текст, используйте опцию B<--match-all>. Это сокращение для указания шаблона C<(?s).+>, который соответствует всему тексту.\n",

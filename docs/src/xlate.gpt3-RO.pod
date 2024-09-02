@@ -58,6 +58,10 @@ Se elimină spațiile albe de la început și sfârșitul fiecărei linii.
 
 =item *
 
+Dacă o linie se încheie cu un caracter de punctuație de lățime completă, concatenează cu linia următoare.
+
+=item *
+
 Dacă o linie se termină cu un caracter de lățime completă și linia următoare începe cu un caracter de lățime completă, se concatenează liniile.
 
 =item *

@@ -55,6 +55,7 @@ Datele din formatul markerilor de conflict pot fi vizualizate în stil paralel p
 Prelucrarea se face în unități specificate, dar în cazul unei secvențe de linii multiple de text nevid, acestea sunt convertite împreună într-o singură linie. Această operațiune se efectuează după cum urmează:
 
 - Se elimină spațiul alb de la începutul și sfârșitul fiecărei linii.
+- Dacă o linie se termină cu un caracter de punctuație de lățime maximă, concatenarea se face cu linia următoare.
 - Dacă o linie se termină cu un caracter de lățime întreagă și următoarea linie începe cu un caracter de lățime întreagă, se concatenează liniile.
 - Dacă sfârșitul sau începutul unei linii nu este un caracter de lățime maximă, concatenați-le prin inserarea unui caracter de spațiu.
 

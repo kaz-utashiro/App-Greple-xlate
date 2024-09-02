@@ -55,6 +55,7 @@ Eğer metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini ku
 İşlem belirtilen birimler halinde yapılır, ancak birden fazla boş olmayan metin satırı dizisi olması durumunda, bunlar birlikte tek bir satıra dönüştürülür. Bu işlem aşağıdaki gibi gerçekleştirilir:
 
 - Her satırın başındaki ve sonundaki beyaz boşluğu kaldırın.
+- Bir satır tam genişlikte bir noktalama karakteriyle bitiyorsa, sonraki satırla birleştirin.
 - Bir satır tam genişlikte bir karakterle bitiyorsa ve bir sonraki satır tam genişlikte bir karakterle başlıyorsa, satırları birleştirin.
 - Bir satırın sonu veya başı tam genişlikte bir karakter değilse, boşluk karakteri ekleyerek birleştirin.
 

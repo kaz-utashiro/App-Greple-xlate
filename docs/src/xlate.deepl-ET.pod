@@ -58,6 +58,10 @@ Eemaldatakse valge tühik iga rea alguses ja lõpus.
 
 =item *
 
+Kui rida lõpeb täies laiuses kirjavahemärgiga, ühendage see järgmise reaga.
+
+=item *
+
 Kui rida lõpeb täies laiuses märgiga ja järgmine rida algab täies laiuses märgiga, ühendatakse read.
 
 =item *

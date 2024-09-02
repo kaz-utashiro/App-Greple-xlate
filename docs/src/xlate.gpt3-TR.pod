@@ -58,6 +58,10 @@ Her satırın başında ve sonundaki boşlukları kaldırın.
 
 =item *
 
+Eğer bir satır tam genişlikte bir noktalama işareti karakteri ile biterse, bir sonraki satırla birleştirin.
+
+=item *
+
 Bir satır tam genişlikli bir karakterle biterse ve bir sonraki satır tam genişlikli bir karakterle başlarsa, satırları birleştirin.
 
 =item *

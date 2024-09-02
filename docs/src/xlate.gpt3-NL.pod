@@ -58,6 +58,10 @@ Verwijder witruimte aan het begin en einde van elke regel.
 
 =item *
 
+Als een regel eindigt met een leesteken in volledige breedte, voeg dan samen met de volgende regel.
+
+=item *
+
 Als een regel eindigt met een volledig breedte karakter en de volgende regel begint met een volledig breedte karakter, voeg dan de regels samen.
 
 =item *

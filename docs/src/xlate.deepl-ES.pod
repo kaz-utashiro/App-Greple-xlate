@@ -58,6 +58,10 @@ Se eliminan los espacios en blanco al principio y al final de cada línea.
 
 =item *
 
+Si una línea termina con un carácter de puntuación de ancho completo, concaténela con la línea siguiente.
+
+=item *
+
 Si una línea termina con un carácter de ancho completo y la línea siguiente comienza con un carácter de ancho completo, concatene las líneas.
 
 =item *

@@ -55,6 +55,7 @@ Conflict marker formaatgegevens kunnen worden bekeken in een zij-aan-zij stijl m
 Verwerking gebeurt in opgegeven eenheden, maar in het geval van een reeks van meerdere regels met niet-lege tekst, worden ze samen omgezet in één regel. Deze bewerking wordt als volgt uitgevoerd:
 
 - Verwijder witruimte aan het begin en einde van elke regel.
+- Als een regel eindigt met een leesteken in volledige breedte, voeg dan samen met de volgende regel.
 - Als een regel eindigt met een volledig breedte karakter en de volgende regel begint met een volledig breedte karakter, voeg dan de regels samen.
 - Als het einde of het begin van een regel geen volledig breedte karakter is, voeg ze dan samen door een spatiekarakter in te voegen.
 

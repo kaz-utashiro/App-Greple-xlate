@@ -55,6 +55,7 @@ Daten im Konfliktmarkerformat können mit dem Befehl `sdif` und der Option `-V` 
 Die Verarbeitung erfolgt in den angegebenen Einheiten, aber im Falle einer Folge von mehreren nicht leeren Textzeilen werden diese zusammen in eine einzige Zeile umgewandelt. Dieser Vorgang wird wie folgt durchgeführt:
 
 - Am Anfang und am Ende jeder Zeile wird der Leerraum entfernt.
+- Wenn eine Zeile mit einem Satzzeichen in voller Breite endet, wird sie mit der nächsten Zeile verkettet.
 - Wenn eine Zeile mit einem Zeichen voller Breite endet und die nächste Zeile mit einem Zeichen voller Breite beginnt, werden die Zeilen verkettet.
 - Wenn entweder das Ende oder der Anfang einer Zeile kein Zeichen mit voller Breite ist, verketten Sie sie durch Einfügen eines Leerzeichens.
 

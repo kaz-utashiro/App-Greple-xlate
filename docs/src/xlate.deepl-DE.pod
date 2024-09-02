@@ -58,6 +58,10 @@ Am Anfang und am Ende jeder Zeile wird der Leerraum entfernt.
 
 =item *
 
+Wenn eine Zeile mit einem Satzzeichen in voller Breite endet, wird sie mit der nächsten Zeile verkettet.
+
+=item *
+
 Wenn eine Zeile mit einem Zeichen voller Breite endet und die nächste Zeile mit einem Zeichen voller Breite beginnt, werden die Zeilen verkettet.
 
 =item *

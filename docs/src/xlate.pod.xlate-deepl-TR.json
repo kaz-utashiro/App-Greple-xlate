@@ -15,6 +15,7 @@
    "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "DeepL API modülü ile 15 dilde belge oluşturma (Japonca)\n",
    "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Sadece gerekli kısımları çevirmek ve değiştirmek için Greple modülü DeepL API (Japonca)\n",
    "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n" : "Bir satır tam genişlikte bir karakterle bitiyorsa ve bir sonraki satır tam genişlikte bir karakterle başlıyorsa, satırları birleştirin.\n",
+   "If a line ends with a full-width punctuation character, concatenate with next line.\n" : "Bir satır tam genişlikte bir noktalama karakteriyle bitiyorsa, sonraki satırla birleştirin.\n",
    "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n" : "Bir satırın sonu veya başı tam genişlikte bir karakter değilse, boşluk karakteri ekleyerek birleştirin.\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Biçim C<xtxt> (çevrilmiş metin) veya bilinmiyorsa, yalnızca çevrilmiş metin yazdırılır.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Eğer metnin tamamını çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, metnin tamamıyla eşleşen C<(?s).+> kalıbını belirtmek için kısa yoldur.\n",

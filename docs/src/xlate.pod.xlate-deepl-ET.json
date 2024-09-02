@@ -15,6 +15,7 @@
    "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Dokumentide genereerimine 15 keeles DeepL API mooduliga (jaapani keeles).\n",
    "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Greple moodul tõlkida ja asendada ainult vajalikud osad DeepL API (jaapani keeles)\n",
    "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n" : "Kui rida lõpeb täies laiuses märgiga ja järgmine rida algab täies laiuses märgiga, ühendatakse read.\n",
+   "If a line ends with a full-width punctuation character, concatenate with next line.\n" : "Kui rida lõpeb täies laiuses kirjavahemärgiga, ühendage see järgmise reaga.\n",
    "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n" : "Kui rea lõpp või algus ei ole täies laiuses märk, ühendage need, lisades tühiku.\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Kui formaat on C<xtxt> (tõlgitud tekst) või tundmatu, trükitakse ainult tõlgitud tekst.\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Kui soovite tõlkida kogu teksti, kasutage valikut B<--match-all>. See on otsetee, et määrata muster C<(?s).+>, mis vastab kogu tekstile.\n",

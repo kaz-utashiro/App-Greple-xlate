@@ -55,6 +55,7 @@ Konfliktimärgistuse vormingu andmeid saab vaadata kõrvuti stiilis `sdif` käsu
 Töötlemine toimub määratletud üksustes, kuid mitme rea järjestikuse mitte-tühja teksti korral teisendatakse need koos üheks reaks. See toiming viiakse läbi järgmiselt:
 
 - Eemaldatakse tühikud iga rea algusest ja lõpust.
+- Kui rida lõpeb täispikkusega kirjavahemärgiga, siis ühenda see järgmise reaga.
 - Kui rida lõpeb täislaia tähemärgiga ja järgmine rida algab täislaia tähemärgiga, ühendatakse read.
 - Kui rea lõpus või alguses pole täislaia tähemärki, ühendatakse nad, sisestades tühikumärgi.
 

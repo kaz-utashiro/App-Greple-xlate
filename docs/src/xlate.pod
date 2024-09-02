@@ -79,6 +79,11 @@ Remove white space at the beginning and end of each line.
 
 =item *
 
+If a line ends with a full-width punctuation character, concatenate
+with next line.
+
+=item *
+
 If a line ends with a full-width character and the next line begins
 with a full-width character, concatenate the lines.
 

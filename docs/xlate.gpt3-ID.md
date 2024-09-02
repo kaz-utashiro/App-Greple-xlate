@@ -55,6 +55,7 @@ Format penanda konflik data dapat dilihat dalam gaya samping-samping dengan peri
 Pemrosesan dilakukan dalam unit yang ditentukan, tetapi dalam kasus urutan beberapa baris teks non-kosong, mereka dikonversi bersama menjadi satu baris. Operasi ini dilakukan sebagai berikut:
 
 - Hapus spasi putih di awal dan akhir setiap baris.
+- Jika sebuah baris diakhiri dengan karakter tanda baca lebar penuh, gabungkan dengan baris berikutnya.
 - Jika sebuah baris diakhiri dengan karakter lebar penuh dan baris berikutnya dimulai dengan karakter lebar penuh, gabungkan baris tersebut.
 - Jika baik di akhir maupun di awal baris tidak ada karakter lebar penuh, gabungkan mereka dengan menyisipkan karakter spasi.
 

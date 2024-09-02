@@ -58,6 +58,10 @@ Supprimer les espaces blancs au début et à la fin de chaque ligne.
 
 =item *
 
+Si une ligne se termine par un caractère de ponctuation de pleine largeur, concaténer avec la ligne suivante.
+
+=item *
+
 Si une ligne se termine par un caractère de pleine largeur et que la ligne suivante commence par un caractère de pleine largeur, concaténer les lignes.
 
 =item *

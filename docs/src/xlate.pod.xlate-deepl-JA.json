@@ -15,6 +15,7 @@
    "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "DeepL APIモジュールによる15言語のドキュメント生成\n",
    "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "DeepL APIで必要な部分だけを翻訳・置換するGrepleモジュール\n",
    "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n" : "ある行が全角文字で終わり、次の行が全角文字で始まる場合、その行を連結する。\n",
+   "If a line ends with a full-width punctuation character, concatenate with next line.\n" : "行末が全角句読点の場合は、次の行と連結する。\n",
    "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n" : "行末または行頭が全角文字でない場合は、スペース文字を挿入して連結する。\n",
    "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "形式がC<xtxt>（翻訳済みテキスト）または未知の場合は、翻訳済みテキストのみが印刷されます。\n",
    "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "テキスト全体を翻訳したい場合は、B<--match-all>オプションを使います。これはテキスト全体にマッチするパターンC<(?s).+>を指定するショートカットです。\n",

@@ -55,6 +55,7 @@ Data format penanda konflik dapat dilihat dalam gaya berdampingan dengan perinta
 Pemrosesan dilakukan dalam unit yang ditentukan, tetapi dalam kasus urutan beberapa baris teks yang tidak kosong, teks-teks tersebut dikonversi bersama menjadi satu baris. Operasi ini dilakukan sebagai berikut:
 
 - Menghilangkan spasi pada awal dan akhir setiap baris.
+- Jika sebuah baris diakhiri dengan karakter tanda baca dengan lebar penuh, gabungkan dengan baris berikutnya.
 - Jika sebuah baris diakhiri dengan karakter dengan lebar penuh dan baris berikutnya dimulai dengan karakter dengan lebar penuh, gabungkan kedua baris tersebut.
 - Jika akhir atau awal baris bukan merupakan karakter dengan lebar penuh, gabungkan keduanya dengan menyisipkan karakter spasi.
 

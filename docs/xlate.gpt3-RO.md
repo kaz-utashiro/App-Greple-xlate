@@ -55,6 +55,7 @@ Formatul datelor pentru markerul de conflict poate fi vizualizat în stil side-b
 Procesarea se face în unități specificate, dar în cazul unei secvențe de mai multe linii de text ne-gol, acestea sunt convertite împreună într-o singură linie. Această operație se efectuează astfel:
 
 - Se elimină spațiile albe de la început și sfârșitul fiecărei linii.
+- Dacă o linie se încheie cu un caracter de punctuație de lățime completă, concatenează cu linia următoare.
 - Dacă o linie se termină cu un caracter de lățime completă și linia următoare începe cu un caracter de lățime completă, se concatenează liniile.
 - Dacă fie sfârșitul sau începutul unei linii nu este un caracter de lățime completă, acestea sunt concatenate prin inserarea unui caracter spațiu.
 

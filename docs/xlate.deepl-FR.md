@@ -55,6 +55,7 @@ Les données du format de marqueur de conflit peuvent être visualisées côte �
 Le traitement se fait par unités spécifiées, mais dans le cas d'une séquence de plusieurs lignes de texte non vide, elles sont converties ensemble en une seule ligne. Cette opération s'effectue comme suit :
 
 - Supprimer les espaces blancs au début et à la fin de chaque ligne.
+- Si une ligne se termine par un caractère de ponctuation de pleine largeur, concaténer avec la ligne suivante.
 - Si une ligne se termine par un caractère de pleine largeur et que la ligne suivante commence par un caractère de pleine largeur, concaténer les lignes.
 - Si la fin ou le début d'une ligne n'est pas un caractère de pleine largeur, concaténer les lignes en insérant un caractère d'espacement.
 

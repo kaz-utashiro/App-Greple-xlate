@@ -55,6 +55,7 @@ Konfliktmarker-Formatdaten können im Seit-an-Seit-Stil mit dem Befehl `sdif` un
 Die Verarbeitung erfolgt in festgelegten Einheiten, aber im Fall einer Sequenz von mehreren Zeilen mit nicht-leerem Text werden sie zusammen in eine einzige Zeile umgewandelt. Diese Operation wird wie folgt durchgeführt:
 
 - Entfernen Sie Leerzeichen am Anfang und Ende jeder Zeile.
+- Wenn eine Zeile mit einem Vollbreiten-Satzzeichen endet, verknüpfen Sie sie mit der nächsten Zeile.
 - Wenn eine Zeile mit einem Vollbreitenzeichen endet und die nächste Zeile mit einem Vollbreitenzeichen beginnt, werden die Zeilen zusammengefügt.
 - Wenn entweder das Ende oder der Anfang einer Zeile kein Vollbreitenzeichen ist, werden sie durch Einfügen eines Leerzeichens zusammengefügt.
 
