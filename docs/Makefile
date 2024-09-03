@@ -1,14 +1,14 @@
 .DELETE_ON_ERROR:
 
 LANGS    := DE EL ES ET FR ID JA KO NL RO RU TR ZH
-RM_LANGS := DE FR JA KO RU ZH
+RM_LANGS := DE          FR    JA KO       RU    ZH
 IGNORE   := VERSION AUTHOR LICENSE
 
 ENGINES     := deepl gpt3 gpt4 gpt4o
 LANGS_deepl := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 LANGS_gpt3  := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 LANGS_gpt4  := JA
-LANGS_gpt4o := JA
+LANGS_gpt4o := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 
 MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
 MOD_PATH := ../lib/$(subst -,/,$(MOD_NAME)).pm
