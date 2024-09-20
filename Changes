@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.3401 2024-09-20T03:49:59Z
+
+    - update gpt4o module
+    - include documents translated by gpt4o
+
 0.34 2024-09-02T13:24:56Z
 
     - introduce gpt4o engine

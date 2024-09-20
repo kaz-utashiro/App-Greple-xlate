@@ -10,7 +10,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 # VERSION
 
-Version 0.34
+Version 0.3401
 
 # DESCRIPTION
 
