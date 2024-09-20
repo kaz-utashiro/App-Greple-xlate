@@ -66,6 +66,9 @@ sub xlate_each {
     my $lines = sum @count;
     _progress("From:\n", map s/^/\t< /mgr, @_);
     my $to = $call->(join '', @_);
+    if ((my @to = split /(?<=\n)\n+/, $to) > 1) {
+	$to = join '', map { /(.+\n)\z/ ? $1 : die } @to;
+    }
     my @out = $to =~ /^.+\n/mg;
     _progress("To:\n", map s/^/\t> /mgr, @out);
     if ($lines == 1 and @out > 1) {
@@ -82,7 +85,7 @@ sub xlate {
     my @from = map { /\n\z/ ? $_ : "$_\n" } @_;
     my @to;
     my $maxsize = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
-    my $maxline = $App::Greple::xlate::max_line;
+    my $maxline = $App::Greple::xlate::max_line || 1;
     if (my @len = grep { $_ > $maxsize } map length, @from) {
 	die "Contain lines longer than max length (@len > $maxsize).\n";
     }
