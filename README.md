@@ -213,9 +213,11 @@ This interface is experimental and subject to change in the future.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
         Original and converted text are printed separated by single blank
-        line.
+        line.  For `space+`, it also outputs a newline after the converted
+        text.
 
     - **xtxt**
 

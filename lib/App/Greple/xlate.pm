@@ -243,8 +243,11 @@ You can retrieve only Japanese text by the B<unifdef> command:
 
 =item B<space>
 
+=item B<space+>
+
 Original and converted text are printed separated by single blank
-line.
+line.  For C<space+>, it also outputs a newline after the converted
+text.
 
 =item B<xtxt>
 
@@ -554,8 +557,9 @@ our %formatter = (
 	    $_[1],
 	    "#endif\n";
     },
-    space   => sub { join "\n", @_ },
-    discard => sub { '' },
+    space    => sub { join("\n", @_) },
+    'space+' => sub { join("\n", @_) . "\n" },
+    discard  => sub { '' },
 );
 
 # aliases
