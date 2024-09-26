@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -239,8 +239,11 @@ You can retrieve only Japanese text by the B<unifdef> command:
 
 =item B<space>
 
+=item B<space+>
+
 Original and converted text are printed separated by single blank
-line.
+line.  For C<space+>, it also outputs a newline after the converted
+text.
 
 =item B<xtxt>
 

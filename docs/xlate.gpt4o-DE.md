@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,12 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Original- und konvertierter Text werden durch eine einzelne Leerzeile getrennt ausgegeben.  
+        Original and converted text are printed separated by single blank line. 
+        Der Original- und konvertierte Text wird durch eine einzelne Leerzeile getrennt.
+        For `space+`, it also outputs a newline after the converted text.
+        Für `space+` wird auch eine neue Zeile nach dem konvertierten Text ausgegeben.
 
     - **xtxt**
 

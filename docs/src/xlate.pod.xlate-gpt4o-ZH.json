@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "选项 B<--xlate> 调用 B<--xlate-color> 选项，并带有 B<--color=never> 选项。\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "原始文本和转换文本以 L<cpp(1)> C<#ifdef> 格式打印。\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "原始文本和转换文本以 L<git(1)> 冲突标记格式打印。\n",
-   "Original and converted text are printed separated by single blank line.\n" : "原始文本和转换文本之间用单个空行分隔。\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "原始文本和转换后的文本之间用一个空行分隔。对于 C<space+>，转换后的文本后面也会输出一个换行符。\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "处理是在指定的单位中进行的，但在多行非空文本的序列情况下，它们会一起转换为单行。此操作按如下方式执行：  \n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "有关详细信息，请阅读L</SEE ALSO>部分中的日文文章。  \n",
    "Remove white space at the beginning and end of each line.\n" : "去除每行开头和结尾的空白。  \n",

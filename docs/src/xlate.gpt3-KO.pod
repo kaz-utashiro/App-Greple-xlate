@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ B<unifdef> 명령으로 일본어 텍스트만 검색할 수 있습니다:
 
 =item B<space>
 
-원본과 변환된 텍스트는 한 줄의 공백으로 구분되어 출력됩니다.
+=item B<space+>
+
+Original: Hello, how are you doing today?
 
 =item B<xtxt>
 

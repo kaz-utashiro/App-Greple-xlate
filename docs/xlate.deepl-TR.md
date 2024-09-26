@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Orijinal ve dönüştürülmüş metin tek bir boş satırla ayrılarak yazdırılır.
+        Orijinal ve dönüştürülmüş metin tek bir boş satırla ayrılarak yazdırılır. `space+` için, dönüştürülen metinden sonra bir satırsonu çıktısı da verir.
 
     - **xtxt**
 

@@ -12,7 +12,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ Saate ainult jaapani keelse teksti kätte B<unifdef> käsu abil:
 
 =item B<space>
 
-Originaal- ja tõlgitud tekst on eraldatud ühe tühja reaga.
+=item B<space+>
+
+Original text:
 
 =item B<xtxt>
 

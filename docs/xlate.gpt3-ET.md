@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Originaal- ja tõlgitud tekst on eraldatud ühe tühja reaga.
+        Original text:
 
     - **xtxt**
 

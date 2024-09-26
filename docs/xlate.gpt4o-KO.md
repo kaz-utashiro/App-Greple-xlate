@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,12 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        원본 및 변환된 텍스트는 단일 공백 줄로 구분되어 인쇄됩니다.  
+        Original and converted text are printed separated by single blank line. 
+        원본 및 변환된 텍스트는 단일 공백 줄로 구분되어 인쇄됩니다.
+        For `space+`, it also outputs a newline after the converted text.
+        `space+`의 경우, 변환된 텍스트 뒤에 새 줄도 출력됩니다.
 
     - **xtxt**
 

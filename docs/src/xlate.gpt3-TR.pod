@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ B<unifdef> komutuyla yalnızca Japonca metni alabilirsiniz:
 
 =item B<space>
 
-Orjinal ve çevrilmiş metin tek boş satır ile ayrılmış olarak yazdırılır.
+=item B<space+>
+
+Hello, how can I help you today?
 
 =item B<xtxt>
 

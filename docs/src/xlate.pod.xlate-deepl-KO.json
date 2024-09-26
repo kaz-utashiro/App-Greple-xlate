@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "옵션 B<--xlate>는 B<--color=never> 옵션과 함께 B<--xlate-color> 옵션을 호출합니다.\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "원본 텍스트와 변환된 텍스트는 L<cpp(1)> C<#ifdef> 형식으로 인쇄됩니다.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "원본 텍스트와 변환된 텍스트는 L<git(1)> 충돌 마커 형식으로 인쇄됩니다.\n",
-   "Original and converted text are printed separated by single blank line.\n" : "원본 텍스트와 변환된 텍스트는 하나의 빈 줄로 구분하여 인쇄됩니다.\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "원본 텍스트와 변환된 텍스트는 하나의 빈 줄로 구분하여 인쇄됩니다. C<스페이스+>의 경우 변환된 텍스트 뒤에 줄 바꿈도 출력합니다.\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "처리는 지정된 단위로 수행되지만 비어 있지 않은 여러 줄의 텍스트 시퀀스의 경우 한 줄로 함께 변환됩니다. 이 작업은 다음과 같이 수행됩니다:\n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "자세한 내용은 L</또는 참조> 섹션의 일본어 기사를 참조하세요.\n",
    "Remove white space at the beginning and end of each line.\n" : "각 줄의 시작과 끝에서 공백을 제거합니다.\n",

@@ -10,7 +10,7 @@
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,12 @@ Version 0.3401
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Το πρωτότυπο και το μετατραπέν κείμενο εκτυπώνονται χωρισμένα με μία μόνο κενή γραμμή.
+        Original and converted text are printed separated by single blank line. 
+        Το πρωτότυπο και το μετατραπέν κείμενο εκτυπώνονται χωρισμένα με μία κενή γραμμή.
+        For `space+`, it also outputs a newline after the converted text.
+        Για `space+`, εκτυπώνει επίσης μια νέα γραμμή μετά το μετατραπέν κείμενο.
 
     - **xtxt**
 

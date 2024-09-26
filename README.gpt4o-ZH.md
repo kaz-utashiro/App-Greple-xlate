@@ -10,7 +10,7 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Version 0.3401
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        原始文本和转换文本之间用单个空行分隔。
+        原始文本和转换后的文本之间用一个空行分隔。对于 `space+`，转换后的文本后面也会输出一个换行符。
 
     - **xtxt**
 

@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ Puteți recupera doar textul japonez prin comanda B<unifdef>:
 
 =item B<space>
 
-Textul original și textul convertit sunt tipărite separate de o singură linie albă.
+=item B<space+>
+
+Textul original și cel convertit sunt tipărite separate de o singură linie albă. Pentru C<space+>, se tipărește și o linie nouă după textul convertit.
 
 =item B<xtxt>
 

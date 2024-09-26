@@ -10,7 +10,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,12 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Originaal- ja muudetud tekst prinditakse eraldatud ühe tühja reaga. 
+        Original and converted text are printed separated by single blank line. 
+        Originaal ja muudetud tekst on trükitud eraldi ühe tühja rea kaupa.
+        For `space+`, it also outputs a newline after the converted text.
+        `space+` puhul väljastatakse ka uue rea muudetud teksti järel.
 
     - **xtxt**
 

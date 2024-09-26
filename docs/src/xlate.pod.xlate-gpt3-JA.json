@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "オプションB<--xlate>は、B<--xlate-color>オプションをB<--color=never>オプションとともに呼び出します。\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "オリジナルと変換されたテキストは、L<cpp(1)>のC<#ifdef>フォーマットで印刷されます。\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "オリジナルと変換されたテキストは、L<git(1)>の競合マーカーフォーマットで印刷されます。\n",
-   "Original and converted text are printed separated by single blank line.\n" : "オリジナルと変換されたテキストは、1つの空白行で区切られて印刷されます。\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Hello, how can I help you today?\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "処理は指定された単位で行われますが、複数行の非空のテキストのシーケンスの場合、それらは一緒に1行に変換されます。この操作は次のように行われます：\n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "詳細については、L</関連記事>セクションの日本語の記事を読んでください。\n",
    "Remove white space at the beginning and end of each line.\n" : "各行の先頭と末尾の空白を削除します。\n",

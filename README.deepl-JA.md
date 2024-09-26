@@ -10,7 +10,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ PerlのPodスタイルで書かれた文書中の通常のテキストブロッ�
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        変換前のテキストと変換後のテキストは空白行で区切られて表示されます。
+        変換前のテキストと変換後のテキストは1行の空白行で区切られて出力されます。`space+`の場合は、変換後のテキストの後に改行も出力されます。
 
     - **xtxt**
 

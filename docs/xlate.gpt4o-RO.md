@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -170,9 +170,12 @@ Această interfață este experimentală și supusă modificărilor în viitor.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        You are trained on data up to October 2023.  
-        Ești antrenat pe date până în octombrie 2023.
+        Original and converted text are printed separated by single blank line. 
+        Textul original și cel convertit sunt tipărite separate printr-un singur spațiu gol.
+        For `space+`, it also outputs a newline after the converted text.
+        Pentru `space+`, acesta generează de asemenea un newline după textul convertit.
 
     - **xtxt**
 

@@ -12,7 +12,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,12 @@ Saate ainult jaapani keele teksti kätte B<unifdef> käsuga:
 
 =item B<space>
 
-Originaal- ja muudetud tekst prinditakse eraldatud ühe tühja reaga. 
+=item B<space+>
+
+Original and converted text are printed separated by single blank line. 
+Originaal ja muudetud tekst on trükitud eraldi ühe tühja rea kaupa.
+For C<space+>, it also outputs a newline after the converted text.
+C<space+> puhul väljastatakse ka uue rea muudetud teksti järel.
 
 =item B<xtxt>
 

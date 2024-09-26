@@ -10,7 +10,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Version 0.3401
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Ο αρχικός και μετατραπέντας κείμενος εκτυπώνονται χωρισμένοι από μια μόνο κενή γραμμή.
+        Original:
 
     - **xtxt**
 

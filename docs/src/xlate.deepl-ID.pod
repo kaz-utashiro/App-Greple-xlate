@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ Anda hanya dapat mengambil teks bahasa Jepang dengan perintah B<unifdef>:
 
 =item B<space>
 
-Teks asli dan teks yang dikonversi dicetak dengan dipisahkan oleh satu baris kosong.
+=item B<space+>
+
+Teks asli dan teks yang dikonversi dicetak dipisahkan oleh satu baris kosong. Untuk C<spasi+>, ini juga menghasilkan baris baru setelah teks yang dikonversi.
 
 =item B<xtxt>
 

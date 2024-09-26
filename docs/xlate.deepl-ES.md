@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        El texto original y el convertido se imprimen separados por una sola línea en blanco.
+        El texto original y el convertido se imprimen separados por una sola línea en blanco. Para `espacio+`, también se imprime una nueva línea después del texto convertido.
 
     - **xtxt**
 

@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Version 0.3401
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        원본과 변환된 텍스트는 한 줄의 공백으로 구분되어 출력됩니다.
+        Original: Hello, how are you doing today?
 
     - **xtxt**
 

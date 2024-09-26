@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "Опция B<--xlate> вызывает опцию B<--xlate-color> с опцией B<--color=never>.  \n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Оригинальный и преобразованный текст выводятся в формате L<cpp(1)> C<#ifdef>.  \n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Оригинальный и преобразованный текст выводятся в формате L<git(1)> маркера конфликта.  \n",
-   "Original and converted text are printed separated by single blank line.\n" : "Оригинальный и преобразованный текст выводятся, разделенные одной пустой строкой.  \n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Оригинальный и преобразованный текст печатаются, разделенные одним пробелом.\nДля C<space+> также выводится новая строка после преобразованного текста.\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "Обработка выполняется в указанных единицах, но в случае последовательности нескольких строк непустого текста они объединяются в одну строку. Эта операция выполняется следующим образом:  \n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Читать японскую статью в разделе L</SEE ALSO> для подробностей.  \n",
    "Remove white space at the beginning and end of each line.\n" : "Удалите пробелы в начале и в конце каждой строки.  \n",

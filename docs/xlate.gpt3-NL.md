@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Originele en geconverteerde tekst worden gescheiden door een enkele lege regel.
+        Hello! How can I help you today?
 
     - **xtxt**
 

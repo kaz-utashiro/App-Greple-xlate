@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ B<unifdef> コマンドを使用して、日本語のテキストのみを取得
 
 =item B<space>
 
-元のテキストと変換されたテキストは、1行の空白行で区切られて印刷されます。  
+=item B<space+>
+
+原文と変換されたテキストは、単一の空白行で区切られて印刷されます。C<space+>の場合、変換されたテキストの後にも改行が出力されます。
 
 =item B<xtxt>
 

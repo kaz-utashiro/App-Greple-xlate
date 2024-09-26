@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "Opțiunea B<--xlate> apelează opțiunea B<--xlate-color> cu opțiunea B<--color=never>.\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Textul original și cel convertit sunt tipărite în formatul L<cpp(1)> C<#ifdef>.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Textul original și cel convertit sunt tipărite în formatul de marker de conflict L<git(1)>.\n",
-   "Original and converted text are printed separated by single blank line.\n" : "Textul original și textul convertit sunt tipărite separate de o singură linie albă.\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Textul original și cel convertit sunt tipărite separate de o singură linie albă. Pentru C<space+>, se tipărește și o linie nouă după textul convertit.\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "Prelucrarea se face în unități specificate, dar în cazul unei secvențe de linii multiple de text nevid, acestea sunt convertite împreună într-o singură linie. Această operațiune se efectuează după cum urmează:\n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Citiți articolul japonez din secțiunea L</SEE ALSO> pentru detalii.\n",
    "Remove white space at the beginning and end of each line.\n" : "Se elimină spațiul alb de la începutul și sfârșitul fiecărei linii.\n",

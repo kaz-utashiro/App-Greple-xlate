@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        オリジナルと変換されたテキストは、1つの空白行で区切られて印刷されます。
+        Hello, how can I help you today?
 
     - **xtxt**
 

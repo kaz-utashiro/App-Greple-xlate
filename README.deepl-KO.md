@@ -10,7 +10,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        원본 텍스트와 변환된 텍스트는 하나의 빈 줄로 구분하여 인쇄됩니다.
+        원본 텍스트와 변환된 텍스트는 하나의 빈 줄로 구분하여 인쇄됩니다. `스페이스+`의 경우 변환된 텍스트 뒤에 줄 바꿈도 출력합니다.
 
     - **xtxt**
 

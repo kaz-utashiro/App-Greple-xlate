@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ Mit dem Befehl B<unifdef> können Sie nur japanischen Text wiederherstellen:
 
 =item B<space>
 
-Original und konvertierter Text werden durch eine einzelne Leerzeile getrennt gedruckt.
+=item B<space+>
+
+Original und konvertierter Text werden durch eine einzelne Leerzeile getrennt ausgegeben. Bei C<Leerzeichen+> wird nach dem konvertierten Text auch ein Zeilenumbruch ausgegeben.
 
 =item B<xtxt>
 

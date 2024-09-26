@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Orjinal ve çevrilmiş metin tek boş satır ile ayrılmış olarak yazdırılır.
+        Hello, how can I help you today?
 
     - **xtxt**
 

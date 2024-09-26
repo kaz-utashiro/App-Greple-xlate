@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Teks asli dan terjemahan dicetak terpisah oleh satu baris kosong.
+        Original: 
 
     - **xtxt**
 

@@ -12,7 +12,7 @@
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,12 @@ Version 0.3401
 
 =item B<space>
 
-Το πρωτότυπο και το μετατραπέν κείμενο εκτυπώνονται χωρισμένα με μία μόνο κενή γραμμή.
+=item B<space+>
+
+Original and converted text are printed separated by single blank line. 
+Το πρωτότυπο και το μετατραπέν κείμενο εκτυπώνονται χωρισμένα με μία κενή γραμμή.
+For C<space+>, it also outputs a newline after the converted text.
+Για C<space+>, εκτυπώνει επίσης μια νέα γραμμή μετά το μετατραπέν κείμενο.
 
 =item B<xtxt>
 

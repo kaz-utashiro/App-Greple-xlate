@@ -12,7 +12,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ Version 0.3401
 
 =item B<space>
 
-Оригинальный и преобразованный тексты печатаются, разделенные одной пустой строкой.
+=item B<space+>
+
+Original text:
 
 =item B<xtxt>
 

@@ -12,7 +12,7 @@ App::Greple::xlate - vertalingsondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,12 @@ Je kunt alleen Japanse tekst ophalen met het B<unifdef> commando:
 
 =item B<space>
 
-Originele en geconverteerde tekst worden gescheiden door een enkele lege regel afgedrukt.  
+=item B<space+>
+
+Original and converted text are printed separated by single blank line. 
+Originele en geconverteerde tekst worden gescheiden door een enkele lege regel afgedrukt.
+For C<space+>, it also outputs a newline after the converted text.
+Voor C<space+>, wordt er ook een nieuwe regel afgedrukt na de geconverteerde tekst.
 
 =item B<xtxt>
 

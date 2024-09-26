@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Original and converted text are printed in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef` format.
+        Original text:
 
     - **xtxt**
 

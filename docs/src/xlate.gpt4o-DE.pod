@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,12 @@ Sie können nur japanischen Text mit dem B<unifdef> Befehl abrufen:
 
 =item B<space>
 
-Original- und konvertierter Text werden durch eine einzelne Leerzeile getrennt ausgegeben.  
+=item B<space+>
+
+Original and converted text are printed separated by single blank line. 
+Der Original- und konvertierte Text wird durch eine einzelne Leerzeile getrennt.
+For C<space+>, it also outputs a newline after the converted text.
+Für C<space+> wird auch eine neue Zeile nach dem konvertierten Text ausgegeben.
 
 =item B<xtxt>
 

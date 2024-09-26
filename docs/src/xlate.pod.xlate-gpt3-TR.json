@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "B<--xlate> seçeneği B<--xlate-color> seçeneğini B<--color=never> seçeneğiyle çağırır.\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Orjinal ve çevrilmiş metin L<cpp(1)> C<#ifdef> formatında yazdırılır.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Orjinal ve çevrilmiş metin L<git(1)> çakışma işaretçisi formatında yazdırılır.\n",
-   "Original and converted text are printed separated by single blank line.\n" : "Orjinal ve çevrilmiş metin tek boş satır ile ayrılmış olarak yazdırılır.\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Hello, how can I help you today?\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "İşleme belirtilen birimlerde yapılır, ancak birden fazla satırın ardışık olarak işlenmesi durumunda, bunlar birlikte tek bir satıra dönüştürülür. Bu işlem şu şekilde gerçekleştirilir:\n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Ayrıntılar için L</DAHA FAZLASI> bölümündeki Japonca makaleyi okuyun.\n",
    "Remove white space at the beginning and end of each line.\n" : "Her satırın başında ve sonundaki boşlukları kaldırın.\n",

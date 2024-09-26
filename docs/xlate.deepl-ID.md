@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Teks asli dan teks yang dikonversi dicetak dengan dipisahkan oleh satu baris kosong.
+        Teks asli dan teks yang dikonversi dicetak dipisahkan oleh satu baris kosong. Untuk `spasi+`, ini juga menghasilkan baris baru setelah teks yang dikonversi.
 
     - **xtxt**
 

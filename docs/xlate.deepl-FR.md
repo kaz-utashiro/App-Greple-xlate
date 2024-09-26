@@ -10,7 +10,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -152,8 +152,9 @@ Cette interface est expérimentale et peut être modifiée à l'avenir.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        Le texte original et le texte converti sont imprimés séparés par une seule ligne blanche.
+        Le texte original et le texte converti sont imprimés séparés par une seule ligne blanche. Pour `space+`, le texte converti est également suivi d'une nouvelle ligne.
 
     - **xtxt**
 

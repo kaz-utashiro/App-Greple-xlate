@@ -42,7 +42,7 @@
    "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "L'option B<--xlate> appelle l'option B<--xlate-color> avec l'option B<--color=never>.\n",
    "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Le texte original et le texte converti sont imprimés au format L<cpp(1)> C<#ifdef>.\n",
    "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Le texte original et le texte converti sont imprimés au format L<git(1)> marqueur de conflit.\n",
-   "Original and converted text are printed separated by single blank line.\n" : "Le texte original et le texte converti sont imprimés séparés par une seule ligne blanche.\n",
+   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Le texte original et le texte converti sont imprimés séparés par une seule ligne blanche. Pour C<space+>, le texte converti est également suivi d'une nouvelle ligne.\n",
    "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "Le traitement se fait par unités spécifiées, mais dans le cas d'une séquence de plusieurs lignes de texte non vide, elles sont converties ensemble en une seule ligne. Cette opération s'effectue comme suit :\n",
    "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Lire l'article japonais dans la section L</SEE ALSO> pour plus de détails.\n",
    "Remove white space at the beginning and end of each line.\n" : "Supprimer les espaces blancs au début et à la fin de chaque ligne.\n",

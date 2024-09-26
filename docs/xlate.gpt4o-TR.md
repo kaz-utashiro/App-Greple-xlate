@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.3401
+Version 0.35
 
 # DESCRIPTION
 
@@ -156,9 +156,9 @@ Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
             unifdef -UORIGINAL -DJA foo.ja.pm
 
     - **space**
+    - **space+**
 
-        You are trained on data up to October 2023.  
-        Ekim 2023'e kadar verilerle eğitildiniz.
+        Orijinal ve dönüştürülmüş metinler tek bir boş satırla ayrılmış olarak yazdırılır. `space+` için, dönüştürülmüş metinden sonra bir yeni satır da çıktılar.
 
     - **xtxt**
 

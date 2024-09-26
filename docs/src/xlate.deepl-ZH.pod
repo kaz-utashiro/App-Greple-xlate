@@ -12,7 +12,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.3401
+Version 0.35
 
 =head1 DESCRIPTION
 
@@ -179,7 +179,9 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 =item B<space>
 
-原始文本和转换后的文本以单行空行分隔打印。
+=item B<space+>
+
+原始文本和转换后的文本在打印时以单行空行隔开。对于 C<space+>，它还会在转换后的文本后输出一个换行符。
 
 =item B<xtxt>
 
