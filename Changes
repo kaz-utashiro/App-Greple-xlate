@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.36 2024-09-29T04:03:54Z
+
+    - update pod translation area to include line start with punct char
+
 0.35 2024-09-26T15:30:33Z
 
     - introduce output format "space+"
