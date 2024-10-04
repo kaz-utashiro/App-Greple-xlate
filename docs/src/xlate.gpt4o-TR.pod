@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -165,6 +165,28 @@ Orijinal ve dönüştürülmüş metin L<git(1)> çelişki işaretleme formatın
 Orijinal dosyayı bir sonraki L<sed(1)> komutuyla geri alabilirsiniz.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Orijinal ve dönüştürülmüş metin L<git(1)> markdown B<div> blok stil notasyonu ile yazdırılmıştır.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+Bu, şunu ifade eder:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Sütun sayısı varsayılan olarak 7'dir. Eğer C<:::::> gibi bir sütun dizisi belirtirseniz, bu 7 sütun yerine kullanılır.
 
 =item B<ifdef>
 

@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Version 0.36
         你可以通过下一个[sed(1)](http://man.he.net/man1/sed)命令恢复原始文件。
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        原始文本和转换后的文本均以 [git(1)](http://man.he.net/man1/git) markdown **div** 块样式符号打印。
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        这意味着
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        冒号数默认为 7。如果指定冒号序列，如 `:::::`，则会使用它来代替 7 个冒号。
 
     - **ifdef**
 

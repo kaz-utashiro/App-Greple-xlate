@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -220,6 +220,30 @@ format.
 You can recover the original file by next L<sed(1)> command.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in L<git(1)> markdown B<div>
+block style notation.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+This means:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Number of colon is 7 by default.  If you specify colon sequence like
+C<:::::>, it is used instead of 7 colons.
 
 =item B<ifdef>
 

@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -153,6 +153,29 @@ Această interfață este experimentală și supusă modificărilor în viitor.
         Puteți recupera fișierul original folosind următoarea comandă [sed(1)](http://man.he.net/man1/sed).
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.
+        Textul original și cel convertit sunt tipărite în stilul de notare **div** markdown [git(1)](http://man.he.net/man1/git).
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Acest lucru înseamnă:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Numărul de două puncte este 7 în mod implicit. Dacă specificați o secvență de două puncte, cum ar fi `:::::`, aceasta este utilizată în loc de 7 două puncte.
 
     - **ifdef**
 

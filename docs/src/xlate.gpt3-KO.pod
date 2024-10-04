@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ B<gpt-4o>의 인터페이스는 현재 불안정하며 올바르게 작동할 �
 다음 L<sed(1)> 명령으로 원본 파일을 복구할 수 있습니다.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in `git(1)` markdown **div** block style notation.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+This means:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Number of colon is 7 by default. If you specify colon sequence like `:::::`, it is used instead of 7 colons.
 
 =item B<ifdef>
 

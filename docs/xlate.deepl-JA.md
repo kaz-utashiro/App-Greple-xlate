@@ -10,7 +10,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ PerlのPodスタイルで書かれた文書中の通常のテキストブロッ�
         次の[sed(1)](http://man.he.net/man1/sed)コマンドで元のファイルを復元できます。
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        元のテキストと変換後のテキストは[git(1)](http://man.he.net/man1/git)マークダウン**div**ブロックスタイル記法で出力されます。
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        つまり
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        コロンの数はデフォルトでは7です。`::::`のようにコロン列を指定すると、7コロンの代わりにそれが使われます。
 
     - **ifdef**
 

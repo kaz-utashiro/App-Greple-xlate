@@ -10,7 +10,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Version 0.36
         Вы можете восстановить исходный файл следующей командой [sed(1)](http://man.he.net/man1/sed).
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Оригинальный и преобразованный текст печатаются в нотации [git(1)](http://man.he.net/man1/git) markdown **div** block style.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Это означает:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Количество двоеточий по умолчанию равно 7. Если вы укажете последовательность двоеточий, например `:::::`, то она будет использоваться вместо 7 двоеточий.
 
     - **ifdef**
 

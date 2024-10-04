@@ -12,7 +12,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ Le texte original et le texte converti sont imprimés au format L<git(1)> marque
 Vous pouvez récupérer le fichier original par la commande L<sed(1)> suivante.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Le texte original et le texte converti sont imprimés dans le style L<git(1)> markdown B<div> block.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+Cela signifie que :
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Le nombre de deux-points est de 7 par défaut. Si vous spécifiez une séquence de deux points comme C<:::::>, elle est utilisée à la place des 7 points.
 
 =item B<ifdef>
 

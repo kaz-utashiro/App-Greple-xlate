@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
         次の[sed(1)](http://man.he.net/man1/sed)コマンドで元のファイルを復元できます。
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in \`git(1)\` markdown \*\*div\*\* block style notation.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        This means:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Number of colon is 7 by default. If you specify colon sequence like \`:::::::\`, it is used instead of 7 colons.
 
     - **ifdef**
 

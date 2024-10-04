@@ -12,7 +12,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ C<xtxt>以外の以下の書式は、翻訳される部分が行の集まりで�
 次のL<sed(1)>コマンドで元のファイルを復元できます。
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+元のテキストと変換後のテキストはL<git(1)>マークダウンB<div>ブロックスタイル記法で出力されます。
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+つまり
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+コロンの数はデフォルトでは7です。C<::::>のようにコロン列を指定すると、7コロンの代わりにそれが使われます。
 
 =item B<ifdef>
 

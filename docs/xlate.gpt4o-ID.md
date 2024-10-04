@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,29 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
         Anda dapat memulihkan file asli dengan perintah [sed(1)](http://man.he.net/man1/sed) berikutnya.  
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.  
+        Teks asli dan yang dikonversi dicetak dalam notasi gaya blok **div** markdown [git(1)](http://man.he.net/man1/git).
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Ini berarti:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Jumlah kolom adalah 7 secara default. Jika Anda menentukan urutan kolom seperti `:::::`, itu akan digunakan sebagai pengganti 7 kolom.
 
     - **ifdef**
 

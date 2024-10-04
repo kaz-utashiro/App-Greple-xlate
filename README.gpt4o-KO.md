@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
         다음 [sed(1)](http://man.he.net/man1/sed) 명령으로 원본 파일을 복구할 수 있습니다.  
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        원본 및 변환된 텍스트는 [git(1)](http://man.he.net/man1/git) 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        이것은:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        기본적으로 콜론의 수는 7입니다. `:::::`와 같은 콜론 시퀀스를 지정하면 7개의 콜론 대신 사용됩니다.
 
     - **ifdef**
 

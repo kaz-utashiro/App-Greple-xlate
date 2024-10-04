@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
         U kunt het oorspronkelijke bestand herstellen met het volgende [sed(1)](http://man.he.net/man1/sed) commando.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Oorspronkelijke en geconverteerde tekst worden afgedrukt in [git(1)](http://man.he.net/man1/git) markdown **div** blokstijl notatie.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Dit betekent:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Aantal dubbele punten is standaard 7. Als je een dubbele puntensequentie opgeeft zoals `:::::`, wordt deze in plaats van 7 dubbele punten gebruikt.
 
     - **ifdef**
 

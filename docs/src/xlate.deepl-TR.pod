@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ Orijinal ve dönüştürülmüş metin L<git(1)> çakışma işaretleyici biçim
 Bir sonraki L<sed(1)> komutu ile orijinal dosyayı kurtarabilirsiniz.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Orijinal ve dönüştürülmüş metin L<git(1)> markdown B<div> blok stili gösteriminde yazdırılır.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+Bu şu anlama gelir:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+İki nokta üst üste sayısı varsayılan olarak 7'dir. C<:::::> gibi iki nokta üst üste dizisi belirtirseniz, 7 iki nokta üst üste yerine kullanılır.
 
 =item B<ifdef>
 

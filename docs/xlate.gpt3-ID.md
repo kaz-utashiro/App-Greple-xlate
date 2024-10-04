@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
         Anda dapat memulihkan file asli dengan perintah [sed(1)](http://man.he.net/man1/sed) berikutnya.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original dan teks yang diubah dicetak dalam notasi gaya blok [git(1)](http://man.he.net/man1/git) markdown **div**.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Ini berarti:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Jumlah titik dua adalah 7 secara default. Jika Anda menentukan urutan titik dua seperti `:::::`, itu digunakan sebagai pengganti 7 titik dua.
 
     - **ifdef**
 

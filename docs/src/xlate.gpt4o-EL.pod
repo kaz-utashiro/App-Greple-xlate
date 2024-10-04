@@ -12,7 +12,7 @@
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,29 @@ Version 0.36
 Μπορείτε να ανακτήσετε το πρωτότυπο αρχείο με την επόμενη εντολή L<sed(1)>.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in L<git(1)> markdown B<div> block style notation.
+Πρωτότυπο και μετατραπέν κείμενο εκτυπώνονται σε στυλ σημειώσεων B<div> μπλοκ L<git(1)> markdown.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+Αυτό σημαίνει:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Ο αριθμός των κολονακίων είναι 7 από προεπιλογή. Αν καθορίσετε μια ακολουθία κολονακίων όπως C<:::::>, χρησιμοποιείται αντί για 7 κολονακία.
 
 =item B<ifdef>
 

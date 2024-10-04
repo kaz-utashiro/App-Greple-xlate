@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ C<xtxt>以外の以下のフォーマットは、翻訳する部分が複数行�
 次のL<sed(1)>コマンドで元のファイルを復元できます。
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in `git(1)` markdown **div** block style notation.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+This means:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Number of colon is 7 by default. If you specify colon sequence like `:::::::`, it is used instead of 7 colons.
 
 =item B<ifdef>
 

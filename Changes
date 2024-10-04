@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.37 2024-10-04T06:39:51Z
+
+    - introduce --xlate-format colon parameter
+
 0.36 2024-09-29T04:03:54Z
 
     - update pod translation area to include line start with punct char

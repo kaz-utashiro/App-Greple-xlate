@@ -12,7 +12,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -161,6 +161,28 @@ Originaal- ja muudetud tekst prinditakse L<git(1)> konfliktimarkerite formaadis.
 Saate originaalfaili taastada järgmise L<sed(1)> käsuga. 
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Algne ja muudetud tekst on trükitud L<git(1)> markdown B<div> ploki stiilis märkuses.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+See tähendab:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Kolonni arv on vaikimisi 7. Kui määrate kolonni järjestuse nagu C<:::::>, kasutatakse seda 7 kolonni asemel.
 
 =item B<ifdef>
 

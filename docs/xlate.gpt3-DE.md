@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
         Sie können die ursprüngliche Datei mit dem nächsten [sed(1)](http://man.he.net/man1/sed)-Befehl wiederherstellen.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Dies bedeutet:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Number of colon is 7 by default. If you specify colon sequence like `:::::`, it is used instead of 7 colons.
 
     - **ifdef**
 

@@ -10,7 +10,7 @@
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,29 @@ Version 0.36
         Μπορείτε να ανακτήσετε το πρωτότυπο αρχείο με την επόμενη εντολή [sed(1)](http://man.he.net/man1/sed).
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.
+        Πρωτότυπο και μετατραπέν κείμενο εκτυπώνονται σε στυλ σημειώσεων **div** μπλοκ [git(1)](http://man.he.net/man1/git) markdown.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Αυτό σημαίνει:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Ο αριθμός των κολονακίων είναι 7 από προεπιλογή. Αν καθορίσετε μια ακολουθία κολονακίων όπως `:::::`, χρησιμοποιείται αντί για 7 κολονακία.
 
     - **ifdef**
 

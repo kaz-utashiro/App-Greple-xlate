@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
         Puede recuperar el archivo original con el siguiente comando [sed(1)](http://man.he.net/man1/sed).
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        El texto original y el convertido se imprimen en notación de estilo de bloque [git(1)](http://man.he.net/man1/git) markdown **div**.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Esto significa:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        El número de dos puntos es 7 por defecto. Si especifica una secuencia de dos puntos como `:::::`, se utiliza en lugar de 7 dos puntos.
 
     - **ifdef**
 

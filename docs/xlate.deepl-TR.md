@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
         Bir sonraki [sed(1)](http://man.he.net/man1/sed) komutu ile orijinal dosyayı kurtarabilirsiniz.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Orijinal ve dönüştürülmüş metin [git(1)](http://man.he.net/man1/git) markdown **div** blok stili gösteriminde yazdırılır.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Bu şu anlama gelir:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        İki nokta üst üste sayısı varsayılan olarak 7'dir. `:::::` gibi iki nokta üst üste dizisi belirtirseniz, 7 iki nokta üst üste yerine kullanılır.
 
     - **ifdef**
 

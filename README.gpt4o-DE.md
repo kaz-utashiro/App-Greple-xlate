@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
         Sie können die Originaldatei mit dem nächsten [sed(1)](http://man.he.net/man1/sed) Befehl wiederherstellen.  
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Original und konvertierter Text werden im [git(1)](http://man.he.net/man1/git) Markdown **div** Blockstil notiert.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Das bedeutet:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Die Anzahl der Doppelpunkte beträgt standardmäßig 7. Wenn Sie eine Doppelpunktreihenfolge wie `:::::` angeben, wird diese anstelle von 7 Doppelpunkten verwendet.
 
     - **ifdef**
 

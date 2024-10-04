@@ -10,7 +10,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ Version 0.36
         Μπορείτε να ανακτήσετε το αρχικό αρχείο με την επόμενη εντολή [sed(1)](http://man.he.net/man1/sed).
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Ο αρχικός και μετατραπέντας κείμενο εκτυπώνονται σε μορφή μπλοκ [git(1)](http://man.he.net/man1/git) markdown **div**.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Αυτό σημαίνει:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Ο αριθμός των αίωνων είναι 7 από προεπιλογή. Εάν καθορίσετε μια ακολουθία αίωνων όπως `:::::`, χρησιμοποιείται αντί για τους 7 αίωνες.
 
     - **ifdef**
 

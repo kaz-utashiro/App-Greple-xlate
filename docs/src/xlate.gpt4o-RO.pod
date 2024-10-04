@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 =head1 VERSION
 
-Version 0.36
+Version 0.37
 
 =head1 DESCRIPTION
 
@@ -179,6 +179,29 @@ Originalul și textul convertit sunt tipărite în formatul markerului de confli
 Puteți recupera fișierul original folosind următoarea comandă L<sed(1)>.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in L<git(1)> markdown B<div> block style notation.
+Textul original și cel convertit sunt tipărite în stilul de notare B<div> markdown L<git(1)>.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+Acest lucru înseamnă:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Numărul de două puncte este 7 în mod implicit. Dacă specificați o secvență de două puncte, cum ar fi C<:::::>, aceasta este utilizată în loc de 7 două puncte.
 
 =item B<ifdef>
 

@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -139,6 +139,28 @@ Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
         Orijinal dosyayı bir sonraki [sed(1)](http://man.he.net/man1/sed) komutuyla geri alabilirsiniz.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Orijinal ve dönüştürülmüş metin [git(1)](http://man.he.net/man1/git) markdown **div** blok stil notasyonu ile yazdırılmıştır.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        Bu, şunu ifade eder:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Sütun sayısı varsayılan olarak 7'dir. Eğer `:::::` gibi bir sütun dizisi belirtirseniz, bu 7 sütun yerine kullanılır.
 
     - **ifdef**
 

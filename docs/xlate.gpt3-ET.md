@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.36
+Version 0.37
 
 # DESCRIPTION
 
@@ -135,6 +135,28 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
         Saate algse faili taastada järgmise [sed(1)](http://man.he.net/man1/sed) käsu abil.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
+
+    - **colon**, _:::::::_
+
+        Originaal- ja teisendatud tekst on trükitud [git(1)](http://man.he.net/man1/git) märkustiku **div** ploki stiilis märkustiku abil.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        See tähendab:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Vaikimisi on koolonite arv 7. Kui määratlete koolonite jada nagu `:::::`, kasutatakse seda 7 kooloni asemel.
 
     - **ifdef**
 
