@@ -196,6 +196,30 @@ This interface is experimental and subject to change in the future.
 
             sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
+    - **colon**, _:::::::_
+
+        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div**
+        block style notation.
+
+            ::::::: ORIGINAL
+            original text
+            :::::::
+            ::::::: JA
+            translated Japanese text
+            :::::::
+
+        This means:
+
+            <div class="ORIGINAL">
+            original text
+            </div>
+            <div class="JA">
+            translated Japanese text
+            </div>
+
+        Number of colon is 7 by default.  If you specify colon sequence like
+        `:::::`, it is used instead of 7 colons.
+
     - **ifdef**
 
         Original and converted text are printed in [cpp(1)](http://man.he.net/man1/cpp) `#ifdef`

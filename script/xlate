@@ -24,7 +24,7 @@ define pod <<"=cut"
 	-e # translation engine (*deepl, gpt3, gpt4, gpt4o)
 	-p # pattern to determine translation area
 	-w # wrap line by # width
-	-o # output format (*xtxt, cm, ifdef, space, space+)
+	-o # output format (*xtxt, cm, ifdef, space, space+, colon)
 	-f # from lang (ignored)
 	-t # to lang (required, no default)
 	-m # max length per API call

@@ -225,6 +225,30 @@ You can recover the original file by next L<sed(1)> command.
 
     sed -e '/^<<<<<<< /d' -e '/^=======$/,/^>>>>>>> /d'
 
+=item B<colon>, I<:::::::>
+
+Original and converted text are printed in L<git(1)> markdown B<div>
+block style notation.
+
+    ::::::: ORIGINAL
+    original text
+    :::::::
+    ::::::: JA
+    translated Japanese text
+    :::::::
+
+This means:
+
+    <div class="ORIGINAL">
+    original text
+    </div>
+    <div class="JA">
+    translated Japanese text
+    </div>
+
+Number of colon is 7 by default.  If you specify colon sequence like
+C<:::::>, it is used instead of 7 colons.
+
 =item B<ifdef>
 
 Original and converted text are printed in L<cpp(1)> C<#ifdef>
@@ -535,6 +559,7 @@ lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
 
 my $current_file;
+my $colon_count = 7;
 
 our %formatter = (
     xtxt => undef,
@@ -548,6 +573,16 @@ our %formatter = (
 	    ">>>>>>> $lang_to\n";
     },
     cm => 'conflict',
+    colon => sub {
+	my $colon = ':' x $colon_count;
+	join '',
+	    "$colon $lang_from\n",
+	    $_[0],
+	    "$colon\n",
+	    "$colon $lang_to\n",
+	    $_[1],
+	    "$colon\n";
+    },
     ifdef => sub {
 	join '',
 	    "#ifdef $lang_from\n",
@@ -764,6 +799,10 @@ sub begin {
     s/\z/\n/ if /.\z/;
     if (not defined $xlate_engine) {
 	die "Select translation engine.\n";
+    }
+    if ($output_format =~ /^(:+)$/) {
+	$colon_count = length($1);
+	$output_format = 'colon';
     }
     if (my $file = cache_file) {
 	my @opt;
