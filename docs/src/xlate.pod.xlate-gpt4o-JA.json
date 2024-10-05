@@ -184,8 +184,8 @@
       "B<xlate>モジュールは、各ファイルの翻訳のキャッシュテキストを保存し、実行前にそれを読み込むことでサーバーへの問い合わせのオーバーヘッドを排除できます。デフォルトのキャッシュ戦略C<auto>では、ターゲットファイルのキャッシュファイルが存在する場合のみキャッシュデータを維持します。  \n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "B<--cache-clear>オプションを使用してキャッシュ管理を開始したり、既存のキャッシュデータをすべて更新したりできます。このオプションで実行されると、キャッシュファイルが存在しない場合は新しいキャッシュファイルが作成され、その後自動的に維持されます。  \n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "B<--xlate-cache=clear>を使用して、キャッシュ管理を開始するか、既存のキャッシュデータをすべてクリーンアップします。このオプションで実行されると、存在しない場合は新しいキャッシュファイルが作成され、その後自動的に維持されます。\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "デフォルトの動作では、未使用のデータはキャッシュファイルから削除されます。削除せずにファイルに保持したい場合は、C<accumulate>を使用します。  \n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "このオプションは、必要でなくてもキャッシュファイルを更新することを強制します。\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

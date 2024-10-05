@@ -184,8 +184,8 @@
       "Модуль B<xlate> может хранить кэшированный текст перевода для каждого файла и считывать его перед выполнением, чтобы устранить накладные расходы на запрос к серверу. При стратегии кэширования по умолчанию C<auto> он поддерживает данные кэша только тогда, когда файл кэша существует для целевого файла.  \n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Опция B<--cache-clear> может быть использована для инициации управления кэшем или для обновления всех существующих данных кэша. После выполнения с этой опцией будет создан новый файл кэша, если он не существует, и затем автоматически поддерживаться впоследствии.  \n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Используйте B<--xlate-cache=clear>, чтобы инициировать управление кэшем или очистить все существующие данные кэша. После выполнения с этой опцией будет создан новый файл кэша, если он не существует, и затем автоматически поддерживаться впоследствии.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "По умолчанию неиспользуемые данные удаляются из файла кэша. Если вы не хотите их удалять и хотите сохранить в файле, используйте C<accumulate>.  \n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Этот параметр заставляет обновить файл кэша, даже если это не требуется.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

@@ -184,8 +184,8 @@
       "B<엑스레이트> 모듈은 각 파일에 대한 번역 텍스트를 캐시하여 저장하고 실행 전에 읽어들여 서버에 요청하는 오버헤드를 없앨 수 있습니다. 기본 캐시 전략 C<auto>를 사용하면 대상 파일에 대한 캐시 파일이 존재할 때만 캐시 데이터를 유지합니다.\n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "B<--cache-clear> 옵션은 캐시 관리를 시작하거나 기존의 모든 캐시 데이터를 새로 고치는 데 사용할 수 있습니다. 이 옵션을 실행하면 캐시 파일이 없는 경우 새 캐시 파일이 생성되고 이후에는 자동으로 유지 관리됩니다.\n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "캐시 관리를 시작하거나 기존의 모든 캐시 데이터를 정리하려면 B<--xlate-cache=clear>를 사용합니다. 이 옵션을 실행하면 캐시 파일이 없는 경우 새 캐시 파일이 생성되고 이후 자동으로 유지 관리됩니다.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "기본 동작에 따라 사용하지 않는 데이터는 캐시 파일에서 제거됩니다. 제거하지 않고 파일에 유지하려면 C<accumulate>를 사용하세요.\n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "이 옵션은 필요하지 않은 경우에도 캐시 파일을 강제로 업데이트합니다.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

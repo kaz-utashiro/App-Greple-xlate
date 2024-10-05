@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Mengatur seluruh teks file sebagai area target.
 
 Modul B<xlate> dapat menyimpan teks terjemahan dalam cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead dari permintaan ke server. Dengan strategi cache default C<auto>, modul ini mempertahankan data cache hanya ketika file cache ada untuk file target.
 
+Gunakan B<--xlate-cache=clear> untuk memulai manajemen cache atau untuk membersihkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
+
 =over 7
-
-=item --cache-clear
-
-Opsi B<--cache-clear> dapat digunakan untuk memulai manajemen cache atau untuk menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dipelihara setelahnya.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ Jangan pernah menggunakan file cache meskipun ada.
 Secara default, data yang tidak digunakan akan dihapus dari file cache. Jika Anda tidak ingin menghapusnya dan menyimpannya di dalam file, gunakan C<accumulate>.
 
 =back
+
+=item B<--xlate-update>
+
+Opsi ini memaksa untuk memperbarui file cache meskipun tidak diperlukan.
 
 =back
 

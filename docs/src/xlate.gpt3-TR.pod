@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Dosyanın tüm metnini hedef alan olarak ayarlayın.
 
 B<xlate> modülü, her dosyanın çeviri önbelleğini saklayabilir ve sunucuya sorma işleminin üstesinden gelmek için yürütmeden önce onu okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, hedef dosya için önbellek verisi yalnızca önbellek dosyası varsa tutulur.
 
+Önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini temizlemek için B<--xlate-cache=clear> kullanın. Bu seçenekle birlikte çalıştırıldığında, bir önbellek dosyası mevcut değilse yeni bir dosya oluşturulacak ve ardından otomatik olarak bakımı yapılacaktır.
+
 =over 7
-
-=item --cache-clear
-
-B<--cache-clear> seçeneği, önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, bir önbellek dosyası yoksa yeni bir önbellek dosyası oluşturulur ve ardından otomatik olarak sürdürülür.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ Hedef normal dosya olduğu sürece her durumda önbelleği sürdürün.
 Varsayılan davranışa göre, kullanılmayan veriler önbellek dosyasından kaldırılır. Onları kaldırmak istemezseniz ve dosyada tutmak isterseniz, C<accumulate> kullanın.
 
 =back
+
+=item B<--xlate-update>
+
+Bu seçenek, gerekli olmasa bile önbellek dosyasını güncellemeye zorlar.
 
 =back
 

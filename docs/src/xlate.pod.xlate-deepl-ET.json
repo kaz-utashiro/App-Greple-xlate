@@ -184,8 +184,8 @@
       "B<xlate> moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia C<auto> puhul säilitab ta vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas.\n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Valikut B<--cache-clear> saab kasutada vahemälu haldamise alustamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole veel olemas, ja seejärel hooldatakse seda automaatselt.\n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Kasutage B<--xlate-cache=clear>, et alustada vahemälu haldamist või puhastada kõik olemasolevad vahemälu andmed. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole veel olemas, ja seejärel hooldatakse seda automaatselt.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Vaikimisi käitumise kohaselt eemaldatakse kasutamata andmed vahemälufailist. Kui te ei soovi neid eemaldada ja failis hoida, kasutage C<accumulate>.\n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "See valik sunnib uuendama vahemälufaili isegi siis, kui see pole vajalik.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

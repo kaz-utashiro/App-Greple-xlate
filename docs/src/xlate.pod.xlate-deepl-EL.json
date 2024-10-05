@@ -184,8 +184,8 @@
       "Η ενότητα B<xlate> μπορεί να αποθηκεύσει το αποθηκευμένο κείμενο της μετάφρασης για κάθε αρχείο και να το διαβάσει πριν από την εκτέλεση, ώστε να εξαλειφθεί η επιβάρυνση από την ερώτηση στον διακομιστή. Με την προεπιλεγμένη στρατηγική κρυφής μνήμης C<auto>, διατηρεί τα δεδομένα της κρυφής μνήμης μόνο όταν το αρχείο κρυφής μνήμης υπάρχει για το αρχείο-στόχο.\n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Η επιλογή B<--cache-clear> μπορεί να χρησιμοποιηθεί για να ξεκινήσει η διαχείριση της κρυφής μνήμης ή για να ανανεωθούν όλα τα υπάρχοντα δεδομένα της κρυφής μνήμης. Μόλις εκτελεστεί με αυτή την επιλογή, θα δημιουργηθεί ένα νέο αρχείο cache αν δεν υπάρχει και στη συνέχεια θα διατηρηθεί αυτόματα.\n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Χρησιμοποιήστε το B<--xlate-cache=clear> για να ξεκινήσετε τη διαχείριση της κρυφής μνήμης ή για να καθαρίσετε όλα τα υπάρχοντα δεδομένα της κρυφής μνήμης. Μόλις εκτελεστεί με αυτή την επιλογή, θα δημιουργηθεί ένα νέο αρχείο cache, αν δεν υπάρχει, και στη συνέχεια θα διατηρηθεί αυτόματα.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Σύμφωνα με την προεπιλεγμένη συμπεριφορά, τα αχρησιμοποίητα δεδομένα αφαιρούνται από το αρχείο προσωρινής αποθήκευσης. Αν δεν θέλετε να τα αφαιρέσετε και να τα διατηρήσετε στο αρχείο, χρησιμοποιήστε το C<accumulate>.\n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Αυτή η επιλογή επιβάλλει την ενημέρωση του αρχείου cache ακόμη και αν δεν είναι απαραίτητο.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

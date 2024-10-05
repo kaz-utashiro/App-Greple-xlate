@@ -12,7 +12,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Original text:
 
 将整个文件的文本设置为目标区域。
 
+使用B<--xlate-cache=clear>来启动缓存管理或清除所有现有的缓存数据。一旦使用此选项执行，如果不存在缓存文件，将会创建一个新的缓存文件，然后自动进行维护。
+
 =over 7
-
-=item --cache-clear
-
-B<xlate> 模块可以为每个文件存储翻译的缓存文本，并在执行之前读取它，以消除向服务器请求的开销。使用默认的缓存策略 C<auto>，它仅在目标文件的缓存文件存在时维护缓存数据。
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ B<--cache-clear> 选项可用于初始化缓存管理或刷新所有现有的缓
 即使存在缓存文件，也不要使用缓存文件。
 
 =back
+
+=item B<--xlate-update>
+
+此选项强制更新缓存文件，即使没有必要。
 
 =back
 

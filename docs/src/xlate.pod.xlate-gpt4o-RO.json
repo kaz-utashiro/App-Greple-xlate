@@ -184,8 +184,8 @@
       "B<xlate> modulul poate stoca textul tradus în cache pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina suprasarcina de a întreba serverul. Cu strategia de cache implicită C<auto>, menține datele de cache doar atunci când fișierul de cache există pentru fișierul țintă.\n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Opțiunea B<--cache-clear> poate fi utilizată pentru a iniția gestionarea cache-ului sau pentru a actualiza toate datele cache existente. Odată executată cu această opțiune, un nou fișier cache va fi creat dacă nu există unul și apoi va fi întreținut automat ulterior.\n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Folosiți B<--xlate-cache=clear> pentru a iniția gestionarea cache-ului sau pentru a curăța toate datele cache existente. Odată executat cu această opțiune, un nou fișier cache va fi creat dacă nu există unul și apoi va fi întreținut automat ulterior.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Prin comportamentul implicit, datele neutilizate sunt eliminate din fișierul cache. Dacă nu doriți să le eliminați și să le păstrați în fișier, utilizați C<accumulate>.\n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Această opțiune forțează actualizarea fișierului cache chiar dacă nu este necesară.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

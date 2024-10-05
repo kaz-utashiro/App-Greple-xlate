@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -308,14 +308,12 @@ read it before execution to eliminate the overhead of asking to
 server.  With the default cache strategy C<auto>, it maintains cache
 data only when the cache file exists for target file.
 
+Use B<--xlate-cache=clear> to initiate cache management or to clean up
+all existing cache data.  Once executed with this option, a new cache
+file will be created if one does not exist and then automatically
+maintained afterward.
+
 =over 7
-
-=item --cache-clear
-
-The B<--cache-clear> option can be used to initiate cache management
-or to refresh all existing cache data. Once executed with this option,
-a new cache file will be created if one does not exist and then
-automatically maintained afterward.
 
 =item --xlate-cache=I<strategy>
 
@@ -347,6 +345,10 @@ By default behavior, unused data is removed from the cache file.  If
 you don't want to remove them and keep in the file, use C<accumulate>.
 
 =back
+
+=item B<--xlate-update>
+
+This option forces to update cache file even if it is not necessary.
 
 =back
 

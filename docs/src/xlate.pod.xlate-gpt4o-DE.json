@@ -184,8 +184,8 @@
       "Das B<xlate> Modul kann den zwischengespeicherten Text der Übersetzung für jede Datei speichern und ihn vor der Ausführung lesen, um die Überlastung durch Anfragen an den Server zu vermeiden. Mit der Standard-Cache-Strategie C<auto> werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert.  \n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Die B<--cache-clear> Option kann verwendet werden, um das Cache-Management zu initiieren oder um alle vorhandenen Cache-Daten zu aktualisieren. Sobald diese Option ausgeführt wird, wird eine neue Cache-Datei erstellt, wenn keine existiert, und anschließend automatisch verwaltet.  \n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Verwenden Sie B<--xlate-cache=clear>, um das Cache-Management zu initiieren oder um alle vorhandenen Cache-Daten zu bereinigen. \nSobald dies mit dieser Option ausgeführt wird, wird eine neue Cache-Datei erstellt, wenn noch keine existiert, und anschließend automatisch verwaltet.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Im Standardverhalten werden ungenutzte Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten möchten, verwenden Sie C<accumulate>.  \n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Diese Option zwingt dazu, die Cache-Datei zu aktualisieren, auch wenn es nicht notwendig ist.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

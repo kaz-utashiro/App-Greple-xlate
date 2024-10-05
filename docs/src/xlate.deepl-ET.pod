@@ -12,7 +12,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Määrake kogu faili tekst sihtkohaks.
 
 B<xlate> moodul võib salvestada iga faili tõlketeksti vahemällu ja lugeda seda enne täitmist, et kõrvaldada serveri küsimisega kaasnev koormus. Vaikimisi vahemälustrateegia C<auto> puhul säilitab ta vahemälu andmeid ainult siis, kui vahemälufail on sihtfaili jaoks olemas.
 
+Kasutage B<--xlate-cache=clear>, et alustada vahemälu haldamist või puhastada kõik olemasolevad vahemälu andmed. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole veel olemas, ja seejärel hooldatakse seda automaatselt.
+
 =over 7
-
-=item --cache-clear
-
-Valikut B<--cache-clear> saab kasutada vahemälu haldamise alustamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Selle valikuga käivitamisel luuakse uus vahemälufail, kui seda ei ole veel olemas, ja seejärel hooldatakse seda automaatselt.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ Ei kasuta kunagi vahemälufaili, isegi kui see on olemas.
 Vaikimisi käitumise kohaselt eemaldatakse kasutamata andmed vahemälufailist. Kui te ei soovi neid eemaldada ja failis hoida, kasutage C<accumulate>.
 
 =back
+
+=item B<--xlate-update>
+
+See valik sunnib uuendama vahemälufaili isegi siis, kui see pole vajalik.
 
 =back
 

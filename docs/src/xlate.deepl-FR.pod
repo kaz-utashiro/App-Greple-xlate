@@ -12,7 +12,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Définissez l'ensemble du texte du fichier comme zone cible.
 
 Le module B<xlate> peut stocker le texte de la traduction en cache pour chaque fichier et le lire avant l'exécution pour éliminer les frais généraux de demande au serveur. Avec la stratégie de cache par défaut C<auto>, il maintient les données de cache uniquement lorsque le fichier de cache existe pour le fichier cible.
 
+Utilisez B<--xlate-cache=clear> pour lancer la gestion du cache ou pour nettoyer toutes les données de cache existantes. Une fois cette option exécutée, un nouveau fichier de cache sera créé s'il n'en existe pas et sera automatiquement maintenu par la suite.
+
 =over 7
-
-=item --cache-clear
-
-L'option B<--cache-clear> peut être utilisée pour initier la gestion du cache ou pour rafraîchir toutes les données du cache existant. Une fois exécutée avec cette option, un nouveau fichier de cache sera créé s'il n'en existe pas, puis automatiquement maintenu par la suite.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ Ne jamais utiliser le fichier cache même s'il existe.
 Par défaut, les données inutilisées sont supprimées du fichier cache. Si vous ne voulez pas les supprimer et les conserver dans le fichier, utilisez C<accumulate>.
 
 =back
+
+=item B<--xlate-update>
+
+Cette option oblige à mettre à jour le fichier de cache même si cela n'est pas nécessaire.
 
 =back
 

@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.37
+Version 0.38
 
 # DESCRIPTION
 
@@ -204,9 +204,7 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
 Das **xlate**-Modul kann den zwischengespeicherten Text der Übersetzung für jede Datei speichern und vor der Ausführung lesen, um den Overhead des Serveranfragen zu eliminieren. Mit der Standard-Cache-Strategie `auto` werden Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei vorhanden ist.
 
-- --cache-clear
-
-    Die Option **--cache-clear** kann verwendet werden, um das Cache-Management zu initiieren oder alle vorhandenen Cache-Daten zu aktualisieren. Sobald sie mit dieser Option ausgeführt wird, wird eine neue Cache-Datei erstellt, wenn sie nicht vorhanden ist, und danach automatisch gewartet.
+Verwenden Sie **--xlate-cache=clear**, um das Cache-Management zu starten oder alle vorhandenen Cache-Daten zu löschen. Nach der Ausführung mit dieser Option wird eine neue Cache-Datei erstellt, wenn noch keine vorhanden ist, und danach automatisch gewartet.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -232,6 +230,9 @@ Das **xlate**-Modul kann den zwischengespeicherten Text der Übersetzung für je
     - `accumulate`
 
         Standardmäßig werden nicht verwendete Daten aus der Cache-Datei entfernt. Wenn Sie sie nicht entfernen und in der Datei behalten möchten, verwenden Sie `accumulate`.
+- **--xlate-update**
+
+    Diese Option zwingt dazu, die Cache-Datei zu aktualisieren, auch wenn es nicht notwendig ist.
 
 # COMMAND LINE INTERFACE
 

@@ -10,7 +10,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 # VERSION
 
-Version 0.37
+Version 0.38
 
 # DESCRIPTION
 
@@ -207,9 +207,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 **xlate** moodul võib salvestada tõlke vahemälu iga faili jaoks ja lugeda seda enne täitmist, et vähendada serveri pärimise ülekaalu. Vaikimisi vahemälu strateegia `auto` säilitab vahemälu andmeid ainult siis, kui vahemälu fail eksisteerib sihtfaili jaoks.  
 
-- --cache-clear
-
-    **--cache-clear** valikut saab kasutada vahemälu haldamise algatamiseks või kõigi olemasolevate vahemälu andmete värskendamiseks. Kui see valik on täidetud, luuakse uus vahemälu fail, kui seda ei eksisteeri, ja seejärel hoitakse seda automaatselt.  
+Use **--xlate-cache=clear** vahemälu haldamise algatamiseks või olemasoleva vahemälu andmete puhastamiseks. Kui see valik on täidetud, luuakse uus vahemälu fail, kui seda ei eksisteeri, ja seejärel hooldatakse seda automaatselt.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -235,6 +233,9 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
     - `accumulate`
 
         Vaikimisi käitumise kohaselt eemaldatakse kasutamata andmed vahemälu failist. Kui te ei soovi neid eemaldada ja soovite failis hoida, kasutage `accumulate`.  
+- **--xlate-update**
+
+    See valik sunnib värskendama vahemälu faili isegi kui see ei ole vajalik.
 
 # COMMAND LINE INTERFACE
 

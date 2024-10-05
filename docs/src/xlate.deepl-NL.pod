@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Stel de hele tekst van het bestand in als doelgebied.
 
 De module B<xlate> kan de tekst van de vertaling voor elk bestand in de cache opslaan en lezen vóór de uitvoering om de overhead van het vragen aan de server te elimineren. Met de standaard cache strategie C<auto>, onderhoudt het alleen cache gegevens wanneer het cache bestand bestaat voor het doelbestand.
 
+Gebruik B<--xlate-cache=clear> om cachebeheer te starten of om alle bestaande cachegegevens op te ruimen. Eenmaal uitgevoerd met deze optie, zal een nieuw cachebestand worden aangemaakt als er geen bestaat en daarna automatisch worden onderhouden.
+
 =over 7
-
-=item --cache-clear
-
-De optie B<--cache-clear> kan worden gebruikt om het beheer van de cache te starten of om alle bestaande cache-gegevens te vernieuwen. Eenmaal uitgevoerd met deze optie, wordt een nieuw cachebestand aangemaakt als er geen bestaat en daarna automatisch onderhouden.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ Cache-bestand nooit gebruiken, zelfs niet als het bestaat.
 Standaard worden ongebruikte gegevens uit het cachebestand verwijderd. Als u ze niet wilt verwijderen en in het bestand wilt houden, gebruik dan C<accumuleren>.
 
 =back
+
+=item B<--xlate-update>
+
+Deze optie dwingt om het cachebestand bij te werken, zelfs als dat niet nodig is.
 
 =back
 

@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.37
+Version 0.38
 
 # DESCRIPTION
 
@@ -204,9 +204,7 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 
 Modulul **xlate** poate stoca textul tradus în cache pentru fiecare fișier și îl poate citi înainte de execuție pentru a elimina costurile de întrebare către server. Cu strategia implicită de cache `auto`, acesta menține datele cache doar atunci când fișierul cache există pentru fișierul țintă.
 
-- --cache-clear
-
-    Opțiunea **--cache-clear** poate fi utilizată pentru a iniția gestionarea cache-ului sau pentru a reîmprospăta toate datele cache existente. Odată executată cu această opțiune, va fi creat un nou fișier cache dacă nu există și apoi va fi menținut automat.
+Folosește **--xlate-cache=clear** pentru a iniția gestionarea cache-ului sau pentru a curăța toate datele de cache existente. Odată ce este executat cu această opțiune, un nou fișier de cache va fi creat dacă nu există deja și apoi va fi întreținut automat ulterior.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -232,6 +230,9 @@ Modulul **xlate** poate stoca textul tradus în cache pentru fiecare fișier și
     - `accumulate`
 
         În mod implicit, datele neutilizate sunt eliminate din fișierul cache. Dacă nu doriți să le eliminați și să le păstrați în fișier, utilizați `accumulate`.
+- **--xlate-update**
+
+    Această opțiune forțează actualizarea fișierului de cache chiar dacă nu este necesar.
 
 # COMMAND LINE INTERFACE
 

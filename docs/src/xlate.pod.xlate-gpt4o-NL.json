@@ -184,8 +184,8 @@
       "De B<xlate> module kan gecachte vertaaltekst voor elk bestand opslaan en deze lezen voordat de uitvoering plaatsvindt om de overhead van het vragen aan de server te elimineren. Met de standaard cache-strategie C<auto> onderhoudt het cachegegevens alleen wanneer het cachebestand bestaat voor het doelbestand.  \n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "De B<--cache-clear> optie kan worden gebruikt om cachebeheer te initiëren of om alle bestaande cachegegevens te vernieuwen. Zodra deze optie is uitgevoerd, wordt er een nieuw cachebestand aangemaakt als er nog geen bestaat en wordt het daarna automatisch onderhouden.  \n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Gebruik B<--xlate-cache=clear> om cachebeheer te initiëren of om alle bestaande cachegegevens op te schonen. Zodra dit met deze optie is uitgevoerd, wordt er een nieuw cachebestand aangemaakt als er nog geen bestaat en wordt het daarna automatisch onderhouden.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Bij standaardgedrag worden ongebruikte gegevens uit het cachebestand verwijderd. Als je ze niet wilt verwijderen en in het bestand wilt houden, gebruik dan C<accumulate>.  \n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Deze optie dwingt de cachebestand bij te werken, zelfs als het niet nodig is.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

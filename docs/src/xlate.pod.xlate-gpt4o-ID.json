@@ -184,8 +184,8 @@
       "Modul B<xlate> dapat menyimpan teks terjemahan yang di-cache untuk setiap file dan membacanya sebelum eksekusi untuk menghilangkan overhead meminta ke server. Dengan strategi cache default C<auto>, ia hanya mempertahankan data cache ketika file cache ada untuk file target.  \n"
    ],
    [
-      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
-      "Opsi B<--cache-clear> dapat digunakan untuk memulai manajemen cache atau untuk menyegarkan semua data cache yang ada. Setelah dieksekusi dengan opsi ini, file cache baru akan dibuat jika tidak ada yang ada dan kemudian secara otomatis dipelihara setelahnya.  \n"
+      "Use B<--xlate-cache=clear> to initiate cache management or to clean up all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Gunakan B<--xlate-cache=clear> untuk memulai manajemen cache atau untuk membersihkan semua data cache yang ada. Setelah dijalankan dengan opsi ini, file cache baru akan dibuat jika belum ada dan kemudian secara otomatis dikelola setelahnya.\n"
    ],
    [
       "Maintain the cache file if it exists.\n",
@@ -210,6 +210,10 @@
    [
       "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
       "Dengan perilaku default, data yang tidak terpakai dihapus dari file cache. Jika Anda tidak ingin menghapusnya dan menyimpannya di file, gunakan C<accumulate>.  \n"
+   ],
+   [
+      "This option forces to update cache file even if it is not necessary.\n",
+      "Opsi ini memaksa untuk memperbarui file cache meskipun tidak diperlukan.\n"
    ],
    [
       "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",

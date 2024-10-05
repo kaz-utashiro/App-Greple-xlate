@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.37
+Version 0.38
 
 # DESCRIPTION
 
@@ -204,9 +204,7 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 
 **xlate** modülü, her dosyanın çeviri önbelleğini saklayabilir ve sunucuya sorma işleminin üstesinden gelmek için yürütmeden önce onu okuyabilir. Varsayılan önbellek stratejisi `auto` ile, hedef dosya için önbellek verisi yalnızca önbellek dosyası varsa tutulur.
 
-- --cache-clear
-
-    **--cache-clear** seçeneği, önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini yenilemek için kullanılabilir. Bu seçenekle çalıştırıldığında, bir önbellek dosyası yoksa yeni bir önbellek dosyası oluşturulur ve ardından otomatik olarak sürdürülür.
+Önbellek yönetimini başlatmak veya mevcut tüm önbellek verilerini temizlemek için **--xlate-cache=clear** kullanın. Bu seçenekle birlikte çalıştırıldığında, bir önbellek dosyası mevcut değilse yeni bir dosya oluşturulacak ve ardından otomatik olarak bakımı yapılacaktır.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -232,6 +230,9 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
     - `accumulate`
 
         Varsayılan davranışa göre, kullanılmayan veriler önbellek dosyasından kaldırılır. Onları kaldırmak istemezseniz ve dosyada tutmak isterseniz, `accumulate` kullanın.
+- **--xlate-update**
+
+    Bu seçenek, gerekli olmasa bile önbellek dosyasını güncellemeye zorlar.
 
 # COMMAND LINE INTERFACE
 

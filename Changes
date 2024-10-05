@@ -2,6 +2,12 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.38 2024-10-05T07:45:54Z
+
+    - maintain cache data in ordered list format rather than hash
+    - introduce --xlate-update option to force update cache data
+    - undocument --cache-clear option (use --xlate-cache=clear)
+
 0.37 2024-10-04T06:39:51Z
 
     - introduce --xlate-format colon parameter

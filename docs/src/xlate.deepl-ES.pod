@@ -12,7 +12,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 =head1 VERSION
 
-Version 0.37
+Version 0.38
 
 =head1 DESCRIPTION
 
@@ -235,11 +235,9 @@ Establece todo el texto del fichero como área de destino.
 
 El módulo B<xlate> puede almacenar en caché el texto traducido de cada fichero y leerlo antes de la ejecución para eliminar la sobrecarga de preguntar al servidor. Con la estrategia de caché por defecto C<auto>, mantiene los datos de caché sólo cuando el archivo de caché existe para el archivo de destino.
 
+Utilice B<--xlate-cache=clear> para iniciar la gestión de la caché o para limpiar todos los datos de caché existentes. Una vez ejecutado con esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
+
 =over 7
-
-=item --cache-clear
-
-La opción B<--cache-clear> puede utilizarse para iniciar la gestión de la caché o para refrescar todos los datos de caché existentes. Una vez ejecutada esta opción, se creará un nuevo archivo de caché si no existe y se mantendrá automáticamente después.
 
 =item --xlate-cache=I<strategy>
 
@@ -270,6 +268,10 @@ No utilizar nunca el archivo de caché aunque exista.
 Por defecto, los datos no utilizados se eliminan del archivo de caché. Si no desea eliminarlos y mantenerlos en el archivo, utilice C<acumular>.
 
 =back
+
+=item B<--xlate-update>
+
+Esta opción obliga a actualizar el archivo de caché aunque no sea necesario.
 
 =back
 
