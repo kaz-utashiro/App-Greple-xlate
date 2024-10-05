@@ -1,80 +1,314 @@
-{
-   "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n" : "Кроме того, поскольку в комплекте поставляются make-файлы для различных стилей документов, перевод на другие языки возможен без специальных уточнений. Используйте опцию C<-M>.\n",
-   "App::Greple::xlate - translation support module for greple\n" : "App::Greple::xlate - модуль поддержки перевода для greple\n",
-   "At this time, the following engines are available\n" : "На данный момент доступны следующие движки\n",
-   "Automatic translation Docker environment with DeepL API (in Japanese)\n" : "Автоматический перевод Docker-окружения с помощью DeepL API (на японском языке)\n",
-   "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemented as a back-end engine. Experimental support for gpt-4 and gpt-4o are also included.\n" : "Модуль B<Greple> B<xlate> находит нужные текстовые блоки и заменяет их переведенным текстом. В настоящее время в качестве внутреннего движка реализованы модули DeepL (F<deepl.pm>) и ChatGPT (F<gpt3.pm>). Также включена экспериментальная поддержка gpt-4 и gpt-4o.\n",
-   "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n" : "Интерфейс B<gpt-4o> нестабилен и в настоящее время не может быть гарантированно корректной работы.\n",
-   "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n" : "Модуль B<xlate> может хранить кэшированный текст перевода для каждого файла и считывать его перед выполнением, чтобы исключить накладные расходы на запрос к серверу. При стратегии кэширования по умолчанию C<auto>, он сохраняет данные кэша только тогда, когда файл кэша существует для целевого файла.\n",
-   "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n" : "По умолчанию неиспользуемые данные удаляются из файла кэша. Если вы не хотите удалять их и сохранять в файле, используйте C<accumulate>.\n",
-   "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n" : "По умолчанию оригинальный и транслированный текст печатается в формате \"маркер конфликта\", совместимом с L<git(1)>. Используя формат C<ifdef>, можно легко получить нужную часть командой L<unifdef(1)>. Выходной формат может быть задан опцией B<--xlate-format>.\n",
-   "Cache data is managed based on the normalized text, so even if modifications are made that do not affect the normalization results, the cached translation data will still be effective.\n" : "Кэш-данные управляются на основе нормализованного текста, поэтому даже если будут внесены изменения, не влияющие на результаты нормализации, кэшированные данные перевода будут по-прежнему эффективны.\n",
-   "Clear the cache data first.\n" : "Сначала очистите данные кэша.\n",
-   "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n" : "Результат команды выводится в стандартный аут, поэтому при необходимости перенаправьте его в файл или воспользуйтесь модулем L<App::Greple::update>.\n",
-   "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n" : "Данные формата маркеров конфликтов можно просматривать в стиле \"бок о бок\" с помощью команды C<sdif> с опцией C<-V>. Поскольку сравнивать по каждой строке не имеет смысла, рекомендуется использовать опцию C<--no-cdif>. Если вам не нужно раскрашивать текст, укажите C<--no-textcolor> (или C<--no-tc>).\n",
-   "Create empty cache file and exit.\n" : "Создать пустой файл кэша и выйти.\n",
-   "DeepL Python library and CLI command.\n" : "DeepL Библиотека Python и команда CLI.\n",
-   "Generating documents in 15 languages with DeepL API module (in Japanese)\n" : "Генерация документов на 15 языках с помощью модуля DeepL API (на японском языке)\n",
-   "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n" : "Модуль Greple для перевода и замены только необходимых частей с помощью DeepL API (на японском языке)\n",
-   "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n" : "Если строка заканчивается символом полной ширины и следующая строка начинается символом полной ширины, объедините строки.\n",
-   "If a line ends with a full-width punctuation character, concatenate with next line.\n" : "Если строка заканчивается полноразмерным символом препинания, объедините ее со следующей строкой.\n",
-   "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n" : "Если конец или начало строки не являются символами полной ширины, объедините их, вставив символ пробела.\n",
-   "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n" : "Если формат C<xtxt> (переведенный текст) или неизвестен, печатается только переведенный текст.\n",
-   "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n" : "Если требуется перевести весь текст, используйте опцию B<--match-all>. Это сокращение для указания шаблона C<(?s).+>, который соответствует всему тексту.\n",
-   "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n" : "Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду B<greple> с модулем C<xlate::deepl> и C<perl> следующим образом:\n",
-   "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n" : "В этой команде шаблонная строка C<^(\\w.*\\n)+> означает последовательные строки, начинающиеся с буквенно-цифрового символа. В этой команде выделяется область, подлежащая переводу. Опция B<--all> используется для создания всего текста.\n",
-   "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n" : "Вместо того чтобы вызывать механизм перевода, вы должны работать на него. После подготовки текста для перевода он копируется в буфер обмена. Вы должны вставить их в форму, скопировать результат в буфер обмена и нажать кнопку return.\n",
-   "Invoke the translation process for each matched area.\n" : "Запустите процесс перевода для каждой совпавшей области.\n",
-   "L<App::Greple::xlate::deepl>\n" : "L<App::Greple::xlate::deepl>\n",
-   "L<App::Greple::xlate::gpt3>\n" : "L<App::Greple::xlate::gpt3>\n",
-   "L<App::Greple::xlate>\n" : "L<App::Greple::xlate>\n",
-   "L<https://github.com/DeepLcom/deepl-python>\n" : "L<https://github.com/DeepLcom/deepl-python>\n",
-   "L<https://github.com/tecolicom/App-gpty>\n" : "L<https://github.com/tecolicom/App-gpty>\n",
-   "L<https://hub.docker.com/r/tecolicom/xlate>\n" : "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-   "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n" : "Загрузите файл F<xlate.el>, включенный в репозиторий, чтобы использовать команду C<xlate> из редактора Emacs. Функция C<xlate-region> переводит заданный регион. Язык по умолчанию - C<EN-US>, и вы можете указать язык, вызывая ее с помощью аргумента prefix.\n",
-   "Maintain cache anyway as far as the target is normal file.\n" : "Сохранять кэш в любом случае, пока целевой файл является обычным файлом.\n",
-   "Maintain the cache file if it exists.\n" : "Сохранять файл кэша, если он существует.\n",
-   "Never use cache file even if it exists.\n" : "Никогда не использовать файл кэша, даже если он существует.\n",
-   "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n" : "Количество двоеточий по умолчанию равно 7. Если вы укажете последовательность двоеточий, например C<:::::>, то она будет использоваться вместо 7 двоеточий.\n",
-   "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n" : "Иногда встречаются части текста, которые не нужно переводить. Например, теги в файлах формата markdown. На сайте DeepL предлагается в таких случаях преобразовывать исключаемые части текста в XML-теги, переводить их, а затем восстанавливать после завершения перевода. Чтобы поддержать эту идею, можно указать части, которые нужно замаскировать от перевода.\n",
-   "OpenAI Python Library\n" : "Библиотека OpenAI Python\n",
-   "OpenAI authentication key.\n" : "Ключ аутентификации OpenAI.\n",
-   "OpenAI command line interface\n" : "Интерфейс командной строки OpenAI\n",
-   "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n" : "Опция B<--xlate> вызывает опцию B<--xlate-color> с опцией B<--color=never>.\n",
-   "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n" : "Оригинальный и преобразованный текст печатаются в формате L<cpp(1)> C<#ifdef>.\n",
-   "Original and converted text are printed in L<git(1)> conflict marker format.\n" : "Оригинальный и преобразованный текст печатаются в формате L<git(1)> маркеров конфликтов.\n",
-   "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n" : "Оригинальный и преобразованный текст печатаются в нотации L<git(1)> markdown B<div> block style.\n",
-   "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n" : "Оригинальный и преобразованный текст выводятся на печать, разделенные одной пустой строкой. Для C<пробел+> после преобразованного текста также выводится новая строка.\n",
-   "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n" : "Обработка выполняется в заданных единицах, но в случае последовательности из нескольких строк непустого текста они преобразуются в одну строку. Эта операция выполняется следующим образом:\n",
-   "Read Japanese article in L</SEE ALSO> section for detail.\n" : "Подробности читайте в японской статье в разделе L</SEE ALSO>.\n",
-   "Remove white space at the beginning and end of each line.\n" : "Удалите пробелы в начале и конце каждой строки.\n",
-   "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n" : "Выполнение команды C<xlate -GC> запустит оболочку с подключенным текущим рабочим git-репозиторием.\n",
-   "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n" : "Подробную информацию о шаблоне целевого текста см. в руководстве B<greple>. Используйте опции B<--inside>, B<--outside>, B<--include>, B<--exclude> для ограничения области совпадения.\n",
-   "See the tranlsation result in real time in the STDERR output.\n" : "Результат перевода можно увидеть в реальном времени в выводе STDERR.\n",
-   "Set the whole text of the file as a target area.\n" : "Установите весь текст файла в качестве целевой области.\n",
-   "Set this value to 1 if you want to translate one line at a time. This option takes precedence over the C<--xlate-maxlen> option.\n" : "Установите значение 1, если вы хотите переводить по одной строке за раз. Этот параметр имеет приоритет перед параметром C<--xlate-maxlen>.\n",
-   "Set your authentication key for DeepL service.\n" : "Задайте ключ аутентификации для сервиса DeepL.\n",
-   "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n" : "Определяет используемый движок перевода. Если вы указываете модуль движка напрямую, например C<-Mxlate::deepl>, то этот параметр использовать не нужно.\n",
-   "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n" : "Укажите максимальную длину текста, передаваемого в API за один раз. По умолчанию установлено значение, как для бесплатного сервиса DeepL: 128К для API (B<--xlate>) и 5000 для интерфейса буфера обмена (B<--xlate-labor>). Вы можете изменить эти значения, если используете услугу Pro.\n",
-   "Specify the maximum lines of text to be sent to the API at once.\n" : "Укажите максимальное количество строк текста, которое будет отправлено в API за один раз.\n",
-   "Specify the output format for original and translated text.\n" : "Укажите формат вывода оригинального и переведенного текста.\n",
-   "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n" : "Укажите целевой язык. Вы можете получить доступные языки с помощью команды C<deepl languages> при использовании движка B<DeepL>.\n",
-   "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n" : "Опция B<--cache-clear> может быть использована для инициирования управления кэшем или для обновления всех существующих данных кэша. После выполнения этой опции будет создан новый файл кэша, если он не существует, а затем автоматически сохранен.\n",
-   "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n" : "Команда C<xlate> работает совместно со средой Docker, поэтому даже если у вас ничего не установлено, вы можете использовать ее, пока доступен Docker. Используйте опцию C<-D> или C<-C>.\n",
-   "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n" : "Следующие форматы, отличные от C<xtxt>, предполагают, что переводимая часть представляет собой набор строк. На самом деле можно перевести только часть строки, и указание формата, отличного от C<xtxt>, не даст значимых результатов.\n",
-   "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n" : "Затем добавьте опцию C<--xlate> для перевода выделенной области. После этого программа найдет нужные участки и заменит их выводом команды B<--deepl>.\n",
-   "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n" : "Поэтому используйте первый шаблон для текста, который должен быть обработан путем объединения нескольких строк в одну строку, а второй - для предварительно отформатированного текста. Если в первом шаблоне нет текста, который можно было бы сопоставить, используйте шаблон, который ничему не соответствует, например C<(?!)>.\n",
-   "This interface is experimental and subject to change in the future.\n" : "Этот интерфейс является экспериментальным и может быть изменен в будущем.\n",
-   "This means:\n" : "Это означает:\n",
-   "This normalization process is performed only for the first (0th) and even-numbered pattern. Thus, if two patterns are specified as follows, the text matching the first pattern will be processed after normalization, and no normalization process will be performed on the text matching the second pattern.\n" : "Этот процесс нормализации выполняется только для первого (0-го) и четного шаблона. Таким образом, если два шаблона указаны следующим образом, то текст, соответствующий первому шаблону, будет обработан после нормализации, а для текста, соответствующего второму шаблону, процесс нормализации не будет выполняться.\n",
-   "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n" : "При этом каждая строка файла `MASKPATTERN` будет интерпретироваться как регулярное выражение, переводить строки, соответствующие ему, и возвращаться после обработки. Строки, начинающиеся с C<#>, игнорируются.\n",
-   "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n" : "Используйте B<sdif>, чтобы показать формат маркера конфликта бок о бок с опцией B<-V>.\n",
-   "With B<--xlate-fold> option, converted text is folded by the specified width. Default width is 70 and can be set by B<--xlate-fold-width> option. Four columns are reserved for run-in operation, so each line could hold 74 characters at most.\n" : "С опцией B<--xlate-fold> преобразованный текст сворачивается на указанную ширину. Ширина по умолчанию равна 70 и может быть задана опцией B<--xlate-fold-width>. Для обкатки зарезервировано четыре колонки, поэтому в каждой строке может содержаться не более 74 символов.\n",
-   "Without this option, B<greple> behaves as a normal search command. So you can check which part of the file will be subject of the translation before invoking actual work.\n" : "Без этой опции B<greple> ведет себя как обычная команда поиска. Таким образом, вы можете проверить, какая часть файла будет подвергнута переводу, прежде чем вызывать фактическую работу.\n",
-   "You can also combine the Docker and make options so that you can run make in a Docker environment.\n" : "Вы также можете комбинировать опции Docker и make, чтобы запускать make в среде Docker.\n",
-   "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n" : "Вы можете легко использовать этот модуль из командной строки с помощью команды C<xlate>, входящей в дистрибутив. Информацию об использовании C<xlate> смотрите в справке.\n",
-   "You can recover the original file by next L<sed(1)> command.\n" : "Вы можете восстановить исходный файл следующей командой L<sed(1)>.\n",
-   "You can retrieve only Japanese text by the B<unifdef> command:\n" : "Вы можете восстановить только японский текст командой B<unifdef>:\n",
-   "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n" : "Вы можете использовать модуль C<-Mupdate> для модификации файлов по результатам команды B<greple>.\n",
-   "You have to install command line tools for DeepL and ChatGPT.\n" : "Необходимо установить инструменты командной строки для DeepL и ChatGPT.\n"
-}
+[
+   [
+      "App::Greple::xlate - translation support module for greple\n",
+      "App::Greple::xlate - модуль поддержки перевода для greple\n"
+   ],
+   [
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT (F<gpt3.pm>) module are implemented as a back-end engine. Experimental support for gpt-4 and gpt-4o are also included.\n",
+      "Модуль B<Greple> B<xlate> находит нужные текстовые блоки и заменяет их переведенным текстом. В настоящее время в качестве внутреннего движка реализованы модули DeepL (F<deepl.pm>) и ChatGPT (F<gpt3.pm>). Также включена экспериментальная поддержка gpt-4 и gpt-4o.\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
+      "Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду B<greple> с модулем C<xlate::deepl> и C<perl> следующим образом:\n"
+   ],
+   [
+      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "В этой команде шаблонная строка C<^(\\w.*\\n)+> означает последовательные строки, начинающиеся с буквенно-цифрового символа. В этой команде выделяется область, подлежащая переводу. Опция B<--all> используется для создания всего текста.\n"
+   ],
+   [
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
+      "Затем добавьте опцию C<--xlate> для перевода выделенной области. После этого программа найдет нужные участки и заменит их выводом команды B<--deepl>.\n"
+   ],
+   [
+      "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
+      "По умолчанию оригинальный и транслированный текст печатается в формате \"маркер конфликта\", совместимом с L<git(1)>. Используя формат C<ifdef>, можно легко получить нужную часть командой L<unifdef(1)>. Выходной формат может быть задан опцией B<--xlate-format>.\n"
+   ],
+   [
+      "If you want to translate entire text, use B<--match-all> option. This is a short-cut to specify the pattern C<(?s).+> which matches entire text.\n",
+      "Если требуется перевести весь текст, используйте опцию B<--match-all>. Это сокращение для указания шаблона C<(?s).+>, который соответствует всему тексту.\n"
+   ],
+   [
+      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Данные формата маркеров конфликтов можно просматривать в стиле \"бок о бок\" с помощью команды C<sdif> с опцией C<-V>. Поскольку сравнивать по каждой строке не имеет смысла, рекомендуется использовать опцию C<--no-cdif>. Если вам не нужно раскрашивать текст, укажите C<--no-textcolor> (или C<--no-tc>).\n"
+   ],
+   [
+      "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",
+      "Обработка выполняется в заданных единицах, но в случае последовательности из нескольких строк непустого текста они преобразуются в одну строку. Эта операция выполняется следующим образом:\n"
+   ],
+   [
+      "Remove white space at the beginning and end of each line.\n",
+      "Удалите пробелы в начале и конце каждой строки.\n"
+   ],
+   [
+      "If a line ends with a full-width punctuation character, concatenate with next line.\n",
+      "Если строка заканчивается полноразмерным символом препинания, объедините ее со следующей строкой.\n"
+   ],
+   [
+      "If a line ends with a full-width character and the next line begins with a full-width character, concatenate the lines.\n",
+      "Если строка заканчивается символом полной ширины и следующая строка начинается символом полной ширины, объедините строки.\n"
+   ],
+   [
+      "If either the end or the beginning of a line is not a full-width character, concatenate them by inserting a space character.\n",
+      "Если конец или начало строки не являются символами полной ширины, объедините их, вставив символ пробела.\n"
+   ],
+   [
+      "Cache data is managed based on the normalized text, so even if modifications are made that do not affect the normalization results, the cached translation data will still be effective.\n",
+      "Кэш-данные управляются на основе нормализованного текста, поэтому даже если будут внесены изменения, не влияющие на результаты нормализации, кэшированные данные перевода будут по-прежнему эффективны.\n"
+   ],
+   [
+      "This normalization process is performed only for the first (0th) and even-numbered pattern. Thus, if two patterns are specified as follows, the text matching the first pattern will be processed after normalization, and no normalization process will be performed on the text matching the second pattern.\n",
+      "Этот процесс нормализации выполняется только для первого (0-го) и четного шаблона. Таким образом, если два шаблона указаны следующим образом, то текст, соответствующий первому шаблону, будет обработан после нормализации, а для текста, соответствующего второму шаблону, процесс нормализации не будет выполняться.\n"
+   ],
+   [
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
+      "Поэтому используйте первый шаблон для текста, который должен быть обработан путем объединения нескольких строк в одну строку, а второй - для предварительно отформатированного текста. Если в первом шаблоне нет текста, который можно было бы сопоставить, используйте шаблон, который ничему не соответствует, например C<(?!)>.\n"
+   ],
+   [
+      "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",
+      "Иногда встречаются части текста, которые не нужно переводить. Например, теги в файлах формата markdown. На сайте DeepL предлагается в таких случаях преобразовывать исключаемые части текста в XML-теги, переводить их, а затем восстанавливать после завершения перевода. Чтобы поддержать эту идею, можно указать части, которые нужно замаскировать от перевода.\n"
+   ],
+   [
+      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "При этом каждая строка файла `MASKPATTERN` будет интерпретироваться как регулярное выражение, переводить строки, соответствующие ему, и возвращаться после обработки. Строки, начинающиеся с C<#>, игнорируются.\n"
+   ],
+   [
+      "This interface is experimental and subject to change in the future.\n",
+      "Этот интерфейс является экспериментальным и может быть изменен в будущем.\n"
+   ],
+   [
+      "Invoke the translation process for each matched area.\n",
+      "Запустите процесс перевода для каждой совпавшей области.\n"
+   ],
+   [
+      "Without this option, B<greple> behaves as a normal search command. So you can check which part of the file will be subject of the translation before invoking actual work.\n",
+      "Без этой опции B<greple> ведет себя как обычная команда поиска. Таким образом, вы можете проверить, какая часть файла будет подвергнута переводу, прежде чем вызывать фактическую работу.\n"
+   ],
+   [
+      "Command result goes to standard out, so redirect to file if necessary, or consider to use L<App::Greple::update> module.\n",
+      "Результат команды выводится в стандартный аут, поэтому при необходимости перенаправьте его в файл или воспользуйтесь модулем L<App::Greple::update>.\n"
+   ],
+   [
+      "Option B<--xlate> calls B<--xlate-color> option with B<--color=never> option.\n",
+      "Опция B<--xlate> вызывает опцию B<--xlate-color> с опцией B<--color=never>.\n"
+   ],
+   [
+      "With B<--xlate-fold> option, converted text is folded by the specified width. Default width is 70 and can be set by B<--xlate-fold-width> option. Four columns are reserved for run-in operation, so each line could hold 74 characters at most.\n",
+      "С опцией B<--xlate-fold> преобразованный текст сворачивается на указанную ширину. Ширина по умолчанию равна 70 и может быть задана опцией B<--xlate-fold-width>. Для обкатки зарезервировано четыре колонки, поэтому в каждой строке может содержаться не более 74 символов.\n"
+   ],
+   [
+      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
+      "Определяет используемый движок перевода. Если вы указываете модуль движка напрямую, например C<-Mxlate::deepl>, то этот параметр использовать не нужно.\n"
+   ],
+   [
+      "At this time, the following engines are available\n",
+      "На данный момент доступны следующие движки\n"
+   ],
+   [
+      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
+      "Интерфейс B<gpt-4o> нестабилен и в настоящее время не может быть гарантированно корректной работы.\n"
+   ],
+   [
+      "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n",
+      "Вместо того чтобы вызывать механизм перевода, вы должны работать на него. После подготовки текста для перевода он копируется в буфер обмена. Вы должны вставить их в форму, скопировать результат в буфер обмена и нажать кнопку return.\n"
+   ],
+   [
+      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Укажите целевой язык. Вы можете получить доступные языки с помощью команды C<deepl languages> при использовании движка B<DeepL>.\n"
+   ],
+   [
+      "Specify the output format for original and translated text.\n",
+      "Укажите формат вывода оригинального и переведенного текста.\n"
+   ],
+   [
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "Следующие форматы, отличные от C<xtxt>, предполагают, что переводимая часть представляет собой набор строк. На самом деле можно перевести только часть строки, и указание формата, отличного от C<xtxt>, не даст значимых результатов.\n"
+   ],
+   [
+      "Original and converted text are printed in L<git(1)> conflict marker format.\n",
+      "Оригинальный и преобразованный текст печатаются в формате L<git(1)> маркеров конфликтов.\n"
+   ],
+   [
+      "You can recover the original file by next L<sed(1)> command.\n",
+      "Вы можете восстановить исходный файл следующей командой L<sed(1)>.\n"
+   ],
+   [
+      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
+      "Оригинальный и преобразованный текст печатаются в нотации L<git(1)> markdown B<div> block style.\n"
+   ],
+   [
+      "This means:\n",
+      "Это означает:\n"
+   ],
+   [
+      "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",
+      "Количество двоеточий по умолчанию равно 7. Если вы укажете последовательность двоеточий, например C<:::::>, то она будет использоваться вместо 7 двоеточий.\n"
+   ],
+   [
+      "Original and converted text are printed in L<cpp(1)> C<#ifdef> format.\n",
+      "Оригинальный и преобразованный текст печатаются в формате L<cpp(1)> C<#ifdef>.\n"
+   ],
+   [
+      "You can retrieve only Japanese text by the B<unifdef> command:\n",
+      "Вы можете восстановить только японский текст командой B<unifdef>:\n"
+   ],
+   [
+      "Original and converted text are printed separated by single blank line. For C<space+>, it also outputs a newline after the converted text.\n",
+      "Оригинальный и преобразованный текст выводятся на печать, разделенные одной пустой строкой. Для C<пробел+> после преобразованного текста также выводится новая строка.\n"
+   ],
+   [
+      "If the format is C<xtxt> (translated text) or unkown, only translated text is printed.\n",
+      "Если формат C<xtxt> (переведенный текст) или неизвестен, печатается только переведенный текст.\n"
+   ],
+   [
+      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Укажите максимальную длину текста, передаваемого в API за один раз. По умолчанию установлено значение, как для бесплатного сервиса DeepL: 128К для API (B<--xlate>) и 5000 для интерфейса буфера обмена (B<--xlate-labor>). Вы можете изменить эти значения, если используете услугу Pro.\n"
+   ],
+   [
+      "Specify the maximum lines of text to be sent to the API at once.\n",
+      "Укажите максимальное количество строк текста, которое будет отправлено в API за один раз.\n"
+   ],
+   [
+      "Set this value to 1 if you want to translate one line at a time. This option takes precedence over the C<--xlate-maxlen> option.\n",
+      "Установите значение 1, если вы хотите переводить по одной строке за раз. Этот параметр имеет приоритет перед параметром C<--xlate-maxlen>.\n"
+   ],
+   [
+      "See the tranlsation result in real time in the STDERR output.\n",
+      "Результат перевода можно увидеть в реальном времени в выводе STDERR.\n"
+   ],
+   [
+      "Set the whole text of the file as a target area.\n",
+      "Установите весь текст файла в качестве целевой области.\n"
+   ],
+   [
+      "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
+      "Модуль B<xlate> может хранить кэшированный текст перевода для каждого файла и считывать его перед выполнением, чтобы исключить накладные расходы на запрос к серверу. При стратегии кэширования по умолчанию C<auto>, он сохраняет данные кэша только тогда, когда файл кэша существует для целевого файла.\n"
+   ],
+   [
+      "The B<--cache-clear> option can be used to initiate cache management or to refresh all existing cache data. Once executed with this option, a new cache file will be created if one does not exist and then automatically maintained afterward.\n",
+      "Опция B<--cache-clear> может быть использована для инициирования управления кэшем или для обновления всех существующих данных кэша. После выполнения этой опции будет создан новый файл кэша, если он не существует, а затем автоматически сохранен.\n"
+   ],
+   [
+      "Maintain the cache file if it exists.\n",
+      "Сохранять файл кэша, если он существует.\n"
+   ],
+   [
+      "Create empty cache file and exit.\n",
+      "Создать пустой файл кэша и выйти.\n"
+   ],
+   [
+      "Maintain cache anyway as far as the target is normal file.\n",
+      "Сохранять кэш в любом случае, пока целевой файл является обычным файлом.\n"
+   ],
+   [
+      "Clear the cache data first.\n",
+      "Сначала очистите данные кэша.\n"
+   ],
+   [
+      "Never use cache file even if it exists.\n",
+      "Никогда не использовать файл кэша, даже если он существует.\n"
+   ],
+   [
+      "By default behavior, unused data is removed from the cache file. If you don't want to remove them and keep in the file, use C<accumulate>.\n",
+      "По умолчанию неиспользуемые данные удаляются из файла кэша. Если вы не хотите удалять их и сохранять в файле, используйте C<accumulate>.\n"
+   ],
+   [
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
+      "Вы можете легко использовать этот модуль из командной строки с помощью команды C<xlate>, входящей в дистрибутив. Информацию об использовании C<xlate> смотрите в справке.\n"
+   ],
+   [
+      "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
+      "Команда C<xlate> работает совместно со средой Docker, поэтому даже если у вас ничего не установлено, вы можете использовать ее, пока доступен Docker. Используйте опцию C<-D> или C<-C>.\n"
+   ],
+   [
+      "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
+      "Кроме того, поскольку в комплекте поставляются make-файлы для различных стилей документов, перевод на другие языки возможен без специальных уточнений. Используйте опцию C<-M>.\n"
+   ],
+   [
+      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
+      "Вы также можете комбинировать опции Docker и make, чтобы запускать make в среде Docker.\n"
+   ],
+   [
+      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
+      "Выполнение команды C<xlate -GC> запустит оболочку с подключенным текущим рабочим git-репозиторием.\n"
+   ],
+   [
+      "Read Japanese article in L</SEE ALSO> section for detail.\n",
+      "Подробности читайте в японской статье в разделе L</SEE ALSO>.\n"
+   ],
+   [
+      "Load the F<xlate.el> file included in the repository to use C<xlate> command from Emacs editor. C<xlate-region> function translate the given region. Default language is C<EN-US> and you can specify language invoking it with prefix argument.\n",
+      "Загрузите файл F<xlate.el>, включенный в репозиторий, чтобы использовать команду C<xlate> из редактора Emacs. Функция C<xlate-region> переводит заданный регион. Язык по умолчанию - C<EN-US>, и вы можете указать язык, вызывая ее с помощью аргумента prefix.\n"
+   ],
+   [
+      "Set your authentication key for DeepL service.\n",
+      "Задайте ключ аутентификации для сервиса DeepL.\n"
+   ],
+   [
+      "OpenAI authentication key.\n",
+      "Ключ аутентификации OpenAI.\n"
+   ],
+   [
+      "You have to install command line tools for DeepL and ChatGPT.\n",
+      "Необходимо установить инструменты командной строки для DeepL и ChatGPT.\n"
+   ],
+   [
+      "L<https://github.com/DeepLcom/deepl-python>\n",
+      "L<https://github.com/DeepLcom/deepl-python>\n"
+   ],
+   [
+      "L<https://github.com/tecolicom/App-gpty>\n",
+      "L<https://github.com/tecolicom/App-gpty>\n"
+   ],
+   [
+      "L<App::Greple::xlate>\n",
+      "L<App::Greple::xlate>\n"
+   ],
+   [
+      "L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::deepl>\n"
+   ],
+   [
+      "L<App::Greple::xlate::gpt3>\n",
+      "L<App::Greple::xlate::gpt3>\n"
+   ],
+   [
+      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
+      "L<https://hub.docker.com/r/tecolicom/xlate>\n"
+   ],
+   [
+      "DeepL Python library and CLI command.\n",
+      "DeepL Библиотека Python и команда CLI.\n"
+   ],
+   [
+      "OpenAI Python Library\n",
+      "Библиотека OpenAI Python\n"
+   ],
+   [
+      "OpenAI command line interface\n",
+      "Интерфейс командной строки OpenAI\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "Подробную информацию о шаблоне целевого текста см. в руководстве B<greple>. Используйте опции B<--inside>, B<--outside>, B<--include>, B<--exclude> для ограничения области совпадения.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "Вы можете использовать модуль C<-Mupdate> для модификации файлов по результатам команды B<greple>.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "Используйте B<sdif>, чтобы показать формат маркера конфликта бок о бок с опцией B<-V>.\n"
+   ],
+   [
+      "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",
+      "Модуль Greple для перевода и замены только необходимых частей с помощью DeepL API (на японском языке)\n"
+   ],
+   [
+      "Generating documents in 15 languages with DeepL API module (in Japanese)\n",
+      "Генерация документов на 15 языках с помощью модуля DeepL API (на японском языке)\n"
+   ],
+   [
+      "Automatic translation Docker environment with DeepL API (in Japanese)\n",
+      "Автоматический перевод Docker-окружения с помощью DeepL API (на японском языке)\n"
+   ]
+]
