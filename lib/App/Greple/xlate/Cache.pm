@@ -95,9 +95,13 @@ sub open {
     }
     my $json_obj //= &json;
     if (CORE::open my $fh, $file) {
-	my $json = do { local $/; <$fh> };
-	my $hash = $json eq '' ? {} : $json_obj->decode($json);
-	$obj->{saved} = $hash;
+	my $data = do { local $/; <$fh> };
+	my $json = $data eq '' ? {} : $json_obj->decode($data);
+	$obj->{saved} = do {
+	    if    (ref $json eq 'HASH')  { $json }
+	    elsif (ref $json eq 'ARRAY') { +{ map @{$_}[0,1], @$json } }
+	    else  { die "unexpected json data." }
+	};
 	warn "read cache from $file\n";
     } else {
 	$obj->{saved} = {};
