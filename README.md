@@ -198,8 +198,8 @@ This interface is experimental and subject to change in the future.
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div**
-        block style notation.
+        Original and converted text are printed in the markdown **div** block
+        style notation.
 
             ::::::: ORIGINAL
             original text
@@ -363,7 +363,7 @@ Read Japanese article in ["SEE ALSO"](#see-also) section for detail.
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)
