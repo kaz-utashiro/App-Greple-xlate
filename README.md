@@ -278,12 +278,10 @@ read it before execution to eliminate the overhead of asking to
 server.  With the default cache strategy `auto`, it maintains cache
 data only when the cache file exists for target file.
 
-- --cache-clear
-
-    The **--cache-clear** option can be used to initiate cache management
-    or to refresh all existing cache data. Once executed with this option,
-    a new cache file will be created if one does not exist and then
-    automatically maintained afterward.
+Use **--xlate-cache=clear** to initiate cache management or to clean up
+all existing cache data.  Once executed with this option, a new cache
+file will be created if one does not exist and then automatically
+maintained afterward.
 
 - --xlate-cache=_strategy_
     - `auto` (Default)
@@ -310,6 +308,9 @@ data only when the cache file exists for target file.
 
         By default behavior, unused data is removed from the cache file.  If
         you don't want to remove them and keep in the file, use `accumulate`.
+- **--xlate-update**
+
+    This option forces to update cache file even if it is not necessary.
 
 # COMMAND LINE INTERFACE
 

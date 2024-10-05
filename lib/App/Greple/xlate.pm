@@ -312,14 +312,12 @@ read it before execution to eliminate the overhead of asking to
 server.  With the default cache strategy C<auto>, it maintains cache
 data only when the cache file exists for target file.
 
+Use B<--xlate-cache=clear> to initiate cache management or to clean up
+all existing cache data.  Once executed with this option, a new cache
+file will be created if one does not exist and then automatically
+maintained afterward.
+
 =over 7
-
-=item --cache-clear
-
-The B<--cache-clear> option can be used to initiate cache management
-or to refresh all existing cache data. Once executed with this option,
-a new cache file will be created if one does not exist and then
-automatically maintained afterward.
 
 =item --xlate-cache=I<strategy>
 
@@ -351,6 +349,10 @@ By default behavior, unused data is removed from the cache file.  If
 you don't want to remove them and keep in the file, use C<accumulate>.
 
 =back
+
+=item B<--xlate-update>
+
+This option forces to update cache file even if it is not necessary.
 
 =back
 
@@ -547,6 +549,7 @@ our %opt = (
     width    => \(our $fold_width = 70),
     auth_key => \(our $auth_key),
     method   => \(our $cache_method //= $ENV{GREPLE_XLATE_CACHE} || 'auto'),
+    update   => \(our $force_update = 0),
     dryrun   => \(our $dryrun = 0),
     maxlen   => \(our $max_length = 0),
     maxline  => \(our $max_line = 0),
@@ -812,6 +815,9 @@ sub begin {
 	if ($cache_method =~ /accumulate/i) {
 	    push @opt, accumulate => 1;
 	}
+	if ($force_update) {
+	    push @opt, force_update => 1;
+	}
 	require App::Greple::xlate::Cache;
 	tie %cache, 'App::Greple::xlate::Cache', $file, @opt;
 	die "skip $current_file" if $cache_method eq 'create';
@@ -844,6 +850,7 @@ builtin xlate-fold-width=i $fold_width
 builtin xlate-from=s       $lang_from
 builtin xlate-to=s         $lang_to
 builtin xlate-cache:s      $cache_method
+builtin xlate-update!      $force_update
 builtin xlate-engine=s     $xlate_engine
 builtin xlate-dryrun       $dryrun
 builtin xlate-maxlen=i     $max_length

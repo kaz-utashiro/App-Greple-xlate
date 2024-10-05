@@ -20,6 +20,7 @@ define pod <<"=cut"
 	-a   use API
 	-c   just check translation area
 	-r   refresh cache
+	-u   force update cache
 	-s   silent mode
 	-e # translation engine (*deepl, gpt3, gpt4, gpt4o)
 	-p # pattern to determine translation area
@@ -175,7 +176,7 @@ share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
 
 declare -a pattern
 
-while getopts "${EXOPT}"'Macrsne:w:o:f:t:m:p:l:hv' OPT
+while getopts "${EXOPT}"'Macrusne:w:o:f:t:m:p:l:hv' OPT
 do
     case $OPT in
 	[$EXOPT]) : ignore ;;
@@ -183,6 +184,7 @@ do
 	a)   use_api=yes ;;
 	c)     check=yes ;;
 	r)   refresh=yes ;;
+	u)    update=yes ;;
 	s)    silent=yes ;;
 	n)    dryrun=yes ;;
 	e)    engine="$OPTARG" ;;
@@ -277,7 +279,8 @@ option+=(--all)
 [ "$check"   == yes ] || option+=(--xlate${use_clipboard:+-labor})
 [ "$wrap"    != ""  ] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
 [ "$debug"   == yes ] && option+=(-dmo)
-[ "$refresh" == yes ] && option+=(--cache-clear)
+[ "$refresh" == yes ] && option+=(--xlate-cache=clear)
+[ "$update"  == yes ] && option+=(--xlate-update)
 [ "$silent"  == yes ] && option+=(--no-xlate-progress)
 [ "$max"     != ""  ] && option+=(--xlate-maxlen="$max")
 
