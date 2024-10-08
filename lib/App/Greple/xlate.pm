@@ -532,6 +532,7 @@ use Text::ANSI::Fold ':constants';
 use App::cdif::Command;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
+use List::Util qw(max);
 
 use Exporter 'import';
 our @EXPORT_OK = qw($VERSION &opt);
@@ -674,7 +675,8 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my($s, $e, $i) = @$m;
-	    my $key = normalize $grep->cut(@$m), $i % 2 == 0;
+	    my $paragraph = ($i % 2 == 0);
+	    my $key = normalize $grep->cut(@$m), $paragraph;
 	    if (not exists $cache{$key}) {
 		$cache{$key} = undef;
 		push @miss, $key;
@@ -682,6 +684,22 @@ sub postgrep {
 	}
     }
     cache_update(@miss) if @miss;
+}
+
+#
+# Increment even/odd indices each
+#
+sub stripe_index {
+    my $grep = shift;
+    my $step = 2;
+    my @counter = (-$step .. -1);
+    for my $r ($grep->result) {
+	my($b, @match) = @$r;
+	for my $m (@match) {
+	    my $mod = $m->[2] % $step;
+	    $m->[2] = ($counter[$mod] += $step);
+	}
+    }
 }
 
 sub _progress {
@@ -861,7 +879,10 @@ builtin xlate-glossary=s   $glossary
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default --need=1 --no-regioncolor --cm=/544E,/454E,/533E,/353E
+option default \
+	--cm=/544E,/454E,/533E,/353E \
+	--postgrep &__PACKAGE__::stripe_index \
+	--need=1 --no-regioncolor
 
 option --xlate-setopt --prologue &__PACKAGE__::set($<shift>)
 
