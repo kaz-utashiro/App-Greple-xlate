@@ -49,10 +49,12 @@
          "requires" : {
             "App::Greple" : "9.15",
             "App::Greple::msdoc" : "1.05",
+            "App::Greple::stripe" : "0",
             "App::optex::textconv" : "1.04",
             "App::sdif" : "4.29",
             "Clipboard" : "0",
             "File::Share" : "0",
+            "Getopt::EX::termcolor" : "0",
             "Hash::Util" : "0",
             "JSON" : "0",
             "List::Util" : "1.56",
