@@ -1,4 +1,4 @@
-requires 'perl', 'v5.18.2';
+requires 'perl', 'v5.24';
 
 requires 'JSON';
 requires 'List::Util', '1.56';
