@@ -10,7 +10,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku **greple** koos `xlate::deepl` ja `perl` mooduliga niimoodi:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Selles käsus tähendab musterjada `^(\w.*\n)+` järjestikuseid ridu, mis algavad tähtnumbrilise tähega. See käsk näitab tõlgitavat ala esile tõstetud kujul. Valikut **--all** kasutatakse kogu teksti koostamiseks.
+Selles käsus tähendab musterjada `^([\w\pP].*\n)+` järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgiga. See käsk näitab tõlgitavat ala esile tõstetud kujul. Valikut **--all** kasutatakse kogu teksti koostamiseks.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     - **colon**, _:::::::_
 
-        Algne ja konverteeritud tekst on trükitud [git(1)](http://man.he.net/man1/git) markdown **div** plokkstiilis märgenduses.
+        Algne ja teisendatud tekst on trükitud markdown **div** plokkstiilis märkmikus.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Näete tõlkimise tulemust reaalajas STDERR-väljundist.
+
+- **--xlate-stripe**
+
+    Kasutage [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) moodulit, et näidata sobitatud osa sebratriibu moodi. See on kasulik siis, kui sobitatud osad on omavahel ühendatud.
+
+    Värvipalett vahetatakse vastavalt terminali taustavärvile. Kui soovite seda selgesõnaliselt määrata, võite kasutada **--xlate-stripe-light** või **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Lugege üksikasjalikult Jaapani artiklit ["SEE ALSO"](#see-also) osas.
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

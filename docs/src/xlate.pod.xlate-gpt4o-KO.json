@@ -12,8 +12,8 @@
       "Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 B<greple> 명령을 C<xlate::deepl> 및 C<perl> 모듈과 함께 다음과 같이 사용하십시오:  \n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "이 명령에서 패턴 문자열 C<^(\\w.*\\n)+>는 알파벳 숫자 문자로 시작하는 연속적인 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시하여 보여줍니다. 옵션 B<--all>은 전체 텍스트를 생성하는 데 사용됩니다.  \n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "이 명령에서 패턴 문자열 C<^([\\w\\pP].*\\n)+>는 알파-넘버 및 구두점 문자로 시작하는 연속적인 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 B<--all>은 전체 텍스트를 생성하는 데 사용됩니다.\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "다음 L<sed(1)> 명령으로 원본 파일을 복구할 수 있습니다.  \n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "원본 및 변환된 텍스트는 L<git(1)> 마크다운 B<div> 블록 스타일 표기법으로 인쇄됩니다.\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "B<div>원본 및 변환된 텍스트는 마크다운 B<div> 블록 스타일 표기법으로 인쇄됩니다.</div>\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "STDERR 출력에서 실시간으로 번역 결과를 확인하세요.  \n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "L<App::Greple::stripe> 모듈을 사용하여 지그재그 스트라이프 방식으로 일치하는 부분을 표시합니다. 이는 일치하는 부분이 서로 연결되어 있을 때 유용합니다.\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "색상 팔레트는 터미널의 배경 색상에 따라 전환됩니다.  \n명시적으로 지정하려면 B<--xlate-stripe-light> 또는 B<--xlate-stripe-dark>를 사용할 수 있습니다.\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

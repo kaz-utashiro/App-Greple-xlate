@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Perlのpodスタイルで書かれたドキュメント内の通常のテキストブロックを翻訳したい場合は、次のように`xlate::deepl`と`perl`モジュールを使用した**greple**コマンドを使用してください。
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-このコマンドでは、パターン文字列`^(\w.*\n)+`は、英数字で始まる連続した行を意味します。このコマンドは、翻訳対象のエリアをハイライト表示します。オプション**--all**は、全体のテキストを生成するために使用されます。
+このコマンドでは、パターン文字列`^([\w\pP].*\n)+`は、アルファベット、数字、句読点で始まる連続した行を意味します。このコマンドは、翻訳する領域をハイライト表示します。オプション**--all**は、全文を表示するために使用されます。
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in \`git(1)\` markdown \*\*div\*\* block style notation.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     STDERR出力でリアルタイムに翻訳結果を確認します。
+
+- **--xlate-stripe**
+
+    マッチした部分をゼブラストライプのように表示するために、[App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)モジュールを使用します。マッチした部分が連続している場合に便利です。
+
+    カラーパレットは、端末の背景色に応じて切り替わります。明示的に指定したい場合は、**--xlate-stripe-light**または**--xlate-stripe-dark**を使用できます。
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Dockerとメイクオプションを組み合わせることもでき、Docker�
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

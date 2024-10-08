@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 만약 Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 `xlate::deepl`과 `perl` 모듈을 사용하는 **greple** 명령을 사용하십시오.
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-이 명령에서 패턴 문자열 `^(\w.*\n)+`은 알파벳과 숫자로 시작하는 연속된 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.
+이 명령어에서 패턴 문자열 `^([\w\pP].*\n)+`은 알파벳-숫자 및 구두점 문자로 시작하는 연이은 줄을 의미합니다. 이 명령어는 번역할 영역을 강조해서 보여줍니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Version 0.38
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in \`git(1)\` markdown \*\*div\*\* block style notation.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Version 0.38
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     STDERR 출력에서 실시간으로 번역 결과를 확인합니다.
+
+- **--xlate-stripe**
+
+    매치된 부분을 지브라 스트라이프 패션으로 보여주기 위해 [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) 모듈을 사용합니다. 매치된 부분이 연이어 연결된 경우 유용합니다.
+
+    색상 팔레트는 터미널의 배경색에 따라 전환됩니다. 명시적으로 지정하려면 **--xlate-stripe-light** 또는 **--xlate-stripe-dark**를 사용할 수 있습니다.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Docker와 make 옵션을 결합하여 Docker 환경에서 make를 실행할 수�
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

@@ -10,7 +10,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 **greple** 명령과 `xlate::deepl` 및 `perl` 모듈을 사용합니다:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-이 명령에서 패턴 문자열 `^(\w.*\n)+`는 영숫자로 시작하는 연속된 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.
+이 명령에서 패턴 문자열 `^([\w\pP].*\n)+`은 영숫자 및 구두점으로 시작하는 연속된 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 
     - **colon**, _:::::::_
 
-        원본 텍스트와 변환된 텍스트는 [git(1)](http://man.he.net/man1/git) 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.
+        원본 텍스트와 변환된 텍스트는 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     번역 결과는 STDERR 출력에서 실시간으로 확인할 수 있습니다.
+
+- **--xlate-stripe**
+
+    일치하는 부분을 지브라 스트라이프 방식으로 표시하려면 [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) 모듈을 사용합니다. 이 옵션은 일치하는 부분이 연속적으로 연결될 때 유용합니다.
+
+    색상 팔레트는 단말기의 배경색에 따라 전환됩니다. 명시적으로 지정하고 싶으면 **--지연 스트라이프-밝음** 또는 **--지연 스트라이프-어두움**을 사용할 수 있습니다.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Docker 환경에서도 make를 실행할 수 있도록 Docker와 make 옵션을 
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

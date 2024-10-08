@@ -12,7 +12,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 DESCRIPTION
 
@@ -20,9 +20,9 @@ El módulo B<Greple> B<xlate> encuentra bloques de texto deseados y los reemplaz
 
 Si quieres traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, utiliza el comando B<greple> con los módulos C<xlate::deepl> y C<perl> de la siguiente manera:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-En este comando, la cadena de patrón C<^(\w.*\n)+> significa líneas consecutivas que comienzan con una letra alfanumérica. Este comando muestra el área que se va a traducir resaltada. La opción B<--all> se utiliza para producir todo el texto.
+En este comando, el patrón de cadena C<^([\w\pP].*\n)+> significa líneas consecutivas que comienzan con una letra alfanumérica y de puntuación. Este comando muestra el área a ser traducida resaltada. La opción B<--all> se utiliza para producir todo el texto.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -164,7 +164,7 @@ Puede recuperar el archivo original con el siguiente comando L<sed(1)>.
 
 =item B<colon>, I<:::::::>
 
-Texto original y convertido se imprimen en notación de estilo de bloque L<git(1)> B<div>.
+```markdown
 
     ::::::: ORIGINAL
     original text
@@ -224,6 +224,12 @@ Establece este valor en 1 si deseas traducir una línea a la vez. Esta opción t
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Vea el resultado de la traducción en tiempo real en la salida STDERR.
+
+=item B<--xlate-stripe>
+
+Utiliza el módulo L<App::Greple::stripe> para mostrar la parte coincidente de manera rayada en estilo cebra. Esto es útil cuando las partes coincidentes están conectadas una tras otra.
+
+La paleta de colores se cambia según el color de fondo del terminal. Si deseas especificar explícitamente, puedes usar B<--xlate-stripe-light> o B<--xlate-stripe-dark>.
 
 =item B<--match-all>
 
@@ -290,39 +296,39 @@ Ejecutar algo como C<xlate -GC> abrirá una terminal con el repositorio git de t
 Lea el artículo en japonés en la sección "VER TAMBIÉN" para más detalles.
 
     xlate [ options ] -t lang file [ greple options ]
-	-h   help
-	-v   show version
-	-d   debug
-	-n   dry-run
-	-a   use API
-	-c   just check translation area
-	-r   refresh cache
-	-s   silent mode
-	-e # translation engine (default "deepl")
-	-p # pattern to determine translation area
-	-w # wrap line by # width
-	-o # output format (default "xtxt", or "cm", "ifdef")
-	-f # from lang (ignored)
-	-t # to lang (required, no default)
-	-m # max length per API call
-	-l # show library files (XLATE.mk, xlate.el)
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
-	-M   run make
-	-n   dry-run
+        -M   run make
+        -n   dry-run
     Docker options
-	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
-	-R   mount read-only
-	-E * specify environment variable to be inherited
-	-I * specify altanative docker image (default: tecolicom/xlate:version)
-	-D * run xlate on the container with the rest parameters
-	-C * run following command on the container, or run shell
-
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+    
     Control Files:
-	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-	*.ENGINE  translation engine (deepl or gpt3)
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 
 =head1 EMACS

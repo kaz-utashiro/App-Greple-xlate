@@ -12,8 +12,8 @@
       "Εάν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο που έχει γραφεί στο στυλ pod της Perl, χρησιμοποιήστε την εντολή B<greple> με το C<xlate::deepl> και το πρόσθετο C<perl> όπως εξής:\n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "Σε αυτήν την εντολή, η συμβολοσειρά προτύπου C<^(\\w.*\\n)+> σημαίνει συνεχόμενες γραμμές που ξεκινούν με αλφαριθμητικό γράμμα. Αυτή η εντολή εμφανίζει την περιοχή που πρόκειται να μεταφραστεί με επισήμανση. Η επιλογή B<--all> χρησιμοποιείται για να παράγει ολόκληρο το κείμενο.\n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "Σε αυτή την εντολή, το πρότυπο συμβολοσειράς C<^([\\w\\pP].*\\n)+> σημαίνει διαδοχικές γραμμές που ξεκινούν με αλφαριθμητικούς και σημεία στίξης χαρακτήρες. Αυτή η εντολή εμφανίζει την περιοχή που πρέπει να μεταφραστεί με έντονη ανάδειξη. Η επιλογή B<--all> χρησιμοποιείται για να παράγει ολόκληρο το κείμενο.\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "Μπορείτε να ανακτήσετε το αρχικό αρχείο με την επόμενη εντολή L<sed(1)>.\n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "Ο αρχικός και μετατραπέντας κείμενο εκτυπώνονται σε μορφή μπλοκ L<git(1)> markdown B<div>.\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "```markdown\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Δείτε το αποτέλεσμα της μετάφρασης σε πραγματικό χρόνο στην έξοδο STDERR.\n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "Χρησιμοποιήστε το πρόσθετο L<App::Greple::stripe> για να εμφανίσετε το ταιριασμένο τμήμα με τρόπο ζέβρα. Αυτό είναι χρήσιμο όταν τα ταιριασμένα τμήματα είναι συνδεδεμένα πίσω-μπροστά.\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "Η παλέτα χρωμάτων αλλάζει ανάλογα με το χρώμα του φόντου του τερματικού. Αν θέλετε να το καθορίσετε ρητά, μπορείτε να χρησιμοποιήσετε τις επιλογές B<--xlate-stripe-light> ή B<--xlate-stripe-dark>.\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

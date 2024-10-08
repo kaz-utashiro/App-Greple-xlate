@@ -12,8 +12,8 @@
       "Dacă doriți să traduceți blocurile de text normale dintr-un document scris în stilul pod al Perl, utilizați comanda B<greple> cu modulul C<xlate::deepl> și C<perl> în felul următor:\n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "În această comandă, șirul de tipar C<^(\\w.*\\n)+> înseamnă linii consecutive care încep cu litere alfanumerice. Această comandă arată zona care urmează să fie tradusă evidențiată. Opțiunea B<--all> este utilizată pentru a produce întregul text.\n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "În această comandă, șirul de tipar C<^([\\w\\pP].*\\n)+> înseamnă linii consecutive care încep cu litere alfanumerice și de punctuație. Această comandă arată zona care trebuie tradusă evidențiată. Opțiunea B<--all> este folosită pentru a produce întregul text.\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "Puteți recupera fișierul original cu următoarea comandă L<sed(1)>.\n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "Textul original și cel convertit sunt tipărite în notația stilului bloc B<div> L<git(1)> markdown.\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "```markdown\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Vedeți rezultatul traducerii în timp real în ieșirea STDERR.\n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "Folosiți modulul L<App::Greple::stripe> pentru a arăta partea potrivită într-un mod cu dungi de zebra. Acest lucru este util atunci când părțile potrivite sunt conectate una după alta.\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "Paleta de culori se schimbă în funcție de culoarea de fundal a terminalului. Dacă doriți să specificați explicit, puteți folosi B<--xlate-stripe-light> sau B<--xlate-stripe-dark>.\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 DESCRIPTION
 
@@ -20,9 +20,9 @@ B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud 
 
 Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Selles käskluses tähendab mustristring C<^(\w.*\n)+> järjestikuseid ridu, mis algavad alfa-numbrilise tähega. See käsklus näitab tõlgitavat ala esile tõstetult. Valik B<--all> kasutatakse kogu teksti tootmiseks.
+Selles käsu C<^([\w\pP].*\n)+> muster tähendab järjestikuseid ridu, mis algavad alfa-numbrilise ja kirjavahemärgiga. See käsk näitab tõlgitavat ala esile tõstetult. Valikut B<--all> kasutatakse kogu teksti tootmiseks.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -164,7 +164,7 @@ Saate algse faili taastada järgmise L<sed(1)> käsu abil.
 
 =item B<colon>, I<:::::::>
 
-Originaal- ja teisendatud tekst on trükitud L<git(1)> märkustiku B<div> ploki stiilis märkustiku abil.
+```markdown
 
     ::::::: ORIGINAL
     original text
@@ -224,6 +224,12 @@ Seadke see väärtus 1, kui soovite tõlkida ühe rea korraga. See valik on prio
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Vaadake tõlke tulemust reaalajas STDERR väljundis.
+
+=item B<--xlate-stripe>
+
+Kasuta L<App::Greple::stripe> moodulit, et näidata sobitatud osa sebralise triibulise moega. See on kasulik, kui sobitatud osad on omavahel ühendatud.
+
+Värvipalett vahetub vastavalt terminali taustavärvile. Kui soovid seda selgelt määratleda, saad kasutada valikuid B<--xlate-stripe-light> või B<--xlate-stripe-dark>.
 
 =item B<--match-all>
 
@@ -290,39 +296,39 @@ Käivitades näiteks C<xlate -GC>, käivitatakse käskluskonsool, kus on praegun
 Lugege jaapani keelse artikli üksikasjade kohta L</VAATA KA> jaotises.
 
     xlate [ options ] -t lang file [ greple options ]
-	-h   help
-	-v   show version
-	-d   debug
-	-n   dry-run
-	-a   use API
-	-c   just check translation area
-	-r   refresh cache
-	-s   silent mode
-	-e # translation engine (default "deepl")
-	-p # pattern to determine translation area
-	-w # wrap line by # width
-	-o # output format (default "xtxt", or "cm", "ifdef")
-	-f # from lang (ignored)
-	-t # to lang (required, no default)
-	-m # max length per API call
-	-l # show library files (XLATE.mk, xlate.el)
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
-	-M   run make
-	-n   dry-run
+        -M   run make
+        -n   dry-run
     Docker options
-	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
-	-R   mount read-only
-	-E * specify environment variable to be inherited
-	-I * specify altanative docker image (default: tecolicom/xlate:version)
-	-D * run xlate on the container with the rest parameters
-	-C * run following command on the container, or run shell
-
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+    
     Control Files:
-	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-	*.ENGINE  translation engine (deepl or gpt3)
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 
 =head1 EMACS

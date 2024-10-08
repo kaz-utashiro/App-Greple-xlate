@@ -12,8 +12,8 @@
       "如果要翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 B<greple> 命令，并像这样使用 C<xlate::deepl> 和 C<perl> 模块：\n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "在该命令中，模式字符串 C<^(\\w.*\\n)+> 表示以字母数字开头的连续行。该命令高亮显示要翻译的区域。选项 B<--all> 用于生成整个文本。\n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "在该命令中，模式字符串 C<^([\\w\\pP].*\\n)+> 表示以字母和标点符号开头的连续行。该命令高亮显示要翻译的区域。选项 B<--all> 用于生成整个文本。\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "你可以通过下一个L<sed(1)>命令恢复原始文件。\n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "原始文本和转换后的文本均以 L<git(1)> markdown B<div> 块样式符号打印。\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "原始文本和转换后的文本均以标记符 B<div> 块样式符号打印。\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "在STDERR输出中可以看到实时的翻译结果。\n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "使用 L<App::Greple::stripe> 模块以斑马线方式显示匹配部分。当匹配部分背靠背连接时，这种方式非常有用。\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "调色板会根据终端的背景颜色进行切换。如果要明确指定，可以使用 B<--xlate-stripe-light> 或 B<--xlate-stripe-dark>。\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

@@ -10,7 +10,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду **greple** с модулем `xlate::deepl` и `perl` следующим образом:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-В этой команде шаблонная строка `^(\w.*\n)+` означает последовательные строки, начинающиеся с буквенно-цифрового символа. В этой команде выделяется область, подлежащая переводу. Опция **--all** используется для создания всего текста.
+В этой команде шаблонная строка `^([\w\pP].*\n)+` означает последовательные строки, начинающиеся с букв алфавитно-цифрового ряда и знаков препинания. Эта команда показывает область, которую нужно перевести, выделенной. Опция **--all** используется для перевода всего текста.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Version 0.38
 
     - **colon**, _:::::::_
 
-        Оригинальный и преобразованный текст печатаются в нотации [git(1)](http://man.he.net/man1/git) markdown **div** block style.
+        Оригинальный и преобразованный текст печатаются в блочном стиле markdown **div**.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Version 0.38
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Результат перевода можно увидеть в реальном времени в выводе STDERR.
+
+- **--xlate-stripe**
+
+    Используйте модуль [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe), чтобы показать совпадающие части в виде полосок зебры. Это удобно, когда совпадающие части соединены встык.
+
+    Цветовая палитра переключается в соответствии с цветом фона терминала. Если вы хотите указать его явно, можно использовать **--xlate-stripe-light** или **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Version 0.38
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

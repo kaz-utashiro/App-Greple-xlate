@@ -12,8 +12,8 @@
       "Perlのpodスタイルで書かれたドキュメント内の通常のテキストブロックを翻訳したい場合は、次のようにB<greple>コマンドをC<xlate::deepl>およびC<perl>モジュールと共に使用します：  \n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "このコマンドでは、パターン文字列C<^(\\w.*\\n)+>は、英数字の文字で始まる連続した行を意味します。このコマンドは、翻訳されるべき領域をハイライト表示します。オプションB<--all>は、全体のテキストを生成するために使用されます。  \n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "このコマンドでは、パターン文字列 C<^([\\w\\pP].*\\n)+> は、英数字および句読点文字で始まる連続した行を意味します。このコマンドは、翻訳されるべき領域をハイライト表示します。オプション B<--all> は、全体のテキストを生成するために使用されます。\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "次の L<sed(1)> コマンドで元のファイルを復元できます。  \n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "元のテキストと変換されたテキストは、L<git(1)> マークダウン B<div> ブロックスタイルの表記で印刷されます。\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "B<div>オリジナルと変換されたテキストは、マークダウンB<div>ブロックスタイルの表記で印刷されます。</div>\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "リアルタイムでSTDERR出力に翻訳結果を表示します。  \n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "L<App::Greple::stripe> モジュールを使用して、ゼブラストライプのスタイルで一致した部分を表示します。これは、一致した部分が連続している場合に便利です。\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "ターミナルの背景色に応じてカラーパレットが切り替わります。明示的に指定したい場合は、B<--xlate-stripe-light> または B<--xlate-stripe-dark> を使用できます。\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 DESCRIPTION
 
@@ -20,9 +20,9 @@ De module B<Greple> B<xlate> vindt de gewenste tekstblokken en vervangt ze door 
 
 Als je normale tekstblokken wilt vertalen in een document dat geschreven is in de pod-stijl van Perl, gebruik dan het commando B<greple> met de module C<xlate::deepl> en C<perl> als volgt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In dit commando betekent pattern string C<^(\w.*\n)+> opeenvolgende regels die beginnen met een alfa-numerieke letter. Deze opdracht toont het te vertalen gebied gemarkeerd. Optie B<--all> wordt gebruikt om de hele tekst te produceren.
+In deze opdracht betekent patroontekenreeks C<^([\w\pP].*\n)+> opeenvolgende regels die beginnen met alfanumerieke letters en leestekens. Deze opdracht laat het te vertalen gebied gemarkeerd zien. Optie B<--all> wordt gebruikt om de volledige tekst te produceren.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -164,7 +164,7 @@ U kunt het originele bestand herstellen met de volgende L<sed(1)> opdracht.
 
 =item B<colon>, I<:::::::>
 
-Originele en geconverteerde tekst worden afgedrukt in L<git(1)> markdown B<div> blokstijlnotatie.
+Originele en geconverteerde tekst worden afgedrukt in de markdown B<div> blokstijlnotatie.
 
     ::::::: ORIGINAL
     original text
@@ -224,6 +224,12 @@ Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie h
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Zie het resultaat van de vertaling in real time in de STDERR uitvoer.
+
+=item B<--xlate-stripe>
+
+Gebruik de module L<App::Greple::stripe> om het gematchte deel weer te geven met zebrastrepen. Dit is nuttig wanneer de gematchte delen rug-aan-rug verbonden zijn.
+
+Het kleurenpalet wordt omgeschakeld volgens de achtergrondkleur van de terminal. Als je dit expliciet wilt specificeren, kun je B<--xlate-stripe-light> of B<--xlate-stripe-dark> gebruiken.
 
 =item B<--match-all>
 
@@ -290,39 +296,39 @@ Door te draaien als C<xlate -GC> wordt een shell gestart met de huidige werkende
 Lees het Japanse artikel in de L</SEE ALSO> sectie voor meer informatie.
 
     xlate [ options ] -t lang file [ greple options ]
-	-h   help
-	-v   show version
-	-d   debug
-	-n   dry-run
-	-a   use API
-	-c   just check translation area
-	-r   refresh cache
-	-s   silent mode
-	-e # translation engine (default "deepl")
-	-p # pattern to determine translation area
-	-w # wrap line by # width
-	-o # output format (default "xtxt", or "cm", "ifdef")
-	-f # from lang (ignored)
-	-t # to lang (required, no default)
-	-m # max length per API call
-	-l # show library files (XLATE.mk, xlate.el)
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
-	-M   run make
-	-n   dry-run
+        -M   run make
+        -n   dry-run
     Docker options
-	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
-	-R   mount read-only
-	-E * specify environment variable to be inherited
-	-I * specify altanative docker image (default: tecolicom/xlate:version)
-	-D * run xlate on the container with the rest parameters
-	-C * run following command on the container, or run shell
-
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+    
     Control Files:
-	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-	*.ENGINE  translation engine (deepl or gpt3)
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 
 =head1 EMACS

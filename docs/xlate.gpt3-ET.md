@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Kui soovite tõlkida tavalisi tekstiplokke Perl'i pod-stiilis kirjutatud dokumendis, kasutage **greple** käsku koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Selles käskluses tähendab mustristring `^(\w.*\n)+` järjestikuseid ridu, mis algavad alfa-numbrilise tähega. See käsklus näitab tõlgitavat ala esile tõstetult. Valik **--all** kasutatakse kogu teksti tootmiseks.
+Selles käsu `^([\w\pP].*\n)+` muster tähendab järjestikuseid ridu, mis algavad alfa-numbrilise ja kirjavahemärgiga. See käsk näitab tõlgitavat ala esile tõstetult. Valikut **--all** kasutatakse kogu teksti tootmiseks.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     - **colon**, _:::::::_
 
-        Originaal- ja teisendatud tekst on trükitud [git(1)](http://man.he.net/man1/git) märkustiku **div** ploki stiilis märkustiku abil.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Vaadake tõlke tulemust reaalajas STDERR väljundis.
+
+- **--xlate-stripe**
+
+    Kasuta [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) moodulit, et näidata sobitatud osa sebralise triibulise moega. See on kasulik, kui sobitatud osad on omavahel ühendatud.
+
+    Värvipalett vahetub vastavalt terminali taustavärvile. Kui soovid seda selgelt määratleda, saad kasutada valikuid **--xlate-stripe-light** või **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Lugege jaapani keelse artikli üksikasjade kohta ["VAATA KA"](#vaata-ka) jaotise
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

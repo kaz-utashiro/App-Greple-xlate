@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Wenn Sie normale Textblöcke in einem Dokument im Perl-Pod-Stil übersetzen möchten, verwenden Sie den **greple** Befehl mit `xlate::deepl` und `perl` Modul wie folgt:  
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In diesem Befehl bedeutet das Muster `^(\w.*\n)+`, dass aufeinanderfolgende Zeilen mit einem alphanumerischen Buchstaben beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option **--all** wird verwendet, um den gesamten Text zu erzeugen.  
+In diesem Befehl bedeutet das Musterzeichen `^([\w\pP].*\n)+`, dass aufeinanderfolgende Zeilen mit alphanumerischen und Interpunktionszeichen beginnen. Dieser Befehl zeigt den Bereich, der übersetzt werden soll, hervorgehoben an. Die Option **--all** wird verwendet, um den gesamten Text zu erzeugen.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
 
     - **colon**, _:::::::_
 
-        Original und konvertierter Text werden im [git(1)](http://man.he.net/man1/git) Markdown **div** Blockstil notiert.
+        Sure! Please provide the text you would like me to translate into German.
 
             ::::::: ORIGINAL
             original text
@@ -198,6 +198,13 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe.  
+
+- **--xlate-stripe**
+
+    Verwenden Sie das [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) Modul, um den übereinstimmenden Teil im Zebra-Streifen-Stil anzuzeigen.  
+    Dies ist nützlich, wenn die übereinstimmenden Teile direkt hintereinander verbunden sind.
+
+    Die Farbpalette wird entsprechend der Hintergrundfarbe des Terminals umgeschaltet. Wenn Sie dies ausdrücklich angeben möchten, können Sie **--xlate-stripe-light** oder **--xlate-stripe-dark** verwenden.
 
 - **--match-all**
 
@@ -281,7 +288,7 @@ Lesen Sie den japanischen Artikel im ["SEE ALSO"](#see-also) Abschnitt für Deta
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

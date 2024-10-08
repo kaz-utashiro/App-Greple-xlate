@@ -10,7 +10,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Αν θέλετε να μεταφράσετε κανονικά μπλοκ κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με την ενότητα `xlate::deepl` και `perl` ως εξής:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Σε αυτή την εντολή, η συμβολοσειρά προτύπων `^(\w.*\n)+` σημαίνει διαδοχικές γραμμές που αρχίζουν με αλφαριθμητικό γράμμα. Αυτή η εντολή εμφανίζει την περιοχή που πρόκειται να μεταφραστεί επισημασμένη. Η επιλογή **--all** χρησιμοποιείται για την παραγωγή ολόκληρου του κειμένου.
+Στην εντολή αυτή, η συμβολοσειρά προτύπων `^([\w\pP].*\n)+` σημαίνει διαδοχικές γραμμές που αρχίζουν με αλφαριθμητικά και γράμματα στίξης. Αυτή η εντολή δείχνει την περιοχή που πρόκειται να μεταφραστεί επισημασμένη. Η επιλογή **--all** χρησιμοποιείται για την παραγωγή ολόκληρου του κειμένου.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Version 0.38
 
     - **colon**, _:::::::_
 
-        Το αρχικό και το μετασχηματισμένο κείμενο εκτυπώνονται σε σημειογραφία τύπου μπλοκ [git(1)](http://man.he.net/man1/git) markdown **div**.
+        Το αρχικό και το μετασχηματισμένο κείμενο εκτυπώνονται με τη σημειογραφία μπλοκ markdown **div**.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Version 0.38
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Δείτε το αποτέλεσμα της μετάφρασης σε πραγματικό χρόνο στην έξοδο STDERR.
+
+- **--xlate-stripe**
+
+    Χρησιμοποιήστε την ενότητα [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) για να εμφανίσετε το αντιστοιχισμένο τμήμα με τον τρόπο της λωρίδας ζέβρας. Αυτό είναι χρήσιμο όταν τα αντιστοιχισμένα μέρη συνδέονται πλάτη με πλάτη.
+
+    Η παλέτα χρωμάτων αλλάζει ανάλογα με το χρώμα φόντου του τερματικού. Αν θέλετε να το καθορίσετε ρητά, μπορείτε να χρησιμοποιήσετε **--xlate-stripe-light** ή **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Version 0.38
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

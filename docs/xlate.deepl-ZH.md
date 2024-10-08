@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 如果要翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 **greple** 命令，并像这样使用 `xlate::deepl` 和 `perl` 模块：
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-在该命令中，模式字符串 `^(\w.*\n)+` 表示以字母数字开头的连续行。该命令高亮显示要翻译的区域。选项 **--all** 用于生成整个文本。
+在该命令中，模式字符串 `^([\w\pP].*\n)+` 表示以字母和标点符号开头的连续行。该命令高亮显示要翻译的区域。选项 **--all** 用于生成整个文本。
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Version 0.38
 
     - **colon**, _:::::::_
 
-        原始文本和转换后的文本均以 [git(1)](http://man.he.net/man1/git) markdown **div** 块样式符号打印。
+        原始文本和转换后的文本均以标记符 **div** 块样式符号打印。
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Version 0.38
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     在STDERR输出中可以看到实时的翻译结果。
+
+- **--xlate-stripe**
+
+    使用 [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) 模块以斑马线方式显示匹配部分。当匹配部分背靠背连接时，这种方式非常有用。
+
+    调色板会根据终端的背景颜色进行切换。如果要明确指定，可以使用 **--xlate-stripe-light** 或 **--xlate-stripe-dark**。
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Version 0.38
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 DESCRIPTION
 
@@ -25,12 +25,12 @@ If you want to translate normal text blocks in a document written in
 the Perl's pod style, use B<greple> command with C<xlate::deepl> and
 C<perl> module like this:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In this command, pattern string C<^(\w.*\n)+> means consecutive lines
-starting with alpha-numeric letter.  This command show the area to be
-translated highlighted.  Option B<--all> is used to produce entire
-text.
+In this command, pattern string C<^([\w\pP].*\n)+> means consecutive
+lines starting with alpha-numeric and punctuation letter.  This
+command show the area to be translated highlighted.  Option B<--all>
+is used to produce entire text.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -223,8 +223,8 @@ You can recover the original file by next L<sed(1)> command.
 
 =item B<colon>, I<:::::::>
 
-Original and converted text are printed in L<git(1)> markdown B<div>
-block style notation.
+Original and converted text are printed in the markdown B<div> block
+style notation.
 
     ::::::: ORIGINAL
     original text
@@ -294,6 +294,16 @@ option takes precedence over the C<--xlate-maxlen> option.
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
+
+=item B<--xlate-stripe>
+
+Use L<App::Greple::stripe> module to show the matched part by zebra
+striping fashion.  This is useful when the matched parts are connected
+back-to-back.
+
+The color palette is switched according to the background color of the
+terminal.  If you want to specify explicitly, you can use
+B<--xlate-stripe-light> or B<--xlate-stripe-dark>.
 
 =item B<--match-all>
 
@@ -375,39 +385,39 @@ git repository mounted.
 Read Japanese article in L</SEE ALSO> section for detail.
 
     xlate [ options ] -t lang file [ greple options ]
-	-h   help
-	-v   show version
-	-d   debug
-	-n   dry-run
-	-a   use API
-	-c   just check translation area
-	-r   refresh cache
-	-s   silent mode
-	-e # translation engine (default "deepl")
-	-p # pattern to determine translation area
-	-w # wrap line by # width
-	-o # output format (default "xtxt", or "cm", "ifdef")
-	-f # from lang (ignored)
-	-t # to lang (required, no default)
-	-m # max length per API call
-	-l # show library files (XLATE.mk, xlate.el)
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
-	-M   run make
-	-n   dry-run
+        -M   run make
+        -n   dry-run
     Docker options
-	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
-	-R   mount read-only
-	-E * specify environment variable to be inherited
-	-I * specify altanative docker image (default: tecolicom/xlate:version)
-	-D * run xlate on the container with the rest parameters
-	-C * run following command on the container, or run shell
-
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+    
     Control Files:
-	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-	*.ENGINE  translation engine (deepl or gpt3)
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 
 =head1 EMACS

@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile aşağıdaki gibi kullanın:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Bu komutta, `^(\w.*\n)+` kalıp dizesi alfa-sayısal harfle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. **--all** seçeneği metnin tamamını üretmek için kullanılır.
+Bu komutta, `^([\w\pP].*\n)+` kalıp dizesi alfa-sayısal ve noktalama harfleriyle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. **--all** seçeneği metnin tamamını üretmek için kullanılır.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     - **colon**, _:::::::_
 
-        Orijinal ve dönüştürülmüş metin [git(1)](http://man.he.net/man1/git) markdown **div** blok stili gösteriminde yazdırılır.
+        Orijinal ve dönüştürülmüş metin markdown **div** blok stili gösteriminde yazdırılır.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.
+
+- **--xlate-stripe**
+
+    Eşleşen kısmı zebra şeritleme yöntemiyle göstermek için [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) modülünü kullanın. Bu, eşleşen parçalar arka arkaya bağlandığında kullanışlıdır.
+
+    Renk paleti terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz, **--xlate-stripe-light** veya **--xlate-stripe-dark** kullanabilirsiniz.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Ayrıntılar için ["SEE ALSO"](#see-also) bölümündeki Japonca makaleyi okuyu
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

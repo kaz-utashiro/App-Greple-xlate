@@ -12,8 +12,8 @@
       "如果您想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 B<greple> 命令与 C<xlate::deepl> 和 C<perl> 模块，如下所示：  \n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "在此命令中，模式字符串 C<^(\\w.*\\n)+> 表示以字母数字字符开头的连续行。此命令将突出显示要翻译的区域。选项 B<--all> 用于生成整个文本。  \n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "在这个命令中，模式字符串 C<^([\\w\\pP].*\\n)+> 意味着以字母数字和标点符号字母开头的连续行。这个命令显示要翻译的区域高亮显示。选项 B<--all> 用于生成整个文本。\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "您可以通过下一个 L<sed(1)> 命令恢复原始文件。\n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "原始文本和转换后的文本以 L<git(1)> markdown B<div> 块样式标记法打印。\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "Sure! Please provide the text you would like me to translate into Chinese.\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "在STDERR输出中实时查看翻译结果。  \n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "使用L<App::Greple::stripe>模块以斑马条纹的方式显示匹配的部分。当匹配的部分是连续连接时，这非常有用。\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "颜色调色板根据终端的背景颜色进行切换。如果您想明确指定，可以使用 B<--xlate-stripe-light> 或 B<--xlate-stripe-dark>。\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

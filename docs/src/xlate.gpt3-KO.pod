@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.38
+Version 0.39
 
 =head1 DESCRIPTION
 
@@ -20,9 +20,9 @@ B<Greple> B<xlate> 모듈은 원하는 텍스트 블록을 찾아 번역된 텍�
 
 만약 Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 C<xlate::deepl>과 C<perl> 모듈을 사용하는 B<greple> 명령을 사용하십시오.
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-이 명령에서 패턴 문자열 C<^(\w.*\n)+>은 알파벳과 숫자로 시작하는 연속된 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 B<--all>은 전체 텍스트를 생성하는 데 사용됩니다.
+이 명령어에서 패턴 문자열 C<^([\w\pP].*\n)+>은 알파벳-숫자 및 구두점 문자로 시작하는 연이은 줄을 의미합니다. 이 명령어는 번역할 영역을 강조해서 보여줍니다. 옵션 B<--all>은 전체 텍스트를 생성하는 데 사용됩니다.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -164,7 +164,7 @@ B<gpt-4o>의 인터페이스는 현재 불안정하며 올바르게 작동할 �
 
 =item B<colon>, I<:::::::>
 
-Original and converted text are printed in `git(1)` markdown **div** block style notation.
+```markdown
 
     ::::::: ORIGINAL
     original text
@@ -224,6 +224,12 @@ Original: Hello, how are you doing today?
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 STDERR 출력에서 실시간으로 번역 결과를 확인합니다.
+
+=item B<--xlate-stripe>
+
+매치된 부분을 지브라 스트라이프 패션으로 보여주기 위해 L<App::Greple::stripe> 모듈을 사용합니다. 매치된 부분이 연이어 연결된 경우 유용합니다.
+
+색상 팔레트는 터미널의 배경색에 따라 전환됩니다. 명시적으로 지정하려면 B<--xlate-stripe-light> 또는 B<--xlate-stripe-dark>를 사용할 수 있습니다.
 
 =item B<--match-all>
 
@@ -290,39 +296,39 @@ C<xlate -GC>와 같이 실행하면 현재 작업 중인 git 저장소가 마운
 자세한 내용은 L</SEE ALSO> 섹션에 있는 일본어 기사를 읽어보세요.
 
     xlate [ options ] -t lang file [ greple options ]
-	-h   help
-	-v   show version
-	-d   debug
-	-n   dry-run
-	-a   use API
-	-c   just check translation area
-	-r   refresh cache
-	-s   silent mode
-	-e # translation engine (default "deepl")
-	-p # pattern to determine translation area
-	-w # wrap line by # width
-	-o # output format (default "xtxt", or "cm", "ifdef")
-	-f # from lang (ignored)
-	-t # to lang (required, no default)
-	-m # max length per API call
-	-l # show library files (XLATE.mk, xlate.el)
+        -h   help
+        -v   show version
+        -d   debug
+        -n   dry-run
+        -a   use API
+        -c   just check translation area
+        -r   refresh cache
+        -s   silent mode
+        -e # translation engine (default "deepl")
+        -p # pattern to determine translation area
+        -w # wrap line by # width
+        -o # output format (default "xtxt", or "cm", "ifdef")
+        -f # from lang (ignored)
+        -t # to lang (required, no default)
+        -m # max length per API call
+        -l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
     Make options
-	-M   run make
-	-n   dry-run
+        -M   run make
+        -n   dry-run
     Docker options
-	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
-	-R   mount read-only
-	-E * specify environment variable to be inherited
-	-I * specify altanative docker image (default: tecolicom/xlate:version)
-	-D * run xlate on the container with the rest parameters
-	-C * run following command on the container, or run shell
-
+        -G   mount git top-level directory
+        -B   run in non-interactive (batch) mode
+        -R   mount read-only
+        -E * specify environment variable to be inherited
+        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -D * run xlate on the container with the rest parameters
+        -C * run following command on the container, or run shell
+    
     Control Files:
-	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
-	*.ENGINE  translation engine (deepl or gpt3)
+        *.LANG    translation languates
+        *.FORMAT  translation foramt (xtxt, cm, ifdef)
+        *.ENGINE  translation engine (deepl or gpt3)
 
 
 =head1 EMACS

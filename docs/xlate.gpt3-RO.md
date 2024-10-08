@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Modulul **Greple** **xlate** găsește blocurile de text dorite și le înlocuie
 
 Dacă doriți să traduceți blocurile de text normale dintr-un document scris în stilul pod al Perl, utilizați comanda **greple** cu modulul `xlate::deepl` și `perl` în felul următor:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-În această comandă, șirul de tipar `^(\w.*\n)+` înseamnă linii consecutive care încep cu litere alfanumerice. Această comandă arată zona care urmează să fie tradusă evidențiată. Opțiunea **--all** este utilizată pentru a produce întregul text.
+În această comandă, șirul de tipar `^([\w\pP].*\n)+` înseamnă linii consecutive care încep cu litere alfanumerice și de punctuație. Această comandă arată zona care trebuie tradusă evidențiată. Opțiunea **--all** este folosită pentru a produce întregul text.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 
     - **colon**, _:::::::_
 
-        Textul original și cel convertit sunt tipărite în notația stilului bloc **div** [git(1)](http://man.he.net/man1/git) markdown.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Vedeți rezultatul traducerii în timp real în ieșirea STDERR.
+
+- **--xlate-stripe**
+
+    Folosiți modulul [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) pentru a arăta partea potrivită într-un mod cu dungi de zebra. Acest lucru este util atunci când părțile potrivite sunt conectate una după alta.
+
+    Paleta de culori se schimbă în funcție de culoarea de fundal a terminalului. Dacă doriți să specificați explicit, puteți folosi **--xlate-stripe-light** sau **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Citiți articolul în limba japoneză din secțiunea "VEZI ȘI" pentru detalii.
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

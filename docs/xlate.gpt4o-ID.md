@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:  
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Dalam perintah ini, string pola `^(\w.*\n)+` berarti baris berturut-turut yang dimulai dengan huruf alfanumerik. Perintah ini menunjukkan area yang akan diterjemahkan dengan sorotan. Opsi **--all** digunakan untuk menghasilkan seluruh teks.  
+Dalam perintah ini, pola string `^([\w\pP].*\n)+` berarti baris berturut-turut yang dimulai dengan huruf alfanumerik dan tanda baca. Perintah ini menunjukkan area yang akan diterjemahkan dengan disorot. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
 
 <div>
     <p>
@@ -138,8 +138,9 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.  
-        Teks asli dan yang dikonversi dicetak dalam notasi gaya blok **div** markdown [git(1)](http://man.he.net/man1/git).
+        **div** 
+        Teks asli dan teks yang dikonversi dicetak dalam notasi gaya blok markdown **div**. 
+        &lt;/div>
 
             ::::::: ORIGINAL
             original text
@@ -199,6 +200,12 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Lihat hasil terjemahan secara real-time di output STDERR.  
+
+- **--xlate-stripe**
+
+    Gunakan [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) modul untuk menunjukkan bagian yang cocok dengan cara zebra striping. Ini berguna ketika bagian yang cocok terhubung secara langsung.
+
+    Palet warna diubah sesuai dengan warna latar belakang terminal. Jika Anda ingin menentukan secara eksplisit, Anda dapat menggunakan **--xlate-stripe-light** atau **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -281,7 +288,7 @@ Baca artikel Jepang di bagian ["SEE ALSO"](#see-also) untuk detail.
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

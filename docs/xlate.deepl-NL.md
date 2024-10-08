@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ De module **Greple** **xlate** vindt de gewenste tekstblokken en vervangt ze doo
 
 Als je normale tekstblokken wilt vertalen in een document dat geschreven is in de pod-stijl van Perl, gebruik dan het commando **greple** met de module `xlate::deepl` en `perl` als volgt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In dit commando betekent pattern string `^(\w.*\n)+` opeenvolgende regels die beginnen met een alfa-numerieke letter. Deze opdracht toont het te vertalen gebied gemarkeerd. Optie **--all** wordt gebruikt om de hele tekst te produceren.
+In deze opdracht betekent patroontekenreeks `^([\w\pP].*\n)+` opeenvolgende regels die beginnen met alfanumerieke letters en leestekens. Deze opdracht laat het te vertalen gebied gemarkeerd zien. Optie **--all** wordt gebruikt om de volledige tekst te produceren.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     - **colon**, _:::::::_
 
-        Originele en geconverteerde tekst worden afgedrukt in [git(1)](http://man.he.net/man1/git) markdown **div** blokstijlnotatie.
+        Originele en geconverteerde tekst worden afgedrukt in de markdown **div** blokstijlnotatie.
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Zie het resultaat van de vertaling in real time in de STDERR uitvoer.
+
+- **--xlate-stripe**
+
+    Gebruik de module [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) om het gematchte deel weer te geven met zebrastrepen. Dit is nuttig wanneer de gematchte delen rug-aan-rug verbonden zijn.
+
+    Het kleurenpalet wordt omgeschakeld volgens de achtergrondkleur van de terminal. Als je dit expliciet wilt specificeren, kun je **--xlate-stripe-light** of **--xlate-stripe-dark** gebruiken.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Lees het Japanse artikel in de ["SEE ALSO"](#see-also) sectie voor meer informat
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

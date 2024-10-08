@@ -10,7 +10,7 @@ App::Greple::xlate - module de support de traduction pour greple
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande **greple** avec `xlate::deepl` et le module `perl` comme ceci :  
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Dans cette commande, la chaîne de motif `^(\w.*\n)+` signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande montre la zone à traduire mise en surbrillance. L'option **--all** est utilisée pour produire l'intégralité du texte.  
+Dans cette commande, la chaîne de motif `^([\w\pP].*\n)+` signifie des lignes consécutives commençant par une lettre alphanumérique et de ponctuation. Cette commande montre la zone à traduire mise en surbrillance. L'option **--all** est utilisée pour produire l'intégralité du texte.
 
 <div>
     <p>
@@ -138,8 +138,7 @@ Cette interface est expérimentale et sujette à des changements à l'avenir.
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in [git(1)](http://man.he.net/man1/git) markdown **div** block style notation.  
-        Le texte original et converti est imprimé dans la notation de style bloc **div** markdown [git(1)](http://man.he.net/man1/git).
+        Sure! Please provide the text you would like me to translate into French.
 
             ::::::: ORIGINAL
             original text
@@ -199,6 +198,12 @@ Cette interface est expérimentale et sujette à des changements à l'avenir.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Voir le résultat de la traduction en temps réel dans la sortie STDERR.  
+
+- **--xlate-stripe**
+
+    Utilisez le module [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) pour afficher la partie correspondante de manière à rayures zébrées. Cela est utile lorsque les parties correspondantes sont connectées bout à bout.
+
+    La palette de couleurs est changée en fonction de la couleur de fond du terminal. Si vous souhaitez spécifier explicitement, vous pouvez utiliser **--xlate-stripe-light** ou **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -281,7 +286,7 @@ Lisez l'article japonais dans la section ["SEE ALSO"](#see-also) pour plus de d�
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

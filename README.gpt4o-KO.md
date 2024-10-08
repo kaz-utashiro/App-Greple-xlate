@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 **greple** 명령을 `xlate::deepl` 및 `perl` 모듈과 함께 다음과 같이 사용하십시오:  
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-이 명령에서 패턴 문자열 `^(\w.*\n)+`는 알파벳 숫자 문자로 시작하는 연속적인 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시하여 보여줍니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.  
+이 명령에서 패턴 문자열 `^([\w\pP].*\n)+`는 알파-넘버 및 구두점 문자로 시작하는 연속적인 줄을 의미합니다. 이 명령은 번역할 영역을 강조 표시합니다. 옵션 **--all**은 전체 텍스트를 생성하는 데 사용됩니다.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
     - **colon**, _:::::::_
 
-        원본 및 변환된 텍스트는 [git(1)](http://man.he.net/man1/git) 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.
+        **div**원본 및 변환된 텍스트는 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.&lt;/div>
 
             ::::::: ORIGINAL
             original text
@@ -198,6 +198,13 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     STDERR 출력에서 실시간으로 번역 결과를 확인하세요.  
+
+- **--xlate-stripe**
+
+    [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) 모듈을 사용하여 지그재그 스트라이프 방식으로 일치하는 부분을 표시합니다. 이는 일치하는 부분이 서로 연결되어 있을 때 유용합니다.
+
+    색상 팔레트는 터미널의 배경 색상에 따라 전환됩니다.  
+    명시적으로 지정하려면 **--xlate-stripe-light** 또는 **--xlate-stripe-dark**를 사용할 수 있습니다.
 
 - **--match-all**
 
@@ -280,7 +287,7 @@ Docker와 메이크 옵션을 결합하여 Docker 환경에서 메이크를 실�
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

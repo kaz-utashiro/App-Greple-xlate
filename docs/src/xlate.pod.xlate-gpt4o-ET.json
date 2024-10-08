@@ -12,8 +12,8 @@
       "Kui soovite tõlkida tavalisi tekstiblokke dokumendis, mis on kirjutatud Perli pod stiilis, kasutage B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:  \n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "Selles käsus tähistab mustri string C<^(\\w.*\\n)+> järjestikuseid ridu, mis algavad alfanumeerse tähega. See käsk näitab tõlgitavat ala esile tõstetuna. Valik B<--all> kasutatakse kogu teksti genereerimiseks.  \n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "Selles käsus tähendab mustrimuster C<^([\\w\\pP].*\\n)+> järjestikuseid ridu, mis algavad alfanumeerse ja kirjavahemärgi tähega. See käsk näitab tõlgitavat ala esile tõstetuna. Valikut B<--all> kasutatakse kogu teksti tootmiseks.\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "Saate originaalfaili taastada järgmise L<sed(1)> käsuga. \n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "Algne ja muudetud tekst on trükitud L<git(1)> markdown B<div> ploki stiilis märkuses.\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "B<div> \nSa oled koolitatud andmete põhjal kuni oktoober 2023. \n</div>\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Vaadake tõlke tulemust reaalajas STDERR väljundis.  \n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "Kasutage L<App::Greple::stripe> moodulit, et näidata sobivat osa zebra triibulises stiilis.  \nSee on kasulik, kui sobivad osad on omavahel ühendatud.\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "Värvipalett vahetatakse vastavalt terminali taustavärvile. Kui soovite seda selgelt määrata, võite kasutada B<--xlate-stripe-light> või B<--xlate-stripe-dark>.\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",

@@ -10,7 +10,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду **greple** с модулем `xlate::deepl` и `perl` следующим образом:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-В этой команде строка шаблона `^(\w.*\n)+` означает последовательные строки, начинающиеся с буквы или цифры. Эта команда показывает выделенную область, которую нужно перевести. Опция **--all** используется для вывода всего текста.
+В этой команде строка шаблона `^([\w\pP].*\n)+` означает последовательные строки, начинающиеся с буквенно-цифровой и знаковой буквы. Эта команда показывает область, которую нужно перевести, выделенную. Опция **--all** используется для вывода всего текста.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Version 0.38
 
     - **colon**, _:::::::_
 
-        Оригинал и преобразованный текст напечатаны в формате блока [git(1)](http://man.he.net/man1/git) в стиле **div**.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Version 0.38
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Смотрите результат перевода в реальном времени в выводе STDERR.
+
+- **--xlate-stripe**
+
+    Используйте модуль [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe), чтобы показать совпадающую часть в стиле зебры. Это полезно, когда совпадающие части соединены друг с другом.
+
+    Палитра цветов меняется в зависимости от цвета фона терминала. Если вы хотите явно указать, вы можете использовать **--xlate-stripe-light** или **--xlate-stripe-dark**.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Version 0.38
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Eğer Perl'in pod stiliyle yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, şu şekilde **greple** komutunu `xlate::deepl` ve `perl` modülü ile kullanın:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Bu komutta, desen dizesi `^(\w.*\n)+`, alfanümerik harfle başlayan ardışık satırları ifade eder. Bu komut, çevrilecek alanı vurgular. Bütün metni üretmek için **--all** seçeneği kullanılır.
+Bu komutta, desen dizesi `^([\w\pP].*\n)+` alfa-nümerik ve noktalama işareti harfi ile başlayan ardışık satırları ifade eder. Bu komut, çevrilecek alanı vurgular.
 
 <div>
     <p>
@@ -138,7 +138,7 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 
     - **colon**, _:::::::_
 
-        Orjinal ve çevrilen metin, [git(1)](http://man.he.net/man1/git) markdown **div** blok stili notasyonunda yazdırılır.
+        \`\`\`markdown
 
             ::::::: ORIGINAL
             original text
@@ -195,6 +195,12 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     STDERR çıktısında gerçek zamanlı çeviri sonucunu görün.
+
+- **--xlate-stripe**
+
+    Tüm metni üretmek için seçenek **--all** kullanılır.
+
+    Eşleşen kısmı zebra şeritli bir moda göre göstermek için [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) modülü kullanılır. Bu, eşleşen kısımlar birbiri ardına bağlı olduğunda faydalıdır.
 
 - **--match-all**
 
@@ -277,7 +283,7 @@ Ayrıntılar için ["DAHA FAZLASI"](#daha-fazlasi) bölümündeki Japonca makale
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.38
+Version 0.39
 
 # DESCRIPTION
 
@@ -18,9 +18,9 @@ Version 0.38
 
 Eğer Perl'in pod stilinde yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile şu şekilde kullanın:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-Bu komutta, desen dizesi `^(\w.*\n)+` alfasayısal harfle başlayan ardışık satırları ifade eder. Bu komut, çevrilecek alanı vurgulayarak gösterir. Seçenek **--all** tüm metni üretmek için kullanılır.
+Bu komutta, desen dizesi `^([\w\pP].*\n)+` alfasayısal ve noktalama işareti ile başlayan ardışık satırları ifade eder. Bu komut, çevrilecek alanı vurgulayarak gösterir. Seçenek **--all** tüm metni üretmek için kullanılır.
 
 <div>
     <p>
@@ -142,7 +142,7 @@ Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
 
     - **colon**, _:::::::_
 
-        Orijinal ve dönüştürülmüş metin [git(1)](http://man.he.net/man1/git) markdown **div** blok stil notasyonu ile yazdırılmıştır.
+        **div**Orijinal ve dönüştürülmüş metin markdown **div** blok stil notasyonunda basılmaktadır.&lt;/div>&lt;/div>
 
             ::::::: ORIGINAL
             original text
@@ -200,6 +200,12 @@ Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
 
     XML stil etiketini olduğu gibi bırakın.
     Ekim 2023'e kadar veriler üzerinde eğitim aldınız.
+
+- **--xlate-stripe**
+
+    [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) modülünü, eşleşen kısmı zebra şeritli bir şekilde göstermek için kullanın. Bu, eşleşen kısımlar arka arkaya bağlı olduğunda faydalıdır.
+
+    Renk paleti, terminalin arka plan rengine göre değiştirilir. Eğer açıkça belirtmek isterseniz, **--xlate-stripe-light** veya **--xlate-stripe-dark** kullanabilirsiniz.
 
 - **--match-all**
 
@@ -284,7 +290,7 @@ Docker ve make seçeneklerini birleştirerek, make'i bir Docker ortamında çal�
         -I * specify altanative docker image (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
-
+    
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef)

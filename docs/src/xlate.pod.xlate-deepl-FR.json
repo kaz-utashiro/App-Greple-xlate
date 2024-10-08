@@ -12,8 +12,8 @@
       "Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style Perl's pod, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme suit :\n"
    ],
    [
-      "In this command, pattern string C<^(\\w.*\\n)+> means consecutive lines starting with alpha-numeric letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
-      "Dans cette commande, la chaîne de caractères C<^(\\w.*\\n)+> signifie des lignes consécutives commençant par une lettre alphanumérique. Cette commande met en évidence la zone à traduire. L'option B<--tout> est utilisée pour produire le texte entier.\n"
+      "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
+      "Dans cette commande, la chaîne de caractères C<^([\\w\\p].*\\n)+> signifie des lignes consécutives commençant par des lettres alphanumériques et de ponctuation. Cette commande permet de mettre en évidence la zone à traduire. L'option B<-tout> est utilisée pour produire un texte entier.\n"
    ],
    [
       "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
@@ -132,8 +132,8 @@
       "Vous pouvez récupérer le fichier original par la commande L<sed(1)> suivante.\n"
    ],
    [
-      "Original and converted text are printed in L<git(1)> markdown B<div> block style notation.\n",
-      "Le texte original et le texte converti sont imprimés dans le style L<git(1)> markdown B<div> block.\n"
+      "Original and converted text are printed in the markdown B<div> block style notation.\n",
+      "Le texte original et le texte converti sont imprimés dans le style de notation markdown B<div>.\n"
    ],
    [
       "This means:\n",
@@ -174,6 +174,14 @@
    [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Voir le résultat de la traduction en temps réel dans la sortie STDERR.\n"
+   ],
+   [
+      "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
+      "Utilisez le module L<App::Greple::stripe> pour afficher la partie correspondante sous forme de bandes zébrées. Ceci est utile lorsque les parties correspondantes sont connectées dos à dos.\n"
+   ],
+   [
+      "The color palette is switched according to the background color of the terminal. If you want to specify explicitly, you can use B<--xlate-stripe-light> or B<--xlate-stripe-dark>.\n",
+      "La palette de couleurs est modifiée en fonction de la couleur d'arrière-plan du terminal. Si vous souhaitez le spécifier explicitement, vous pouvez utiliser B<--xlate-stripe-light> ou B<--xlate-stripe-dark>.\n"
    ],
    [
       "Set the whole text of the file as a target area.\n",
