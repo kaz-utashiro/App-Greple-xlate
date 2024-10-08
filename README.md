@@ -24,12 +24,12 @@ If you want to translate normal text blocks in a document written in
 the Perl's pod style, use **greple** command with `xlate::deepl` and
 `perl` module like this:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In this command, pattern string `^(\w.*\n)+` means consecutive lines
-starting with alpha-numeric letter.  This command show the area to be
-translated highlighted.  Option **--all** is used to produce entire
-text.
+In this command, pattern string `^([\w\pP].*\n)+` means consecutive
+lines starting with alpha-numeric and punctuation letter.  This
+command show the area to be translated highlighted.  Option **--all**
+is used to produce entire text.
 
 <div>
     <p>
@@ -266,6 +266,16 @@ This interface is experimental and subject to change in the future.
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     See the tranlsation result in real time in the STDERR output.
+
+- **--xlate-stripe**
+
+    Use [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) module to show the matched part by zebra
+    striping fashion.  This is useful when the matched parts are connected
+    back-to-back.
+
+    The color palette is switched according to the background color of the
+    terminal.  If you want to specify explicitly, you can use
+    **--xlate-stripe-light** or **--xlate-stripe-dark**.
 
 - **--match-all**
 

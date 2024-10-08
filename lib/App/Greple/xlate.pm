@@ -29,12 +29,12 @@ If you want to translate normal text blocks in a document written in
 the Perl's pod style, use B<greple> command with C<xlate::deepl> and
 C<perl> module like this:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^(\w.*\n)+' --all foo.pm
+    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
-In this command, pattern string C<^(\w.*\n)+> means consecutive lines
-starting with alpha-numeric letter.  This command show the area to be
-translated highlighted.  Option B<--all> is used to produce entire
-text.
+In this command, pattern string C<^([\w\pP].*\n)+> means consecutive
+lines starting with alpha-numeric and punctuation letter.  This
+command show the area to be translated highlighted.  Option B<--all>
+is used to produce entire text.
 
 =for html <p>
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
@@ -298,6 +298,16 @@ option takes precedence over the C<--xlate-maxlen> option.
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
+
+=item B<--xlate-stripe>
+
+Use L<App::Greple::stripe> module to show the matched part by zebra
+striping fashion.  This is useful when the matched parts are connected
+back-to-back.
+
+The color palette is switched according to the background color of the
+terminal.  If you want to specify explicitly, you can use
+B<--xlate-stripe-light> or B<--xlate-stripe-dark>.
 
 =item B<--match-all>
 
@@ -686,22 +696,6 @@ sub postgrep {
     cache_update(@miss) if @miss;
 }
 
-#
-# Increment even/odd indices each
-#
-sub stripe_index {
-    my $grep = shift;
-    my $step = 2;
-    my @counter = (-$step .. -1);
-    for my $r ($grep->result) {
-	my($b, @match) = @$r;
-	for my $m (@match) {
-	    my $mod = $m->[2] % $step;
-	    $m->[2] = ($counter[$mod] += $step);
-	}
-    }
-}
-
 sub _progress {
     my $opt = ref $_[0] ? shift : {};
     opt('progress') or return;
@@ -879,10 +873,7 @@ builtin xlate-glossary=s   $glossary
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
 
-option default \
-	--cm=/544E,/454E,/533E,/353E \
-	--postgrep &__PACKAGE__::stripe_index \
-	--need=1 --no-regioncolor
+option default --need=1 --no-regioncolor --cm=/544E,/454E,/533E,/353E
 
 option --xlate-setopt --prologue &__PACKAGE__::set($<shift>)
 
@@ -904,6 +895,12 @@ option --match-paragraph --re '^(.+\n)+'
 option --match-podtext   -Mperl --pod --re '^(\w.*\n)(\S.*\n)*'
 
 option --ifdef-color --re '^#ifdef(?s:.*?)^#endif.*\n'
+
+option --xlate-stripe --xlate-stripe-auto
+option --xlate-stripe-light -Mstripe
+option --xlate-stripe-dark  -Mstripe::set=darkmode
+option --xlate-stripe-auto \
+	-Mtermcolor::bg(light=-Mstripe,dark=-Mstripe::set=darkmode)
 
 #  LocalWords:  deepl ifdef unifdef Greple greple perl DeepL ChatGPT
 #  LocalWords:  gpt html img src xlabor
