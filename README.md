@@ -117,6 +117,9 @@ This will interpret each line of the file \`MASKPATTERN\` as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with `#` are ignored.
 
+How the text is transformed by masking can be seen by **--xlate-mask**
+option.
+
 This interface is experimental and subject to change in the future.
 
 # OPTIONS
@@ -277,6 +280,11 @@ This interface is experimental and subject to change in the future.
     terminal.  If you want to specify explicitly, you can use
     **--xlate-stripe-light** or **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Perform masking function and display the converted text as is without
+    restoration.
+
 - **--match-all**
 
     Set the whole text of the file as a target area.
@@ -418,7 +426,9 @@ You have to install command line tools for DeepL and ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker container image.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -447,6 +457,10 @@ You have to install command line tools for DeepL and ChatGPT.
 
     Use **sdif** to show conflict marker format side by side with **-V**
     option.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** module use by **--xlate-stripe** option.
 
 ## ARTICLES
 

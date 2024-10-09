@@ -131,6 +131,9 @@ This will interpret each line of the file `MASKPATTERN` as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with C<#> are ignored.
 
+How the text is transformed by masking can be seen by B<--xlate-mask>
+option.
+
 This interface is experimental and subject to change in the future.
 
 =head1 OPTIONS
@@ -309,6 +312,11 @@ The color palette is switched according to the background color of the
 terminal.  If you want to specify explicitly, you can use
 B<--xlate-stripe-light> or B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Perform masking function and display the converted text as is without
+restoration.
+
 =item B<--match-all>
 
 Set the whole text of the file as a target area.
@@ -467,37 +475,43 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker container image.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python library and CLI command.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python Library
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI command line interface
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 See the B<greple> manual for the detail about target text pattern.
 Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to
 limit the matching area.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 You can use C<-Mupdate> module to modify files by the result of
 B<greple> command.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Use B<sdif> to show conflict marker format side by side with B<-V>
 option.
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> module use by B<--xlate-stripe> option.
 
 =back
 
@@ -721,7 +735,7 @@ sub cache_update {
     my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
     my @to = &XLATE(@from);
     chop @to[@chop];
-    $maskobj->unmask(@to) if $maskobj;
+    $maskobj->unmask(@to)->reset if $maskobj;
 
     _progress({label => "To"}, @to);
     die "Unmatched response:\n@to" if @from != @to;
@@ -792,6 +806,14 @@ sub xlate {
     }
 }
 sub callback { goto &xlate }
+
+sub mask_string {
+    my($s) = +{ @_ }->{match};
+    if ($maskobj) {
+	$maskobj->mask($s);
+    }
+    $s;
+}
 
 sub cache_file {
     my $file = sprintf("%s.xlate-%s-%s.json",
@@ -886,6 +908,10 @@ option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 option --xlabor --xlate-labor
+
+option --xlate-mask \
+	--begin    &__PACKAGE__::begin \
+	--callback &__PACKAGE__::mask_string
 
 option --cache-clear --xlate-cache=clear
 
