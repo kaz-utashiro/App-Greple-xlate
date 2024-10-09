@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ En ocasiones, hay partes del texto que no desea traducir. Por ejemplo, las etiqu
     --xlate-setopt maskfile=MASKPATTERN
 
 Esto interpretará cada línea del fichero \`MASKPATTERN\` como una expresión regular, traducirá las cadenas que coincidan con ella, y revertirá tras el proceso. Las líneas que empiezan por `#` se ignoran.
+
+Un patrón complejo puede escribirse en varias líneas con una barra invertida y una nueva línea.
+
+Cómo se transforma el texto mediante el enmascaramiento puede verse con la opción **--xlate-mask**.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
@@ -202,6 +206,10 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     La paleta de colores cambia según el color de fondo del terminal. Si desea especificarlo explícitamente, puede utilizar **--xlate-stripe-light** o **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Realiza la función de enmascaramiento y muestra el texto convertido tal cual sin restaurar.
+
 - **--match-all**
 
     Establece todo el texto del fichero como área de destino.
@@ -325,7 +333,9 @@ Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Imagen de contenedor Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Utilice **sdif** para mostrar el formato del marcador de conflicto junto con la opción **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Uso del módulo Greple **stripe** mediante la opción **--xlate-stripe**.
 
 ## ARTICLES
 

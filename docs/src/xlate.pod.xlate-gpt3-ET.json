@@ -72,6 +72,14 @@
       "See tõlgib iga `MASKPATTERN` faili rea tõlgendamiseks regulaaravaldistena ja taastab pärast töötlemist. Ridadega, mis algavad C<#>, ei tegeleta.\n"
    ],
    [
+      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Kompleksne muster saab kirjutada mitmele reale tagurpidi kaldkriipsuga põimitud uuele reale.\n"
+   ],
+   [
+      "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
+      "Kuidas tekst muudetakse varjamise abil, saab näha valikuga B<--xlate-mask>.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "See liides on eksperimentaalne ja võib tulevikus muutuda.\n"
    ],
@@ -184,6 +192,10 @@
       "Värvipalett vahetub vastavalt terminali taustavärvile. Kui soovid seda selgelt määratleda, saad kasutada valikuid B<--xlate-stripe-light> või B<--xlate-stripe-dark>.\n"
    ],
    [
+      "Perform masking function and display the converted text as is without restoration.\n",
+      "Täida varjamisfunktsioon ja kuvage teisendatud tekst ilma taastamiseta.\n"
+   ],
+   [
       "Set the whole text of the file as a target area.\n",
       "Määrake faili kogu tekst sihtalaks.\n"
    ],
@@ -284,8 +296,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-      "L<https://hub.docker.com/r/tecolicom/xlate> - L<https://hub.docker.com/r/tecolicom/xlate>\n"
+      "Docker container image.\n",
+      "Dockeri konteineri pilt.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
@@ -310,6 +322,10 @@
    [
       "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
       "Kasutage B<sdif> konfliktimärgendi vormingu kuvamiseks kõrvuti B<-V> valikuga.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Greple B<stripe> moodulit kasutatakse valikuga B<--xlate-stripe>.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

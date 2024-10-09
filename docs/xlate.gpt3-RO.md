@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Uneori, există părți ale textului pe care nu dorești să le traduci. De exem
     --xlate-setopt maskfile=MASKPATTERN
 
 Acesta va interpreta fiecare linie a fișierului \`MASKPATTERN\` ca o expresie regulată, va traduce șirurile care se potrivesc cu ea, și va reveni la forma inițială după procesare. Liniile care încep cu `#` sunt ignorate.
+
+Un model complex poate fi scris pe mai multe linii cu o linie nouă scrisă cu backslash.
+
+Cum este transformat textul prin mascare poate fi văzut prin opțiunea **--xlate-mask**.
 
 Această interfață este experimentală și este supusă unor posibile schimbări în viitor.
 
@@ -202,6 +206,10 @@ Această interfață este experimentală și este supusă unor posibile schimbă
 
     Paleta de culori se schimbă în funcție de culoarea de fundal a terminalului. Dacă doriți să specificați explicit, puteți folosi **--xlate-stripe-light** sau **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Efectuați funcția de mascare și afișați textul convertit așa cum este fără restaurare.
+
 - **--match-all**
 
     Setați întregul text al fișierului ca zonă țintă.
@@ -325,7 +333,9 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Imaginea containerului Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Utilizați **sdif** pentru a afișa formatul markerului de conflict alături de opțiunea **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Modulul Greple **stripe** folosit de opțiunea **--xlate-stripe**.
 
 ## ARTICLES
 

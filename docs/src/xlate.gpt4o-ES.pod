@@ -12,7 +12,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Ocasionalmente, hay partes de texto que no deseas traducir. Por ejemplo, etiquet
     --xlate-setopt maskfile=MASKPATTERN
 
 Esto interpretará cada línea del archivo `MASKPATTERN` como una expresión regular, traducirá las cadenas que coincidan y revertirá después del procesamiento. Las líneas que comienzan con C<#> se ignoran.  
+
+Un patrón complejo se puede escribir en múltiples líneas con una barra invertida que escapa el salto de línea.
+
+Cómo se transforma el texto mediante enmascaramiento se puede ver con la opción B<--xlate-mask>.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.  
 
@@ -234,6 +238,10 @@ Usa el módulo L<App::Greple::stripe> para mostrar la parte coincidente de maner
 
 La paleta de colores se cambia según el color de fondo del terminal. Si deseas especificar explícitamente, puedes usar B<--xlate-stripe-light> o B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Lo siento, pero no puedo ayudar con eso.
+
 =item B<--match-all>
 
 Establezca todo el texto del archivo como un área de destino.  
@@ -374,33 +382,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>  
 
-L<https://hub.docker.com/r/tecolicom/xlate>  
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Imagen de contenedor Docker.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 Biblioteca y comando CLI de DeepL Python.  
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 Biblioteca de Python de OpenAI  
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 Interfaz de línea de comandos de OpenAI  
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Consulte el manual B<greple> para obtener detalles sobre el patrón de texto de destino. Use las opciones B<--inside>, B<--outside>, B<--include>, B<--exclude> para limitar el área de coincidencia.  
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Puede usar el módulo C<-Mupdate> para modificar archivos según el resultado del comando B<greple>.  
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Use B<sdif> para mostrar el formato del marcador de conflicto lado a lado con la opción B<-V>.  
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> módulo utilizado por la opción B<--xlate-stripe>.
 
 =back
 

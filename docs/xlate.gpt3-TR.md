@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Ara sıra, çevrilmesini istemediğiniz metin parçaları olabilir. Örneğin, m
     --xlate-setopt maskfile=MASKPATTERN
 
 Bu, \`MASKPATTERN\` dosyasının her satırını bir düzenli ifade olarak yorumlayacak, eşleşen dizeleri çevirecek ve işlem sonrasında geri dönecektir. `#` ile başlayan satırlar görmezden gelinir.
+
+Karmaşık desen, ters eğik çizgi ile kaçış karakteri kullanılarak birden fazla satıra yazılabilir.
+
+Metnin maskeleme ile nasıl dönüştürüldüğü, **--xlate-mask** seçeneği ile görülebilir.
 
 Bu arayüz deneyseldir ve gelecekte değişebilir.
 
@@ -202,6 +206,10 @@ Bu arayüz deneyseldir ve gelecekte değişebilir.
 
     Eşleşen kısmı zebra şeritli bir moda göre göstermek için [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe) modülü kullanılır. Bu, eşleşen kısımlar birbiri ardına bağlı olduğunda faydalıdır.
 
+- **--xlate-mask**
+
+    Maskeleme işlemini gerçekleştirin ve dönüştürülmüş metni geri yükleme olmadan görüntüleyin.
+
 - **--match-all**
 
     Dosyanın tüm metnini hedef alan olarak ayarlayın.
@@ -325,7 +333,9 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekmektedir.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker konteyner görüntüsü.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekmektedir.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     **-V** seçeneğiyle çakışma işaretçi formatını yan yana göstermek için **sdif** kullanın.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** modülü, **--xlate-stripe** seçeneği ile kullanılır.
 
 ## ARTICLES
 

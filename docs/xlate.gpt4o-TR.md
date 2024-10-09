@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -75,6 +75,10 @@ Bazen, çevrilmesini istemediğiniz metin parçaları vardır. Örneğin, markdo
     --xlate-setopt maskfile=MASKPATTERN
 
 Bu, \`MASKPATTERN\` dosyasının her bir satırını bir düzenli ifade olarak yorumlayacak, ona uyan dizeleri çevirecek ve işlemden sonra geri dönecektir. `#` ile başlayan satırlar göz ardı edilir.
+
+Karmaşık desen, ters eğik çizgi ile kaçırılmış yeni satır ile birden fazla satıra yazılabilir.
+
+Metnin maskeleme ile nasıl dönüştürüldüğü **--xlate-mask** seçeneği ile görülebilir.
 
 Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
 
@@ -207,6 +211,11 @@ Bu arayüz deneyseldir ve gelecekte değişikliklere tabi olabilir.
 
     Renk paleti, terminalin arka plan rengine göre değiştirilir. Eğer açıkça belirtmek isterseniz, **--xlate-stripe-light** veya **--xlate-stripe-dark** kullanabilirsiniz.
 
+- **--xlate-mask**
+
+    XML stil etiketlerini olduğu gibi bırakın. 
+    Veri, Ekim 2023'e kadar eğitilmiştir.
+
 - **--match-all**
 
     XML style tag'ını olduğu gibi bırakın.
@@ -332,7 +341,9 @@ DeepL ve ChatGPT için komut satırı araçlarını kurmalısınız.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker konteyner görüntüsü.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -357,6 +368,10 @@ DeepL ve ChatGPT için komut satırı araçlarını kurmalısınız.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     **sdif** kullanarak **-V** seçeneği ile yan yana çelişki işaretleyici formatını gösterin.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** modülü **--xlate-stripe** seçeneği ile kullanılır.
 
 ## ARTICLES
 

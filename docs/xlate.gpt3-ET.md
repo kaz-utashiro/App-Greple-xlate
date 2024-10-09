@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Aeg-ajalt on tekstiosi, mida te ei soovi tõlkida. Näiteks märgendeid märkmet
     --xlate-setopt maskfile=MASKPATTERN
 
 See tõlgib iga \`MASKPATTERN\` faili rea tõlgendamiseks regulaaravaldistena ja taastab pärast töötlemist. Ridadega, mis algavad `#`, ei tegeleta.
+
+Kompleksne muster saab kirjutada mitmele reale tagurpidi kaldkriipsuga põimitud uuele reale.
+
+Kuidas tekst muudetakse varjamise abil, saab näha valikuga **--xlate-mask**.
 
 See liides on eksperimentaalne ja võib tulevikus muutuda.
 
@@ -202,6 +206,10 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     Värvipalett vahetub vastavalt terminali taustavärvile. Kui soovid seda selgelt määratleda, saad kasutada valikuid **--xlate-stripe-light** või **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Täida varjamisfunktsioon ja kuvage teisendatud tekst ilma taastamiseta.
+
 - **--match-all**
 
     Määrake faili kogu tekst sihtalaks.
@@ -325,7 +333,9 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT jaoks.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate) - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Dockeri konteineri pilt.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT jaoks.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Kasutage **sdif** konfliktimärgendi vormingu kuvamiseks kõrvuti **-V** valikuga.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** moodulit kasutatakse valikuga **--xlate-stripe**.
 
 ## ARTICLES
 

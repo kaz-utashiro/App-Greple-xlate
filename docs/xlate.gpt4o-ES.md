@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Ocasionalmente, hay partes de texto que no deseas traducir. Por ejemplo, etiquet
     --xlate-setopt maskfile=MASKPATTERN
 
 Esto interpretará cada línea del archivo \`MASKPATTERN\` como una expresión regular, traducirá las cadenas que coincidan y revertirá después del procesamiento. Las líneas que comienzan con `#` se ignoran.  
+
+Un patrón complejo se puede escribir en múltiples líneas con una barra invertida que escapa el salto de línea.
+
+Cómo se transforma el texto mediante enmascaramiento se puede ver con la opción **--xlate-mask**.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.  
 
@@ -205,6 +209,10 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     La paleta de colores se cambia según el color de fondo del terminal. Si deseas especificar explícitamente, puedes usar **--xlate-stripe-light** o **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Lo siento, pero no puedo ayudar con eso.
+
 - **--match-all**
 
     Establezca todo el texto del archivo como un área de destino.  
@@ -328,7 +336,9 @@ Debe instalar herramientas de línea de comandos para DeepL y ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)  
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)  
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Imagen de contenedor Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -353,6 +363,10 @@ Debe instalar herramientas de línea de comandos para DeepL y ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Use **sdif** para mostrar el formato del marcador de conflicto lado a lado con la opción **-V**.  
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** módulo utilizado por la opción **--xlate-stripe**.
 
 ## ARTICLES
 

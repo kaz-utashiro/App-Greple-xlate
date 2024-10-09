@@ -72,6 +72,14 @@
       "Bu, `MASKPATTERN` dosyasının her satırını düzenli bir ifade olarak yorumlayacak, bununla eşleşen dizeleri çevirecek ve işlemden sonra geri dönecektir. C<#> ile başlayan satırlar yok sayılır.\n"
    ],
    [
+      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Karmaşık desen ters eğik çizgi ile birden fazla satıra yazılabilir.\n"
+   ],
+   [
+      "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
+      "Maskeleme ile metnin nasıl dönüştürüldüğü B<--xlate-mask> seçeneği ile görülebilir.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Bu arayüz deneyseldir ve gelecekte değiştirilebilir.\n"
    ],
@@ -184,6 +192,10 @@
       "Renk paleti terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz, B<--xlate-stripe-light> veya B<--xlate-stripe-dark> kullanabilirsiniz.\n"
    ],
    [
+      "Perform masking function and display the converted text as is without restoration.\n",
+      "Maskeleme işlevini gerçekleştirin ve dönüştürülen metni geri yükleme yapmadan olduğu gibi görüntüleyin.\n"
+   ],
+   [
       "Set the whole text of the file as a target area.\n",
       "Dosyanın tüm metnini hedef alan olarak ayarlayın.\n"
    ],
@@ -284,8 +296,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n"
+      "Docker container image.\n",
+      "Docker konteyner görüntüsü.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
@@ -310,6 +322,10 @@
    [
       "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
       "B<-V> seçeneği ile çakışma işaretleyici formatını yan yana göstermek için B<sdif> kullanın.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "B<--xlate-stripe> seçeneği ile Greple B<stripe> modülü kullanımı.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Gelegentlich gibt es Teile von Text, die nicht übersetzt werden sollen. Zum Bei
     --xlate-setopt maskfile=MASKPATTERN
 
 Dies wird jede Zeile der Datei `MASKPATTERN` als regulären Ausdruck interpretieren, Zeichenfolgen übersetzen, die ihm entsprechen, und nach der Verarbeitung zurücksetzen. Zeilen, die mit C<#> beginnen, werden ignoriert.
+
+Komplexes Muster kann auf mehreren Zeilen mit einem umgekehrten Schrägstrich für einen Zeilenumbruch geschrieben werden.
+
+Wie der Text durch Maskierung transformiert wird, kann durch die B<--xlate-mask> Option gesehen werden.
 
 Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
@@ -231,6 +235,10 @@ Verwenden Sie das Modul L<App::Greple::stripe>, um den übereinstimmenden Teil i
 
 Die Farbpalette wird entsprechend der Hintergrundfarbe des Terminals umgeschaltet. Wenn Sie dies explizit angeben möchten, können Sie B<--xlate-stripe-light> oder B<--xlate-stripe-dark> verwenden.
 
+=item B<--xlate-mask>
+
+Führen Sie die Maskierungsfunktion aus und zeigen Sie den konvertierten Text ohne Wiederherstellung an.
+
 =item B<--match-all>
 
 Setzen Sie den gesamten Text der Datei als Zielbereich.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker-Container-Image.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python-Bibliothek und CLI-Befehl.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python-Bibliothek
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI-Befehlszeilenschnittstelle
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Weitere Informationen zum Zieltextmuster finden Sie im Handbuch von B<greple>. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include> und B<--exclude>, um den Übereinstimmungsbereich einzuschränken.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu ändern.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Verwenden Sie B<sdif>, um das Konfliktmarkerformat mit der Option B<-V> nebeneinander anzuzeigen.
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> Modul verwenden Sie die B<--xlate-stripe> Option.
 
 =back
 

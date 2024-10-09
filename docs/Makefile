@@ -51,6 +51,11 @@ XLATE += $(if $(XLATE_LABOR),--xlate-labor,--xlate)
 XLATE += --xlate-cache=$(if $(XLATE_INIT),clear,yes)
 XLATE += --match-podtext --xlate-format=none --all --need=0
 
+MASKFILE=PATTERN_MASK
+ifneq ($(wildcard $(MASKFILE)),)
+XLATE += --xlate-setopt maskfile=$(MASKFILE)
+endif
+
 ifdef IGNORE
 $(foreach ignore,$(IGNORE),$(eval \
   XLATE += --exclude '^=head\d[ ]+(?i:$(ignore))\b(?s:.*?)(?=^=|\z)'\

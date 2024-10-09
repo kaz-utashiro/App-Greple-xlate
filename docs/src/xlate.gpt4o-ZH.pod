@@ -12,7 +12,7 @@ App::Greple::xlate - greple 的翻译支持模块
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ B<Greple> B<xlate> 模块查找所需的文本块并用翻译后的文本替换�
     --xlate-setopt maskfile=MASKPATTERN
 
 这将把文件 `MASKPATTERN` 的每一行解释为正则表达式，翻译与之匹配的字符串，并在处理后恢复。以 C<#> 开头的行将被忽略。
+
+复杂的模式可以用反斜杠转义换行符在多行上书写。
+
+通过 B<--xlate-mask> 选项可以看到文本是如何通过掩码进行转换的。
 
 此接口是实验性的，未来可能会有所更改。
 
@@ -231,6 +235,10 @@ Sure! Please provide the text you would like me to translate into Chinese.
 
 颜色调色板根据终端的背景颜色进行切换。如果您想明确指定，可以使用 B<--xlate-stripe-light> 或 B<--xlate-stripe-dark>。
 
+=item B<--xlate-mask>
+
+执行掩码功能并按原样显示转换后的文本，而不进行恢复。
+
 =item B<--match-all>
 
 将文件的整个文本设置为目标区域。  
@@ -372,33 +380,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>  
 
-L<https://hub.docker.com/r/tecolicom/xlate>  
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker容器镜像。
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python库和CLI命令。  
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python库  
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI命令行接口  
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 有关目标文本模式的详细信息，请参见B<greple>手册。使用B<--inside>、B<--outside>、B<--include>、B<--exclude>选项来限制匹配区域。  
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 您可以使用C<-Mupdate>模块根据B<greple>命令的结果修改文件。  
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 使用B<sdif>以B<-V>选项并排显示冲突标记格式。  
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> 模块通过 B<--xlate-stripe> 选项使用。
 
 =back
 

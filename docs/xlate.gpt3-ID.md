@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Kadang-kadang, ada bagian teks yang tidak ingin Anda terjemahkan. Misalnya, tag 
     --xlate-setopt maskfile=MASKPATTERN
 
 Ini akan menginterpretasikan setiap baris dari file \`MASKPATTERN\` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan `#` diabaikan.
+
+Pola kompleks dapat ditulis dalam beberapa baris dengan garis miring terlepas baris baru.
+
+Bagaimana teks diubah dengan masking dapat dilihat melalui opsi **--xlate-mask**.
 
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
@@ -202,6 +206,10 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     Palet warna akan berubah sesuai dengan warna latar belakang terminal. Jika Anda ingin menentukannya secara eksplisit, Anda dapat menggunakan **--xlate-stripe-light** atau **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Melakukan fungsi masking dan menampilkan teks yang diubah tanpa restorasi.
+
 - **--match-all**
 
     Atur seluruh teks file sebagai area target.
@@ -325,7 +333,9 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Gambar kontainer Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Gunakan **sdif** untuk menampilkan format penanda konflik berdampingan dengan opsi **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Modul Greple **stripe** digunakan oleh opsi **--xlate-stripe**.
 
 ## ARTICLES
 

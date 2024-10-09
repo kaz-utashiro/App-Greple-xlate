@@ -10,7 +10,7 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Version 0.39
     --xlate-setopt maskfile=MASKPATTERN
 
 这将把文件 \`MASKPATTERN\` 的每一行解释为正则表达式，翻译与之匹配的字符串，并在处理后恢复。以 `#` 开头的行将被忽略。
+
+复杂的模式可以用反斜杠转义换行符在多行上书写。
+
+通过 **--xlate-mask** 选项可以看到文本是如何通过掩码进行转换的。
 
 此接口是实验性的，未来可能会有所更改。
 
@@ -202,6 +206,10 @@ Version 0.39
 
     颜色调色板根据终端的背景颜色进行切换。如果您想明确指定，可以使用 **--xlate-stripe-light** 或 **--xlate-stripe-dark**。
 
+- **--xlate-mask**
+
+    执行掩码功能并按原样显示转换后的文本，而不进行恢复。
+
 - **--match-all**
 
     将文件的整个文本设置为目标区域。  
@@ -326,7 +334,9 @@ Version 0.39
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)  
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)  
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker容器镜像。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -351,6 +361,10 @@ Version 0.39
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     使用**sdif**以**-V**选项并排显示冲突标记格式。  
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** 模块通过 **--xlate-stripe** 选项使用。
 
 ## ARTICLES
 

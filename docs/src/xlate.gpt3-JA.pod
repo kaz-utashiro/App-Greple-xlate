@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
     --xlate-setopt maskfile=MASKPATTERN
 
 これにより、ファイル`MASKPATTERN`の各行を正規表現として解釈し、それに一致する文字列を翻訳し、処理後に元に戻します。行頭がC<#>で始まる行は無視されます。
+
+複雑なパターンは、バックスラッシュで改行をエスケープして複数行に書くことができます。
+
+テキストがマスキングによって変換される方法は、B<--xlate-mask>オプションで確認できます。
 
 このインターフェースは実験的であり、将来変更される可能性があります。
 
@@ -231,6 +235,10 @@ STDERR出力でリアルタイムに翻訳結果を確認します。
 
 カラーパレットは、端末の背景色に応じて切り替わります。明示的に指定したい場合は、B<--xlate-stripe-light>またはB<--xlate-stripe-dark>を使用できます。
 
+=item B<--xlate-mask>
+
+マスキング機能を実行し、変換されたテキストを復元せずに表示します。
+
 =item B<--match-all>
 
 ファイルの全体のテキストを対象エリアとして設定します。
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Dockerコンテナイメージ。
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL PythonライブラリとCLIコマンドです。
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Pythonライブラリ
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAIコマンドラインインターフェース
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 対象のテキストパターンに関する詳細については、B<greple>マニュアルを参照してください。一致する範囲を制限するために、B<--inside>、B<--outside>、B<--include>、B<--exclude>オプションを使用できます。
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 B<greple>コマンドの結果を使用してファイルを変更するために、C<-Mupdate>モジュールを使用することができます。
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 B<-V>オプションとともに、衝突マーカーフォーマットを並べて表示するためにB<sdif>を使用してください。
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe>モジュールは、B<--xlate-stripe>オプションを使用しています。
 
 =back
 

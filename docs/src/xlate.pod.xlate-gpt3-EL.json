@@ -72,6 +72,14 @@
       "Αυτό θα ερμηνεύσει κάθε γραμμή του αρχείου `MASKPATTERN` ως έναν τακτικό εκφρασμένο, θα μεταφράσει τις συμβολοσειρές που ταιριάζουν με αυτό, και θα επαναφέρει μετά την επεξεργασία. Οι γραμμές που αρχίζουν με C<#> αγνοούνται.\n"
    ],
    [
+      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Ένα πολύπλοκο πρότυπο μπορεί να γραφτεί σε πολλαπλές γραμμές με αναδρομή με backslash.\n"
+   ],
+   [
+      "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
+      "Πώς η μετατροπή του κειμένου με τη χρήση μάσκας μπορεί να δει κανείς μέσω της επιλογής B<--xlate-mask>.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Αυτή η διεπαφή είναι πειραματική και υπόκειται σε αλλαγές στο μέλλον.\n"
    ],
@@ -184,6 +192,10 @@
       "Η παλέτα χρωμάτων αλλάζει ανάλογα με το χρώμα του φόντου του τερματικού. Αν θέλετε να το καθορίσετε ρητά, μπορείτε να χρησιμοποιήσετε τις επιλογές B<--xlate-stripe-light> ή B<--xlate-stripe-dark>.\n"
    ],
    [
+      "Perform masking function and display the converted text as is without restoration.\n",
+      "Εκτελέστε τη λειτουργία μάσκας και εμφανίστε το μετατραπέν κείμενο χωρίς ανάκτηση.\n"
+   ],
+   [
       "Set the whole text of the file as a target area.\n",
       "Ορίστε ολόκληρο το κείμενο του αρχείου ως περιοχή στόχο.\n"
    ],
@@ -284,8 +296,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n"
+      "Docker container image.\n",
+      "Εικόνα εμφιάλωσης Docker.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
@@ -310,6 +322,10 @@
    [
       "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
       "Χρησιμοποιήστε το B<sdif> για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή B<-V>.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Χρήση του μοντέλου Greple B<stripe> με την επιλογή B<--xlate-stripe>.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

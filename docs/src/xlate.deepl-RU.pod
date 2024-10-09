@@ -12,7 +12,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Version 0.39
     --xlate-setopt maskfile=MASKPATTERN
 
 При этом каждая строка файла `MASKPATTERN` будет интерпретироваться как регулярное выражение, переводить строки, соответствующие ему, и возвращаться после обработки. Строки, начинающиеся с C<#>, игнорируются.
+
+Сложный шаблон может быть записан в нескольких строках с обратным слешем, сопровождаемым новой строкой.
+
+Как текст преобразуется при маскировании, можно увидеть с помощью опции B<--xlate-mask>.
 
 Этот интерфейс является экспериментальным и может быть изменен в будущем.
 
@@ -231,6 +235,10 @@ Version 0.39
 
 Цветовая палитра переключается в соответствии с цветом фона терминала. Если вы хотите указать его явно, можно использовать B<--xlate-stripe-light> или B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Выполните функцию маскирования и отобразите преобразованный текст как есть, без восстановления.
+
 =item B<--match-all>
 
 Установите весь текст файла в качестве целевой области.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Образ контейнера Docker.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Библиотека Python и команда CLI.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 Библиотека OpenAI Python
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 Интерфейс командной строки OpenAI
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Подробную информацию о шаблоне целевого текста см. в руководстве B<greple>. Используйте опции B<--inside>, B<--outside>, B<--include>, B<--exclude> для ограничения области совпадения.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Вы можете использовать модуль C<-Mupdate> для модификации файлов по результатам команды B<greple>.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Используйте B<sdif>, чтобы показать формат маркера конфликта бок о бок с опцией B<-V>.
+
+=item * L<App::Greple::stripe>
+
+Использование модуля Greple B<stripe> с помощью опции B<--xlate-stripe>.
 
 =back
 

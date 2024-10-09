@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Ocasionalmente, hay partes de texto que no deseas traducir. Por ejemplo, etiquet
     --xlate-setopt maskfile=MASKPATTERN
 
 Esto interpretará cada línea del archivo \`MASKPATTERN\` como una expresión regular, traducirá las cadenas que coincidan con ella y las revertirá después del procesamiento. Las líneas que comienzan con `#` son ignoradas.
+
+Un patrón complejo puede ser escrito en múltiples líneas con una barra invertida para escapar el salto de línea.
+
+Cómo se transforma el texto mediante el enmascaramiento se puede ver con la opción **--xlate-mask**.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
@@ -202,6 +206,10 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     La paleta de colores se cambia según el color de fondo del terminal. Si deseas especificar explícitamente, puedes usar **--xlate-stripe-light** o **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Realice la función de enmascaramiento y muestre el texto convertido tal cual, sin restauración.
+
 - **--match-all**
 
     Establezca todo el texto del archivo como un área objetivo.
@@ -325,7 +333,9 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Imagen del contenedor de Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Utiliza **sdif** para mostrar el formato de marcador de conflicto junto con la opción **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    El módulo Greple **stripe** se utiliza con la opción **--xlate-stripe**.
 
 ## ARTICLES
 

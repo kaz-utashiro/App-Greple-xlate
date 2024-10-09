@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Uneori, există părți ale textului pe care nu dorești să le traduci. De exem
     --xlate-setopt maskfile=MASKPATTERN
 
 Acesta va interpreta fiecare linie a fișierului `MASKPATTERN` ca o expresie regulată, va traduce șirurile care se potrivesc cu ea, și va reveni la forma inițială după procesare. Liniile care încep cu C<#> sunt ignorate.
+
+Un model complex poate fi scris pe mai multe linii cu o linie nouă scrisă cu backslash.
+
+Cum este transformat textul prin mascare poate fi văzut prin opțiunea B<--xlate-mask>.
 
 Această interfață este experimentală și este supusă unor posibile schimbări în viitor.
 
@@ -231,6 +235,10 @@ Folosiți modulul L<App::Greple::stripe> pentru a arăta partea potrivită într
 
 Paleta de culori se schimbă în funcție de culoarea de fundal a terminalului. Dacă doriți să specificați explicit, puteți folosi B<--xlate-stripe-light> sau B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Efectuați funcția de mascare și afișați textul convertit așa cum este fără restaurare.
+
 =item B<--match-all>
 
 Setați întregul text al fișierului ca zonă țintă.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Imaginea containerului Docker.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 Bibliotecă Python DeepL și comandă CLI.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 Biblioteca Python OpenAI
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 Interfața de linie de comandă OpenAI
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Consultați manualul B<greple> pentru detalii despre modelul de text țintă. Utilizați opțiunile B<--inside>, B<--outside>, B<--include>, B<--exclude> pentru a limita zona de potrivire.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Puteți utiliza modulul C<-Mupdate> pentru a modifica fișierele în funcție de rezultatul comenzii B<greple>.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Utilizați B<sdif> pentru a afișa formatul markerului de conflict alături de opțiunea B<-V>.
+
+=item * L<App::Greple::stripe>
+
+Modulul Greple B<stripe> folosit de opțiunea B<--xlate-stripe>.
 
 =back
 

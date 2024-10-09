@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Kadang-kadang, ada bagian teks yang tidak ingin Anda terjemahkan. Misalnya, tag 
     --xlate-setopt maskfile=MASKPATTERN
 
 Ini akan menginterpretasikan setiap baris dari file `MASKPATTERN` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan C<#> diabaikan.
+
+Pola kompleks dapat ditulis dalam beberapa baris dengan garis miring terlepas baris baru.
+
+Bagaimana teks diubah dengan masking dapat dilihat melalui opsi B<--xlate-mask>.
 
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
@@ -231,6 +235,10 @@ Gunakan modul L<App::Greple::stripe> untuk menampilkan bagian yang cocok dengan 
 
 Palet warna akan berubah sesuai dengan warna latar belakang terminal. Jika Anda ingin menentukannya secara eksplisit, Anda dapat menggunakan B<--xlate-stripe-light> atau B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Melakukan fungsi masking dan menampilkan teks yang diubah tanpa restorasi.
+
 =item B<--match-all>
 
 Atur seluruh teks file sebagai area target.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Gambar kontainer Docker.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 Pustaka DeepL Python dan perintah CLI.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 Pustaka Python OpenAI
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 Antarmuka baris perintah OpenAI
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Lihat panduan B<greple> untuk detail tentang pola teks target. Gunakan opsi B<--inside>, B<--outside>, B<--include>, B<--exclude> untuk membatasi area pencocokan.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Anda dapat menggunakan modul C<-Mupdate> untuk memodifikasi file berdasarkan hasil perintah B<greple>.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Gunakan B<sdif> untuk menampilkan format penanda konflik berdampingan dengan opsi B<-V>.
+
+=item * L<App::Greple::stripe>
+
+Modul Greple B<stripe> digunakan oleh opsi B<--xlate-stripe>.
 
 =back
 

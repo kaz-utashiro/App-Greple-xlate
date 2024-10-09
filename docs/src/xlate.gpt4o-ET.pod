@@ -12,7 +12,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Mõnikord on tekste, mida te ei soovi tõlkida. Näiteks, sildid markdown failid
     --xlate-setopt maskfile=MASKPATTERN
 
 See tõlgendab iga faili `MASKPATTERN` rida regulaaravaldisena, tõlgib sellele vastavad stringid ja taastab pärast töötlemist. Rida, mis algab C<#>, jäetakse tähelepanuta. 
+
+Kompleksne muster saab kirjutada mitmele reale, kasutades tagurpidi kaldkriipsu, et vältida reavahet.
+
+Kuidas teksti muudetakse maskeerimise abil, saab näha B<--xlate-mask> valiku kaudu.
 
 See liides on eksperimentaalne ja võib tulevikus muutuda. 
 
@@ -237,6 +241,10 @@ See on kasulik, kui sobivad osad on omavahel ühendatud.
 
 Värvipalett vahetatakse vastavalt terminali taustavärvile. Kui soovite seda selgelt määrata, võite kasutada B<--xlate-stripe-light> või B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+<masking_function>Te olete koolitatud andmetel kuni oktoober 2023.</masking_function>
+
 =item B<--match-all>
 
 Seadke kogu faili tekst sihtalaks.  
@@ -377,33 +385,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>  
 
-L<https://hub.docker.com/r/tecolicom/xlate>  
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker konteineri pilt.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python teek ja CLI käsk.  
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python teek  
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI käsurea liides  
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Vaadake B<greple> käsiraamatut sihtteksti mustri kohta. Kasutage B<--inside>, B<--outside>, B<--include>, B<--exclude> valikuid, et piirata vastavust.  
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Saate kasutada C<-Mupdate> moodulit failide muutmiseks B<greple> käsu tulemuste põhjal.  
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Kasutage B<sdif>, et näidata konfliktimarkerite formaati kõrvuti B<-V> valikuga.  
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> mooduli kasutamine B<--xlate-stripe> valiku kaudu.
 
 =back
 

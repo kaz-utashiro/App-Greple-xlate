@@ -11,7 +11,7 @@ App::Greple::xlate - translation support module for greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -116,6 +116,9 @@ translation.
 This will interpret each line of the file \`MASKPATTERN\` as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with `#` are ignored.
+
+Complex pattern can be written on multiple lines with backslash
+escpaed newline.
 
 How the text is transformed by masking can be seen by **--xlate-mask**
 option.

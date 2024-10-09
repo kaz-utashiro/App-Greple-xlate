@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -126,6 +126,12 @@ translation.
 This will interpret each line of the file `MASKPATTERN` as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with C<#> are ignored.
+
+Complex pattern can be written on multiple lines with backslash
+escpaed newline.
+
+How the text is transformed by masking can be seen by B<--xlate-mask>
+option.
 
 This interface is experimental and subject to change in the future.
 
@@ -305,6 +311,11 @@ The color palette is switched according to the background color of the
 terminal.  If you want to specify explicitly, you can use
 B<--xlate-stripe-light> or B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Perform masking function and display the converted text as is without
+restoration.
+
 =item B<--match-all>
 
 Set the whole text of the file as a target area.
@@ -463,37 +474,43 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker container image.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python library and CLI command.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python Library
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI command line interface
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 See the B<greple> manual for the detail about target text pattern.
 Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to
 limit the matching area.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 You can use C<-Mupdate> module to modify files by the result of
 B<greple> command.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Use B<sdif> to show conflict marker format side by side with B<-V>
 option.
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> module use by B<--xlate-stripe> option.
 
 =back
 

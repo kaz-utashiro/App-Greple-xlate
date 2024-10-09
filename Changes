@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.40 2024-10-09T11:03:07Z
+
+    - introduce --xlate-mask
+
 0.39 2024-10-08T07:10:21Z
 
     - introduce --xlate-stripe option

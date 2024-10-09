@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "0.39";
+our $VERSION = "0.40";
 
 =encoding utf-8
 
@@ -16,7 +16,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -130,6 +130,9 @@ translation.
 This will interpret each line of the file `MASKPATTERN` as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with C<#> are ignored.
+
+Complex pattern can be written on multiple lines with backslash
+escpaed newline.
 
 How the text is transformed by masking can be seen by B<--xlate-mask>
 option.

@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Ocazional, există părți de text pe care nu le doriți traduse. De exemplu, et
     --xlate-setopt maskfile=MASKPATTERN
 
 Aceasta va interpreta fiecare linie din fișierul \`MASKPATTERN\` ca o expresie regulată, va traduce șirurile care corespund acesteia și va reveni după procesare. Liniile care încep cu `#` sunt ignorate.
+
+Modelul complex poate fi scris pe mai multe linii cu backslash escpaed newline.
+
+Modul în care textul este transformat prin mascare poate fi văzut prin opțiunea **--xlate-mask**.
 
 Această interfață este experimentală și poate fi modificată în viitor.
 
@@ -202,6 +206,10 @@ Această interfață este experimentală și poate fi modificată în viitor.
 
     Paleta de culori este comutată în funcție de culoarea de fundal a terminalului. Dacă doriți să specificați explicit, puteți utiliza **--xlate-stripe-light** sau **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Efectuați funcția de mascare și afișați textul convertit ca atare, fără restaurare.
+
 - **--match-all**
 
     Setați întregul text al fișierului ca zonă țintă.
@@ -325,7 +333,9 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Imagine container Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Folosiți **sdif** pentru a afișa formatul markerilor de conflict unul lângă altul cu opțiunea **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Utilizarea modulului Greple **stripe** prin opțiunea **--xlate-stripe**.
 
 ## ARTICLES
 

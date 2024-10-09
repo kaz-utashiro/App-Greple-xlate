@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Gelegentlich gibt es Textteile, die Sie nicht übersetzt haben möchten. Zum Bei
     --xlate-setopt maskfile=MASKPATTERN
 
 Dadurch wird jede Zeile der Datei \`MASKPATTERN\` als regulärer Ausdruck interpretiert, die entsprechenden Zeichenfolgen werden übersetzt und nach der Verarbeitung wiederhergestellt. Zeilen, die mit `#` beginnen, werden ignoriert.
+
+Komplexe Muster können auf mehreren Zeilen mit Backslash und escpaed newline geschrieben werden.
+
+Wie der Text durch die Maskierung umgewandelt wird, können Sie mit der Option **--xlate-mask** sehen.
 
 Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
@@ -202,6 +206,10 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
     Die Farbpalette wird entsprechend der Hintergrundfarbe des Terminals umgeschaltet. Wenn Sie dies explizit angeben wollen, können Sie **--xlate-stripe-light** oder **--xlate-stripe-dark** verwenden.
 
+- **--xlate-mask**
+
+    Führen Sie die Maskierungsfunktion aus und zeigen Sie den umgewandelten Text so an, wie er ist, ohne ihn wiederherzustellen.
+
 - **--match-all**
 
     Legen Sie den gesamten Text der Datei als Zielbereich fest.
@@ -325,7 +333,9 @@ Sie müssen die Befehlszeilentools für DeepL und ChatGPT installieren.
 
 [Anwendung::Greple::xlate::gpt3](https://metacpan.org/pod/Anwendung%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker-Container-Abbild.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Sie müssen die Befehlszeilentools für DeepL und ChatGPT installieren.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Verwenden Sie **sdif**, um das Format der Konfliktmarkierung zusammen mit der Option **-V** anzuzeigen.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** Modul Verwendung durch **--xlate-stripe** Option.
 
 ## ARTICLES
 

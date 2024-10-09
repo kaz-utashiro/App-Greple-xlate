@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Terkadang, ada bagian teks yang tidak ingin diterjemahkan. Misalnya, tag dalam f
     --xlate-setopt maskfile=MASKPATTERN
 
 Ini akan menginterpretasikan setiap baris dari file \`MASKPATTERN\` sebagai ekspresi reguler, menerjemahkan string yang cocok dengan itu, dan mengembalikannya setelah diproses. Baris yang dimulai dengan `#` akan diabaikan.
+
+Pola kompleks dapat ditulis pada beberapa baris dengan garis miring diakhiri dengan baris baru.
+
+Bagaimana teks diubah dengan masking dapat dilihat dengan opsi **--xlate-mask**.
 
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
@@ -202,6 +206,10 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     Palet warna dialihkan menurut warna latar belakang terminal. Jika Anda ingin menentukan secara eksplisit, Anda dapat menggunakan **--xlate-stripe-light** atau **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Lakukan fungsi masking dan tampilkan teks yang dikonversi apa adanya tanpa pemulihan.
+
 - **--match-all**
 
     Mengatur seluruh teks file sebagai area target.
@@ -325,7 +333,9 @@ L <App::Greple::xlate>
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Gambar kontainer Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ L <App::Greple::xlate>
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Gunakan **sdif** untuk menampilkan format penanda konflik berdampingan dengan opsi **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Modul Greple **stripe** yang digunakan oleh opsi **--xlate-stripe**.
 
 ## ARTICLES
 

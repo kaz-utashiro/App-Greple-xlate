@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
     --xlate-setopt maskfile=MASKPATTERN
 
 これは、ファイル \`MASKPATTERN\` の各行を正規表現として解釈し、それに一致する文字列を翻訳し、処理後に元に戻します。`#` で始まる行は無視されます。  
+
+複雑なパターンは、バックスラッシュでエスケープされた改行を使って、複数行にわたって記述することができます。
+
+テキストがマスキングによってどのように変換されるかは、**--xlate-mask**オプションで確認できます。
 
 このインターフェースは実験的であり、将来的に変更される可能性があります。  
 
@@ -202,6 +206,10 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     カラーパレットはターミナルの背景色に応じて切り替えられます。明示的に指定したい場合は、**--xlate-stripe-light** または **--xlate-stripe-dark** を使用できます。
 
+- **--xlate-mask**
+
+    マスキング機能を実行し、復元せずに変換されたテキストをそのまま表示します。
+
 - **--match-all**
 
     ファイル全体のテキストを対象領域として設定します。
@@ -325,7 +333,9 @@ DeepLとChatGPTのコマンドラインツールをインストールする必�
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)  
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)  
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Dockerコンテナイメージ。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ DeepLとChatGPTのコマンドラインツールをインストールする必�
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     **sdif**を使用して、**-V**オプションとともにコンフリクトマーカー形式を並べて表示します。  
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe**モジュールは、**--xlate-stripe**オプションによって使用されます。
 
 ## ARTICLES
 

@@ -12,7 +12,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Version 0.39
     --xlate-setopt maskfile=MASKPATTERN
 
 Αυτό θα ερμηνεύσει κάθε γραμμή του αρχείου `MASKPATTERN` ως μια κανονική έκφραση, θα μεταφράσει τις συμβολοσειρές που ταιριάζουν σε αυτήν και θα επανέλθει μετά την επεξεργασία. Οι γραμμές που αρχίζουν με C<#> αγνοούνται.
+
+Το σύνθετο μοτίβο μπορεί να γραφτεί σε πολλαπλές γραμμές με backslash escpaed newline.
+
+Το πώς μετασχηματίζεται το κείμενο με τη μάσκα μπορεί να φανεί με την επιλογή B<--xlate-mask>.
 
 Αυτή η διεπαφή είναι πειραματική και μπορεί να αλλάξει στο μέλλον.
 
@@ -231,6 +235,10 @@ Version 0.39
 
 Η παλέτα χρωμάτων αλλάζει ανάλογα με το χρώμα φόντου του τερματικού. Αν θέλετε να το καθορίσετε ρητά, μπορείτε να χρησιμοποιήσετε B<--xlate-stripe-light> ή B<--xlate-stripe-dark>.
 
+=item B<--xlate-mask>
+
+Εκτελέστε τη λειτουργία μάσκας και εμφανίστε το μετασχηματισμένο κείμενο ως έχει χωρίς αποκατάσταση.
+
 =item B<--match-all>
 
 Ορίστε ολόκληρο το κείμενο του αρχείου ως περιοχή-στόχο.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Εικόνα εμπορευματοκιβωτίου Docker.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL βιβλιοθήκη Python και εντολή CLI.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 Βιβλιοθήκη OpenAI Python
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 Διεπαφή γραμμής εντολών OpenAI
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Ανατρέξτε στο εγχειρίδιο B<greple> για λεπτομέρειες σχετικά με το μοτίβο κειμένου-στόχου. Χρησιμοποιήστε τις επιλογές B<--inside>, B<--outside>, B<--include>, B<--exclude> για να περιορίσετε την περιοχή αντιστοίχισης.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Μπορείτε να χρησιμοποιήσετε την ενότητα C<-Mupdate> για να τροποποιήσετε αρχεία με βάση το αποτέλεσμα της εντολής B<greple>.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 Χρησιμοποιήστε την εντολή B<sdif> για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή B<-V>.
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> χρήση της μονάδας B<--xlate-stripe> με την επιλογή B<--xlate-stripe>.
 
 =back
 

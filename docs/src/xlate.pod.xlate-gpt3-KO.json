@@ -72,6 +72,14 @@
       "이는 파일 `MASKPATTERN`의 각 줄을 정규 표현식으로 해석하여 일치하는 문자열을 번역하고 처리 후 되돌립니다. C<#>로 시작하는 줄은 무시됩니다.\n"
    ],
    [
+      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "복잡한 패턴은 백슬래시로 이스케이프된 새 줄에 여러 줄에 작성할 수 있습니다.\n"
+   ],
+   [
+      "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
+      "텍스트가 가려짐으로써 어떻게 변환되는지는 B<--xlate-mask> 옵션으로 확인할 수 있습니다.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "이 인터페이스는 실험적이며 향후 변경될 수 있습니다.\n"
    ],
@@ -184,6 +192,10 @@
       "색상 팔레트는 터미널의 배경색에 따라 전환됩니다. 명시적으로 지정하려면 B<--xlate-stripe-light> 또는 B<--xlate-stripe-dark>를 사용할 수 있습니다.\n"
    ],
    [
+      "Perform masking function and display the converted text as is without restoration.\n",
+      "마스킹 기능을 수행하고 변환된 텍스트를 복원 없이 표시합니다.\n"
+   ],
+   [
       "Set the whole text of the file as a target area.\n",
       "파일의 전체 텍스트를 대상 영역으로 설정합니다.\n"
    ],
@@ -284,8 +296,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n"
+      "Docker container image.\n",
+      "도커 컨테이너 이미지.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
@@ -310,6 +322,10 @@
    [
       "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
       "B<-V> 옵션과 함께 충돌 마커 형식을 옆에 나란히 표시하려면 B<sdif>를 사용하십시오.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Greple B<stripe> 모듈은 B<--xlate-stripe> 옵션을 사용합니다.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

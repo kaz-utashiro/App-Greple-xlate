@@ -10,7 +10,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Version 0.39
     --xlate-setopt maskfile=MASKPATTERN
 
 Αυτό θα ερμηνεύσει κάθε γραμμή του αρχείου \`MASKPATTERN\` ως έναν τακτικό εκφρασμένο, θα μεταφράσει τις συμβολοσειρές που ταιριάζουν με αυτό, και θα επαναφέρει μετά την επεξεργασία. Οι γραμμές που αρχίζουν με `#` αγνοούνται.
+
+Ένα πολύπλοκο πρότυπο μπορεί να γραφτεί σε πολλαπλές γραμμές με αναδρομή με backslash.
+
+Πώς η μετατροπή του κειμένου με τη χρήση μάσκας μπορεί να δει κανείς μέσω της επιλογής **--xlate-mask**.
 
 Αυτή η διεπαφή είναι πειραματική και υπόκειται σε αλλαγές στο μέλλον.
 
@@ -202,6 +206,10 @@ Version 0.39
 
     Η παλέτα χρωμάτων αλλάζει ανάλογα με το χρώμα του φόντου του τερματικού. Αν θέλετε να το καθορίσετε ρητά, μπορείτε να χρησιμοποιήσετε τις επιλογές **--xlate-stripe-light** ή **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Εκτελέστε τη λειτουργία μάσκας και εμφανίστε το μετατραπέν κείμενο χωρίς ανάκτηση.
+
 - **--match-all**
 
     Ορίστε ολόκληρο το κείμενο του αρχείου ως περιοχή στόχο.
@@ -325,7 +333,9 @@ Version 0.39
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Εικόνα εμφιάλωσης Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Version 0.39
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Χρησιμοποιήστε το **sdif** για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Χρήση του μοντέλου Greple **stripe** με την επιλογή **--xlate-stripe**.
 
 ## ARTICLES
 

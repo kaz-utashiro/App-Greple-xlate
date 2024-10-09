@@ -10,7 +10,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Version 0.39
     --xlate-setopt maskfile=MASKPATTERN
 
 Это будет интерпретировать каждую строку файла \`MASKPATTERN\` как регулярное выражение, переводить строки, соответствующие ему, и возвращать после обработки. Строки, начинающиеся с `#`, игнорируются.
+
+Сложный шаблон можно написать на нескольких строках с использованием символа обратного слеша для переноса строки.
+
+Как текст преобразуется с помощью маскировки, можно увидеть с помощью опции **--xlate-mask**.
 
 Этот интерфейс является экспериментальным и может быть изменен в будущем.
 
@@ -202,6 +206,10 @@ Version 0.39
 
     Палитра цветов меняется в зависимости от цвета фона терминала. Если вы хотите явно указать, вы можете использовать **--xlate-stripe-light** или **--xlate-stripe-dark**.
 
+- **--xlate-mask**
+
+    Выполните функцию маскировки и отобразите преобразованный текст без восстановления.
+
 - **--match-all**
 
     Установите весь текст файла в качестве целевой области.
@@ -325,7 +333,9 @@ Version 0.39
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Образ контейнера Docker.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Version 0.39
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Используйте **sdif**, чтобы показать формат маркера конфликта рядом с опцией **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Модуль Greple **stripe** используется с помощью опции **--xlate-stripe**.
 
 ## ARTICLES
 

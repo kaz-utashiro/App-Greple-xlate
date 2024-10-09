@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 VERSION
 
-Version 0.39
+Version 0.40
 
 =head1 DESCRIPTION
 
@@ -85,6 +85,10 @@ Bazen, çevrilmesini istemediğiniz metin bölümleri olabilir. Örneğin, markd
     --xlate-setopt maskfile=MASKPATTERN
 
 Bu, `MASKPATTERN` dosyasının her satırını düzenli bir ifade olarak yorumlayacak, bununla eşleşen dizeleri çevirecek ve işlemden sonra geri dönecektir. C<#> ile başlayan satırlar yok sayılır.
+
+Karmaşık desen ters eğik çizgi ile birden fazla satıra yazılabilir.
+
+Maskeleme ile metnin nasıl dönüştürüldüğü B<--xlate-mask> seçeneği ile görülebilir.
 
 Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
@@ -231,6 +235,10 @@ Eşleşen kısmı zebra şeritleme yöntemiyle göstermek için L<App::Greple::s
 
 Renk paleti terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz, B<--xlate-stripe-light> veya B<--xlate-stripe-dark> kullanabilirsiniz.
 
+=item B<--xlate-mask>
+
+Maskeleme işlevini gerçekleştirin ve dönüştürülen metni geri yükleme yapmadan olduğu gibi görüntüleyin.
+
 =item B<--match-all>
 
 Dosyanın tüm metnini hedef alan olarak ayarlayın.
@@ -371,33 +379,39 @@ L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt3>
 
-L<https://hub.docker.com/r/tecolicom/xlate>
+=over 2
 
-=over 7
+=item * L<https://hub.docker.com/r/tecolicom/xlate>
 
-=item L<https://github.com/DeepLcom/deepl-python>
+Docker konteyner görüntüsü.
+
+=item * L<https://github.com/DeepLcom/deepl-python>
 
 DeepL Python kütüphanesi ve CLI komutu.
 
-=item L<https://github.com/openai/openai-python>
+=item * L<https://github.com/openai/openai-python>
 
 OpenAI Python Kütüphanesi
 
-=item L<https://github.com/tecolicom/App-gpty>
+=item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI komut satırı arayüzü
 
-=item L<App::Greple>
+=item * L<App::Greple>
 
 Hedef metin kalıbı hakkında ayrıntılı bilgi için B<greple> kılavuzuna bakın. Eşleşen alanı sınırlamak için B<--inside>, B<--outside>, B<--include>, B<--exclude> seçeneklerini kullanın.
 
-=item L<App::Greple::update>
+=item * L<App::Greple::update>
 
 Dosyaları B<greple> komutunun sonucuna göre değiştirmek için C<-Mupdate> modülünü kullanabilirsiniz.
 
-=item L<App::sdif>
+=item * L<App::sdif>
 
 B<-V> seçeneği ile çakışma işaretleyici formatını yan yana göstermek için B<sdif> kullanın.
+
+=item * L<App::Greple::stripe>
+
+B<--xlate-stripe> seçeneği ile Greple B<stripe> modülü kullanımı.
 
 =back
 

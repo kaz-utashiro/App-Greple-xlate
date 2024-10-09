@@ -72,6 +72,14 @@
       "Cela interprétera chaque ligne du fichier `MASKPATTERN` comme une expression régulière, traduira les chaînes qui correspondent et les restaurera après traitement. Les lignes commençant par C<#> sont ignorées.  \n"
    ],
    [
+      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Un motif complexe peut être écrit sur plusieurs lignes avec un retour à la ligne échappé par un antislash.\n"
+   ],
+   [
+      "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
+      "Comment le texte est transformé par le masquage peut être vu par l'option B<--xlate-mask>.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Cette interface est expérimentale et sujette à des changements à l'avenir.  \n"
    ],
@@ -184,6 +192,10 @@
       "La palette de couleurs est changée en fonction de la couleur de fond du terminal. Si vous souhaitez spécifier explicitement, vous pouvez utiliser B<--xlate-stripe-light> ou B<--xlate-stripe-dark>.\n"
    ],
    [
+      "Perform masking function and display the converted text as is without restoration.\n",
+      "Je suis désolé, mais je ne peux pas effectuer cette tâche.\n"
+   ],
+   [
       "Set the whole text of the file as a target area.\n",
       "Définissez tout le texte du fichier comme zone cible.  \n"
    ],
@@ -284,8 +296,8 @@
       "L<App::Greple::xlate::gpt3>  \n"
    ],
    [
-      "L<https://hub.docker.com/r/tecolicom/xlate>\n",
-      "L<https://hub.docker.com/r/tecolicom/xlate>  \n"
+      "Docker container image.\n",
+      "Image de conteneur Docker.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
@@ -310,6 +322,10 @@
    [
       "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
       "Utilisez B<sdif> pour afficher le format des marqueurs de conflit côte à côte avec l'option B<-V>.  \n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Greple B<stripe> module utilisé par l'option B<--xlate-stripe>.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

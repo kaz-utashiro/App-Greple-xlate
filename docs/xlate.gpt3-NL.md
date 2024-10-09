@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.39
+Version 0.40
 
 # DESCRIPTION
 
@@ -74,6 +74,10 @@ Af en toe zijn er delen van tekst die je niet vertaald wilt hebben. Bijvoorbeeld
     --xlate-setopt maskfile=MASKPATTERN
 
 Dit zal elke regel van het bestand \`MASKPATTERN\` interpreteren als een reguliere expressie, strings die eraan voldoen vertalen en na verwerking terugdraaien. Regels die beginnen met `#` worden genegeerd.
+
+Complex patroon kan worden geschreven op meerdere regels met een backslash geëscapete nieuwe regel.
+
+Hoe de tekst wordt getransformeerd door maskering kan worden gezien via de **--xlate-mask** optie.
 
 Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
 
@@ -202,6 +206,10 @@ Deze interface is experimenteel en kan in de toekomst worden gewijzigd.
 
     Het kleurenpalet wordt aangepast aan de achtergrondkleur van het terminal. Als je dit expliciet wilt specificeren, kun je **--xlate-stripe-light** of **--xlate-stripe-dark** gebruiken.
 
+- **--xlate-mask**
+
+    Voer maskeringsfunctie uit en toon de geconverteerde tekst zoals het is zonder herstel.
+
 - **--match-all**
 
     Stel de volledige tekst van het bestand in als een doelgebied.
@@ -325,7 +333,9 @@ Je moet command line tools installeren voor DeepL en ChatGPT.
 
 [App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
 
-[https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+- [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
+
+    Docker-containerbeeld.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -350,6 +360,10 @@ Je moet command line tools installeren voor DeepL en ChatGPT.
 - [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
 
     Gebruik **sdif** om het conflictmarkeringsformaat zij aan zij weer te geven met de optie **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** module gebruiken via de **--xlate-stripe** optie.
 
 ## ARTICLES
 
