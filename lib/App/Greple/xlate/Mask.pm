@@ -38,9 +38,9 @@ sub configure {
 	    push @{$obj->{PATTERN}}, @pattern;
 	}
 	elsif ($a eq 'file') {
-	    open my $fh, $b or die "$b: $!";
-	    chomp(my @pattern = <$fh>);
-	    push @{$obj->{PATTERN}}, @pattern;
+	    open my $fh, '<:encoding(utf8)', $b or die "$b: $!\n";
+	    my @p = map s/\\(?=\n)//gr, split /(?<!\\)\n/, do { local $/; <$fh> };
+	    push @{$obj->{PATTERN}}, @p;
 	}
 	else {
 	    $obj->{$a} = $b;
