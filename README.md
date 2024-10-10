@@ -204,8 +204,8 @@ This interface is experimental and subject to change in the future.
 
     - **colon**, _:::::::_
 
-        Original and converted text are printed in the markdown **div** block
-        style notation.
+        The original and translated text are output in a markdown's custom
+        container style.
 
             ::::::: ORIGINAL
             original text
@@ -214,7 +214,7 @@ This interface is experimental and subject to change in the future.
             translated Japanese text
             :::::::
 
-        This means:
+        Above text will be translated to the following in HTML.
 
             <div class="ORIGINAL">
             original text

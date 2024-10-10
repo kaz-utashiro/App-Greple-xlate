@@ -233,8 +233,8 @@ You can recover the original file by next L<sed(1)> command.
 
 =item B<colon>, I<:::::::>
 
-Original and converted text are printed in the markdown B<div> block
-style notation.
+The original and translated text are output in a markdown's custom
+container style.
 
     ::::::: ORIGINAL
     original text
@@ -243,7 +243,7 @@ style notation.
     translated Japanese text
     :::::::
 
-This means:
+Above text will be translated to the following in HTML.
 
     <div class="ORIGINAL">
     original text
