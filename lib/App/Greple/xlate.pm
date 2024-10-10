@@ -426,14 +426,14 @@ Read Japanese article in L</SEE ALSO> section for detail.
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 
 =head1 EMACS
@@ -764,7 +764,7 @@ sub strip {
     goto &paragraph_strip if $paragraph;
     my @text = $text =~ /.*\n|.+\z/g;
     my @space = map {
-	[ s/\A(\s+)// ? $1 : '', s/(\h+)$//  ? $1 : ''  ]
+	[ s/\A(\s+)// ? $1 : '', s/(\h+)$// ? $1 : '' ]
     } @text;
     $_[0] = join '', @text;
     sub { # unstrip

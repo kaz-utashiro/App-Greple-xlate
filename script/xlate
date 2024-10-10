@@ -43,8 +43,7 @@ define pod <<"=cut"
 	-B   run in non-interactive (batch) mode
 	-R   mount read-only
 	-E # specify environment variable to be inherited
-	-I # specify altanative docker image (default: tecolicom/xlate:version)
-#	-T # specify docker image version
+	-I # docker image or version (default: tecolicom/xlate:version)
 #	-L   use the latest version
 #	-V # specify directory to be mounted (default: current directory)
 
@@ -54,7 +53,7 @@ define pod <<"=cut"
 
     Control Files:
 	*.LANG    translation languates
-	*.FORMAT  translation foramt (xtxt, cm, ifdef)
+	*.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
 	*.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 #	marked as # options are experimental
@@ -117,11 +116,15 @@ do
     case $OPT in
 	d)       debug=yes ; set -x ;;
 	B) interactive= ;;
-	I)   container="$OPTARG" ;;
 	V)      volume="$OPTARG" ;;
-	T)     version=:"$OPTARG" ;;
 	L)     version=:latest ;;
 	R)  mount_mode=ro ;;
+	I)
+	    case "$OPTARG" in
+		[0-9]*.[0-9]*) version=:"$OPTARG" ;;
+		*)             container="$OPTARG" ;;
+	    esac
+	    ;;
 	E)
 	    DEFAULT_ENV+=$'\n'"$OPTARG" ;;
 	G)
