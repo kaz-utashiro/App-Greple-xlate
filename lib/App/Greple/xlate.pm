@@ -410,6 +410,7 @@ Read Japanese article in L</SEE ALSO> section for detail.
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
