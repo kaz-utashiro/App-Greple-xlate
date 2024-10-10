@@ -32,7 +32,7 @@ define pod <<"=cut"
 	-m # max length per API call
 	-l # show library files (XLATE.mk, xlate.el)
         --   terminate option parsing
-        N.B. default is maked as *
+        N.B. default is marked as *
 
     Make options
 	-M   run make
@@ -121,8 +121,8 @@ do
 	R)  mount_mode=ro ;;
 	I)
 	    case "$OPTARG" in
-		[0-9]*.[0-9]*) version=:"$OPTARG" ;;
-		*)             container="$OPTARG" ;;
+		[0-9]*|latest) version=:"$OPTARG" ;;
+		*) container="$OPTARG" ;;
 	    esac
 	    ;;
 	E)
