@@ -74,8 +74,13 @@ sub unmask {
     for (@_) {
 	for my $fromto (reverse @{$obj->{TABLE}}) {
 	    my($from, $to) = @$fromto;
-	    s/\Q$from/$to/;
-	    /\Q$from/ and die "Masking error: \"$from\" duplicated.\n";
+	    # update the first one
+	    if (s/\Q$from/$to/) {
+		# check the rest
+		if (s/\Q$from/$to/g) {
+		    warn "Masking error: \"$from\" duplicated.\n";
+		}
+	    }
 	}
     }
     $obj->reset if $obj->{AUTORESET};
