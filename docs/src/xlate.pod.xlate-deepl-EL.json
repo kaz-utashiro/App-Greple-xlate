@@ -60,8 +60,8 @@
       "Αυτή η διαδικασία κανονικοποίησης εκτελείται μόνο για το πρώτο (0ο) και το ζυγό πρότυπο. Έτσι, αν καθοριστούν δύο πρότυπα ως εξής, το κείμενο που ταιριάζει στο πρώτο πρότυπο θα υποβληθεί σε επεξεργασία μετά την κανονικοποίηση και δεν θα εκτελεστεί καμία διαδικασία κανονικοποίησης στο κείμενο που ταιριάζει στο δεύτερο πρότυπο.\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Επομένως, χρησιμοποιήστε το πρώτο μοτίβο για κείμενο που πρόκειται να υποστεί επεξεργασία με συνδυασμό πολλών γραμμών σε μία γραμμή και χρησιμοποιήστε το δεύτερο μοτίβο για προ-διαμορφωμένο κείμενο. Εάν δεν υπάρχει κείμενο προς αντιστοίχιση στο πρώτο μοτίβο, τότε ένα μοτίβο που δεν ταιριάζει με τίποτα, όπως C<(;!)>.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Επομένως, χρησιμοποιήστε το πρώτο μοτίβο για κείμενο που πρόκειται να υποστεί επεξεργασία συνδυάζοντας πολλές γραμμές σε μία γραμμή και χρησιμοποιήστε το δεύτερο μοτίβο για προ-διαμορφωμένο κείμενο. Εάν δεν υπάρχει κείμενο προς αντιστοίχιση στο πρώτο μοτίβο, χρησιμοποιήστε ένα μοτίβο που δεν ταιριάζει με τίποτα, όπως C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

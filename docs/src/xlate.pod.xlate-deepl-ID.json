@@ -60,7 +60,7 @@
       "Proses normalisasi ini dilakukan hanya untuk pola pertama (ke-0) dan pola bernomor genap. Dengan demikian, jika dua pola ditentukan sebagai berikut, teks yang cocok dengan pola pertama akan diproses setelah normalisasi, dan tidak ada proses normalisasi yang dilakukan pada teks yang cocok dengan pola kedua.\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
       "Oleh karena itu, gunakan pola pertama untuk teks yang akan diproses dengan menggabungkan beberapa baris menjadi satu baris, dan gunakan pola kedua untuk teks yang telah diformat sebelumnya. Jika tidak ada teks yang cocok dengan pola pertama, gunakan pola yang tidak cocok dengan apa pun, seperti C<(?!)>.\n"
    ],
    [

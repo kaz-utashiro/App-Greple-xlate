@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -66,7 +66,7 @@ Bu normalizasyon süreci yalnızca birinci (0. sıradaki) ve çift numaralı des
 
     greple -Mxlate -E normalized -E not-normalized
 
-Bu nedenle, birden fazla satırı tek bir satırda birleştirerek işlenecek metin için birinci deseni kullanın ve önceden biçimlendirilmiş metin için ikinci deseni kullanın. Eğer birinci desende eşleşecek metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen, örneğin `(?!)` kullanın.
+Bu nedenle, birden fazla satırı tek bir satırda birleştirerek işlenecek metinler için birinci deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer birinci desende eşleşecek bir metin yoksa, hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin `(?!)`.
 
 # MASKING
 
@@ -281,6 +281,7 @@ Docker ve make seçeneklerini birleştirerek, make'i bir Docker ortamında çal�
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -296,14 +297,14 @@ Docker ve make seçeneklerini birleştirerek, make'i bir Docker ortamında çal�
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

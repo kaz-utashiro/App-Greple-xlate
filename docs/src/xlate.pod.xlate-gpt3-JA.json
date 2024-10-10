@@ -60,7 +60,7 @@
       "この正規化プロセスは、最初の（0番目）および偶数番目のパターンに対してのみ実行されます。したがって、2つのパターンが次のように指定された場合、最初のパターンに一致するテキストは正規化後に処理され、2番目のパターンに一致するテキストには正規化プロセスが実行されません。\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
       "したがって、複数の行を1行に結合して処理するテキストには最初のパターンを使用し、整形済みのテキストには2番目のパターンを使用します。最初のパターンに一致するテキストがない場合は、C<(?!)>のように何も一致しないパターンを使用してください。\n"
    ],
    [

@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -72,9 +72,7 @@ iar niciun proces de normalizare nu va fi efectuat pe textul care se potrivește
 
     greple -Mxlate -E normalized -E not-normalized
 
-&lt;translation>
-Prin urmare, folosiți primul model pentru textul care trebuie procesat prin combinarea mai multor linii într-o singură linie, și folosiți al doilea model pentru textul pre-formatat. Dacă nu există text de potrivit în primul model, atunci un model care nu se potrivește cu nimic, cum ar fi `(?!)`.
-&lt;/translation>
+Prin urmare, folosiți primul model pentru textul care trebuie procesat prin combinarea mai multor linii într-o singură linie, și folosiți al doilea model pentru textul pre-formatat. Dacă nu există text de potrivit în primul model, folosiți un model care nu se potrivește cu nimic, cum ar fi `(?!)`.
 
 # MASKING
 
@@ -296,6 +294,7 @@ Citiți articolul japonez din secțiunea ["SEE ALSO"](#see-also) pentru detalii.
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -311,14 +310,14 @@ Citiți articolul japonez din secțiunea ["SEE ALSO"](#see-also) pentru detalii.
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

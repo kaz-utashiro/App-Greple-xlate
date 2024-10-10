@@ -10,7 +10,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -65,7 +65,7 @@ See normaliseerimisprotsess viiakse läbi ainult esimese (0.) ja paarisarvulise 
 
     greple -Mxlate -E normalized -E not-normalized
 
-Seega kasuta esimest mustrit teksti jaoks, mis tuleb töödelda mitme rea ühendamisega üheks reaks, ning kasuta teist mustrit eelvormindatud teksti jaoks. Kui esimesele mustrile vastavat teksti ei ole, siis kasuta mustrit, mis ei vasta millelegi, näiteks `(?!)`.
+Seetõttu kasutage esimest mustrit teksti jaoks, mis tuleb töödelda, kombineerides mitu rida üheks reaks, ning kasutage teist mustrit eelvormindatud teksti jaoks. Kui esimeses mustris pole teksti, mida sobitada, kasutage mustrit, mis ei sobita midagi, näiteks `(?!)`.
 
 # MASKING
 
@@ -273,6 +273,7 @@ Lugege jaapani keelse artikli üksikasjade kohta ["VAATA KA"](#vaata-ka) jaotise
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -288,14 +289,14 @@ Lugege jaapani keelse artikli üksikasjade kohta ["VAATA KA"](#vaata-ka) jaotise
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

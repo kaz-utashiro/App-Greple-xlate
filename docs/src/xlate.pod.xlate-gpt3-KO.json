@@ -60,8 +60,8 @@
       "이 정규화 과정은 첫 번째(0번째) 및 짝수 번째 패턴에 대해서만 수행됩니다. 따라서 두 개의 패턴이 다음과 같이 지정된 경우, 첫 번째 패턴과 일치하는 텍스트는 정규화 후 처리되며, 두 번째 패턴과 일치하는 텍스트에는 정규화 과정이 수행되지 않습니다.\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "따라서 여러 줄을 한 줄로 결합하여 처리해야 하는 텍스트에는 첫 번째 패턴을 사용하고, 서식이 적용된 텍스트에는 두 번째 패턴을 사용하십시오. 첫 번째 패턴에 일치하는 텍스트가 없는 경우, 아무것도 일치하지 않는 패턴인 C<(?!)>을 사용하십시오.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "따라서 여러 줄을 하나의 줄로 결합하여 처리해야 하는 텍스트에는 첫 번째 패턴을 사용하고, 서식이 있는 텍스트에는 두 번째 패턴을 사용하십시오. 첫 번째 패턴에 일치하는 텍스트가 없는 경우 C<(?!)>과 같이 아무것도 일치하지 않는 패턴을 사용하십시오.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

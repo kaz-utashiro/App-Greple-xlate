@@ -60,8 +60,8 @@
       "Dieser Normalisierungsprozess wird nur für das erste (0.) und gerade nummerierte Muster durchgeführt. Wenn also zwei Muster wie folgt angegeben sind, wird der Text, der dem ersten Muster entspricht, nach der Normalisierung verarbeitet, und es wird kein Normalisierungsprozess auf den Text angewendet, der dem zweiten Muster entspricht.  \n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Verwenden Sie daher das erste Muster für Text, der verarbeitet werden soll, indem mehrere Zeilen in eine einzige Zeile kombiniert werden, und verwenden Sie das zweite Muster für vorformatierten Text. Wenn es keinen Text gibt, der mit dem ersten Muster übereinstimmt, verwenden Sie ein Muster, das nichts übereinstimmt, wie C<(?!)>.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Daher verwenden Sie das erste Muster für Text, der verarbeitet werden soll, indem mehrere Zeilen zu einer einzigen Zeile kombiniert werden, und verwenden Sie das zweite Muster für vorformatierten Text. Wenn es keinen Text gibt, der im ersten Muster übereinstimmt, verwenden Sie ein Muster, das nichts übereinstimmt, wie C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

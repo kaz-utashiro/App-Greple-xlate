@@ -10,7 +10,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -65,7 +65,7 @@ Version 0.40
 
     greple -Mxlate -E normalized -E not-normalized
 
-Поэтому используйте первый шаблон для текста, который должен быть обработан путем объединения нескольких строк в одну строку, а второй - для предварительно отформатированного текста. Если в первом шаблоне нет текста, который можно было бы сопоставить, используйте шаблон, который ничему не соответствует, например `(?!)`.
+Поэтому используйте первый шаблон для текста, который должен быть обработан путем объединения нескольких строк в одну, а второй - для предварительно отформатированного текста. Если в первом шаблоне нет текста для проверки, используйте шаблон, который ничему не соответствует, например `(?!)`.
 
 # MASKING
 
@@ -273,6 +273,7 @@ Version 0.40
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -288,14 +289,14 @@ Version 0.40
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

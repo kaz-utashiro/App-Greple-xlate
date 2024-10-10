@@ -60,8 +60,8 @@
       "Bu normalizasyon süreci yalnızca birinci (0. sıradaki) ve çift numaralı desenler için gerçekleştirilir. Böylece, iki desen aşağıdaki gibi belirtilirse, birinci desene uyan metin normalizasyon işleminden sonra işlenecek ve ikinci desene uyan metin üzerinde herhangi bir normalizasyon işlemi yapılmayacaktır.\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Bu nedenle, birden fazla satırı tek bir satırda birleştirerek işlenecek metin için birinci deseni kullanın ve önceden biçimlendirilmiş metin için ikinci deseni kullanın. Eğer birinci desende eşleşecek metin yoksa, o zaman hiçbir şeyi eşleştirmeyen bir desen, örneğin C<(?!)> kullanın.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Bu nedenle, birden fazla satırı tek bir satırda birleştirerek işlenecek metinler için birinci deseni kullanın ve önceden biçimlendirilmiş metinler için ikinci deseni kullanın. Eğer birinci desende eşleşecek bir metin yoksa, hiçbir şeyi eşleştirmeyen bir desen kullanın, örneğin C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

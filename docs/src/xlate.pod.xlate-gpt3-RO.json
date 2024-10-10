@@ -60,8 +60,8 @@
       "Acest proces de normalizare este efectuat doar pentru primul (0-lea) și pentru modelul cu număr par. Prin urmare, dacă sunt specificate două modele după cum urmează, textul care se potrivește cu primul model va fi procesat după normalizare, iar niciun proces de normalizare nu va fi efectuat pe textul care se potrivește cu al doilea model.\n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Prin urmare, folosiți primul model pentru textul care trebuie procesat prin combinarea mai multor linii într-o singură linie, și folosiți al doilea model pentru textul pre-formatat. Dacă nu există text de potrivit în primul model, atunci folosiți un model care nu se potrivește cu nimic, cum ar fi C<(?!)>.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Prin urmare, folosiți primul model pentru textul care urmează să fie procesat prin combinarea mai multor linii într-o singură linie, și folosiți al doilea model pentru textul preformatat. Dacă nu există text de potrivit în primul model, folosiți un model care nu se potrivește cu nimic, cum ar fi C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

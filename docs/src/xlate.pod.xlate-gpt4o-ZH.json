@@ -60,8 +60,8 @@
       "此规范化过程仅对第一个（0th）和偶数模式执行。因此，如果指定两个模式如下，匹配第一个模式的文本将在规范化后处理，而匹配第二个模式的文本将不进行规范化处理。  \n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "因此，使用第一个模式处理需要将多行合并为单行的文本，使用第二个模式处理预格式化文本。如果在第一个模式中没有匹配的文本，则使用一个不匹配任何内容的模式，例如 C<(?!)>。\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "因此，对于需要通过将多行合并为单行来处理的文本，使用第一个模式；对于预格式化文本，使用第二个模式。如果在第一个模式中没有匹配的文本，请使用一个不匹配任何内容的模式，例如 C<(?!)>。\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

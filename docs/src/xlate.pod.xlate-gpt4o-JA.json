@@ -60,8 +60,8 @@
       "この正規化プロセスは、最初（0番目）および偶数番号のパターンに対してのみ実行されます。したがって、次のように2つのパターンが指定されている場合、最初のパターンに一致するテキストは正規化後に処理され、2番目のパターンに一致するテキストには正規化プロセスは実行されません。  \n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "したがって、複数行を一つの行にまとめて処理するテキストには最初のパターンを使用し、事前にフォーマットされたテキストには2番目のパターンを使用します。最初のパターンに一致するテキストがない場合は、C<(?!)>のような何にも一致しないパターンを使用します。\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "したがって、複数の行を1行に結合して処理するテキストには最初のパターンを使用し、整形済みテキストには2番目のパターンを使用します。最初のパターンに一致するテキストがない場合は、C<(?!)>のように何にも一致しないパターンを使用してください。\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

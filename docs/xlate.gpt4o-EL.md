@@ -10,7 +10,7 @@
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -65,7 +65,11 @@ Version 0.40
 
     greple -Mxlate -E normalized -E not-normalized
 
-<Επομένως, χρησιμοποιήστε το πρώτο μοτίβο για κείμενο που πρόκειται να υποβληθεί σε επεξεργασία συνδυάζοντας πολλές γραμμές σε μία μόνο γραμμή, και χρησιμοποιήστε το δεύτερο μοτίβο για προ-μορφοποιημένο κείμενο. Αν δεν υπάρχει κείμενο για να ταιριάξει στο πρώτο μοτίβο, τότε ένα μοτίβο που δεν ταιριάζει με τίποτα, όπως το `(?!)`.>
+&lt;translation>
+Επομένως, χρησιμοποιήστε το πρώτο μοτίβο για κείμενο που πρόκειται να επεξεργαστεί συνδυάζοντας πολλές γραμμές σε μία μόνο γραμμή, 
+και χρησιμοποιήστε το δεύτερο μοτίβο για προ-μορφοποιημένο κείμενο. 
+Αν δεν υπάρχει κείμενο για να ταιριάξει στο πρώτο μοτίβο, χρησιμοποιήστε ένα μοτίβο που δεν ταιριάζει σε τίποτα, όπως `(?!)`.
+&lt;/translation>
 
 # MASKING
 
@@ -277,6 +281,7 @@ Version 0.40
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -292,14 +297,14 @@ Version 0.40
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

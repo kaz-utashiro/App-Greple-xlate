@@ -60,8 +60,8 @@
       "Ce processus de normalisation est effectué uniquement pour le premier (0ème) et les motifs de numéro pair. Ainsi, si deux motifs sont spécifiés comme suit, le texte correspondant au premier motif sera traité après normalisation, et aucun processus de normalisation ne sera effectué sur le texte correspondant au second motif.  \n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Par conséquent, utilisez le premier motif pour le texte qui doit être traité en combinant plusieurs lignes en une seule ligne, et utilisez le second motif pour le texte préformaté. S'il n'y a pas de texte à faire correspondre dans le premier motif, alors un motif qui ne correspond à rien, comme C<(?!)>.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Donc, utilisez le premier modèle pour le texte qui doit être traité en combinant plusieurs lignes en une seule ligne, et utilisez le deuxième modèle pour le texte préformaté. Si aucun texte ne correspond au premier modèle, utilisez un modèle qui ne correspond à rien, tel que C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

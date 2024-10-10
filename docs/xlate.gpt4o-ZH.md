@@ -10,7 +10,7 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -65,7 +65,7 @@ Version 0.40
 
     greple -Mxlate -E normalized -E not-normalized
 
-因此，使用第一个模式处理需要将多行合并为单行的文本，使用第二个模式处理预格式化文本。如果在第一个模式中没有匹配的文本，则使用一个不匹配任何内容的模式，例如 `(?!)`。
+因此，对于需要通过将多行合并为单行来处理的文本，使用第一个模式；对于预格式化文本，使用第二个模式。如果在第一个模式中没有匹配的文本，请使用一个不匹配任何内容的模式，例如 `(?!)`。
 
 # MASKING
 
@@ -274,6 +274,7 @@ Version 0.40
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -289,14 +290,14 @@ Version 0.40
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 

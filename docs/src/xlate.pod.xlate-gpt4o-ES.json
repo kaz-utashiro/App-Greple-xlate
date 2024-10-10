@@ -60,8 +60,8 @@
       "Este proceso de normalización se realiza solo para el primer (0º) y los patrones de número par. Por lo tanto, si se especifican dos patrones como sigue, el texto que coincide con el primer patrón se procesará después de la normalización, y no se realizará ningún proceso de normalización en el texto que coincide con el segundo patrón.  \n"
    ],
    [
-      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, then a pattern that does not match anything, such as C<(?!)>.\n",
-      "Por lo tanto, usa el primer patrón para el texto que se procesará combinando múltiples líneas en una sola línea, y usa el segundo patrón para texto preformateado. Si no hay texto que coincida en el primer patrón, entonces un patrón que no coincida con nada, como C<(?!)>.\n"
+      "Therefore, use the first pattern for text that is to be processed by combining multiple lines into a single line, and use the second pattern for pre-formatted text. If there is no text to match in the first pattern, use a pattern that does not match anything, such as C<(?!)>.\n",
+      "Por lo tanto, utiliza el primer patrón para el texto que debe ser procesado combinando múltiples líneas en una sola línea, y utiliza el segundo patrón para texto preformateado. Si no hay texto que coincida en el primer patrón, utiliza un patrón que no coincida con nada, como C<(?!)>.\n"
    ],
    [
       "Occasionally, there are parts of text that you do not want translated. For example, tags in markdown files. DeepL suggests that in such cases, the part of the text to be excluded be converted to XML tags, translated, and then restored after the translation is complete. To support this, it is possible to specify the parts to be masked from translation.\n",

@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.40
+Version 0.41
 
 # DESCRIPTION
 
@@ -65,7 +65,7 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
     greple -Mxlate -E normalized -E not-normalized
 
-따라서 여러 줄을 하나의 줄로 결합하여 처리할 텍스트에는 첫 번째 패턴을 사용하고, 미리 형식이 지정된 텍스트에는 두 번째 패턴을 사용하십시오. 첫 번째 패턴에서 일치하는 텍스트가 없으면 `(?!)`와 같이 아무것도 일치하지 않는 패턴을 사용하십시오.
+따라서, 여러 줄을 하나의 줄로 결합하여 처리할 텍스트에는 첫 번째 패턴을 사용하고, 미리 형식이 지정된 텍스트에는 두 번째 패턴을 사용하십시오. 첫 번째 패턴에서 일치하는 텍스트가 없으면, `(?!)`와 같이 아무것도 일치하지 않는 패턴을 사용하십시오.
 
 # MASKING
 
@@ -277,6 +277,7 @@ Docker와 메이크 옵션을 결합하여 Docker 환경에서 메이크를 실�
         -s   silent mode
         -e # translation engine (default "deepl")
         -p # pattern to determine translation area
+        -x # file containing mask patterns
         -w # wrap line by # width
         -o # output format (default "xtxt", or "cm", "ifdef")
         -f # from lang (ignored)
@@ -292,14 +293,14 @@ Docker와 메이크 옵션을 결합하여 Docker 환경에서 메이크를 실�
         -B   run in non-interactive (batch) mode
         -R   mount read-only
         -E * specify environment variable to be inherited
-        -I * specify altanative docker image (default: tecolicom/xlate:version)
+        -I * docker image name or version (default: tecolicom/xlate:version)
         -D * run xlate on the container with the rest parameters
         -C * run following command on the container, or run shell
     
     Control Files:
         *.LANG    translation languates
-        *.FORMAT  translation foramt (xtxt, cm, ifdef)
-        *.ENGINE  translation engine (deepl or gpt3)
+        *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
+        *.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
 
 # EMACS
 
