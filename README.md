@@ -99,7 +99,7 @@ text matching the second pattern.
 Therefore, use the first pattern for text that is to be processed by
 combining multiple lines into a single line, and use the second
 pattern for pre-formatted text.  If there is no text to match in the
-first pattern, then a pattern that does not match anything, such as
+first pattern, use a pattern that does not match anything, such as
 `(?!)`.
 
 # MASKING
