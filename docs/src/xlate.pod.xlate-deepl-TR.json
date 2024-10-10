@@ -140,12 +140,12 @@
       "Bir sonraki L<sed(1)> komutu ile orijinal dosyayı kurtarabilirsiniz.\n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "Orijinal ve dönüştürülmüş metin markdown B<div> blok stili gösteriminde yazdırılır.\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "Orijinal ve çevrilmiş metin, markdown'un özel kapsayıcı stilinde çıktı olarak verilir.\n"
    ],
    [
-      "This means:\n",
-      "Bu şu anlama gelir:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "Yukarıdaki metin HTML'de aşağıdakine çevrilecektir.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        \`\`\`markdown
+        \`\`\`html
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        这意味着：
+        &lt;div style="background-color: #f4f4f4; color: #333; border-left: 6px solid #c0392b; padding: 10px; margin: 10px 0;">
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Version 0.41
 # EMACS
 
 您可以通过使用存储库中包含的 `xlate` 命令从命令行轻松使用此模块。有关用法，请参阅 `xlate` 帮助信息。
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

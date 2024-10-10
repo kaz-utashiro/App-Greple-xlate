@@ -140,12 +140,12 @@
       "다음 L<sed(1)> 명령으로 원본 파일을 복구할 수 있습니다.  \n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "B<div>원본 및 변환된 텍스트는 마크다운 B<div> 블록 스타일 표기법으로 인쇄됩니다.</div>\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "```markdown\n<custom-container>\nThe original and translated text are output in a markdown's custom container style.\n원본 및 번역된 텍스트는 마크다운의 사용자 정의 컨테이너 스타일로 출력됩니다.\n</custom-container>\n```\n"
    ],
    [
-      "This means:\n",
-      "이것은:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "위의 텍스트는 HTML로 다음과 같이 번역됩니다.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

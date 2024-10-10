@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,12 @@ C<xtxt> 이외의 다음 형식은 번역할 부분이 여러 줄의 모음이�
 
 =item B<colon>, I<:::::::>
 
-B<div>원본 및 변환된 텍스트는 마크다운 B<div> 블록 스타일 표기법으로 인쇄됩니다.</div>
+```markdown
+<custom-container>
+The original and translated text are output in a markdown's custom container style.
+원본 및 번역된 텍스트는 마크다운의 사용자 정의 컨테이너 스타일로 출력됩니다.
+</custom-container>
+```
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +182,7 @@ B<div>원본 및 변환된 텍스트는 마크다운 B<div> 블록 스타일 표
     translated Japanese text
     :::::::
 
-이것은:
+위의 텍스트는 HTML로 다음과 같이 번역됩니다.
 
     <div class="ORIGINAL">
     original text
@@ -347,6 +352,10 @@ C<xlate -GC>와 같이 실행하면 현재 작업 중인 git 리포지토리가 
 =head1 EMACS
 
 Emacs 편집기에서 C<xlate> 명령을 사용하려면 리포지토리에 포함된 F<xlate.el> 파일을 로드하세요. C<xlate-region> 함수는 주어진 영역을 번역합니다. 기본 언어는 C<EN-US>이며 접두사 인수를 사용하여 언어를 지정할 수 있습니다.  
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

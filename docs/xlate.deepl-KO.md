@@ -10,7 +10,7 @@ App::Greple::xlate - Greple용 번역 지원 모듈
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
 
     - **colon**, _:::::::_
 
-        원본 텍스트와 변환된 텍스트는 마크다운 **div** 블록 스타일 표기법으로 인쇄됩니다.
+        원본 텍스트와 번역된 텍스트는 마크다운의 사용자 정의 컨테이너 스타일로 출력됩니다.
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Perl의 포드 스타일로 작성된 문서에서 일반 텍스트 블록을 �
             translated Japanese text
             :::::::
 
-        즉
+        위의 텍스트는 HTML에서 다음과 같이 번역됩니다.
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Docker 환경에서도 make를 실행할 수 있도록 Docker와 make 옵션을 
 # EMACS
 
 저장소에 포함된 `xlate.el` 파일을 로드하여 Emacs 편집기에서 `xlate` 명령을 사용합니다. `xlate-region` 함수는 지정된 지역을 번역합니다. 기본 언어는 `EN-US`이며 접두사 인수를 사용하여 호출하는 언어를 지정할 수 있습니다.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

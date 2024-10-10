@@ -12,7 +12,7 @@ App::Greple::xlate - tõlketoe moodul greple jaoks
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ Saate algse faili taastada järgmise L<sed(1)> käsu abil.
 
 =item B<colon>, I<:::::::>
 
-```markdown
+```html
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ Saate algse faili taastada järgmise L<sed(1)> käsu abil.
     translated Japanese text
     :::::::
 
-See tähendab:
+<div class="original">
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Lugege jaapani keelse artikli üksikasjade kohta L</VAATA KA> jaotises.
 =head1 EMACS
 
 Laadige C<xlate.el> fail, mis on kaasasolevas hoidlas, et kasutada C<xlate> käsku Emacs redaktorist. C<xlate-region> funktsioon tõlgib antud piirkonna. Vaikimisi keel on C<EN-US> ja saate keele määrata eesliiteargumendiga.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

@@ -12,7 +12,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ B<gpt-4o>의 인터페이스는 현재 불안정하며 올바르게 작동할 �
 
 =item B<colon>, I<:::::::>
 
-```markdown
+```html
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ B<gpt-4o>의 인터페이스는 현재 불안정하며 올바르게 작동할 �
     translated Japanese text
     :::::::
 
-This means:
+<div style="background-color: #f4f4f4; color: #333; padding: 10px; margin: 10px 0;">
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ C<xlate -GC>와 같이 실행하면 현재 작업 중인 git 저장소가 마운
 =head1 EMACS
 
 Emacs 편집기에서 C<xlate> 명령을 사용하려면 저장소에 포함된 F<xlate.el> 파일을 로드하십시오. C<xlate-region> 함수는 지정된 영역을 번역합니다. 기본 언어는 C<EN-US>이며 접두사 인수로 언어를 지정할 수 있습니다.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

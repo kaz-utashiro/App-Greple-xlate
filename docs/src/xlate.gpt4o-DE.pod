@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,12 @@ Sie können die Originaldatei mit dem nächsten L<sed(1)> Befehl wiederherstelle
 
 =item B<colon>, I<:::::::>
 
-Sure! Please provide the text you would like me to translate into German.
+```markdown
+<custom-container>
+The original and translated text are output in a markdown's custom container style.
+Der ursprüngliche und übersetzte Text wird in einem benutzerdefinierten Containerstil von Markdown ausgegeben.
+</custom-container>
+```
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +182,7 @@ Sure! Please provide the text you would like me to translate into German.
     translated Japanese text
     :::::::
 
-Das bedeutet:
+Der obige Text wird in HTML wie folgt übersetzt.
 
     <div class="ORIGINAL">
     original text
@@ -348,6 +353,10 @@ Lesen Sie den japanischen Artikel im L</SEE ALSO> Abschnitt für Details.
 =head1 EMACS
 
 Laden Sie die F<xlate.el> Datei, die im Repository enthalten ist, um den C<xlate> Befehl aus dem Emacs-Editor zu verwenden. Die C<xlate-region> Funktion übersetzt den angegebenen Bereich. Die Standardsprache ist C<EN-US> und Sie können die Sprache angeben, indem Sie sie mit einem Präfix-Argument aufrufen.  
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

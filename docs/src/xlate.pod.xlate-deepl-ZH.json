@@ -140,12 +140,12 @@
       "你可以通过下一个L<sed(1)>命令恢复原始文件。\n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "原始文本和转换后的文本均以标记符 B<div> 块样式符号打印。\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "原文和译文以 markdown 的自定义容器样式输出。\n"
    ],
    [
-      "This means:\n",
-      "这意味着\n"
+      "Above text will be translated to the following in HTML.\n",
+      "以上文本将在 HTML 中翻译为以下内容。\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

@@ -10,7 +10,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     - **colon**, _:::::::_
 
-        Originele en geconverteerde tekst worden afgedrukt in de markdown **div** blokstijlnotatie.
+        De originele en vertaalde tekst worden uitgevoerd in de aangepaste containerstijl van markdown.
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
             translated Japanese text
             :::::::
 
-        Dit betekent:
+        Bovenstaande tekst wordt vertaald naar het volgende in HTML.
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Lees het Japanse artikel in de ["SEE ALSO"](#see-also) sectie voor meer informat
 # EMACS
 
 Laad het `xlate.el` bestand in het archief om het `xlate` commando te gebruiken vanuit de Emacs editor. `xlate-region` functie vertaalt de gegeven regio. De standaardtaal is `EN-US` en u kunt de taal specificeren met het prefix argument.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

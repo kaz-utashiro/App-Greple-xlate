@@ -12,7 +12,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 =item B<colon>, I<:::::::>
 
-原始文本和转换后的文本均以标记符 B<div> 块样式符号打印。
+原文和译文以 markdown 的自定义容器样式输出。
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
     translated Japanese text
     :::::::
 
-这意味着
+以上文本将在 HTML 中翻译为以下内容。
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ C<xlate> 命令与 Docker 环境协同工作，因此即使你手头没有安装
 =head1 EMACS
 
 加载存储库中的F<xlate.el>文件，从Emacs编辑器中使用C<xlate>命令。C<xlate-region>函数翻译给定的区域。默认的语言是C<EN-US>，你可以用前缀参数指定调用语言。
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

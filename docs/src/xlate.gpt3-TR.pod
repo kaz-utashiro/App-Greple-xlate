@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -177,7 +177,7 @@ Orijinal dosyayı aşağıdaki L<sed(1)> komutuyla geri alabilirsiniz.
     translated Japanese text
     :::::::
 
-Bu şu demektir:
+The original and translated text are output in a markdown's custom container style.
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Ayrıntılar için L</DAHA FAZLASI> bölümündeki Japonca makaleyi okuyun.
 =head1 EMACS
 
 Emacs düzenleyicisinden C<xlate> komutunu kullanmak için depoda bulunan F<xlate.el> dosyasını yükleyin. C<xlate-region> işlevi verilen bölgeyi çevirir. Varsayılan dil C<EN-US>'dir ve dil belirtmek için ön ek argümanını kullanabilirsiniz.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

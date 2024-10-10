@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        \`\`\`markdown
+        \`\`\`html
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        This means:
+        &lt;div style="background-color: #f4f4f4; color: #333; padding: 10px; margin: 10px 0;">
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Docker와 make 옵션을 결합하여 Docker 환경에서 make를 실행할 수�
 # EMACS
 
 Emacs 편집기에서 `xlate` 명령을 사용하려면 저장소에 포함된 `xlate.el` 파일을 로드하십시오. `xlate-region` 함수는 지정된 영역을 번역합니다. 기본 언어는 `EN-US`이며 접두사 인수로 언어를 지정할 수 있습니다.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

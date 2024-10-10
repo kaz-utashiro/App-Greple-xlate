@@ -140,12 +140,12 @@
       "Μπορείτε να ανακτήσετε το αρχικό αρχείο με την επόμενη εντολή L<sed(1)>.\n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "```markdown\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "```html\n"
    ],
    [
-      "This means:\n",
-      "Αυτό σημαίνει:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "<div class=\"original\">\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

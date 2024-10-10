@@ -12,7 +12,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ C<xtxt> 以外の以下の形式は、翻訳される部分が行のコレクシ
 
 =item B<colon>, I<:::::::>
 
-オリジナルと変換されたテキストは、マークダウンのB<div>ブロックスタイル表記で印刷されます。
+オリジナルと翻訳されたテキストは、マークダウンのカスタムコンテナスタイルで出力されます。
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ C<xtxt> 以外の以下の形式は、翻訳される部分が行のコレクシ
     translated Japanese text
     :::::::
 
-これは次のような意味です：
+上記のテキストはHTMLで以下のように翻訳されます。
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ C<xlate -GC>のように実行すると、現在の作業中のGitリポジト�
 =head1 EMACS
 
 リポジトリに含まれるF<xlate.el>ファイルをロードして、EmacsエディタからC<xlate>コマンドを使用します。C<xlate-region>関数は指定された領域を翻訳します。デフォルトの言語はC<EN-US>で、プレフィックス引数を使用して言語を指定できます。  
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

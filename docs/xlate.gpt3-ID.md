@@ -10,7 +10,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -151,7 +151,7 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
             translated Japanese text
             :::::::
 
-        Ini berarti:
+        &lt;div class="original">
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Baca artikel Jepang di bagian ["LIHAT JUGA"](#lihat-juga) untuk detailnya.
 # EMACS
 
 Muat file `xlate.el` yang disertakan dalam repositori untuk menggunakan perintah `xlate` dari editor Emacs. Fungsi `xlate-region` menerjemahkan wilayah yang diberikan. Bahasa default adalah `EN-US` dan Anda dapat menentukan bahasa dengan memanggilnya dengan argumen awalan.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

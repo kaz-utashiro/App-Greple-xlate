@@ -10,7 +10,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     - **colon**, _:::::::_
 
-        Orijinal ve dönüştürülmüş metin markdown **div** blok stili gösteriminde yazdırılır.
+        Orijinal ve çevrilmiş metin, markdown'un özel kapsayıcı stilinde çıktı olarak verilir.
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
             translated Japanese text
             :::::::
 
-        Bu şu anlama gelir:
+        Yukarıdaki metin HTML'de aşağıdakine çevrilecektir.
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Ayrıntılar için ["SEE ALSO"](#see-also) bölümündeki Japonca makaleyi okuyu
 # EMACS
 
 Emacs editöründen `xlate` komutunu kullanmak için depoda bulunan `xlate.el` dosyasını yükleyin. `xlate-region` fonksiyonu verilen bölgeyi çevirir. Varsayılan dil `EN-US`'dir ve prefix argümanı ile çağırarak dili belirtebilirsiniz.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

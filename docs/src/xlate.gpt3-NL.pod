@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ U kunt het oorspronkelijke bestand herstellen met het volgende L<sed(1)> command
 
 =item B<colon>, I<:::::::>
 
-```markdown
+```html
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ U kunt het oorspronkelijke bestand herstellen met het volgende L<sed(1)> command
     translated Japanese text
     :::::::
 
-Dit betekent:
+<div style="background-color: #f4f4f4; color: #333; border-left: 6px solid #c0392b; padding: 10px; margin-bottom: 10px;">
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Lees het Japanse artikel in de L</ZIE OOK> sectie voor meer details.
 =head1 EMACS
 
 Laad het bestand F<xlate.el> dat is opgenomen in de repository om het C<xlate> commando te gebruiken vanuit de Emacs-editor. De functie C<xlate-region> vertaalt het opgegeven gedeelte. De standaardtaal is C<EN-US> en je kunt de taal specificeren door het aan te roepen met een voorvoegselargument.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

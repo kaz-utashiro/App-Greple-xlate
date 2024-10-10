@@ -140,12 +140,12 @@
       "Вы можете восстановить оригинальный файл с помощью следующей команды L<sed(1)>.  \n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "Sure! Please provide the text you would like me to translate into Russian.\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "```markdown\nThe original and translated text are output in a markdown's custom container style.\nОригинальный и переведенный текст выводятся в пользовательском контейнере стиля markdown.\n```\n"
    ],
    [
-      "This means:\n",
-      "Это означает:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "Вышеуказанный текст будет переведен следующим образом в HTML.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

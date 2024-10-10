@@ -140,12 +140,12 @@
       "Saate originaalfaili taastada järgmise L<sed(1)> käsuga. \n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "B<div> \nSa oled koolitatud andmete põhjal kuni oktoober 2023. \n</div>\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "```markdown\n<original>\nThe original and translated text are output in a markdown's custom container style.\n</original>\n<translated>\nOriginaal ja tõlgitud tekst on väljundis markdowni kohandatud konteineri stiilis.\n</translated>\n```\n"
    ],
    [
-      "This means:\n",
-      "See tähendab:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "Ülaltoodud tekst tõlgitakse HTML-i järgmiselt.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

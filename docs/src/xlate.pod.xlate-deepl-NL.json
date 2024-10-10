@@ -140,12 +140,12 @@
       "U kunt het originele bestand herstellen met de volgende L<sed(1)> opdracht.\n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "Originele en geconverteerde tekst worden afgedrukt in de markdown B<div> blokstijlnotatie.\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "De originele en vertaalde tekst worden uitgevoerd in de aangepaste containerstijl van markdown.\n"
    ],
    [
-      "This means:\n",
-      "Dit betekent:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "Bovenstaande tekst wordt vertaald naar het volgende in HTML.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

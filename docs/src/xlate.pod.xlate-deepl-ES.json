@@ -140,12 +140,12 @@
       "Puede recuperar el archivo original con el siguiente comando L<sed(1)>.\n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "El texto original y el convertido se imprimen en la notación de estilo de bloque B<div> de markdown.\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "El texto original y el traducido salen en un estilo contenedor personalizado de markdown.\n"
    ],
    [
-      "This means:\n",
-      "Esto significa:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "El texto anterior se traducirá a lo siguiente en HTML.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

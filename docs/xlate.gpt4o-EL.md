@@ -10,7 +10,7 @@
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -146,7 +146,12 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        Sure! Please provide the text you would like me to translate into Greek.
+        \`\`\`markdown
+        &lt;custom-container>
+        The original and translated text are output in a markdown's custom container style.
+        Η αρχική και μεταφρασμένη κείμενο εξάγεται σε στυλ προσαρμοσμένου δοχείου του markdown.
+        &lt;/custom-container>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -155,7 +160,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        Αυτό σημαίνει:
+        Το παραπάνω κείμενο θα μεταφραστεί ως εξής σε HTML.
 
             <div class="ORIGINAL">
             original text
@@ -309,6 +314,12 @@ Version 0.41
 # EMACS
 
 Φορτώστε το αρχείο `xlate.el` που περιλαμβάνεται στο αποθετήριο για να χρησιμοποιήσετε την εντολή `xlate` από τον επεξεργαστή Emacs. Η συνάρτηση `xlate-region` μεταφράζει την καθορισμένη περιοχή. Η προεπιλεγμένη γλώσσα είναι `EN-US` και μπορείτε να καθορίσετε γλώσσα καλώντας την με προθετικό επιχείρημα.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

@@ -12,7 +12,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -229,8 +229,8 @@ You can recover the original file by next L<sed(1)> command.
 
 =item B<colon>, I<:::::::>
 
-Original and converted text are printed in the markdown B<div> block
-style notation.
+The original and translated text are output in a markdown's custom
+container style.
 
     ::::::: ORIGINAL
     original text
@@ -239,7 +239,7 @@ style notation.
     translated Japanese text
     :::::::
 
-This means:
+Above text will be translated to the following in HTML.
 
     <div class="ORIGINAL">
     original text
@@ -438,6 +438,10 @@ Load the F<xlate.el> file included in the repository to use C<xlate>
 command from Emacs editor.  C<xlate-region> function translate the
 given region.  Default language is C<EN-US> and you can specify
 language invoking it with prefix argument.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

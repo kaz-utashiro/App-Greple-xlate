@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,9 +168,10 @@ Anda dapat memulihkan file asli dengan perintah L<sed(1)> berikutnya.
 
 =item B<colon>, I<:::::::>
 
-B<div> 
-Teks asli dan teks yang dikonversi dicetak dalam notasi gaya blok markdown B<div>. 
-</div>
+```markdown
+The original and translated text are output in a markdown's custom container style.
+Teks asli dan terjemahan dikeluarkan dalam gaya wadah khusus markdown.
+```
 
     ::::::: ORIGINAL
     original text
@@ -179,7 +180,7 @@ Teks asli dan teks yang dikonversi dicetak dalam notasi gaya blok markdown B<div
     translated Japanese text
     :::::::
 
-Ini berarti:
+Teks di atas akan diterjemahkan menjadi yang berikut dalam HTML.
 
     <div class="ORIGINAL">
     original text
@@ -348,6 +349,10 @@ Baca artikel Jepang di bagian L</SEE ALSO> untuk detail.
 =head1 EMACS
 
 Muat file F<xlate.el> yang disertakan dalam repositori untuk menggunakan perintah C<xlate> dari editor Emacs. Fungsi C<xlate-region> menerjemahkan wilayah yang diberikan. Bahasa default adalah C<EN-US> dan Anda dapat menentukan bahasa dengan memanggilnya dengan argumen prefiks.  
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

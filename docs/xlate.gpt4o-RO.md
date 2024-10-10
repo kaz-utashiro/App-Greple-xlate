@@ -10,7 +10,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -158,7 +158,12 @@ Această interfață este experimentală și supusă modificărilor în viitor.
 
     - **colon**, _:::::::_
 
-        Sure! Please provide the text you would like me to translate into Romanian.
+        \`\`\`markdown
+        &lt;custom-container>
+        The original and translated text are output in a markdown's custom container style.
+        Textul original și tradus sunt afișate într-un stil personalizat de container markdown.
+        &lt;/custom-container>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -167,7 +172,7 @@ Această interfață este experimentală și supusă modificărilor în viitor.
             translated Japanese text
             :::::::
 
-        Acest lucru înseamnă:
+        Textul de mai sus va fi tradus în următorul format HTML.
 
             <div class="ORIGINAL">
             original text
@@ -324,6 +329,12 @@ Citiți articolul japonez din secțiunea ["SEE ALSO"](#see-also) pentru detalii.
 Încărcați fișierul `xlate.el` inclus în depozit pentru a folosi comanda `xlate` din editorul Emacs.  
 Funcția `xlate-region` traduce regiunea dată.  
 Limba implicită este `EN-US` și puteți specifica limba invocând-o cu un argument prefix.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

@@ -10,7 +10,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        Το αρχικό και το μετασχηματισμένο κείμενο εκτυπώνονται με τη σημειογραφία μπλοκ markdown **div**.
+        Το πρωτότυπο και το μεταφρασμένο κείμενο εξάγονται με το προσαρμοσμένο στυλ δοχείου markdown.
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        Αυτό σημαίνει ότι:
+        Το παραπάνω κείμενο θα μεταφραστεί στα ακόλουθα σε HTML.
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Version 0.41
 # EMACS
 
 Φορτώστε το αρχείο `xlate.el` που περιλαμβάνεται στο αποθετήριο για να χρησιμοποιήσετε την εντολή `xlate` από τον επεξεργαστή Emacs. Η συνάρτηση `xlate-region` μεταφράζει τη δεδομένη περιοχή. Η προεπιλεγμένη γλώσσα είναι η `EN-US` και μπορείτε να καθορίσετε τη γλώσσα που θα την καλέσετε με το όρισμα prefix.
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

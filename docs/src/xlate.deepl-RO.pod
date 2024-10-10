@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ Puteți recupera fișierul original prin următoarea comandă L<sed(1)>.
 
 =item B<colon>, I<:::::::>
 
-Textul original și cel convertit sunt tipărite în notarea stilului de bloc markdown B<div>.
+Textul original și cel tradus sunt editate într-un stil de container personalizat markdown.
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ Textul original și cel convertit sunt tipărite în notarea stilului de bloc ma
     translated Japanese text
     :::::::
 
-Aceasta înseamnă că:
+Textul de mai sus va fi tradus în următoarele în HTML.
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Citiți articolul japonez din secțiunea L</SEE ALSO> pentru detalii.
 =head1 EMACS
 
 Încărcați fișierul F<xlate.el> inclus în depozit pentru a utiliza comanda C<xlate> din editorul Emacs. Funcția C<xlate-region> traduce regiunea dată. Limba implicită este C<EN-US> și puteți specifica limba invocând-o cu argumentul prefix.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

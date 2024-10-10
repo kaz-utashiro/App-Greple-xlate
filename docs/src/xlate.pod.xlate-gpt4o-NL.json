@@ -140,12 +140,12 @@
       "Je kunt het originele bestand herstellen met de volgende L<sed(1)> opdracht.  \n"
    ],
    [
-      "Original and converted text are printed in the markdown B<div> block style notation.\n",
-      "Sure! Please provide the text you would like me to translate into Dutch.\n"
+      "The original and translated text are output in a markdown's custom container style.\n",
+      "```markdown\n<custom-container>\nThe original and translated text are output in a markdown's custom container style.\nDe originele en vertaalde tekst worden weergegeven in een aangepaste containerstijl van markdown.\n</custom-container>\n```\n"
    ],
    [
-      "This means:\n",
-      "Dit betekent:\n"
+      "Above text will be translated to the following in HTML.\n",
+      "Bovenstaande tekst zal in HTML als volgt worden vertaald.\n"
    ],
    [
       "Number of colon is 7 by default. If you specify colon sequence like C<:::::>, it is used instead of 7 colons.\n",

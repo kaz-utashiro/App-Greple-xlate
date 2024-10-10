@@ -10,7 +10,7 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,12 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        Sure! Please provide the text you would like me to translate into Chinese.
+        \`\`\`markdown
+        &lt;custom-container>
+        The original and translated text are output in a markdown's custom container style.
+        原文和翻译的文本以Markdown的自定义容器样式输出。
+        &lt;/custom-container>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +156,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        这意味着：
+        以上文本将被翻译为以下HTML。
 
             <div class="ORIGINAL">
             original text
@@ -302,6 +307,12 @@ Version 0.41
 # EMACS
 
 加载存储库中包含的`xlate.el`文件，以便从Emacs编辑器使用`xlate`命令。`xlate-region`函数翻译给定区域。默认语言为`EN-US`，您可以通过调用前缀参数指定语言。  
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

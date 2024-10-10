@@ -12,7 +12,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ Sie können die ursprüngliche Datei mit dem nächsten L<sed(1)>-Befehl wiederhe
 
 =item B<colon>, I<:::::::>
 
-```md
+```html
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ Sie können die ursprüngliche Datei mit dem nächsten L<sed(1)>-Befehl wiederhe
     translated Japanese text
     :::::::
 
-Dies bedeutet:
+<div class="original">
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Lesen Sie den japanischen Artikel im Abschnitt "Siehe auch" für weitere Details
 =head1 EMACS
 
 Laden Sie die Datei F<xlate.el> aus dem Repository, um den Befehl C<xlate> im Emacs-Editor zu verwenden. Die Funktion C<xlate-region> übersetzt den angegebenen Bereich. Die Standardsprache ist C<EN-US>, und Sie können die Sprache mit einem Präfixargument angeben.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

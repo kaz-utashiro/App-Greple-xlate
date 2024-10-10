@@ -10,7 +10,7 @@ App::Greple::xlate - tõlke toetuse moodul greple jaoks
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,9 +142,14 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     - **colon**, _:::::::_
 
-        **div** 
-        Sa oled koolitatud andmete põhjal kuni oktoober 2023. 
-        &lt;/div>
+        \`\`\`markdown
+        &lt;original>
+        The original and translated text are output in a markdown's custom container style.
+        &lt;/original>
+        &lt;translated>
+        Originaal ja tõlgitud tekst on väljundis markdowni kohandatud konteineri stiilis.
+        &lt;/translated>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -153,7 +158,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
             translated Japanese text
             :::::::
 
-        See tähendab:
+        Ülaltoodud tekst tõlgitakse HTML-i järgmiselt.
 
             <div class="ORIGINAL">
             original text
@@ -307,6 +312,12 @@ Lugege jaapani keeles artiklit ["SEE ALSO"](#see-also) jaotises üksikasjade jao
 # EMACS
 
 Laadige hoidlas sisalduv `xlate.el` fail, et kasutada `xlate` käsku Emacsi redigeerijast. `xlate-region` funktsioon tõlgib antud piirkonna. Vaikimisi keel on `EN-US` ja saate keelt määrata, kutsudes seda esitusargumendiga.  
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

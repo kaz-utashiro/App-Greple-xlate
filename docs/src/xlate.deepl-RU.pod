@@ -12,7 +12,7 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -168,7 +168,7 @@ Version 0.41
 
 =item B<colon>, I<:::::::>
 
-Оригинальный и преобразованный текст печатаются в блочном стиле markdown B<div>.
+Оригинальный и переведенный текст выводятся в пользовательском стиле контейнера markdown.
 
     ::::::: ORIGINAL
     original text
@@ -177,7 +177,7 @@ Version 0.41
     translated Japanese text
     :::::::
 
-Это означает:
+Приведенный выше текст будет переведен в HTML следующим образом.
 
     <div class="ORIGINAL">
     original text
@@ -343,6 +343,10 @@ Version 0.41
 =head1 EMACS
 
 Загрузите файл F<xlate.el>, включенный в репозиторий, чтобы использовать команду C<xlate> из редактора Emacs. Функция C<xlate-region> переводит заданный регион. Язык по умолчанию - C<EN-US>, и вы можете указать язык, вызывая ее с помощью аргумента prefix.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

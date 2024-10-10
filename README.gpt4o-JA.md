@@ -10,7 +10,7 @@ App::Greple::xlate - grepleの翻訳サポートモジュール
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,12 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
 
     - **colon**, _:::::::_
 
-        **div**オリジナルと変換されたテキストは、マークダウン**div**ブロックスタイルの表記で印刷されます。&lt;/div>
+        \`\`\`markdown
+        &lt;custom-container>
+        The original and translated text are output in a markdown's custom container style.
+        元のテキストと翻訳されたテキストは、マークダウンのカスタムコンテナスタイルで出力されます。
+        &lt;/custom-container>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +156,7 @@ Perlのpodスタイルで書かれたドキュメント内の通常のテキス�
             translated Japanese text
             :::::::
 
-        これは意味します：
+        上記のテキストは、HTMLで以下のように翻訳されます。
 
             <div class="ORIGINAL">
             original text
@@ -303,6 +308,12 @@ DockerとMakeオプションを組み合わせて、Docker環境でMakeを実行
 # EMACS
 
 リポジトリに含まれる`xlate.el`ファイルを読み込んで、Emacsエディタから`xlate`コマンドを使用します。`xlate-region`関数は指定された領域を翻訳します。デフォルトの言語は`EN-US`で、プレフィックス引数を使用して言語を指定できます。  
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

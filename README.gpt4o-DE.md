@@ -10,7 +10,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,12 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
 
     - **colon**, _:::::::_
 
-        Sure! Please provide the text you would like me to translate into German.
+        \`\`\`markdown
+        &lt;custom-container>
+        The original and translated text are output in a markdown's custom container style.
+        Der ursprüngliche und übersetzte Text wird in einem benutzerdefinierten Containerstil von Markdown ausgegeben.
+        &lt;/custom-container>
+        \`\`\`
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +156,7 @@ Diese Schnittstelle ist experimentell und kann in Zukunft Änderungen unterliege
             translated Japanese text
             :::::::
 
-        Das bedeutet:
+        Der obige Text wird in HTML wie folgt übersetzt.
 
             <div class="ORIGINAL">
             original text
@@ -306,6 +311,12 @@ Lesen Sie den japanischen Artikel im ["SEE ALSO"](#see-also) Abschnitt für Deta
 # EMACS
 
 Laden Sie die `xlate.el` Datei, die im Repository enthalten ist, um den `xlate` Befehl aus dem Emacs-Editor zu verwenden. Die `xlate-region` Funktion übersetzt den angegebenen Bereich. Die Standardsprache ist `EN-US` und Sie können die Sprache angeben, indem Sie sie mit einem Präfix-Argument aufrufen.  
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 

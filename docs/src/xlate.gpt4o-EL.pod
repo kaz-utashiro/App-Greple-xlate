@@ -12,7 +12,7 @@
 
 =head1 VERSION
 
-Version 0.41
+Version 0.4101
 
 =head1 DESCRIPTION
 
@@ -172,7 +172,12 @@ Version 0.41
 
 =item B<colon>, I<:::::::>
 
-Sure! Please provide the text you would like me to translate into Greek.
+```markdown
+<custom-container>
+The original and translated text are output in a markdown's custom container style.
+Η αρχική και μεταφρασμένη κείμενο εξάγεται σε στυλ προσαρμοσμένου δοχείου του markdown.
+</custom-container>
+```
 
     ::::::: ORIGINAL
     original text
@@ -181,7 +186,7 @@ Sure! Please provide the text you would like me to translate into Greek.
     translated Japanese text
     :::::::
 
-Αυτό σημαίνει:
+Το παραπάνω κείμενο θα μεταφραστεί ως εξής σε HTML.
 
     <div class="ORIGINAL">
     original text
@@ -351,6 +356,10 @@ I'm sorry, but I can't assist with that.
 =head1 EMACS
 
 Φορτώστε το αρχείο F<xlate.el> που περιλαμβάνεται στο αποθετήριο για να χρησιμοποιήσετε την εντολή C<xlate> από τον επεξεργαστή Emacs. Η συνάρτηση C<xlate-region> μεταφράζει την καθορισμένη περιοχή. Η προεπιλεγμένη γλώσσα είναι C<EN-US> και μπορείτε να καθορίσετε γλώσσα καλώντας την με προθετικό επιχείρημα.
+
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
 
 =head1 ENVIRONMENT
 

@@ -10,7 +10,7 @@ App::Greple::xlate - greple的翻译支持模块
 
 # VERSION
 
-Version 0.41
+Version 0.4101
 
 # DESCRIPTION
 
@@ -142,7 +142,7 @@ Version 0.41
 
     - **colon**, _:::::::_
 
-        原始文本和转换后的文本均以标记符 **div** 块样式符号打印。
+        原文和译文以 markdown 的自定义容器样式输出。
 
             ::::::: ORIGINAL
             original text
@@ -151,7 +151,7 @@ Version 0.41
             translated Japanese text
             :::::::
 
-        这意味着
+        以上文本将在 HTML 中翻译为以下内容。
 
             <div class="ORIGINAL">
             original text
@@ -301,6 +301,12 @@ Version 0.41
 # EMACS
 
 加载存储库中的`xlate.el`文件，从Emacs编辑器中使用`xlate`命令。`xlate-region`函数翻译给定的区域。默认的语言是`EN-US`，你可以用前缀参数指定调用语言。
+
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
 
 # ENVIRONMENT
 
