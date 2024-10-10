@@ -443,6 +443,10 @@ command from Emacs editor.  C<xlate-region> function translate the
 given region.  Default language is C<EN-US> and you can specify
 language invoking it with prefix argument.
 
+=for html <p>
+<img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+</p>
+
 =head1 ENVIRONMENT
 
 =over 7

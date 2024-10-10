@@ -398,6 +398,12 @@ command from Emacs editor.  `xlate-region` function translate the
 given region.  Default language is `EN-US` and you can specify
 language invoking it with prefix argument.
 
+<div>
+    <p>
+    <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/emacs.png">
+    </p>
+</div>
+
 # ENVIRONMENT
 
 - DEEPL\_AUTH\_KEY
