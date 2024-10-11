@@ -89,6 +89,7 @@ get_ip() {
 
 repository=tecolicom/xlate
 hostname=
+autoremove=yes
 interactive=yes
 version=
 workdir=/work
@@ -158,8 +159,9 @@ do
 	    : ${hostname:=$(echo ${container} | sed -e s:.*/:: -e s/:.*//)}
 	    command+=(${1+"$@"})
 	    [ ${#ENV[@]} -gt 0 ] && ENV_PATTERN="$(env_pattern ${ENV[@]})"
-	    exec docker run --rm \
+	    exec docker run \
 		 -e XLATE_RUNNING_ON_DOCKER=1 \
+		 ${autoremove:+--rm} \
 		 ${interactive:+-it} \
 		 ${read_only:+--read-only} \
 		 ${hostname:+--hostname "${hostname}"} \
