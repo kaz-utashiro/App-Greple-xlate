@@ -44,7 +44,6 @@ define pod <<"=cut"
 	-R   mount read-only
 	-E # specify environment variable to be inherited
 	-I # docker image or version (default: tecolicom/xlate:version)
-#	-L   use the latest version
 #	-V # specify directory to be mounted (default: current directory)
 
 	-D * run xlate on the container with the rest parameters
@@ -117,13 +116,14 @@ do
 	d)       debug=yes ; set -x ;;
 	B) interactive= ;;
 	V)      volume="$OPTARG" ;;
-	L)     version=:latest ;;
 	R)  mount_mode=ro ;;
 	I)
-	    case "$OPTARG" in
-		[0-9]*|latest) version=:"$OPTARG" ;;
-		*) container="$OPTARG" ;;
-	    esac
+	    if [[ "$OPTARG" =~ ^(v?[0-9.]*|latest)$ ]]
+	    then
+		version=:"$OPTARG"
+	    else 
+		container="$OPTARG"
+	    fi
 	    ;;
 	E)
 	    DEFAULT_ENV+=$'\n'"$OPTARG" ;;
