@@ -107,7 +107,7 @@ DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
 	DEEPL_AUTH_KEY
 	OPENAI_API_KEY
 EOF
-)"
+)"$'\n'
 
 declare -a ENV
 
@@ -127,7 +127,7 @@ do
 	    fi
 	    ;;
 	E)
-	    DEFAULT_ENV+=$'\n'"$OPTARG" ;;
+	    DEFAULT_ENV+="$OPTARG"$'\n' ;;
 	G)
 	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
 	    if [ "${topdir:=$(git_topdir)}" ]
