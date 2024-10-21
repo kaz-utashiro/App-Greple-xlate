@@ -6,6 +6,8 @@ myname="${0##*/}"
 
 define pod <<"=cut"
 
+=encoding utf-8
+
 =head1 NAME
 
     xlate - translate CLI front-end for App::Greple::xlate module
@@ -60,6 +62,348 @@ define pod <<"=cut"
 =head1 VERSION
 
     Version 0.4101
+
+=head1 DESCRIPTION
+
+B<XLATE> is a versatile command-line tool designed as a user-friendly
+frontend for the B<greple> C<-Mxlate> module, simplifying the process
+of multilingual automatic translation using various API services.  It
+streamlines the interaction with the underlying module, making it
+easier for users to handle diverse translation needs across multiple
+file formats and languages.
+
+A key feature of B<xlate> is its seamless integration with Docker
+environments, allowing users to quickly set up and use the tool
+without complex environment configurations.  This Docker support
+ensures consistency across different systems and simplifies
+deployment, benefiting both individual users and teams working on
+translation projects.
+
+B<xlate> supports various document formats, including C<.docx>,
+C<.pptx>, and C<.md> files, and offers multiple output formats to suit
+different requirements.  By combining Docker capabilities with
+built-in make functionality, B<xlate> enables powerful automation of
+translation workflows.  This combination facilitates efficient batch
+processing of multiple files, streamlined project management, and easy
+integration into continuous integration/continuous deployment (CI/CD)
+pipelines, significantly enhancing productivity in large-scale
+localization efforts.
+
+=head2 Basic Usage
+
+To translate a file, use the following command:
+
+    xlate -t <target_language> <file>
+
+For example, to translate a file from English to Japanese:
+
+    xlate -t JA example.txt
+
+=head2 Translation Engines
+
+xlate supports multiple translation engines.  Use the -e option to
+specify the engine:
+
+    xlate -e deepl -t JA example.txt
+
+Available engines: deepl, gpt3, gpt4, gpt4o
+
+=head2 Output Formats
+
+Various output formats are supported. Use the -o option to specify the format:
+
+    xlate -o cm -t JA example.txt
+
+Available formats: xtxt, cm, ifdef, space, space+, colon
+
+=head2 Docker Support
+
+B<xlate> offers seamless integration with Docker, providing a powerful
+and flexible environment for translation tasks.  This approach
+combines the strengths of xlate's translation capabilities with
+Docker's containerization benefits.
+
+=head3 Key Concepts
+
+=over 4
+
+=item B<Containerized Environment>
+
+By running xlate in a Docker container, you ensure a consistent and
+isolated environment for all translation tasks.  This eliminates
+issues related to system dependencies or conflicting software
+versions.
+
+=item B<Integration with Make>
+
+The Docker functionality can be combined with xlate's B<make> feature,
+allowing for complex, multi-file translation projects to be managed
+efficiently within a containerized environment. For example:
+
+    xlate -DM -t 'EN FR DE' project_files/*.docx
+
+This command runs B<xlate> in a Docker container, utilizing make to
+process multiple files with specified target languages.
+
+=item B<Flexible Mount Options>
+
+B<xlate> provides options to mount different directories, including
+Git repositories (C<-G>) and read-only mounts (C<-R>).  This allows
+for flexible workflow integration while maintaining data security.
+
+=item B<Environment Variable Handling>
+
+With the ability to pass specific environment variables into the
+container (C<-E>), you can easily manage API keys and other
+configuration settings without modifying the container itself.
+
+=item B<Interactive and Batch Modes>
+
+xlate supports both interactive (C<-C>) and non-interactive (C<-B>)
+modes when running in Docker, catering to different use cases from
+development to automated processing.
+
+=back
+
+=head2 Make Support
+
+xlate utilizes GNU Make for automating and managing translation tasks.
+This feature is particularly useful for handling translations of
+multiple files or to different languages.
+
+To use the make feature:
+
+    xlate -M [options] [target]
+
+xlate provides a specialized Makefile (F<XLATE.mk>) that defines
+translation tasks and rules.  This file is located in the xlate
+library directory and is automatically used when the -M option is
+specified.
+
+Example usage:
+
+    xlate -M -t 'EN FR DE' document.docx
+
+This command will use make to translate document.docx to English,
+French, and German, following the rules defined in XLATE.mk.
+
+The C<-n> option can be used with C<-M> for a dry-run, showing what
+actions would be taken without actually performing the translations:
+
+    xlate -M -n -t 'EN FR DE' document.docx
+
+Users can customize the translation process using parameter files:
+
+=over 4
+
+=item F<*.LANG>:
+
+Specifies target languages for a specific file
+
+=item F<*.FORMAT>:
+
+Defines output formats for a specific file
+
+=item F<*.ENGINE>:
+
+Selects the translation engine for a specific file
+
+=back
+
+For more detailed information on the make functionality and available
+rules, refer to the F<XLATE.mk> file in the xlate library directory.
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<-h>
+
+Show help message.
+
+=item B<-v>
+
+Show version information.
+
+=item B<-d>
+
+Enable debug mode.
+
+=item B<-n>
+
+Perform a dry-run without making any changes.
+
+=item B<-a>
+
+Use API for translation.
+
+=item B<-c>
+
+Check translation area without performing translation.
+
+=item B<-r>
+
+Refresh the translation cache.
+
+=item B<-u>
+
+Force update of the translation cache.
+
+=item B<-s>
+
+Run in silent mode.
+
+=item B<-e> I<engine>
+
+Specify the translation engine to use.
+
+=item B<-p> I<pattern>
+
+Specify a pattern to determine the translation area.
+
+=item B<-x> I<file>
+
+Specify a file containing mask patterns.
+
+=item B<-w> I<width>
+
+Wrap lines at the specified width.
+
+=item B<-o> I<format>
+
+Specify the output format.
+
+=item B<-f> I<lang>
+
+Specify the source language (currently ignored).
+
+=item B<-t> I<lang>
+
+Specify the target language (required).
+
+=item B<-m> I<length>
+
+Specify the maximum length per API call.
+
+=item B<-l> I<file>
+
+Show library files (XLATE.mk, xlate.el).
+
+=back
+
+=head2 MAKE OPTIONS
+
+=over 7
+
+=item B<-M>
+
+Run make.
+
+=item B<-n>
+
+Dry run.
+
+=back
+
+=head2 DOCKER OPTIONS
+
+=over 7
+
+=item B<-G>
+
+Mount L<git(1)> top-level directory when running in Docker.
+
+=item B<-B>
+
+Run in non-interactive (batch) mode in Docker.
+
+=item B<-R>
+
+Mount directory as read-only in Docker.
+
+=item B<-E> I<var>
+
+Specify environment variable to be inherited in Docker.
+
+=item B<-I> I<image>
+
+Specify Docker image or version.
+
+=item B<-D>
+
+Run xlate on the Docker container with the rest of the parameters.
+
+=item B<-C>
+
+Run the following command on the Docker container, or run a shell if
+no command is provided.
+
+=back
+
+=head1 ENVIRONMENT
+
+=over 4
+
+=item DEEPL_AUTH_KEY
+
+Authentication key for DeepL API.
+
+=item OPENAI_API_KEY
+
+API key for OpenAI (used for GPT-based engines).
+
+=back
+
+=head1 FILES
+
+=over 4
+
+=item F<*.LANG>
+
+Specifies translation languages.
+
+=item F<*.FORMAT>
+
+Specifies translation format.
+
+=item F<*.ENGINE>
+
+Specifies translation engine.
+
+=back
+
+=head1 EXAMPLES
+
+1. Translate a Word document to English:
+
+   xlate -DMa -t EN-US example.docx
+
+2. Translate to multiple languages and formats:
+
+   xlate -M -o 'xtxt ifdef' -t 'EN-US KO ZH' example.docx
+
+3. Run a command in Docker container:
+
+   xlate -C sdif -V --nocdif example.EN-US.cm | less
+
+4. Translate without using API (via clipboard):
+
+   xlate -t JA README.md
+
+=head1 SEE ALSO
+
+L<App::Greple::xlate>
+
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
+=head1 LICENSE
+
+Copyright © 2023-2024 Kazumasa Utashiro.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =cut
 
