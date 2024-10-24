@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.42 2024-10-24T15:44:24Z
+
+    - introduce "xlate -U" option
+    - add AI generated manual for "xlate"
+
 0.4101 2024-10-10T08:17:43Z
 
     - duplication in unmasking process can happen
