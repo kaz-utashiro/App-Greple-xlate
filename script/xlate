@@ -42,8 +42,9 @@ define pod <<"=cut"
 
     Docker options
 	-G   mount git top-level directory
-	-B   run in non-interactive (batch) mode
 	-R   mount read-only
+	-U   do not mount
+	-B   run in non-interactive (batch) mode
 	-E # specify environment variable to be inherited
 	-I # docker image or version (default: tecolicom/xlate:version)
 #	-V # specify directory to be mounted (default: current directory)
@@ -307,19 +308,28 @@ Dry run.
 
 =head2 DOCKER OPTIONS
 
+Docker feature is invoked by the B<-D> or B<-C> option.  These are
+exclusive, so only one of them can be used.  Also, once these two
+options appear, subsequent options are not interpreted, so they should
+always be specified last.
+
 =over 7
 
 =item B<-G>
 
 Mount L<git(1)> top-level directory when running in Docker.
 
-=item B<-B>
-
-Run in non-interactive (batch) mode in Docker.
-
 =item B<-R>
 
 Mount directory as read-only in Docker.
+
+=item B<-U>
+
+Do not mount any directory.
+
+=item B<-B>
+
+Run in non-interactive (batch) mode in Docker.
 
 =item B<-E> I<var>
 
@@ -433,6 +443,7 @@ get_ip() {
 
 repository=tecolicom/xlate
 hostname=
+mount=yes
 autoremove=yes
 interactive=yes
 version=
@@ -455,11 +466,12 @@ EOF
 
 declare -a ENV
 
-while getopts :${EXOPT:=dBI:V:T:LRE:GCD} OPT
+while getopts :${EXOPT:=dBUI:V:T:LRE:GCD} OPT
 do
     case $OPT in
 	d)       debug=yes ; set -x ;;
 	B) interactive= ;;
+	U)       mount= ;;
 	V)      volume="$OPTARG" ;;
 	R)  mount_mode=ro ;;
 	I)
@@ -510,8 +522,8 @@ do
 		 ${read_only:+--read-only} \
 		 ${hostname:+--hostname "${hostname}"} \
 		 ${localtime:+-v ${localtime}:/etc/localtime:ro} \
-		 -v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
-		 -w "${workdir}${cd_path}" \
+		 ${mount:+-v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
+		 	  -w "${workdir}${cd_path}"} \
 		 ${display:+-e DISPLAY="$display"} \
 		 ${DEFAULT_ENV:+--env-file <(echo "$DEFAULT_ENV")} \
 		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
