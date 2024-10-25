@@ -66,7 +66,7 @@ define pod <<"=cut"
 
 =cut
 
-my_version=$(awk '$1=="Version"{print $2; exit}' <<< "$pod")
+my_version=$(awk '$1=="Version"{print $2; exit}' <<< $pod)
 
 git_topdir() {
     [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == true ] || return
@@ -227,7 +227,7 @@ do
 		-e '/^\n*(#|=encoding)/d' \
 		-e 's/^(\n*)=[a-z]+[0-9]* */\1/' \
 		-e '/Version/q' \
-		<<< "$pod"
+		<<< $pod
 	    exit
 	    ;;
 	v)
