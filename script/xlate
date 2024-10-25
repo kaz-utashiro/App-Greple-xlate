@@ -224,7 +224,7 @@ do
 	h)
 	    sed -r \
 		-e '/^$/N' \
-		-e '/^\n*#/d' \
+		-e '/^\n*(#|=encoding)/d' \
 		-e 's/^(\n*)=[a-z]+[0-9]* */\1/' \
 		-e '/Version/q' \
 		<<< "$pod"
