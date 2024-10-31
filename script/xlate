@@ -33,7 +33,7 @@ define pod <<"=cut"
 	-t # to lang (required, no default)
 	-m # max length per API call
 	-l # show library files (XLATE.mk, xlate.el)
-        --   terminate option parsing
+        --   end of option
         N.B. default is marked as *
 
     Make options
@@ -42,23 +42,22 @@ define pod <<"=cut"
 
     Docker options
 	-G   mount git top-level directory
-	-R   mount read-only
+	-H   mount home directory
+	-V # specify mount directory
 	-U   do not mount
+	-R   mount read-only
 	-B   run in non-interactive (batch) mode
 	-E # specify environment variable to be inherited
 	-I # docker image or version (default: tecolicom/xlate:version)
-#	-V # specify directory to be mounted (default: current directory)
 
 	-D * run xlate on the container with the rest parameters
 	-C * run following command on the container, or run shell
-	N.B. -D/-C terminates option parsing
+	N.B. -D/-C terminates option handling
 
     Control Files:
 	*.LANG    translation languates
 	*.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)
 	*.ENGINE  translation engine (deepl, gpt3, gpt4, gpt4o)
-
-#	marked as # options are experimental
 
 =head1 VERSION
 
@@ -90,6 +89,7 @@ get_ip() {
     echo -n $ip
 }
 
+pwd=$(pwd)
 repository=tecolicom/xlate
 hostname=
 mount=yes
@@ -115,13 +115,16 @@ EOF
 
 declare -a ENV
 
-while getopts :${EXOPT:=dBUI:V:T:LRE:GCD} OPT
+##
+## Docker
+##
+while getopts :d${DOCKER_OPT:=dBUI:HV:T:LRE:GCD} OPT
 do
+    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
 	d)       debug=yes ; set -x ;;
 	B) interactive= ;;
 	U)       mount= ;;
-	V)      volume="$OPTARG" ;;
 	R)  mount_mode=ro ;;
 	I)
 	    if [[ "$OPTARG" =~ ^(v?[0-9.]*|latest)$ ]]
@@ -132,21 +135,26 @@ do
 	    fi
 	    ;;
 	E)
-	    DEFAULT_ENV+="$OPTARG"$'\n' ;;
-	G)
-	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
-	    if [ "${topdir:=$(git_topdir)}" ]
+	    DEFAULT_ENV+="$OPTARG"$'\n'
+	    ;;
+	H|V|G)
+	    case $OPT in
+		 H)  volume="$HOME" ;;
+		 V)  volume="$OPTARG" ;;
+		 G)
+		     if [[ ${topdir:=$(git_topdir)} && $topdir != $pwd ]]
+		     then
+			 volume="$topdir"
+		     fi
+		     ;;
+	    esac
+	    if [[ $volume && $volume != $pwd ]]
 	    then
-		if [ "$topdir" != "${PWD:=$(pwd)}" ]
-		then
-		    echo "Mount $topdir to $workdir" >&2
-		    volume=$topdir
-		    cd_path=${PWD#$topdir}
-		fi
+		echo "Mount $volume to $workdir" >&2
+		[[ "${pwd#$volume/}" != $pwd ]] && relative="${pwd#$volume/}"
 	    fi
 	    ;;
 	C|D)
-	    [ "$XLATE_RUNNING_ON_DOCKER" ] && break
 	    if [ "$DISPLAY" ] && [ "${ip:=$(get_ip)}" ]
 	    then
 		display="$ip:0"
@@ -171,8 +179,8 @@ do
 		 ${read_only:+--read-only} \
 		 ${hostname:+--hostname "${hostname}"} \
 		 ${localtime:+-v ${localtime}:/etc/localtime:ro} \
-		 ${mount:+-v "${volume:-$(pwd)}:${workdir}:${mount_mode}" \
-		 	  -w "${workdir}${cd_path}"} \
+		 ${mount:+-v "${volume:-$pwd}:${workdir}:${mount_mode}" \
+		 	  -w "${workdir}${relative:+/${relative}}"} \
 		 ${display:+-e DISPLAY="$display"} \
 		 ${DEFAULT_ENV:+--env-file <(echo "$DEFAULT_ENV")} \
 		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
@@ -189,10 +197,11 @@ share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
 
 declare -a pattern
 
-while getopts "${EXOPT}"'Macrusne:w:o:f:t:m:x:p:l:hv' OPT
+while getopts "${DOCKER_OPT}"'Macrusne:w:o:f:t:m:x:p:l:hv' OPT
 do
     case $OPT in
-	[$EXOPT]) : ignore ;;
+	[$DOCKER_OPT]) : ;;
+	d)     debug=yes ; set -x ;;
 	M)  run_make=yes ;;
 	a)   use_api=yes ;;
 	c)     check=yes ;;
@@ -238,7 +247,9 @@ do
 done	
 shift $((OPTIND - 1))
 
-: run make
+##
+## Make
+##
 if [ "$run_make" == yes ]
 then
     declare -a opt
@@ -595,19 +606,32 @@ exclusive, so only one of them can be used.  Also, once these two
 options appear, subsequent options are not interpreted, so they should
 always be specified last.
 
+When running in a docker environment, the current directory is mounted
+by default.  If another directory is specified to be mounted, such as
+the git top directory or the home directory, it will still be moved to
+the current directory location within that tree and executed.
+
 =over 7
 
 =item B<-G>
 
 Mount L<git(1)> top-level directory when running in Docker.
 
-=item B<-R>
+=item B<-H>
 
-Mount directory as read-only in Docker.
+Mount user's home directory when running in Docker.
+
+=item B<-V>=I<directory>
+
+Specify directory to be mounted when running in Docker.
 
 =item B<-U>
 
 Do not mount any directory.
+
+=item B<-R>
+
+Mount directory as read-only in Docker.
 
 =item B<-B>
 
