@@ -260,6 +260,7 @@ then
 	 XLATE_DEBUG=$debug \
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
+	 XLATE_UPDATE=$update \
 	 ${engine:+XLATE_ENGINE=\""$engine"\"} \
 	 ${format:+XLATE_FORMAT=\""$format"\"} \
 	 ${files:+XLATE_FILES=\""$files"\"} \
