@@ -46,7 +46,6 @@ define pod <<"=cut"
 	-V # specify mount directory
 	-U   do not mount
 	-R   mount read-only
-	-B   run in non-interactive (batch) mode
 	-E # specify environment variable to be inherited
 	-I # docker image or version (default: tecolicom/xlate:version)
 
@@ -93,14 +92,12 @@ pwd=$(pwd)
 repository=tecolicom/xlate
 hostname=
 mount=yes
-autoremove=yes
-interactive=yes
 version=
 workdir=/work
 mount_mode=rw
 read_only=
 display=
-[ -e ${localtime:=/etc/localtime} ] || localtime=
+localtime=/etc/localtime
 
 DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
 	LANG TZ
@@ -110,6 +107,8 @@ DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
 	TERM_PROGRAM TERM_BGCOLOR COLORTERM
 	DEEPL_AUTH_KEY
 	OPENAI_API_KEY
+	ANTHROPIC_API_KEY
+	LLM_PERPLEXITY_KEY
 EOF
 )"$'\n'
 
@@ -123,7 +122,6 @@ do
     [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
 	d)       debug=yes ; set -x ;;
-	B) interactive= ;;
 	U)       mount= ;;
 	R)  mount_mode=ro ;;
 	I)
@@ -172,13 +170,14 @@ do
 	    : ${hostname:=$(echo ${container} | sed -e s:.*/:: -e s/:.*//)}
 	    command+=(${1+"$@"})
 	    [ ${#ENV[@]} -gt 0 ] && ENV_PATTERN="$(env_pattern ${ENV[@]})"
+	    declare dockopt=(--interactive --rm)
+	    [ -t 0 ]            && dockopt+=(--tty)
+	    [ -e "$localtime" ] && dockopt+=(-v $localtime:$localtime:ro)
 	    exec docker run \
+		 "${dockopt[@]}" \
 		 -e XLATE_RUNNING_ON_DOCKER=1 \
-		 ${autoremove:+--rm} \
-		 ${interactive:+-it} \
 		 ${read_only:+--read-only} \
 		 ${hostname:+--hostname "${hostname}"} \
-		 ${localtime:+-v ${localtime}:/etc/localtime:ro} \
 		 ${mount:+-v "${volume:-$pwd}:${workdir}:${mount_mode}" \
 		 	  -w "${workdir}${relative:+/${relative}}"} \
 		 ${display:+-e DISPLAY="$display"} \
@@ -451,12 +450,6 @@ With the ability to pass specific environment variables into the
 container (C<-E>), you can easily manage API keys and other
 configuration settings without modifying the container itself.
 
-=item B<Interactive and Batch Modes>
-
-xlate supports both interactive (C<-C>) and non-interactive (C<-B>)
-modes when running in Docker, catering to different use cases from
-development to automated processing.
-
 =back
 
 =head2 Make Support
@@ -632,10 +625,6 @@ Do not mount any directory.
 =item B<-R>
 
 Mount directory as read-only in Docker.
-
-=item B<-B>
-
-Run in non-interactive (batch) mode in Docker.
 
 =item B<-E> I<var>
 
