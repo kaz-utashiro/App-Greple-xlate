@@ -2,6 +2,12 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.43 2024-10-31T09:51:34Z
+
+    - install "llm" in Docker image
+    - inherit "-u" option to MAKE environment
+    - introduce "xlate -H" option to mount the home directory
+
 0.42 2024-10-24T15:44:24Z
 
     - introduce "xlate -U" option
