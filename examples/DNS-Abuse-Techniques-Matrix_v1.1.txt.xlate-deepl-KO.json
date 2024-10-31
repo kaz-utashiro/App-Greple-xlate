@@ -1,77 +1,302 @@
-{
-   "1. DGAs (Domain Generation Algorithms) – https://attack.mitre.org/techniques/T1568/002/\n" : "1. DGA(도메인 생성 알고리즘) - https://attack.mitre.org/techniques/T1568/002/\n",
-   "1. Registrars – an organization that allows registration of domains under a TLD - https://www.icann.org/en/icann-acronyms-and-terms/registrar-en\n" : "1. 등록기관 - TLD로 도메인을 등록할 수 있는 기관 - https://www.icann.org/en/icann-acronyms-and-terms/registrar-en\n",
-   "10. Device, OS, & Application Software Developers – Software developers who write the code or develop DNS resolver software or are responsible for updating an imported DNS resolver version in their software project.\n" : "10. 장치, OS 및 애플리케이션 소프트웨어 개발자 - 코드를 작성하거나 DNS 확인자 소프트웨어를 개발하거나 소프트웨어 프로젝트에서 가져온 DNS 확인자 버전을 업데이트할 책임이 있는 소프트웨어 개발자.\n",
-   "10. DoS against the DNS – Multiple systems sending malicious traffic to a target at the same time.\n" : "10. DNS에 대한 DoS - 여러 시스템이 동시에 대상에 악성 트래픽을 전송합니다.\n",
-   "11. DNS as a vector for DoS – \"Adversaries may attempt to cause a denial of service by reflecting a high-volume of network traffic to a target. This type of Network DoS takes advantage of a third-party server intermediary that hosts and will respond to a given spoofed source IP address. This third-party server is commonly termed a reflector. An adversary accomplishes a reflection attack by sending packets to reflectors with the spoofed address of the victim. Two prominent protocols that have enabled Reflection Amplification Floods are DNS and NTP through the use of several others in the wild have been documented.\" These Reflection and Amplification Floods can be directed against components of the DNS, like authoritative nameservers, rendering them unresponsive.” (https://attack.mitre.org/techniques/T1498/002/)\n" : "11. DoS의 매개체로서의 DNS - \"공격자는 대량의 네트워크 트래픽을 표적에 반영하여 서비스 거부를 일으킬 수 있습니다. 이러한 유형의 네트워크 DoS는 지정된 스푸핑된 소스 IP 주소를 호스팅하고 이에 응답하는 타사 서버 중개자를 이용합니다. 이 타사 서버를 일반적으로 리플렉터라고 합니다. 공격자는 피해자의 스푸핑된 주소가 포함된 패킷을 리플렉터로 전송하여 리플렉션 공격을 수행합니다. 반사 증폭 플러드를 가능하게 한 두 가지 대표적인 프로토콜은 DNS와 NTP이며, 이 외에도 여러 프로토콜을 사용한 반사 증폭 플러드가 문서화되어 있습니다.\" 이러한 반사 및 증폭 플러드는 권한 있는 네임서버와 같은 DNS 구성 요소로 향하여 응답하지 않게 만들 수 있습니다.\" (https://attack.mitre.org/techniques/T1498/002/)\n",
-   "11. Domain Registrants – “an individual or entity who registers a domain name” https://www.icann.org/en/icann-acronyms-and-terms/registrant-en. In the case of the malicious registration rows, this stakeholder is modeled as the actual human who made the malicious registration.\n" : "11. 도메인 등록자 - \"도메인 이름을 등록하는 개인 또는 법인\" https://www.icann.org/en/icann-acronyms-and-terms/registrant-en. 악의적인 등록 행의 경우, 이 이해관계자는 악의적인 등록을 한 실제 사람으로 모델링됩니다.\n",
-   "12. Dynamic DNS resolution (as obfuscation technique) – Adversaries may dynamically establish connections to command and control infrastructure to evade common detections and remediations. This may be achieved by using malware that shares a common algorithm with the infrastructure the adversary uses to receive the malware's communications. These calculations can be used to dynamically adjust parameters such as the domain name IP address or port number the malware uses for command and control. (https://attack.mitre.org/techniques/T1568/)\n" : "12. 동적 DNS 확인(난독화 기술) - 공격자는 일반적인 탐지 및 해결을 회피하기 위해 명령 및 제어 인프라에 동적으로 연결을 설정할 수 있습니다. 이는 공격자가 멀웨어의 통신을 수신하는 데 사용하는 인프라와 공통 알고리즘을 공유하는 멀웨어를 사용하여 달성할 수 있습니다. 이러한 계산은 멀웨어가 명령 및 제어에 사용하는 도메인 이름 IP 주소 또는 포트 번호와 같은 매개 변수를 동적으로 조정하는 데 사용될 수 있습니다. (https://attack.mitre.org/techniques/T1568/)\n",
-   "12. End User – Everyone who uses the Internet (who is not performing one of the other stakeholder capabilities listed).\n" : "12. 최종 사용자 - 인터넷을 사용하는 모든 사람(나열된 다른 이해관계자 기능 중 하나를 수행하지 않는 사람).\n",
-   "13. Dynamic DNS resolution: Fast flux (as obfuscation technique) – “Adversaries may use Fast Flux DNS to hide a command and control channel behind an array of rapidly changing IP addresses linked to a single domain resolution. This technique uses a fully qualified domain name with multiple IP addresses assigned to it which are swapped with high frequency using a combination of round robin IP addressing and short Time-To-Live (TTL) for a DNS resource record.” (https://attack.mitre.org/techniques/T1568/001/)\n" : "13. 동적 DNS 확인: 빠른 플럭스(난독화 기법) - \"공격자는 빠른 플럭스 DNS를 사용하여 단일 도메인 확인에 연결된 빠르게 변경되는 IP 주소 배열 뒤에 명령 및 제어 채널을 숨길 수 있습니다. 이 기법은 여러 개의 IP 주소가 할당된 정규화된 도메인 이름을 사용하며, 이 주소는 라운드 로빈 IP 주소 지정과 DNS 리소스 레코드에 대한 짧은 TTL(Time-To-Live)의 조합을 사용하여 높은 빈도로 교체됩니다.\" (https://attack.mitre.org/techniques/T1568/001/)\n",
-   "13. Law Enforcement and Public Safety Authorities – Government organizations with authority to enforce laws or act in the public interest. Such organizations typically become aware of an issue because of:\n" : "13. 법 집행 기관 및 공공 안전 기관 - 법률을 집행하거나 공익을 위해 행동할 권한이 있는 정부 기관. 이러한 기관은 일반적으로 다음과 같은 이유로 문제를 인지하게 됩니다:\n",
-   "14. CSIRTs / ISACs – Computer Security Incident Response Teams / Information Sharing and Analysis Centers. This column models exclusively the capability of the team or center. Each CSIRT and ISAC also is an end user of services, a registrant, may be a threat intel provider, etc. When the CSIRT or ISAC (organization) is performing those stakeholder capability, use those columns.\n" : "14. CSIRT/ISAC - 컴퓨터 보안 사고 대응팀/정보 공유 및 분석 센터. 이 열은 팀 또는 센터의 역량만을 모델링합니다. 각 CSIRT 및 ISAC는 서비스의 최종 사용자, 등록자, 위협 인텔리전스 제공자 등이 될 수도 있습니다. CSIRT 또는 ISAC(조직)이 이러한 이해관계자 역량을 수행하는 경우 해당 열을 사용하세요.\n",
-   "14. Infiltration and exfiltration via the DNS – Exfiltration via the DNS requires a delegated domain or, if the domain does not exist in the public DNS, the operation of a resolver preloaded with that domain's zone file information and configured to receive and respond to the queries sent by the compromised devices.\n" : "14. DNS를 통한 침투 및 유출 - DNS를 통한 유출에는 위임된 도메인이 필요하며, 도메인이 공용 DNS에 존재하지 않는 경우 해당 도메인의 영역 파일 정보가 미리 로드되어 있고 침해된 디바이스에서 보낸 쿼리를 수신하고 응답하도록 구성된 리졸버의 작동이 필요합니다.\n",
-   "15. Incident responder – The Computer Security Incident Response Team that is internal to the impacted organization.\n" : "15. 인시던트 대응자 - 영향을 받은 조직 내부에 있는 컴퓨터 보안 인시던트 대응팀입니다.\n",
-   "15. Malicious registration of (effective) second level domains – For example, before attacking a victim, adversaries purchase or register domains from an ICANN-accredited registrar that can be used during targeting. See also CAPEC-630.\n" : "15. (유효) 2단계 도메인의 악의적 등록 - 예를 들어, 공격자는 피해자를 공격하기 전에 ICANN이 인증한 등록기관으로부터 표적 공격에 사용할 수 있는 도메인을 구매하거나 등록합니다. CAPEC-630도 참조하세요.\n",
-   "16. Creation of malicious subdomains under dynamic DNS providers – Before attacking a victim, adversaries purchase or create domains from an entity other than a registrar or registry that provides subdomains under domains they own and control. See also https://en.wikipedia.org/wiki/Dynamic_DNS.\n" : "16. 동적 DNS 공급업체에서 악성 하위 도메인 생성 - 공격자는 피해자를 공격하기 전에 자신이 소유하고 관리하는 도메인 아래에 하위 도메인을 제공하는 등록기관 또는 레지스트리가 아닌 다른 기관으로부터 도메인을 구매하거나 생성합니다. https://en.wikipedia.org/wiki/Dynamic_DNS 참조.\n",
-   "17. Compromise of a non-DNS server to conduct abuse – Internet attack infrastructure is a broad category, and this covers any non-DNS server. Many compromised servers, such as web servers or mail servers, interact with the DNS or may be instrumental in conducting DNS abuse. For example, compromised mail servers are one technique that may be used to send phishing emails.\n" : "17. 악용을 위한 비 DNS 서버의 침해 - 인터넷 공격 인프라는 광범위한 범주이며, 여기에는 모든 비 DNS 서버가 포함됩니다. 웹 서버나 메일 서버와 같이 손상된 많은 서버는 DNS와 상호 작용하거나 DNS 남용을 수행하는 데 중요한 역할을 할 수 있습니다. 예를 들어, 손상된 메일 서버는 피싱 이메일을 보내는 데 사용될 수 있는 기술 중 하나입니다.\n",
-   "18. Spoofing or otherwise using unregistered domain names – In a context where a domain name is expected (such as the From header in mail or a URL in a web page or message body), supplying a domain name not controlled by the attacker and that is not controlled by or registered to a legitimate registrant.\n" : "18. 스푸핑 또는 등록되지 않은 도메인 이름 사용 - 도메인 이름이 예상되는 상황(예: 메일의 발신자 헤더 또는 웹 페이지 또는 메시지 본문의 URL)에서 공격자가 제어하지 않고 합법적인 등록자가 제어하거나 등록하지 않은 도메인 이름을 제공하는 행위입니다.\n",
-   "19. Spoofing of a registered domain – In a context where a domain name is expected (such as the From header in mail or a URL in a web page or message body), supplying a domain name not controlled by the attacker and that is in fact controlled by or registered to a legitimate registrant.\n" : "19. 등록된 도메인의 스푸핑 - 도메인 이름이 예상되는 상황(예: 메일의 보낸 사람 헤더 또는 웹 페이지 또는 메시지 본문의 URL)에서 공격자가 제어하지 않으며 실제로는 합법적인 등록자가 제어하거나 등록한 도메인 이름을 제공하는 행위입니다.\n",
-   "2. Domain name compromise – The wrongfully taking control of a domain name from the rightful name holder. Compromised domains can be used for different kinds of malicious activity like sending spam or phishing, for distributing malware or as botnet command and control - https://www.icann.org/groups/ssac/documents/sac-007-en.\n" : "2. 도메인 이름 손상 - 정당한 이름 소유자로부터 도메인 이름을 부당하게 장악하는 행위. 손상된 도메인은 스팸 또는 피싱 전송, 멀웨어 배포 또는 봇넷 명령 및 제어와 같은 다양한 종류의 악의적인 활동에 사용될 수 있습니다(https://www.icann.org/groups/ssac/documents/sac-007-en).\n",
-   "2. Registries – organizations responsible for maintaining the database of domains for a TLD - https://www.icann.org/en/icann-acronyms-and-terms/registry-en\n" : "2. 레지스트리 - TLD에 대한 도메인 데이터베이스를 유지 관리하는 조직 - https://www.icann.org/en/icann-acronyms-and-terms/registry-en\n",
-   "20. DNS tunneling - tunneling another protocol over DNS – The DNS protocol serves an administrative function in computer networking and thus may be very common in environments. DNS traffic may also be allowed even before network authentication is completed. DNS packets contain many fields and headers in which data can be concealed. Often known as DNS tunneling, adversaries may abuse DNS to communicate with systems under their control within a victim network while also mimicking normal expected traffic. (https://attack.mitre.org/techniques/T1071/004/)\n" : "20. DNS 터널링 - DNS를 통해 다른 프로토콜 터널링 - DNS 프로토콜은 컴퓨터 네트워킹에서 관리 기능을 수행하므로 환경에서 매우 일반적일 수 있습니다. 네트워크 인증이 완료되기 전에도 DNS 트래픽이 허용될 수 있습니다. DNS 패킷에는 데이터를 숨길 수 있는 많은 필드와 헤더가 포함되어 있습니다. 흔히 DNS 터널링으로 알려진 공격자는 DNS를 악용하여 피해자 네트워크 내에서 자신이 제어하는 시스템과 통신하는 동시에 정상적인 예상 트래픽을 모방할 수 있습니다. (https://attack.mitre.org/techniques/T1071/004/)\n",
-   "21. DNS beacons - C2 communication – Successive or periodic DNS queries to a command & control server, either to exfiltrate data or await further commands from the C2.\n" : "21. DNS 비콘 - C2 통신 - 데이터를 유출하거나 C2의 추가 명령을 기다리기 위해 명령 및 제어 서버에 대한 연속적 또는 주기적 DNS 쿼리.\n",
-   "3. Authoritative Operators – https://www.icann.org/en/icann-acronyms-and- terms/authoritative-name-server-en\n" : "3. 권한 있는 운영자 - https://www.icann.org/en/icann-acronyms-and- terms/authoritative-name-server-en\n",
-   "3. Lame delegations – Lame delegations occur as a result of expired nameserver domains allowing attackers to take control of the domain resolution by re-registering this expired nameserver domain - https://blog.apnic.net/2021/03/16/the-prevalence-persistence-perils-of- lame-nameservers/.\n" : "3. 레임 위임 - 레임 위임은 만료된 네임서버 도메인으로 인해 발생하며, 공격자는 만료된 네임서버 도메인을 다시 등록하여 도메인 해결을 제어할 수 있습니다(https://blog.apnic.net/2021/03/16/the-prevalence-persistence-perils-of- lame-nameservers/).\n",
-   "4. DNS cache poisoning – also known as DNS spoofing, is a type of cyber attack in which an attacker corrupts a DNS resolver's cache by injecting false DNS records, causing the resolver to records controlled by the attacker - https://capec.mitre.org/data/definitions/142.html\n" : "4. DNS 캐시 중독 - DNS 스푸핑이라고도 하며, 공격자가 잘못된 DNS 레코드를 주입하여 DNS 확인자의 캐시를 손상시켜 확인자가 공격자가 제어하는 레코드를 기록하게 하는 사이버 공격의 한 유형입니다 - https://capec.mitre.org/data/definitions/142.html\n",
-   "4. Domain name resellers – https://www.icann.org/resources/pages/reseller-2013-05-03-en\n" : "4. 도메인 이름 리셀러 - https://www.icann.org/resources/pages/reseller-2013-05-03-en\n",
-   "5. DNS rebinding – a type of attack where a malicious website directs a client to a local network address, allowing the attacker to bypass the same-origin policy and gain access to the victim's local resources - https://capec.mitre.org/data/definitions/275.html\n" : "5. DNS 리바인딩 - 악성 웹사이트가 클라이언트를 로컬 네트워크 주소로 리디렉션하여 공격자가 동일 출처 정책을 우회하고 피해자의 로컬 리소스에 액세스할 수 있도록 하는 공격 유형 - https://capec.mitre.org/data/definitions/275.html\n",
-   "5. Recursive Operators – Organizations operating either a private or public recursive resolver\n" : "5. 재귀 연산자 - 비공개 또는 공개 재귀 확인자를 운영하는 조직\n",
-   "6. DNS server compromise – Attacker gains administrative privileges on an open recursive DNS server, authoritative DNS server, organizational recursive DNS server, or ISP-operated recursive DNS server.\n" : "6. DNS 서버 손상 - 공격자가 개방형 재귀 DNS 서버, 권한 DNS 서버, 조직 재귀 DNS 서버 또는 ISP가 운영하는 재귀 DNS 서버에 대한 관리 권한을 얻습니다.\n",
-   "6. Network Operators – Organizations operating an autonomous system (AS). We assume an organization with this capability is not running a recursive DNS server. This column means netflow and BGP data, and excludes (as a matter of a clarity choice here) passive DNS.\n" : "6. 네트워크 사업자 - 자율 시스템(AS)을 운영하는 조직. 이 기능이 있는 조직은 재귀 DNS 서버를 실행하지 않는다고 가정합니다. 이 열은 넷플로우 및 BGP 데이터를 의미하며, 명확성을 위해 패시브 DNS는 제외합니다(여기서는 선택의 문제이므로).\n",
-   "7. Application Service Provider – Software as a Service provider (like Google Docs), see https://www.iso.org/obp/ui/#iso:std:iso-iec:17788:ed-1:v1:en for SaaS definition.\n" : "7. 애플리케이션 서비스 공급자 - 서비스형 소프트웨어 공급자(예: Google 문서 도구), SaaS 정의는 https://www.iso.org/obp/ui/#iso:std:iso-iec:17788:ed-1:v1:en 참조.\n",
-   "7. Stub resolver hijacking – The attacker compromises the Operating System of a computer or a phone with malicious code that intercepts and responds to DNS queries with rogue or malicious responses\n" : "7. 스텁 확인자 하이재킹 - 공격자가 악성 코드로 컴퓨터 또는 휴대폰의 운영 체제를 손상시켜 DNS 쿼리를 가로채고 악성 또는 악의적인 응답으로 응답합니다.\n",
-   "8. Hosting Provider – https://en.wikipedia.org/wiki/Web_hosting_service. If the hosting provider is a bulletproof hosting provider or otherwise complicit in providing attack infrastructure, then at best there is no good that will come from contacting them and at worst it will expose the team to reprisals.\n" : "8. 호스팅 제공업체 - https://en.wikipedia.org/wiki/Web_hosting_service. 호스팅 제공업체가 방탄 호스팅 제공업체이거나 공격 인프라 제공에 연루된 경우, 이들과 접촉해도 얻을 수 있는 이득이 없으며 최악의 경우 보복에 노출될 수 있습니다.\n",
-   "8. Local recursive resolver hijacking – Consumer Premise Equipment (CPE), such as home routers, often provide DNS recursion on the local network. If the CPE device is compromised, the attacker can change the recursive resolver behavior; for example, by changing responses.\n" : "8. 로컬 재귀 확인자 하이재킹 - 가정용 라우터와 같은 CPE(소비자 전제 장비)는 로컬 네트워크에서 DNS 재귀를 제공하는 경우가 많습니다. CPE 디바이스가 손상되면 공격자는 응답을 변경하는 등의 방법으로 재귀 확인자 동작을 변경할 수 있습니다.\n",
-   "9. On-path DNS attack – “Attackers intercept communication between a user and a DNS server and provide different destination IP addresses pointing to malicious sites.” (https://www.imperva.com/learn/application-security/dns-hijacking-redirection/)\n" : "9. 온패스 DNS 공격 - \"공격자는 사용자와 DNS 서버 간의 통신을 가로채서 악성 사이트를 가리키는 다른 목적지 IP 주소를 제공합니다.\" (https://www.imperva.com/learn/application-security/dns-hijacking-redirection/)\n",
-   "9. Threat Intelligence Provider – Threat intelligence providers aggregate, transform, analyze, interpret, or enrich intelligence to provide the necessary context for decision-making processes. CTI is considered as sharing and analysis only.\n" : "9. 위협 인텔리전스 제공자 - 위협 인텔리전스 제공자는 인텔리전스를 집계, 변환, 분석, 해석 또는 보강하여 의사 결정 프로세스에 필요한 컨텍스트를 제공합니다. CTI는 공유 및 분석으로만 간주됩니다.\n",
-   ": The entity has the capability to detect / mitigate / prevent the threat\n" : ": 기업은 위협을 감지/완화/예방할 수 있는 역량을 갖추고 있습니다.\n",
-   ": The entity lacks the capability to detect / mitigate / prevent the threat\n" : ": 위협을 탐지/경감/예방할 수 있는 역량이 부족함.\n",
-   "Abuse Matrices\n" : "남용 매트릭스\n",
-   "Actions\n" : "조치\n",
-   "Advice for Incident Responders\n" : "사고 대응자를 위한 조언\n",
-   "DNS Abuse Techniques Matrix\n" : "DNS 어뷰징 기법 매트릭스\n",
-   "Examples of Techniques\n" : "기법의 예\n",
-   "FIRST DNS Abuse Special Interest Group\n" : "최초의 DNS 어뷰징 특별 관심 그룹\n",
-   "Introduction\n" : "소개\n",
-   "It could be useful to note that there are other policy-related, governmental, and judicial avenues that can be contacted in response to an incident, which as of this version of the document haven't been included. For example, The Budapest Convention and other international instruments provide a mechanism for both evidence retrieval and suspension of infrastructure across country borders. The first step for a foreign law enforcement investigator will often be an informal preservation request, to ensure that data is not lost pending a formal legal request (that is, an MLAT).\n" : "사고에 대응하여 연락할 수 있는 다른 정책 관련, 정부 및 사법적 수단이 있지만 이 문서 버전에는 포함되지 않았다는 점에 유의하는 것이 유용할 수 있습니다. 예를 들어, 부다페스트 협약 및 기타 국제 협약은 국경을 넘어 증거를 회수하고 인프라를 중단할 수 있는 메커니즘을 제공합니다. 외국 법 집행기관 수사관의 첫 번째 단계는 공식적인 법적 요청(즉, MLAT)이 있을 때까지 데이터가 유실되지 않도록 비공식 보존 요청을 하는 경우가 많습니다.\n",
-   "It is important for incident responders to be mindful that not every stakeholder will have their best interests at heart. Contacted stakeholders may be distracted, immature, or at worst intentionally operating infrastructure to support abuse. Organizations doing the latter will be unreceptive at best and deceptive at worst. If you are unsure about whether to proceed with contacting a stakeholder, check with your peers.\n" : "사고 대응자는 모든 이해관계자가 자신의 이익을 최우선으로 생각하는 것은 아니라는 점을 염두에 두는 것이 중요합니다. 연락한 이해관계자가 주의가 산만하거나 미성숙하거나 최악의 경우 악용을 지원하기 위해 의도적으로 인프라를 운영할 수도 있습니다. 후자의 행동을 하는 조직은 기껏해야 수용하지 않거나 최악의 경우 기만적인 태도를 보일 것입니다. 이해관계자에게 연락을 계속할지 여부가 확실하지 않은 경우 동료에게 문의하세요.\n",
-   "JPCERT/CC has published a list of phishing URLs that demonstrate examples of techniques including domain generation algorithms (DGAs) and malicious registrations of effective SLDs.\n" : "JPCERT/CC는 도메인 생성 알고리즘(DGA)과 효과적인 SLD의 악의적인 등록을 포함한 기법의 예를 보여주는 피싱 URL 목록을 게시했습니다.\n",
-   "Key\n" : "Key\n",
-   "Many organizations may act in different stakeholder roles at different times. At small and midsize organizations, the same individual may act in different roles at different times. However, these different stakeholders have distinct capabilities and so we have organized them as separate. Even if one organization has different teams that act as different stakeholder roles, it may be helpful to attempt to contact the relevant team that performs a stakeholder capability.\n" : "많은 조직이 서로 다른 시기에 서로 다른 이해관계자 역할을 수행할 수 있습니다. 중소규모 조직에서는 동일한 개인이 서로 다른 시기에 서로 다른 역할을 수행할 수 있습니다. 그러나 이러한 다양한 이해관계자들은 각자의 고유한 역량을 가지고 있으므로 별도로 정리했습니다. 한 조직에 서로 다른 이해관계자 역할을 수행하는 여러 팀이 있더라도 이해관계자 기능을 수행하는 관련 팀에 연락을 시도하는 것이 도움이 될 수 있습니다.\n",
-   "Nominet published an explanation of how dangling DNS entries can lead to vulnerability to the lame delegation and on-path DNS attack techniques.\n" : "Nominet은 댕글링 DNS 항목이 어떻게 절름발이 위임 및 온패스 DNS 공격 기법에 취약해질 수 있는지에 대한 설명을 게시했습니다.\n",
-   "Some techniques may be used in parallel with attacks involving the DNS;for example, BGP hijacking or TLS certificate impersonation. Such techniques are out of scope, this document focuses just on DNS abuse techniques.\n" : "일부 기술은 DNS와 관련된 공격과 병행하여 사용될 수 있습니다(예: BGP 하이재킹 또는 TLS 인증서 사칭). 이러한 기법은 이 문서의 범위를 벗어나며, 이 문서에서는 DNS 남용 기법에만 초점을 맞춥니다.\n",
-   "Stakeholders\n" : "이해관계자\n",
-   "Techniques\n" : "기술\n",
-   "Terms\n" : "용어\n",
-   "The DNS ecosystem is complex, with many stakeholders and operating models. Some of the techniques listed may have benign uses, so it's not as simple as “these techniques should never be allowed”. However, in the context of incident response, the assumption is that an incident is occurring, so therefore whatever techniques the adversary used to initiate or maintain that incident are malicious or are against the security policy of the organization, or both. Incident responders should adhere to responsible collection within their jurisdictional boundaries. The DNS Abuse SIG is agnostic as to whether any of the listed techniques are abusive of the DNS in general. This report is composed from the point of view of assuming that a technique is used maliciously in the particular incident, and therefore bringing light as to who can take action by detecting, mitigating, or preventing.\n" : "DNS 에코시스템은 많은 이해관계자와 운영 모델로 복잡합니다. 나열된 기술 중 일부는 긍정적인 용도로 사용될 수 있으므로 \"이러한 기술은 절대 허용되어서는 안 된다\"라고 간단하게 말할 수는 없습니다. 그러나 인시던트 대응의 맥락에서는 인시던트가 발생하고 있다고 가정하므로 공격자가 인시던트를 시작하거나 유지하는 데 사용한 기술이 무엇이든 악의적이거나 조직의 보안 정책에 위배되거나 둘 다에 해당합니다. 인시던트 대응자는 관할 구역 내에서 책임감 있는 수집을 준수해야 합니다. DNS 남용 SIG는 나열된 기술 중 어떤 것이 일반적으로 DNS를 남용하는지 여부에 대해 불가지론적입니다. 이 보고서는 특정 기법이 특정 사건에서 악의적으로 사용되었다고 가정하고 이를 탐지, 완화 또는 방지하여 조치를 취할 수 있는 주체를 밝히는 관점에서 작성되었습니다.\n",
-   "The IRS published a warning against SMS scams making use of malicious registration as well as spoofing the target organization.\n" : "IRS는 악의적인 등록과 대상 조직 스푸핑을 이용한 SMS 사기에 대한 경고를 게시했습니다.\n",
-   "The SIG has collected examples of various techniques and made the available via the FIRST.org website under the DNS Abuse SIG homepage:\n" : "SIG는 다양한 기법의 예시를 수집하여 FIRST.org 웹사이트의 DNS 어뷰징 SIG 홈페이지에서 확인할 수 있도록 했습니다:\n",
-   "The advice currently takes the form of a matrix indicating whether a specific stakeholder can directly help with a specific technique. By “help”, we mean whether the stakeholder is in a position to detect, mitigate, or prevent the abuse technique. We have organized this information under three spreadsheets covering these incident response actions. For example, during an incident involving DNS cache poisoning, the team can go to the mitigation tab and look at the row for DNS cache poisoning, to find which stakeholders they might be able to contact to help mitigate the incident.\n" : "현재 이 조언은 특정 이해관계자가 특정 기법에 대해 직접적으로 도움을 줄 수 있는지 여부를 나타내는 매트릭스 형태로 제공됩니다. '도움'이란 이해관계자가 해당 어뷰징 기법을 탐지, 완화 또는 예방할 수 있는 위치에 있는지 여부를 의미합니다. 이러한 사고 대응 조치를 다루는 세 개의 스프레드시트에 이 정보를 정리했습니다. 예를 들어, DNS 캐시 중독과 관련된 인시던트가 발생하는 동안 팀은 완화 탭으로 이동하여 DNS 캐시 중독 행을 살펴보고 인시던트 완화를 위해 연락할 수 있는 이해관계자를 찾을 수 있습니다.\n",
-   "The definitions are linked to the FIRST CSIRT services framework v2.1, for services that a CSIRT might provide.\n" : "이 정의는 CSIRT가 제공할 수 있는 서비스에 대한 첫 번째 CSIRT 서비스 프레임워크 v2.1과 연결되어 있습니다.\n",
-   "The following spreadsheets represent our advice on what kind of organizations might be productively contacted at different incident response phases for different DNS abuse techniques. The Budapest Convention and other networks provide a mechanism for both evidence retrieval and suspension of infrastructure across country borders. The Convention sets expectations, for example “the first step for an investigator will often be an informal preservation request, to ensure that data is not lost pending a formal legal request (MLAT)”.\n" : "다음 스프레드시트는 다양한 DNS 악용 기법에 대해 사고 대응 단계별로 어떤 종류의 조직에 연락해야 하는지에 대한 조언을 담고 있습니다. 부다페스트 협약 및 기타 네트워크는 국경을 넘어 증거를 검색하고 인프라를 중단할 수 있는 메커니즘을 제공합니다. 예를 들어, 부다페스트 협약은 \"조사자의 첫 번째 단계는 공식적인 법적 요청(MLAT)이 있을 때까지 데이터가 손실되지 않도록 비공식 보존 요청을 하는 경우가 많다\"는 기대치를 제시합니다.\n",
-   "The three dimensions of the matrix (action, technique, and stakeholder) use the following definitions of terms.\n" : "매트릭스의 세 가지 차원(조치, 기술, 이해관계자)에서는 다음과 같은 용어 정의를 사용합니다.\n",
-   "This list of examples will continue to be updated as more are curated.\n" : "이 예시 목록은 더 많은 예시가 수집됨에 따라 계속 업데이트될 예정입니다.\n",
-   "This report from the DNS Abuse Special Interest Group (SIG) at FIRST provides advice for incident response teams responding to incidents involving DNS abuse. Crisply defining the edges of what is and is not DNS abuse is a challenge. Many organizations have weighed in on defining DNS abuse as relating to some combination of phishing, malware, unsolicited email, botnets, fraud, or a combination of some or all of these abuse types. The FIRST DNS Abuse SIG has recognized a gap in this conversation, which is that these categories do not give actionable advice to incident responders. This report therefore aims to complement existing efforts in DNS abuse studies by providing common examples of techniques used in incidents that responders and security teams see, and providing a stakeholder list for who might be able to help the incident responders detect, mitigate, or prevent specific techniques used for abuse.\n" : "FIRST의 DNS 어뷰징 특별 관심 그룹(SIG)에서 작성한 이 보고서는 DNS 어뷰징과 관련된 사고에 대응하는 사고 대응팀을 위한 조언을 제공합니다. DNS 어뷰징과 그렇지 않은 것의 경계를 명확하게 정의하는 것은 어려운 일입니다. 많은 조직에서 피싱, 멀웨어, 원치 않는 이메일, 봇넷, 사기 또는 이러한 어뷰징 유형 중 일부 또는 전부의 조합과 관련된 것으로 DNS 어뷰징을 정의하는 데 무게를 두고 있습니다. 첫 번째 DNS 어뷰징 SIG는 이러한 범주가 사고 대응자에게 실행 가능한 조언을 제공하지 못한다는 점을 인식했습니다. 따라서 이 보고서는 대응자 및 보안 팀이 볼 수 있는 사고에 사용된 기술의 일반적인 예를 제공하고, 사고 대응자가 악용에 사용된 특정 기술을 탐지, 완화 또는 방지하는 데 도움을 줄 수 있는 이해관계자 목록을 제공함으로써 DNS 악용 연구의 기존 노력을 보완하는 것을 목표로 합니다.\n",
-   "Version 1.1 (Feb 9, 2023)\n" : "버전 1.1 (Feb 9, 2023)\n",
-   "a. Ongoing investigation in which LE technique gives unique insight.\n" : "a. LE 기법이 고유한 인사이트를 제공하는 지속적인 조사.\n",
-   "b. Victim complaints provide information indicating the abuse, often relying upon collaboration with technical SMEs to help the organization understand the evidence.\n" : "b. 피해자 불만이 남용을 나타내는 정보를 제공하는 경우, 조직이 증거를 이해하는 데 도움을 주기 위해 기술 중소기업과의 협력에 의존하는 경우가 많습니다.\n",
-   "https://www.first.org/global/sigs/dns\n" : "https://www.first.org/global/sigs/dns\n",
-   "https://www.first.org/global/sigs/dns/dns-abuse-examples\n" : "https://www.first.org/global/sigs/dns/dns-abuse-examples\n",
-   "■ DGA: domain generation algorithm\n" : "DGA: 도메인 생성 알고리즘\n",
-   "■ Detect – identify potential incidents. Services: Monitoring and Detection; Incident Report Acceptance. Note: The phase of incident management where the IR team wants to confirm and gather additional detection tools and signatures is part of the Mitigation phase, not Detection. The Detection action focuses only on initial detection of the incident.\n" : "탐지 - 잠재적 인시던트를 식별합니다. 서비스: 모니터링 및 탐지, 인시던트 보고서 수락. 참고: IR 팀이 추가적인 탐지 도구 및 서명을 확인하고 수집하려는 인시던트 관리 단계는 탐지가 아닌 완화 단계의 일부입니다. 탐지 작업은 인시던트의 초기 탐지에만 중점을 둡니다.\n",
-   "■ Mitigate – contain an incident and restore secure operations. Services: Mitigation and Recovery.\n" : "완화 - 인시던트를 억제하고 보안 운영을 복원합니다. 서비스: 완화 및 복구.\n",
-   "■ Prevent – using DNS-specific steps, make it less likely incidents of this type will occur in the future. Services: Knowledge transfer (including to internal IT teams); Vulnerability Response; also relates to detection (possibly updating the signatures and detection rules) and recovery (during recovery, should the system be reconfigured to prevent recurrence). Note that broad anti-malware prevention is out of scope. Of course everyone should do the broad anti- malware practices, see for example Best Practices | M3AAWG.\n" : "예방 - DNS 관련 단계를 사용하여 향후 이러한 유형의 인시던트가 발생할 가능성을 줄입니다. 서비스: 지식 이전(내부 IT 팀 포함), 취약성 대응, 탐지(시그니처 및 탐지 규칙 업데이트 가능) 및 복구(복구 중 재발을 방지하기 위해 시스템을 재구성해야 하는 경우)와도 관련이 있습니다. 광범위한 안티맬웨어 예방은 범위에서 제외됩니다. 물론 모든 사람이 광범위한 멀웨어 방지 관행을 수행해야 합니다(예: 모범 사례 | M3AAWG 참조).\n",
-   "■ eSLD: effective second-level domain\n" : "eSLD: 유효 2차 레벨 도메인\n",
-   "■ pDNS: passive DNS traffic analysis\n" : "pDNS: 패시브 DNS 트래픽 분석\n"
-}
+[
+   [
+      "Version 1.1 (Feb 9, 2023)\n",
+      "버전 1.1 (Feb 9, 2023)\n"
+   ],
+   [
+      "DNS Abuse Techniques Matrix\n",
+      "DNS 어뷰징 기법 매트릭스\n"
+   ],
+   [
+      "FIRST DNS Abuse Special Interest Group\n",
+      "최초의 DNS 어뷰징 특별 관심 그룹\n"
+   ],
+   [
+      "https://www.first.org/global/sigs/dns\n",
+      "https://www.first.org/global/sigs/dns\n"
+   ],
+   [
+      "Introduction\n",
+      "소개\n"
+   ],
+   [
+      "This report from the DNS Abuse Special Interest Group (SIG) at FIRST provides advice for incident response teams responding to incidents involving DNS abuse. Crisply defining the edges of what is and is not DNS abuse is a challenge. Many organizations have weighed in on defining DNS abuse as relating to some combination of phishing, malware, unsolicited email, botnets, fraud, or a combination of some or all of these abuse types. The FIRST DNS Abuse SIG has recognized a gap in this conversation, which is that these categories do not give actionable advice to incident responders. This report therefore aims to complement existing efforts in DNS abuse studies by providing common examples of techniques used in incidents that responders and security teams see, and providing a stakeholder list for who might be able to help the incident responders detect, mitigate, or prevent specific techniques used for abuse.\n",
+      "FIRST의 DNS 어뷰징 특별 관심 그룹(SIG)에서 작성한 이 보고서는 DNS 어뷰징과 관련된 사고에 대응하는 사고 대응팀을 위한 조언을 제공합니다. DNS 어뷰징과 그렇지 않은 것의 경계를 명확하게 정의하는 것은 어려운 일입니다. 많은 조직에서 피싱, 멀웨어, 원치 않는 이메일, 봇넷, 사기 또는 이러한 어뷰징 유형 중 일부 또는 전부의 조합과 관련된 것으로 DNS 어뷰징을 정의하는 데 무게를 두고 있습니다. 첫 번째 DNS 어뷰징 SIG는 이러한 범주가 사고 대응자에게 실행 가능한 조언을 제공하지 못한다는 점을 인식했습니다. 따라서 이 보고서는 대응자 및 보안 팀이 볼 수 있는 사고에 사용된 기술의 일반적인 예를 제공하고, 사고 대응자가 악용에 사용된 특정 기술을 탐지, 완화 또는 방지하는 데 도움을 줄 수 있는 이해관계자 목록을 제공함으로써 DNS 악용 연구의 기존 노력을 보완하는 것을 목표로 합니다.\n"
+   ],
+   [
+      "The advice currently takes the form of a matrix indicating whether a specific stakeholder can directly help with a specific technique. By “help”, we mean whether the stakeholder is in a position to detect, mitigate, or prevent the abuse technique. We have organized this information under three spreadsheets covering these incident response actions. For example, during an incident involving DNS cache poisoning, the team can go to the mitigation tab and look at the row for DNS cache poisoning, to find which stakeholders they might be able to contact to help mitigate the incident.\n",
+      "현재 이 조언은 특정 이해관계자가 특정 기법에 대해 직접적으로 도움을 줄 수 있는지 여부를 나타내는 매트릭스 형태로 제공됩니다. '도움'이란 이해관계자가 해당 어뷰징 기법을 탐지, 완화 또는 예방할 수 있는 위치에 있는지 여부를 의미합니다. 이러한 사고 대응 조치를 다루는 세 개의 스프레드시트에 이 정보를 정리했습니다. 예를 들어, DNS 캐시 중독과 관련된 인시던트가 발생하는 동안 팀은 완화 탭으로 이동하여 DNS 캐시 중독 행을 살펴보고 인시던트 완화를 위해 연락할 수 있는 이해관계자를 찾을 수 있습니다.\n"
+   ],
+   [
+      "The DNS ecosystem is complex, with many stakeholders and operating models. Some of the techniques listed may have benign uses, so it's not as simple as “these techniques should never be allowed”. However, in the context of incident response, the assumption is that an incident is occurring, so therefore whatever techniques the adversary used to initiate or maintain that incident are malicious or are against the security policy of the organization, or both. Incident responders should adhere to responsible collection within their jurisdictional boundaries. The DNS Abuse SIG is agnostic as to whether any of the listed techniques are abusive of the DNS in general. This report is composed from the point of view of assuming that a technique is used maliciously in the particular incident, and therefore bringing light as to who can take action by detecting, mitigating, or preventing.\n",
+      "DNS 에코시스템은 많은 이해관계자와 운영 모델로 복잡합니다. 나열된 기술 중 일부는 긍정적인 용도로 사용될 수 있으므로 \"이러한 기술은 절대 허용되어서는 안 된다\"라고 간단하게 말할 수는 없습니다. 그러나 인시던트 대응의 맥락에서는 인시던트가 발생하고 있다고 가정하므로 공격자가 인시던트를 시작하거나 유지하는 데 사용한 기술이 무엇이든 악의적이거나 조직의 보안 정책에 위배되거나 둘 다에 해당합니다. 인시던트 대응자는 관할 구역 내에서 책임감 있는 수집을 준수해야 합니다. DNS 남용 SIG는 나열된 기술 중 어떤 것이 일반적으로 DNS를 남용하는지 여부에 대해 불가지론적입니다. 이 보고서는 특정 기법이 특정 사건에서 악의적으로 사용되었다고 가정하고 이를 탐지, 완화 또는 방지하여 조치를 취할 수 있는 주체를 밝히는 관점에서 작성되었습니다.\n"
+   ],
+   [
+      "Some techniques may be used in parallel with attacks involving the DNS;for example, BGP hijacking or TLS certificate impersonation. Such techniques are out of scope, this document focuses just on DNS abuse techniques.\n",
+      "일부 기술은 DNS와 관련된 공격과 병행하여 사용될 수 있습니다(예: BGP 하이재킹 또는 TLS 인증서 사칭). 이러한 기법은 이 문서의 범위를 벗어나며, 이 문서에서는 DNS 남용 기법에만 초점을 맞춥니다.\n"
+   ],
+   [
+      "It could be useful to note that there are other policy-related, governmental, and judicial avenues that can be contacted in response to an incident, which as of this version of the document haven't been included. For example, The Budapest Convention and other international instruments provide a mechanism for both evidence retrieval and suspension of infrastructure across country borders. The first step for a foreign law enforcement investigator will often be an informal preservation request, to ensure that data is not lost pending a formal legal request (that is, an MLAT).\n",
+      "사고에 대응하여 연락할 수 있는 다른 정책 관련, 정부 및 사법적 수단이 있지만 이 문서 버전에는 포함되지 않았다는 점에 유의하는 것이 유용할 수 있습니다. 예를 들어, 부다페스트 협약 및 기타 국제 협약은 국경을 넘어 증거를 회수하고 인프라를 중단할 수 있는 메커니즘을 제공합니다. 외국 법 집행기관 수사관의 첫 번째 단계는 공식적인 법적 요청(즉, MLAT)이 있을 때까지 데이터가 유실되지 않도록 비공식 보존 요청을 하는 경우가 많습니다.\n"
+   ],
+   [
+      "Terms\n",
+      "용어\n"
+   ],
+   [
+      "The three dimensions of the matrix (action, technique, and stakeholder) use the following definitions of terms.\n",
+      "매트릭스의 세 가지 차원(조치, 기술, 이해관계자)에서는 다음과 같은 용어 정의를 사용합니다.\n"
+   ],
+   [
+      "Actions\n",
+      "조치\n"
+   ],
+   [
+      "The definitions are linked to the FIRST CSIRT services framework v2.1, for services that a CSIRT might provide.\n",
+      "이 정의는 CSIRT가 제공할 수 있는 서비스에 대한 첫 번째 CSIRT 서비스 프레임워크 v2.1과 연결되어 있습니다.\n"
+   ],
+   [
+      "■ Detect – identify potential incidents. Services: Monitoring and Detection; Incident Report Acceptance. Note: The phase of incident management where the IR team wants to confirm and gather additional detection tools and signatures is part of the Mitigation phase, not Detection. The Detection action focuses only on initial detection of the incident.\n",
+      "탐지 - 잠재적 인시던트를 식별합니다. 서비스: 모니터링 및 탐지, 인시던트 보고서 수락. 참고: IR 팀이 추가적인 탐지 도구 및 서명을 확인하고 수집하려는 인시던트 관리 단계는 탐지가 아닌 완화 단계의 일부입니다. 탐지 작업은 인시던트의 초기 탐지에만 중점을 둡니다.\n"
+   ],
+   [
+      "■ Mitigate – contain an incident and restore secure operations. Services: Mitigation and Recovery.\n",
+      "완화 - 인시던트를 억제하고 보안 운영을 복원합니다. 서비스: 완화 및 복구.\n"
+   ],
+   [
+      "■ Prevent – using DNS-specific steps, make it less likely incidents of this type will occur in the future. Services: Knowledge transfer (including to internal IT teams); Vulnerability Response; also relates to detection (possibly updating the signatures and detection rules) and recovery (during recovery, should the system be reconfigured to prevent recurrence). Note that broad anti-malware prevention is out of scope. Of course everyone should do the broad anti- malware practices, see for example Best Practices | M3AAWG.\n",
+      "예방 - DNS 관련 단계를 사용하여 향후 이러한 유형의 인시던트가 발생할 가능성을 줄입니다. 서비스: 지식 이전(내부 IT 팀 포함), 취약성 대응, 탐지(시그니처 및 탐지 규칙 업데이트 가능) 및 복구(복구 중 재발을 방지하기 위해 시스템을 재구성해야 하는 경우)와도 관련이 있습니다. 광범위한 안티맬웨어 예방은 범위에서 제외됩니다. 물론 모든 사람이 광범위한 멀웨어 방지 관행을 수행해야 합니다(예: 모범 사례 | M3AAWG 참조).\n"
+   ],
+   [
+      "Techniques\n",
+      "기술\n"
+   ],
+   [
+      "1. DGAs (Domain Generation Algorithms) – https://attack.mitre.org/techniques/T1568/002/\n",
+      "1. DGA(도메인 생성 알고리즘) - https://attack.mitre.org/techniques/T1568/002/\n"
+   ],
+   [
+      "2. Domain name compromise – The wrongfully taking control of a domain name from the rightful name holder. Compromised domains can be used for different kinds of malicious activity like sending spam or phishing, for distributing malware or as botnet command and control - https://www.icann.org/groups/ssac/documents/sac-007-en.\n",
+      "2. 도메인 이름 손상 - 정당한 이름 소유자로부터 도메인 이름을 부당하게 장악하는 행위. 손상된 도메인은 스팸 또는 피싱 전송, 멀웨어 배포 또는 봇넷 명령 및 제어와 같은 다양한 종류의 악의적인 활동에 사용될 수 있습니다(https://www.icann.org/groups/ssac/documents/sac-007-en).\n"
+   ],
+   [
+      "3. Lame delegations – Lame delegations occur as a result of expired nameserver domains allowing attackers to take control of the domain resolution by re-registering this expired nameserver domain - https://blog.apnic.net/2021/03/16/the-prevalence-persistence-perils-of- lame-nameservers/.\n",
+      "3. 레임 위임 - 레임 위임은 만료된 네임서버 도메인으로 인해 발생하며, 공격자는 만료된 네임서버 도메인을 다시 등록하여 도메인 해결을 제어할 수 있습니다(https://blog.apnic.net/2021/03/16/the-prevalence-persistence-perils-of- lame-nameservers/).\n"
+   ],
+   [
+      "4. DNS cache poisoning – also known as DNS spoofing, is a type of cyber attack in which an attacker corrupts a DNS resolver's cache by injecting false DNS records, causing the resolver to records controlled by the attacker - https://capec.mitre.org/data/definitions/142.html\n",
+      "4. DNS 캐시 중독 - DNS 스푸핑이라고도 하며, 공격자가 잘못된 DNS 레코드를 주입하여 DNS 확인자의 캐시를 손상시켜 확인자가 공격자가 제어하는 레코드를 기록하게 하는 사이버 공격의 한 유형입니다 - https://capec.mitre.org/data/definitions/142.html\n"
+   ],
+   [
+      "5. DNS rebinding – a type of attack where a malicious website directs a client to a local network address, allowing the attacker to bypass the same-origin policy and gain access to the victim's local resources - https://capec.mitre.org/data/definitions/275.html\n",
+      "5. DNS 리바인딩 - 악성 웹사이트가 클라이언트를 로컬 네트워크 주소로 리디렉션하여 공격자가 동일 출처 정책을 우회하고 피해자의 로컬 리소스에 액세스할 수 있도록 하는 공격 유형 - https://capec.mitre.org/data/definitions/275.html\n"
+   ],
+   [
+      "6. DNS server compromise – Attacker gains administrative privileges on an open recursive DNS server, authoritative DNS server, organizational recursive DNS server, or ISP-operated recursive DNS server.\n",
+      "6. DNS 서버 손상 - 공격자가 개방형 재귀 DNS 서버, 권한 DNS 서버, 조직 재귀 DNS 서버 또는 ISP가 운영하는 재귀 DNS 서버에 대한 관리 권한을 얻습니다.\n"
+   ],
+   [
+      "7. Stub resolver hijacking – The attacker compromises the Operating System of a computer or a phone with malicious code that intercepts and responds to DNS queries with rogue or malicious responses\n",
+      "7. 스텁 확인자 하이재킹 - 공격자가 악성 코드로 컴퓨터 또는 휴대폰의 운영 체제를 손상시켜 DNS 쿼리를 가로채고 악성 또는 악의적인 응답으로 응답합니다.\n"
+   ],
+   [
+      "8. Local recursive resolver hijacking – Consumer Premise Equipment (CPE), such as home routers, often provide DNS recursion on the local network. If the CPE device is compromised, the attacker can change the recursive resolver behavior; for example, by changing responses.\n",
+      "8. 로컬 재귀 확인자 하이재킹 - 가정용 라우터와 같은 CPE(소비자 전제 장비)는 로컬 네트워크에서 DNS 재귀를 제공하는 경우가 많습니다. CPE 디바이스가 손상되면 공격자는 응답을 변경하는 등의 방법으로 재귀 확인자 동작을 변경할 수 있습니다.\n"
+   ],
+   [
+      "9. On-path DNS attack – “Attackers intercept communication between a user and a DNS server and provide different destination IP addresses pointing to malicious sites.” (https://www.imperva.com/learn/application-security/dns-hijacking-redirection/)\n",
+      "9. 온패스 DNS 공격 - \"공격자는 사용자와 DNS 서버 간의 통신을 가로채서 악성 사이트를 가리키는 다른 목적지 IP 주소를 제공합니다.\" (https://www.imperva.com/learn/application-security/dns-hijacking-redirection/)\n"
+   ],
+   [
+      "10. DoS against the DNS – Multiple systems sending malicious traffic to a target at the same time.\n",
+      "10. DNS에 대한 DoS - 여러 시스템이 동시에 대상에 악성 트래픽을 전송합니다.\n"
+   ],
+   [
+      "11. DNS as a vector for DoS – \"Adversaries may attempt to cause a denial of service by reflecting a high-volume of network traffic to a target. This type of Network DoS takes advantage of a third-party server intermediary that hosts and will respond to a given spoofed source IP address. This third-party server is commonly termed a reflector. An adversary accomplishes a reflection attack by sending packets to reflectors with the spoofed address of the victim. Two prominent protocols that have enabled Reflection Amplification Floods are DNS and NTP through the use of several others in the wild have been documented.\" These Reflection and Amplification Floods can be directed against components of the DNS, like authoritative nameservers, rendering them unresponsive.” (https://attack.mitre.org/techniques/T1498/002/)\n",
+      "11. DoS의 매개체로서의 DNS - \"공격자는 대량의 네트워크 트래픽을 표적에 반영하여 서비스 거부를 일으킬 수 있습니다. 이러한 유형의 네트워크 DoS는 지정된 스푸핑된 소스 IP 주소를 호스팅하고 이에 응답하는 타사 서버 중개자를 이용합니다. 이 타사 서버를 일반적으로 리플렉터라고 합니다. 공격자는 피해자의 스푸핑된 주소가 포함된 패킷을 리플렉터로 전송하여 리플렉션 공격을 수행합니다. 반사 증폭 플러드를 가능하게 한 두 가지 대표적인 프로토콜은 DNS와 NTP이며, 이 외에도 여러 프로토콜을 사용한 반사 증폭 플러드가 문서화되어 있습니다.\" 이러한 반사 및 증폭 플러드는 권한 있는 네임서버와 같은 DNS 구성 요소로 향하여 응답하지 않게 만들 수 있습니다.\" (https://attack.mitre.org/techniques/T1498/002/)\n"
+   ],
+   [
+      "12. Dynamic DNS resolution (as obfuscation technique) – Adversaries may dynamically establish connections to command and control infrastructure to evade common detections and remediations. This may be achieved by using malware that shares a common algorithm with the infrastructure the adversary uses to receive the malware's communications. These calculations can be used to dynamically adjust parameters such as the domain name IP address or port number the malware uses for command and control. (https://attack.mitre.org/techniques/T1568/)\n",
+      "12. 동적 DNS 확인(난독화 기술) - 공격자는 일반적인 탐지 및 해결을 회피하기 위해 명령 및 제어 인프라에 동적으로 연결을 설정할 수 있습니다. 이는 공격자가 멀웨어의 통신을 수신하는 데 사용하는 인프라와 공통 알고리즘을 공유하는 멀웨어를 사용하여 달성할 수 있습니다. 이러한 계산은 멀웨어가 명령 및 제어에 사용하는 도메인 이름 IP 주소 또는 포트 번호와 같은 매개 변수를 동적으로 조정하는 데 사용될 수 있습니다. (https://attack.mitre.org/techniques/T1568/)\n"
+   ],
+   [
+      "13. Dynamic DNS resolution: Fast flux (as obfuscation technique) – “Adversaries may use Fast Flux DNS to hide a command and control channel behind an array of rapidly changing IP addresses linked to a single domain resolution. This technique uses a fully qualified domain name with multiple IP addresses assigned to it which are swapped with high frequency using a combination of round robin IP addressing and short Time-To-Live (TTL) for a DNS resource record.” (https://attack.mitre.org/techniques/T1568/001/)\n",
+      "13. 동적 DNS 확인: 빠른 플럭스(난독화 기법) - \"공격자는 빠른 플럭스 DNS를 사용하여 단일 도메인 확인에 연결된 빠르게 변경되는 IP 주소 배열 뒤에 명령 및 제어 채널을 숨길 수 있습니다. 이 기법은 여러 개의 IP 주소가 할당된 정규화된 도메인 이름을 사용하며, 이 주소는 라운드 로빈 IP 주소 지정과 DNS 리소스 레코드에 대한 짧은 TTL(Time-To-Live)의 조합을 사용하여 높은 빈도로 교체됩니다.\" (https://attack.mitre.org/techniques/T1568/001/)\n"
+   ],
+   [
+      "14. Infiltration and exfiltration via the DNS – Exfiltration via the DNS requires a delegated domain or, if the domain does not exist in the public DNS, the operation of a resolver preloaded with that domain's zone file information and configured to receive and respond to the queries sent by the compromised devices.\n",
+      "14. DNS를 통한 침투 및 유출 - DNS를 통한 유출에는 위임된 도메인이 필요하며, 도메인이 공용 DNS에 존재하지 않는 경우 해당 도메인의 영역 파일 정보가 미리 로드되어 있고 침해된 디바이스에서 보낸 쿼리를 수신하고 응답하도록 구성된 리졸버의 작동이 필요합니다.\n"
+   ],
+   [
+      "15. Malicious registration of (effective) second level domains – For example, before attacking a victim, adversaries purchase or register domains from an ICANN-accredited registrar that can be used during targeting. See also CAPEC-630.\n",
+      "15. (유효) 2단계 도메인의 악의적 등록 - 예를 들어, 공격자는 피해자를 공격하기 전에 ICANN이 인증한 등록기관으로부터 표적 공격에 사용할 수 있는 도메인을 구매하거나 등록합니다. CAPEC-630도 참조하세요.\n"
+   ],
+   [
+      "16. Creation of malicious subdomains under dynamic DNS providers – Before attacking a victim, adversaries purchase or create domains from an entity other than a registrar or registry that provides subdomains under domains they own and control. See also https://en.wikipedia.org/wiki/Dynamic_DNS.\n",
+      "16. 동적 DNS 공급업체에서 악성 하위 도메인 생성 - 공격자는 피해자를 공격하기 전에 자신이 소유하고 관리하는 도메인 아래에 하위 도메인을 제공하는 등록기관 또는 레지스트리가 아닌 다른 기관으로부터 도메인을 구매하거나 생성합니다. https://en.wikipedia.org/wiki/Dynamic_DNS 참조.\n"
+   ],
+   [
+      "17. Compromise of a non-DNS server to conduct abuse – Internet attack infrastructure is a broad category, and this covers any non-DNS server. Many compromised servers, such as web servers or mail servers, interact with the DNS or may be instrumental in conducting DNS abuse. For example, compromised mail servers are one technique that may be used to send phishing emails.\n",
+      "17. 악용을 위한 비 DNS 서버의 침해 - 인터넷 공격 인프라는 광범위한 범주이며, 여기에는 모든 비 DNS 서버가 포함됩니다. 웹 서버나 메일 서버와 같이 손상된 많은 서버는 DNS와 상호 작용하거나 DNS 남용을 수행하는 데 중요한 역할을 할 수 있습니다. 예를 들어, 손상된 메일 서버는 피싱 이메일을 보내는 데 사용될 수 있는 기술 중 하나입니다.\n"
+   ],
+   [
+      "18. Spoofing or otherwise using unregistered domain names – In a context where a domain name is expected (such as the From header in mail or a URL in a web page or message body), supplying a domain name not controlled by the attacker and that is not controlled by or registered to a legitimate registrant.\n",
+      "18. 스푸핑 또는 등록되지 않은 도메인 이름 사용 - 도메인 이름이 예상되는 상황(예: 메일의 발신자 헤더 또는 웹 페이지 또는 메시지 본문의 URL)에서 공격자가 제어하지 않고 합법적인 등록자가 제어하거나 등록하지 않은 도메인 이름을 제공하는 행위입니다.\n"
+   ],
+   [
+      "19. Spoofing of a registered domain – In a context where a domain name is expected (such as the From header in mail or a URL in a web page or message body), supplying a domain name not controlled by the attacker and that is in fact controlled by or registered to a legitimate registrant.\n",
+      "19. 등록된 도메인의 스푸핑 - 도메인 이름이 예상되는 상황(예: 메일의 보낸 사람 헤더 또는 웹 페이지 또는 메시지 본문의 URL)에서 공격자가 제어하지 않으며 실제로는 합법적인 등록자가 제어하거나 등록한 도메인 이름을 제공하는 행위입니다.\n"
+   ],
+   [
+      "20. DNS tunneling - tunneling another protocol over DNS – The DNS protocol serves an administrative function in computer networking and thus may be very common in environments. DNS traffic may also be allowed even before network authentication is completed. DNS packets contain many fields and headers in which data can be concealed. Often known as DNS tunneling, adversaries may abuse DNS to communicate with systems under their control within a victim network while also mimicking normal expected traffic. (https://attack.mitre.org/techniques/T1071/004/)\n",
+      "20. DNS 터널링 - DNS를 통해 다른 프로토콜 터널링 - DNS 프로토콜은 컴퓨터 네트워킹에서 관리 기능을 수행하므로 환경에서 매우 일반적일 수 있습니다. 네트워크 인증이 완료되기 전에도 DNS 트래픽이 허용될 수 있습니다. DNS 패킷에는 데이터를 숨길 수 있는 많은 필드와 헤더가 포함되어 있습니다. 흔히 DNS 터널링으로 알려진 공격자는 DNS를 악용하여 피해자 네트워크 내에서 자신이 제어하는 시스템과 통신하는 동시에 정상적인 예상 트래픽을 모방할 수 있습니다. (https://attack.mitre.org/techniques/T1071/004/)\n"
+   ],
+   [
+      "21. DNS beacons - C2 communication – Successive or periodic DNS queries to a command & control server, either to exfiltrate data or await further commands from the C2.\n",
+      "21. DNS 비콘 - C2 통신 - 데이터를 유출하거나 C2의 추가 명령을 기다리기 위해 명령 및 제어 서버에 대한 연속적 또는 주기적 DNS 쿼리.\n"
+   ],
+   [
+      "Stakeholders\n",
+      "이해관계자\n"
+   ],
+   [
+      "Many organizations may act in different stakeholder roles at different times. At small and midsize organizations, the same individual may act in different roles at different times. However, these different stakeholders have distinct capabilities and so we have organized them as separate. Even if one organization has different teams that act as different stakeholder roles, it may be helpful to attempt to contact the relevant team that performs a stakeholder capability.\n",
+      "많은 조직이 서로 다른 시기에 서로 다른 이해관계자 역할을 수행할 수 있습니다. 중소규모 조직에서는 동일한 개인이 서로 다른 시기에 서로 다른 역할을 수행할 수 있습니다. 그러나 이러한 다양한 이해관계자들은 각자의 고유한 역량을 가지고 있으므로 별도로 정리했습니다. 한 조직에 서로 다른 이해관계자 역할을 수행하는 여러 팀이 있더라도 이해관계자 기능을 수행하는 관련 팀에 연락을 시도하는 것이 도움이 될 수 있습니다.\n"
+   ],
+   [
+      "It is important for incident responders to be mindful that not every stakeholder will have their best interests at heart. Contacted stakeholders may be distracted, immature, or at worst intentionally operating infrastructure to support abuse. Organizations doing the latter will be unreceptive at best and deceptive at worst. If you are unsure about whether to proceed with contacting a stakeholder, check with your peers.\n",
+      "사고 대응자는 모든 이해관계자가 자신의 이익을 최우선으로 생각하는 것은 아니라는 점을 염두에 두는 것이 중요합니다. 연락한 이해관계자가 주의가 산만하거나 미성숙하거나 최악의 경우 악용을 지원하기 위해 의도적으로 인프라를 운영할 수도 있습니다. 후자의 행동을 하는 조직은 기껏해야 수용하지 않거나 최악의 경우 기만적인 태도를 보일 것입니다. 이해관계자에게 연락을 계속할지 여부가 확실하지 않은 경우 동료에게 문의하세요.\n"
+   ],
+   [
+      "1. Registrars – an organization that allows registration of domains under a TLD - https://www.icann.org/en/icann-acronyms-and-terms/registrar-en\n",
+      "1. 등록기관 - TLD로 도메인을 등록할 수 있는 기관 - https://www.icann.org/en/icann-acronyms-and-terms/registrar-en\n"
+   ],
+   [
+      "2. Registries – organizations responsible for maintaining the database of domains for a TLD - https://www.icann.org/en/icann-acronyms-and-terms/registry-en\n",
+      "2. 레지스트리 - TLD에 대한 도메인 데이터베이스를 유지 관리하는 조직 - https://www.icann.org/en/icann-acronyms-and-terms/registry-en\n"
+   ],
+   [
+      "3. Authoritative Operators – https://www.icann.org/en/icann-acronyms-and- terms/authoritative-name-server-en\n",
+      "3. 권한 있는 운영자 - https://www.icann.org/en/icann-acronyms-and- terms/authoritative-name-server-en\n"
+   ],
+   [
+      "4. Domain name resellers – https://www.icann.org/resources/pages/reseller-2013-05-03-en\n",
+      "4. 도메인 이름 리셀러 - https://www.icann.org/resources/pages/reseller-2013-05-03-en\n"
+   ],
+   [
+      "5. Recursive Operators – Organizations operating either a private or public recursive resolver\n",
+      "5. 재귀 연산자 - 비공개 또는 공개 재귀 확인자를 운영하는 조직\n"
+   ],
+   [
+      "6. Network Operators – Organizations operating an autonomous system (AS). We assume an organization with this capability is not running a recursive DNS server. This column means netflow and BGP data, and excludes (as a matter of a clarity choice here) passive DNS.\n",
+      "6. 네트워크 사업자 - 자율 시스템(AS)을 운영하는 조직. 이 기능이 있는 조직은 재귀 DNS 서버를 실행하지 않는다고 가정합니다. 이 열은 넷플로우 및 BGP 데이터를 의미하며, 명확성을 위해 패시브 DNS는 제외합니다(여기서는 선택의 문제이므로).\n"
+   ],
+   [
+      "7. Application Service Provider – Software as a Service provider (like Google Docs), see https://www.iso.org/obp/ui/#iso:std:iso-iec:17788:ed-1:v1:en for SaaS definition.\n",
+      "7. 애플리케이션 서비스 공급자 - 서비스형 소프트웨어 공급자(예: Google 문서 도구), SaaS 정의는 https://www.iso.org/obp/ui/#iso:std:iso-iec:17788:ed-1:v1:en 참조.\n"
+   ],
+   [
+      "8. Hosting Provider – https://en.wikipedia.org/wiki/Web_hosting_service. If the hosting provider is a bulletproof hosting provider or otherwise complicit in providing attack infrastructure, then at best there is no good that will come from contacting them and at worst it will expose the team to reprisals.\n",
+      "8. 호스팅 제공업체 - https://en.wikipedia.org/wiki/Web_hosting_service. 호스팅 제공업체가 방탄 호스팅 제공업체이거나 공격 인프라 제공에 연루된 경우, 이들과 접촉해도 얻을 수 있는 이득이 없으며 최악의 경우 보복에 노출될 수 있습니다.\n"
+   ],
+   [
+      "9. Threat Intelligence Provider – Threat intelligence providers aggregate, transform, analyze, interpret, or enrich intelligence to provide the necessary context for decision-making processes. CTI is considered as sharing and analysis only.\n",
+      "9. 위협 인텔리전스 제공자 - 위협 인텔리전스 제공자는 인텔리전스를 집계, 변환, 분석, 해석 또는 보강하여 의사 결정 프로세스에 필요한 컨텍스트를 제공합니다. CTI는 공유 및 분석으로만 간주됩니다.\n"
+   ],
+   [
+      "10. Device, OS, & Application Software Developers – Software developers who write the code or develop DNS resolver software or are responsible for updating an imported DNS resolver version in their software project.\n",
+      "10. 장치, OS 및 애플리케이션 소프트웨어 개발자 - 코드를 작성하거나 DNS 확인자 소프트웨어를 개발하거나 소프트웨어 프로젝트에서 가져온 DNS 확인자 버전을 업데이트할 책임이 있는 소프트웨어 개발자.\n"
+   ],
+   [
+      "11. Domain Registrants – “an individual or entity who registers a domain name” https://www.icann.org/en/icann-acronyms-and-terms/registrant-en. In the case of the malicious registration rows, this stakeholder is modeled as the actual human who made the malicious registration.\n",
+      "11. 도메인 등록자 - \"도메인 이름을 등록하는 개인 또는 법인\" https://www.icann.org/en/icann-acronyms-and-terms/registrant-en. 악의적인 등록 행의 경우, 이 이해관계자는 악의적인 등록을 한 실제 사람으로 모델링됩니다.\n"
+   ],
+   [
+      "12. End User – Everyone who uses the Internet (who is not performing one of the other stakeholder capabilities listed).\n",
+      "12. 최종 사용자 - 인터넷을 사용하는 모든 사람(나열된 다른 이해관계자 기능 중 하나를 수행하지 않는 사람).\n"
+   ],
+   [
+      "13. Law Enforcement and Public Safety Authorities – Government organizations with authority to enforce laws or act in the public interest. Such organizations typically become aware of an issue because of:\n",
+      "13. 법 집행 기관 및 공공 안전 기관 - 법률을 집행하거나 공익을 위해 행동할 권한이 있는 정부 기관. 이러한 기관은 일반적으로 다음과 같은 이유로 문제를 인지하게 됩니다:\n"
+   ],
+   [
+      "a. Ongoing investigation in which LE technique gives unique insight.\n",
+      "a. LE 기법이 고유한 인사이트를 제공하는 지속적인 조사.\n"
+   ],
+   [
+      "b. Victim complaints provide information indicating the abuse, often relying upon collaboration with technical SMEs to help the organization understand the evidence.\n",
+      "b. 피해자 불만이 남용을 나타내는 정보를 제공하는 경우, 조직이 증거를 이해하는 데 도움을 주기 위해 기술 중소기업과의 협력에 의존하는 경우가 많습니다.\n"
+   ],
+   [
+      "14. CSIRTs / ISACs – Computer Security Incident Response Teams / Information Sharing and Analysis Centers. This column models exclusively the capability of the team or center. Each CSIRT and ISAC also is an end user of services, a registrant, may be a threat intel provider, etc. When the CSIRT or ISAC (organization) is performing those stakeholder capability, use those columns.\n",
+      "14. CSIRT/ISAC - 컴퓨터 보안 사고 대응팀/정보 공유 및 분석 센터. 이 열은 팀 또는 센터의 역량만을 모델링합니다. 각 CSIRT 및 ISAC는 서비스의 최종 사용자, 등록자, 위협 인텔리전스 제공자 등이 될 수도 있습니다. CSIRT 또는 ISAC(조직)이 이러한 이해관계자 역량을 수행하는 경우 해당 열을 사용하세요.\n"
+   ],
+   [
+      "15. Incident responder – The Computer Security Incident Response Team that is internal to the impacted organization.\n",
+      "15. 인시던트 대응자 - 영향을 받은 조직 내부에 있는 컴퓨터 보안 인시던트 대응팀입니다.\n"
+   ],
+   [
+      "Examples of Techniques\n",
+      "기법의 예\n"
+   ],
+   [
+      "The SIG has collected examples of various techniques and made the available via the FIRST.org website under the DNS Abuse SIG homepage:\n",
+      "SIG는 다양한 기법의 예시를 수집하여 FIRST.org 웹사이트의 DNS 어뷰징 SIG 홈페이지에서 확인할 수 있도록 했습니다:\n"
+   ],
+   [
+      "https://www.first.org/global/sigs/dns/dns-abuse-examples\n",
+      "https://www.first.org/global/sigs/dns/dns-abuse-examples\n"
+   ],
+   [
+      "This list of examples will continue to be updated as more are curated.\n",
+      "이 예시 목록은 더 많은 예시가 수집됨에 따라 계속 업데이트될 예정입니다.\n"
+   ],
+   [
+      "JPCERT/CC has published a list of phishing URLs that demonstrate examples of techniques including domain generation algorithms (DGAs) and malicious registrations of effective SLDs.\n",
+      "JPCERT/CC는 도메인 생성 알고리즘(DGA)과 효과적인 SLD의 악의적인 등록을 포함한 기법의 예를 보여주는 피싱 URL 목록을 게시했습니다.\n"
+   ],
+   [
+      "Nominet published an explanation of how dangling DNS entries can lead to vulnerability to the lame delegation and on-path DNS attack techniques.\n",
+      "Nominet은 댕글링 DNS 항목이 어떻게 절름발이 위임 및 온패스 DNS 공격 기법에 취약해질 수 있는지에 대한 설명을 게시했습니다.\n"
+   ],
+   [
+      "The IRS published a warning against SMS scams making use of malicious registration as well as spoofing the target organization.\n",
+      "IRS는 악의적인 등록과 대상 조직 스푸핑을 이용한 SMS 사기에 대한 경고를 게시했습니다.\n"
+   ],
+   [
+      "Advice for Incident Responders\n",
+      "사고 대응자를 위한 조언\n"
+   ],
+   [
+      "The following spreadsheets represent our advice on what kind of organizations might be productively contacted at different incident response phases for different DNS abuse techniques. The Budapest Convention and other networks provide a mechanism for both evidence retrieval and suspension of infrastructure across country borders. The Convention sets expectations, for example “the first step for an investigator will often be an informal preservation request, to ensure that data is not lost pending a formal legal request (MLAT)”.\n",
+      "다음 스프레드시트는 다양한 DNS 악용 기법에 대해 사고 대응 단계별로 어떤 종류의 조직에 연락해야 하는지에 대한 조언을 담고 있습니다. 부다페스트 협약 및 기타 네트워크는 국경을 넘어 증거를 검색하고 인프라를 중단할 수 있는 메커니즘을 제공합니다. 예를 들어, 부다페스트 협약은 \"조사자의 첫 번째 단계는 공식적인 법적 요청(MLAT)이 있을 때까지 데이터가 손실되지 않도록 비공식 보존 요청을 하는 경우가 많다\"는 기대치를 제시합니다.\n"
+   ],
+   [
+      "Abuse Matrices\n",
+      "남용 매트릭스\n"
+   ],
+   [
+      "Key\n",
+      "Key\n"
+   ],
+   [
+      ": The entity has the capability to detect / mitigate / prevent the threat\n",
+      ": 기업은 위협을 감지/완화/예방할 수 있는 역량을 갖추고 있습니다.\n"
+   ],
+   [
+      ": The entity lacks the capability to detect / mitigate / prevent the threat\n",
+      ": 위협을 탐지/경감/예방할 수 있는 역량이 부족함.\n"
+   ],
+   [
+      "■ DGA: domain generation algorithm\n",
+      "DGA: 도메인 생성 알고리즘\n"
+   ],
+   [
+      "■ eSLD: effective second-level domain\n",
+      "eSLD: 유효 2차 레벨 도메인\n"
+   ],
+   [
+      "■ pDNS: passive DNS traffic analysis\n",
+      "pDNS: 패시브 DNS 트래픽 분석\n"
+   ]
+]

@@ -12,37 +12,37 @@ Revised on June 7, 2019
 
 Revised on June 15, 2021
 
-In our country, awareness of the disclosure and utilization of data held by the government, local governments, and businesses has increased since the Great East Japan Earthquake on March 11, 2011. [^2]
+　In our country, awareness of the disclosure and utilization of data held by the government, local governments, and businesses has increased since the Great East Japan Earthquake on March 11, 2011. [^2]
 
-Based on the recognition that public data is a shared asset of the people, the government has been promoting open data initiatives in accordance with the "e-Government Open Data Strategy" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on July 4, 2012) and others.
+　Based on the recognition that public data is a shared asset of the people, the government has been promoting open data initiatives in accordance with the "e-Government Open Data Strategy" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on July 4, 2012) and others.
 
-The directions for the development of new open data were indicated in "Towards the Expansion of New Open Data" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on June 30, 2015) and "Open Data 2.0" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on May 20, 2016), shifting the focus from initiatives centered on data disclosure to the promotion of "problem-solving-oriented open data" based on the utilization of data.
+　The directions for the development of new open data were indicated in "Towards the Expansion of New Open Data" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on June 30, 2015) and "Open Data 2.0" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on May 20, 2016), shifting the focus from initiatives centered on data disclosure to the promotion of "problem-solving-oriented open data" based on the utilization of data.
 
-The "Government-Private Data Utilization Promotion Basic Law" (hereinafter referred to as the "Government-Private Data Law"), which was promulgated and enforced on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and have a comfortable living environment through the promotion of government-private data utilization, and it provides provisions regarding the easy use of government-private data held by the country, local governments, and businesses.
+　The "Government-Private Data Utilization Promotion Basic Law" (hereinafter referred to as the "Government-Private Data Law"), which was promulgated and enforced on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and have a comfortable living environment through the promotion of government-private data utilization, and it provides provisions regarding the easy use of government-private data held by the country, local governments, and businesses.
 
-This document summarizes the basic guidelines for the future efforts of the country, local governments, and businesses in the disclosure and utilization of public data, based on the previous initiatives and the concept of Open Data by Design. [^3]
+　This document summarizes the basic guidelines for the future efforts of the country, local governments, and businesses in the disclosure and utilization of public data, based on the previous initiatives and the concept of Open Data by Design. [^3]
 
 1. Significance of Open Data
 
-The significance and objectives of promoting the disclosure and utilization of public data in a form that allows secondary use are as follows:
+　The significance and objectives of promoting the disclosure and utilization of public data in a form that allows secondary use are as follows:
 
 (1) Resolution of various issues through citizen participation and government-private collaboration, and economic revitalization
 
-By advancing the utilization of public data by a wide range of entities, it becomes possible to provide a variety of services quickly and efficiently, utilizing creative ideas, and to realize the provision and improvement of public services through government-private collaboration. This contributes to the resolution of various issues faced by our country, such as the diversification of needs and values, appropriate responses to environmental changes such as technological innovations, as well as the challenging fiscal situation and the rapid aging of the population.
+　By advancing the utilization of public data by a wide range of entities, it becomes possible to provide a variety of services quickly and efficiently, utilizing creative ideas, and to realize the provision and improvement of public services through government-private collaboration. This contributes to the resolution of various issues faced by our country, such as the diversification of needs and values, appropriate responses to environmental changes such as technological innovations, as well as the challenging fiscal situation and the rapid aging of the population.
 
-In addition, it promotes the creation of diverse new services and businesses by venture companies and others, as well as the efficiency of corporate activities, leading to the overall revitalization of our country's economy.
+　In addition, it promotes the creation of diverse new services and businesses by venture companies and others, as well as the efficiency of corporate activities, leading to the overall revitalization of our country's economy.
 
 （２）Modernisation et efficacité de l'administration
 
-En utilisant les données, les politiques et les mesures sont planifiées et élaborées sur la base d'informations obtenues par l'utilisation des données (EBPM : Evidence Based Policy Making), ce qui contribue à la promotion d'une administration efficace et efficiente.
+　En utilisant les données, les politiques et les mesures sont planifiées et élaborées sur la base d'informations obtenues par l'utilisation des données (EBPM : Evidence Based Policy Making), ce qui contribue à la promotion d'une administration efficace et efficiente.
 
 （３）Amélioration de la transparence et de la confiance
 
-La publication des données publiques utilisées pour l'élaboration des politiques permet aux citoyens d'analyser et de juger suffisamment les politiques, ce qui renforce la transparence de l'administration et la confiance des citoyens envers l'administration.
+　La publication des données publiques utilisées pour l'élaboration des politiques permet aux citoyens d'analyser et de juger suffisamment les politiques, ce qui renforce la transparence de l'administration et la confiance des citoyens envers l'administration.
 
 2. Définition des données ouvertes
 
-Les données publiques publiées de manière à répondre à l'un des critères suivants, afin que tous les citoyens puissent les utiliser facilement (traitement, édition, redistribution, etc.) via Internet ou d'autres moyens, sont définies comme des données ouvertes par le gouvernement, les autorités locales et les entreprises qui les détiennent. [^4]
+　Les données publiques publiées de manière à répondre à l'un des critères suivants, afin que tous les citoyens puissent les utiliser facilement (traitement, édition, redistribution, etc.) via Internet ou d'autres moyens, sont définies comme des données ouvertes par le gouvernement, les autorités locales et les entreprises qui les détiennent. [^4]
 
 Ceux qui sont soumis à des règles de réutilisation secondaire, qu'ils soient à but lucratif ou non lucratif.
 
@@ -54,9 +54,9 @@ Ceux qui peuvent être utilisés gratuitement [^6].
 
 (1) Principe de la publication des données détenues par l'administration en tant que données ouvertes
 
-En reconnaissant que les données publiques sont la propriété commune des citoyens, toutes les données détenues par les ministères et les agences gouvernementales, y compris les données qui ont servi de base à la planification et à l'élaboration des politiques (y compris les lois et les budgets), doivent être publiées en tant que données ouvertes, en principe. [^7].
+　En reconnaissant que les données publiques sont la propriété commune des citoyens, toutes les données détenues par les ministères et les agences gouvernementales, y compris les données qui ont servi de base à la planification et à l'élaboration des politiques (y compris les lois et les budgets), doivent être publiées en tant que données ouvertes, en principe. [^7].
 
-Cependant, si des demandes de publication sont faites pour des informations qui contiennent des informations personnelles (1), qui pourraient compromettre la sécurité et l'ordre public du pays ou du public (2), ou qui pourraient porter atteinte aux droits et intérêts des personnes morales ou physiques (3), les raisons pour lesquelles ces informations ne peuvent pas être publiées en tant que données ouvertes doivent être publiées [^8], en principe [^9].
+　Cependant, si des demandes de publication sont faites pour des informations qui contiennent des informations personnelles (1), qui pourraient compromettre la sécurité et l'ordre public du pays ou du public (2), ou qui pourraient porter atteinte aux droits et intérêts des personnes morales ou physiques (3), les raisons pour lesquelles ces informations ne peuvent pas être publiées en tant que données ouvertes doivent être publiées [^8], en principe [^9].
 
 (2) Règles concernant la réutilisation des données publiques
 
@@ -64,19 +64,19 @@ En ce qui concerne les données publiées sur les sites Web des ministères et d
 
 (3) Environnement de publication
 
-Chaque ministère et agence gouvernementale publie des données de manière facilement consultable et utilisable sur leur site web. En particulier, les données considérées comme utiles en raison de leur caractère exclusif aux ministères et agences gouvernementales, de leur fiabilité en tant que données de base dans divers domaines, ou de leur caractère en temps réel, sont supposées répondre à une demande sociale élevée, et sont donc activement publiées. De plus, afin de faciliter l'utilisation par les utilisateurs et de prendre en compte la charge et l'efficacité du système, nous encourageons l'introduction d'un mécanisme permettant le téléchargement en bloc et la fourniture via une API.
+　Chaque ministère et agence gouvernementale publie des données de manière facilement consultable et utilisable sur leur site web. En particulier, les données considérées comme utiles en raison de leur caractère exclusif aux ministères et agences gouvernementales, de leur fiabilité en tant que données de base dans divers domaines, ou de leur caractère en temps réel, sont supposées répondre à une demande sociale élevée, et sont donc activement publiées. De plus, afin de faciliter l'utilisation par les utilisateurs et de prendre en compte la charge et l'efficacité du système, nous encourageons l'introduction d'un mécanisme permettant le téléchargement en bloc et la fourniture via une API.
 
 De plus, afin de permettre une recherche transversale de l'ensemble des données ouvertes du gouvernement et de promouvoir l'utilisation des données, nous enregistrons et publions les métadonnées telles que les informations générales et le format des données sur le site du catalogue de données du gouvernement "DATA.GO.JP", en les traitant conformément à la licence "CC0 1.0 Universal" définie par Creative Commons.
 
 (4) Format des données publiées
 
-En principe, les données publiées sont présentées dans une structure et un format de données adaptés à la lecture automatique. Nous nous efforçons de publier les données dans des termes et des formats plus faciles à utiliser, en nous référant à l'indicateur "cinq étoiles" utilisé comme référence pour l'infrastructure lexicale commune et l'évaluation du niveau de réalisation des données ouvertes.
+　En principe, les données publiées sont présentées dans une structure et un format de données adaptés à la lecture automatique. Nous nous efforçons de publier les données dans des termes et des formats plus faciles à utiliser, en nous référant à l'indicateur "cinq étoiles" utilisé comme référence pour l'infrastructure lexicale commune et l'évaluation du niveau de réalisation des données ouvertes.
 
 Cependant, du point de vue de la divulgation d'informations au public, nous continuerons également à publier des données dans des formats adaptés à la lecture humaine traditionnelle. Dans ce cas, il est nécessaire de pouvoir effectuer des recherches et des extractions de texte.
 
 En particulier, nous privilégions la publication des données structurées dans des formats plus faciles à utiliser, tels que le format "trois étoiles" (format CSV, XML, etc.). De plus, nous nous efforçons de faciliter la visualisation et l'utilisation des API pour toutes les données publiques, y compris celles qui contiennent des données difficiles à structurer, en améliorant l'environnement pour la publication de métadonnées, tel que l'utilisation du site du catalogue de données.
 
-Le Bureau de la stratégie globale des TIC du Cabinet du Premier ministre continuera de promouvoir la normalisation des structures et des formats de données en collaboration avec les ministères et agences concernés. De plus, pour les données incluant des informations sur les personnes morales, le numéro d'identification des personnes morales sera ajouté.
+　Le Bureau de la stratégie globale des TIC du Cabinet du Premier ministre continuera de promouvoir la normalisation des structures et des formats de données en collaboration avec les ministères et agences concernés. De plus, pour les données incluant des informations sur les personnes morales, le numéro d'identification des personnes morales sera ajouté.
 
 (5) Publication limitée des données non publiées
 
@@ -86,7 +86,7 @@ Cette évaluation devrait être effectuée dans un environnement fermé, tel qu'
 
 (6) Principes de publication des données payantes
 
-Comme indiqué à la ligne 2, si les coûts de maintenance et de gestion du système de fourniture de données sont couverts par des frais facturés aux utilisateurs limités, cela ne peut pas être considéré comme des données ouvertes, mais il est souhaitable d'appliquer des règles permettant une utilisation secondaire similaire (à l'exception de ceux pour lesquels une utilisation secondaire est interdite pour des raisons spécifiques et raisonnables). De plus, en ce qui concerne ces frais, il est prévu de revoir les points suivants en spécifiant le moment de l'évaluation et en indiquant les bases de calcul des frais liés à la fourniture :
+　Comme indiqué à la ligne 2, si les coûts de maintenance et de gestion du système de fourniture de données sont couverts par des frais facturés aux utilisateurs limités, cela ne peut pas être considéré comme des données ouvertes, mais il est souhaitable d'appliquer des règles permettant une utilisation secondaire similaire (à l'exception de ceux pour lesquels une utilisation secondaire est interdite pour des raisons spécifiques et raisonnables). De plus, en ce qui concerne ces frais, il est prévu de revoir les points suivants en spécifiant le moment de l'évaluation et en indiquant les bases de calcul des frais liés à la fourniture :
 
 - Étude de la réduction des coûts de fourniture grâce à l'utilisation de technologies récentes peu coûteuses et sûres
 
@@ -96,7 +96,7 @@ Comme indiqué à la ligne 2, si les coûts de maintenance et de gestion du syst
 
 (7) Mise à jour des données publiées
 
-Pour les données importantes où une publication rapide et le maintien de leur fraîcheur sont essentiels, il est prévu de les publier aussi rapidement que possible et de les mettre à jour de manière appropriée et en temps opportun. De plus, il est prévu de spécifier la période de mise à jour des données et de permettre aux utilisateurs de connaître à l'avance le moment de la mise à jour.
+　Pour les données importantes où une publication rapide et le maintien de leur fraîcheur sont essentiels, il est prévu de les publier aussi rapidement que possible et de les mettre à jour de manière appropriée et en temps opportun. De plus, il est prévu de spécifier la période de mise à jour des données et de permettre aux utilisateurs de connaître à l'avance le moment de la mise à jour.
 
 4. Mécanismes pour promouvoir la publication et l'utilisation des données ouvertes.
 
@@ -112,37 +112,37 @@ In promoting Open Data, it is important to proceed while accurately reflecting u
 
 （１）Establishment of Consultation Points
 
-In order to actively collect and understand the needs (requests) and opinions of users regarding Open Data, and reflect them in the government's unified efforts, the Cabinet Secretariat's IT Strategy Office shall establish a comprehensive consultation point for Open Data. Additionally, each government ministry and agency shall also establish consultation points and actively respond to individual inquiries from users regarding Open Data.
+　In order to actively collect and understand the needs (requests) and opinions of users regarding Open Data, and reflect them in the government's unified efforts, the Cabinet Secretariat's IT Strategy Office shall establish a comprehensive consultation point for Open Data. Additionally, each government ministry and agency shall also establish consultation points and actively respond to individual inquiries from users regarding Open Data.
 
 （２）Promotion System
 
-The Cabinet Secretariat's IT Strategy Office, under the government CIO, shall collaborate with each government ministry and agency to plan and coordinate the overall Open Data initiatives of the government. This includes reviewing various measures, including the status of Open Data disclosure by each government ministry and agency, and conducting follow-ups to promote unified efforts in Open Data. Furthermore, the Cabinet Secretariat's IT Strategy Office shall cooperate with relevant government ministries and agencies to promote initiatives in local public bodies.
+　The Cabinet Secretariat's IT Strategy Office, under the government CIO, shall collaborate with each government ministry and agency to plan and coordinate the overall Open Data initiatives of the government. This includes reviewing various measures, including the status of Open Data disclosure by each government ministry and agency, and conducting follow-ups to promote unified efforts in Open Data. Furthermore, the Cabinet Secretariat's IT Strategy Office shall cooperate with relevant government ministries and agencies to promote initiatives in local public bodies.
 
-Each government ministry's Chief Information Officer (CIO) shall promote Open Data initiatives within their respective ministry and also promote Open Data initiatives by independent administrative agencies and public service providers. Additionally, each government ministry's Deputy Chief Information Officer (Deputy CIO) and other officials responsible for information technology shall assist the ministry's CIO and oversee the command and supervision within the ministry regarding Open Data policies.
+　Each government ministry's Chief Information Officer (CIO) shall promote Open Data initiatives within their respective ministry and also promote Open Data initiatives by independent administrative agencies and public service providers. Additionally, each government ministry's Deputy Chief Information Officer (Deputy CIO) and other officials responsible for information technology shall assist the ministry's CIO and oversee the command and supervision within the ministry regarding Open Data policies.
 
 6. Initiatives for Open Data in Local Public Bodies, Independent Administrative Agencies, and Businesses
 
 （１）Local Public Bodies
 
-Under Article 11, Paragraph 1 of the Public-Private Data Act, local public bodies are required to take necessary measures to make their data easily accessible to the public, similar to the national government.
+　Under Article 11, Paragraph 1 of the Public-Private Data Act, local public bodies are required to take necessary measures to make their data easily accessible to the public, similar to the national government.
 
-Local public bodies are expected to promote Open Data in accordance with the purpose of the Public-Private Data Act and this basic guideline.
+　Local public bodies are expected to promote Open Data in accordance with the purpose of the Public-Private Data Act and this basic guideline.
 
-Dans le cadre de la promotion, il est souhaitable de s'efforcer de rendre les données publiques accessibles de manière transversale en utilisant des formats et des règles standardisés. De plus, il est également efficace que plusieurs organisations collaborent pour créer un portail de données ouvertes.
+　Dans le cadre de la promotion, il est souhaitable de s'efforcer de rendre les données publiques accessibles de manière transversale en utilisant des formats et des règles standardisés. De plus, il est également efficace que plusieurs organisations collaborent pour créer un portail de données ouvertes.
 
 Le gouvernement soutient activement les initiatives de données ouvertes au niveau local en fournissant des experts spécialisés dans les données ouvertes, en présentant les domaines et les éléments de données qui sont particulièrement souhaités pour la publication au niveau local, en fournissant des exemples de pratiques avancées et des guides, ainsi qu'en offrant des outils de développement des compétences.
 
 (2) Entreprises
 
-Selon l'article 11, paragraphe 2 de la loi sur les données publiques, les entreprises (y compris les organismes administratifs indépendants) sont tenues de prendre les mesures nécessaires pour faciliter l'accès du public aux données qui contribuent à l'intérêt général.
+　Selon l'article 11, paragraphe 2 de la loi sur les données publiques, les entreprises (y compris les organismes administratifs indépendants) sont tenues de prendre les mesures nécessaires pour faciliter l'accès du public aux données qui contribuent à l'intérêt général.
 
-Il est souhaitable que les organismes administratifs indépendants et les universités, entre autres, promeuvent les initiatives de données ouvertes conformément à ces lignes directrices de base, compte tenu du fait qu'ils sont financés ou réalisent des projets et des recherches.
+　Il est souhaitable que les organismes administratifs indépendants et les universités, entre autres, promeuvent les initiatives de données ouvertes conformément à ces lignes directrices de base, compte tenu du fait qu'ils sont financés ou réalisent des projets et des recherches.
 
-De plus, il est souhaitable que les entreprises du secteur des services publics tels que l'électricité, le gaz, les communications, les médias et les transports promeuvent les données ouvertes en tenant compte de leur caractère d'intérêt public et des besoins des utilisateurs.
+　De plus, il est souhaitable que les entreprises du secteur des services publics tels que l'électricité, le gaz, les communications, les médias et les transports promeuvent les données ouvertes en tenant compte de leur caractère d'intérêt public et des besoins des utilisateurs.
 
 7. Révision des présentes lignes directrices
 
-Ces lignes directrices seront révisées de manière flexible en tenant compte des résultats des différentes mesures, des opinions et des demandes des citoyens et des entreprises, ainsi que des évolutions technologiques et de l'environnement international.
+　Ces lignes directrices seront révisées de manière flexible en tenant compte des résultats des différentes mesures, des opinions et des demandes des citoyens et des entreprises, ainsi que des évolutions technologiques et de l'environnement international.
 
 (Fin)
 

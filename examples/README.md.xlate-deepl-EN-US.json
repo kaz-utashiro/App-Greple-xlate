@@ -1,75 +1,294 @@
-{
-   "# Greple -Mxlate モジュール サンプルファイル\n" : "# Greple -Mxlate module sample files\n",
-   "## xlate スクリプト\n" : "## xlate script\n",
-   "## 制御ファイル\n" : "## Control files\n",
-   "## 生成ファイル\n" : "## Generated files\n",
-   "## 翻訳処理\n" : "## translation process\n",
-   "## 行の折り返し\n" : "## Wrap lines\n",
-   "### .ENGINE\n" : "### .ENGINE\n",
-   "### .FORMAT\n" : "### .FORMAT\n",
-   "### .LANG\n" : "### .LANG\n",
-   "### DeepL API を利用する\n" : "### Using the DeepL API\n",
-   "### Docker コンテナを利用する\n" : "### Using the Docker container\n",
-   "### `XLATE_OPT` 変数\n" : "### `XLATE_OPT` variable\n",
-   "### `xlate -C`\n" : "### `xlate -C`\n",
-   "### `xlate -D`\n" : "### `xlate -D`\n",
-   "### `xlate -M`\n" : "### `xlate -M`.\n",
-   "### 単一 ENGINE の場合\n" : "### For a single ENGINE\n",
-   "### 文字数制限\n" : "### character limit\n",
-   "### 複数 ENGINE の場合\n" : "### For multiple ENGINE\n",
-   "#### `xlate -GC`\n" : "#### `xlate -GC`\n",
-   "#### `xlate -GM`\n" : "#### `xlate -GM`\n",
-   "#### `xlate -G`\n" : "#### `xlate -G`\n",
-   "- `*.docx`\n" : "- `*.docx`, `*.pptx`, and `*.pptx`.\n",
-   "- `*.md`\n" : "- `*.md`\n",
-   "- `*.pm`\n" : "- `*.pm`\n",
-   "- `*.pptx`\n" : "- `*.pptx`, `*.pptx`, and `*.txt`.\n",
-   "- `*.txt`\n" : "- `*.txt`\n",
-   "API を使って翻訳する場合には `deepl` コマンドがインストールされている必要があります。`USEAPI` という変数をセットして make を実行してください。ただし、Docker コンテナ上で実行する場合は `deepl` コマンドは不要です。\n" : "To translate using the API, the `deepl` command must be installed. Set the variable `USEAPI` and run make. However, you do not need the `deepl` command if you run on a Docker container.\n",
-   "API を利用する場合は、最大文字数は 128K に設定されます。認証キーは環境変数 `DEEPL_AUTH_KEY` に設定します。必要に応じて`DEEPL_SERVER_URL` 等の環境変数を設定してください。\n" : "When using the API, the maximum number of characters is set to 128K. The authentication key is set in the environment variable `DEEPL_AUTH_KEY`. Set environment variables such as `DEEPL_SERVER_URL` if necessary.\n",
-   "Docker 環境で xlate コマンドを実行します。\n" : "Run the xlate command in the Docker environment.\n",
-   "Docker 環境でコマンドを実行します。\n" : "Run the command in the Docker environment.\n",
-   "Docker 環境を構築する際に、現在の git リポジトリのトップディレクトリをマウントします。\n" : "Mount the top directory of the current git repository in the Docker environment.\n",
-   "Document.txt.JA.cm\n" : "Document.txt.JA.cm\n",
-   "Document.txt.JA.ifdef\n" : "Document.txt.JA.ifdef\n",
-   "Document.txt.JA.xtxt\n" : "Document.txt.JA.xtxt\n",
-   "Document.txt.deepl-JA.cm\n" : "Document.txt.deepl-JA.cm\n",
-   "Document.txt.deepl-JA.ifdef\n" : "Document.txt.deepl-JA.ifdef\n",
-   "Document.txt.deepl-JA.xtxt\n" : "Document.txt.deepl-JA.xtxt\n",
-   "Document.txt.gpt3-JA.cm\n" : "Document.txt.gpt3-JA.cm\n",
-   "Document.txt.gpt3-JA.ifdef\n" : "Document.txt.gpt3-JA.ifdef\n",
-   "Document.txt.gpt3-JA.xtxt\n" : "Document.txt.gpt3-JA.xtxt\n",
-   "ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次のようにエンジン名を含むファイルを生成します。\n" : "If two ENGINEs, `deepl` and `gpt3`, are specified, a file containing the engine name is generated as follows.\n",
-   "Git やその他のツールが一式インストールしてあるので、そのまま作業することができます。作業ディレクトリをマウントするので、そこで行った修正は元のファイルに反映されることに注意してください。\n" : "Git and a set of other tools are installed, so you can work straight through. Note that it mounts your working directory, so any modifications you make there will be reflected in the original files.\n",
-   "Git リポジトリをマウントして Docker 環境でシェルを立ち上げます。\n" : "Mount the Git repository and launch a shell in the Docker environment.\n",
-   "`-C` に続けてコマンドを指定するとそのコマンドを実行します。何も指定しない場合には、シェルが立ち上がります。\n" : "If you specify `-C` followed by a command, it will execute that command. If nothing is specified, a shell will be launched.\n",
-   "`DOCKER` という変数を有効にして make を実行してください。\n" : "Run make with the variable `DOCKER` enabled.\n",
-   "`xlate` コマンドに与えるオプションを指定することもできます。\n" : "You can also specify options to give to the `xlate` command.\n",
-   "make DOCKER=yes\n" : "make DOCKER=yes\n",
-   "make MAXLEN=100000\n" : "make MAXLEN=100000\n",
-   "make USEAPI=yes\n" : "make USEAPI=yes\n",
-   "make XLATE_OPT=-Dam100000\n" : "make XLATE_OPT=-Dam100000\n",
-   "make を実行します。\n" : "Run make.\n",
-   "このディレクトリには、Greple の -Mxlate モジュールを使ってファイルを自動翻訳する例が含まれています。\n" : "This directory contains an example of using Greple's -Mxlate module to automatically translate a file.\n",
-   "たとえば、`Document.txt` というファイルを日本語に翻訳する場合、\n" : "For example, if you want to translate the file `Document.txt` into Japanese, three files named\n",
-   "という3つのファイルが生成されます。`xtxt` ファイルには、翻訳文章のみ、 `cm` と `ifdef` には原文と訳文の両方が含まれます。\n" : "Three files will be generated: `cm`, `ifdef`, and `cm`. The `xtxt` file contains only the translated text, while the `cm` and `ifdef` files contain both the original and translated text.\n",
-   "どのようなコマンドを実行するか確認したい場合には `xlate -GMn` のように `-n` オプションを指定することができます。\n" : "You can specify the `-n` option, like `xlate -GMn` if you want to see what command to run.\n",
-   "のようにすれば、API を利用して、文字数制限を10万文字に設定して、Docker 上で実行することができます。\n" : "would allow the API to run on Docker with a character limit of 100,000 characters.\n",
-   "もし、この文章を日本語以外の言語で読んでいるとしたら、それはこの仕組みを使って自動翻訳して生成されたものです。多少おかしな点があっても我慢してください。もし日本語で読んでいてもおかしな点があったら、それは作者の頭がおかしいので、やはり我慢するか、優しく指摘してください。\n" : "If you are reading this text in a language other than Japanese, it was generated by automatic translation using this system. Please be patient even if there are some strange points. If you are reading this in Japanese and you find something wrong, please be patient or point it out gently, because the author is not right in the head.\n",
-   "デフォルトでは、現行ディレクトリが `/work` ディレクトリにマウントされます。git 環境を使いたい場合は、次の `-G` オプションを使ってください。\n" : "By default, the current directory is mounted in the `/work` directory; if you want to use the git environment, use the following `-G` option.\n",
-   "デフォルトの動作では、翻訳対象となるテキストをクリップボードにコピーした状態で、翻訳処理を促すプロンプトが表示されます。DeepL のアプリケーションやウェブインタフェースを使ってそれを翻訳し、結果を再びクリップボードにコピーしてから、エンターキーを押してください。\n" : "The default behavior is to copy the text to be translated to the clipboard, and you will be prompted to process the translation; translate it using the DeepL application or web interface, copy the result back to the clipboard, and then press enter Please press enter.\n",
-   "フリーアカウントで実行している場合には、一度に5000文字までしか処理できないので、すべてのテキストの処理が終わるまでこの作業を繰り返します。\n" : "If you are running with a free account, you can only process up to 5000 characters at a time, so repeat this process until all text has been processed.\n",
-   "ヘルプを見るためには `xlate -h` を実行してください。\n" : "To get help, run `xlate -h`.\n",
-   "他の形式、たとえば `md` することもできますが、その場合は `xtxt` と同様の内容になります。ただ `.md` で終わるファイルを生成すると、次回はそのファイルも翻訳対象になってしまうので注意して使う必要があります。\n" : "You can also use other formats, such as `md`, in which case the contents will be the same as for `xtxt`. If you generate a file ending with `.md`, it will also be translated next time, so you should use it carefully.\n",
-   "対象ファイルに特定の拡張子が付いたファイルがあると、その内容によって翻訳処理を制御することができます。たとえば、`Document.txt` というファイルと共に `Document.txt.LANG` というファイルがあれば、その中に書かれている言語に翻訳します。\n" : "If the target file has a file with a specific extension, the translation process can be controlled by its contents. For example, if there is a file called `Document.txt.LANG` along with a file called `Document.txt`, the translation will be done in the language written in the file.\n",
-   "当初、これらのファイルは Makefile によって処理するように作りましたが、現在はそこで使われていた設定をより汎用的なものとし、`xlate` というスクリプトで自動的に処理するようにしてあります。ですから、現在の Makefile は、単に `xlate` コマンドを呼び出すだけのものになっています。`xlate` が使用する Makefile は `../share/XLATE.mk` にあります。\n" : "Originally, these files were created to be handled by a Makefile, but now the settings used there are more generic and are automatically handled by a script called `xlate`. Thus, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is `. /share/XLATE.mk`.\n",
-   "形式指定に、たとえば `cm-fold` の様に、最後に `-fold` を付けると、出力を80カラムで折り返します。\n" : "The format specification with trailing `-fold`, for example `cm-fold`, wraps the output at 80 columns.\n",
-   "有料アカウントを使っていて、処理する文字数に制限がない場合には `MAXLEN` という変数に上限を設定して実行してください。\n" : "If you are using a paid account and there is no limit to the number of characters to process, set the variable `MAXLEN` to the upper limit and run.\n",
-   "特に指定がない場合には、翻訳対象言語毎に `xtxt`, `cm`, `ifdef` の3種類のファイルが作られます。\n" : "If not specified, three types of files, `xtxt`, `cm`, and `ifdef`, will be generated for each target language.\n",
-   "現在の git リポジトリをマウントして、Docker 環境で make を実行します。\n" : "Mount the current git repository and run make in the Docker environment.\n",
-   "翻訳したい文書ファイルを置いて、make コマンドを実行するだけで必要なファイルを生成します。現時点で対象としているのは、以下の種類のファイルです。\n" : "Simply place the document file to be translated and execute the make command to generate the necessary file. The following types of files are currently covered.\n",
-   "翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定できます。デフォルトは `deepl` です。\n" : "Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.\n",
-   "翻訳対象言語の指定。\n" : "Specify the language to be translated.\n",
-   "翻訳形式を指定。通常は `xtxt`、`cm`、`ifdef` の中から指定します。\n" : "Specify the translation format. Usually, you can specify one of `xtxt`, `cm`, or `ifdef`.\n",
-   "読み込みのみでマウントしたければ `-R` オプションを指定します。\n" : "If you want to mount read-only, use the `-R` option.\n"
-}
+[
+   [
+      "# Greple -Mxlate モジュール サンプルファイル\n",
+      "# Greple -Mxlate module sample files\n"
+   ],
+   [
+      "このディレクトリには、Greple の -Mxlate モジュールを使ってファイルを自動翻訳する例が含まれています。\n",
+      "This directory contains an example of using Greple's -Mxlate module to automatically translate a file.\n"
+   ],
+   [
+      "もし、この文章を日本語以外の言語で読んでいるとしたら、それはこの仕組みを使って自動翻訳して生成されたものです。多少おかしな点があっても我慢してください。もし日本語で読んでいてもおかしな点があったら、それは作者の頭がおかしいので、やはり我慢するか、優しく指摘してください。\n",
+      "If you are reading this text in a language other than Japanese, it was generated by automatic translation using this system. Please be patient even if there are some strange points. If you are reading this in Japanese and you find something wrong, please be patient or point it out gently, because the author is not right in the head.\n"
+   ],
+   [
+      "翻訳したい文書ファイルを置いて、make コマンドを実行するだけで必要なファイルを生成します。現時点で対象としているのは、以下の種類のファイルです。\n",
+      "Simply place the document file to be translated and execute the make command to generate the necessary file. The following types of files are currently covered.\n"
+   ],
+   [
+      "- `*.docx`\n",
+      "- `*.docx`, `*.pptx`, and `*.pptx`.\n"
+   ],
+   [
+      "- `*.pptx`\n",
+      "- `*.pptx`, `*.pptx`, and `*.txt`.\n"
+   ],
+   [
+      "- `*.txt`\n",
+      "- `*.txt`\n"
+   ],
+   [
+      "- `*.md`\n",
+      "- `*.md`\n"
+   ],
+   [
+      "- `*.pm`\n",
+      "- `*.pm`\n"
+   ],
+   [
+      "## 生成ファイル\n",
+      "## Generated files\n"
+   ],
+   [
+      "### 単一 ENGINE の場合\n",
+      "### For a single ENGINE\n"
+   ],
+   [
+      "特に指定がない場合には、翻訳対象言語毎に `xtxt`, `cm`, `ifdef` の3種類のファイルが作られます。\n",
+      "If not specified, three types of files, `xtxt`, `cm`, and `ifdef`, will be generated for each target language.\n"
+   ],
+   [
+      "たとえば、`Document.txt` というファイルを日本語に翻訳する場合、\n",
+      "For example, if you want to translate the file `Document.txt` into Japanese, three files named\n"
+   ],
+   [
+      "Document.txt.JA.xtxt\n",
+      "Document.txt.JA.xtxt\n"
+   ],
+   [
+      "Document.txt.JA.cm\n",
+      "Document.txt.JA.cm\n"
+   ],
+   [
+      "Document.txt.JA.ifdef\n",
+      "Document.txt.JA.ifdef\n"
+   ],
+   [
+      "という3つのファイルが生成されます。`xtxt` ファイルには、翻訳文章のみ、`cm` と `ifdef` には原文と訳文の両方が含まれます。\n",
+      "という3つのファイルが生成されます。`xtxt` ファイルには、翻訳文章のみ、`cm` と `ifdef` には原文と訳文の両方が含まれます。\n"
+   ],
+   [
+      "### 複数 ENGINE の場合\n",
+      "### For multiple ENGINE\n"
+   ],
+   [
+      "ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次のようにエンジン名を含むファイルを生成します。\n",
+      "If two ENGINEs, `deepl` and `gpt3`, are specified, a file containing the engine name is generated as follows.\n"
+   ],
+   [
+      "Document.txt.deepl-JA.xtxt\n",
+      "Document.txt.deepl-JA.xtxt\n"
+   ],
+   [
+      "Document.txt.deepl-JA.cm\n",
+      "Document.txt.deepl-JA.cm\n"
+   ],
+   [
+      "Document.txt.deepl-JA.ifdef\n",
+      "Document.txt.deepl-JA.ifdef\n"
+   ],
+   [
+      "Document.txt.gpt3-JA.xtxt\n",
+      "Document.txt.gpt3-JA.xtxt\n"
+   ],
+   [
+      "Document.txt.gpt3-JA.cm\n",
+      "Document.txt.gpt3-JA.cm\n"
+   ],
+   [
+      "Document.txt.gpt3-JA.ifdef\n",
+      "Document.txt.gpt3-JA.ifdef\n"
+   ],
+   [
+      "## 行の折り返し\n",
+      "## Wrap lines\n"
+   ],
+   [
+      "形式指定に、たとえば `cm-fold` の様に、最後に `-fold` を付けると、出力を80カラムで折り返します。\n",
+      "The format specification with trailing `-fold`, for example `cm-fold`, wraps the output at 80 columns.\n"
+   ],
+   [
+      "## 制御ファイル\n",
+      "## Control files\n"
+   ],
+   [
+      "対象ファイルに特定の拡張子が付いたファイルがあると、その内容によって翻訳処理を制御することができます。たとえば、`Document.txt` というファイルと共に `Document.txt.LANG` というファイルがあれば、その中に書かれている言語に翻訳します。\n",
+      "If the target file has a file with a specific extension, the translation process can be controlled by its contents. For example, if there is a file called `Document.txt.LANG` along with a file called `Document.txt`, the translation will be done in the language written in the file.\n"
+   ],
+   [
+      "### .ENGINE\n",
+      "### .ENGINE\n"
+   ],
+   [
+      "翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定できます。デフォルトは `deepl` です。\n",
+      "Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.\n"
+   ],
+   [
+      "### .LANG\n",
+      "### .LANG\n"
+   ],
+   [
+      "翻訳対象言語の指定。\n",
+      "Specify the language to be translated.\n"
+   ],
+   [
+      "### .FORMAT\n",
+      "### .FORMAT\n"
+   ],
+   [
+      "翻訳形式を指定。通常は `xtxt`、`cm`、`ifdef` の中から指定します。\n",
+      "Specify the translation format. Usually, you can specify one of `xtxt`, `cm`, or `ifdef`.\n"
+   ],
+   [
+      "他の形式、たとえば `md` することもできますが、その場合は `xtxt` と同様の内容になります。ただ `.md` で終わるファイルを生成すると、次回はそのファイルも翻訳対象になってしまうので注意して使う必要があります。\n",
+      "You can also use other formats, such as `md`, in which case the contents will be the same as for `xtxt`. If you generate a file ending with `.md`, it will also be translated next time, so you should use it carefully.\n"
+   ],
+   [
+      "## 翻訳処理\n",
+      "## translation process\n"
+   ],
+   [
+      "デフォルトの動作では、翻訳対象となるテキストをクリップボードにコピーした状態で、翻訳処理を促すプロンプトが表示されます。DeepL のアプリケーションやウェブインタフェースを使ってそれを翻訳し、結果を再びクリップボードにコピーしてから、エンターキーを押してください。\n",
+      "The default behavior is to copy the text to be translated to the clipboard, and you will be prompted to process the translation; translate it using the DeepL application or web interface, copy the result back to the clipboard, and then press enter Please press enter.\n"
+   ],
+   [
+      "### 文字数制限\n",
+      "### character limit\n"
+   ],
+   [
+      "フリーアカウントで実行している場合には、一度に5000文字までしか処理できないので、すべてのテキストの処理が終わるまでこの作業を繰り返します。\n",
+      "If you are running with a free account, you can only process up to 5000 characters at a time, so repeat this process until all text has been processed.\n"
+   ],
+   [
+      "有料アカウントを使っていて、処理する文字数に制限がない場合には `MAXLEN` という変数に上限を設定して実行してください。\n",
+      "If you are using a paid account and there is no limit to the number of characters to process, set the variable `MAXLEN` to the upper limit and run.\n"
+   ],
+   [
+      "make MAXLEN=100000\n",
+      "make MAXLEN=100000\n"
+   ],
+   [
+      "### DeepL API を利用する\n",
+      "### Using the DeepL API\n"
+   ],
+   [
+      "API を使って翻訳する場合には `deepl` コマンドがインストールされている必要があります。`USEAPI` という変数をセットして make を実行してください。ただし、Docker コンテナ上で実行する場合は `deepl` コマンドは不要です。\n",
+      "To translate using the API, the `deepl` command must be installed. Set the variable `USEAPI` and run make. However, you do not need the `deepl` command if you run on a Docker container.\n"
+   ],
+   [
+      "make USEAPI=yes\n",
+      "make USEAPI=yes\n"
+   ],
+   [
+      "API を利用する場合は、最大文字数は 128K に設定されます。認証キーは環境変数 `DEEPL_AUTH_KEY` に設定します。必要に応じて`DEEPL_SERVER_URL` 等の環境変数を設定してください。\n",
+      "When using the API, the maximum number of characters is set to 128K. The authentication key is set in the environment variable `DEEPL_AUTH_KEY`. Set environment variables such as `DEEPL_SERVER_URL` if necessary.\n"
+   ],
+   [
+      "### Docker コンテナを利用する\n",
+      "### Using the Docker container\n"
+   ],
+   [
+      "`DOCKER` という変数を有効にして make を実行してください。\n",
+      "Run make with the variable `DOCKER` enabled.\n"
+   ],
+   [
+      "make DOCKER=yes\n",
+      "make DOCKER=yes\n"
+   ],
+   [
+      "### `XLATE_OPT` 変数\n",
+      "### `XLATE_OPT` variable\n"
+   ],
+   [
+      "`xlate` コマンドに与えるオプションを指定することもできます。\n",
+      "You can also specify options to give to the `xlate` command.\n"
+   ],
+   [
+      "make XLATE_OPT=-Dam100000\n",
+      "make XLATE_OPT=-Dam100000\n"
+   ],
+   [
+      "のようにすれば、API を利用して、文字数制限を10万文字に設定して、Docker 上で実行することができます。\n",
+      "would allow the API to run on Docker with a character limit of 100,000 characters.\n"
+   ],
+   [
+      "## xlate スクリプト\n",
+      "## xlate script\n"
+   ],
+   [
+      "当初、これらのファイルは Makefile によって処理するように作りましたが、現在はそこで使われていた設定をより汎用的なものとし、`xlate` というスクリプトで自動的に処理するようにしてあります。ですから、現在の Makefile は、単に `xlate` コマンドを呼び出すだけのものになっています。`xlate` が使用する Makefile は `../share/XLATE.mk` にあります。\n",
+      "Originally, these files were created to be handled by a Makefile, but now the settings used there are more generic and are automatically handled by a script called `xlate`. Thus, the current Makefile simply calls the `xlate` command. The Makefile used by `xlate` is `. /share/XLATE.mk`.\n"
+   ],
+   [
+      "ヘルプを見るためには `xlate -h` を実行してください。\n",
+      "To get help, run `xlate -h`.\n"
+   ],
+   [
+      "### `xlate -M`\n",
+      "### `xlate -M`.\n"
+   ],
+   [
+      "make を実行します。\n",
+      "Run make.\n"
+   ],
+   [
+      "### `xlate -D`\n",
+      "### `xlate -D`\n"
+   ],
+   [
+      "Docker 環境で xlate コマンドを実行します。\n",
+      "Run the xlate command in the Docker environment.\n"
+   ],
+   [
+      "### `xlate -C`\n",
+      "### `xlate -C`\n"
+   ],
+   [
+      "Docker 環境でコマンドを実行します。\n",
+      "Run the command in the Docker environment.\n"
+   ],
+   [
+      "`-C` に続けてコマンドを指定するとそのコマンドを実行します。何も指定しない場合には、シェルが立ち上がります。\n",
+      "If you specify `-C` followed by a command, it will execute that command. If nothing is specified, a shell will be launched.\n"
+   ],
+   [
+      "デフォルトでは、現行ディレクトリが `/work` ディレクトリにマウントされます。git 環境を使いたい場合は、次の `-G` オプションを使ってください。\n",
+      "By default, the current directory is mounted in the `/work` directory; if you want to use the git environment, use the following `-G` option.\n"
+   ],
+   [
+      "読み込みのみでマウントしたければ `-R` オプションを指定します。\n",
+      "If you want to mount read-only, use the `-R` option.\n"
+   ],
+   [
+      "#### `xlate -G`\n",
+      "#### `xlate -G`\n"
+   ],
+   [
+      "Docker 環境を構築する際に、現在の git リポジトリのトップディレクトリをマウントします。\n",
+      "Mount the top directory of the current git repository in the Docker environment.\n"
+   ],
+   [
+      "#### `xlate -GM`\n",
+      "#### `xlate -GM`\n"
+   ],
+   [
+      "現在の git リポジトリをマウントして、Docker 環境で make を実行します。\n",
+      "Mount the current git repository and run make in the Docker environment.\n"
+   ],
+   [
+      "どのようなコマンドを実行するか確認したい場合には `xlate -GMn` のように `-n` オプションを指定することができます。\n",
+      "You can specify the `-n` option, like `xlate -GMn` if you want to see what command to run.\n"
+   ],
+   [
+      "#### `xlate -GC`\n",
+      "#### `xlate -GC`\n"
+   ],
+   [
+      "Git リポジトリをマウントして Docker 環境でシェルを立ち上げます。\n",
+      "Mount the Git repository and launch a shell in the Docker environment.\n"
+   ],
+   [
+      "Git やその他のツールが一式インストールしてあるので、そのまま作業することができます。作業ディレクトリをマウントするので、そこで行った修正は元のファイルに反映されることに注意してください。\n",
+      "Git and a set of other tools are installed, so you can work straight through. Note that it mounts your working directory, so any modifications you make there will be reflected in the original files.\n"
+   ]
+]

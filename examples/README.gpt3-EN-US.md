@@ -24,7 +24,7 @@ For example, if you want to translate a file named `Document.txt` into Japanese,
     Document.txt.EN.cm
     Document.txt.EN.ifdef
 
-The `xtxt` file contains only the translated text, while both the original text and the translated text are included in the `cm` and `ifdef` files.
+Three files will be generated: the `xtxt` file will contain only the translated text, while both the original text and the translated text will be included in the `cm` and `ifdef` files.
 
 ### Multiple ENGINES
 
