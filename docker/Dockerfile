@@ -25,10 +25,12 @@ RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        python3 python3-pip
 
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
 RUN pip install --upgrade \
-       --break-system-packages \
        packaging deepl \
-       git+https://github.com/tecolicom/App-gpty.git
+       git+https://github.com/tecolicom/App-gpty.git \
+       llm \
+    && llm install llm-gemini llm-claude llm-claude-3 llm-perplexity
 
 RUN deepl --version
 RUN gpty --version
