@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.44 2024-11-01T08:14:59Z
+
+    - run docker with --tty option when stdin is terminal
+    - -H option set HOME to the mount point
+
 0.43 2024-10-31T09:51:34Z
 
     - install "llm" in Docker image
