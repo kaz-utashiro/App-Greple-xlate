@@ -10,7 +10,7 @@ define pod <<"=cut"
 
 =head1 NAME
 
-    xlate - translate CLI front-end for App::Greple::xlate module
+    xlate - TRANSlate CLI front-end for App::Greple::xlate module
 
 =head1 SYNOPSIS
 
@@ -78,6 +78,11 @@ get_ip() {
     echo -n $ip
 }
 
+warn() {
+    [[ $quiet ]] && return
+    echo ${1+"$@"} >&2
+}
+
 pwd=$(pwd)
 repository=tecolicom/xlate
 hostname=
@@ -89,29 +94,29 @@ read_only=
 display=
 localtime=/etc/localtime
 
-DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
-	LANG TZ
-	LESS=-cR LESSANSIENDCHARS=mK
-	HTTP_PROXY HTTPS_PROXY
-	http_proxy https_proxy
-	TERM_PROGRAM TERM_BGCOLOR COLORTERM
-	DEEPL_AUTH_KEY
-	OPENAI_API_KEY
-	ANTHROPIC_API_KEY
-	LLM_PERPLEXITY_KEY
-EOF
-)"$'\n'
+ENV=(
+    LANG TZ
+    LESS=-cR LESSANSIENDCHARS=mK
+    HTTP_PROXY HTTPS_PROXY
+    http_proxy https_proxy
+    TERM_PROGRAM TERM_BGCOLOR COLORTERM
+    DEEPL_AUTH_KEY
+    OPENAI_API_KEY
+    ANTHROPIC_API_KEY
+    LLM_PERPLEXITY_KEY
+)
 
 ##
 ## Docker
 ##
-while getopts :d${DOCKER_OPT:=dBUI:HV:T:LRE:GCD} OPT
+while getopts :dq${DOCKER_OPT:=dBUI:HV:T:LRE:GCD} OPT
 do
     [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
-	d)       debug=yes ; set -x ;;
-	U)       mount= ;;
-	R)  mount_mode=ro ;;
+	d) debug=yes ; set -x ;;
+	q) quiet=yes ;;
+	U) mount= ;;
+	R) mount_mode=ro ;;
 	I)
 	    if [[ "$OPTARG" =~ ^(v?[0-9.]*|latest)$ ]]
 	    then
@@ -121,7 +126,7 @@ do
 	    fi
 	    ;;
 	E)
-	    DEFAULT_ENV+="$OPTARG"$'\n'
+	    ENV+=("$OPTARG")
 	    ;;
 	H|V|G)
 	    case $OPT in
@@ -136,7 +141,7 @@ do
 	    esac
 	    if [[ $volume && $volume != $pwd ]]
 	    then
-		echo "Mount $volume to $workdir" >&2
+		warn "Mount $volume to $workdir"
 		[[ "${pwd#$volume/}" != $pwd ]] && relative="${pwd#$volume/}"
 	    fi
 	    ;;
@@ -163,16 +168,15 @@ do
 	    [ -e "$localtime" ] && dockopt+=(-v $localtime:$localtime:ro)
 	    [ $mount ]          && dockopt+=(
 		    -v "${volume:-$pwd}:${workdir}:${mount_mode}" 
-		    -w "${workdir}${relative:+/${relative}}" )
+		    -w "${workdir}${relative:+/${relative}}")
 	    dockopt+=(
 		${read_only:+--read-only}
 		${hostname:+--hostname "${hostname}"}
 		${display:+-e DISPLAY="$display"}
+		${ENV[@]/#/-e }
 	    )
-	    exec docker run \
-		 --env-file <(echo "$DEFAULT_ENV") \
-		 "${dockopt[@]}" "${container}" "${command[@]}"
-	    exit;
+	    exec docker run "${dockopt[@]}" "${container}" "${command[@]}"
+	    exit
 	    ;;
     esac
 done
@@ -183,11 +187,12 @@ share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
 
 declare -a pattern
 
-while getopts "${DOCKER_OPT}"'Macrusne:w:o:f:t:m:x:p:l:hv' OPT
+while getopts dq"${DOCKER_OPT}"'Macrusne:w:o:f:t:m:x:p:l:hv' OPT
 do
     case $OPT in
 	[$DOCKER_OPT]) : ;;
 	d)     debug=yes ; set -x ;;
+	q)     quiet=yes ;;
 	M)  run_make=yes ;;
 	a)   use_api=yes ;;
 	c)     check=yes ;;
@@ -613,9 +618,10 @@ Do not mount any directory.
 
 Mount directory as read-only in Docker.
 
-=item B<-E> I<var>
+=item B<-E> I<name>[=I<value>]
 
 Specify environment variable to be inherited in Docker.
+Repeatable.
 
 =item B<-I> I<image>
 
@@ -638,11 +644,19 @@ no command is provided.
 
 =item DEEPL_AUTH_KEY
 
-Authentication key for DeepL API.
+DeepL API key.
 
 =item OPENAI_API_KEY
 
-API key for OpenAI (used for GPT-based engines).
+OpenAI API key.
+
+=item ANTHROPIC_API_KEY
+
+Anthropic API key.
+
+=item LLM_PERPLEXITY_KEY
+
+Perplexity API key.
 
 =back
 
