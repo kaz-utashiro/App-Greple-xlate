@@ -130,7 +130,9 @@ do
 	    ;;
 	H|V|G)
 	    case $OPT in
-		 H)  volume="$HOME" ;;
+		 H)  volume="$HOME"
+		     ENV+=(HOME=$workdir)
+		     ;;
 		 V)  volume="$OPTARG" ;;
 		 G)
 		     if [[ ${topdir:=$(git_topdir)} && $topdir != $pwd ]]
@@ -604,7 +606,8 @@ Mount L<git(1)> top-level directory when running in Docker.
 
 =item B<-H>
 
-Mount user's home directory when running in Docker.
+Mount user's home directory when running in Docker.  The environment
+variable C<HOME> is set to the mount point.
 
 =item B<-V>=I<directory>
 
