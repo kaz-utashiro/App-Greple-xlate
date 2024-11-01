@@ -73,16 +73,6 @@ git_topdir() {
     echo -n $dir
 }
 
-env_pattern() {
-    local name
-    while (( $# > 0 ))
-    do
-	name+="${name:+\\|}$1"
-	shift
-    done
-    echo -n ${name:+"^\\($name\\)="}
-}
-
 get_ip() {
     local ip=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | tail -1)
     echo -n $ip
@@ -111,8 +101,6 @@ DEFAULT_ENV="$(sed 's/  */\n/g' <<-EOF
 	LLM_PERPLEXITY_KEY
 EOF
 )"$'\n'
-
-declare -a ENV
 
 ##
 ## Docker
@@ -166,10 +154,9 @@ do
 		C) shift $((OPTIND - 1)) ;;
 		D) command=(xlate) ;;
 	    esac
+	    command+=(${1+"$@"})
 	    : ${container:=${repository}${version}}
 	    : ${hostname:=$(echo ${container} | sed -e s:.*/:: -e s/:.*//)}
-	    command+=(${1+"$@"})
-	    [ ${#ENV[@]} -gt 0 ] && ENV_PATTERN="$(env_pattern ${ENV[@]})"
 	    declare dockopt=(--interactive --rm)
 	    [ -t 0 ]            && dockopt+=(--tty)
 	    [ -e "$localtime" ] && dockopt+=(-v $localtime:$localtime:ro)
@@ -182,7 +169,6 @@ do
 		 	  -w "${workdir}${relative:+/${relative}}"} \
 		 ${display:+-e DISPLAY="$display"} \
 		 ${DEFAULT_ENV:+--env-file <(echo "$DEFAULT_ENV")} \
-		 ${ENV_PATTERN:+--env-file <(env | grep -e "$ENV_PATTERN")} \
 		 ${container} \
 		 "${command[@]}"
 	    exit;
