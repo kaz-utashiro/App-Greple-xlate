@@ -80,8 +80,7 @@ RUN exec >> $HOME/.inputrc \
     && echo Control-n: history-search-forward \
     && echo Control-p: history-search-backward \
     && echo Control-d: delete-char-or-list
-# .bashrc
-RUN exec >> $HOME/.bashrc \
-    && echo export LANG=ja_JP.UTF-8 \
-    && echo export LESS=-cR \
-    && echo export LESSANSIENDCHARS=mK
+
+ENV LANG=ja_JP.UTF-8
+ENV LESS=-cR
+ENV LESSANSIENDCHARS=mK
