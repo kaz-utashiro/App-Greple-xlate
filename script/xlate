@@ -96,7 +96,6 @@ localtime=/etc/localtime
 
 ENV=(
     LANG TZ
-    LESS=-cR LESSANSIENDCHARS=mK
     HTTP_PROXY HTTPS_PROXY
     http_proxy https_proxy
     TERM_PROGRAM TERM_BGCOLOR COLORTERM
@@ -164,13 +163,16 @@ do
 	    command+=(${1+"$@"})
 	    : ${container:=${repository}${version:+:$version}}
 	    : ${hostname:=$(<<< ${container} sed -e s:.*/:: -e s/:.*//)}
-	    declare -a dockopt
-	    dockopt+=(-e XLATE_RUNNING_ON_DOCKER=1 --interactive --rm)
+	    declare -a dockopt=(
+		-e XLATE_RUNNING_ON_DOCKER=1
+		--interactive --rm
+	    )
 	    [ -t 0 ]            && dockopt+=(--tty)
 	    [ -e "$localtime" ] && dockopt+=(-v $localtime:$localtime:ro)
 	    [ $mount ]          && dockopt+=(
 		    -v "${volume:-$pwd}:${workdir}:${mount_mode}" 
-		    -w "${workdir}${relative:+/${relative}}")
+		    -w "${workdir}${relative:+/${relative}}"
+		)
 	    dockopt+=(
 		${read_only:+--read-only}
 		${hostname:+--hostname "${hostname}"}
@@ -591,27 +593,27 @@ Dry run.
 Docker feature is invoked by the B<-D> or B<-C> option.  These are
 exclusive, so only one of them can be used.  Also, once these two
 options appear, subsequent options are not interpreted, so they should
-always be specified last.
+always be the last of Docker related options.
 
 When running in a docker environment, the current directory is mounted
 by default.  If another directory is specified to be mounted, such as
 the git top directory or the home directory, it will still be moved to
-the current directory location within that tree and executed.
+the current location within that tree and executed.
 
 =over 7
 
 =item B<-G>
 
-Mount L<git(1)> top-level directory when running in Docker.
+Mount L<git(1)> top-level directory.
 
 =item B<-H>
 
-Mount user's home directory when running in Docker.  The environment
-variable C<HOME> is set to the mount point.
+Mount user's home directory.  The environment variable C<HOME> is set
+to the mount point.
 
 =item B<-V> I<directory>
 
-Specify directory to be mounted when running in Docker.
+Specify directory to be mounted.
 
 =item B<-U>
 
@@ -619,7 +621,7 @@ Do not mount any directory.
 
 =item B<-R>
 
-Mount directory as read-only in Docker.
+Mount directory as read-only.
 
 =item B<-E> I<name>[=I<value>]
 
@@ -632,7 +634,8 @@ Specify Docker image or version.
 
 =item B<-D>
 
-Run xlate on the Docker container with the rest of the parameters.
+Run B<xlate> scirpt on the Docker container with the rest of the
+parameters.
 
 =item B<-C>
 
