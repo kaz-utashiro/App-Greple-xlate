@@ -46,12 +46,15 @@ define pod <<"=cut"
 	-V # specify mount directory
 	-U   do not mount
 	-R   mount read-only
+        -K   do not remove and keep live container
+	-X   remove live container
 	-E # specify environment variable to be inherited
 	-I # docker image or version (default: tecolicom/xlate:version)
 
-	-D * run xlate on the container with the rest parameters
+	-D * run xlate on the container with the same parameters
 	-C * run following command on the container, or run shell
-	N.B. -D/-C terminates option handling
+	-L * create or attach to the live container
+	N.B. -D/-C/-L terminates option handling
 
     Control Files:
 	*.LANG    translation languates
@@ -87,6 +90,8 @@ pwd=$(pwd)
 repository=tecolicom/xlate
 hostname=
 mount=yes
+remove=yes
+container=$myname
 version=
 workdir=/work
 mount_mode=rw
@@ -108,7 +113,7 @@ ENV=(
 ##
 ## Docker
 ##
-while getopts :dq${DOCKER_OPT:=dBUI:HV:T:LRE:GCD} OPT
+while getopts :dq${DOCKER_OPT:=dURAI:E:HV:GN:XLKCD} OPT
 do
     [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
@@ -117,11 +122,11 @@ do
 	U) mount= ;;
 	R) mount_mode=ro ;;
 	I)
-	    if [[ $OPTARG =~ ^(v?[0-9.]*|latest)$ ]]
+	    if [[ $OPTARG =~ ^:(.+)$ ]]
 	    then
-		version="$OPTARG"
+		version="${BASH_REMATCH[1]}"
 	    else 
-		container="$OPTARG"
+		image="$OPTARG"
 	    fi
 	    ;;
 	E)
@@ -146,6 +151,39 @@ do
 		[[ "${pwd#$volume/}" != $pwd ]] && relative="${pwd#$volume/}"
 	    fi
 	    ;;
+	N) container="$OPTARG" ;;
+	X)
+	    if [[ $(docker ps -a -q -f name="$container") ]]
+	    then
+		docker rm -f $container | sed 's/$/ is removed/'
+	    else
+		echo $container does not exist
+	    fi
+	    if [[ ${@:$OPTIND:1} =~ XL ]]
+	    then
+		(( OPTIND++ ))
+	    else
+		exit
+	    fi
+	    ;&
+	L)
+	    if [[ $(docker ps -q -f status=exited -f name="$container") ]]
+	    then
+		warn start and attach to \"$container\"
+		docker start -ia $container
+		exit
+	    fi
+	    if [[ $(docker ps -q -f status=running -f name="$container") ]]
+	    then
+		warn attach to \"$container\"
+		docker attach $container
+		exit
+	    fi
+	    ;&
+	K)
+	    warn create live conainer \"$container\"
+	    remove=
+	    ;&
 	C|D)
 	    if [[ $DISPLAY && "${ip:=$(get_ip)}" ]]
 	    then
@@ -157,19 +195,23 @@ do
 	    fi
 	    declare -a command
 	    case "$OPT" in
-		C) shift $((OPTIND - 1)) ;;
 		D) command=(xlate) ;;
+		*) shift $((OPTIND - 1)) ;;
 	    esac
 	    command+=(${1+"$@"})
-	    : ${container:=${repository}${version:+:$version}}
-	    : ${hostname:=$(<<< ${container} sed -e s:.*/:: -e s/:.*//)}
+	    : ${image:=${repository}${version:+:$version}}
+	    : ${hostname:=$(<<< ${image} sed -e s:.*/:: -e s/:.*//)}
 	    declare -a dockopt=(
 		-e XLATE_RUNNING_ON_DOCKER=1
-		--interactive --rm
+		--interactive
 	    )
+	    if [ "$remove" ]
+	    then dockopt+=(--rm)
+	    else dockopt+=(${container:+--name "$container"})
+	    fi
 	    [ -t 0 ]            && dockopt+=(--tty)
 	    [ -e "$localtime" ] && dockopt+=(-v $localtime:$localtime:ro)
-	    [ $mount ]          && dockopt+=(
+	    [ "$mount" ]        && dockopt+=(
 		    -v "${volume:-$pwd}:${workdir}:${mount_mode}" 
 		    -w "${workdir}${relative:+/${relative}}"
 		)
@@ -179,7 +221,7 @@ do
 		${display:+-e DISPLAY="$display"}
 		${ENV[@]/#/-e }
 	    )
-	    exec docker run "${dockopt[@]}" "${container}" "${command[@]}"
+	    exec docker run "${dockopt[@]}" "${image}" "${command[@]}"
 	    exit
 	    ;;
     esac
@@ -590,8 +632,8 @@ Dry run.
 
 =head2 DOCKER OPTIONS
 
-Docker feature is invoked by the B<-D> or B<-C> option.  These are
-exclusive, so only one of them can be used.  Also, once these two
+Docker feature is invoked by the B<-D>, B<-C> or B<-L> option.  These
+are exclusive, so only one of them can be used.  Also, once these two
 options appear, subsequent options are not interpreted, so they should
 always be the last of Docker related options.
 
@@ -630,7 +672,26 @@ Repeatable.
 
 =item B<-I> I<image>
 
-Specify Docker image or version.
+Specify Docker image name.  If it begins with a colon (C<:>), it is
+treated as a version of the default image.
+
+=item B<-K>
+
+Keep containers alive after execution.  By default, container is
+automatically removed upon exit (C<--rm>).  This option disables that
+automatic deletion.
+
+=item B<-N>
+
+Specifies the name of the live container.  Default is C<xlate>.
+
+=item B<-X>
+
+Remove the existing live container.  If a container with the specified
+name (default is C<xlate>) exists, it will be stopped and removed.
+
+If specified as C<-XL>, then a new container is launched after the
+existing container is removed.
 
 =item B<-D>
 
@@ -641,6 +702,18 @@ parameters.
 
 Run the following command on the Docker container, or run a shell if
 no command is provided.
+
+=item B<-L>
+
+Attach to a continuously running live container.  If the container
+does not exist, a new one is created, and if there is a stopped
+container, it is restarted before connecting.
+
+The other docker options only apply the first time the container is
+launched.  Therefore, if you are changing the configuration, such as
+changing the mount directory, use the C<-X> option to remove the
+existing container before starting.  Alternatively, the C<-XL> option
+can be used to remove and create at the same time.
 
 =back
 
