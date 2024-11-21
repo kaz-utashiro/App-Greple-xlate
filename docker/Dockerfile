@@ -41,7 +41,7 @@ RUN apt-get update && apt-get -yq upgrade \
 	xclip socat \
 	poppler-utils \
 	mecab mecab-ipadic-utf8 \
-	jq \
+	jq yq \
 	diffutils
 
 RUN rm -fr \
