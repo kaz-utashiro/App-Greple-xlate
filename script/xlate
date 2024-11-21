@@ -87,17 +87,19 @@ warn() {
 }
 
 pwd=$(pwd)
-repository=tecolicom/xlate
+owner=tecolicom
+repository=$owner/$myname
 hostname=
 mount=yes
 remove=yes
-container=$myname
+container=
 version=
 workdir=/work
 mount_mode=rw
 read_only=
 display=
 localtime=/etc/localtime
+givenname=
 
 ENV=(
     LANG TZ
@@ -109,6 +111,21 @@ ENV=(
     ANTHROPIC_API_KEY
     LLM_PERPLEXITY_KEY
 )
+
+container_name() {
+    local name
+    if [[ $givenname ]]
+    then
+	name=$givename
+    else
+	if [[ $image =~ (.*/)?([-_.a-zA-Z]+) ]]
+	then name=${BASH_REMATCH[2]}
+	else name=$myname
+	fi
+	[[ $volume ]] && name+=.${volume##*/}
+    fi
+    echo $name
+}
 
 ##
 ## Docker
@@ -151,9 +168,10 @@ do
 		[[ "${pwd#$volume/}" != $pwd ]] && relative="${pwd#$volume/}"
 	    fi
 	    ;;
-	N) container="$OPTARG" ;;
+	N) givenname="$OPTARG" ;;
 	X)
-	    if [[ $(docker ps -a -q -f name="$container") ]]
+	    : ${container:=$(container_name)}
+	    if [[ $(docker ps -a -q -f name="/$container\$") ]]
 	    then
 		docker rm -f $container | sed 's/$/ is removed/'
 	    else
@@ -167,20 +185,20 @@ do
 	    fi
 	    ;&
 	L)
-	    if [[ $(docker ps -q -f status=exited -f name="$container") ]]
+	    : ${container:=$(container_name)}
+	    if [[ $(docker ps -q -f status=exited -f name="^/$container$") ]]
 	    then
 		warn start and attach to \"$container\"
-		docker start -ia $container
-		exit
+		exec docker start -ia $container || exit 1
 	    fi
-	    if [[ $(docker ps -q -f status=running -f name="$container") ]]
+	    if [[ $(docker ps -q -f status=running -f name="/$container\$") ]]
 	    then
 		warn attach to \"$container\"
-		docker attach $container
-		exit
+		exec docker attach $container || exit 1
 	    fi
 	    ;&
 	K)
+	    : ${container:=$(container_name)}
 	    warn create live conainer \"$container\"
 	    remove=
 	    ;&
@@ -221,8 +239,7 @@ do
 		${display:+-e DISPLAY="$display"}
 		${ENV[@]/#/-e }
 	    )
-	    exec docker run "${dockopt[@]}" "${image}" "${command[@]}"
-	    exit
+	    exec docker run "${dockopt[@]}" "${image}" "${command[@]}" || exit 1
 	    ;;
     esac
 done
@@ -312,8 +329,8 @@ then
 	 ${engine:+XLATE_ENGINE=\""$engine"\"} \
 	 ${format:+XLATE_FORMAT=\""$format"\"} \
 	 ${files:+XLATE_FILES=\""$files"\"} \
-	 ${opt[@]}
-    exit 1
+	 ${opt[@]} \
+    || exit 1
 fi
 
 if [ ! "$to_lang" ]
