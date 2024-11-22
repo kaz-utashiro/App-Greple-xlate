@@ -236,8 +236,8 @@
       "Opsi ini memaksa untuk memperbarui file cache meskipun tidak diperlukan.\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "Anda dapat dengan mudah menggunakan modul ini dari baris perintah dengan menggunakan perintah C<xlate> yang disertakan dalam distribusi. Lihat informasi bantuan C<xlate> untuk informasi penggunaan.\n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "Anda dapat dengan mudah menggunakan modul ini dari baris perintah dengan menggunakan perintah C<xlate> yang disertakan dalam distribusi. Lihat halaman manifes C<xlate> untuk penggunaan.\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",

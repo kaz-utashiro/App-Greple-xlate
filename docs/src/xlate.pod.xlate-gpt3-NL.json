@@ -236,8 +236,8 @@
       "Deze optie dwingt het bijwerken van het cachebestand af, zelfs als dit niet nodig is.\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "U kunt dit module gemakkelijk gebruiken vanaf de commandoregel door gebruik te maken van het C<xlate> commando dat is opgenomen in de distributie. Raadpleeg de C<xlate> helpinformatie voor het gebruik.\n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "Je kunt dit module eenvoudig vanaf de commandoregel gebruiken door het C<xlate> commando te gebruiken dat is opgenomen in de distributie. Bekijk de C<xlate> man-pagina voor het gebruik.\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",

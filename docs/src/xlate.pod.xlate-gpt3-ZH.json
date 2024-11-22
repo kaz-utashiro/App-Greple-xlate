@@ -236,8 +236,8 @@
       "此选项强制更新缓存文件，即使没有必要。\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "您可以通过使用分发中包含的C<xlate>命令，轻松地从命令行使用此模块。请参阅C<xlate>帮助信息以了解用法。\n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "您可以通过在分发中包含的 C<xlate> 命令轻松地从命令行中使用此模块。请查看 C<xlate> 手册页以了解用法。\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",

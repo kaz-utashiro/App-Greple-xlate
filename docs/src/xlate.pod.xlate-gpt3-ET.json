@@ -236,8 +236,8 @@
       "See valik sunnib värskendama vahemälu faili isegi siis, kui see pole vajalik.\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "Seda moodulit saate hõlpsalt kasutada käsurealt, kasutades distributsioonis kaasasolevat C<xlate> käsku. Vaadake C<xlate> kasutusjuhendit lisateabe saamiseks.\n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "Saate seda moodulit hõlpsalt kasutada käsurealt, kasutades jaotises sisalduvat C<xlate> käsku. Vaadake kasutamiseks C<xlate> man lehte.\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",

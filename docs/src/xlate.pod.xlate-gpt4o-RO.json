@@ -236,8 +236,8 @@
       "Această opțiune forțează actualizarea fișierului cache chiar dacă nu este necesară.\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "Puteți folosi cu ușurință acest modul din linia de comandă folosind comanda C<xlate> inclusă în distribuție. \nConsultați informațiile de ajutor C<xlate> pentru utilizare.\n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "Poți folosi cu ușurință acest modul din linia de comandă folosind comanda C<xlate> inclusă în distribuție. Consultă pagina de manual C<xlate> pentru utilizare.\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",

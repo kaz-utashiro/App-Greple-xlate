@@ -10,7 +10,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 0.45
+Version 0.99
 
 # DESCRIPTION
 
@@ -250,7 +250,7 @@ Utilice **--xlate-cache=clear** para iniciar la gestión de la caché o para lim
 
 # COMMAND LINE INTERFACE
 
-Puede utilizar fácilmente este módulo desde la línea de comandos utilizando el comando `xlate` incluido en la distribución. Consulte la información de ayuda de `xlate` para su uso.
+Puede utilizar fácilmente este módulo desde la línea de comandos mediante el comando `xlate` incluido en la distribución. Consulte la página del manual `xlate` para más información.
 
 El comando `xlate` funciona conjuntamente con el entorno Docker, por lo que incluso si no tiene nada instalado a mano, puede utilizarlo siempre que Docker esté disponible. Utilice la opción `-D` o `-C`.
 
@@ -270,29 +270,40 @@ Lea el artículo japonés en la sección ["SEE TAMBIÉN"](#see-también) para m�
         -a   use API
         -c   just check translation area
         -r   refresh cache
+        -u   force update cache
         -s   silent mode
-        -e # translation engine (default "deepl")
+        -e # translation engine (*deepl, gpt3, gpt4, gpt4o)
         -p # pattern to determine translation area
         -x # file containing mask patterns
         -w # wrap line by # width
-        -o # output format (default "xtxt", or "cm", "ifdef")
+        -o # output format (*xtxt, cm, ifdef, space, space+, colon)
         -f # from lang (ignored)
         -t # to lang (required, no default)
         -m # max length per API call
         -l # show library files (XLATE.mk, xlate.el)
-        --   terminate option parsing
+        --   end of option
+        N.B. default is marked as *
+
     Make options
         -M   run make
         -n   dry-run
+
     Docker options
+        -D * run xlate on the container with the same parameters
+        -C * execute following command on the container, or run shell
+        -A * attach to the live container
+        N.B. -D/-C/-A terminates option handling
+
         -G   mount git top-level directory
-        -B   run in non-interactive (batch) mode
+        -H   mount home directory
+        -V # specify mount directory
+        -U   do not mount
         -R   mount read-only
-        -E * specify environment variable to be inherited
-        -I * docker image name or version (default: tecolicom/xlate:version)
-        -D * run xlate on the container with the rest parameters
-        -C * run following command on the container, or run shell
-    
+        -K   do not remove and keep live container
+        -Q   quit and remove live container
+        -E # specify environment variable to be inherited
+        -I # docker image or version (default: tecolicom/xlate:version)
+
     Control Files:
         *.LANG    translation languates
         *.FORMAT  translation foramt (xtxt, cm, ifdef, colon, space)

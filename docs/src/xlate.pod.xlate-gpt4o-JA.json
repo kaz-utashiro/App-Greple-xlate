@@ -236,8 +236,8 @@
       "このオプションは、必要でなくてもキャッシュファイルを更新することを強制します。\n"
    ],
    [
-      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> help information for usage.\n",
-      "このモジュールは、配布に含まれるC<xlate>コマンドを使用することで、コマンドラインから簡単に使用できます。使用法についてはC<xlate>ヘルプ情報を参照してください。  \n"
+      "You can easily use this module from the command line by using the C<xlate> command included in the distribution. See the C<xlate> man page for usage.\n",
+      "このモジュールは、配布に含まれているC<xlate>コマンドを使用することで、コマンドラインから簡単に使用できます。使用法については、C<xlate>マニュアルページを参照してください。\n"
    ],
    [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
