@@ -723,14 +723,14 @@ treated as a version of the default image.
 
 Keep containers alive after execution.  By default, container is
 automatically removed upon exit (C<--rm>).  This option disables that
-automatic deletion.  This option works like option C<-C>, but does not
+automatic deletion.  This option works like option C<-A>, but does not
 involve the container name.
 
 =item B<-N>
 
 Specifies the name of the live container explicitly.  Once you have
 created a container named C<xlate>, you can connect to it with just
-the C<-C> option.
+the C<-A> option.
 
 =item B<-Q>
 
@@ -738,7 +738,7 @@ Quit and remove the existing live container.  If a container with the
 specified name (default is C<xlate>) exists, it will be stopped and
 removed.
 
-If specified as C<-QC>, then a new container is launched after the
+If specified as C<-QA>, then a new container is launched after the
 existing container is removed.
 
 =back
