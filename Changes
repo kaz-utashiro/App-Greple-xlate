@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.45 2024-11-22T02:14:44Z
+
+    - introduce -L and -K/-X option in xlate script
+    - install "yq" in docker
+
 0.44 2024-11-01T08:14:59Z
 
     - run docker with --tty option when stdin is terminal

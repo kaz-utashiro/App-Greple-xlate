@@ -80,7 +80,7 @@
          "web" : "https://github.com/kaz-utashiro/App-Greple-xlate"
       }
    },
-   "version" : "0.44",
+   "version" : "0.45",
    "x_authority" : "cpan:UTASHIRO",
    "x_contributors" : [
       "Kazumasa Utashiro <kaz@utashiro.com>"
