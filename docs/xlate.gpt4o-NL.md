@@ -10,7 +10,7 @@ App::Greple::xlate - vertalingsondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.99
+Version 0.9901
 
 # DESCRIPTION
 
@@ -299,6 +299,7 @@ Lees het Japanse artikel in de ["SEE ALSO"](#see-also) sectie voor details.
     Docker options
         -D * run xlate on the container with the same parameters
         -C * execute following command on the container, or run shell
+        -S * start the live container
         -A * attach to the live container
         N.B. -D/-C/-A terminates option handling
 
@@ -307,8 +308,8 @@ Lees het Japanse artikel in de ["SEE ALSO"](#see-also) sectie voor details.
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -K   do not remove and keep live container
-        -Q   quit and remove live container
+        -L   do not remove and keep live container
+        -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
 

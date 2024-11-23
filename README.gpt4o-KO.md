@@ -10,7 +10,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈
 
 # VERSION
 
-Version 0.99
+Version 0.9901
 
 # DESCRIPTION
 
@@ -300,6 +300,7 @@ Docker와 메이크 옵션을 결합하여 Docker 환경에서 메이크를 실�
     Docker options
         -D * run xlate on the container with the same parameters
         -C * execute following command on the container, or run shell
+        -S * start the live container
         -A * attach to the live container
         N.B. -D/-C/-A terminates option handling
 
@@ -308,8 +309,8 @@ Docker와 메이크 옵션을 결합하여 Docker 환경에서 메이크를 실�
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -K   do not remove and keep live container
-        -Q   quit and remove live container
+        -L   do not remove and keep live container
+        -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
 

@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri desteği modülü
 
 =head1 VERSION
 
-Version 0.99
+Version 0.9901
 
 =head1 DESCRIPTION
 
@@ -332,6 +332,7 @@ Ayrıntılar için L</DAHA FAZLASI> bölümündeki Japonca makaleyi okuyun.
     Docker options
         -D * run xlate on the container with the same parameters
         -C * execute following command on the container, or run shell
+        -S * start the live container
         -A * attach to the live container
         N.B. -D/-C/-A terminates option handling
 
@@ -340,8 +341,8 @@ Ayrıntılar için L</DAHA FAZLASI> bölümündeki Japonca makaleyi okuyun.
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -K   do not remove and keep live container
-        -Q   quit and remove live container
+        -L   do not remove and keep live container
+        -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
 
