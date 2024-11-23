@@ -392,8 +392,8 @@ Read Japanese article in ["SEE ALSO"](#see-also) section for detail.
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -K   do not remove and keep live container
-        -Q   quit and remove live container
+        -L   do not remove and keep live container
+        -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
 

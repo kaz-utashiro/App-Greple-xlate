@@ -51,8 +51,8 @@ define pod <<"=cut"
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -K   do not remove and keep live container
-        -Q   quit and remove live container
+        -L   do not remove and keep live container
+        -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
 
@@ -130,7 +130,7 @@ container_name() {
 ##
 ## Docker
 ##
-while getopts :dq${DOCKER_OPT:=dURAI:E:HV:GN:QAKCD} OPT
+while getopts :dq${DOCKER_OPT:=dURAI:E:HV:GN:KALCD} OPT
 do
     [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
@@ -169,7 +169,7 @@ do
 	    fi
 	    ;;
 	N) givenname="$OPTARG" ;;
-	Q)
+	K)
 	    : ${container:=$(container_name)}
 	    if [[ $(docker ps -a -q -f name="^/$container$") ]]
 	    then
@@ -193,7 +193,7 @@ do
 		exec docker attach $container || exit 1
 	    fi
 	    ;&
-	K)
+	L)
 	    : ${container:=$(container_name)}
 	    warn create live conainer \"$container\"
 	    remove=
@@ -675,8 +675,8 @@ run C<ubuntu:latest> image with mounting home directory (C<-H>), the
 container name will be C<ubuntu.yourname>.
 
 Naturally, the other docker options only apply the first time the
-container is launched.  Use the C<-Q> option to remove the existing
-container before starting.  The C<-QA> option can be used to restart
+container is launched.  Use the C<-K> option to remove the existing
+container before starting.  The C<-KA> option can be used to restart
 the container.
 
 =back
@@ -719,7 +719,7 @@ Repeatable.
 Specify Docker image name.  If it begins with a colon (C<:>), it is
 treated as a version of the default image.
 
-=item B<-K>
+=item B<-L>
 
 Keep containers alive after execution.  By default, container is
 automatically removed upon exit (C<--rm>).  This option disables that
@@ -732,13 +732,13 @@ Specifies the name of the live container explicitly.  Once you have
 created a container named C<xlate>, you can connect to it with just
 the C<-A> option.
 
-=item B<-Q>
+=item B<-K>
 
-Quit and remove the existing live container.  If a container with the
+Kill and remove the existing live container.  If a container with the
 specified name (default is C<xlate>) exists, it will be stopped and
 removed.
 
-If specified as C<-QA>, then a new container is launched after the
+If specified as C<-KA>, then a new container is launched after the
 existing container is removed.
 
 =back
