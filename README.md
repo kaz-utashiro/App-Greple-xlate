@@ -384,6 +384,7 @@ Read Japanese article in ["SEE ALSO"](#see-also) section for detail.
     Docker options
         -D * run xlate on the container with the same parameters
         -C * execute following command on the container, or run shell
+        -S * start the live container
         -A * attach to the live container
         N.B. -D/-C/-A terminates option handling
 

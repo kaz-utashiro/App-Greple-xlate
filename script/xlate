@@ -43,15 +43,15 @@ define pod <<"=cut"
     Docker options
         -D * run xlate on the container with the same parameters
         -C * execute following command on the container, or run shell
+        -S * start the live container
         -A * attach to the live container
-        N.B. -D/-C/-A terminates option handling
+        N.B. These options terminate option handling
 
         -G   mount git top-level directory
         -H   mount home directory
         -V # specify mount directory
         -U   do not mount
         -R   mount read-only
-        -L   do not remove and keep live container
         -K   kill and remove live container
         -E # specify environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
@@ -100,6 +100,7 @@ read_only=
 display=
 localtime=/etc/localtime
 givenname=
+detach=
 
 ENV=(
     LANG TZ
@@ -130,7 +131,7 @@ container_name() {
 ##
 ## Docker
 ##
-while getopts :dq${DOCKER_OPT:=dURAI:E:HV:GN:KALCD} OPT
+while getopts :dq${DOCKER_OPT:=dURAI:E:HV:GN:KSALCD} OPT
 do
     [ "$XLATE_RUNNING_ON_DOCKER" ] && break
     case $OPT in
@@ -169,28 +170,30 @@ do
 	    fi
 	    ;;
 	N) givenname="$OPTARG" ;;
-	K)
+	K|S)
 	    : ${container:=$(container_name)}
 	    if [[ $(docker ps -a -q -f name="^/$container$") ]]
 	    then
 		docker rm -f $container | sed 's/$/ is removed/'
-	    else
-		echo $container does not exist
 	    fi
-	    [[ ${@:$OPTIND:1} =~ A ]] || exit
-	    (( OPTIND++ ))
+	    case $OPT in
+		K) [[ ${@:$OPTIND:1} =~ A ]] && (( OPTIND++ )) || exit ;;
+	    esac
 	    ;&
 	A)
 	    : ${container:=$(container_name)}
-	    if [[ $(docker ps -q -f status=exited -f name="^/$container$") ]]
+	    if [[ $OPT == A ]]
 	    then
-		warn start and attach to \"$container\"
-		exec docker start -ia $container || exit 1
-	    fi
-	    if [[ $(docker ps -q -f status=running -f name="^/$container$") ]]
-	    then
-		warn attach to \"$container\"
-		exec docker attach $container || exit 1
+		if [[ $(docker ps -q -f status=exited -f name="^/$container$") ]]
+		then
+		    warn start and attach to \"$container\"
+		    exec docker start -ia $container || exit 1
+		fi
+		if [[ $(docker ps -q -f status=running -f name="^/$container$") ]]
+		then
+		    warn attach to \"$container\"
+		    exec docker attach $container || exit 1
+		fi
 	    fi
 	    ;&
 	L)
@@ -230,6 +233,7 @@ do
 		    -w "${workdir}${relative:+/${relative}}"
 		)
 	    dockopt+=(
+		${detach:+--detach}
 		${read_only:+--read-only}
 		${hostname:+--hostname "${hostname}"}
 		${display:+-e DISPLAY="$display"}
@@ -645,9 +649,10 @@ Dry run.
 
 =head2 DOCKER OPTIONS
 
-Docker feature is invoked by the C<-D>, C<-C> or C<-A> option.  Once
-any of these options appear, subsequent options are not interpreted,
-so it should always be the last of Docker related options.
+Docker feature is invoked by the C<-D>, C<-C>, C<-S> or C<-A> option.
+Once any of these options appear, subsequent options are not
+interpreted, so it should always be the last of Docker related
+options.
 
 =over 7
 
@@ -661,11 +666,14 @@ parameters.
 Execute the following command on the Docker container, or run a shell
 if no command is provided.
 
-=item B<-A>
+=item B<-S>, B<-A>
 
-Attach to a running container.  If the container does not exist, a new
-one is created, and if there is a stopped container, it is restarted
-before connecting.
+Option C<-S> starts a new live container.  If the container exists, it
+is removed before starting.
+
+Option C<-A> attaches to a running container.  If the container does
+not exist, a new one is created, and if there is a stopped container,
+it is restarted before connecting.
 
 Target container is distinguished by name.  The default container name
 is C<xlate>.  The last portion of the Docker image to run is given as
@@ -674,10 +682,14 @@ name of that directory is added after dot (C<.>).  For example, if you
 run C<ubuntu:latest> image with mounting home directory (C<-H>), the
 container name will be C<ubuntu.yourname>.
 
+=begin comment
+
 Naturally, the other docker options only apply the first time the
 container is launched.  Use the C<-K> option to remove the existing
 container before starting.  The C<-KA> option can be used to restart
 the container.
+
+=end comment
 
 =back
 
@@ -719,12 +731,16 @@ Repeatable.
 Specify Docker image name.  If it begins with a colon (C<:>), it is
 treated as a version of the default image.
 
+=begin comment
+
 =item B<-L>
 
 Keep containers alive after execution.  By default, container is
 automatically removed upon exit (C<--rm>).  This option disables that
 automatic deletion.  This option works like option C<-A>, but does not
 involve the container name.
+
+=end comment
 
 =item B<-N>
 
@@ -738,8 +754,12 @@ Kill and remove the existing live container.  If a container with the
 specified name (default is C<xlate>) exists, it will be stopped and
 removed.
 
+=begin comment
+
 If specified as C<-KA>, then a new container is launched after the
 existing container is removed.
+
+=end comment
 
 =back
 
