@@ -220,6 +220,7 @@ do
 	    : ${hostname:=$(<<< ${image} sed -e s:.*/:: -e s/:.*//)}
 	    declare -a dockopt=(
 		-e XLATE_RUNNING_ON_DOCKER=1
+		--init
 		--interactive
 	    )
 	    if [ "$remove" ]
