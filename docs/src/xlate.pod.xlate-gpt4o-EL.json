@@ -248,12 +248,12 @@
       "Επίσης, δεδομένου ότι παρέχονται makefiles για διάφορα στυλ εγγράφων, η μετάφραση σε άλλες γλώσσες είναι δυνατή χωρίς ειδική προδιαγραφή. Χρησιμοποιήστε την επιλογή C<-M>.\n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Μπορείτε επίσης να συνδυάσετε τις επιλογές Docker και make ώστε να μπορείτε να εκτελέσετε make σε περιβάλλον Docker.\n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "Μπορείτε επίσης να συνδυάσετε τις επιλογές Docker και C<make> έτσι ώστε να μπορείτε να εκτελέσετε C<make> σε ένα περιβάλλον Docker.\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "Η εκτέλεση όπως C<xlate -GC> θα εκκινήσει ένα shell με το τρέχον αποθετήριο git να είναι προσαρτημένο.\n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "Η εκτέλεση όπως C<xlate -C> θα εκκινήσει ένα shell με το τρέχον εργάσιμο git αποθετήριο προσαρτημένο.\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

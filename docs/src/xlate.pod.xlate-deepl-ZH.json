@@ -248,12 +248,12 @@
       "此外，由于提供了各种文档样式的 makefile，因此无需特别说明即可翻译成其他语言。使用 C<-M> 选项。\n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "你还可以将 Docker 和 make 选项结合起来，以便在 Docker 环境中运行 make。\n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "你还可以把 Docker 和 C<make> 选项结合起来，这样就能在 Docker 环境中运行 C<make>。\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "像 C<xlate -GC> 这样运行，会启动一个挂载了当前工作 git 仓库的 shell。\n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "像 C<xlate -C> 这样运行，会启动一个挂载了当前工作 git 仓库的 shell。\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

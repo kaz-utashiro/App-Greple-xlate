@@ -248,12 +248,12 @@
       "Ook, aangezien makefiles voor verschillende documentstijlen worden geleverd, is vertaling naar andere talen mogelijk zonder speciale specificatie. Gebruik de C<-M> optie.  \n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Je kunt ook de Docker- en make-opties combineren zodat je make in een Docker-omgeving kunt uitvoeren.  \n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "Je kunt ook de Docker en C<make> opties combineren, zodat je C<make> in een Docker-omgeving kunt draaien.\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "Uitvoeren zoals C<xlate -GC> zal een shell starten met de huidige werkende git-repository gemonteerd.  \n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "Lopen zoals C<xlate -C> zal een shell starten met de huidige werkende git-repository gemonteerd.\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

@@ -248,12 +248,12 @@
       "De asemenea, deoarece sunt furnizate fișiere make pentru diferite stiluri de documente, traducerea în alte limbi este posibilă fără specificații speciale. Utilizați opțiunea C<-M>.\n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Puteți combina și opțiunile Docker și make astfel încât să puteți rula make într-un mediu Docker.\n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "De asemenea, puteți combina opțiunile Docker și C<make> astfel încât să puteți rula C<make> într-un mediu Docker.\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "Rularea ca C<xlate -GC> va lansa un shell cu depozitul git de lucru curent montat.\n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "Rularea ca C<xlate -C> va lansa un shell cu depozitul git de lucru curent montat.\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

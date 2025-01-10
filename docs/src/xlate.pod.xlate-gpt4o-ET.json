@@ -248,12 +248,12 @@
       "Samuti, kuna erinevate dokumentide stiilide jaoks on saadaval makefailid, on tõlkimine teistesse keeltesse võimalik ilma erilise spetsifikatsioonita. Kasutage C<-M> valikut.  \n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Saate ka kombineerida Docker ja make valikud, et saaksite käivitada make Docker keskkonnas.  \n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "Sa saad ka kombineerida Docker ja C<make> valikud, et saaksid käivitada C<make> Docker keskkonnas.\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "Käivitamine nagu C<xlate -GC> käivitab shelli koos praeguse töötava git hoidla montaažiga.  \n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "Käivitamine nagu C<xlate -C> avab shelli, kus on praegune töötav git-repositoorium monteeritud.\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

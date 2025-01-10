@@ -248,12 +248,12 @@
       "Selain itu, karena tersedia makefile untuk berbagai gaya dokumen, penerjemahan ke dalam bahasa lain dapat dilakukan tanpa spesifikasi khusus. Gunakan opsi C<-M>.\n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Anda juga dapat menggabungkan opsi Docker dan make sehingga Anda dapat menjalankan make di lingkungan Docker.\n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "Anda juga dapat menggabungkan opsi Docker dan C<make> sehingga Anda dapat menjalankan C<make> di lingkungan Docker.\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "Menjalankan seperti C<xlate -GC> akan meluncurkan sebuah shell dengan repositori git yang sedang berjalan.\n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "Menjalankan seperti C<xlate -C> akan meluncurkan sebuah shell dengan repositori git yang sedang berjalan.\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",

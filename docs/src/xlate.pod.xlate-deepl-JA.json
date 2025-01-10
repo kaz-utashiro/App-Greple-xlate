@@ -248,12 +248,12 @@
       "また、様々なドキュメントスタイルに対応したmakefileが提供されているので、特別な指定なしに他言語への翻訳が可能です。C<-M>オプションを使用してください。\n"
    ],
    [
-      "You can also combine the Docker and make options so that you can run make in a Docker environment.\n",
-      "Dockerオプションとmakeオプションを組み合わせて、Docker環境でmakeを実行することもできます。\n"
+      "You can also combine the Docker and C<make> options so that you can run C<make> in a Docker environment.\n",
+      "Docker と C<make> オプションを組み合わせて、Docker 環境で C<make> を実行することもできます。\n"
    ],
    [
-      "Running like C<xlate -GC> will launch a shell with the current working git repository mounted.\n",
-      "C<xlate -GC>のように実行すると、現在作業中のgitリポジトリがマウントされたシェルが起動します。\n"
+      "Running like C<xlate -C> will launch a shell with the current working git repository mounted.\n",
+      "C<xlate -C> のように実行すると、現在作業中の git リポジトリがマウントされたシェルが起動します。\n"
    ],
    [
       "Read Japanese article in L</SEE ALSO> section for detail.\n",
