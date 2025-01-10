@@ -14,7 +14,7 @@ define pod <<"=cut"
 
 =head1 SYNOPSIS
 
-    xlate [ options ] -t lang file [ greple options ]
+    xlate [ options ] -t LANG FILE [ greple options ]
         -h   help
         -v   show version
         -d   debug
@@ -24,14 +24,14 @@ define pod <<"=cut"
         -r   refresh cache
         -u   force update cache
         -s   silent mode
+        -t # target language (required, no default)
+        -b # base language (informational)
         -e # translation engine (*deepl, gpt3, gpt4, gpt4o)
         -p # pattern string to determine translation area
-        -z # pattern file to determine translation area
+        -f # pattern file to determine translation area
+        -o # output format (*xtxt, cm, ifdef, space, space+, colon)
         -x # file containing mask patterns
         -w # wrap line by # width
-        -o # output format (*xtxt, cm, ifdef, space, space+, colon)
-        -f # from lang (ignored)
-        -t # to lang (required, no default)
         -m # max length per API call
         -l # show library files (XLATE.mk, xlate.el)
         --   end of option
@@ -286,7 +286,7 @@ share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
 
 declare -a pattern
 
-while getopts dq"${DOCKER_OPT}"'Macrusne:w:o:f:t:m:x:g:p:z:l:hv' OPT
+while getopts dq"${DOCKER_OPT}"'Macrusne:w:o:b:t:m:x:g:p:f:l:hv' OPT
 do
     case $OPT in
 	[$DOCKER_OPT]) : ;;
@@ -302,13 +302,13 @@ do
 	e)    engine="$OPTARG" ;;
 	w)      wrap="$OPTARG" ;;
 	o)    format="$OPTARG" ;;
-	f) from_lang="$OPTARG" ;;
-	t)   to_lang="$OPTARG" ;;
+	b) base_lang="$OPTARG" ;;
+	t)  tgt_lang="$OPTARG" ;;
 	m)       max="$OPTARG" ;;
 	x)  maskfile="$OPTARG" ;;
 	g)  glossary="$OPTARG" ;;
 	p)  pattern+=(-E "$OPTARG") ;;
-	z)  pattern+=(-f "$OPTARG") ;;
+	f)  pattern+=(-f "$OPTARG") ;;
 	l)
 	    file="$share/$OPTARG"
 	    if [[ -f $file ]]
@@ -357,7 +357,7 @@ then
     unset MAKELEVEL
     exec make -f $share/XLATE.mk \
 	 ${dryrun:+-n} \
-	 XLATE_LANG=\""$to_lang"\" \
+	 XLATE_LANG=\""$tgt_lang"\" \
 	 XLATE_DEBUG=$debug \
 	 XLATE_MAXLEN=$max \
 	 XLATE_USEAPI=$use_api \
@@ -369,7 +369,7 @@ then
     || exit 1
 fi
 
-if [[ ! $to_lang ]]
+if [[ ! $tgt_lang ]]
 then
     warn "-t option is required."
     exit 1
@@ -388,10 +388,10 @@ declare -a module option
 
 module+=(-Mxlate) 
 option+=(--xlate-engine="$engine")
-option+=(--xlate-to="$to_lang" --xlate-format="$format" --xlate-cache=yes)
+option+=(--xlate-to="$tgt_lang" --xlate-format="$format" --xlate-cache=yes)
 option+=(--all)
 
-[ "$from_lang"      ] && option+=(--xlate-from "$from_lang")
+[ "$base_lang"      ] && option+=(--xlate-from "$base_lang")
 [ "$use_api" == yes ] || use_clipboard=yes
 [ "$check"   == yes ] || option+=(--xlate${use_clipboard:+-labor})
 [ "$wrap"           ] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
@@ -629,6 +629,14 @@ Force update of the translation cache.
 
 Run in silent mode.
 
+=item B<-t> I<lang>
+
+Specify the target language (required).
+
+=item B<-b> I<lang>
+
+Specify the base language (optional).
+
 =item B<-e> I<engine>
 
 Specify the translation engine to use.
@@ -636,10 +644,16 @@ Specify the translation engine to use.
 =item B<-p> I<pattern>
 
 Specify a pattern to determine the translation area.
+See L<App::Greple::xlate/NORMALIZATION>.
 
-=item B<-z> I<file>
+=item B<-f> I<file>
 
 Specify a file containing pattern to determine the translation area.
+See L<App::Greple::xlate/NORMALIZATION>.
+
+=item B<-o> I<format>
+
+Specify the output format.
 
 =item B<-x> I<file>
 
@@ -648,18 +662,6 @@ Specify a file containing mask patterns.
 =item B<-w> I<width>
 
 Wrap lines at the specified width.
-
-=item B<-o> I<format>
-
-Specify the output format.
-
-=item B<-f> I<lang>
-
-Specify the source language (currently ignored).
-
-=item B<-t> I<lang>
-
-Specify the target language (required).
 
 =item B<-m> I<length>
 
