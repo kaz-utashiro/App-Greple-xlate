@@ -640,28 +640,7 @@ sub setup {
     }
 }
 
-sub normalize {
-    local $_ = shift;
-    my $paragraph = shift;
-    if (not $paragraph) {
-	return
-	s{^.+}{
-	    ${^MATCH}
-		=~ s/\A\s+|\s+\z//gr
-	}pmger;
-    }
-    s{^.+(?:\n.+)*}{
-	${^MATCH}
-	# remove leading/trailing spaces
-	    =~ s/\A\s+|\s+\z//gr
-	# remove newline after Japanese Punct char
-	    =~ s/(?<=\p{InFullwidth})(?<=\pP)\n//gr
-	# join Japanese lines without space
-	    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
-	# join ASCII lines with single space
-	    =~ s/\s+/ /gr
-    }pmger;
-}
+use App::Greple::xlate::Text;
 
 sub postgrep {
     my $grep = shift;
@@ -670,8 +649,9 @@ sub postgrep {
 	my($b, @match) = @$r;
 	for my $m (@match) {
 	    my($s, $e, $i) = @$m;
-	    my $paragraph = ($i % 2 == 0);
-	    my $key = normalize $grep->cut(@$m), $paragraph;
+	    my $key = App::Greple::xlate::Text
+		->new($grep->cut(@$m), paragraph => ($i % 2 == 0))
+		->normalized;
 	    if (not exists $cache{$key}) {
 		$cache{$key} = undef;
 		push @miss, $key;
@@ -726,49 +706,13 @@ sub fold_lines {
     $_;
 }
 
-sub strip {
-    my($text, $paragraph) = @_;
-    goto &paragraph_strip if $paragraph;
-    my @text = $text =~ /.*\n|.+\z/g;
-    my @space = map {
-	[ s/\A(\s+)// ? $1 : '', s/(\h+)$// ? $1 : '' ]
-    } @text;
-    $_[0] = join '', @text;
-    sub { # unstrip
-	for (@_) {
-	    my @text = /.*\n|.+\z/g;
-	    if (@space == @text + 1) {
-		push @text, '';
-	    }
-	    die "UNMATCH:\n".Dumper(\@text, \@space) if @text != @space;
-	    for my $i (keys @text) {
-		my($head, $tail) = @{$space[$i]};
-		$text[$i] =~ s/\A/$head/ if length $head > 0;
-		$text[$i] =~ s/\Z/$tail/ if length $tail > 0;
-	    }
-	    $_ = join '', @text;
-	}
-    };
-}
-sub paragraph_strip {
-    local *_ = \$_[0];
-    my $head = s/\A(\s+)// ? $1 : '' ;
-    my $tail = s/(\h+)$//  ? $1 : '' ;
-    sub {
-	for (@_) {
-	    s/\A/$head/ if length $head > 0;
-	    s/\Z/$tail/ if length $tail > 0;
-	}
-    };
-}
 sub xlate {
     my $param = { @_ };
     my($index, $text) = @{$param}{qw(index match)};
-    my $paragraph = $index % 2 == 0;
-    my $unstrip = strip($text, $paragraph);
-    my $key = normalize($text, $paragraph);
-    my $s = $cache{$key} // "!!! TRANSLATION ERROR !!!\n";
-    $unstrip->($text, $s);
+    my $obj = App::Greple::xlate::Text->new($text,
+					    paragraph => $index % 2 == 0);
+    my $s = $cache{$obj->normalized} // "!!! TRANSLATION ERROR !!!\n";
+    $obj->unstrip($s);
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
 	return $formatter->($text, $s);

@@ -15,7 +15,7 @@ sub import {
     }
 }
 
-import "App::Greple::xlate", qw(strip);
+use App::Greple::xlate::Text;
 
 sub label {
     local $_ = shift;
@@ -35,12 +35,13 @@ for my $t ([ "a", "a", "a" ],
     my $opt = ref $t->[-1] ? pop @$t : {};
     my($s, @a) = @$t;
     my $save = $s;
-    for my $p (0, 1) {
+    for my $is_paragraph (0, 1) {
 	local $TODO = $opt->{TODO};
-	my $unstrip = strip($s, $p);
+	my $obj = App::Greple::xlate::Text->new($s, paragraph => $is_paragraph);
+	my $s = $obj->{STRIPPED};
 	my $l = label($save);
-	is($s, $a[$p], "  strip: " . $l);
-	$unstrip->($s);
+	is($s, $a[$is_paragraph], "  strip: " . $l);
+	$obj->unstrip($s);
 	is($s, $save, "unstrip: " . $l);
     }
 }
