@@ -146,7 +146,7 @@ docker_find() {
 	esac
     done
     shift $((OPTIND - 1))
-    id=$(docker ps -q -f ${status:+status=$status} -f name="^/$1\$")
+    id=$(docker ps -a -q ${status:+-f status=$status} -f name="^/$1\$")
     [[ $id ]] && echo $id || return 1
 }
 
@@ -509,6 +509,12 @@ Docker's containerization benefits.
 
 =over 4
 
+=item B<Git Friendly>
+
+If you are working in a git environment, the git top directory is
+automatically mounted, which works seamlessly with git commands.
+Otherwise the current directory is mounted.
+
 =item B<Containerized Environment>
 
 By running xlate in a Docker container, you ensure a consistent and
@@ -526,12 +532,6 @@ efficiently within a containerized environment. For example:
 
 This command runs B<xlate> in a Docker container, utilizing make to
 process multiple files with specified target languages.
-
-=item B<Flexible Mount Options>
-
-If you are working in a git environment, the git top directory is
-automatically mounted, which works seamlessly with git commands.
-Otherwise the current directory is mounted.
 
 =item B<Environment Variable Handling>
 
