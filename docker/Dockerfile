@@ -84,3 +84,4 @@ RUN exec >> $HOME/.inputrc \
 ENV LANG=ja_JP.UTF-8
 ENV LESS=-cR
 ENV LESSANSIENDCHARS=mK
+ENV PATH=$HOME/.optex.d/bin:$PATH

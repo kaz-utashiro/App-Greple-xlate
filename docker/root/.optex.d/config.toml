@@ -1,0 +1,37 @@
+no-module = [
+	"greple",
+]
+
+[alias]
+	######################################################################
+	# repeat
+	######################################################################
+	repeat = [ 'bash', '-c', '''
+	    while getopts 'c:i:px' OPT ; do
+		case $OPT in
+		    c) count=$OPTARG ;;
+		    i) sleep=$OPTARG ;;
+		    p) paragraph=yes ;;
+		    x) set -x ;;
+		esac
+	    done; shift $((OPTIND - 1))
+	    case $1 in
+		[0-9]*) count=$1 ; shift ;;
+	    esac
+	    : ${count:=1}
+	    command=("$@")
+	    while ((count--)) ; do
+		eval "${command[@]@Q}"
+		if (( count > 0 )) ; then
+		    [ "$paragraph" ] && echo
+		    [ "$sleep" ] && sleep $sleep
+		fi
+	    done
+	''', 'repeat' ]
+	######################################################################
+	# git-changes
+	######################################################################
+	git-changes = [ 'bash', '-c', '''
+	    git log --reverse $(git tag | tail -1).. \
+	    | perl -ne 'print if s/    \K(?=(.))/$1 =~ m[\W] ? "  " : "- "/e'
+	''', 'git-changes' ]
