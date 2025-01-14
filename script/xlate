@@ -231,7 +231,7 @@ do
 	    remove=
 	    ;&
 	C|D)
-	    if [[ $volume && $volume != $pwd ]]
+	    if [[ $mount && $volume && $volume != $pwd ]]
 	    then
 		warn "Mount $volume to $workdir"
 		[[ ${pwd#$volume/} != $pwd ]] && relative="${pwd#$volume/}"
@@ -275,7 +275,8 @@ do
 		${others[@]}
 		${ENV[@]/#/-e }
 	    )
-	    exec docker run "${dockopt[@]}" "${image}" "${command[@]}" || exit 1
+	    exec=(docker run "${dockopt[@]}" "${image}" "${command[@]}")
+	    exec "${exec[@]}" || exit 1
 	    ;;
     esac
 done
