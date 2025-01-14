@@ -173,7 +173,7 @@ do
 	    ;;
 	E) ENV+=("$OPTARG") ;;
 	P) ports+=("$OPTARG") ;;
-	O) others+=("$OPTARG") ;;
+	O) others+=($OPTARG) ;;
 
 	# mount related options
 	U) mount= ;;
