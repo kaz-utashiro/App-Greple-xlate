@@ -8,7 +8,7 @@ App::Greple::xlate::Text - text normalization interface
 
 =head1 SYNOPSIS
 
-    my $obj = App::Greple::xlate::Text->new($text);
+    my $obj = App::Greple::xlate::Text->new($text, paragraph => 1);
     my $normalized = $obj->normalized;
 
     $result = process($normalized);
@@ -22,41 +22,51 @@ text.
 
 To get the normalized text, use the C<normalized> method.
 
-Before normalization, any whitespace before and after the text is
-removed.  Therefore, the result of processing the normalized text does
-not preserve the whitespace in the original string; the C<unstrip>
-method can be used to restore the removed whitespace.
+During normalization process, any whitespace at the beginning and the
+end of the line is removed.  Therefore, the result of processing the
+normalized text does not preserve the whitespace in the original
+string; the C<unstrip> method can be used to restore the removed
+whitespace.
 
 =head1 METHODS
 
 =over 7
 
-=item new
+=item B<new>
 
 Creates an object.  The first parameter is the original string; the
 second and subsequent parameters are pairs of attribute name and values.
 
 =over 4
 
-=item paragraph
+=item B<paragraph>
 
 Specifies whether or not the text should be treated as a paragraph.
 
-If true, multiple lines are concatenated into a single line.  Leading
-and trailing whitespace is stripped from each line.
+If true, multiple lines are concatenated into a single line.
 
-If false, multiple strings are processed as is.  Only leading and
-trailing whitespace is stripped from the entire string.
+If false, multiple strings are processed as they are.
+
+In both cases, leading and trailing whitespace is stripped from each
+line.
 
 =back
 
-=item normalized
+=item B<normalized>()
 
 Returns a normalized string.
 
-=item unstrip
+=item B<unstrip>(I<$text>)
 
-Recover removed white spaces.
+Recover removed white spaces from normalized text or corresponding
+cooked text.
+
+If not in paragraph mode, the string to be processed must have the
+same number of lines as the original string.
+
+=item B<text>
+
+Retrieve original text.
 
 =back
 
@@ -80,9 +90,8 @@ sub new {
 	UNSTRIP => undef,
     }, $class;
     lock_keys %{$obj};
-    $obj->{TEXT} = shift;
+    $obj->text = shift;
     %{$obj->{ATTR}} = (%{$obj->{ATTR}}, @_);
-    $obj->strip->normalize;
     $obj;
 }
 
@@ -94,44 +103,46 @@ sub attr :lvalue {
 
 sub normalize {
     my $obj = shift;
-    my $paragraph = $obj->{ATTR}->{paragraph};
-    $obj->{NORMALIZED} = do {
-	local $_ = $obj->{TEXT};
-	if (not $paragraph) {
-	    s{^.+}{
-		${^MATCH}
-		    =~ s/\A\s+|\s+\z//gr
-		}pmger;
-	}
-	else {
-	    s{^.+(?:\n.+)*}{
-		${^MATCH}
-		    # remove leading/trailing spaces
-		    =~ s/\A\s+|\s+\z//gr
-		    # remove newline after Japanese Punct char
-		    =~ s/(?<=\p{InFullwidth})(?<=\pP)\n//gr
-		    # join Japanese lines without space
-		    =~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
-		    # join ASCII lines with single space
-		    =~ s/\s+/ /gr
-		}pmger;
-	}
-    };
-    $obj
+    my $paragraph = $obj->attr('paragraph');
+    local $_ = $obj->text;
+    if (not $paragraph) {
+	s{^.+}{
+	    ${^MATCH}
+		=~ s/\A\s+|\s+\z//gr
+	    }pmger;
+    } else {
+	s{^.+(?:\n.+)*}{
+	    ${^MATCH}
+		# remove leading/trailing spaces
+		=~ s/\A\s+|\s+\z//gr
+		# remove newline after Japanese Punct char
+		=~ s/(?<=\p{InFullwidth})(?<=\pP)\n//gr
+		# join Japanese lines without space
+		=~ s/(?<=\p{InFullwidth})\n(?=\p{InFullwidth})//gr
+		# join ASCII lines with single space
+		=~ s/\s+/ /gr
+	    }pmger;
+    }
+}
+
+sub text :lvalue {
+    my $obj = shift;
+    $obj->{TEXT};
 }
 
 sub normalized {
     my $obj = shift;
-    $obj->{NORMALIZED};
+    $obj->{NORMALIZED} //= $obj->normalize;
 }
 
 sub strip {
     my $obj = shift;
-    my $text = $obj->{TEXT};
+    my $text = $obj->text;
     if ($obj->attr('paragraph')) {
 	return $obj->paragraph_strip;
     }
-    my @text = $text =~ /.*\n|.+\z/g;
+    my $line_re = qr/.*\n|.+\z/;
+    my @text = $text =~ /$line_re/g;
     my @space = map {
 	[ s/\A(\s+)// ? $1 : '', s/(\h+)$// ? $1 : '' ]
     } @text;
@@ -156,7 +167,7 @@ sub strip {
 
 sub paragraph_strip {
     my $obj = shift;
-    local *_ = \($obj->{STRIPPED} = $obj->{TEXT});
+    local *_ = \($obj->{STRIPPED} = $obj->text);
     my $head = s/\A(\s+)// ? $1 : '' ;
     my $tail = s/(\h+)$//  ? $1 : '' ;
     $obj->{UNSTRIP} = sub {
@@ -170,7 +181,8 @@ sub paragraph_strip {
 
 sub unstrip {
     my $obj = shift;
-    if (my $unstrip = $obj->{UNSTRIP}->(@_)) {
+    $obj->strip if not $obj->{UNSTRIP};
+    if (my $unstrip = $obj->{UNSTRIP}) {
 	$unstrip->(@_);
     }
     $obj;

@@ -710,7 +710,7 @@ sub xlate {
     my $param = { @_ };
     my($index, $text) = @{$param}{qw(index match)};
     my $obj = App::Greple::xlate::Text->new($text,
-					    paragraph => $index % 2 == 0);
+					    paragraph => ($index % 2 == 0));
     my $s = $cache{$obj->normalized} // "!!! TRANSLATION ERROR !!!\n";
     $obj->unstrip($s);
     $s = fold_lines $s if $fold_line;
