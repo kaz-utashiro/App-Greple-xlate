@@ -197,13 +197,13 @@ do
 		docker rm -f $container | sed -e 's/$/ is removed/'
 	    fi
 	    case $OPT in
-		K) [[ ${@:$OPTIND:1} =~ A ]] && (( OPTIND++ )) || exit ;;
+		K) [[ ${@:$OPTIND:1} =~ L ]] && (( OPTIND++ )) || exit ;;
 		S) ;;
 	    esac
 	    ;&
-	A|L)
+	L)
 	    : ${container:=$(container_name)}
-	    if [[ $OPT =~ [AL] ]]
+	    if [[ $OPT =~ L ]]
 	    then
 		if id=$(docker_find -s exited "$container")
 		then
