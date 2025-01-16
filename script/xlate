@@ -84,6 +84,10 @@ get_ip() {
     echo $ip
 }
 
+dist_dir() {
+    perl -MFile::Share=:all -E "say dist_dir '$1'"
+}
+
 warn() {
     [[ $quiet ]] && return
     echo ${1+"$@"} >&2
@@ -142,12 +146,16 @@ docker_find() {
     while getopts "s:" OPT
     do
 	case $OPT in
-	    s) status=$OPTARG ;;
+	    s) status+=($OPTARG) ;;
 	esac
     done
     shift $((OPTIND - 1))
-    id=$(docker ps -a -q ${status:+-f status=$status} -f name="^/$1\$")
+    id=$(docker ps -a -q ${status[@]/#/-f status=} -f name="^/$1\$")
     [[ $id ]] && echo $id || return 1
+}
+
+docker_status() {
+    docker inspect --format='{{.State.Status}}' $1
 }
 
 ##
@@ -194,7 +202,7 @@ do
 	    : ${container:=$(container_name)}
 	    if id=$(docker_find "$container")
 	    then
-		docker rm -f $container | sed -e 's/$/ is removed/'
+		docker rm -f "$container" | sed -e "s/\$/ ($id) is removed/"
 	    fi
 	    case $OPT in
 		K) [[ ${@:$OPTIND:1} =~ L ]] && (( OPTIND++ )) || exit ;;
@@ -205,10 +213,24 @@ do
 	    : ${container:=$(container_name)}
 	    if [[ $OPT =~ L ]]
 	    then
-		if id=$(docker_find -s exited "$container")
+		if id=$(docker_find "$container")
 		then
-		    warn start and attach to the "$container ($id)"
-		    exec docker start -ia $id || exit 1
+		    status=$(docker_status $id)
+		    case $status in
+			exited)
+			    warn start the "$container ($id)"
+			    id=$(docker start $id) || exit 1
+			    ;;
+			paused)
+			    warn unpause the "$container ($id)"
+			    id=$(docker unpause $id) || exit 1
+			    ;;
+			running)
+			    ;;
+			*)
+			    warn unknown status $status of "$container ($id)"
+			    ;;
+		    esac
 		fi
 		if id=$(docker_find -s running "$container")
 		then
@@ -226,7 +248,6 @@ do
 		    exit
 		fi
 	    fi
-	    : ${container:=$(container_name)}
 	    warn create live conainer \"$container\"
 	    remove=
 	    ;&
@@ -282,8 +303,7 @@ do
 done
 OPTIND=1
 
-mod="App-Greple-xlate"
-share=$(perl -MFile::Share=:all -E "say dist_dir '$mod'")
+share=$(dist_dir App-Greple-xlate)
 
 declare -a pattern
 
@@ -346,7 +366,7 @@ then
     declare -a opt
     for m in "$@"
     do
-	if [ -f "$m" ]
+	if [[ -f $m ]]
 	then
 	    # GNU Make behaves differently in different versions with
 	    # respect to double-quoted strings and spaces within them.
