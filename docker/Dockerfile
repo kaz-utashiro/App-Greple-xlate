@@ -19,7 +19,8 @@ RUN cpanm -qn \
     App::Greple::git \
     App::Greple::frame \
     App::Greple::subst App::Greple::subst::desumasu \
-    App::Greple::update App::Greple::type
+    App::Greple::update App::Greple::type \
+    App::Greple::charcode
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
