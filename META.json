@@ -49,7 +49,7 @@
          "requires" : {
             "App::Greple" : "9.22",
             "App::Greple::msdoc" : "1.06",
-            "App::Greple::stripe" : "0",
+            "App::Greple::stripe" : "1.02",
             "App::optex::textconv" : "1.07",
             "App::sdif" : "4.41",
             "Clipboard" : "0",
