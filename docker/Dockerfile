@@ -18,6 +18,7 @@ RUN cpanm -qn \
     App::Greple::xp \
     App::Greple::git \
     App::Greple::frame \
+    App::Greple::L \
     App::Greple::subst App::Greple::subst::desumasu \
     App::Greple::update App::Greple::type \
     App::Greple::charcode
