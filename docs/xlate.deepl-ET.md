@@ -10,7 +10,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.9906
+Version 0.9907
 
 # DESCRIPTION
 

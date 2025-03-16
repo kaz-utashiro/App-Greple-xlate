@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9907 2025-03-16T09:02:13Z
+
+    - trial implementation of reading .xlaterc
+
 0.9906 2025-02-28T13:05:13Z
 
     - add paused container handling
