@@ -163,7 +163,9 @@ docker_status() {
 ##
 ## read .xlaterc
 ##
-for dir in $topdir .
+declare -a rcpath=($HOME)
+[[ $topdir && $topdir != $pwd ]] && rcpath+=($topdir)
+for dir in ${rcpath[@]}
 do
     rc="$dir/.xlaterc"
     [[ -r $rc ]] || continue
