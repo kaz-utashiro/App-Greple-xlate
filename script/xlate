@@ -166,8 +166,9 @@ docker_status() {
 ##
 ## read .xlaterc
 ##
-declare -a rcpath=($HOME)
+declare -a rcpath=(.)
 [[ $topdir && $topdir != $pwd ]] && rcpath+=($topdir)
+[[ $HOME != $pwd ]] && rcpath+=($HOME)
 for dir in ${rcpath[@]}
 do
     rc="$dir/.xlaterc"
@@ -639,9 +640,9 @@ rules, refer to the F<XLATE.mk> file in the xlate library directory.
 =head2 XLATERC File
 
 The F<.xlaterc> file allows you to set default options for the
-C<xlate> command.  This file is searched in the Git top directory and
-the current directory.  If found, its contents are applied before any
-command-line options.
+C<xlate> command.  This file is searched in the user's home directory,
+Git top directory and the current directory.  If found, its contents
+are applied before any command-line options.
 
 Each line in the C<.xlaterc> file should contain a valid C<xlate>
 command option.  Lines starting with C<#> are treated as comments and
