@@ -185,7 +185,7 @@ if [[ $topdir && $topdir != $pwd ]]
 then
     volume="$topdir"
 fi
-while getopts :dq${DOCKER_OPT:=dURAI:E:WHP:O:BV:GN:KSALCD} OPT
+while getopts :dq${DOCKER_OPT:=dJ:URAI:E:WHP:O:BV:GN:KSALCD} OPT
 do
     [[ $XLATE_RUNNING_ON_DOCKER ]] && break
     case $OPT in
@@ -205,6 +205,7 @@ do
 	B) interactive= ;;
 
 	# mount related options
+	J) workdir="$OPTARG" ;;
 	U) mount= ;;
 	R) mount_mode=ro ;;
 	V) volumes+=("$OPTARG") ;;
@@ -848,6 +849,14 @@ Repeatable.
 
 Specify Docker image name.  If it begins with a colon (C<:>), it is
 treated as a version of the default image.
+
+=begin comment
+
+=item B<-J> I<directory>
+
+Specify the working directory (default: C</work>).
+
+=end comment
 
 =item B<-B>
 
