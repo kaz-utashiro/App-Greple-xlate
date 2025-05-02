@@ -148,7 +148,7 @@ Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perint
 
 Tentukan format output untuk teks asli dan terjemahan.
 
-Format berikut ini selain C<xtxt> mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, dan menentukan format selain C<xtxt> tidak akan menghasilkan hasil yang berarti.
+Format berikut ini selain C<xtxt> mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, tetapi menentukan format selain C<xtxt> tidak akan menghasilkan hasil yang berarti.
 
 =over 4
 

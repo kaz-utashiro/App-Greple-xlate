@@ -148,7 +148,7 @@ Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando C<deep
 
 Specificeer het uitvoerformaat voor originele en vertaalde tekst.
 
-De volgende indelingen anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan C<xtxt> zal geen zinvolle resultaten opleveren.
+De volgende indelingen anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, maar het specificeren van een andere opmaak dan C<xtxt> zal geen zinvolle resultaten opleveren.
 
 =over 4
 

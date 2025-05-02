@@ -124,7 +124,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
-    `xtxt` dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir bölümünü çevirmek mümkündür ve `xtxt` dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
+    `xtxt` dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir kısmını çevirmek mümkündür, ancak `xtxt` dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
 
     - **conflict**, **cm**
 

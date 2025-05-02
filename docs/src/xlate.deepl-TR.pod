@@ -148,7 +148,7 @@ Hedef dili belirtin. B<DeepL> motorunu kullanırken C<deepl languages> komutu il
 
 Orijinal ve çevrilmiş metin için çıktı formatını belirtin.
 
-C<xtxt> dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir bölümünü çevirmek mümkündür ve C<xtxt> dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
+C<xtxt> dışındaki aşağıdaki biçimler çevrilecek parçanın bir satır koleksiyonu olduğunu varsayar. Aslında, bir satırın yalnızca bir kısmını çevirmek mümkündür, ancak C<xtxt> dışında bir biçim belirtmek anlamlı sonuçlar üretmeyecektir.
 
 =over 4
 

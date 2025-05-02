@@ -128,8 +128,8 @@
       "원본 및 번역 텍스트의 출력 형식을 지정합니다.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "C<xtxt> 이외의 다음 형식은 번역할 부분이 줄의 모음이라고 가정합니다. 실제로는 한 줄의 일부만 번역할 수 있으며, C<xtxt> 이외의 형식을 지정하면 의미 있는 결과가 나오지 않습니다.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "C<xtxt> 이외의 다음 형식은 번역할 부분이 줄의 모음이라고 가정합니다. 실제로는 한 줄의 일부만 번역할 수 있지만 C<xtxt> 이외의 형식을 지정하면 의미 있는 결과가 나오지 않습니다.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

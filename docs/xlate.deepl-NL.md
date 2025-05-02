@@ -124,7 +124,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     Specificeer het uitvoerformaat voor originele en vertaalde tekst.
 
-    De volgende indelingen anders dan `xtxt` gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan `xtxt` zal geen zinvolle resultaten opleveren.
+    De volgende indelingen anders dan `xtxt` gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, maar het specificeren van een andere opmaak dan `xtxt` zal geen zinvolle resultaten opleveren.
 
     - **conflict**, **cm**
 

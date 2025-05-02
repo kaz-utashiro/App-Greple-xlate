@@ -128,8 +128,8 @@
       "Specificeer het uitvoerformaat voor originele en vertaalde tekst.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "De volgende indelingen anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, en het specificeren van een ander formaat dan C<xtxt> zal geen zinvolle resultaten opleveren.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "De volgende indelingen anders dan C<xtxt> gaan ervan uit dat het te vertalen deel een verzameling regels is. In feite is het mogelijk om slechts een deel van een regel te vertalen, maar het specificeren van een andere opmaak dan C<xtxt> zal geen zinvolle resultaten opleveren.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

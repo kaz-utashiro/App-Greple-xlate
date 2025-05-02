@@ -128,8 +128,8 @@
       "指定原始和翻译文本的输出格式。\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "除 C<xtxt> 以外的下列格式假定要翻译的部分是行的集合。事实上，有可能只翻译一行的一部分，因此指定 C<xtxt> 以外的格式不会产生有意义的结果。\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "除 C<xtxt> 以外的以下格式都假定要翻译的部分是行的集合。事实上，可以只翻译一行的一部分，但指定 C<xtxt> 以外的格式不会产生有意义的结果。\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

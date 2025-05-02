@@ -128,8 +128,8 @@
       "Specificați formatul de ieșire pentru textul original și cel tradus.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "Următoarele formate, altele decât C<xtxt>, presupun că partea care urmează să fie tradusă este o colecție de linii. De fapt, este posibil să se traducă doar o parte a unei linii, iar specificarea unui alt format decât C<xtxt> nu va produce rezultate semnificative.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "Următoarele formate, altele decât C<xtxt>, presupun că partea care urmează să fie tradusă este o colecție de linii. De fapt, este posibil să se traducă doar o parte a unei linii, dar specificarea unui alt format decât C<xtxt> nu va produce rezultate semnificative.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

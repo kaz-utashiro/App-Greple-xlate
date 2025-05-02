@@ -148,7 +148,7 @@ Especifique el idioma de destino. Puede obtener los idiomas disponibles mediante
 
 Especifique el formato de salida del texto original y traducido.
 
-Los siguientes formatos distintos de C<xtxt> asumen que la parte a traducir es una colección de líneas. De hecho, es posible traducir sólo una parte de una línea, y especificar un formato distinto de C<xtxt> no producirá resultados significativos.
+Los siguientes formatos distintos de C<xtxt> asumen que la parte a traducir es una colección de líneas. De hecho, es posible traducir sólo una parte de una línea, pero especificar un formato distinto de C<xtxt> no producirá resultados significativos.
 
 =over 4
 

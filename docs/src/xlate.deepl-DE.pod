@@ -148,7 +148,7 @@ Geben Sie die Zielsprache an. Sie können die verfügbaren Sprachen mit dem Befe
 
 Legen Sie das Ausgabeformat für den ursprünglichen und den übersetzten Text fest.
 
-Die folgenden Formate mit Ausnahme von C<xtxt> gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines anderen Formats als C<xtxt> liefert keine sinnvollen Ergebnisse.
+Die folgenden Formate mit Ausnahme von C<xtxt> gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. In der Tat ist es möglich, nur einen Teil einer Zeile zu übersetzen, aber die Angabe eines anderen Formats als C<xtxt> führt zu keinen sinnvollen Ergebnissen.
 
 =over 4
 

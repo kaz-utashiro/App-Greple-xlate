@@ -128,8 +128,8 @@
       "Tentukan format output untuk teks asli dan terjemahan.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "Format berikut ini selain C<xtxt> mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, dan menentukan format selain C<xtxt> tidak akan menghasilkan hasil yang berarti.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "Format berikut ini selain C<xtxt> mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, tetapi menentukan format selain C<xtxt> tidak akan menghasilkan hasil yang berarti.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

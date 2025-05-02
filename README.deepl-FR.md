@@ -124,7 +124,7 @@ Cette interface est expérimentale et peut être modifiée à l'avenir.
 
     Spécifiez le format de sortie pour le texte original et le texte traduit.
 
-    Les formats suivants, autres que `xtxt`, supposent que la partie à traduire est une collection de lignes. En fait, il est possible de ne traduire qu'une partie d'une ligne, et la spécification d'un format autre que `xtxt` ne produira pas de résultats significatifs.
+    Les formats suivants autres que `xtxt` supposent que la partie à traduire est une collection de lignes. En fait, il est possible de ne traduire qu'une partie d'une ligne, mais la spécification d'un format autre que `xtxt` ne produira pas de résultats significatifs.
 
     - **conflict**, **cm**
 

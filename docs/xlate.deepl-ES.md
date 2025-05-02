@@ -124,7 +124,7 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     Especifique el formato de salida del texto original y traducido.
 
-    Los siguientes formatos distintos de `xtxt` asumen que la parte a traducir es una colección de líneas. De hecho, es posible traducir sólo una parte de una línea, y especificar un formato distinto de `xtxt` no producirá resultados significativos.
+    Los siguientes formatos distintos de `xtxt` asumen que la parte a traducir es una colección de líneas. De hecho, es posible traducir sólo una parte de una línea, pero especificar un formato distinto de `xtxt` no producirá resultados significativos.
 
     - **conflict**, **cm**
 

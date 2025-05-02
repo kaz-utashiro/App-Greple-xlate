@@ -124,7 +124,7 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
     Legen Sie das Ausgabeformat für den ursprünglichen und den übersetzten Text fest.
 
-    Die folgenden Formate mit Ausnahme von `xtxt` gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines anderen Formats als `xtxt` liefert keine sinnvollen Ergebnisse.
+    Die folgenden Formate mit Ausnahme von `xtxt` gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. In der Tat ist es möglich, nur einen Teil einer Zeile zu übersetzen, aber die Angabe eines anderen Formats als `xtxt` führt zu keinen sinnvollen Ergebnissen.
 
     - **conflict**, **cm**
 

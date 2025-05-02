@@ -124,7 +124,7 @@ Această interfață este experimentală și poate fi modificată în viitor.
 
     Specificați formatul de ieșire pentru textul original și cel tradus.
 
-    Următoarele formate, altele decât `xtxt`, presupun că partea care urmează să fie tradusă este o colecție de linii. De fapt, este posibil să se traducă doar o parte a unei linii, iar specificarea unui alt format decât `xtxt` nu va produce rezultate semnificative.
+    Următoarele formate, altele decât `xtxt`, presupun că partea care urmează să fie tradusă este o colecție de linii. De fapt, este posibil să se traducă doar o parte a unei linii, dar specificarea unui alt format decât `xtxt` nu va produce rezultate semnificative.
 
     - **conflict**, **cm**
 

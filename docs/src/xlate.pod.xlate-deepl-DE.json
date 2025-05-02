@@ -128,8 +128,8 @@
       "Legen Sie das Ausgabeformat für den ursprünglichen und den übersetzten Text fest.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "Die folgenden Formate mit Ausnahme von C<xtxt> gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. Tatsächlich ist es möglich, nur einen Teil einer Zeile zu übersetzen, und die Angabe eines anderen Formats als C<xtxt> liefert keine sinnvollen Ergebnisse.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "Die folgenden Formate mit Ausnahme von C<xtxt> gehen davon aus, dass der zu übersetzende Teil eine Sammlung von Zeilen ist. In der Tat ist es möglich, nur einen Teil einer Zeile zu übersetzen, aber die Angabe eines anderen Formats als C<xtxt> führt zu keinen sinnvollen Ergebnissen.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

@@ -124,7 +124,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     Määrake originaal- ja tõlgitud teksti väljundformaat.
 
-    Järgmised vormingud, välja arvatud `xtxt`, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast ja muu formaadi kui `xtxt` määramine ei anna mõttekaid tulemusi.
+    Järgmised vormingud, välja arvatud `xtxt`, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast, kuid muu formaadi kui `xtxt` määramine ei anna mõttekaid tulemusi.
 
     - **conflict**, **cm**
 

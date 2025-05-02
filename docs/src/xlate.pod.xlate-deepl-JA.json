@@ -128,8 +128,8 @@
       "原文と訳文の出力形式を指定します。\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "C<xtxt>以外の以下の書式は、翻訳される部分が行の集まりであることを前提としている。実際には、行の一部だけを翻訳することも可能であり、C<xt>以外の書式を指定しても意味のある結果は得られない。\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "C<xtxt>以外の以下の書式は、翻訳される部分が行の集まりであることを前提としています。実際、行の一部だけを翻訳することは可能ですが、 C<xtxt>以外の書式を指定しても意味のある結果は得られません。\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

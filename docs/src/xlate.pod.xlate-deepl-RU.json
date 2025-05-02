@@ -128,8 +128,8 @@
       "Укажите формат вывода оригинального и переведенного текста.\n"
    ],
    [
-      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, and specifying a format other than C<xtxt> will not produce meaningful results.\n",
-      "Следующие форматы, отличные от C<xtxt>, предполагают, что переводимая часть представляет собой набор строк. На самом деле можно перевести только часть строки, и указание формата, отличного от C<xtxt>, не даст значимых результатов.\n"
+      "The following formats other than C<xtxt> assume that the part to be translated is a collection of lines. In fact, it is possible to translate only a portion of a line, but specifying a format other than C<xtxt> will not produce meaningful results.\n",
+      "Следующие форматы, кроме C<xtxt>, предполагают, что переводимая часть представляет собой набор строк. На самом деле можно перевести только часть строки, но указание формата, отличного от C<xtxt>, не даст значимых результатов.\n"
    ],
    [
       "Original and converted text are printed in L<git(1)> conflict marker format.\n",

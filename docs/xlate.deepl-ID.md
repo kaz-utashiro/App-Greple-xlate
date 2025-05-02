@@ -124,7 +124,7 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     Tentukan format output untuk teks asli dan terjemahan.
 
-    Format berikut ini selain `xtxt` mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, dan menentukan format selain `xtxt` tidak akan menghasilkan hasil yang berarti.
+    Format berikut ini selain `xtxt` mengasumsikan bahwa bagian yang akan diterjemahkan adalah kumpulan baris. Pada kenyataannya, dimungkinkan untuk menerjemahkan hanya sebagian dari sebuah baris, tetapi menentukan format selain `xtxt` tidak akan menghasilkan hasil yang berarti.
 
     - **conflict**, **cm**
 

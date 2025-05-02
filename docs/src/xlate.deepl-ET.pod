@@ -148,7 +148,7 @@ Määrake sihtkeel. B<DeepL> mootori kasutamisel saate saadaval olevad keeled k�
 
 Määrake originaal- ja tõlgitud teksti väljundformaat.
 
-Järgmised vormingud, välja arvatud C<xtxt>, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast ja muu formaadi kui C<xtxt> määramine ei anna mõttekaid tulemusi.
+Järgmised vormingud, välja arvatud C<xtxt>, eeldavad, et tõlgitav osa on ridade kogum. Tegelikult on võimalik tõlkida ainult osa reast, kuid muu formaadi kui C<xtxt> määramine ei anna mõttekaid tulemusi.
 
 =over 4
 
