@@ -211,7 +211,7 @@ Specify the output format for original and translated text.
 
 The following formats other than C<xtxt> assume that the part to be
 translated is a collection of lines.  In fact, it is possible to
-translate only a portion of a line, and specifying a format other than
+translate only a portion of a line, but specifying a format other than
 C<xtxt> will not produce meaningful results.
 
 =over 4
