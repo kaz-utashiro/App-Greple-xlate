@@ -23,10 +23,14 @@ my %param = (
     gpt3 => { engine => 'gpt-3.5-turbo', temp => '0.0', max => 3000, sub => \&gpty,
 	      prompt => 'Translate following entire text into %s, line-by-line.',
 	  },
-    gpt4 => { engine => 'gpt-4-turbo', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => "Translate following entire text into %s, line-by-line.\n"
-		      . "Leave XML style tag as it is.\n"
-		      ,
+    gpt4 => { engine => 'gpt-4.1', temp => '0.0', max => 3000, sub => \&gpty,
+	      prompt => <<END
+Translate the following text into %s, line by line.
+For each input line, output only the corresponding translated line.
+Leave blank lines and XML-style tags (e.g., <m id=1 />) unchanged and do not translate them.
+**Do not output the original (pre-translation) text under any circumstances.**
+**Output only the translated lines (or unchanged tags/blank lines), and make sure the number of output lines always matches the number of input lines.**
+END
 	  },
 );
 
