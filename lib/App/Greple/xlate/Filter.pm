@@ -1,6 +1,6 @@
 package App::Greple::xlate::Filter;
 
-use v5.14;
+use v5.26;
 use warnings;
 use Data::Dumper;
 
