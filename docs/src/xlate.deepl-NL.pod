@@ -126,7 +126,7 @@ Op dit moment zijn de volgende engines beschikbaar
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Voer de maskeerfunctie uit en geef de geconverteerde tekst weer zoals hij is, zo
 =item B<--match-all>
 
 Stel de hele tekst van het bestand in als doelgebied.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+In het geval van de C<cm> en C<colon> opmaak wordt de uitvoer regel voor regel opgesplitst en opgemaakt. Daarom kan het verwachte resultaat niet worden verkregen als slechts een deel van een regel moet worden vertaald. Deze filters herstellen uitvoer die beschadigd is door het vertalen van een deel van een regel naar normale regel-voor-regel uitvoer.
+
+In de huidige implementatie, als meerdere delen van een regel worden vertaald, worden ze uitgevoerd als onafhankelijke regels.
 
 =back
 

@@ -200,6 +200,14 @@
       "Führen Sie die Maskierungsfunktion aus und zeigen Sie den konvertierten Text unverändert ohne Wiederherstellung an.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "Im Fall der C<cm>- und C<colon>-Formate wird die Ausgabe zeilenweise aufgeteilt und formatiert. Daher kann das erwartete Ergebnis nicht erzielt werden, wenn nur ein Teil einer Zeile übersetzt wird. Diese Filter beheben Ausgaben, die durch die Übersetzung eines Teils einer Zeile beschädigt wurden, indem sie eine normale zeilenweise Ausgabe erzeugen.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "In der aktuellen Implementierung werden mehrere übersetzte Teile einer Zeile als unabhängige Zeilen ausgegeben.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Setzen Sie den gesamten Text der Datei als Zielbereich.\n"
    ],

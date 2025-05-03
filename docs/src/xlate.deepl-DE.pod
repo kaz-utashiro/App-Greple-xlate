@@ -126,7 +126,7 @@ Zur Zeit sind die folgenden Engines verfügbar
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Führen Sie die Maskierungsfunktion aus und zeigen Sie den umgewandelten Text so
 =item B<--match-all>
 
 Legen Sie den gesamten Text der Datei als Zielbereich fest.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+Im Falle der Formate C<cm> und C<colon> wird die Ausgabe zeilenweise aufgeteilt und formatiert. Wenn also nur ein Teil einer Zeile übersetzt werden soll, kann das erwartete Ergebnis nicht erzielt werden. Diese Filter korrigieren die Ausgabe, die durch die Übersetzung eines Teils einer Zeile in die normale zeilenweise Ausgabe verfälscht wird.
+
+Werden in der derzeitigen Implementierung mehrere Teile einer Zeile übersetzt, werden sie als unabhängige Zeilen ausgegeben.
 
 =back
 

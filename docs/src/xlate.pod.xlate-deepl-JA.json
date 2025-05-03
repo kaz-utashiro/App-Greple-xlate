@@ -200,6 +200,14 @@
       "ファイルの全文を対象領域に設定する。\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "C<cm>とC<colon>形式の場合、出力は一行ごとに分割され、整形されます。従って、行の一部だけが変換される場合、期待された結果は得られません。これらのフィルタは、行の一部を通常の行単位の出力に変換することによって破損した出力を修正します。\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "現在の実装では、行の複数の部分が翻訳された場合、それらは独立した行として出力されます。\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "B<xlate>モジュールは、各ファイルの翻訳テキストをキャッシュしておき、実行前に読み込むことで、サーバーに問い合わせるオーバーヘッドをなくすことができます。デフォルトのキャッシュ戦略C<auto>では、対象ファイルに対してキャッシュファイルが存在する場合にのみキャッシュデータを保持します。\n"
    ],

@@ -200,6 +200,14 @@
       "Efectuați funcția de mascarea și afișați textul convertit așa cum este, fără restaurare.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "În cazul formatelor C<cm> și C<colon>, ieșirea este împărțită și formatată linie cu linie. Prin urmare, dacă doar o parte a unei linii trebuie tradusă, rezultatul așteptat nu poate fi obținut. Aceste filtre corectează ieșirea care este coruptă prin traducerea unei părți dintr-o linie într-o ieșire normală, linie cu linie.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "În implementarea actuală, dacă mai multe părți ale unei linii sunt traduse, acestea sunt afișate ca linii independente.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Setați întregul text al fișierului ca zonă țintă.\n"
    ],

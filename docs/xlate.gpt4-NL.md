@@ -106,7 +106,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o**'s interface is instabiel en kan momenteel niet gegarandeerd correct werken.
@@ -213,6 +213,13 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 - **--match-all**
 
     Voer de maskeringsfunctie uit en toon de geconverteerde tekst zoals deze is, zonder herstel.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    In het geval van de `cm`- en `colon`-formaten wordt de uitvoer regel voor regel gesplitst en opgemaakt. Daarom kan het verwachte resultaat niet worden verkregen als slechts een deel van een regel wordt vertaald. Deze filters herstellen uitvoer die is beschadigd door een deel van een regel te vertalen naar normale regel-voor-regel uitvoer.
+
+    In de huidige implementatie worden meerdere vertaalde delen van een regel als onafhankelijke regels weergegeven.
 
 # CACHE OPTIONS
 

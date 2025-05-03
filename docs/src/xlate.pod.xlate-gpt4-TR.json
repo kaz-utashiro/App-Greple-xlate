@@ -200,6 +200,14 @@
       "Renk paleti, terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz B<--xlate-stripe-light> veya B<--xlate-stripe-dark> kullanabilirsiniz.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "C<cm> ve C<colon> formatları durumunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının çevrilmesiyle bozulan çıktıyı, normal satır satır çıktıya dönüştürür.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Mevcut uygulamada, bir satırın birden fazla kısmı çevrilirse, bunlar bağımsız satırlar olarak çıktı verilir.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Maskeleme işlevini gerçekleştirir ve dönüştürülmüş metni olduğu gibi restorasyon yapmadan gösterir.\n"
    ],

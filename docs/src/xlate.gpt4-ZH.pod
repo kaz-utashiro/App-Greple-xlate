@@ -126,7 +126,7 @@ B<Greple> B<xlate> 模块会查找所需的文本块，并将其替换为翻译�
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 =item B<--match-all>
 
 执行掩码功能，并按原样显示转换后的文本而不进行还原。
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+对于 C<cm> 和 C<colon> 格式，输出会被逐行拆分和格式化。因此，如果只翻译了一行的一部分，将无法获得预期的结果。这些过滤器可以修复因只翻译部分内容而导致输出损坏的问题，使其恢复为正常的逐行输出。
+
+在当前的实现中，如果一行的多个部分被翻译，它们会作为独立的行输出。
 
 =back
 

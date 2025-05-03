@@ -126,7 +126,7 @@ Saat ini, mesin-mesin berikut tersedia
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Palet warna akan berganti sesuai dengan warna latar belakang terminal. Jika Anda
 =item B<--match-all>
 
 Lakukan fungsi masking dan tampilkan teks yang telah dikonversi apa adanya tanpa pemulihan.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+Dalam kasus format C<cm> dan C<colon>, output dibagi dan diformat baris demi baris. Oleh karena itu, jika hanya sebagian dari sebuah baris yang diterjemahkan, hasil yang diharapkan tidak dapat diperoleh. Filter-filter ini memperbaiki output yang rusak akibat menerjemahkan sebagian baris menjadi output normal baris demi baris.
+
+Dalam implementasi saat ini, jika beberapa bagian dari sebuah baris diterjemahkan, bagian-bagian tersebut akan dikeluarkan sebagai baris yang berdiri sendiri.
 
 =back
 

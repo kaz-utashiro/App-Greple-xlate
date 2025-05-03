@@ -178,7 +178,7 @@ At this time, the following engines are available
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -319,6 +319,19 @@ restoration.
 =item B<--match-all>
 
 Set the whole text of the file as a target area.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+In the case of the C<cm> and C<colon> formats, the output is split and
+formatted line by line.  Therefore, if only a portion of a line is to
+be translated, the expected result cannot be obtained.  These filters
+fix output that is corrupted by translating part of a line into normal
+line-by-line output.
+
+In the current implementation, if multiple parts of a line are
+translated, they are output as independent lines.
 
 =back
 

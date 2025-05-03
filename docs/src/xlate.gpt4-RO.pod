@@ -126,7 +126,7 @@ Specifică motorul de traducere care va fi folosit. Dacă specificați direct mo
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Paleta de culori este comutată în funcție de culoarea de fundal a terminalulu
 =item B<--match-all>
 
 Efectuați funcția de mascarea și afișați textul convertit așa cum este, fără restaurare.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+În cazul formatelor C<cm> și C<colon>, ieșirea este împărțită și formatată linie cu linie. Prin urmare, dacă doar o parte a unei linii trebuie tradusă, rezultatul așteptat nu poate fi obținut. Aceste filtre corectează ieșirea care este coruptă prin traducerea unei părți dintr-o linie într-o ieșire normală, linie cu linie.
+
+În implementarea actuală, dacă mai multe părți ale unei linii sunt traduse, acestea sunt afișate ca linii independente.
 
 =back
 

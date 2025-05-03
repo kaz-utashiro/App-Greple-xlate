@@ -106,7 +106,7 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin berfungsi dengan benar saat ini.
@@ -213,6 +213,13 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 - **--match-all**
 
     Lakukan fungsi masking dan tampilkan teks yang telah dikonversi apa adanya tanpa pemulihan.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    Dalam kasus format `cm` dan `colon`, output dibagi dan diformat baris demi baris. Oleh karena itu, jika hanya sebagian dari sebuah baris yang diterjemahkan, hasil yang diharapkan tidak dapat diperoleh. Filter-filter ini memperbaiki output yang rusak akibat menerjemahkan sebagian baris menjadi output normal baris demi baris.
+
+    Dalam implementasi saat ini, jika beberapa bagian dari sebuah baris diterjemahkan, bagian-bagian tersebut akan dikeluarkan sebagai baris yang berdiri sendiri.
 
 # CACHE OPTIONS
 

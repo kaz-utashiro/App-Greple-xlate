@@ -106,7 +106,7 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         Die Schnittstelle von **gpt-4o** ist instabil und es kann nicht garantiert werden, dass sie im Moment korrekt funktioniert.
@@ -213,6 +213,13 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 - **--match-all**
 
     Legen Sie den gesamten Text der Datei als Zielbereich fest.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    Im Falle der Formate `cm` und `colon` wird die Ausgabe zeilenweise aufgeteilt und formatiert. Wenn also nur ein Teil einer Zeile übersetzt werden soll, kann das erwartete Ergebnis nicht erzielt werden. Diese Filter korrigieren die Ausgabe, die durch die Übersetzung eines Teils einer Zeile in die normale zeilenweise Ausgabe verfälscht wird.
+
+    Werden in der derzeitigen Implementierung mehrere Teile einer Zeile übersetzt, werden sie als unabhängige Zeilen ausgegeben.
 
 # CACHE OPTIONS
 

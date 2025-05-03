@@ -126,7 +126,7 @@ C<^([\w\pP].*\n)+>
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ L<App::Greple::stripe> 모듈을 사용하여 지브라 스트라이프 방식�
 =item B<--match-all>
 
 파일의 전체 텍스트를 대상 영역으로 설정합니다.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+C<cm> 및 C<colon> 형식의 경우, 출력이 줄 단위로 분할되어 포맷됩니다. 따라서 한 줄의 일부만 번역할 경우, 기대한 결과를 얻을 수 없습니다. 이러한 필터는 한 줄의 일부만 번역되어 손상된 출력을 정상적인 줄 단위 출력으로 수정합니다.
+
+현재 구현에서는 한 줄의 여러 부분이 번역될 경우, 각각이 독립적인 줄로 출력됩니다.
 
 =back
 

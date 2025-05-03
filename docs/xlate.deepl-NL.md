@@ -106,7 +106,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         De interface van **gpt-4o** is instabiel en er kan op dit moment niet gegarandeerd worden dat deze correct werkt.
@@ -213,6 +213,13 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 - **--match-all**
 
     Stel de hele tekst van het bestand in als doelgebied.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    In het geval van de `cm` en `colon` opmaak wordt de uitvoer regel voor regel opgesplitst en opgemaakt. Daarom kan het verwachte resultaat niet worden verkregen als slechts een deel van een regel moet worden vertaald. Deze filters herstellen uitvoer die beschadigd is door het vertalen van een deel van een regel naar normale regel-voor-regel uitvoer.
+
+    In de huidige implementatie, als meerdere delen van een regel worden vertaald, worden ze uitgevoerd als onafhankelijke regels.
 
 # CACHE OPTIONS
 

@@ -126,7 +126,7 @@ En este momento, los siguientes motores están disponibles
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ La paleta de colores se cambia según el color de fondo del terminal. Si desea e
 =item B<--match-all>
 
 Realice la función de enmascaramiento y muestre el texto convertido tal cual sin restauración.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+En el caso de los formatos C<cm> y C<colon>, la salida se divide y se formatea línea por línea. Por lo tanto, si solo se traduce una parte de una línea, no se puede obtener el resultado esperado. Estos filtros corrigen la salida que se corrompe al traducir parte de una línea en una salida normal línea por línea.
+
+En la implementación actual, si se traducen varias partes de una línea, se muestran como líneas independientes.
 
 =back
 

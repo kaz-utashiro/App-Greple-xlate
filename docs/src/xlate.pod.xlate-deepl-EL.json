@@ -200,6 +200,14 @@
       "Ορίστε ολόκληρο το κείμενο του αρχείου ως περιοχή-στόχο.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "Στην περίπτωση των μορφών C<cm> και C<colon>, η έξοδος χωρίζεται και μορφοποιείται γραμμή προς γραμμή. Επομένως, εάν πρόκειται να μεταφραστεί μόνο ένα τμήμα μιας γραμμής, δεν μπορεί να επιτευχθεί το αναμενόμενο αποτέλεσμα. Αυτά τα φίλτρα διορθώνουν την έξοδο που έχει αλλοιωθεί με τη μετάφραση μέρους μιας γραμμής σε κανονική έξοδο γραμμή προς γραμμή.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Στην τρέχουσα εφαρμογή, εάν μεταφράζονται πολλά τμήματα μιας γραμμής, η έξοδος γίνεται ως ανεξάρτητες γραμμές.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Η ενότητα B<xlate> μπορεί να αποθηκεύσει το αποθηκευμένο κείμενο της μετάφρασης για κάθε αρχείο και να το διαβάσει πριν από την εκτέλεση, ώστε να εξαλειφθεί η επιβάρυνση από την ερώτηση στον διακομιστή. Με την προεπιλεγμένη στρατηγική κρυφής μνήμης C<auto>, διατηρεί τα δεδομένα της κρυφής μνήμης μόνο όταν το αρχείο κρυφής μνήμης υπάρχει για το αρχείο-στόχο.\n"
    ],

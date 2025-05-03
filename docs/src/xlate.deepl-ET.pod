@@ -126,7 +126,7 @@ Praegu on saadaval järgmised mootorid
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Sooritage maskeerimisfunktsioon ja kuvage teisendatud tekst sellisena, nagu see 
 =item B<--match-all>
 
 Määrake kogu faili tekst sihtkohaks.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+Formaatide C<cm> ja C<colon> puhul jagatakse ja vormistatakse väljund rida-realt. Seega, kui tõlgitakse ainult osa reast, ei saa oodatud tulemust. Need filtrid parandavad väljundi, mis on rikutud, kui osa reast tõlgitakse tavalise rea kaupa väljundiks.
+
+Praeguses rakenduses, kui rea mitu osa tõlgitakse, väljastatakse need sõltumatute ridadega.
 
 =back
 

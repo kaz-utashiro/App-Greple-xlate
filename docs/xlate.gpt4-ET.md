@@ -106,7 +106,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o** liides on ebastabiilne ja selle korrektset toimimist ei saa hetkel garanteerida.
@@ -213,6 +213,13 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--match-all**
 
     Määra kogu faili tekst sihtalaks.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    `cm` ja `colon` vormingute puhul jagatakse väljund ja vormindatakse rida-realt. Seetõttu, kui ainult osa reast tõlgitakse, ei saa oodatud tulemust. Need filtrid parandavad väljundi, mis on rikutud, tõlkides osa reast normaalseks rida-realt väljundiks.
+
+    Praeguses teostuses, kui mitu osa reast tõlgitakse, väljastatakse need iseseisvate ridadena.
 
 # CACHE OPTIONS
 

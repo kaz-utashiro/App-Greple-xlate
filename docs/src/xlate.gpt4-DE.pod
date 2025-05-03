@@ -126,7 +126,7 @@ Derzeit sind folgende Engines verfügbar
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Die Farbpalette wird entsprechend der Hintergrundfarbe des Terminals umgeschalte
 =item B<--match-all>
 
 Führen Sie die Maskierungsfunktion aus und zeigen Sie den konvertierten Text unverändert ohne Wiederherstellung an.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+Im Fall der C<cm>- und C<colon>-Formate wird die Ausgabe zeilenweise aufgeteilt und formatiert. Daher kann das erwartete Ergebnis nicht erzielt werden, wenn nur ein Teil einer Zeile übersetzt wird. Diese Filter beheben Ausgaben, die durch die Übersetzung eines Teils einer Zeile beschädigt wurden, indem sie eine normale zeilenweise Ausgabe erzeugen.
+
+In der aktuellen Implementierung werden mehrere übersetzte Teile einer Zeile als unabhängige Zeilen ausgegeben.
 
 =back
 

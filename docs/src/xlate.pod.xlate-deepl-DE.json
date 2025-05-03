@@ -200,6 +200,14 @@
       "Legen Sie den gesamten Text der Datei als Zielbereich fest.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "Im Falle der Formate C<cm> und C<colon> wird die Ausgabe zeilenweise aufgeteilt und formatiert. Wenn also nur ein Teil einer Zeile übersetzt werden soll, kann das erwartete Ergebnis nicht erzielt werden. Diese Filter korrigieren die Ausgabe, die durch die Übersetzung eines Teils einer Zeile in die normale zeilenweise Ausgabe verfälscht wird.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Werden in der derzeitigen Implementierung mehrere Teile einer Zeile übersetzt, werden sie als unabhängige Zeilen ausgegeben.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Das Modul B<xlate> kann den Text der Übersetzung für jede Datei im Cache speichern und vor der Ausführung lesen, um den Overhead durch die Anfrage an den Server zu vermeiden. Bei der Standard-Cache-Strategie C<auto> werden die Cache-Daten nur dann beibehalten, wenn die Cache-Datei für die Zieldatei existiert.\n"
    ],

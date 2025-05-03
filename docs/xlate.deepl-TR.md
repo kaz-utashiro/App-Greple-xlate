@@ -106,7 +106,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o**'nun arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.
@@ -213,6 +213,13 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 - **--match-all**
 
     Dosyanın tüm metnini hedef alan olarak ayarlayın.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    `cm` ve `colon` biçimleri söz konusu olduğunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının normal satır satır çıktıya çevrilmesiyle bozulan çıktıyı düzeltir.
+
+    Mevcut uygulamada, bir satırın birden fazla parçası çevrilirse, bunlar bağımsız satırlar olarak çıkarılır.
 
 # CACHE OPTIONS
 

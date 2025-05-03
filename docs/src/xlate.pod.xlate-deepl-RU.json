@@ -200,6 +200,14 @@
       "Установите весь текст файла в качестве целевой области.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "В случае форматов C<cm> и C<colon> вывод разбивается и форматируется построчно. Поэтому, если перевести только часть строки, ожидаемый результат не будет получен. Эти фильтры исправляют вывод, испорченный переводом части строки в обычный построчный вывод.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "В текущей реализации, если переводится несколько частей строки, они выводятся как независимые строки.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Модуль B<xlate> может хранить кэшированный текст перевода для каждого файла и считывать его перед выполнением, чтобы исключить накладные расходы на запрос к серверу. При стратегии кэширования по умолчанию C<auto>, он сохраняет данные кэша только тогда, когда файл кэша существует для целевого файла.\n"
    ],

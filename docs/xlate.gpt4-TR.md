@@ -106,7 +106,7 @@ Bu arayüz deneyseldir ve gelecekte değişikliğe tabidir.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o**'ün arayüzü kararsızdır ve şu anda düzgün çalışacağı garanti edilemez.
@@ -213,6 +213,13 @@ Bu arayüz deneyseldir ve gelecekte değişikliğe tabidir.
 - **--match-all**
 
     Renk paleti, terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz **--xlate-stripe-light** veya **--xlate-stripe-dark** kullanabilirsiniz.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    `cm` ve `colon` formatları durumunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının çevrilmesiyle bozulan çıktıyı, normal satır satır çıktıya dönüştürür.
+
+    Mevcut uygulamada, bir satırın birden fazla kısmı çevrilirse, bunlar bağımsız satırlar olarak çıktı verilir.
 
 # CACHE OPTIONS
 

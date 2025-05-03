@@ -126,7 +126,7 @@ B<--xlate-fold> 옵션을 사용하면 변환된 텍스트가 지정된 너비�
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ C<xtxt> 이외의 다음 형식은 번역할 부분이 줄의 모음이라고 �
 =item B<--match-all>
 
 파일의 전체 텍스트를 대상 영역으로 설정합니다.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+C<cm> 및 C<colon> 형식의 경우 출력이 한 줄씩 분할되어 형식이 지정됩니다. 따라서 한 줄의 일부만 번역해야 하는 경우 예상되는 결과를 얻을 수 없습니다. 이 필터는 한 줄의 일부를 정상적인 줄 단위 출력으로 번역하여 손상된 출력을 수정합니다.
+
+현재 구현에서는 한 줄의 여러 부분이 번역되는 경우 독립된 줄로 출력됩니다.
 
 =back
 

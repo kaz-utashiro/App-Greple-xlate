@@ -106,7 +106,7 @@ Cette interface est expérimentale et susceptible d'être modifiée à l'avenir.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         L'interface de **gpt-4o** est instable et son bon fonctionnement ne peut être garanti pour le moment.
@@ -213,6 +213,13 @@ Cette interface est expérimentale et susceptible d'être modifiée à l'avenir.
 - **--match-all**
 
     Effectuez la fonction de masquage et affichez le texte converti tel quel sans restauration.
+
+- **--lineify-cm**
+- **--lineify-colon**
+
+    Dans le cas des formats `cm` et `colon`, la sortie est divisée et formatée ligne par ligne. Par conséquent, si seule une partie d'une ligne doit être traduite, le résultat attendu ne peut pas être obtenu. Ces filtres corrigent la sortie qui est corrompue en traduisant une partie d'une ligne en une sortie normale ligne par ligne.
+
+    Dans l'implémentation actuelle, si plusieurs parties d'une ligne sont traduites, elles sont produites comme des lignes indépendantes.
 
 # CACHE OPTIONS
 

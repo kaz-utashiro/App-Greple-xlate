@@ -126,7 +126,7 @@ Kullanılacak çeviri motorunu belirtir. Motor modülünü C<-Mxlate::deepl> gib
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Maskeleme işlevini gerçekleştirin ve dönüştürülen metni geri yükleme ya
 =item B<--match-all>
 
 Dosyanın tüm metnini hedef alan olarak ayarlayın.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+C<cm> ve C<colon> biçimleri söz konusu olduğunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının normal satır satır çıktıya çevrilmesiyle bozulan çıktıyı düzeltir.
+
+Mevcut uygulamada, bir satırın birden fazla parçası çevrilirse, bunlar bağımsız satırlar olarak çıkarılır.
 
 =back
 

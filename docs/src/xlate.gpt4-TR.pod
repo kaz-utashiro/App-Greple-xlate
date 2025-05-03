@@ -126,7 +126,7 @@ Kullanılacak çeviri motorunu belirtir. C<-Mxlate::deepl> gibi motor modülün�
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Eşleşen kısmı zebra şeritli şekilde göstermek için L<App::Greple::stripe
 =item B<--match-all>
 
 Renk paleti, terminalin arka plan rengine göre değiştirilir. Açıkça belirtmek isterseniz B<--xlate-stripe-light> veya B<--xlate-stripe-dark> kullanabilirsiniz.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+C<cm> ve C<colon> formatları durumunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının çevrilmesiyle bozulan çıktıyı, normal satır satır çıktıya dönüştürür.
+
+Mevcut uygulamada, bir satırın birden fazla kısmı çevrilirse, bunlar bağımsız satırlar olarak çıktı verilir.
 
 =back
 

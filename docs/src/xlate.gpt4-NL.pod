@@ -126,7 +126,7 @@ Op dit moment zijn de volgende engines beschikbaar
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Het kleurenpalet wordt aangepast aan de achtergrondkleur van de terminal. Als u 
 =item B<--match-all>
 
 Voer de maskeringsfunctie uit en toon de geconverteerde tekst zoals deze is, zonder herstel.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+In het geval van de C<cm>- en C<colon>-formaten wordt de uitvoer regel voor regel gesplitst en opgemaakt. Daarom kan het verwachte resultaat niet worden verkregen als slechts een deel van een regel wordt vertaald. Deze filters herstellen uitvoer die is beschadigd door een deel van een regel te vertalen naar normale regel-voor-regel uitvoer.
+
+In de huidige implementatie worden meerdere vertaalde delen van een regel als onafhankelijke regels weergegeven.
 
 =back
 

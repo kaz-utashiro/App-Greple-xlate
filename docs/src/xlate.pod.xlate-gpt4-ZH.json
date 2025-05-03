@@ -200,6 +200,14 @@
       "执行掩码功能，并按原样显示转换后的文本而不进行还原。\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "对于 C<cm> 和 C<colon> 格式，输出会被逐行拆分和格式化。因此，如果只翻译了一行的一部分，将无法获得预期的结果。这些过滤器可以修复因只翻译部分内容而导致输出损坏的问题，使其恢复为正常的逐行输出。\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "在当前的实现中，如果一行的多个部分被翻译，它们会作为独立的行输出。\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "将文件的全部文本设置为目标区域。\n"
    ],

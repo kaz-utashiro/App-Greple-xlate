@@ -126,7 +126,7 @@ Specifică motorul de traducere care urmează să fie utilizat. Dacă specifica�
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ Efectuați funcția de mascare și afișați textul convertit ca atare, fără r
 =item B<--match-all>
 
 Setați întregul text al fișierului ca zonă țintă.
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+În cazul formatelor C<cm> și C<colon>, rezultatul este împărțit și formatat linie cu linie. Prin urmare, dacă trebuie tradusă doar o parte a unei linii, rezultatul așteptat nu poate fi obținut. Aceste filtre fixează ieșirea care este coruptă prin traducerea unei părți a unei linii în ieșire normală linie cu linie.
+
+În implementarea actuală, dacă mai multe părți ale unei linii sunt traduse, acestea sunt emise ca linii independente.
 
 =back
 

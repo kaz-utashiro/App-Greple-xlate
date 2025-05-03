@@ -200,6 +200,14 @@
       "Выполнить функцию маскирования и отображать преобразованный текст как есть, без восстановления.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "В случае форматов C<cm> и C<colon> вывод разбивается и форматируется построчно.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Поэтому, если требуется перевести только часть строки, ожидаемый результат получить невозможно.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "Установить весь текст файла как целевую область.\n"
    ],

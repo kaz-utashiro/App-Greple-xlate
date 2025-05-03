@@ -200,6 +200,14 @@
       "Dosyanın tüm metnini hedef alan olarak ayarlayın.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "C<cm> ve C<colon> biçimleri söz konusu olduğunda, çıktı satır satır bölünür ve biçimlendirilir. Bu nedenle, bir satırın yalnızca bir kısmı çevrilecekse, beklenen sonuç elde edilemez. Bu filtreler, bir satırın bir kısmının normal satır satır çıktıya çevrilmesiyle bozulan çıktıyı düzeltir.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Mevcut uygulamada, bir satırın birden fazla parçası çevrilirse, bunlar bağımsız satırlar olarak çıkarılır.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "B<xlate> modülü her dosya için önbellekte çeviri metnini saklayabilir ve sunucuya sorma ek yükünü ortadan kaldırmak için yürütmeden önce okuyabilir. Varsayılan önbellek stratejisi C<auto> ile, önbellek verilerini yalnızca hedef dosya için önbellek dosyası mevcut olduğunda tutar.\n"
    ],

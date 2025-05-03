@@ -200,6 +200,14 @@
       "Määra kogu faili tekst sihtalaks.\n"
    ],
    [
+      "In the case of the C<cm> and C<colon> formats, the output is split and formatted line by line. Therefore, if only a portion of a line is to be translated, the expected result cannot be obtained. These filters fix output that is corrupted by translating part of a line into normal line-by-line output.\n",
+      "C<cm> ja C<colon> vormingute puhul jagatakse väljund ja vormindatakse rida-realt. Seetõttu, kui ainult osa reast tõlgitakse, ei saa oodatud tulemust. Need filtrid parandavad väljundi, mis on rikutud, tõlkides osa reast normaalseks rida-realt väljundiks.\n"
+   ],
+   [
+      "In the current implementation, if multiple parts of a line are translated, they are output as independent lines.\n",
+      "Praeguses teostuses, kui mitu osa reast tõlgitakse, väljastatakse need iseseisvate ridadena.\n"
+   ],
+   [
       "B<xlate> module can store cached text of translation for each file and read it before execution to eliminate the overhead of asking to server. With the default cache strategy C<auto>, it maintains cache data only when the cache file exists for target file.\n",
       "B<xlate> moodul saab salvestada iga faili tõlke vahemällu ja lugeda selle enne täitmist, et vältida serverilt pärimise viivitust. Vaikimisi vahemälustrateegia C<auto> korral hoitakse vahemälu ainult siis, kui sihtfaili jaoks on olemas vahemälufail.\n"
    ],

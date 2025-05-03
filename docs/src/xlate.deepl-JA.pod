@@ -126,7 +126,7 @@ B<--xlate-fold> オプションを指定すると、変換されたテキスト�
 
 =item * B<gpt3>: gpt-3.5-turbo
 
-=item * B<gpt4>: gpt-4-turbo
+=item * B<gpt4>: gpt-4.1
 
 =item * B<gpt4o>: gpt-4o-mini
 
@@ -242,6 +242,14 @@ L<App::Greple::stripe>モジュールを使うと、一致した部分をゼブ�
 =item B<--match-all>
 
 ファイルの全文を対象領域に設定します。
+
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+C<cm>とC<colon>形式の場合、出力は一行ごとに分割され、整形されます。従って、行の一部だけが変換される場合、期待された結果は得られません。これらのフィルタは、行の一部を通常の行単位の出力に変換することによって破損した出力を修正します。
+
+現在の実装では、行の複数の部分が翻訳された場合、それらは独立した行として出力されます。
 
 =back
 
