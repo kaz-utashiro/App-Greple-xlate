@@ -324,6 +324,19 @@ restoration.
 
 Set the whole text of the file as a target area.
 
+=item B<--lineify-cm>
+
+=item B<--lineify-colon>
+
+In the case of the C<cm> and C<colon> formats, the output is split and
+formatted line by line.  Therefore, if only a portion of a line is to
+be translated, the expected result cannot be obtained.  These filters
+fix output that is corrupted by translating part of a line into normal
+line-by-line output.
+
+In the current implementation, if multiple parts of a line are
+translated, they are output as independent lines.
+
 =back
 
 =head1 CACHE OPTIONS
@@ -842,6 +855,12 @@ option --xlate-stripe-light -Mstripe
 option --xlate-stripe-dark  -Mstripe::config=darkmode
 option --xlate-stripe-auto \
 	-Mtermcolor::bg(light=-Mstripe,dark=-Mstripe::config=darkmode)
+
+option --lineify-cm \
+	-Mxlate::Filter --of &lineify_cm
+
+option --lineify-colon \
+	-Mxlate::Filter --of &lineify_colon
 
 #  LocalWords:  deepl ifdef unifdef Greple greple perl DeepL ChatGPT
 #  LocalWords:  gpt html img src xlabor

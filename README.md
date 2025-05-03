@@ -292,6 +292,18 @@ This interface is experimental and subject to change in the future.
 
     Set the whole text of the file as a target area.
 
+- **--lineify-cm**
+- **--lineify-colon**
+
+    In the case of the `cm` and `colon` formats, the output is split and
+    formatted line by line.  Therefore, if only a portion of a line is to
+    be translated, the expected result cannot be obtained.  These filters
+    fix output that is corrupted by translating part of a line into normal
+    line-by-line output.
+
+    In the current implementation, if multiple parts of a line are
+    translated, they are output as independent lines.
+
 # CACHE OPTIONS
 
 **xlate** module can store cached text of translation for each file and
