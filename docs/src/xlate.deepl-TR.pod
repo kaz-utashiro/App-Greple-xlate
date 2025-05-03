@@ -6,17 +6,19 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT (F<gpt3.pm>) modülü bir arka uç motoru olarak uygulanmaktadır. Gpt-4 ve gpt-4o için deneysel destek de dahil edilmiştir.
+B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve ChatGPT 4.1 (F<gpt4.pm>) modülü bir arka uç motoru olarak uygulanmaktadır.
 
 Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile aşağıdaki gibi kullanın:
 
@@ -353,7 +355,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

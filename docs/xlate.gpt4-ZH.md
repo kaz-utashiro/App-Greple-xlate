@@ -4,17 +4,19 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9909
+Version 0.9910
 
 # DESCRIPTION
 
-**Greple** **xlate** 模块会查找所需的文本块，并将其替换为翻译后的文本。目前，DeepL（`deepl.pm`）和 ChatGPT（`gpt3.pm`）模块已作为后端引擎实现。还包括对 gpt-4 和 gpt-4o 的实验性支持。
+**Greple** **xlate** 模块查找所需的文本块并将其替换为翻译后的文本。目前，DeepL（`deepl.pm`）和ChatGPT 4.1（`gpt4.pm`）模块已作为后端引擎实现。
 
 如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 **greple** 命令，并结合 `xlate::deepl` 和 `perl` 模块，如下所示：
 
@@ -309,7 +311,7 @@ Version 0.9909
 
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
-[App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

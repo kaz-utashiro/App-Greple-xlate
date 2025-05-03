@@ -4,17 +4,19 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9909
+Version 0.9910
 
 # DESCRIPTION
 
-**Greple** **xlate** modul ini mencari blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`) dan ChatGPT (`gpt3.pm`) telah diimplementasikan sebagai mesin back-end. Dukungan eksperimental untuk gpt-4 dan gpt-4o juga disertakan.
+**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini DeepL (`deepl.pm`) dan ChatGPT 4.1 (`gpt4.pm`) telah diimplementasikan sebagai mesin back-end.
 
 Jika Anda ingin menerjemahkan blok teks biasa dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
@@ -309,7 +311,7 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 [https://github.com/tecolicom/App-gpty](https://github.com/tecolicom/App-gpty)
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

@@ -4,17 +4,19 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9909
+Version 0.9910
 
 # DESCRIPTION
 
-**Greple** **xlate** η μονάδα βρίσκει τα επιθυμητά μπλοκ κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι μονάδες DeepL (`deepl.pm`) και ChatGPT (`gpt3.pm`) έχουν υλοποιηθεί ως μηχανές back-end. Πειραματική υποστήριξη για gpt-4 και gpt-4o περιλαμβάνεται επίσης.
+**Greple** **xlate** η μονάδα εντοπίζει τα επιθυμητά μπλοκ κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι DeepL (`deepl.pm`) και ChatGPT 4.1 (`gpt4.pm`) έχουν υλοποιηθεί ως μηχανές back-end.
 
 Αν θέλετε να μεταφράσετε κανονικά μπλοκ κειμένου σε ένα έγγραφο γραμμένο σε στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με τις μονάδες `xlate::deepl` και `perl` ως εξής:
 
@@ -309,7 +311,7 @@ Version 0.9909
 
 [https://github.com/tecolicom/App-gpty](https://github.com/tecolicom/App-gpty)
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

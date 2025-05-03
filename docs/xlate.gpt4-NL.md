@@ -4,17 +4,19 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9909
+Version 0.9910
 
 # DESCRIPTION
 
-**Greple** **xlate** module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en ChatGPT (`gpt3.pm`) modules geïmplementeerd als back-end engine. Experimentele ondersteuning voor gpt-4 en gpt-4o is ook inbegrepen.
+**Greple** **xlate** module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en ChatGPT 4.1 (`gpt4.pm`) module geïmplementeerd als back-end engine.
 
 Als je normale tekstblokken in een document geschreven in de Perl's pod-stijl wilt vertalen, gebruik dan het **greple** commando met `xlate::deepl` en `perl` module zoals dit:
 
@@ -309,7 +311,7 @@ Je moet de commandoregeltools voor DeepL en ChatGPT installeren.
 
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
-[App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

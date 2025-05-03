@@ -6,17 +6,19 @@ App::Greple::xlate - greple 的翻译支持模块
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> 模块会查找所需的文本块，并将其替换为翻译后的文本。目前，DeepL（F<deepl.pm>）和 ChatGPT（F<gpt3.pm>）模块已作为后端引擎实现。还包括对 gpt-4 和 gpt-4o 的实验性支持。
+B<Greple> B<xlate> 模块查找所需的文本块并将其替换为翻译后的文本。目前，DeepL（F<deepl.pm>）和ChatGPT 4.1（F<gpt4.pm>）模块已作为后端引擎实现。
 
 如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请使用 B<greple> 命令，并结合 C<xlate::deepl> 和 C<perl> 模块，如下所示：
 
@@ -353,7 +355,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

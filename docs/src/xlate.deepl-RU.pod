@@ -6,17 +6,19 @@ App::Greple::xlate - модуль поддержки перевода для gre
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-Модуль B<Greple> B<xlate> находит нужные текстовые блоки и заменяет их переведенным текстом. В настоящее время в качестве внутреннего движка реализованы модули DeepL (F<deepl.pm>) и ChatGPT (F<gpt3.pm>). Также включена экспериментальная поддержка gpt-4 и gpt-4o.
+Модуль B<Greple> B<xlate> находит нужные текстовые блоки и заменяет их переведенным текстом. В настоящее время в качестве внутреннего движка реализован модуль DeepL (F<deepl.pm>) и ChatGPT 4.1 (F<gpt4.pm>).
 
 Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду B<greple> с модулем C<xlate::deepl> и C<perl> следующим образом:
 
@@ -353,7 +355,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

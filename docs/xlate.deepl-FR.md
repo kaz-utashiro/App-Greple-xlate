@@ -4,17 +4,19 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 # SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9909
+Version 0.9910
 
 # DESCRIPTION
 
-Le module **Greple** **xlate** recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et ChatGPT (`gpt3.pm`) sont mis en œuvre en tant que moteur dorsal. Un support expérimental pour gpt-4 et gpt-4o est également inclus.
+Le module **Greple** **xlate** recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et ChatGPT 4.1 (`gpt4.pm`) sont mis en œuvre en tant que moteur dorsal.
 
 Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style Perl's pod, utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` comme suit :
 
@@ -309,7 +311,7 @@ Vous devez installer les outils de ligne de commande pour DeepL et ChatGPT.
 
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
-[App::Greple::xlate::gpt3](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt3)
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

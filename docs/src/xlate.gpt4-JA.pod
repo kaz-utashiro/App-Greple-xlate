@@ -6,17 +6,19 @@ App::Greple::xlate - grepleのための翻訳サポートモジュール
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> モジュールは、目的のテキストブロックを見つけて翻訳されたテキストに置き換えます。現在、DeepL（F<deepl.pm>）およびChatGPT（F<gpt3.pm>）モジュールがバックエンドエンジンとして実装されています。gpt-4およびgpt-4oの実験的サポートも含まれています。
+B<Greple> B<xlate> モジュールは、目的のテキストブロックを見つけて翻訳されたテキストに置き換えます。現在、DeepL（F<deepl.pm>）およびChatGPT 4.1（F<gpt4.pm>）モジュールがバックエンドエンジンとして実装されています。
 
 Perlのpodスタイルで書かれたドキュメント内の通常のテキストブロックを翻訳したい場合は、B<greple>コマンドをC<xlate::deepl>およびC<perl>モジュールとともに次のように使用します。
 
@@ -353,7 +355,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 L<App::Greple::xlate>
 
-L<App::Greple::xlate::deepl>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

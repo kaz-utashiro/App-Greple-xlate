@@ -6,17 +6,19 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT (F<gpt3.pm>) sunt implementate ca motoare back-end. Suportul experimental pentru gpt-4 și gpt-4o este de asemenea inclus.
+B<Greple> B<xlate> modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și ChatGPT 4.1 (F<gpt4.pm>) sunt implementate ca motor de back-end.
 
 Dacă doriți să traduceți blocuri normale de text într-un document scris în stilul pod al Perl, folosiți comanda B<greple> cu C<xlate::deepl> și modulul C<perl> astfel:
 
@@ -353,7 +355,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 L<App::Greple::xlate>
 
-L<App::Greple::xlate::deepl>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

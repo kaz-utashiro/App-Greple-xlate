@@ -6,17 +6,19 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (F<deepl.pm>) und ChatGPT (F<gpt3.pm>) als Back-End-Engines implementiert. Experimentelle Unterstützung für gpt-4 und gpt-4o ist ebenfalls enthalten.
+B<Greple> B<xlate> Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (F<deepl.pm>) und ChatGPT 4.1 (F<gpt4.pm>) Modul als Back-End-Engine implementiert.
 
 Wenn Sie normale Textblöcke in einem im Perl-Pod-Stil geschriebenen Dokument übersetzen möchten, verwenden Sie den B<greple>-Befehl mit C<xlate::deepl> und C<perl>-Modul wie folgt:
 
@@ -353,7 +355,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 

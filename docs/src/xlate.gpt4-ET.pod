@@ -6,17 +6,19 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 =head1 SYNOPSIS
 
-    greple -Mxlate -e ENGINE --xlate pattern target-file
-
     greple -Mxlate::deepl --xlate pattern target-file
+
+    greple -Mxlate::gpt4 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9909
+Version 0.9910
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul leiab soovitud tekstilõigud ja asendab need tõlgitud tekstiga. Praegu on DeepL (F<deepl.pm>) ja ChatGPT (F<gpt3.pm>) moodulid rakendatud taustamootorina. Eksperimentaalne tugi gpt-4 ja gpt-4o jaoks on samuti kaasas.
+B<Greple> B<xlate> moodul leiab soovitud tekstilõigud ja asendab need tõlgitud tekstiga. Praegu on taustamootorina rakendatud DeepL (F<deepl.pm>) ja ChatGPT 4.1 (F<gpt4.pm>) moodul.
 
 Kui soovid tõlkida tavalisi tekstilõike dokumendis, mis on kirjutatud Perli pod-stiilis, kasuta B<greple> käsku koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
 
@@ -353,7 +355,7 @@ L<App::Greple::xlate>
 
 L<App::Greple::xlate::deepl>
 
-L<App::Greple::xlate::gpt3>
+L<App::Greple::xlate::gpt4>
 
 =over 2
 
