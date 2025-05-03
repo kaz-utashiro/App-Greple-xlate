@@ -159,7 +159,7 @@ This interface is experimental and subject to change in the future.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4-turbo
+    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o**'s interface is unstable and cannot be guaranteed to work
