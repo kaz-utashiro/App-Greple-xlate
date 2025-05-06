@@ -28,8 +28,8 @@
       "Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi B<--match-all>. Ini adalah jalan pintas untuk menentukan pola C<(?s).+> yang cocok dengan seluruh teks.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Data format conflict marker dapat dilihat dalam gaya berdampingan dengan perintah C<sdif> dan opsi C<-V>. Karena tidak masuk akal untuk membandingkan per string, opsi C<--no-cdif> direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan C<--no-textcolor> (atau C<--no-tc>).\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Format data penanda konflik dapat dilihat dalam gaya berdampingan dengan perintah L<sdif|App::sdif> menggunakan opsi C<-V>. Karena tidak masuk akal untuk membandingkan berdasarkan per-string, opsi C<--no-cdif> direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan C<--no-textcolor> (atau C<--no-tc>).\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

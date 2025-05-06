@@ -28,8 +28,8 @@
       "Tüm metni çevirmek istiyorsanız, B<--match-all> seçeneğini kullanın. Bu, tüm metni eşleştiren C<(?s).+> desenini belirtmek için bir kısayoldur.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Çakışma işaretleyici formatındaki veriler, C<sdif> komutuyla ve C<-V> seçeneğiyle yan yana görüntülenebilir. Karşılaştırmanın dize bazında yapılmasının anlamı olmadığından, C<--no-cdif> seçeneği önerilir. Metni renklendirmenize gerek yoksa, C<--no-textcolor> (veya C<--no-tc>) belirtin.\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Çakışma işaretleyici biçimindeki veriler, L<sdif|App::sdif> komutu ile C<-V> seçeneği kullanılarak yan yana biçimde görüntülenebilir. Karşılaştırmanın dize bazında yapılmasının anlamı olmadığından, C<--no-cdif> seçeneği önerilir. Metni renklendirmenize gerek yoksa, C<--no-textcolor> (veya C<--no-tc>) belirtin.\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

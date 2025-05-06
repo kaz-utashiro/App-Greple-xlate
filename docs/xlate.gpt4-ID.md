@@ -12,7 +12,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.9910
+Version 0.9911
 
 # DESCRIPTION
 
@@ -42,9 +42,9 @@ Secara default, teks asli dan terjemahan dicetak dalam format "conflict marker" 
 
 Jika Anda ingin menerjemahkan seluruh teks, gunakan opsi **--match-all**. Ini adalah jalan pintas untuk menentukan pola `(?s).+` yang cocok dengan seluruh teks.
 
-Data format conflict marker dapat dilihat dalam gaya berdampingan dengan perintah `sdif` dan opsi `-V`. Karena tidak masuk akal untuk membandingkan per string, opsi `--no-cdif` direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan `--no-textcolor` (atau `--no-tc`).
+Format data penanda konflik dapat dilihat dalam gaya berdampingan dengan perintah [sdif](https://metacpan.org/pod/App%3A%3Asdif) menggunakan opsi `-V`. Karena tidak masuk akal untuk membandingkan berdasarkan per-string, opsi `--no-cdif` direkomendasikan. Jika Anda tidak perlu mewarnai teks, tentukan `--no-textcolor` (atau `--no-tc`).
 
-    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-filename --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>

@@ -12,7 +12,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.9910
+Version 0.9911
 
 # DESCRIPTION
 
@@ -42,9 +42,9 @@ Standaard worden originele en vertaalde tekst afgedrukt in het "conflict marker"
 
 Als je de volledige tekst wilt vertalen, gebruik dan de **--match-all** optie. Dit is een snelkoppeling om het patroon `(?s).+` te specificeren dat overeenkomt met de volledige tekst.
 
-Conflict marker formaat data kan in zij-aan-zij stijl worden bekeken met het `sdif` commando en de `-V` optie. Omdat het geen zin heeft om per string te vergelijken, wordt de `--no-cdif` optie aanbevolen. Als je de tekst niet hoeft te kleuren, specificeer dan `--no-textcolor` (of `--no-tc`).
+Conflictmarkeringformaatgegevens kunnen in zij-aan-zij stijl worden bekeken met het [sdif](https://metacpan.org/pod/App%3A%3Asdif) commando met de `-V` optie. Aangezien het geen zin heeft om per tekenreeks te vergelijken, wordt de `--no-cdif` optie aanbevolen. Als u de tekst niet hoeft te kleuren, geef dan `--no-textcolor` (of `--no-tc`) op.
 
-    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-filename --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>

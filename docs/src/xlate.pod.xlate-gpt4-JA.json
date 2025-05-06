@@ -28,8 +28,8 @@
       "テキスト全体を翻訳したい場合は、B<--match-all>オプションを使用してください。これは、テキスト全体にマッチするパターンC<(?s).+>を指定するショートカットです。\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "コンフリクトマーカー形式のデータは、C<sdif>コマンドとC<-V>オプションでサイドバイサイド表示できます。文字列単位で比較しても意味がないため、C<--no-cdif>オプションの使用を推奨します。テキストの色付けが不要な場合は、C<--no-textcolor>（またはC<--no-tc>）を指定してください。\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "コンフリクトマーカーフォーマットのデータは、L<sdif|App::sdif> コマンドと C<-V> オプションでサイドバイサイド形式で表示できます。文字列単位で比較しても意味がないため、C<--no-cdif> オプションの使用を推奨します。テキストの色付けが不要な場合は、C<--no-textcolor>（または C<--no-tc>）を指定してください。\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

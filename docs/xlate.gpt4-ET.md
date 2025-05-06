@@ -12,7 +12,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # VERSION
 
-Version 0.9910
+Version 0.9911
 
 # DESCRIPTION
 
@@ -42,9 +42,9 @@ Vaikimisi prinditakse originaal ja tõlgitud tekst "konfliktimarkeri" formaadis,
 
 Kui soovid tõlkida kogu teksti, kasuta **--match-all** valikut. See on otsetee mustri `(?s).+` määramiseks, mis sobib kogu tekstiga.
 
-Konfliktimarkeri formaadis andmeid saab vaadata kõrvuti stiilis `sdif` käsuga koos `-V` valikuga. Kuna pole mõtet võrrelda üksikute stringide kaupa, on soovitatav kasutada `--no-cdif` valikut. Kui pole vaja teksti värvida, määra `--no-textcolor` (või `--no-tc`).
+Konfliktimarkerite vormingut saab vaadata kõrvuti stiilis käsuga [sdif](https://metacpan.org/pod/App%3A%3Asdif) koos valikuga `-V`. Kuna pole mõtet võrrelda stringi kaupa, on soovitatav kasutada valikut `--no-cdif`. Kui teksti pole vaja värvida, määra `--no-textcolor` (või `--no-tc`).
 
-    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-filename --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>

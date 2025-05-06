@@ -28,8 +28,8 @@
       "Kui soovid tõlkida kogu teksti, kasuta B<--match-all> valikut. See on otsetee mustri C<(?s).+> määramiseks, mis sobib kogu tekstiga.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Konfliktimarkeri formaadis andmeid saab vaadata kõrvuti stiilis C<sdif> käsuga koos C<-V> valikuga. Kuna pole mõtet võrrelda üksikute stringide kaupa, on soovitatav kasutada C<--no-cdif> valikut. Kui pole vaja teksti värvida, määra C<--no-textcolor> (või C<--no-tc>).\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Konfliktimarkerite vormingut saab vaadata kõrvuti stiilis käsuga L<sdif|App::sdif> koos valikuga C<-V>. Kuna pole mõtet võrrelda stringi kaupa, on soovitatav kasutada valikut C<--no-cdif>. Kui teksti pole vaja värvida, määra C<--no-textcolor> (või C<--no-tc>).\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.9910
+Version 0.9911
 
 # DESCRIPTION
 
@@ -42,9 +42,9 @@ Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man
 
 Eğer metnin tamamını çevirmek istiyorsanız, **--match-all** seçeneğini kullanın. Bu, metnin tamamıyla eşleşen `(?s).+` kalıbını belirtmek için kısa yoldur.
 
-Çatışma işaretleyici formatı verileri, `-V` seçeneği ile `sdif` komutu ile yan yana tarzda görüntülenebilir. Dize bazında karşılaştırma yapmanın bir anlamı olmadığından, `--no-cdif` seçeneği önerilir. Metni renklendirmeniz gerekmiyorsa, `--no-textcolor` (veya `--no-tc`) seçeneğini belirtin.
+Çakışma işaretleyici biçimi verileri [sdif](https://metacpan.org/pod/App%3A%3Asdif) komutu ve `-V` seçeneği ile yan yana görüntülenebilir. Dize bazında karşılaştırma yapmanın bir anlamı olmadığından, `--no-cdif` seçeneği önerilir. Metni renklendirmeniz gerekmiyorsa, `--no-textcolor` (veya `--no-tc`) belirtin.
 
-    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-filename --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>

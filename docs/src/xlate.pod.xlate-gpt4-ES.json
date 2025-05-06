@@ -28,8 +28,8 @@
       "Si desea traducir todo el texto, utilice la opción B<--match-all>. Esto es un atajo para especificar el patrón C<(?s).+> que coincide con todo el texto.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Los datos en formato de marcador de conflicto pueden verse en estilo lado a lado con el comando C<sdif> y la opción C<-V>. Dado que no tiene sentido comparar por cadena, se recomienda la opción C<--no-cdif>. Si no necesita colorear el texto, especifique C<--no-textcolor> (o C<--no-tc>).\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Los datos en formato de marcador de conflicto pueden visualizarse en estilo lado a lado mediante el comando L<sdif|App::sdif> con la opción C<-V>. Dado que no tiene sentido comparar por cada cadena, se recomienda la opción C<--no-cdif>. Si no necesitas colorear el texto, especifica C<--no-textcolor> (o C<--no-tc>).\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

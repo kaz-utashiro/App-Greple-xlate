@@ -28,8 +28,8 @@
       "Αν θέλετε να μεταφράσετε ολόκληρο το κείμενο, χρησιμοποιήστε την επιλογή B<--match-all>. Αυτή είναι μια σύντομη διαδρομή για να καθορίσετε το μοτίβο C<(?s).+> που ταιριάζει σε ολόκληρο το κείμενο.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Τα δεδομένα μορφής δείκτη σύγκρουσης μπορούν να προβληθούν σε στυλ side-by-side με την εντολή C<sdif> με την επιλογή C<-V>. Δεδομένου ότι δεν έχει νόημα η σύγκριση ανά συμβολοσειρά, συνιστάται η επιλογή C<--no-cdif>. Αν δεν χρειάζεται να χρωματίσετε το κείμενο, καθορίστε την επιλογή C<--no-textcolor> (ή C<--no-tc>).\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Τα δεδομένα μορφής δείκτη σύγκρουσης μπορούν να προβληθούν σε στυλ side-by-side με την εντολή L<sdif|App::sdif> με την επιλογή C<-V>. Δεδομένου ότι δεν έχει νόημα η σύγκριση ανά συμβολοσειρά, συνιστάται η επιλογή C<--no-cdif>. Εάν δεν χρειάζεται να χρωματίσετε το κείμενο, καθορίστε την επιλογή C<--no-textcolor> (ή C<--no-tc>).\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

@@ -28,8 +28,8 @@
       "如果要翻译整个文本，请使用 B<--match-all> 选项。这是指定匹配整个文本的模式 C<(?s).+> 的快捷方式。\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "冲突标记格式数据可以通过带有 C<-V> 选项的 C<sdif> 命令并排查看。由于按字符串进行比较毫无意义，因此建议使用 C<--no-cdif> 选项。如果不需要给文本着色，可指定 C<--no-textcolor>（或 C<--no-tc>）。\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "冲突标记格式数据可以通过 L<sdif|App::sdif> 命令和 C<-V> 选项并排查看。由于按字符串进行比较毫无意义，因此建议使用 C<--no-cdif> 选项。如果不需要给文本着色，可指定 C<--no-textcolor>（或 C<--no-tc>）。\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

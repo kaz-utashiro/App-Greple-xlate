@@ -28,8 +28,8 @@
       "Als je de hele tekst wilt vertalen, gebruik dan de optie B<--match-all>. Dit is een snelkoppeling om het patroon C<(?s).+> op te geven dat overeenkomt met de hele tekst.\n"
    ],
    [
-      "Conflict marker format data can be viewed in side-by-side style by C<sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
-      "Gegevens in conflictmarkerformaat kunnen naast elkaar worden bekeken met het commando C<sdif> met de optie C<-V>. Aangezien het geen zin heeft om per string te vergelijken, wordt de optie C<--no-cdif> aangeraden. Als je de tekst niet hoeft te kleuren, geef dan C<--no-textcolor> (of C<--no-tc>).\n"
+      "Conflict marker format data can be viewed in side-by-side style by L<sdif|App::sdif> command with C<-V> option. Since it makes no sense to compare on a per-string basis, the C<--no-cdif> option is recommended. If you do not need to color the text, specify C<--no-textcolor> (or C<--no-tc>).\n",
+      "Gegevens in conflictmarkerformaat kunnen naast elkaar worden bekeken met het L<sdif|App::sdif> commando met de C<-V> optie. Omdat het geen zin heeft om per string te vergelijken, wordt de optie C<--no-cdif> aanbevolen. Als je de tekst niet hoeft te kleuren, geef dan C<--no-textcolor> op (of C<--no-tc>).\n"
    ],
    [
       "Processing is done in specified units, but in the case of a sequence of multiple lines of non-empty text, they are converted together into a single line. This operation is performed as follows:\n",

@@ -12,7 +12,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 0.9910
+Version 0.9911
 
 # DESCRIPTION
 
@@ -42,9 +42,9 @@ Apoi adăugați opțiunea `--xlate` pentru a traduce zona selectată. Astfel, va
 
 Dacă doriți să traduceți întregul text, folosiți opțiunea **--match-all**. Aceasta este o scurtătură pentru a specifica pattern-ul `(?s).+` care se potrivește cu întregul text.
 
-Datele în format conflict marker pot fi vizualizate în stil side-by-side cu comanda `sdif` și opțiunea `-V`. Deoarece nu are sens să comparați pe bază de șir, este recomandată opțiunea `--no-cdif`. Dacă nu aveți nevoie de colorarea textului, specificați `--no-textcolor` (sau `--no-tc`).
+Datele în format de marcator de conflict pot fi vizualizate în stil side-by-side prin comanda [sdif](https://metacpan.org/pod/App%3A%3Asdif) cu opțiunea `-V`. Deoarece nu are sens să comparați pe bază de șir, se recomandă opțiunea `--no-cdif`. Dacă nu aveți nevoie să colorați textul, specificați `--no-textcolor` (sau `--no-tc`).
 
-    sdif -V --no-tc --no-cdif data_shishin.deepl-EN-US.cm
+    sdif -V --no-filename --no-tc --no-cdif data_shishin.deepl-EN-US.cm
 
 <div>
     <p>

@@ -81,7 +81,7 @@ sub unmask {
 		    warn "Masking error: \"$from\" duplicated.\n";
 		}
 	    } else {
-		die "Masking error: \"$from\" is missing in the output.\n";
+		die "Masking error: \"$from\" is missing in the output($_).\n";
 	    }
 	}
     }
