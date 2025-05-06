@@ -80,6 +80,8 @@ sub unmask {
 		if (s/\Q$from/$to/g) {
 		    warn "Masking error: \"$from\" duplicated.\n";
 		}
+	    } else {
+		die "Masking error: \"$from\" is missing in the output.\n";
 	    }
 	}
     }
