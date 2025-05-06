@@ -698,7 +698,7 @@ sub cache_update {
 
     $maskobj->mask(@from) if $maskobj;
     my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
-    my @to = &XLATE(@from);
+    my @to = map { s/ +$//mgr } &XLATE(@from);
     chop @to[@chop];
     $maskobj->unmask(@to)->reset if $maskobj;
 
