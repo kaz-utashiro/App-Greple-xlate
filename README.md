@@ -13,7 +13,7 @@ App::Greple::xlate - translation support module for greple
 
 # VERSION
 
-Version 0.9911
+Version 0.9912
 
 # DESCRIPTION
 
