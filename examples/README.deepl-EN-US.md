@@ -28,14 +28,14 @@ For example, if you want to translate the file `Document.txt` into Japanese, thr
 
 ### For multiple ENGINE
 
-If two ENGINEs, `deepl` and `gpt3`, are specified, a file containing the engine name is generated as follows.
+If both `deepl` and `gpt4` are specified for ENGINE, a file containing the engine name is generated as follows
 
     Document.txt.deepl-JA.xtxt
     Document.txt.deepl-JA.cm
     Document.txt.deepl-JA.ifdef
-    Document.txt.gpt3-JA.xtxt
-    Document.txt.gpt3-JA.cm
-    Document.txt.gpt3-JA.ifdef
+    Document.txt.gpt4-JA.xtxt
+    Document.txt.gpt4-JA.cm
+    Document.txt.gpt4-JA.ifdef
 
 ## Wrap lines
 
@@ -47,7 +47,7 @@ If the target file has a file with a specific extension, the translation process
 
 ### .ENGINE
 
-Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.
+Specifies the translation engine. The default `deepl` and `gpt4` can be specified. The default is `deepl`.
 
 ### .LANG
 

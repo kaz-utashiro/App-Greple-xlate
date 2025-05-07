@@ -28,14 +28,14 @@ these three files will be generated. The `xtxt` file contains only the translate
 
 ### For Multiple ENGINES
 
-If two engines, such as `deepl` and `gpt3`, are specified for ENGINE, files including the engine name will be generated as follows.
+If both `deepl` and `gpt4` are specified in ENGINE, files including the engine name will be generated as follows.
 
     Document.txt.deepl-JA.xtxt
     Document.txt.deepl-JA.cm
     Document.txt.deepl-JA.ifdef
-    Document.txt.gpt3-JA.xtxt
-    Document.txt.gpt3-JA.cm
-    Document.txt.gpt3-JA.ifdef
+    Document.txt.gpt4-EN.xtxt
+    Document.txt.gpt4-EN.cm
+    Document.txt.gpt4-EN.ifdef
 
 ## Line Wrapping
 
@@ -47,7 +47,7 @@ If a file with a specific extension exists for the target file, you can control 
 
 ### .ENGINE
 
-Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.
+Translation engine specification. The default `deepl` and `gpt4` can be specified. The default is `deepl`.
 
 ### .LANG
 

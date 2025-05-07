@@ -35,15 +35,15 @@
 
 ### 複数 ENGINE の場合
 
-ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次のようにエ
+ENGINE に `deepl` と `gpt4` の2つが指定されていた場合は、次のようにエ
 ンジン名を含むファイルを生成します。
 
     Document.txt.deepl-JA.xtxt
     Document.txt.deepl-JA.cm
     Document.txt.deepl-JA.ifdef
-    Document.txt.gpt3-JA.xtxt
-    Document.txt.gpt3-JA.cm
-    Document.txt.gpt3-JA.ifdef
+    Document.txt.gpt4-JA.xtxt
+    Document.txt.gpt4-JA.cm
+    Document.txt.gpt4-JA.ifdef
 
 ## 行の折り返し
 
@@ -59,7 +59,7 @@ ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次の�
 
 ### .ENGINE
 
-翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定できます。
+翻訳エンジンの指定。デフォルトの `deepl` と `gpt4` が指定できます。
 デフォルトは `deepl` です。
 
 ### .LANG

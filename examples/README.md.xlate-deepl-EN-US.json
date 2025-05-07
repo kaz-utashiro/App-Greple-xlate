@@ -72,8 +72,8 @@
       "### For multiple ENGINE\n"
    ],
    [
-      "ENGINE に `deepl` と `gpt3` の2つが指定されていた場合は、次のようにエンジン名を含むファイルを生成します。\n",
-      "If two ENGINEs, `deepl` and `gpt3`, are specified, a file containing the engine name is generated as follows.\n"
+      "ENGINE に `deepl` と `gpt4` の2つが指定されていた場合は、次のようにエンジン名を含むファイルを生成します。\n",
+      "If both `deepl` and `gpt4` are specified for ENGINE, a file containing the engine name is generated as follows\n"
    ],
    [
       "Document.txt.deepl-JA.xtxt\n",
@@ -88,16 +88,16 @@
       "Document.txt.deepl-JA.ifdef\n"
    ],
    [
-      "Document.txt.gpt3-JA.xtxt\n",
-      "Document.txt.gpt3-JA.xtxt\n"
+      "Document.txt.gpt4-JA.xtxt\n",
+      "Document.txt.gpt4-JA.xtxt\n"
    ],
    [
-      "Document.txt.gpt3-JA.cm\n",
-      "Document.txt.gpt3-JA.cm\n"
+      "Document.txt.gpt4-JA.cm\n",
+      "Document.txt.gpt4-JA.cm\n"
    ],
    [
-      "Document.txt.gpt3-JA.ifdef\n",
-      "Document.txt.gpt3-JA.ifdef\n"
+      "Document.txt.gpt4-JA.ifdef\n",
+      "Document.txt.gpt4-JA.ifdef\n"
    ],
    [
       "## 行の折り返し\n",
@@ -120,8 +120,8 @@
       "### .ENGINE\n"
    ],
    [
-      "翻訳エンジンの指定。デフォルトの `deepl` と `gpt3` が指定できます。デフォルトは `deepl` です。\n",
-      "Specifies the translation engine. The default `deepl` and `gpt3` can be specified. The default is `deepl`.\n"
+      "翻訳エンジンの指定。デフォルトの `deepl` と `gpt4` が指定できます。デフォルトは `deepl` です。\n",
+      "Specifies the translation engine. The default `deepl` and `gpt4` can be specified. The default is `deepl`.\n"
    ],
    [
       "### .LANG\n",
