@@ -1,0 +1,199 @@
+[ "data_shishin.docx" word/document.xml ]
+
+Basic Open Data Guidelines
+
+May 30, 2017
+
+Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society
+
+Decision of the Public-Private Data Utilization Promotion Strategy Council
+
+Revised June 7, 2019
+
+Revised June 15, 2021
+
+　In Japan, since the Great East Japan Earthquake on March 11, 2011, awareness of the disclosure and utilization of data held by the government, local governments, and businesses has increased.[^2]
+
+　The government has promoted open data initiatives based on documents such as the "e-Government Open Data Strategy" (July 4, 2012, Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society), which recognized public data as a shared asset of the people.
+
+　In the documents 'Toward the Development of New Open Data' (decided by the Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society on June 30, 2015) and 'Open Data 2.0' (decided by the same headquarters on May 20, 2016), a shift in approach was indicated—from initiatives focused on data disclosure to promoting 'problem-solving-oriented open data' based on the utilization of data.
+
+　The "Basic Act on the Promotion of Public-Private Data Utilization" (hereinafter referred to as the "Public-Private Data Act"), which was promulgated and enacted on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and to a comfortable living environment through the promotion of public-private data utilization, and stipulates the easy use of public-private data held by the national government, local governments, and businesses.
+
+　This document summarizes the basic guidelines for the future disclosure and utilization of public data by the national government, local governments, and businesses, based on past initiatives and the concept of Open Data by Design.[^3]
+
+1. Significance of Open Data
+
+　The significance and purpose of promoting the disclosure and utilization of public data in a form that allows secondary use are as follows.
+
+(1) Solving various issues and revitalizing the economy through promoting public participation and public-private collaboration
+
+　As the use of public data by a wide range of entities progresses, it will enable the rapid and efficient provision of diverse services that make use of creativity and ingenuity, as well as the provision and improvement of public services through public-private collaboration. This will contribute to appropriately responding to environmental changes such as diversifying needs and values and technological innovation, and to solving various issues facing Japan, such as severe fiscal conditions and the rapid progress of a declining birthrate and aging population.
+
+　In addition, the creation of diverse new services and businesses by venture companies, the streamlining of corporate activities, and other effects will be promoted, leading to the revitalization of the Japanese economy as a whole.
+
+(2) Advancement and efficiency of administration
+
+　By planning and formulating policies and measures based on information obtained through data utilization by the national and local governments (EBPM: Evidence Based Policy Making), effective and efficient administration will be promoted.
+
+(3) Improved transparency and trust
+
+　When public data used in policy formulation is disclosed, citizens can sufficiently analyze and make judgments regarding policies, thereby increasing the transparency of administration and public trust in government.
+
+2. Definition of Open Data
+
+　Of the public-private data held by the national government, local governments, and businesses, open data is defined as data that is disclosed in a manner that meets all of the following criteria, so that anyone can easily use it (including processing, editing, redistribution, etc.) via the Internet or other means.[^4]
+
+Data to which rules allowing secondary use for both commercial and non-commercial purposes are applied
+
+Data suitable for machine reading[^5]
+
+Data that can be used free of charge[^6]
+
+3. Basic Rules Regarding Open Data
+
+(1) Principle of Open Data Disclosure of Administrative Data
+
+　Based on the recognition that public data is a shared asset of the people, as a general rule, all data held by each ministry and agency, including data that served as the basis for policy planning and formulation (including laws and budgets), shall be disclosed as open data.[^7]
+
+　If there is a request to disclose information that is not appropriate to disclose, such as (1) information containing personal data, (2) information that may hinder national or public safety or the maintenance of order, or (3) information that may harm the rights and interests of corporations or individuals, the reason why it cannot be disclosed as open data shall, in principle, be made public.[^8][^9]
+
+(2) Rules on Secondary Use of Disclosed Data
+
+As a general rule, data disclosed on the websites[^10] of each ministry and agency shall be subject to the Government Standard Terms of Use[^11], and secondary use of disclosed data shall be actively promoted, except for data for which secondary use is not permitted based on specific and reasonable grounds.
+
+(3) Disclosure Environment
+
+　Each ministry and agency shall disclose data in a manner that allows for easy search and use on their websites. In particular, for useful data such as "data that can only be provided by each ministry and agency," "highly reliable data that can serve as basic materials in various fields[^12]," or "data with real-time characteristics[^13]," which are assumed to have high social demand, proactive disclosure shall be promoted. In addition, from the perspective of user convenience, system load, and efficiency, the introduction of mechanisms that allow bulk downloads and the provision of data via APIs shall be promoted.
+
+Furthermore, in order to enable cross-searching of all government open data and promote data utilization, the summary and format of the data and other metadata[^14] shall be handled as "CC0 1.0 Universal"[^15] as defined by Creative Commons, and registered and disclosed on the government's data catalog site "DATA.GO.JP."
+
+(4) Format of Disclosed Data
+
+　As a general rule, disclosed data shall be published in a structure and data format suitable for machine reading[^16][^17]. Referring to the "five-star"[^18] indicators used as evaluation criteria for the achievement level of open data and for common vocabulary infrastructure, efforts shall be made to disclose data in more user-friendly terms and formats.
+
+From the perspective of information disclosure to the public, disclosure in data formats suitable for traditional human-readable use will continue, but even in such cases, it must be possible to search and extract text.
+
+In particular, data that is easy to structure[^19] shall, as a general rule, be disclosed in a data format that is easier to use, such as "three stars[^20] (formats such as CSV[^21] or XML)" or higher. In addition, for all disclosed data, including data that is difficult to structure, efforts shall be made to develop an environment for publishing metadata, such as using data catalog sites, to facilitate visualization and API use.
+
+　The IT Strategic Headquarters of the Cabinet Secretariat shall continue to promote the standardization of data structures and data formats in cooperation with relevant ministries and agencies. In addition, for data including corporate information, a corporate number shall be attached.
+
+(5) Limited Disclosure of Undisclosed Data
+
+As shown in 2., the principle is that all data held by each ministry and agency should be published as open data, but there is some information[^22] that is difficult to immediately publish as open data for various reasons. If publishing data that is not currently available as open data could hinder the safety of citizens' lives or similar concerns, it is required to compare the benefits and risks before publication. For such data, in order to gradually move toward open data, it is effective to publish it with limitations on the purpose, scope, and recipients of use (hereinafter referred to as "limited release") and promote its utilization. Ministries and agencies that conduct limited releases must also publish the reasons and rationale (such as plans showing how the data will be used among stakeholders under limited release).
+
+This review should be conducted in a closed environment, such as in camera, among trusted stakeholders, with necessary conditions such as specifying the purpose of use of the data. While it is desirable for limited release to be carried out with a view to future open data publication, if the review finds issues with open data publication, the reasons should be made public as a general rule.
+
+(6) Principles for the Publication of Paid Data
+
+　As defined in 2., if the cost of maintaining and managing the data provision system is covered by collecting fees from a limited group of users, it cannot be called open data, but it is desirable to apply rules that allow secondary use, in line with the handling of open data (except for cases where secondary use is not permitted based on specific and reasonable grounds). In addition, regarding such fees, the basis for calculating the costs involved in providing the data and the timing for review should be clearly stated, and the following points should be considered for review.
+
+Consideration of reducing costs involved in providing data by utilizing inexpensive and safe state-of-the-art technology
+
+Consideration of efforts to increase the number of users and reduce the burden on individual users
+
+Reconsideration of whether it is socially and economically appropriate to provide the data at the users' expense[^23]
+
+(7) Updating Published Data
+
+　For data where prompt publication and freshness are important, it should be published as quickly as possible and updated in a timely and appropriate manner. The update cycle and other relevant information should also be clearly stated so that users can know in advance when updates will occur.
+
+4. Mechanisms to Promote the Publication and Use of Open Data
+
+(1) Promotion of Open Data by Design
+
+Each ministry and agency, based on the concept of open data by design, will take necessary measures from the planning and design stages of administrative procedures and information systems to publish administrative data in a way that is easy for users to utilize. The IT Strategic Headquarters of the Cabinet Secretariat will provide necessary advice on the efforts of each ministry and agency under the Government CIO.
+
+(2) Reflecting User Needs
+
+In promoting open data, it is important to proceed while accurately reflecting user needs. To this end, each ministry and agency will publish a list organizing the data they hold and its publication status[^24], so that they can grasp user needs, including potential ones, and work to publish data in ways that meet those needs.
+
+5. Promotion System
+
+(1) Establishment of Consultation Desks
+
+　In order to actively collect and understand user needs (requests) and opinions regarding open data and reflect them in government-wide efforts, the IT Strategic Headquarters of the Cabinet Secretariat will set up a comprehensive consultation desk for open data. In addition, each ministry and agency will also set up consultation desks and actively respond to individual inquiries regarding open data from users.
+
+(2) Promotion System
+
+　The IT Strategic Headquarters of the Cabinet Secretariat, under the Government CIO, will coordinate and plan government-wide open data policies in cooperation with each ministry and agency, and will review and follow up on each measure, including the status of open data publication by each ministry and agency, to promote government-wide open data initiatives. The IT Strategic Headquarters will also work with relevant ministries and agencies to promote efforts by local governments.
+
+　Each ministry's Chief Information Officer (Ministry CIO) will promote open data initiatives within their ministry and encourage open data efforts by independent administrative agencies and public service providers. In addition, each ministry's dedicated information officer (Ministry Deputy CIO) will assist the Ministry CIO and be responsible for directing and supervising open data policies within the ministry.
+
+6. Open Data Initiatives by Local Governments, Independent Administrative Agencies, and Businesses
+
+(1) Local Governments
+
+　Article 11, Paragraph 1 of the Act on the Use of Public and Private Sector Data stipulates that local governments, like the national government, must take necessary measures to ensure that the data they hold can be easily used by the public.
+
+　Local governments are required to promote open data in line with the purpose of the Act on the Use of Public and Private Sector Data and this Basic Policy.
+
+　In promoting open data, it is desirable to strive for publication based on standard formats and rules so that data published by the national and local governments can be used across organizations. It is also effective for multiple organizations to jointly launch open data portal sites.
+
+The government will actively support open data initiatives by local governments through measures such as dispatching experts on open data, presenting fields and data items that are particularly desirable for publication by local governments, providing collections of advanced case studies and guides, and providing human resource development tools.
+
+(2) Businesses
+
+　Article 11, Paragraph 2 of the Act on the Use of Public and Private Sector Data stipulates that businesses (including independent administrative agencies) should strive to take necessary measures to ensure that data contributing to the public interest can be easily used by the public.
+
+　For independent administrative agencies and universities, since they are operated with public funds or conduct projects and research funded by the government, it is desirable to promote open data initiatives in accordance with this Basic Policy[^25].
+
+　In addition, for businesses in public service fields such as electricity, gas, communications, broadcasting, and transportation, it is desirable to promote open data in line with this Basic Policy and user needs, given their public nature.
+
+7. Review of This Basic Policy
+
+　This Basic Policy will be reviewed flexibly in response to changes in technology trends, the international environment, and other circumstances, while taking into account the results of various measures and the opinions and requests of the public and businesses.
+
+(End)
+
+
+[ "data_shishin.docx" word/footnotes.xml ]
+
+[^2]: In relation to the provision of information on earthquakes and disasters, cooperation was requested for providing information in file formats that are easy to process, and information such as road traffic conditions held by businesses was published and utilized.
+
+[^3]: This refers to planning, developing, and operating information systems and business processes for public data on the premise of open data.
+
+[^4]: However, for security reasons, measures such as requiring users to register in advance or restricting access methods to data may be implemented.
+
+[^5]: "Machine-readable" means that computer programs can automatically process and edit the data.
+
+[^6]: Although it cannot be called open data, there are cases where the cost of maintaining and managing the data provision system is covered by collecting fees from a limited group of users.
+
+[^7]: For data created for administrative purposes in the future, it is necessary to ensure that data is prepared with the expectation that it will be published as open data in accordance with these guidelines. The Cabinet Secretariat IT Strategic Headquarters is required to monitor the status of preparation by each ministry and agency and make necessary adjustments.
+
+[^8]: If data cannot be published as open data due to laws or reasonable grounds (including cases where there are restrictions on secondary use), this must be specifically indicated.
+
+[^9]: If disclosing the reason for not publishing would itself reveal information that cannot be disclosed (non-disclosure information), the reason does not have to be published.
+
+[^10]: This broadly includes websites, database sites, and individual business sites on the Internet established under the name of each ministry or agency (including affiliated organizations, local branch offices, and organizations belonging to ministries and agencies).
+
+[^11]: Rules regarding the use of each ministry and agency's website, presented as a unified template to promote secondary use of data published on government agency websites. See Attachment 1 "Government Standard Terms of Use (Version 2.0)" of the "Basic Approach to Data Publication by Ministries and Agencies for the Promotion of Secondary Use (Guidelines)".
+
+[^12]: For example, statistical data published by each ministry and agency.
+
+[^13]: Data that needs to be updated at regular intervals, such as event information, congestion rates of public transportation, or disaster and disaster prevention information.
+
+[^14]: Information that indicates what kind of data is being published. For example, property information such as title, name of publishing organization, creator (department name), or keywords for data search. For details on other items, refer to Data.go.jp "Information for Developers" section "(2) Information on metadata provided on the data catalog site" (https://www.data.go.jp/for-developer/for-developer)
+
+[^15]: For the definition of "CC0 1.0 Universal," refer to the "Creative Commons Legal Code." (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+
+[^16]: The "degree suitable for machine readability" has several levels, depending on how much computers can reuse the data without human intervention. For computers to automatically reuse data, they must be able to identify (read) the logical structure of the data and process the values (numbers, text, etc. in tables) within the structure.
+
+[^17]: Refer to "3. Concept for Expanding Publication in Machine-Readable Data Formats" and Attachment 2 "Points to Note When Creating Data for Numbers (Tables), Text, and Geospatial Information" in the "Basic Approach to Data Publication by Ministries and Agencies for the Promotion of Secondary Use (Guidelines)".
+
+[^18]: This is a five-star indicator proposed by Tim Berners-Lee, the founder of the Web. If a license allows secondary use regardless of file format, it is considered the first level; CSV format, which is relatively highly machine-readable, is considered the third level. (http://5stardata.info/ja/)
+
+[^19]: Information that can be represented in matrices or hierarchies, such as statistical information.
+
+[^20]: Formats that can be used commonly and are not limited to specific functions (CSV, XML).
+
+[^21]: When publishing data containing tables in CSV format, refer to "8.3.2 Guidelines for Tabular Data" in the "Open Data Guide Version 2.1" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
+
+[^22]: Information that is already published, including on paper, in response to user requests, including information disclosure, is excluded. As for the concept and operation of data subject to limited disclosure (such as the decision process and system for monitoring and evaluating the progress of limited disclosure), further consideration will be given as necessary in the future.
+
+[^23]: For example, it is possible that some data is fee-based while the rest is free of charge.
+
+[^24]: To create such a list, each ministry and agency will conduct an inventory of the data they hold during FY2017, publish the list, and hold roundtable discussions between the public and private sectors (including businesses, researchers, and citizens) on how to publish and utilize data in high-demand fields. At the roundtable, discussions will be held on how to publish and utilize public and private sector data, including data held by local governments and businesses (including independent administrative agencies).
+
+[^25]: The document "On the Promotion of Open Science in Japan" (March 30, 2015) states, "As a general rule, research papers and research data as evidence for papers resulting from publicly funded research should be made public, and it is desirable that other research data as research and development results also be made public to the extent possible."
+

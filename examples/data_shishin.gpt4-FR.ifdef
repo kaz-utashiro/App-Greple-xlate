@@ -4,126 +4,126 @@
 オープンデータ基本指針
 #endif
 #ifdef FR
-Open Data Guidelines
+Principes directeurs fondamentaux des données ouvertes
 #endif
 
 #ifdef ORIGINAL
 平成29年５月30日
 #endif
 #ifdef FR
-May 30, 2017
+30 mai 2017
 #endif
 
 #ifdef ORIGINAL
 高度情報通信ネットワーク社会推進戦略本部・
 #endif
 #ifdef FR
-Advanced Information and Communication Network Society Promotion Headquarters
+Quartier général de la stratégie pour la promotion de la société avancée des réseaux d'information et de communication
 #endif
 
 #ifdef ORIGINAL
 官民データ活用推進戦略会議決定
 #endif
 #ifdef FR
-Government-Private Data Utilization Promotion Strategy Conference Decision
+Décision de la Conférence sur la promotion de l'utilisation des données publiques et privées
 #endif
 
 #ifdef ORIGINAL
 令和元年６月７日改正
 #endif
 #ifdef FR
-Revised on June 7, 2019
+Révisé le 7 juin 2019
 #endif
 
 #ifdef ORIGINAL
 令和３年６月15日改正
 #endif
 #ifdef FR
-Revised on June 15, 2021
+Révisé le 15 juin 2021
 #endif
 
 #ifdef ORIGINAL
 　我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。[^2]
 #endif
 #ifdef FR
-　In our country, awareness of the disclosure and utilization of data held by the government, local governments, and businesses has increased since the Great East Japan Earthquake on March 11, 2011. [^2]
+　Au Japon, depuis le grand séisme de l'Est du Japon du 11 mars 2011, la conscience de l'importance de la publication et de l'utilisation des données détenues par le gouvernement, les collectivités locales et les entreprises s'est accrue.[^2]
 #endif
 
 #ifdef ORIGINAL
 　政府においては、公共データは国民共有の財産であるとの認識を示した「電子行政オープンデータ戦略」（平成24年７月４日 高度情報通信ネットワーク社会推進戦略本部決定）等に基づき、オープンデータの取組を推進してきた。
 #endif
 #ifdef FR
-　Based on the recognition that public data is a shared asset of the people, the government has been promoting open data initiatives in accordance with the "e-Government Open Data Strategy" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on July 4, 2012) and others.
+　Le gouvernement a promu les initiatives de données ouvertes sur la base de la « Stratégie des données ouvertes pour l'administration électronique » (décidée le 4 juillet 2012 par le Quartier général de la stratégie pour la promotion de la société avancée des réseaux d'information et de communication), qui reconnaît que les données publiques sont un bien commun du peuple.
 #endif
 
 #ifdef ORIGINAL
 　「新たなオープンデータの展開に向けて」（平成27年６月30日 高度情報通信ネットワーク社会推進戦略本部決定）及び「オープンデータ2.0」（平成28年５月20日 高度情報通信ネットワーク社会推進戦略本部決定）では、データの公開を中心とした取組から、データの活用を前提とした「課題解決型のオープンデータの推進」に発想を転換するという方向が示された。
 #endif
 #ifdef FR
-　The directions for the development of new open data were indicated in "Towards the Expansion of New Open Data" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on June 30, 2015) and "Open Data 2.0" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on May 20, 2016), shifting the focus from initiatives centered on data disclosure to the promotion of "problem-solving-oriented open data" based on the utilization of data.
+　Dans « Vers un nouveau développement des données ouvertes » (décidé le 30 juin 2015 par le Quartier général de la stratégie pour la promotion de la société avancée des réseaux d'information et de communication) et « Données ouvertes 2.0 » (décidé le 20 mai 2016 par le même Quartier général), il a été indiqué qu'il fallait passer d'une approche centrée sur la publication des données à une « promotion des données ouvertes axée sur la résolution des problèmes » fondée sur l'utilisation des données.
 #endif
 
 #ifdef ORIGINAL
 　平成28年12月14日に公布・施行された「官民データ活用推進基本法」（以下「官民データ法」と言う。）は、官民データ活用の推進により国民が安全で安心して暮らせる社会及び快適な生活環境の実現に寄与することを目的としており、国、地方公共団体、事業者が保有する官民データの容易な利用等について規定されている。
 #endif
 #ifdef FR
-　The "Government-Private Data Utilization Promotion Basic Law" (hereinafter referred to as the "Government-Private Data Law"), which was promulgated and enforced on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and have a comfortable living environment through the promotion of government-private data utilization, and it provides provisions regarding the easy use of government-private data held by the country, local governments, and businesses.
+　La « Loi fondamentale sur la promotion de l'utilisation des données publiques et privées » (ci-après dénommée « Loi sur les données publiques et privées »), promulguée et entrée en vigueur le 14 décembre 2016, vise à contribuer à la réalisation d'une société sûre et paisible et d'un environnement de vie confortable pour les citoyens grâce à la promotion de l'utilisation des données publiques et privées, et prévoit l'utilisation facile des données détenues par l'État, les collectivités locales et les entreprises.
 #endif
 
 #ifdef ORIGINAL
 　本文書は、これまでの取組を踏まえ、オープンデータ・バイ・デザイン[^3]の考えに基づき、今後、国、地方公共団体、事業者が公共データの公開及び活用に取り組む上での基本指針をまとめたものである。
 #endif
 #ifdef FR
-　This document summarizes the basic guidelines for the future efforts of the country, local governments, and businesses in the disclosure and utilization of public data, based on the previous initiatives and the concept of Open Data by Design. [^3]
+　Le présent document, fondé sur les initiatives menées jusqu'à présent et sur le concept d'Open Data by Design[^3], résume les principes directeurs fondamentaux pour la publication et l'utilisation des données publiques par l'État, les collectivités locales et les entreprises à l'avenir.
 #endif
 
 #ifdef ORIGINAL
 １．オープンデータの意義
 #endif
 #ifdef FR
-1. Significance of Open Data
+1. Importance des données ouvertes
 #endif
 
 #ifdef ORIGINAL
 　公共データの二次利用可能な形での公開とその活用を促進する意義・目的は、次のとおりである。
 #endif
 #ifdef FR
-　The significance and objectives of promoting the disclosure and utilization of public data in a form that allows secondary use are as follows:
+　L'objectif et la signification de la publication et de la promotion de l'utilisation des données publiques sous une forme réutilisable sont les suivants.
 #endif
 
 #ifdef ORIGINAL
 （１）国民参加・官民協働の推進を通じた諸課題の解決、経済活性化
 #endif
 #ifdef FR
-(1) Resolution of various issues through citizen participation and government-private collaboration, and economic revitalization
+(1) Résolution des divers problèmes et dynamisation de l'économie par la promotion de la participation citoyenne et de la collaboration public-privé
 #endif
 
 #ifdef ORIGINAL
 　広範な主体による公共データの活用が進展することで、創意工夫を活かした多様なサービスの迅速かつ効率的な提供、官民の協働による公共サービスの提供や改善が実現し、ニーズや価値観の多様化、技術革新等の環境変化への適切な対応とともに、厳しい財政状況、急速な少子高齢化の進展等の我が国が直面する諸課題の解決に貢献することができる。
 #endif
 #ifdef FR
-　By advancing the utilization of public data by a wide range of entities, it becomes possible to provide a variety of services quickly and efficiently, utilizing creative ideas, and to realize the provision and improvement of public services through government-private collaboration. This contributes to the resolution of various issues faced by our country, such as the diversification of needs and values, appropriate responses to environmental changes such as technological innovations, as well as the challenging fiscal situation and the rapid aging of the population.
+　L'utilisation accrue des données publiques par un large éventail d'acteurs permet de fournir rapidement et efficacement divers services innovants, d'offrir ou d'améliorer les services publics grâce à la collaboration public-privé, de répondre de manière appropriée à la diversification des besoins et des valeurs ainsi qu'aux changements de l'environnement tels que l'innovation technologique, et de contribuer à la résolution des divers problèmes auxquels le Japon est confronté, tels que la situation budgétaire difficile et le vieillissement rapide de la population.
 #endif
 
 #ifdef ORIGINAL
 　また、ベンチャー企業等による多様な新サービスやビジネスの創出、企業活動の効率化等が促され、我が国全体の経済活性化にもつながる。
 #endif
 #ifdef FR
-　In addition, it promotes the creation of diverse new services and businesses by venture companies and others, as well as the efficiency of corporate activities, leading to the overall revitalization of our country's economy.
+　En outre, la création de nouveaux services et entreprises variés par des start-ups, l'amélioration de l'efficacité des activités des entreprises, etc., seront encouragées, ce qui contribuera à la dynamisation de l'économie nationale dans son ensemble.
 #endif
 
 #ifdef ORIGINAL
 （２）行政の高度化・効率化
 #endif
 #ifdef FR
-（２）Modernisation et efficacité de l'administration
+（２）Sophistication et efficacité de l'administration
 #endif
 
 #ifdef ORIGINAL
 　国や地方公共団体においてデータ活用により得られた情報を根拠として政策や施策の企画及び立案が行われることで（ＥＢＰＭ：Evidence Based Policy Making）、効果的かつ効率的な行政の推進につながる。
 #endif
 #ifdef FR
-　En utilisant les données, les politiques et les mesures sont planifiées et élaborées sur la base d'informations obtenues par l'utilisation des données (EBPM : Evidence Based Policy Making), ce qui contribue à la promotion d'une administration efficace et efficiente.
+　Dans l'État et les collectivités locales, la planification et l'élaboration des politiques et mesures sont réalisées sur la base des informations obtenues grâce à l'utilisation des données (EBPM : Evidence Based Policy Making), ce qui conduit à une administration plus efficace et efficiente.
 #endif
 
 #ifdef ORIGINAL
@@ -137,7 +137,7 @@ Revised on June 15, 2021
 　政策立案等に用いられた公共データが公開されることで、国民は政策等に関して十分な分析、判断を行うことが可能になり、行政の透明性、行政に対する国民の信頼が高まる。
 #endif
 #ifdef FR
-　La publication des données publiques utilisées pour l'élaboration des politiques permet aux citoyens d'analyser et de juger suffisamment les politiques, ce qui renforce la transparence de l'administration et la confiance des citoyens envers l'administration.
+　La publication des données publiques utilisées pour l'élaboration des politiques permet aux citoyens d'analyser et de juger suffisamment les politiques, ce qui accroît la transparence de l'administration et la confiance des citoyens envers celle-ci.
 #endif
 
 #ifdef ORIGINAL
@@ -151,28 +151,28 @@ Revised on June 15, 2021
 　国、地方公共団体及び事業者が保有する官民データのうち、国民誰もがインターネット等を通じて容易に利用（加工、編集、再配布等）できるよう、次のいずれの項目にも該当する形で公開されたデータをオープンデータと定義する。[^4]
 #endif
 #ifdef FR
-　Les données publiques publiées de manière à répondre à l'un des critères suivants, afin que tous les citoyens puissent les utiliser facilement (traitement, édition, redistribution, etc.) via Internet ou d'autres moyens, sont définies comme des données ouvertes par le gouvernement, les autorités locales et les entreprises qui les détiennent. [^4]
+　Parmi les données détenues par l'État, les collectivités locales et les entreprises, sont définies comme données ouvertes celles qui sont publiées de manière à ce que tout citoyen puisse facilement les utiliser (modifier, éditer, redistribuer, etc.) via Internet, en remplissant toutes les conditions suivantes.[^4]
 #endif
 
 #ifdef ORIGINAL
 営利目的、非営利目的を問わず二次利用可能なルールが適用されたもの
 #endif
 #ifdef FR
-Ceux qui sont soumis à des règles de réutilisation secondaire, qu'ils soient à but lucratif ou non lucratif.
+Soumises à des règles permettant la réutilisation secondaire à des fins commerciales ou non commerciales
 #endif
 
 #ifdef ORIGINAL
 機械判読[^5]に適したもの
 #endif
 #ifdef FR
-Ceux qui conviennent à la lecture automatique [^5].
+Adaptées à la lecture automatique[^5]
 #endif
 
 #ifdef ORIGINAL
 無償[^6]で利用できるもの
 #endif
 #ifdef FR
-Ceux qui peuvent être utilisés gratuitement [^6].
+Utilisables gratuitement[^6]
 #endif
 
 #ifdef ORIGINAL
@@ -186,329 +186,329 @@ Ceux qui peuvent être utilisés gratuitement [^6].
 （１）行政保有データのオープンデータ公開の原則
 #endif
 #ifdef FR
-(1) Principe de la publication des données détenues par l'administration en tant que données ouvertes
+（１）Principe de publication en données ouvertes des données détenues par l'administration
 #endif
 
 #ifdef ORIGINAL
 　公共データは国民共有の財産であるとの認識に立ち、政策（法令、予算を含む）の企画・立案の根拠となったデータを含め、各府省庁が保有するデータはすべてオープンデータとして公開することを原則とする[^7]。
 #endif
 #ifdef FR
-　En reconnaissant que les données publiques sont la propriété commune des citoyens, toutes les données détenues par les ministères et les agences gouvernementales, y compris les données qui ont servi de base à la planification et à l'élaboration des politiques (y compris les lois et les budgets), doivent être publiées en tant que données ouvertes, en principe. [^7].
+　Reconnaissant que les données publiques sont un bien commun des citoyens, il est de principe que toutes les données détenues par chaque ministère, y compris celles ayant servi de base à la planification et à l'élaboration des politiques (y compris les lois et les budgets), soient publiées en tant que données ouvertes.[^7]
 #endif
 
 #ifdef ORIGINAL
 　なお、①個人情報が含まれるもの、②国や公共の安全、秩序の維持に支障を及ぼすおそれがあるもの、③法人や個人の権利利益を害するおそれがあるもの等、公開することが適当ではない情報に対して公開の要望があった場合は、オープンデータとして公開できない理由を公開する[^8]ことを原則[^9]とする。
 #endif
 #ifdef FR
-　Cependant, si des demandes de publication sont faites pour des informations qui contiennent des informations personnelles (1), qui pourraient compromettre la sécurité et l'ordre public du pays ou du public (2), ou qui pourraient porter atteinte aux droits et intérêts des personnes morales ou physiques (3), les raisons pour lesquelles ces informations ne peuvent pas être publiées en tant que données ouvertes doivent être publiées [^8], en principe [^9].
+　En outre, lorsqu'une demande de publication concerne des informations qu'il n'est pas approprié de rendre publiques, telles que ① celles contenant des informations personnelles, ② celles susceptibles de nuire à la sécurité ou à l'ordre public, ou ③ celles susceptibles de porter atteinte aux droits et intérêts d'entreprises ou de particuliers, il est de principe de publier la raison pour laquelle elles ne peuvent pas être rendues publiques en tant que données ouvertes.[^8][^9]
 #endif
 
 #ifdef ORIGINAL
 （２）公開データの二次利用に関するルール
 #endif
 #ifdef FR
-(2) Règles concernant la réutilisation des données publiques
+（２）Règles concernant la réutilisation secondaire des données publiées
 #endif
 
 #ifdef ORIGINAL
 各府省庁のウェブサイト[^10]上で公開されるデータについては、原則、政府標準利用規約[^11]を適用し、具体的かつ合理的な根拠により二次利用が認められないものを除き、公開データの二次利用を積極的に促進する。
 #endif
 #ifdef FR
-En ce qui concerne les données publiées sur les sites Web des ministères et des agences gouvernementales, sauf si des motifs spécifiques et raisonnables empêchent leur réutilisation, la réutilisation des données publiques doit être activement encouragée en appliquant les conditions d'utilisation standard du gouvernement [^11].
+Pour les données publiées sur les sites web des ministères[^10], il est de principe d'appliquer les conditions d'utilisation standard du gouvernement[^11] et, sauf pour les cas où la réutilisation secondaire n'est pas autorisée pour des raisons concrètes et raisonnables, de promouvoir activement la réutilisation secondaire des données publiées.
 #endif
 
 #ifdef ORIGINAL
 （３）公開環境
 #endif
 #ifdef FR
-(3) Environnement de publication
+（３）Environnement de publication
 #endif
 
 #ifdef ORIGINAL
 　各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ[^12]」、または「リアルタイム性を有するデータ[^13]」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。
 #endif
 #ifdef FR
-　Chaque ministère et agence gouvernementale publie des données de manière facilement consultable et utilisable sur leur site web. En particulier, les données considérées comme utiles en raison de leur caractère exclusif aux ministères et agences gouvernementales, de leur fiabilité en tant que données de base dans divers domaines, ou de leur caractère en temps réel, sont supposées répondre à une demande sociale élevée, et sont donc activement publiées. De plus, afin de faciliter l'utilisation par les utilisateurs et de prendre en compte la charge et l'efficacité du système, nous encourageons l'introduction d'un mécanisme permettant le téléchargement en bloc et la fourniture via une API.
+　Les ministères et agences publient les données sous une forme facilement consultable et utilisable sur leurs sites web. En particulier, pour les données utiles telles que « des données que seuls les ministères et agences peuvent fournir », « des données hautement fiables pouvant servir de documents de base dans divers domaines[^12] », ou encore « des données en temps réel[^13] », qui sont supposées répondre à une forte demande sociale, une publication active sera encouragée. De plus, dans une optique de commodité pour les utilisateurs, de charge et d'efficacité du système, l'introduction de mécanismes permettant le téléchargement en une seule fois et la fourniture via API seront promues.
 #endif
 
 #ifdef ORIGINAL
 更に、政府のオープンデータ全体の横断的検索を可能とし、データの活用を促進するため、データの概要及び形式等のメタ情報[^14]をクリエイティブ・コモンズで定められている「CC0 1.0 全世界」[^15]として取り扱った上で政府のデータカタログサイト「DATA.GO.JP」に登録し、公開する。
 #endif
 #ifdef FR
-De plus, afin de permettre une recherche transversale de l'ensemble des données ouvertes du gouvernement et de promouvoir l'utilisation des données, nous enregistrons et publions les métadonnées telles que les informations générales et le format des données sur le site du catalogue de données du gouvernement "DATA.GO.JP", en les traitant conformément à la licence "CC0 1.0 Universal" définie par Creative Commons.
+En outre, afin de permettre une recherche transversale de l'ensemble des données ouvertes du gouvernement et de promouvoir leur utilisation, les métadonnées telles que le résumé et le format des données[^14] seront traitées comme « CC0 1.0 Universel »[^15] selon Creative Commons, puis enregistrées et publiées sur le site catalogue de données du gouvernement « DATA.GO.JP ».
 #endif
 
 #ifdef ORIGINAL
 （４）公開データの形式等
 #endif
 #ifdef FR
-(4) Format des données publiées
+（４）Format des données publiées, etc.
 #endif
 
 #ifdef ORIGINAL
 　公開するデータについては、機械判読に適した[^16]構造及びデータ形式で掲載することを原則とする[^17]。共通語彙基盤等やオープンデータの達成度の評価指標として用いられている「５つ星」[^18]の指標を参考に、より活用がしやすい用語や形式での公開に努める。
 #endif
 #ifdef FR
-　En principe, les données publiées sont présentées dans une structure et un format de données adaptés à la lecture automatique. Nous nous efforçons de publier les données dans des termes et des formats plus faciles à utiliser, en nous référant à l'indicateur "cinq étoiles" utilisé comme référence pour l'infrastructure lexicale commune et l'évaluation du niveau de réalisation des données ouvertes.
+　En principe, les données publiées doivent être présentées dans une structure et un format adaptés à la lecture automatique[^16][^17]. En se référant à l'indicateur « cinq étoiles »[^18] utilisé comme base de vocabulaire commune et comme indicateur d'évaluation du niveau d'ouverture des données, on s'efforcera de publier les données dans des termes et des formats plus facilement exploitables.
 #endif
 
 #ifdef ORIGINAL
 なお、国民への情報公開の観点から、人が読むという従来からの利用形態に適したデータ形式での公開も継続するが、この場合であってもテキスト検索や抽出ができることが必要である。
 #endif
 #ifdef FR
-Cependant, du point de vue de la divulgation d'informations au public, nous continuerons également à publier des données dans des formats adaptés à la lecture humaine traditionnelle. Dans ce cas, il est nécessaire de pouvoir effectuer des recherches et des extractions de texte.
+Par ailleurs, du point de vue de la divulgation d'informations au public, la publication dans des formats adaptés à la lecture humaine, qui est la forme d'utilisation traditionnelle, se poursuivra, mais même dans ce cas, il doit être possible d'effectuer des recherches et des extractions de texte.
 #endif
 
 #ifdef ORIGINAL
 特に構造化しやすいデータ[^19]はより活用がしやすいデータ形式である「３つ星[^20]（CSV[^21]やXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。
 #endif
 #ifdef FR
-En particulier, nous privilégions la publication des données structurées dans des formats plus faciles à utiliser, tels que le format "trois étoiles" (format CSV, XML, etc.). De plus, nous nous efforçons de faciliter la visualisation et l'utilisation des API pour toutes les données publiques, y compris celles qui contiennent des données difficiles à structurer, en améliorant l'environnement pour la publication de métadonnées, tel que l'utilisation du site du catalogue de données.
+En particulier, les données facilement structurables[^19] doivent, en principe, être publiées dans un format de données plus exploitable, c'est-à-dire « trois étoiles[^20] (formats tels que CSV[^21] ou XML) » ou plus. En outre, pour toutes les données publiées, y compris celles difficiles à structurer, des efforts seront faits pour améliorer l'environnement de publication des métadonnées, par exemple via l'utilisation du site catalogue de données, afin de faciliter la visualisation et l'utilisation via API.
 #endif
 
 #ifdef ORIGINAL
 　内閣官房IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。
 #endif
 #ifdef FR
-　Le Bureau de la stratégie globale des TIC du Cabinet du Premier ministre continuera de promouvoir la normalisation des structures et des formats de données en collaboration avec les ministères et agences concernés. De plus, pour les données incluant des informations sur les personnes morales, le numéro d'identification des personnes morales sera ajouté.
+　Le Bureau de la stratégie informatique du Cabinet, en collaboration avec les ministères et agences concernés, continuera de promouvoir la normalisation des structures et formats de données. De plus, pour les données incluant des informations sur les personnes morales, le numéro d'entreprise sera ajouté.
 #endif
 
 #ifdef ORIGINAL
 （５）未公開データの限定公開
 #endif
 #ifdef FR
-(5) Publication limitée des données non publiées
+（５）Publication limitée des données non publiées
 #endif
 
 #ifdef ORIGINAL
 ２．に示したとおり、各府省庁が保有するデータはすべてオープンデータとして公開されることが原則であるが、何らかの理由により即座にオープンデータとして公開することが困難な情報[^22]も存在する。現在公開していないデータをオープンデータとして公開することで、市民生活の安全の維持に支障を及ぼすおそれ等がある場合には、公開に先立って効果とリスクの比較検討をすることが求められる。こうしたデータについて、段階的にオープンデータ化を進めていく観点からは、データの利用目的、範囲、提供先などを限定して公開し、その活用を図っていくこと（以下「限定公開」という。）が有効である。なお、限定公開を行う府省庁は、その理由と考え方（限定公開の下、関係者間でデータがどのように活用されるかを示す計画等）をあわせて公開することとする。
 #endif
 #ifdef FR
-2. Comme indiqué à la ligne 2, il est généralement prévu que toutes les données détenues par chaque ministère et agence soient publiées en tant que données ouvertes. Cependant, il peut exister des informations difficiles à publier immédiatement en tant que données ouvertes pour diverses raisons[^22]. Lorsqu'il y a un risque que la publication de données actuellement non publiques en tant que données ouvertes puisse compromettre la sécurité de la vie des citoyens, il est nécessaire de procéder à une évaluation comparative des effets et des risques avant la publication. Dans le cadre de la progression progressive de la mise en œuvre des données ouvertes pour de telles données, il est efficace de limiter la publication en spécifiant l'objectif d'utilisation des données, la portée et les destinataires, et de promouvoir leur utilisation (ci-après dénommée "publication limitée"). Les ministères et agences qui effectuent une publication limitée doivent également publier les raisons et les approches (y compris les plans montrant comment les données seront utilisées entre les parties concernées) de cette publication limitée.
+Comme indiqué en 2., le principe veut que toutes les données détenues par chaque ministère et agence soient publiées en tant que données ouvertes, mais il existe également des informations qu'il est difficile de publier immédiatement en tant que données ouvertes pour diverses raisons[^22]. Lorsqu'il existe un risque que la publication de données actuellement non publiées en tant que données ouvertes puisse nuire à la sécurité de la vie des citoyens, il est nécessaire de comparer les avantages et les risques avant la publication. Pour ces données, dans la perspective d'une ouverture progressive, il est efficace de limiter la publication à certains objectifs d'utilisation, portées ou destinataires, et d'encourager leur utilisation (ci-après dénommé « publication limitée »). En outre, les ministères et agences qui procèdent à une publication limitée doivent également publier les raisons et la logique de cette décision (y compris un plan montrant comment les données seront utilisées entre les parties concernées sous publication limitée).
 #endif
 
 #ifdef ORIGINAL
 この検討は、当該データの利用目的等を特定するなど必要な条件を付し、信頼しうる関係者内において、インカメラ等のクローズドな環境で行われることが適当である。限定公開は、将来的なオープンデータ化を見据えて行われることが望ましいが、検討の結果、オープンデータ化に問題があるとされた場合には、その理由を公開することを原則とする。
 #endif
 #ifdef FR
-Cette évaluation devrait être effectuée dans un environnement fermé, tel qu'une caméra intérieure, en spécifiant les conditions nécessaires, telles que l'identification de l'objectif d'utilisation des données concernées, au sein des parties prenantes fiables. Bien qu'il soit souhaitable que la publication limitée soit effectuée en prévision d'une future ouverture des données, si des problèmes sont identifiés lors de l'évaluation qui empêchent l'ouverture des données, il est généralement prévu de publier les raisons de ces problèmes.
+Cet examen doit être mené dans un environnement fermé tel qu'une session à huis clos, avec les conditions nécessaires telles que la spécification des objectifs d'utilisation des données, et uniquement parmi des parties de confiance. Il est souhaitable que la publication limitée soit réalisée en vue d'une ouverture future des données, mais si, à l'issue de l'examen, il est jugé problématique de les ouvrir, il est en principe requis d'en publier les raisons.
 #endif
 
 #ifdef ORIGINAL
 （６）有償データの公開に係る原則
 #endif
 #ifdef FR
-(6) Principes de publication des données payantes
+（6）Principes relatifs à la publication de données payantes
 #endif
 
 #ifdef ORIGINAL
 　２．に示した定義のとおり、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなう場合は、オープンデータとは言えないが、その取扱いに準じ、二次利用可能なルールを適用することが望ましい（具体的かつ合理的な根拠により二次利用が認められないものを除く）。また、当該料金については、提供に係る経費の算出根拠と一定の検討のタイミングを明示した上で、以下のような観点で、見直しを図ることとする。
 #endif
 #ifdef FR
-　Comme indiqué à la ligne 2, si les coûts de maintenance et de gestion du système de fourniture de données sont couverts par des frais facturés aux utilisateurs limités, cela ne peut pas être considéré comme des données ouvertes, mais il est souhaitable d'appliquer des règles permettant une utilisation secondaire similaire (à l'exception de ceux pour lesquels une utilisation secondaire est interdite pour des raisons spécifiques et raisonnables). De plus, en ce qui concerne ces frais, il est prévu de revoir les points suivants en spécifiant le moment de l'évaluation et en indiquant les bases de calcul des frais liés à la fourniture :
+　Comme défini en 2., lorsqu'il s'agit de couvrir les coûts de maintenance et de gestion du système de fourniture de données par des frais perçus auprès d'utilisateurs limités, il ne s'agit pas de données ouvertes, mais il est souhaitable d'appliquer des règles permettant la réutilisation secondaire, sauf si des raisons concrètes et raisonnables l'interdisent. De plus, concernant ces frais, il convient de revoir leur montant selon les perspectives suivantes, après avoir clarifié la base de calcul des coûts de fourniture et le moment de leur réexamen.
 #endif
 
 #ifdef ORIGINAL
 安価かつ安全な最新技術を活用することによる、提供に係る経費の低減化の検討
 #endif
 #ifdef FR
-- Étude de la réduction des coûts de fourniture grâce à l'utilisation de technologies récentes peu coûteuses et sûres
+Étudier la réduction des coûts de fourniture en utilisant des technologies de pointe abordables et sûres
 #endif
 
 #ifdef ORIGINAL
 利用者を増加させ、個別の利用者の負担額を低減する取組の検討
 #endif
 #ifdef FR
-- Étude de mesures visant à augmenter le nombre d'utilisateurs et à réduire la charge individuelle des utilisateurs
+Étudier des initiatives pour augmenter le nombre d'utilisateurs et réduire la charge individuelle de chaque utilisateur
 #endif
 
 #ifdef ORIGINAL
 利用者負担での提供とすることが社会的経済的に適当かどうかの再検討[^23]
 #endif
 #ifdef FR
-- Réexamen de la pertinence de la fourniture aux utilisateurs à charge du point de vue socio-économique[^23]
+Réexaminer si la fourniture à la charge des utilisateurs est socialement et économiquement appropriée[^23]
 #endif
 
 #ifdef ORIGINAL
 （７）公開済みデータの更新
 #endif
 #ifdef FR
-(7) Mise à jour des données publiées
+（7）Mise à jour des données publiées
 #endif
 
 #ifdef ORIGINAL
 　データの迅速な公開やその鮮度の維持が重要なデータについては、可能な限り迅速に公開するとともに適時適切な更新を行う。また、データ更新の周期等を明示し、利用者が予め更新の時期を把握できるようにしていく。
 #endif
 #ifdef FR
-　Pour les données importantes où une publication rapide et le maintien de leur fraîcheur sont essentiels, il est prévu de les publier aussi rapidement que possible et de les mettre à jour de manière appropriée et en temps opportun. De plus, il est prévu de spécifier la période de mise à jour des données et de permettre aux utilisateurs de connaître à l'avance le moment de la mise à jour.
+　Pour les données dont la publication rapide et le maintien de l'actualité sont importants, il convient de les publier aussi rapidement que possible et de les mettre à jour de manière appropriée et en temps opportun. Il convient également d'indiquer la fréquence de mise à jour des données afin que les utilisateurs puissent connaître à l'avance les périodes de mise à jour.
 #endif
 
 #ifdef ORIGINAL
 ４．オープンデータの公開・活用を促す仕組み
 #endif
 #ifdef FR
-4. Mécanismes pour promouvoir la publication et l'utilisation des données ouvertes.
+4. Mécanismes pour promouvoir la publication et l'utilisation des données ouvertes
 #endif
 
 #ifdef ORIGINAL
 （１）オープンデータ・バイ・デザインの推進
 #endif
 #ifdef FR
-（１）Promotion of Open Data by Design
+（１）Promotion des données ouvertes par conception
 #endif
 
 #ifdef ORIGINAL
 各府省庁は、オープンデータ・バイ・デザインの考えに基づき、行政保有データを利用者が活用しやすい形で公開するために行政手続き及び情報システムの企画・設計段階から必要な措置を講じる。内閣官房IT総合戦略室は政府CIOの下、各府省庁の取組について必要な助言を行う。
 #endif
 #ifdef FR
-Each government ministry and agency shall take necessary measures from the planning and design stage of administrative procedures and information systems to ensure that administrative data is made available to users in a user-friendly format, based on the concept of Open Data by Design. The Cabinet Secretariat's IT Strategy Office for Government CIO shall provide necessary advice on the efforts of each government ministry and agency under the government CIO.
+Chaque ministère et agence prend les mesures nécessaires dès la planification et la conception des procédures administratives et des systèmes d'information, afin de publier les données administratives détenues sous une forme facilement exploitable par les utilisateurs, conformément au principe des données ouvertes par conception. Le Bureau de la Stratégie Informatique du Cabinet, sous l'autorité du CIO du gouvernement, fournit les conseils nécessaires aux initiatives de chaque ministère et agence.
 #endif
 
 #ifdef ORIGINAL
 （２）利用者ニーズの反映
 #endif
 #ifdef FR
-（２）Reflection of User Needs
+（２）Prise en compte des besoins des utilisateurs
 #endif
 
 #ifdef ORIGINAL
 オープンデータの推進に当たっては、利用者ニーズを的確に反映しながら進めることが重要である。このため、各府省庁は保有するデータとその公開状況を整理したリストを公開[^24]することで、潜在的なものを含めて利用者ニーズを把握の上、ニーズに即した形でのデータの公開に取り組む。
 #endif
 #ifdef FR
-In promoting Open Data, it is important to proceed while accurately reflecting user needs. Therefore, each government ministry and agency shall publish a list that organizes the data they possess and its status of disclosure[^24], in order to grasp user needs, including potential ones, and work towards the disclosure of data in a manner that meets those needs.
+Dans la promotion des données ouvertes, il est important de progresser tout en reflétant précisément les besoins des utilisateurs. À cette fin, chaque ministère et agence publie une liste récapitulant les données détenues et leur état de publication[^24], afin de saisir les besoins des utilisateurs, y compris les besoins potentiels, et de s'efforcer de publier les données de manière adaptée à ces besoins.
 #endif
 
 #ifdef ORIGINAL
 ５．推進体制
 #endif
 #ifdef FR
-5. Promotion System
+5. Système de promotion
 #endif
 
 #ifdef ORIGINAL
 （１）相談窓口の設置
 #endif
 #ifdef FR
-（１）Establishment of Consultation Points
+（１）Mise en place d'un guichet de consultation
 #endif
 
 #ifdef ORIGINAL
 　オープンデータに係る利用者のニーズ（要望）・意見を積極的に収集・把握し、政府一体となった取組に反映するため、内閣官房IT総合戦略室にオープンデータに関する総合的な相談窓口を設置する。また、各府省庁においても、相談窓口を設置し、利用者からのオープンデータに関する個別の問い合わせ等に積極的に対応する。
 #endif
 #ifdef FR
-　In order to actively collect and understand the needs (requests) and opinions of users regarding Open Data, and reflect them in the government's unified efforts, the Cabinet Secretariat's IT Strategy Office shall establish a comprehensive consultation point for Open Data. Additionally, each government ministry and agency shall also establish consultation points and actively respond to individual inquiries from users regarding Open Data.
+　Afin de collecter et de comprendre activement les besoins (demandes) et opinions des utilisateurs concernant les données ouvertes, et de les refléter dans une initiative gouvernementale unifiée, un guichet de consultation global sur les données ouvertes sera mis en place au Bureau de la Stratégie Informatique du Cabinet. De plus, chaque ministère et agence mettra également en place un guichet de consultation pour répondre activement aux demandes individuelles des utilisateurs concernant les données ouvertes.
 #endif
 
 #ifdef ORIGINAL
 （２）推進体制
 #endif
 #ifdef FR
-（２）Promotion System
+（２）Système de promotion
 #endif
 
 #ifdef ORIGINAL
 　内閣官房IT総合戦略室は政府CIOの下、各府省庁と連携し政府全体のオープンデータに関する企画立案・総合調整を行うとともに、各府省庁によるオープンデータ化の公開状況を含め各施策のレビュー、フォローアップを実施するなど、政府一体となったオープンデータの取組を推進する。また、内閣官房IT総合戦略室は関係府省庁と協力し、地方公共団体における取組を促進する。
 #endif
 #ifdef FR
-　The Cabinet Secretariat's IT Strategy Office, under the government CIO, shall collaborate with each government ministry and agency to plan and coordinate the overall Open Data initiatives of the government. This includes reviewing various measures, including the status of Open Data disclosure by each government ministry and agency, and conducting follow-ups to promote unified efforts in Open Data. Furthermore, the Cabinet Secretariat's IT Strategy Office shall cooperate with relevant government ministries and agencies to promote initiatives in local public bodies.
+　Le Bureau de la Stratégie Informatique du Cabinet, sous l'autorité du CIO du gouvernement, élabore et coordonne globalement les politiques relatives aux données ouvertes en collaboration avec chaque ministère et agence, et procède à la revue et au suivi de chaque mesure, y compris l'état de publication des données ouvertes par chaque ministère et agence, afin de promouvoir une initiative gouvernementale unifiée sur les données ouvertes. En outre, le Bureau de la Stratégie Informatique du Cabinet coopère avec les ministères et agences concernés pour encourager les initiatives des collectivités locales.
 #endif
 
 #ifdef ORIGINAL
 　各府省情報化統括責任者（府省CIO）は、府省庁内におけるオープンデータの取組を推進するとともに、独立行政法人、公益事業者等によるオープンデータの取組を促進する。また、各府省情報化専任審議官等（府省副CIO）は府省CIOを補佐し、オープンデータ施策に関する府省庁内の指揮監督にあたるものとする。
 #endif
 #ifdef FR
-　Each government ministry's Chief Information Officer (CIO) shall promote Open Data initiatives within their respective ministry and also promote Open Data initiatives by independent administrative agencies and public service providers. Additionally, each government ministry's Deputy Chief Information Officer (Deputy CIO) and other officials responsible for information technology shall assist the ministry's CIO and oversee the command and supervision within the ministry regarding Open Data policies.
+　Les responsables de l'informatisation de chaque ministère et agence (CIO ministériel) promeuvent les initiatives de données ouvertes au sein de leur organisation et encouragent également les initiatives de données ouvertes par les agences administratives indépendantes, les entreprises d'utilité publique, etc. De plus, les directeurs adjoints responsables de l'informatisation (vice-CIO ministériels) assistent le CIO ministériel et supervisent la mise en œuvre des politiques de données ouvertes au sein de leur organisation.
 #endif
 
 #ifdef ORIGINAL
 ６．地方公共団体、独立行政法人、事業者におけるオープンデータの取組
 #endif
 #ifdef FR
-6. Initiatives for Open Data in Local Public Bodies, Independent Administrative Agencies, and Businesses
+6. Initiatives de données ouvertes dans les collectivités locales, agences administratives indépendantes et entreprises
 #endif
 
 #ifdef ORIGINAL
 （１）地方公共団体
 #endif
 #ifdef FR
-（１）Local Public Bodies
+（１）Collectivités locales
 #endif
 
 #ifdef ORIGINAL
 　官民データ法第11条第1項では、地方公共団体は、国と同様に、保有するデータを国民が容易に利用できるよう必要な措置を講ずるものとされている。
 #endif
 #ifdef FR
-　Under Article 11, Paragraph 1 of the Public-Private Data Act, local public bodies are required to take necessary measures to make their data easily accessible to the public, similar to the national government.
+　L'article 11, paragraphe 1 de la Loi sur les données publiques et privées stipule que les collectivités locales doivent prendre les mesures nécessaires pour que les citoyens puissent facilement utiliser les données qu'elles détiennent, tout comme l'État.
 #endif
 
 #ifdef ORIGINAL
 　地方公共団体は、官民データ法の趣旨及び本基本指針を踏まえてオープンデータを推進することが求められる。
 #endif
 #ifdef FR
-　Local public bodies are expected to promote Open Data in accordance with the purpose of the Public-Private Data Act and this basic guideline.
+　Les collectivités locales sont tenues de promouvoir les données ouvertes en tenant compte de l'esprit de la Loi sur les données publiques et privées et des présentes directives fondamentales.
 #endif
 
 #ifdef ORIGINAL
 　推進に際しては、国や地方公共団体が公開するデータを横断的に活用することができるよう、標準的な形式及びルールに基づいた公開に努めることが望ましい。また、複数団体が共同でオープンデータポータルサイトを立ち上げるといった取組も有効である。
 #endif
 #ifdef FR
-　Dans le cadre de la promotion, il est souhaitable de s'efforcer de rendre les données publiques accessibles de manière transversale en utilisant des formats et des règles standardisés. De plus, il est également efficace que plusieurs organisations collaborent pour créer un portail de données ouvertes.
+　Lors de la promotion, il est souhaitable de s'efforcer de publier les données selon des formats et des règles standardisés afin de permettre une utilisation transversale des données publiées par l'État et les collectivités locales. De plus, des initiatives telles que la création conjointe de portails open data par plusieurs organismes sont également efficaces.
 #endif
 
 #ifdef ORIGINAL
 政府は、オープンデータに関する専門家等の派遣、地方公共団体において特に公開が望まれる分野やデータ項目の提示、先進的な取組事例集や手引き等の提供、人材育成ツールの提供などを通じ、地方公共団体におけるオープンデータの取組を積極的に支援する。
 #endif
 #ifdef FR
-Le gouvernement soutient activement les initiatives de données ouvertes au niveau local en fournissant des experts spécialisés dans les données ouvertes, en présentant les domaines et les éléments de données qui sont particulièrement souhaités pour la publication au niveau local, en fournissant des exemples de pratiques avancées et des guides, ainsi qu'en offrant des outils de développement des compétences.
+Le gouvernement soutient activement les initiatives open data des collectivités locales en envoyant des experts en open data, en présentant les domaines et les éléments de données dont la publication est particulièrement souhaitable, en fournissant des recueils de cas avancés, des guides, ainsi que des outils de développement des ressources humaines.
 #endif
 
 #ifdef ORIGINAL
 （２）事業者
 #endif
 #ifdef FR
-(2) Entreprises
+（２）Opérateurs économiques
 #endif
 
 #ifdef ORIGINAL
 　官民データ法第11条第２項では、事業者（独立行政法人を含む）は、公益の増進に資するデータを国民が容易に利用できるよう必要な措置を講ずるよう努めるものとされている。
 #endif
 #ifdef FR
-　Selon l'article 11, paragraphe 2 de la loi sur les données publiques, les entreprises (y compris les organismes administratifs indépendants) sont tenues de prendre les mesures nécessaires pour faciliter l'accès du public aux données qui contribuent à l'intérêt général.
+　L'article 11, paragraphe 2 de la Loi sur les données publiques et privées stipule que les opérateurs économiques (y compris les agences administratives indépendantes) doivent s'efforcer de prendre les mesures nécessaires pour que les citoyens puissent facilement utiliser les données contribuant à l'intérêt public.
 #endif
 
 #ifdef ORIGINAL
 　独立行政法人や大学等においては、国費によって運営されていること又は実施している事業や研究があることに鑑み、本基本指針に準拠してオープンデータの取組を推進することが望ましい[^25]。
 #endif
 #ifdef FR
-　Il est souhaitable que les organismes administratifs indépendants et les universités, entre autres, promeuvent les initiatives de données ouvertes conformément à ces lignes directrices de base, compte tenu du fait qu'ils sont financés ou réalisent des projets et des recherches.
+　Il est souhaitable que les agences administratives indépendantes, les universités, etc., promeuvent les initiatives open data conformément à la présente directive de base, compte tenu du fait qu'elles sont exploitées avec des fonds publics ou qu'elles mènent des projets ou des recherches financés par l'État[^25].
 #endif
 
 #ifdef ORIGINAL
 　また、電力・ガス、通信・放送、交通等の公益事業分野の事業者については、その公益性に鑑み、本基本指針及び利用者ニーズを踏まえてオープンデータを推進することが望ましい。
 #endif
 #ifdef FR
-　De plus, il est souhaitable que les entreprises du secteur des services publics tels que l'électricité, le gaz, les communications, les médias et les transports promeuvent les données ouvertes en tenant compte de leur caractère d'intérêt public et des besoins des utilisateurs.
+　En outre, pour les opérateurs des secteurs d'utilité publique tels que l'électricité, le gaz, les télécommunications, la radiodiffusion et les transports, il est souhaitable de promouvoir l'open data en tenant compte de leur utilité publique, de la présente directive de base et des besoins des utilisateurs.
 #endif
 
 #ifdef ORIGINAL
 ７．本基本指針の見直し
 #endif
 #ifdef FR
-7. Révision des présentes lignes directrices
+7. Révision de la présente directive de base
 #endif
 
 #ifdef ORIGINAL
 　本基本指針は、各種施策の成果や国民・事業者等の意見要望等を踏まえつつ、技術動向、国際環境等の状況変化に応じ柔軟に見直しを行うものとする。
 #endif
 #ifdef FR
-　Ces lignes directrices seront révisées de manière flexible en tenant compte des résultats des différentes mesures, des opinions et des demandes des citoyens et des entreprises, ainsi que des évolutions technologiques et de l'environnement international.
+　La présente directive de base sera révisée de manière flexible en fonction des résultats des diverses politiques, des opinions et demandes des citoyens et des opérateurs économiques, ainsi que de l'évolution technologique et des changements dans l'environnement international.
 #endif
 
 #ifdef ORIGINAL
 （以上）
 #endif
 #ifdef FR
-(Fin)
+（Fin）
 #endif
 
 
@@ -518,167 +518,167 @@ Le gouvernement soutient activement les initiatives de données ouvertes au nive
 [^2]: 震災関連情報の提供に関し、情報の加工が容易なファイル形式による情報提供について協力依頼が行われたほか、事業者が保有する道路の通行情報などが公開・活用された。
 #endif
 #ifdef FR
-[2]: Des demandes de coopération ont été faites pour fournir des informations liées aux catastrophes sous forme de fichiers faciles à traiter, et des informations sur la circulation routière détenues par les entreprises ont été publiées et utilisées.
+[^2]: Concernant la fourniture d'informations liées aux catastrophes, une demande de coopération a été faite pour fournir des informations dans des formats de fichiers facilement exploitables, et des informations telles que l'état de circulation des routes détenues par des opérateurs ont été publiées et utilisées.
 #endif
 
 #ifdef ORIGINAL
 [^3]: 公共データについて、オープンデータを前提として情報システムや業務プロセス全体の企画、整備及び運用を行うことである。
 #endif
 #ifdef FR
-[3]: Il s'agit de planifier, de développer et de gérer des systèmes d'information et des processus opérationnels dans leur ensemble en partant du principe des données ouvertes pour les données publiques.
+[^3]: Il s'agit de planifier, d'organiser et d'exploiter l'ensemble des systèmes d'information et des processus opérationnels des données publiques en supposant leur ouverture.
 #endif
 
 #ifdef ORIGINAL
 [^4]: 但し、セキュリティの理由により、利用者に対し、事前登録を求めたり、データへのアクセス方法に制限を設けたりといった措置が講じられることがあり得る。
 #endif
 #ifdef FR
-[4]: Cependant, pour des raisons de sécurité, il peut être nécessaire de demander une pré-inscription aux utilisateurs ou de limiter l'accès aux données.
+[^4]: Toutefois, pour des raisons de sécurité, il peut être demandé aux utilisateurs de s'enregistrer à l'avance ou des restrictions peuvent être imposées sur les méthodes d'accès aux données.
 #endif
 
 #ifdef ORIGINAL
 [^5]: 「機械判読」とは、コンピュータプログラムが自動的にデータを加工、編集等できることを指す。
 #endif
 #ifdef FR
-[5]: "Lecture automatique" fait référence à la capacité d'un programme informatique à traiter et à éditer automatiquement des données.
+[^5]: « Lecture automatique » désigne la capacité d'un programme informatique à traiter et éditer automatiquement des données.
 #endif
 
 #ifdef ORIGINAL
 [^6]: オープンデータとは言えないものの、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなうケースもある。
 #endif
 #ifdef FR
-[6]: Bien qu'ils ne soient pas considérés comme des données ouvertes, il existe des cas où les coûts de maintenance et de gestion des systèmes de fourniture de données sont couverts par des frais facturés aux utilisateurs limités.
+[^6]: Bien que cela ne soit pas considéré comme de l'open data, il existe des cas où les coûts de maintenance des systèmes de fourniture de données sont couverts par des frais facturés à un nombre limité d'utilisateurs.
 #endif
 
 #ifdef ORIGINAL
 [^7]: 今後、行政目的で作成されるデータについては、本指針に基づき、オープンデータとして公開されることを想定してデータ整備がなされることを確保する必要があり、内閣官房IT総合戦略室において、各府省庁の整備状況を把握し、必要な調整を行うことが求められる。
 #endif
 #ifdef FR
-[^7]: À l'avenir, il est nécessaire de garantir que les données créées à des fins administratives sont préparées et publiées en tant que données ouvertes conformément à cette politique, et que le Bureau de la stratégie globale des technologies de l'information du Cabinet du Premier ministre doit surveiller la situation de préparation de chaque ministère et agence et effectuer les ajustements nécessaires.
+[^7] : À l'avenir, pour les données créées à des fins administratives, il est nécessaire de s'assurer que leur préparation soit effectuée en prévoyant leur publication en tant que données ouvertes conformément à la présente directive, et il est demandé au Bureau de la stratégie informatique du Cabinet de surveiller l'état de préparation de chaque ministère et d'effectuer les ajustements nécessaires.
 #endif
 
 #ifdef ORIGINAL
 [^8]: 法令又は合理的な根拠によりオープンデータとして公開できない場合（二次利用に制限がある場合を含む）は、その旨を具体的に示す。
 #endif
 #ifdef FR
-[^8]: Si les données ne peuvent pas être publiées en tant que données ouvertes en vertu de la loi ou d'un motif raisonnable (y compris les cas où il y a des restrictions sur la réutilisation), cela doit être spécifiquement indiqué.
+[^8] : Si, en vertu de la loi ou d'une base raisonnable, il n'est pas possible de publier les données en tant que données ouvertes (y compris les cas où la réutilisation secondaire est restreinte), cela doit être indiqué de manière concrète.
 #endif
 
 #ifdef ORIGINAL
 [^9]: 公開できない理由を公開することだけで、公開できない情報（不開示情報）を開示することとなる場合は、理由を公開しないことができる。
 #endif
 #ifdef FR
-[^9]: Si la seule publication de la raison pour laquelle les données ne peuvent pas être publiées conduit à la divulgation des informations qui ne peuvent pas être divulguées (informations non divulguées), il est possible de ne pas publier la raison.
+[^9] : Si la publication de la raison pour laquelle les données ne peuvent pas être rendues publiques conduit à la divulgation d'informations non publiables (informations non divulguées), il est possible de ne pas publier la raison.
 #endif
 
 #ifdef ORIGINAL
 [^10]: 各府省庁（施設等機関、地方支分部局等、府省庁に属する組織を含む。）が、その名称において開設しているインターネット上のウェブサイト、データベースサイト、個別業務サイト等を広く含む。
 #endif
 #ifdef FR
-[^10]: Cela inclut largement les sites Web, les bases de données en ligne et les sites Web spécifiques aux tâches ouverts par chaque ministère et agence (y compris les installations et les institutions locales relevant des ministères et agences).
+[^10] : Cela inclut largement les sites web, bases de données, sites d'activités spécifiques, etc. sur Internet ouverts sous le nom de chaque ministère (y compris les organismes affiliés, les bureaux régionaux, et les organisations relevant des ministères).
 #endif
 
 #ifdef ORIGINAL
 [^11]: 政府機関のウェブサイトで公開されているデータの二次利用を促進する観点から、統一的なひな形として示された各府省庁ウェブサイトの利用に関するルール。「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の別添１「政府標準利用規約(第2.0版)」。
 #endif
 #ifdef FR
-[^11]: Il s'agit des règles d'utilisation des sites Web des ministères et agences qui ont été présentées comme un modèle unifié dans le but de promouvoir la réutilisation des données publiées sur les sites Web des organismes gouvernementaux. "Lignes directrices sur la publication des données des ministères et agences pour promouvoir la réutilisation" Annexe 1 "Conditions d'utilisation standard du gouvernement (version 2.0)".
+[^11] : Règles concernant l'utilisation des sites web de chaque ministère, présentées comme modèle unifié afin de promouvoir la réutilisation secondaire des données publiées sur les sites web des organismes gouvernementaux. Annexe 1 « Conditions d'utilisation standard du gouvernement (version 2.0) » des « Principes de base concernant la publication des données des ministères pour promouvoir la réutilisation secondaire (lignes directrices) ».
 #endif
 
 #ifdef ORIGINAL
 [^12]: 例えば、各府省庁が公表している統計データ等。
 #endif
 #ifdef FR
-[^12]: Par exemple, les données statistiques publiées par chaque ministère et agence.
+[^12] : Par exemple, les données statistiques publiées par chaque ministère.
 #endif
 
 #ifdef ORIGINAL
 [^13]: イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。
 #endif
 #ifdef FR
-[^13]: Les données qui nécessitent une mise à jour régulière, telles que les informations sur les événements, le taux d'occupation des transports en commun, les informations sur les catastrophes et la prévention des catastrophes.
+[^13] : Données nécessitant une mise à jour régulière, telles que les informations sur les événements, le taux de congestion des transports publics, ou les informations sur les catastrophes et la prévention des catastrophes.
 #endif
 
 #ifdef ORIGINAL
 [^14]: 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）
 #endif
 #ifdef FR
-[^14]: Des informations indiquant la nature des données publiées, telles que le titre, le nom de l'organisation de publication, l'auteur (nom du département), ainsi que des mots-clés pour la recherche de données. Pour plus de détails sur les autres éléments, veuillez consulter les informations sur les métadonnées fournies sur le site Data.go.jp dans la section "Informations pour les développeurs" sous "(2) Informations sur les métadonnées fournies sur le site du catalogue de données" (https://www.data.go.jp/for-developer/for-developer).
+[^14] : Informations indiquant la nature des données publiées. Par exemple, des informations de propriété telles que le titre, le nom de l'organisation de publication, l'auteur (nom du département), ou des mots-clés pour la recherche de données. Pour plus de détails sur les autres éléments, voir la section « (2) Informations sur les métadonnées fournies sur le site du catalogue de données » dans « Informations pour les développeurs » sur Data.go.jp (https://www.data.go.jp/for-developer/for-developer).
 #endif
 
 #ifdef ORIGINAL
 [^15]: 「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
 #endif
 #ifdef FR
-[^15]: Veuillez consulter le "Code juridique de Creative Commons" pour la définition de "CC0 1.0 Universal" (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja).
+[^15] : Pour la définition de « CC0 1.0 Universel », se référer au « Code juridique Creative Commons » (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja).
 #endif
 
 #ifdef ORIGINAL
 [^16]: 「機械判読に適した度合」には、人手をどれだけ要さずに、コンピュータがデータを再利用できるかにより、いくつかの段階がある。コンピュータが自動的にデータを再利用するためには、当該データの論理的な構造を識別（判読）でき、構造中の値（表の中に入っている数値、テキスト等）が処理できるようになっている必要がある。
 #endif
 #ifdef FR
-[^16]: "Le degré de facilité pour la reconnaissance automatique des machines" comporte plusieurs étapes, qui dépendent de la capacité de l'ordinateur à réutiliser les données sans nécessiter beaucoup de travail manuel. Pour que l'ordinateur puisse réutiliser automatiquement les données, il doit être capable d'identifier (lire) la structure logique des données et de traiter les valeurs dans cette structure (les nombres et le texte dans le tableau).
+[^16] : Le « degré d'adaptabilité à la lecture automatique » comporte plusieurs niveaux selon la mesure dans laquelle un ordinateur peut réutiliser les données sans intervention humaine. Pour que l’ordinateur puisse réutiliser automatiquement les données, il est nécessaire qu’il puisse identifier (lire) la structure logique des données concernées et traiter les valeurs contenues dans la structure (nombres, textes, etc. présents dans les tableaux).
 #endif
 
 #ifdef ORIGINAL
 [^17]: 「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の「３ 機械判読が容易なデータ形式による公開の拡大の考え方」及び別添２「数値（表）、文章、地理空間情報のデータ作成に当たっての留意事項」を参照。
 #endif
 #ifdef FR
-[^17]: Veuillez vous référer à la "Directive de base sur la publication des données des ministères et agences gouvernementales pour promouvoir la réutilisation" (Guide) "3. Approche d'élargissement de la publication basée sur des formats de données faciles à reconnaître par les machines" et l'annexe 2 "Points à prendre en compte lors de la création de données numériques (tableaux), de texte et d'informations géospatiales".
+[^17] : Voir la « 3. Approche pour l’expansion de la publication sous des formats de données facilement lisibles par machine » et l’annexe 2 « Points à considérer lors de la création de données numériques (tableaux), de textes et d’informations géospatiales » du « Principes de base (lignes directrices) concernant la publication des données des ministères pour promouvoir la réutilisation secondaire ».
 #endif
 
 #ifdef ORIGINAL
 [^18]: Webの創設者Tim Berners-Leeが提唱した５段階の指標で、ファイル形式に関わらず二次利用が可能なライセンスを満たす場合は第１段階、機械判読性の比較的高いcsv 形式は第３段階とされている。（http://5stardata.info/ja/）
 #endif
 #ifdef FR
-[^18]: Selon les cinq niveaux proposés par Tim Berners-Lee, le créateur du Web, si une licence permet la réutilisation indépendamment du format de fichier, cela correspond au premier niveau, tandis que le format CSV, qui a une reconnaissance automatique relativement élevée, correspond au troisième niveau. (http://5stardata.info/ja/)
+[^18] : Il s’agit d’un indicateur en cinq niveaux proposé par Tim Berners-Lee, le fondateur du Web ; lorsqu’une licence permettant la réutilisation secondaire est satisfaite quel que soit le format de fichier, cela correspond au premier niveau, et le format csv, relativement lisible par machine, correspond au troisième niveau. (http://5stardata.info/ja/)
 #endif
 
 #ifdef ORIGINAL
 [^19]: 統計情報等の行列や階層による表現が可能な情報。
 #endif
 #ifdef FR
-[^19]: Il s'agit d'informations pouvant être représentées sous forme de matrices ou de hiérarchies, telles que des données statistiques.
+[^19] : Informations pouvant être représentées sous forme de matrices ou de hiérarchies, telles que les données statistiques.
 #endif
 
 #ifdef ORIGINAL
 [^20]: 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。
 #endif
 #ifdef FR
-[^20]: Il s'agit de formats pouvant être utilisés de manière commune sans être limités à des fonctionnalités spécifiques (CSV, XML).
+[^20] : Formats utilisables de manière commune sans être limités à des fonctions spécifiques (CSV, XML).
 #endif
 
 #ifdef ORIGINAL
 [^21]: 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。
 #endif
 #ifdef FR
-[^21]: Si vous publiez des données contenant des tableaux en format CSV, veuillez vous référer aux "Directives sur les données ouvertes, version 2.1" "8.3.2 Lignes directrices sur les données au format tabulaire" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
+[^21] : Lors de la publication de données contenant des tableaux au format CSV, se référer à la section « 8.3.2 Directives concernant les données tabulaires » de la « Version 2.1 du Guide des données ouvertes » (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).
 #endif
 
 #ifdef ORIGINAL
 [^22]: 既に紙によるものを含め、利用者の求めに応じて情報公開を含め公開されている情報については対象外とする。なお、限定公開の対象となるデータの考え方や運用（限定公開の決定プロセスや進捗状況を把握・評価する体制等）については必要に応じ、今後さらに検討する。
 #endif
 #ifdef FR
-[^22]: Les informations déjà publiées, y compris celles sur papier, en réponse aux demandes des utilisateurs, sont exclues. Cependant, si nécessaire, nous envisagerons davantage les concepts et les opérations des données à accès limité (tels que le processus de décision et l'évaluation de l'état d'avancement de l'accès limité).
+[^22] : Les informations déjà publiées, y compris celles sur support papier, à la demande des utilisateurs, ne sont pas concernées. Par ailleurs, la réflexion sur la gestion et la conception des données à diffusion restreinte (processus de décision, système d’évaluation et de suivi, etc.) sera poursuivie si nécessaire.
 #endif
 
 #ifdef ORIGINAL
 [^23]: 例えば、一部のデータは有償だが、残りのデータは無償とすること等も考えらえる。
 #endif
 #ifdef FR
-[^23]: Par exemple, il est possible de rendre certaines données payantes tandis que d'autres sont gratuites.
+[^23] : Par exemple, il est envisageable que certaines données soient payantes tandis que d’autres restent gratuites.
 #endif
 
 #ifdef ORIGINAL
 [^24]: このようなリストを作成するため平成29年度中に各府省庁が保有するデータの棚卸しを行い、当該リストを公開した上でニーズの高い分野等について官民（民には、事業者、研究者、市民等を含む）でデータの公開・活用の在り方を対話するラウンドテーブルを開催する試みを実施する。ラウンドテーブルでは、地方公共団体、事業者（独立行政法人を含む）が保有するデータを含め官民データの公開と活用の在り方について議論する。
 #endif
 #ifdef FR
-[^24]: Afin de créer une telle liste, chaque ministère et agence gouvernementale effectuera un inventaire des données qu'ils possèdent d'ici la fin de l'année fiscale 2017, puis organisera une table ronde pour discuter de la manière de publier et d'utiliser les données avec les acteurs publics et privés (y compris les entreprises, les chercheurs et les citoyens) dans les domaines où la demande est élevée. Lors de cette table ronde, nous discuterons de la publication et de l'utilisation des données publiques et privées, y compris les données détenues par les collectivités locales et les entreprises (y compris les organismes administratifs indépendants).
+[^24] : Afin d’établir une telle liste, un inventaire des données détenues par chaque ministère sera réalisé au cours de l’exercice 2017, puis la liste sera publiée. Ensuite, une table ronde sera organisée entre le secteur public et privé (incluant entreprises, chercheurs, citoyens, etc.) pour discuter des modalités de publication et d’utilisation des données dans les domaines à forte demande. Lors de la table ronde, des discussions porteront également sur la publication et l’utilisation des données détenues par les collectivités locales et les entreprises (y compris les agences administratives indépendantes).
 #endif
 
 #ifdef ORIGINAL
 [^25]: 「我が国におけるオープンサイエンス推進のあり方について」（平成27年３月30日）では、公的研究資金による研究成果のうち、論文および論文のエビデンスとしての研究データは、原則公開とし、その他研究開発成果としての研究データについても可能な範囲で公開することが望ましい。」とされている。
 #endif
 #ifdef FR
-[^25]: "Regarding the promotion of open science in our country" (March 30, 2015), it is stated that research data in the form of papers and evidence for papers, among research outcomes funded by public research funds, should be made public as a principle, and it is desirable to also make research data as research and development outcomes public to the extent possible.
+[^25] : Dans « Sur la manière de promouvoir la science ouverte dans notre pays » (30 mars 2015), il est indiqué que, parmi les résultats de recherche financés par des fonds publics, les articles et les données de recherche servant de preuves pour ces articles doivent, en principe, être rendus publics, et qu'il est également souhaitable de rendre publiques, dans la mesure du possible, les autres données de recherche issues des résultats du développement de la recherche.
 #endif
 

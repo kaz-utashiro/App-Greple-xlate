@@ -1,7 +1,7 @@
 [
    [
       "オープンデータ基本指針\n",
-      "Open Data Basic Guidelines\n"
+      "Basic Open Data Guidelines\n"
    ],
    [
       "平成29年５月30日\n",
@@ -9,39 +9,39 @@
    ],
    [
       "高度情報通信ネットワーク社会推進戦略本部・\n",
-      "Advanced Information and Communication Network Society Promotion Headquarters\n"
+      "Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society\n"
    ],
    [
       "官民データ活用推進戦略会議決定\n",
-      "Government-Private Data Utilization Promotion Strategy Conference Decision\n"
+      "Decision of the Public-Private Data Utilization Promotion Strategy Council\n"
    ],
    [
       "令和元年６月７日改正\n",
-      "Revised on June 7, 2019\n"
+      "Revised June 7, 2019\n"
    ],
    [
       "令和３年６月15日改正\n",
-      "Revised on June 15, 2021\n"
+      "Revised June 15, 2021\n"
    ],
    [
       "我が国においては、平成23年３月11日の東日本大震災以降、政府、地方公共団体や事業者等が保有するデータの公開・活用に対する意識が高まった。[^2]\n",
-      "In our country, awareness of the public release and utilization of data held by the government, local governments, and businesses has increased since the Great East Japan Earthquake on March 11, 2011. [^2]\n"
+      "In Japan, since the Great East Japan Earthquake on March 11, 2011, awareness of the disclosure and utilization of data held by the government, local governments, and businesses has increased.[^2]\n"
    ],
    [
       "政府においては、公共データは国民共有の財産であるとの認識を示した「電子行政オープンデータ戦略」（平成24年７月４日 高度情報通信ネットワーク社会推進戦略本部決定）等に基づき、オープンデータの取組を推進してきた。\n",
-      "Based on the recognition that public data is a shared asset of the people, the government has been promoting open data initiatives in accordance with the \"e-Government Open Data Strategy\" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on July 4, 2012) and others.\n"
+      "The government has promoted open data initiatives based on documents such as the \"e-Government Open Data Strategy\" (July 4, 2012, Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society), which recognized public data as a shared asset of the people.\n"
    ],
    [
       "「新たなオープンデータの展開に向けて」（平成27年６月30日 高度情報通信ネットワーク社会推進戦略本部決定）及び「オープンデータ2.0」（平成28年５月20日 高度情報通信ネットワーク社会推進戦略本部決定）では、データの公開を中心とした取組から、データの活用を前提とした「課題解決型のオープンデータの推進」に発想を転換するという方向が示された。\n",
-      "The directions for the development of new open data were indicated in \"Towards the Expansion of New Open Data\" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on June 30, 2015) and \"Open Data 2.0\" (Decision of the Advanced Information and Communication Network Society Promotion Headquarters on May 20, 2016), shifting the focus from initiatives centered on data release to \"problem-solving-oriented promotion of open data\" based on the assumption of data utilization.\n"
+      "In the documents 'Toward the Development of New Open Data' (decided by the Strategic Headquarters for the Promotion of an Advanced Information and Telecommunications Network Society on June 30, 2015) and 'Open Data 2.0' (decided by the same headquarters on May 20, 2016), a shift in approach was indicated—from initiatives focused on data disclosure to promoting 'problem-solving-oriented open data' based on the utilization of data.\n"
    ],
    [
       "平成28年12月14日に公布・施行された「官民データ活用推進基本法」（以下「官民データ法」と言う。）は、官民データ活用の推進により国民が安全で安心して暮らせる社会及び快適な生活環境の実現に寄与することを目的としており、国、地方公共団体、事業者が保有する官民データの容易な利用等について規定されている。\n",
-      "The \"Government-Private Data Utilization Promotion Basic Law\" (hereinafter referred to as the \"Government-Private Data Law\"), which was promulgated and enforced on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and have a comfortable living environment through the promotion of government-private data utilization, and it provides provisions regarding the easy use of government-private data held by the country, local governments, and businesses.\n"
+      "The \"Basic Act on the Promotion of Public-Private Data Utilization\" (hereinafter referred to as the \"Public-Private Data Act\"), which was promulgated and enacted on December 14, 2016, aims to contribute to the realization of a society where people can live safely and securely and to a comfortable living environment through the promotion of public-private data utilization, and stipulates the easy use of public-private data held by the national government, local governments, and businesses.\n"
    ],
    [
       "本文書は、これまでの取組を踏まえ、オープンデータ・バイ・デザイン[^3]の考えに基づき、今後、国、地方公共団体、事業者が公共データの公開及び活用に取り組む上での基本指針をまとめたものである。\n",
-      "This document summarizes the basic guidelines for the future efforts of the country, local governments, and businesses in the public release and utilization of public data, based on the previous initiatives and the concept of Open Data by Design. [^3]\n"
+      "This document summarizes the basic guidelines for the future disclosure and utilization of public data by the national government, local governments, and businesses, based on past initiatives and the concept of Open Data by Design.[^3]\n"
    ],
    [
       "１．オープンデータの意義\n",
@@ -49,35 +49,35 @@
    ],
    [
       "公共データの二次利用可能な形での公開とその活用を促進する意義・目的は、次のとおりである。\n",
-      "The significance and objectives of promoting the public release and utilization of public data in a form that can be reused are as follows:\n"
+      "The significance and purpose of promoting the disclosure and utilization of public data in a form that allows secondary use are as follows.\n"
    ],
    [
       "（１）国民参加・官民協働の推進を通じた諸課題の解決、経済活性化\n",
-      "(1) Resolution of various issues through citizen participation and government-private collaboration, and economic revitalization\n"
+      "(1) Solving various issues and revitalizing the economy through promoting public participation and public-private collaboration\n"
    ],
    [
       "広範な主体による公共データの活用が進展することで、創意工夫を活かした多様なサービスの迅速かつ効率的な提供、官民の協働による公共サービスの提供や改善が実現し、ニーズや価値観の多様化、技術革新等の環境変化への適切な対応とともに、厳しい財政状況、急速な少子高齢化の進展等の我が国が直面する諸課題の解決に貢献することができる。\n",
-      "By promoting the utilization of public data by a wide range of entities, it becomes possible to provide a variety of services quickly and efficiently, utilizing creative ideas, and to realize the provision and improvement of public services through government-private collaboration. This can contribute to the resolution of various issues faced by our country, such as the diversification of needs and values, appropriate responses to environmental changes such as technological innovations, as well as the challenging fiscal situation and the rapid aging of the population.\n"
+      "As the use of public data by a wide range of entities progresses, it will enable the rapid and efficient provision of diverse services that make use of creativity and ingenuity, as well as the provision and improvement of public services through public-private collaboration. This will contribute to appropriately responding to environmental changes such as diversifying needs and values and technological innovation, and to solving various issues facing Japan, such as severe fiscal conditions and the rapid progress of a declining birthrate and aging population.\n"
    ],
    [
       "また、ベンチャー企業等による多様な新サービスやビジネスの創出、企業活動の効率化等が促され、我が国全体の経済活性化にもつながる。\n",
-      "In addition, it can stimulate the creation of diverse new services and businesses by venture companies and others, as well as the efficiency of corporate activities, leading to the overall revitalization of our country's economy.\n"
+      "In addition, the creation of diverse new services and businesses by venture companies, the streamlining of corporate activities, and other effects will be promoted, leading to the revitalization of the Japanese economy as a whole.\n"
    ],
    [
       "（２）行政の高度化・効率化\n",
-      "(2) Enhancement and Efficiency of Administration\n"
+      "(2) Advancement and efficiency of administration\n"
    ],
    [
       "国や地方公共団体においてデータ活用により得られた情報を根拠として政策や施策の企画及び立案が行われることで（ＥＢＰＭ：Evidence Based Policy Making）、効果的かつ効率的な行政の推進につながる。\n",
-      "By utilizing data, information obtained can be used as a basis for planning and formulation of policies and measures (EBPM: Evidence Based Policy Making), leading to effective and efficient administration.\n"
+      "By planning and formulating policies and measures based on information obtained through data utilization by the national and local governments (EBPM: Evidence Based Policy Making), effective and efficient administration will be promoted.\n"
    ],
    [
       "（３）透明性・信頼の向上\n",
-      "(3) Improvement of Transparency and Trust\n"
+      "(3) Improved transparency and trust\n"
    ],
    [
       "政策立案等に用いられた公共データが公開されることで、国民は政策等に関して十分な分析、判断を行うことが可能になり、行政の透明性、行政に対する国民の信頼が高まる。\n",
-      "By making public the public data used in policy formulation, citizens are able to conduct sufficient analysis and judgment regarding policies, increasing transparency in administration and trust from the public.\n"
+      "When public data used in policy formulation is disclosed, citizens can sufficiently analyze and make judgments regarding policies, thereby increasing the transparency of administration and public trust in government.\n"
    ],
    [
       "２．オープンデータの定義\n",
@@ -85,19 +85,19 @@
    ],
    [
       "国、地方公共団体及び事業者が保有する官民データのうち、国民誰もがインターネット等を通じて容易に利用（加工、編集、再配布等）できるよう、次のいずれの項目にも該当する形で公開されたデータをオープンデータと定義する。[^4]\n",
-      "Open data is defined as data that is publicly available in a form that meets any of the following criteria, allowing anyone to easily access (process, edit, redistribute, etc.) it through the internet or other means, among the government, local public bodies, and businesses:\n"
+      "Of the public-private data held by the national government, local governments, and businesses, open data is defined as data that is disclosed in a manner that meets all of the following criteria, so that anyone can easily use it (including processing, editing, redistribution, etc.) via the Internet or other means.[^4]\n"
    ],
    [
       "営利目的、非営利目的を問わず二次利用可能なルールが適用されたもの\n",
-      "- Data that can be reused for both profit and non-profit purposes\n"
+      "Data to which rules allowing secondary use for both commercial and non-commercial purposes are applied\n"
    ],
    [
       "機械判読[^5]に適したもの\n",
-      "- Data that is suitable for machine reading\n"
+      "Data suitable for machine reading[^5]\n"
    ],
    [
       "無償[^6]で利用できるもの\n",
-      "- Data that can be used free of charge\n"
+      "Data that can be used free of charge[^6]\n"
    ],
    [
       "３．オープンデータに関する基本的ルール\n",
@@ -105,99 +105,99 @@
    ],
    [
       "（１）行政保有データのオープンデータ公開の原則\n",
-      "(1) Principle of Open Data Publication for Government-held Data\n"
+      "(1) Principle of Open Data Disclosure of Administrative Data\n"
    ],
    [
       "公共データは国民共有の財産であるとの認識に立ち、政策（法令、予算を含む）の企画・立案の根拠となったデータを含め、各府省庁が保有するデータはすべてオープンデータとして公開することを原則とする[^7]。\n",
-      "Recognizing that public data is a shared asset of the nation, all data held by each ministry and agency, including data that serves as the basis for planning and formulation of policies (including laws and budgets), should be published as open data, as a principle.\n"
+      "Based on the recognition that public data is a shared asset of the people, as a general rule, all data held by each ministry and agency, including data that served as the basis for policy planning and formulation (including laws and budgets), shall be disclosed as open data.[^7]\n"
    ],
    [
       "なお、①個人情報が含まれるもの、②国や公共の安全、秩序の維持に支障を及ぼすおそれがあるもの、③法人や個人の権利利益を害するおそれがあるもの等、公開することが適当ではない情報に対して公開の要望があった場合は、オープンデータとして公開できない理由を公開する[^8]ことを原則[^9]とする。\n",
-      "However, if there are requests for the publication of information that includes personal information, may pose a risk to national security or public order, or may harm the rights and interests of corporations or individuals, the reasons for not being able to publish as open data should be disclosed, as a principle.\n"
+      "If there is a request to disclose information that is not appropriate to disclose, such as (1) information containing personal data, (2) information that may hinder national or public safety or the maintenance of order, or (3) information that may harm the rights and interests of corporations or individuals, the reason why it cannot be disclosed as open data shall, in principle, be made public.[^8][^9]\n"
    ],
    [
       "（２）公開データの二次利用に関するルール\n",
-      "(2) Rules Regarding Secondary Use of Public Data\n"
+      "(2) Rules on Secondary Use of Disclosed Data\n"
    ],
    [
       "各府省庁のウェブサイト[^10]上で公開されるデータについては、原則、政府標準利用規約[^11]を適用し、具体的かつ合理的な根拠により二次利用が認められないものを除き、公開データの二次利用を積極的に促進する。\n",
-      "Regarding data published on the websites of each ministry and agency, the government standard terms of use should be applied as a principle, and unless there are specific and reasonable grounds for not allowing secondary use, the secondary use of public data should be actively promoted.\n"
+      "As a general rule, data disclosed on the websites[^10] of each ministry and agency shall be subject to the Government Standard Terms of Use[^11], and secondary use of disclosed data shall be actively promoted, except for data for which secondary use is not permitted based on specific and reasonable grounds.\n"
    ],
    [
       "（３）公開環境\n",
-      "(3) Publication Environment\n"
+      "(3) Disclosure Environment\n"
    ],
    [
       "各府省庁は、ウェブサイトで容易に検索・利用できる形でデータを公開する。特に「各府省庁にしか提供できないデータ」、「様々な分野での基礎資料となり得る信頼性の高いデータ[^12]」、または「リアルタイム性を有するデータ[^13]」等の有用なデータについては社会的ニーズが高いと想定されるため、積極的な公開を図る。加えて、利用者の利便性やシステムの負荷及び効率性の観点から、一括ダウンロードを可能とする仕組みの導入や、APIを通じた提供を推進する。\n",
-      "Each government ministry and agency will make data available in a searchable and easily accessible format on their websites. In particular, useful data such as \"data that can only be provided by each government ministry and agency,\" \"reliable data that can serve as basic reference material in various fields [^12],\" or \"real-time data [^13]\" is assumed to have high social demand, so active disclosure will be pursued. In addition, from the perspective of user convenience, system load, and efficiency, the introduction of a mechanism that allows bulk downloads and promotion of data provision through APIs will be encouraged.\n"
+      "Each ministry and agency shall disclose data in a manner that allows for easy search and use on their websites. In particular, for useful data such as \"data that can only be provided by each ministry and agency,\" \"highly reliable data that can serve as basic materials in various fields[^12],\" or \"data with real-time characteristics[^13],\" which are assumed to have high social demand, proactive disclosure shall be promoted. In addition, from the perspective of user convenience, system load, and efficiency, the introduction of mechanisms that allow bulk downloads and the provision of data via APIs shall be promoted.\n"
    ],
    [
       "更に、政府のオープンデータ全体の横断的検索を可能とし、データの活用を促進するため、データの概要及び形式等のメタ情報[^14]をクリエイティブ・コモンズで定められている「CC0 1.0 全世界」[^15]として取り扱った上で政府のデータカタログサイト「DATA.GO.JP」に登録し、公開する。\n",
-      "Furthermore, in order to enable cross-sectional search of the entire government's open data and promote the utilization of data, the metadata [^14] such as the overview and format of the data will be treated as \"CC0 1.0 Universal\" [^15] defined by Creative Commons, and registered and disclosed on the government's data catalog site \"DATA.GO.JP.\"\n"
+      "Furthermore, in order to enable cross-searching of all government open data and promote data utilization, the summary and format of the data and other metadata[^14] shall be handled as \"CC0 1.0 Universal\"[^15] as defined by Creative Commons, and registered and disclosed on the government's data catalog site \"DATA.GO.JP.\"\n"
    ],
    [
       "（４）公開データの形式等\n",
-      "(4) Format of disclosed data\n"
+      "(4) Format of Disclosed Data\n"
    ],
    [
       "公開するデータについては、機械判読に適した[^16]構造及びデータ形式で掲載することを原則とする[^17]。共通語彙基盤等やオープンデータの達成度の評価指標として用いられている「５つ星」[^18]の指標を参考に、より活用がしやすい用語や形式での公開に努める。\n",
-      "As a principle, the data to be disclosed will be presented in a structure and data format suitable for machine readability [^16]. Referring to the \"Five Stars\" [^18] indicators commonly used as a benchmark for common vocabulary infrastructure and the achievement level of open data, efforts will be made to disclose in terms and formats that are easier to use.\n"
+      "As a general rule, disclosed data shall be published in a structure and data format suitable for machine reading[^16][^17]. Referring to the \"five-star\"[^18] indicators used as evaluation criteria for the achievement level of open data and for common vocabulary infrastructure, efforts shall be made to disclose data in more user-friendly terms and formats.\n"
    ],
    [
       "なお、国民への情報公開の観点から、人が読むという従来からの利用形態に適したデータ形式での公開も継続するが、この場合であってもテキスト検索や抽出ができることが必要である。\n",
-      "In addition, from the perspective of information disclosure to the public, data formats suitable for traditional usage where people read the data will continue to be disclosed, but it is necessary for text search and extraction to be possible even in such cases.\n"
+      "From the perspective of information disclosure to the public, disclosure in data formats suitable for traditional human-readable use will continue, but even in such cases, it must be possible to search and extract text.\n"
    ],
    [
       "特に構造化しやすいデータ[^19]はより活用がしやすいデータ形式である「３つ星[^20]（CSV[^21]やXML等のフォーマット）」以上での公開を原則とする。また、構造化が困難なデータを含む全ての公開データは可視化やAPI利用が容易になるよう、データカタログサイトの利用等、メタ情報公開に向けた環境の整備に努める。\n",
-      "In particular, data that is easily structured [^19] is primarily disclosed in a data format that is easier to use, such as \"Three Stars [^20] (formats such as CSV [^21] or XML).\" Furthermore, for all disclosed data that includes data that is difficult to structure, efforts will be made to improve the environment for visualization and API usage, such as the use of data catalog sites and the disclosure of metadata.\n"
+      "In particular, data that is easy to structure[^19] shall, as a general rule, be disclosed in a data format that is easier to use, such as \"three stars[^20] (formats such as CSV[^21] or XML)\" or higher. In addition, for all disclosed data, including data that is difficult to structure, efforts shall be made to develop an environment for publishing metadata, such as using data catalog sites, to facilitate visualization and API use.\n"
    ],
    [
       "内閣官房IT総合戦略室は、関係府省庁と連携し、データ構造やデータ形式の標準化を引き続き推進する。また、法人情報を含むデータについては、法人番号を付記する。\n",
-      "The Cabinet Secretariat's IT Strategy Office will continue to promote standardization of data structures and formats in collaboration with relevant government ministries and agencies. In addition, for data including corporate information, the corporate number will be appended.\n"
+      "The IT Strategic Headquarters of the Cabinet Secretariat shall continue to promote the standardization of data structures and data formats in cooperation with relevant ministries and agencies. In addition, for data including corporate information, a corporate number shall be attached.\n"
    ],
    [
       "（５）未公開データの限定公開\n",
-      "(5) Limited disclosure of undisclosed data\n"
+      "(5) Limited Disclosure of Undisclosed Data\n"
    ],
    [
       "２．に示したとおり、各府省庁が保有するデータはすべてオープンデータとして公開されることが原則であるが、何らかの理由により即座にオープンデータとして公開することが困難な情報[^22]も存在する。現在公開していないデータをオープンデータとして公開することで、市民生活の安全の維持に支障を及ぼすおそれ等がある場合には、公開に先立って効果とリスクの比較検討をすることが求められる。こうしたデータについて、段階的にオープンデータ化を進めていく観点からは、データの利用目的、範囲、提供先などを限定して公開し、その活用を図っていくこと（以下「限定公開」という。）が有効である。なお、限定公開を行う府省庁は、その理由と考え方（限定公開の下、関係者間でデータがどのように活用されるかを示す計画等）をあわせて公開することとする。\n",
-      "2. As indicated in 2., it is a principle that all data held by each government agency should be released as open data. However, there may be information that is difficult to immediately release as open data for various reasons. In cases where there is a risk of impeding the maintenance of public safety in citizens' lives by releasing data that is currently not public as open data, it is necessary to conduct a comparative examination of the effectiveness and risks before the release. From the perspective of gradually promoting the open dataization of such data, it is effective to limit the purpose, scope, and recipients of data and release it, and promote its utilization (referred to as \"limited release\" below). Government agencies that conduct limited release shall also disclose their reasons and considerations (such as plans showing how data will be utilized among stakeholders under limited release).\n"
+      "As shown in 2., the principle is that all data held by each ministry and agency should be published as open data, but there is some information[^22] that is difficult to immediately publish as open data for various reasons. If publishing data that is not currently available as open data could hinder the safety of citizens' lives or similar concerns, it is required to compare the benefits and risks before publication. For such data, in order to gradually move toward open data, it is effective to publish it with limitations on the purpose, scope, and recipients of use (hereinafter referred to as \"limited release\") and promote its utilization. Ministries and agencies that conduct limited releases must also publish the reasons and rationale (such as plans showing how the data will be used among stakeholders under limited release).\n"
    ],
    [
       "この検討は、当該データの利用目的等を特定するなど必要な条件を付し、信頼しうる関係者内において、インカメラ等のクローズドな環境で行われることが適当である。限定公開は、将来的なオープンデータ化を見据えて行われることが望ましいが、検討の結果、オープンデータ化に問題があるとされた場合には、その理由を公開することを原則とする。\n",
-      "This examination should be conducted in a closed environment, such as within trusted stakeholders, with necessary conditions such as specifying the purpose of use of the data. Limited release is desirable to be conducted with a view to future open dataization, but if there are problems with open dataization as a result of the examination, the reasons should be disclosed as a principle.\n"
+      "This review should be conducted in a closed environment, such as in camera, among trusted stakeholders, with necessary conditions such as specifying the purpose of use of the data. While it is desirable for limited release to be carried out with a view to future open data publication, if the review finds issues with open data publication, the reasons should be made public as a general rule.\n"
    ],
    [
       "（６）有償データの公開に係る原則\n",
-      "(6) Principles regarding the release of paid data\n"
+      "(6) Principles for the Publication of Paid Data\n"
    ],
    [
       "２．に示した定義のとおり、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなう場合は、オープンデータとは言えないが、その取扱いに準じ、二次利用可能なルールを適用することが望ましい（具体的かつ合理的な根拠により二次利用が認められないものを除く）。また、当該料金については、提供に係る経費の算出根拠と一定の検討のタイミングを明示した上で、以下のような観点で、見直しを図ることとする。\n",
-      "As stated in 2., if the cost of maintaining and managing the data provision system is covered by fees collected from limited users, it cannot be considered open data. However, it is desirable to apply rules that allow secondary use, following the same treatment. Additionally, regarding the fees, the following points should be reviewed, clearly indicating the basis for calculating the expenses related to the provision and the timing of certain examinations, except for cases where specific and rational grounds do not allow secondary use:\n"
+      "As defined in 2., if the cost of maintaining and managing the data provision system is covered by collecting fees from a limited group of users, it cannot be called open data, but it is desirable to apply rules that allow secondary use, in line with the handling of open data (except for cases where secondary use is not permitted based on specific and reasonable grounds). In addition, regarding such fees, the basis for calculating the costs involved in providing the data and the timing for review should be clearly stated, and the following points should be considered for review.\n"
    ],
    [
       "安価かつ安全な最新技術を活用することによる、提供に係る経費の低減化の検討\n",
-      "- Consideration of cost reduction related to the provision by utilizing inexpensive and safe state-of-the-art technology\n"
+      "Consideration of reducing costs involved in providing data by utilizing inexpensive and safe state-of-the-art technology\n"
    ],
    [
       "利用者を増加させ、個別の利用者の負担額を低減する取組の検討\n",
-      "- Examination of measures to increase users and reduce the burden on individual users\n"
+      "Consideration of efforts to increase the number of users and reduce the burden on individual users\n"
    ],
    [
       "利用者負担での提供とすることが社会的経済的に適当かどうかの再検討[^23]\n",
-      "- Re-examination of whether it is socially and economically appropriate to provide it at the user's expense\n"
+      "Reconsideration of whether it is socially and economically appropriate to provide the data at the users' expense[^23]\n"
    ],
    [
       "（７）公開済みデータの更新\n",
-      "(7) Updating of publicly released data\n"
+      "(7) Updating Published Data\n"
    ],
    [
       "データの迅速な公開やその鮮度の維持が重要なデータについては、可能な限り迅速に公開するとともに適時適切な更新を行う。また、データ更新の周期等を明示し、利用者が予め更新の時期を把握できるようにしていく。\n",
-      "For data that is important to be promptly released and maintained in terms of freshness, it should be released as quickly as possible and updated in a timely and appropriate manner. Additionally, the cycle of data updates should be specified to allow users to anticipate the timing of updates.\n"
+      "For data where prompt publication and freshness are important, it should be published as quickly as possible and updated in a timely and appropriate manner. The update cycle and other relevant information should also be clearly stated so that users can know in advance when updates will occur.\n"
    ],
    [
       "４．オープンデータの公開・活用を促す仕組み\n",
-      "4. Mechanisms to promote the release and utilization of open data\n"
+      "4. Mechanisms to Promote the Publication and Use of Open Data\n"
    ],
    [
       "（１）オープンデータ・バイ・デザインの推進\n",
@@ -205,7 +205,7 @@
    ],
    [
       "各府省庁は、オープンデータ・バイ・デザインの考えに基づき、行政保有データを利用者が活用しやすい形で公開するために行政手続き及び情報システムの企画・設計段階から必要な措置を講じる。内閣官房IT総合戦略室は政府CIOの下、各府省庁の取組について必要な助言を行う。\n",
-      "Each government ministry and agency will take necessary measures from the planning and design stage of administrative procedures and information systems to ensure that administrative data is released in a user-friendly format based on the concept of Open Data by Design. The Cabinet Secretariat's IT Strategy Office will provide necessary advice on the efforts of each government ministry and agency under the government's Chief Information Officer (CIO).\n"
+      "Each ministry and agency, based on the concept of open data by design, will take necessary measures from the planning and design stages of administrative procedures and information systems to publish administrative data in a way that is easy for users to utilize. The IT Strategic Headquarters of the Cabinet Secretariat will provide necessary advice on the efforts of each ministry and agency under the Government CIO.\n"
    ],
    [
       "（２）利用者ニーズの反映\n",
@@ -213,55 +213,55 @@
    ],
    [
       "オープンデータの推進に当たっては、利用者ニーズを的確に反映しながら進めることが重要である。このため、各府省庁は保有するデータとその公開状況を整理したリストを公開[^24]することで、潜在的なものを含めて利用者ニーズを把握の上、ニーズに即した形でのデータの公開に取り組む。\n",
-      "It is important to proceed with the promotion of Open Data while accurately reflecting user needs. To achieve this, each government ministry and agency will publish a list that organizes the data they possess and its current status of disclosure, including potential data, in order to understand user needs and work towards the disclosure of data in a manner that meets those needs.\n"
+      "In promoting open data, it is important to proceed while accurately reflecting user needs. To this end, each ministry and agency will publish a list organizing the data they hold and its publication status[^24], so that they can grasp user needs, including potential ones, and work to publish data in ways that meet those needs.\n"
    ],
    [
       "５．推進体制\n",
-      "5. Promotion Structure\n"
+      "5. Promotion System\n"
    ],
    [
       "（１）相談窓口の設置\n",
-      "(1) Establishment of Consultation Points\n"
+      "(1) Establishment of Consultation Desks\n"
    ],
    [
       "オープンデータに係る利用者のニーズ（要望）・意見を積極的に収集・把握し、政府一体となった取組に反映するため、内閣官房IT総合戦略室にオープンデータに関する総合的な相談窓口を設置する。また、各府省庁においても、相談窓口を設置し、利用者からのオープンデータに関する個別の問い合わせ等に積極的に対応する。\n",
-      "To actively collect and understand the needs and opinions of users regarding Open Data and reflect them in the government's unified efforts, the Cabinet Secretariat's IT Strategy Office will establish a comprehensive consultation point for Open Data. Additionally, each government ministry and agency will also establish consultation points to actively respond to individual inquiries from users regarding Open Data.\n"
+      "In order to actively collect and understand user needs (requests) and opinions regarding open data and reflect them in government-wide efforts, the IT Strategic Headquarters of the Cabinet Secretariat will set up a comprehensive consultation desk for open data. In addition, each ministry and agency will also set up consultation desks and actively respond to individual inquiries regarding open data from users.\n"
    ],
    [
       "（２）推進体制\n",
-      "(2) Promotion Structure\n"
+      "(2) Promotion System\n"
    ],
    [
       "内閣官房IT総合戦略室は政府CIOの下、各府省庁と連携し政府全体のオープンデータに関する企画立案・総合調整を行うとともに、各府省庁によるオープンデータ化の公開状況を含め各施策のレビュー、フォローアップを実施するなど、政府一体となったオープンデータの取組を推進する。また、内閣官房IT総合戦略室は関係府省庁と協力し、地方公共団体における取組を促進する。\n",
-      "The Cabinet Secretariat's IT Strategy Office, under the government's CIO, will collaborate with each government ministry and agency to plan and coordinate the overall Open Data initiatives of the government. This includes reviewing the disclosure status of Open Data initiatives by each government ministry and agency and conducting follow-ups, in order to promote unified efforts towards Open Data. Furthermore, the Cabinet Secretariat's IT Strategy Office will cooperate with relevant government ministries and agencies to promote initiatives in local public bodies.\n"
+      "The IT Strategic Headquarters of the Cabinet Secretariat, under the Government CIO, will coordinate and plan government-wide open data policies in cooperation with each ministry and agency, and will review and follow up on each measure, including the status of open data publication by each ministry and agency, to promote government-wide open data initiatives. The IT Strategic Headquarters will also work with relevant ministries and agencies to promote efforts by local governments.\n"
    ],
    [
       "各府省情報化統括責任者（府省CIO）は、府省庁内におけるオープンデータの取組を推進するとともに、独立行政法人、公益事業者等によるオープンデータの取組を促進する。また、各府省情報化専任審議官等（府省副CIO）は府省CIOを補佐し、オープンデータ施策に関する府省庁内の指揮監督にあたるものとする。\n",
-      "Each government ministry's Chief Information Officer (CIO) will promote Open Data initiatives within their respective ministry and also encourage independent administrative agencies and public service providers to engage in Open Data initiatives. Additionally, each government ministry's Deputy Chief Information Officer (Deputy CIO) and other officials responsible for information technology will assist the CIO and oversee the command and supervision of Open Data policies within the ministry.\n"
+      "Each ministry's Chief Information Officer (Ministry CIO) will promote open data initiatives within their ministry and encourage open data efforts by independent administrative agencies and public service providers. In addition, each ministry's dedicated information officer (Ministry Deputy CIO) will assist the Ministry CIO and be responsible for directing and supervising open data policies within the ministry.\n"
    ],
    [
       "６．地方公共団体、独立行政法人、事業者におけるオープンデータの取組\n",
-      "6. Initiatives for Open Data in Local Public Bodies, Independent Administrative Agencies, and Businesses\n"
+      "6. Open Data Initiatives by Local Governments, Independent Administrative Agencies, and Businesses\n"
    ],
    [
       "（１）地方公共団体\n",
-      "(1) Local Public Bodies\n"
+      "(1) Local Governments\n"
    ],
    [
       "官民データ法第11条第1項では、地方公共団体は、国と同様に、保有するデータを国民が容易に利用できるよう必要な措置を講ずるものとされている。\n",
-      "Under Article 11, Paragraph 1 of the Public and Private Data Act, local public bodies are required to take necessary measures to make their data easily accessible to the public, similar to the national government.\n"
+      "Article 11, Paragraph 1 of the Act on the Use of Public and Private Sector Data stipulates that local governments, like the national government, must take necessary measures to ensure that the data they hold can be easily used by the public.\n"
    ],
    [
       "地方公共団体は、官民データ法の趣旨及び本基本指針を踏まえてオープンデータを推進することが求められる。\n",
-      "Local public bodies are expected to promote Open Data in accordance with the purpose of the Public and Private Data Act and this basic guideline.\n"
+      "Local governments are required to promote open data in line with the purpose of the Act on the Use of Public and Private Sector Data and this Basic Policy.\n"
    ],
    [
       "推進に際しては、国や地方公共団体が公開するデータを横断的に活用することができるよう、標準的な形式及びルールに基づいた公開に努めることが望ましい。また、複数団体が共同でオープンデータポータルサイトを立ち上げるといった取組も有効である。\n",
-      "When promoting open data, it is desirable to strive for publication based on standard formats and rules, so that national and local governments can utilize data across different sectors. It is also effective for multiple organizations to collaborate and establish open data portal sites.\n"
+      "In promoting open data, it is desirable to strive for publication based on standard formats and rules so that data published by the national and local governments can be used across organizations. It is also effective for multiple organizations to jointly launch open data portal sites.\n"
    ],
    [
       "政府は、オープンデータに関する専門家等の派遣、地方公共団体において特に公開が望まれる分野やデータ項目の提示、先進的な取組事例集や手引き等の提供、人材育成ツールの提供などを通じ、地方公共団体におけるオープンデータの取組を積極的に支援する。\n",
-      "The government actively supports the efforts of local governments in open data through the dispatch of experts in open data, providing information on areas and data items that are particularly desired to be disclosed, offering advanced case studies and guidelines, and providing tools for talent development.\n"
+      "The government will actively support open data initiatives by local governments through measures such as dispatching experts on open data, presenting fields and data items that are particularly desirable for publication by local governments, providing collections of advanced case studies and guides, and providing human resource development tools.\n"
    ],
    [
       "（２）事業者\n",
@@ -269,67 +269,67 @@
    ],
    [
       "官民データ法第11条第２項では、事業者（独立行政法人を含む）は、公益の増進に資するデータを国民が容易に利用できるよう必要な措置を講ずるよう努めるものとされている。\n",
-      "Under Article 11, Paragraph 2 of the Public and Private Data Act, businesses (including independent administrative agencies) are required to take necessary measures to make data that contributes to the promotion of public interest easily accessible to the public.\n"
+      "Article 11, Paragraph 2 of the Act on the Use of Public and Private Sector Data stipulates that businesses (including independent administrative agencies) should strive to take necessary measures to ensure that data contributing to the public interest can be easily used by the public.\n"
    ],
    [
       "独立行政法人や大学等においては、国費によって運営されていること又は実施している事業や研究があることに鑑み、本基本指針に準拠してオープンデータの取組を推進することが望ましい[^25]。\n",
-      "Considering that independent administrative agencies and universities are operated or conducting projects and research funded by the government, it is desirable for them to promote open data in accordance with this basic guideline.\n"
+      "For independent administrative agencies and universities, since they are operated with public funds or conduct projects and research funded by the government, it is desirable to promote open data initiatives in accordance with this Basic Policy[^25].\n"
    ],
    [
       "また、電力・ガス、通信・放送、交通等の公益事業分野の事業者については、その公益性に鑑み、本基本指針及び利用者ニーズを踏まえてオープンデータを推進することが望ましい。\n",
-      "In addition, for businesses in the public utility sectors such as electricity, gas, telecommunications, broadcasting, and transportation, it is desirable to promote open data based on this basic guideline and user needs, taking into account their public interest.\n"
+      "In addition, for businesses in public service fields such as electricity, gas, communications, broadcasting, and transportation, it is desirable to promote open data in line with this Basic Policy and user needs, given their public nature.\n"
    ],
    [
       "７．本基本指針の見直し\n",
-      "7. Review of this Basic Guideline\n"
+      "7. Review of This Basic Policy\n"
    ],
    [
       "本基本指針は、各種施策の成果や国民・事業者等の意見要望等を踏まえつつ、技術動向、国際環境等の状況変化に応じ柔軟に見直しを行うものとする。\n",
-      "This basic guideline will be flexibly reviewed in response to changes in technological trends, international environment, and taking into account the results of various measures and opinions and requests from the public and businesses.\n"
+      "This Basic Policy will be reviewed flexibly in response to changes in technology trends, the international environment, and other circumstances, while taking into account the results of various measures and the opinions and requests of the public and businesses.\n"
    ],
    [
       "（以上）\n",
-      "(Above)\n"
+      "(End)\n"
    ],
    [
       "[^2]: 震災関連情報の提供に関し、情報の加工が容易なファイル形式による情報提供について協力依頼が行われたほか、事業者が保有する道路の通行情報などが公開・活用された。\n",
-      "[2]: In relation to the provision of disaster-related information, cooperation requests were made for providing information in easily processable file formats, and information on road traffic held by businesses was also disclosed and utilized.\n"
+      "[^2]: In relation to the provision of information on earthquakes and disasters, cooperation was requested for providing information in file formats that are easy to process, and information such as road traffic conditions held by businesses was published and utilized.\n"
    ],
    [
       "[^3]: 公共データについて、オープンデータを前提として情報システムや業務プロセス全体の企画、整備及び運用を行うことである。\n",
-      "[3]: It refers to planning, development, and operation of information systems and business processes as a whole, assuming open data for public data.\n"
+      "[^3]: This refers to planning, developing, and operating information systems and business processes for public data on the premise of open data.\n"
    ],
    [
       "[^4]: 但し、セキュリティの理由により、利用者に対し、事前登録を求めたり、データへのアクセス方法に制限を設けたりといった措置が講じられることがあり得る。\n",
-      "[4]: However, for security reasons, measures such as requiring users to register in advance or restricting access to data may be taken.\n"
+      "[^4]: However, for security reasons, measures such as requiring users to register in advance or restricting access methods to data may be implemented.\n"
    ],
    [
       "[^5]: 「機械判読」とは、コンピュータプログラムが自動的にデータを加工、編集等できることを指す。\n",
-      "[5]: \"Machine-readable\" refers to the ability of computer programs to automatically process and edit data.\n"
+      "[^5]: \"Machine-readable\" means that computer programs can automatically process and edit the data.\n"
    ],
    [
       "[^6]: オープンデータとは言えないものの、データ提供システムの維持管理に要するコストを限定された利用者からの料金徴収でまかなうケースもある。\n",
-      "[6]: Although not considered open data, there are cases where the cost of maintaining and managing data provision systems is covered by charging fees from limited users.\n"
+      "[^6]: Although it cannot be called open data, there are cases where the cost of maintaining and managing the data provision system is covered by collecting fees from a limited group of users.\n"
    ],
    [
       "[^7]: 今後、行政目的で作成されるデータについては、本指針に基づき、オープンデータとして公開されることを想定してデータ整備がなされることを確保する必要があり、内閣官房IT総合戦略室において、各府省庁の整備状況を把握し、必要な調整を行うことが求められる。\n",
-      "[^7]: In the future, data created for administrative purposes should be maintained and ensured to be released as open data based on this guideline. The Cabinet Secretariat's IT Strategy Office is required to understand the maintenance status of each ministry and agency and make necessary adjustments.\n"
+      "[^7]: For data created for administrative purposes in the future, it is necessary to ensure that data is prepared with the expectation that it will be published as open data in accordance with these guidelines. The Cabinet Secretariat IT Strategic Headquarters is required to monitor the status of preparation by each ministry and agency and make necessary adjustments.\n"
    ],
    [
       "[^8]: 法令又は合理的な根拠によりオープンデータとして公開できない場合（二次利用に制限がある場合を含む）は、その旨を具体的に示す。\n",
-      "[^8]: If it is not possible to release data as open data due to laws or reasonable grounds (including cases with restrictions on secondary use), this should be specifically indicated.\n"
+      "[^8]: If data cannot be published as open data due to laws or reasonable grounds (including cases where there are restrictions on secondary use), this must be specifically indicated.\n"
    ],
    [
       "[^9]: 公開できない理由を公開することだけで、公開できない情報（不開示情報）を開示することとなる場合は、理由を公開しないことができる。\n",
-      "[^9]: If disclosing the reason for not being able to release is equivalent to disclosing the information that cannot be disclosed (non-disclosure information), it is permissible not to disclose the reason.\n"
+      "[^9]: If disclosing the reason for not publishing would itself reveal information that cannot be disclosed (non-disclosure information), the reason does not have to be published.\n"
    ],
    [
       "[^10]: 各府省庁（施設等機関、地方支分部局等、府省庁に属する組織を含む。）が、その名称において開設しているインターネット上のウェブサイト、データベースサイト、個別業務サイト等を広く含む。\n",
-      "[^10]: Each ministry and agency (including facilities, local branch offices, and organizations belonging to ministries and agencies) broadly includes websites, database sites, and individual business sites established under their names.\n"
+      "[^10]: This broadly includes websites, database sites, and individual business sites on the Internet established under the name of each ministry or agency (including affiliated organizations, local branch offices, and organizations belonging to ministries and agencies).\n"
    ],
    [
       "[^11]: 政府機関のウェブサイトで公開されているデータの二次利用を促進する観点から、統一的なひな形として示された各府省庁ウェブサイトの利用に関するルール。「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の別添１「政府標準利用規約(第2.0版)」。\n",
-      "[^11]: Rules regarding the use of each ministry and agency website, which are presented as a unified template from the perspective of promoting the secondary use of data published on government agency websites. Annex 1 of the \"Basic Guidelines for the Disclosure of Ministry and Agency Data for the Promotion of Secondary Use\" includes the \"Government Standard Terms of Use (Version 2.0)\".\n"
+      "[^11]: Rules regarding the use of each ministry and agency's website, presented as a unified template to promote secondary use of data published on government agency websites. See Attachment 1 \"Government Standard Terms of Use (Version 2.0)\" of the \"Basic Approach to Data Publication by Ministries and Agencies for the Promotion of Secondary Use (Guidelines)\".\n"
    ],
    [
       "[^12]: 例えば、各府省庁が公表している統計データ等。\n",
@@ -337,54 +337,54 @@
    ],
    [
       "[^13]: イベント情報、公共交通機関の混雑率、または災害・防災情報など、一定時間経過毎に情報を更新する必要があるデータ。\n",
-      "[^13]: Data that needs to be updated at regular intervals, such as event information, congestion rates of public transportation, or disaster and emergency information.\n"
+      "[^13]: Data that needs to be updated at regular intervals, such as event information, congestion rates of public transportation, or disaster and disaster prevention information.\n"
    ],
    [
       "[^14]: 公開するデータに関して、それがどのようなデータであるかを示す情報。例えば、タイトル、公表組織名、作成者（部局名）等のプロパティ情報やデータ検索のためのキーワード等。その他項目の詳細についてはData.go.jp「開発者向け情報」の「(2) データカタログサイトで提供しているメタデータ等に関する情報」を参照（https://www.data.go.jp/for-developer/for-developer）\n",
-      "[^14]: Information that indicates what kind of data is being released. For example, property information such as title, publishing organization name, and creator (department name), as well as keywords for data search. For more details on other items, refer to the \"Information on Metadata Provided on the Data Catalog Site\" in the Data.go.jp \"Information for Developers\" (https://www.data.go.jp/for-developer/for-developer).\n"
+      "[^14]: Information that indicates what kind of data is being published. For example, property information such as title, name of publishing organization, creator (department name), or keywords for data search. For details on other items, refer to Data.go.jp \"Information for Developers\" section \"(2) Information on metadata provided on the data catalog site\" (https://www.data.go.jp/for-developer/for-developer)\n"
    ],
    [
       "[^15]: 「CC0 1.0 全世界」の定義等は「クリエイティブ・コモンズ・リーガル・コード」を参照。(https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)\n",
-      "[^15]: Refer to the \"Creative Commons Legal Code\" for the definition of \"CC0 1.0 Universal\" (https://creativecommons.org/publicdomain/zero/1.0/legalcode).\n"
+      "[^15]: For the definition of \"CC0 1.0 Universal,\" refer to the \"Creative Commons Legal Code.\" (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)\n"
    ],
    [
       "[^16]: 「機械判読に適した度合」には、人手をどれだけ要さずに、コンピュータがデータを再利用できるかにより、いくつかの段階がある。コンピュータが自動的にデータを再利用するためには、当該データの論理的な構造を識別（判読）でき、構造中の値（表の中に入っている数値、テキスト等）が処理できるようになっている必要がある。\n",
-      "[^16]: There are several stages to determine the \"degree suitable for machine reading\" based on how much computer can reuse the data without requiring manual intervention. For the computer to automatically reuse the data, it needs to be able to identify (read) the logical structure of the data and process the values (numeric values, text, etc.) within the structure.\n"
+      "[^16]: The \"degree suitable for machine readability\" has several levels, depending on how much computers can reuse the data without human intervention. For computers to automatically reuse data, they must be able to identify (read) the logical structure of the data and process the values (numbers, text, etc. in tables) within the structure.\n"
    ],
    [
       "[^17]: 「二次利用の促進のための府省のデータ公開に関する基本的考え方（ガイドライン）」の「３ 機械判読が容易なデータ形式による公開の拡大の考え方」及び別添２「数値（表）、文章、地理空間情報のデータ作成に当たっての留意事項」を参照。\n",
-      "[^17]: Refer to \"Basic Concepts (Guidelines) for the Promotion of Government Data Publication for Secondary Use\" section 3 \"Concepts for expanding publication using data formats suitable for machine reading\" and Annex 2 \"Points to consider when creating data for numerical (table), textual, and geospatial information.\"\n"
+      "[^17]: Refer to \"3. Concept for Expanding Publication in Machine-Readable Data Formats\" and Attachment 2 \"Points to Note When Creating Data for Numbers (Tables), Text, and Geospatial Information\" in the \"Basic Approach to Data Publication by Ministries and Agencies for the Promotion of Secondary Use (Guidelines)\".\n"
    ],
    [
       "[^18]: Webの創設者Tim Berners-Leeが提唱した５段階の指標で、ファイル形式に関わらず二次利用が可能なライセンスを満たす場合は第１段階、機械判読性の比較的高いcsv 形式は第３段階とされている。（http://5stardata.info/ja/）\n",
-      "[^18]: According to the five-stage indicator proposed by Tim Berners-Lee, the founder of the Web, if a file format meets the criteria for a license that allows secondary use regardless of the format, it is considered stage 1. The relatively high machine readability of the CSV format is considered stage 3. (http://5stardata.info/en/)\n"
+      "[^18]: This is a five-star indicator proposed by Tim Berners-Lee, the founder of the Web. If a license allows secondary use regardless of file format, it is considered the first level; CSV format, which is relatively highly machine-readable, is considered the third level. (http://5stardata.info/ja/)\n"
    ],
    [
       "[^19]: 統計情報等の行列や階層による表現が可能な情報。\n",
-      "[^19]: Information that can be represented in matrices or hierarchies, such as statistical data.\n"
+      "[^19]: Information that can be represented in matrices or hierarchies, such as statistical information.\n"
    ],
    [
       "[^20]: 特定の機能に限定されず共通で利用できるフォーマット（CSV、XML）。\n",
-      "[^20]: Formats that can be used universally, not limited to specific functions (CSV, XML).\n"
+      "[^20]: Formats that can be used commonly and are not limited to specific functions (CSV, XML).\n"
    ],
    [
       "[^21]: 表が含まれるデータをCSVで公開する場合は「オープンデータガイド第2.1版」の「8.3.2 表形式データに関する指針」を参照（http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf）。\n",
-      "[^21]: When publishing data containing tables in CSV format, refer to \"Guidelines for Open Data Version 2.1\" section 8.3.2 \"Guidelines for tabular data.\" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf)\n"
+      "[^21]: When publishing data containing tables in CSV format, refer to \"8.3.2 Guidelines for Tabular Data\" in the \"Open Data Guide Version 2.1\" (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf).\n"
    ],
    [
       "[^22]: 既に紙によるものを含め、利用者の求めに応じて情報公開を含め公開されている情報については対象外とする。なお、限定公開の対象となるデータの考え方や運用（限定公開の決定プロセスや進捗状況を把握・評価する体制等）については必要に応じ、今後さらに検討する。\n",
-      "[^22]: Information that is already publicly available, including information published in response to user requests, including those in paper format, is not included. However, the concept and operation of limited publication data (establishing a system to understand and evaluate the decision process and progress of limited publication) will be further examined as necessary.\n"
+      "[^22]: Information that is already published, including on paper, in response to user requests, including information disclosure, is excluded. As for the concept and operation of data subject to limited disclosure (such as the decision process and system for monitoring and evaluating the progress of limited disclosure), further consideration will be given as necessary in the future.\n"
    ],
    [
       "[^23]: 例えば、一部のデータは有償だが、残りのデータは無償とすること等も考えらえる。\n",
-      "[^23]: For example, it is possible to consider making some data paid while keeping the rest of the data free of charge.\n"
+      "[^23]: For example, it is possible that some data is fee-based while the rest is free of charge.\n"
    ],
    [
       "[^24]: このようなリストを作成するため平成29年度中に各府省庁が保有するデータの棚卸しを行い、当該リストを公開した上でニーズの高い分野等について官民（民には、事業者、研究者、市民等を含む）でデータの公開・活用の在り方を対話するラウンドテーブルを開催する試みを実施する。ラウンドテーブルでは、地方公共団体、事業者（独立行政法人を含む）が保有するデータを含め官民データの公開と活用の在り方について議論する。\n",
-      "[^24]: In order to create such a list, each government ministry and agency will take an inventory of the data they possess by the end of fiscal year 2017, and then attempt to hold roundtable discussions with the public and private sectors (including businesses, researchers, and citizens) to discuss the publication and utilization of data in high-demand fields. The roundtable discussions will cover the publication and utilization of both public and private sector data, including data held by local governments and businesses (including independent administrative agencies).\n"
+      "[^24]: To create such a list, each ministry and agency will conduct an inventory of the data they hold during FY2017, publish the list, and hold roundtable discussions between the public and private sectors (including businesses, researchers, and citizens) on how to publish and utilize data in high-demand fields. At the roundtable, discussions will be held on how to publish and utilize public and private sector data, including data held by local governments and businesses (including independent administrative agencies).\n"
    ],
    [
       "[^25]: 「我が国におけるオープンサイエンス推進のあり方について」（平成27年３月30日）では、公的研究資金による研究成果のうち、論文および論文のエビデンスとしての研究データは、原則公開とし、その他研究開発成果としての研究データについても可能な範囲で公開することが望ましい。」とされている。\n",
-      "[^25]: In the document titled \"Approach to Promoting Open Science in Our Country\" (March 30, 2015), it is stated that research papers and research data as evidence for those papers, funded by public research funds, should be made publicly available as a general rule. It is also desirable to make research data as other research and development outcomes publicly available to the extent possible.\n"
+      "[^25]: The document \"On the Promotion of Open Science in Japan\" (March 30, 2015) states, \"As a general rule, research papers and research data as evidence for papers resulting from publicly funded research should be made public, and it is desirable that other research data as research and development results also be made public to the extent possible.\"\n"
    ]
 ]
