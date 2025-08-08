@@ -198,6 +198,18 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie heeft voorrang op de `--xlate-maxlen` optie.
 
+- **--xlate-prompt**=_text_
+
+    Geef een aangepaste prompt op die naar de vertaalmachine moet worden gestuurd. Deze optie is alleen beschikbaar bij gebruik van ChatGPT engines (gpt3, gpt4, gpt4o). Je kunt het vertaalgedrag aanpassen door specifieke instructies te geven aan het AI-model. Als de prompt `%s` bevat, wordt deze vervangen door de naam van de doeltaal.
+
+- **--xlate-context**=_text_
+
+    Geef aanvullende contextinformatie op die naar de vertaalmachine moet worden gestuurd. Deze optie kan meerdere keren worden gebruikt om meerdere contextstrings op te geven. De contextinformatie helpt de vertaalmachine om de achtergrond te begrijpen en nauwkeurigere vertalingen te produceren.
+
+- **--xlate-glossary**=_glossary_
+
+    Geef een woordenlijst-ID op die moet worden gebruikt voor vertaling. Deze optie is alleen beschikbaar wanneer je de DeepL engine gebruikt. De woordenlijst-ID moet verkregen worden via je DeepL account en zorgt voor een consistente vertaling van specifieke termen.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Zie het resultaat van de vertaling in real time in de STDERR uitvoer.

@@ -180,6 +180,18 @@
       "如果想一次翻译一行，则将该值设为 1。该选项优先于 C<--xlate-maxlen> 选项。\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "指定发送给翻译引擎的自定义提示。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4、gpt4o）时可用。您可以通过向人工智能模型提供特定指令来定制翻译行为。如果提示包含 C<%s>，它将被替换为目标语言名称。\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "指定要发送给翻译引擎的其他上下文信息。此选项可多次使用，以提供多个上下文字符串。上下文信息有助于翻译引擎理解背景并生成更准确的翻译。\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "指定用于翻译的词汇表 ID。该选项仅在使用 DeepL 引擎时可用。词汇表 ID 应从您的 DeepL 账户获取，可确保特定术语翻译的一致性。\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "在STDERR输出中可以看到实时的翻译结果。\n"
    ],

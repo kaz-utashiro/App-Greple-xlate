@@ -198,6 +198,18 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     Her seferinde bir satır çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek `--xlate-maxlen` seçeneğine göre önceliklidir.
 
+- **--xlate-prompt**=_text_
+
+    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanıldığında kullanılabilir. Yapay zeka modeline özel talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. Komut istemi `%s` içeriyorsa, hedef dil adı ile değiştirilecektir.
+
+- **--xlate-context**=_text_
+
+    Çeviri motoruna gönderilecek ek bağlam bilgilerini belirtin. Bu seçenek, birden fazla bağlam dizesi sağlamak için birden fazla kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
+
+- **--xlate-glossary**=_glossary_
+
+    Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalıdır ve belirli terimlerin tutarlı bir şekilde çevrilmesini sağlar.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.

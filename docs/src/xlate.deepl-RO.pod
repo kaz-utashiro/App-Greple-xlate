@@ -227,6 +227,18 @@ Specificați numărul maxim de linii de text care urmează să fie trimise simul
 
 Setați această valoare la 1 dacă doriți să traduceți un rând pe rând. Această opțiune are prioritate față de opțiunea C<--xlate-maxlen>.
 
+=item B<--xlate-prompt>=I<text>
+
+Specificați un prompt personalizat care să fie trimis către motorul de traducere. Această opțiune este disponibilă numai atunci când utilizați motoarele ChatGPT (gpt3, gpt4, gpt4o). Puteți personaliza comportamentul de traducere prin furnizarea de instrucțiuni specifice modelului AI. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.
+
+=item B<--xlate-context>=I<text>
+
+Specificați informații contextuale suplimentare care urmează să fie trimise motorului de traducere. Această opțiune poate fi utilizată de mai multe ori pentru a furniza mai multe șiruri de context. Informațiile de context ajută motorul de traducere să înțeleagă contextul și să producă traduceri mai precise.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Specificați un ID de glosar care urmează să fie utilizat pentru traducere. Această opțiune este disponibilă numai atunci când se utilizează motorul DeepL. ID-ul glosarului trebuie obținut din contul dvs. DeepL și asigură traducerea consecventă a termenilor specifici.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Vedeți rezultatul traducerii în timp real în ieșirea STDERR.

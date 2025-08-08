@@ -180,6 +180,18 @@
       "Specificați numărul maxim de linii de text care pot fi trimise la API odată.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Specificați un prompt personalizat care va fi trimis motorului de traducere. Această opțiune este disponibilă doar atunci când utilizați motoarele ChatGPT (gpt3, gpt4, gpt4o). Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului AI. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Specificați informații suplimentare de context care vor fi trimise motorului de traducere. Această opțiune poate fi folosită de mai multe ori pentru a furniza mai multe șiruri de context. Informațiile de context ajută motorul de traducere să înțeleagă fundalul și să producă traduceri mai precise.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Specificați un ID de glosar care va fi folosit pentru traducere. Această opțiune este disponibilă doar atunci când utilizați motorul DeepL. ID-ul de glosar trebuie obținut din contul dumneavoastră DeepL și asigură traducerea consecventă a anumitor termeni.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Setați această valoare la 1 dacă doriți să traduceți o linie odată. Această opțiune are prioritate față de opțiunea C<--xlate-maxlen>.\n"
    ],

@@ -227,6 +227,18 @@ Especifique la longitud máxima del texto que se enviará a la API de una vez. E
 
 Especifique el número máximo de líneas de texto que se enviarán a la API de una vez.
 
+=item B<--xlate-prompt>=I<text>
+
+Especifique un mensaje personalizado para enviar al motor de traducción. Esta opción solo está disponible cuando se utilizan motores ChatGPT (gpt3, gpt4, gpt4o). Puede personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si el mensaje contiene C<%s>, será reemplazado por el nombre del idioma de destino.
+
+=item B<--xlate-context>=I<text>
+
+Especifique información de contexto adicional para enviar al motor de traducción. Esta opción se puede usar varias veces para proporcionar múltiples cadenas de contexto. La información de contexto ayuda al motor de traducción a comprender el trasfondo y producir traducciones más precisas.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Especifique un ID de glosario para usar en la traducción. Esta opción solo está disponible cuando se utiliza el motor DeepL. El ID de glosario debe obtenerse de su cuenta de DeepL y garantiza la traducción coherente de términos específicos.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Establezca este valor en 1 si desea traducir una línea a la vez. Esta opción tiene prioridad sobre la opción C<--xlate-maxlen>.

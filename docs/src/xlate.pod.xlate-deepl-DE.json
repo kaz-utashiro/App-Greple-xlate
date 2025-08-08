@@ -180,6 +180,18 @@
       "Setzen Sie diesen Wert auf 1, wenn Sie jeweils nur eine Zeile übersetzen wollen. Diese Option hat Vorrang vor der Option C<--xlate-maxlen>.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Geben Sie eine benutzerdefinierte Eingabeaufforderung an, die an die Übersetzungsmaschine gesendet werden soll. Diese Option ist nur bei Verwendung von ChatGPT-Engines (gpt3, gpt4, gpt4o) verfügbar. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn die Eingabeaufforderung C<%s> enthält, wird sie durch den Namen der Zielsprache ersetzt.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Geben Sie zusätzliche Kontextinformationen an, die an die Übersetzungsmaschine gesendet werden sollen. Diese Option kann mehrfach verwendet werden, um mehrere Kontextstrings anzugeben. Die Kontextinformationen helfen der Übersetzungsmaschine, den Hintergrund zu verstehen und genauere Übersetzungen zu erstellen.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Geben Sie eine Glossarkennung an, die für die Übersetzung verwendet werden soll. Diese Option ist nur bei Verwendung der DeepL Engine verfügbar. Die Glossar-ID sollte von Ihrem DeepL Konto bezogen werden und gewährleistet eine konsistente Übersetzung bestimmter Begriffe.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Sie können das Ergebnis der Übertragung in Echtzeit in der STDERR-Ausgabe sehen.\n"
    ],

@@ -198,6 +198,18 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     Määrake selle väärtuseks 1, kui soovite tõlkida ühe rea korraga. See valik on ülimuslik valikust `--xlate-maxlen`.
 
+- **--xlate-prompt**=_text_
+
+    Määrake tõlkemootorile saadetav kohandatud üleskutse. See valik on saadaval ainult siis, kui kasutate ChatGPT mootoreid (gpt3, gpt4, gpt4o). Te saate kohandada tõlkekäitumist, andes AI-mudelile konkreetsed juhised. Kui üleskutse sisaldab `%s`, asendatakse see sihtkeele nimega.
+
+- **--xlate-context**=_text_
+
+    Määrake lisakonteksti teave, mis saadetakse tõlkemootorile. Seda valikut saab kasutada mitu korda, et anda mitu kontekstijada. Kontekstiandmed aitavad tõlkemootoril mõista tausta ja toota täpsemaid tõlkeid.
+
+- **--xlate-glossary**=_glossary_
+
+    Määrake sõnastiku ID, mida kasutatakse tõlkimisel. See valik on saadaval ainult siis, kui kasutatakse DeepL mootorit. Sõnastiku ID tuleks saada teie DeepL kontolt ja see tagab konkreetsete terminite järjepideva tõlkimise.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Näete tõlkimise tulemust reaalajas STDERR-väljundist.

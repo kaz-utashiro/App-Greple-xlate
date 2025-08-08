@@ -198,6 +198,18 @@ Această interfață este experimentală și poate fi modificată în viitor.
 
     Setați această valoare la 1 dacă doriți să traduceți un rând pe rând. Această opțiune are prioritate față de opțiunea `--xlate-maxlen`.
 
+- **--xlate-prompt**=_text_
+
+    Specificați un prompt personalizat care să fie trimis către motorul de traducere. Această opțiune este disponibilă numai atunci când utilizați motoarele ChatGPT (gpt3, gpt4, gpt4o). Puteți personaliza comportamentul de traducere prin furnizarea de instrucțiuni specifice modelului AI. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
+
+- **--xlate-context**=_text_
+
+    Specificați informații contextuale suplimentare care urmează să fie trimise motorului de traducere. Această opțiune poate fi utilizată de mai multe ori pentru a furniza mai multe șiruri de context. Informațiile de context ajută motorul de traducere să înțeleagă contextul și să producă traduceri mai precise.
+
+- **--xlate-glossary**=_glossary_
+
+    Specificați un ID de glosar care urmează să fie utilizat pentru traducere. Această opțiune este disponibilă numai atunci când se utilizează motorul DeepL. ID-ul glosarului trebuie obținut din contul dvs. DeepL și asigură traducerea consecventă a termenilor specifici.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Vedeți rezultatul traducerii în timp real în ieșirea STDERR.

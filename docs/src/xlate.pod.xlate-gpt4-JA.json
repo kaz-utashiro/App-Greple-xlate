@@ -180,6 +180,18 @@
       "1行ずつ翻訳したい場合は、この値を1に設定してください。このオプションはC<--xlate-maxlen>オプションより優先されます。\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "翻訳エンジンに送信するカスタムプロンプトを指定します。このオプションはChatGPTエンジン（gpt3、gpt4、gpt4o）を使用している場合のみ利用可能です。AIモデルに特定の指示を与えることで、翻訳の挙動をカスタマイズできます。プロンプトにC<%s>が含まれている場合は、対象言語名に置き換えられます。\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "翻訳エンジンに送信する追加のコンテキスト情報を指定します。このオプションは複数回使用でき、複数のコンテキスト文字列を提供できます。コンテキスト情報は翻訳エンジンが背景を理解し、より正確な翻訳を生成するのに役立ちます。\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "翻訳に使用する用語集IDを指定します。このオプションはDeepLエンジンを使用している場合のみ利用可能です。用語集IDはDeepLアカウントから取得する必要があり、特定の用語の一貫した翻訳を保証します。\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "STDERR出力で翻訳結果をリアルタイムで確認できます。\n"
    ],

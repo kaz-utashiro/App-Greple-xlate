@@ -227,6 +227,18 @@ Geben Sie die maximale Anzahl von Textzeilen an, die auf einmal an die API gesen
 
 Setzen Sie diesen Wert auf 1, wenn Sie jeweils nur eine Zeile übersetzen wollen. Diese Option hat Vorrang vor der Option C<--xlate-maxlen>.
 
+=item B<--xlate-prompt>=I<text>
+
+Geben Sie eine benutzerdefinierte Eingabeaufforderung an, die an die Übersetzungsmaschine gesendet werden soll. Diese Option ist nur bei Verwendung von ChatGPT-Engines (gpt3, gpt4, gpt4o) verfügbar. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn die Eingabeaufforderung C<%s> enthält, wird sie durch den Namen der Zielsprache ersetzt.
+
+=item B<--xlate-context>=I<text>
+
+Geben Sie zusätzliche Kontextinformationen an, die an die Übersetzungsmaschine gesendet werden sollen. Diese Option kann mehrfach verwendet werden, um mehrere Kontextstrings anzugeben. Die Kontextinformationen helfen der Übersetzungsmaschine, den Hintergrund zu verstehen und genauere Übersetzungen zu erstellen.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Geben Sie eine Glossarkennung an, die für die Übersetzung verwendet werden soll. Diese Option ist nur bei Verwendung der DeepL Engine verfügbar. Die Glossar-ID sollte von Ihrem DeepL Konto bezogen werden und gewährleistet eine konsistente Übersetzung bestimmter Begriffe.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Sie können das Ergebnis der Übertragung in Echtzeit in der STDERR-Ausgabe sehen.

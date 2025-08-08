@@ -180,6 +180,18 @@
       "Установите значение 1, если вы хотите переводить по одной строке за раз. Этот параметр имеет приоритет перед параметром C<--xlate-maxlen>.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Укажите пользовательскую подсказку, которая будет отправлена механизму перевода. Этот параметр доступен только при использовании движков ChatGPT (gpt3, gpt4, gpt4o). Вы можете настроить поведение переводчика, предоставив специальные инструкции модели искусственного интеллекта. Если подсказка содержит C<%s>, она будет заменена на название целевого языка.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Укажите дополнительную контекстную информацию, которая будет отправлена механизму перевода. Этот параметр можно использовать несколько раз, чтобы указать несколько контекстных строк. Контекстная информация помогает механизму перевода понять фон и создать более точный перевод.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Укажите идентификатор глоссария, который будет использоваться при переводе. Этот параметр доступен только при использовании механизма DeepL. Идентификатор глоссария должен быть получен из учетной записи DeepL и обеспечивает последовательный перевод специфических терминов.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Результат перевода можно увидеть в реальном времени в выводе STDERR.\n"
    ],

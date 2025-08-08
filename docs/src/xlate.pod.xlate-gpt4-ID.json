@@ -180,6 +180,18 @@
       "Tentukan jumlah baris maksimum teks yang akan dikirim ke API sekaligus.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Tentukan prompt khusus yang akan dikirimkan ke mesin terjemahan. Opsi ini hanya tersedia saat menggunakan mesin ChatGPT (gpt3, gpt4, gpt4o). Anda dapat menyesuaikan perilaku terjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi C<%s>, maka akan digantikan dengan nama bahasa target.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Tentukan informasi konteks tambahan yang akan dikirimkan ke mesin terjemahan. Opsi ini dapat digunakan beberapa kali untuk memberikan beberapa string konteks. Informasi konteks membantu mesin terjemahan memahami latar belakang dan menghasilkan terjemahan yang lebih akurat.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Tentukan ID glosarium yang akan digunakan untuk terjemahan. Opsi ini hanya tersedia saat menggunakan mesin DeepL. ID glosarium harus diperoleh dari akun DeepL Anda dan memastikan konsistensi terjemahan istilah tertentu.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Atur nilai ini ke 1 jika Anda ingin menerjemahkan satu baris pada satu waktu. Opsi ini memiliki prioritas lebih tinggi daripada opsi C<--xlate-maxlen>.\n"
    ],

@@ -180,6 +180,18 @@
       "Her seferinde bir satır çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek C<--xlate-maxlen> seçeneğine göre önceliklidir.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanıldığında kullanılabilir. Yapay zeka modeline özel talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. Komut istemi C<%s> içeriyorsa, hedef dil adı ile değiştirilecektir.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Çeviri motoruna gönderilecek ek bağlam bilgilerini belirtin. Bu seçenek, birden fazla bağlam dizesi sağlamak için birden fazla kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalıdır ve belirli terimlerin tutarlı bir şekilde çevrilmesini sağlar.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.\n"
    ],

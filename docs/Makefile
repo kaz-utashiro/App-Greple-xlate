@@ -56,6 +56,11 @@ ifneq ($(wildcard $(MASKFILE)),)
 XLATE += --xlate-setopt maskfile=$(MASKFILE)
 endif
 
+CONTEXTFILE=CONTEXT.md
+ifneq ($(wildcard $(CONTEXTFILE)),)
+XLATE += --xlate-context "$$(cat $(CONTEXTFILE))"
+endif
+
 ifdef IGNORE
 $(foreach ignore,$(IGNORE),$(eval \
   XLATE += --exclude '^=head\d[ ]+(?i:$(ignore))\b(?s:.*?)(?=^=|\z)'\

@@ -180,6 +180,18 @@
       "Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie heeft voorrang op de C<--xlate-maxlen> optie.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Geef een aangepaste prompt op die naar de vertaalmachine moet worden gestuurd. Deze optie is alleen beschikbaar bij gebruik van ChatGPT engines (gpt3, gpt4, gpt4o). Je kunt het vertaalgedrag aanpassen door specifieke instructies te geven aan het AI-model. Als de prompt C<%s> bevat, wordt deze vervangen door de naam van de doeltaal.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Geef aanvullende contextinformatie op die naar de vertaalmachine moet worden gestuurd. Deze optie kan meerdere keren worden gebruikt om meerdere contextstrings op te geven. De contextinformatie helpt de vertaalmachine om de achtergrond te begrijpen en nauwkeurigere vertalingen te produceren.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Geef een woordenlijst-ID op die moet worden gebruikt voor vertaling. Deze optie is alleen beschikbaar wanneer je de DeepL engine gebruikt. De woordenlijst-ID moet verkregen worden via je DeepL account en zorgt voor een consistente vertaling van specifieke termen.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Zie het resultaat van de vertaling in real time in de STDERR uitvoer.\n"
    ],

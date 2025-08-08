@@ -180,6 +180,18 @@
       "Укажите максимальное количество строк текста, которые можно отправить в API за один раз.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Укажите пользовательский запрос, который будет отправлен в движок перевода. Эта опция доступна только при использовании движков ChatGPT (gpt3, gpt4, gpt4o). Вы можете настроить поведение перевода, предоставив конкретные инструкции языковой модели. Если запрос содержит C<%s>, он будет заменён на название целевого языка.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Укажите дополнительную контекстную информацию, которая будет отправлена в движок перевода. Эту опцию можно использовать несколько раз для передачи нескольких строк контекста. Контекстная информация помогает движку перевода понять фон и создавать более точные переводы.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Укажите идентификатор глоссария, который будет использоваться для перевода. Эта опция доступна только при использовании движка DeepL. Идентификатор глоссария должен быть получен из вашей учётной записи DeepL и обеспечивает согласованный перевод определённых терминов.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Установите это значение в 1, если хотите переводить по одной строке за раз. Эта опция имеет приоритет над опцией C<--xlate-maxlen>.\n"
    ],

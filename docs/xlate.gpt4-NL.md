@@ -198,6 +198,18 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     Specificeer het maximaal aantal regels tekst dat in één keer naar de API mag worden gestuurd.
 
+- **--xlate-prompt**=_text_
+
+    Geef een aangepaste prompt op die naar de vertaalmachine wordt gestuurd. Deze optie is alleen beschikbaar bij gebruik van ChatGPT-engines (gpt3, gpt4, gpt4o). Je kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt deze vervangen door de naam van de doeltaal.
+
+- **--xlate-context**=_text_
+
+    Geef extra contextinformatie op die naar de vertaalmachine wordt gestuurd. Deze optie kan meerdere keren worden gebruikt om meerdere contextstrings te leveren. De contextinformatie helpt de vertaalmachine de achtergrond te begrijpen en nauwkeurigere vertalingen te produceren.
+
+- **--xlate-glossary**=_glossary_
+
+    Geef een woordenlijst-ID op die voor de vertaling wordt gebruikt. Deze optie is alleen beschikbaar bij gebruik van de DeepL-engine. De woordenlijst-ID moet uit je DeepL-account worden verkregen en zorgt voor consistente vertaling van specifieke termen.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Stel deze waarde in op 1 als u één regel tegelijk wilt vertalen. Deze optie heeft voorrang op de `--xlate-maxlen`-optie.

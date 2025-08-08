@@ -227,6 +227,18 @@ Määra maksimaalne ridade arv, mida API-le korraga saata.
 
 Sea see väärtus 1-le, kui soovid tõlkida ühe rea korraga. See valik on prioriteetsem kui C<--xlate-maxlen> valik.
 
+=item B<--xlate-prompt>=I<text>
+
+Määra kohandatud viip, mis saadetakse tõlkemootorile. See valik on saadaval ainult ChatGPT mootorite (gpt3, gpt4, gpt4o) kasutamisel. Saad tõlke käitumist kohandada, andes AI-mudelile konkreetseid juhiseid. Kui viip sisaldab C<%s>, asendatakse see sihtkeele nimega.
+
+=item B<--xlate-context>=I<text>
+
+Määra täiendav kontekstiteave, mis saadetakse tõlkemootorile. Seda valikut saab kasutada mitu korda, et anda mitu kontekstistringi. Kontekstiteave aitab tõlkemootoril mõista tausta ja toota täpsemaid tõlkeid.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Määra tõlkes kasutatav sõnastiku ID. See valik on saadaval ainult DeepL mootori kasutamisel. Sõnastiku ID tuleb hankida oma DeepL kontolt ning see tagab kindlate terminite järjepideva tõlkimise.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Vaata tõlketulemust reaalajas STDERR väljundis.

@@ -227,6 +227,18 @@ API'ye bir kerede gönderilecek maksimum metin satırını belirtin.
 
 Her seferinde bir satır çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek C<--xlate-maxlen> seçeneğine göre önceliklidir.
 
+=item B<--xlate-prompt>=I<text>
+
+Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanıldığında kullanılabilir. Yapay zeka modeline özel talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. Komut istemi C<%s> içeriyorsa, hedef dil adı ile değiştirilecektir.
+
+=item B<--xlate-context>=I<text>
+
+Çeviri motoruna gönderilecek ek bağlam bilgilerini belirtin. Bu seçenek, birden fazla bağlam dizesi sağlamak için birden fazla kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalıdır ve belirli terimlerin tutarlı bir şekilde çevrilmesini sağlar.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.

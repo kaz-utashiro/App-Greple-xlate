@@ -180,6 +180,18 @@
       "Καθορίστε το μέγιστο αριθμό γραμμών κειμένου που θα αποστέλλονται στο API κάθε φορά.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Καθορίστε ένα προσαρμοσμένο prompt που θα αποσταλεί στη μηχανή μετάφρασης. Αυτή η επιλογή είναι διαθέσιμη μόνο όταν χρησιμοποιείτε μηχανές ChatGPT (gpt3, gpt4, gpt4o). Μπορείτε να προσαρμόσετε τη συμπεριφορά της μετάφρασης παρέχοντας συγκεκριμένες οδηγίες στο μοντέλο AI. Εάν το prompt περιέχει C<%s>, θα αντικατασταθεί με το όνομα της γλώσσας-στόχου.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Καθορίστε πρόσθετες πληροφορίες πλαισίου που θα αποσταλούν στη μηχανή μετάφρασης. Αυτή η επιλογή μπορεί να χρησιμοποιηθεί πολλαπλές φορές για να παρέχετε πολλαπλές συμβολοσειρές πλαισίου. Οι πληροφορίες πλαισίου βοηθούν τη μηχανή μετάφρασης να κατανοήσει το υπόβαθρο και να παράγει πιο ακριβείς μεταφράσεις.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Καθορίστε ένα αναγνωριστικό γλωσσαρίου που θα χρησιμοποιηθεί για τη μετάφραση. Αυτή η επιλογή είναι διαθέσιμη μόνο όταν χρησιμοποιείτε τη μηχανή DeepL. Το αναγνωριστικό γλωσσαρίου πρέπει να ληφθεί από τον λογαριασμό σας στο DeepL και διασφαλίζει συνεπή μετάφραση συγκεκριμένων όρων.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Ορίστε αυτήν την τιμή σε 1 αν θέλετε να μεταφράζετε μία γραμμή κάθε φορά. Αυτή η επιλογή υπερισχύει της επιλογής C<--xlate-maxlen>.\n"
    ],

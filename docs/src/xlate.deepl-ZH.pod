@@ -227,6 +227,18 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 如果想一次翻译一行，则将该值设为 1。该选项优先于 C<--xlate-maxlen> 选项。
 
+=item B<--xlate-prompt>=I<text>
+
+指定发送给翻译引擎的自定义提示。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4、gpt4o）时可用。您可以通过向人工智能模型提供特定指令来定制翻译行为。如果提示包含 C<%s>，它将被替换为目标语言名称。
+
+=item B<--xlate-context>=I<text>
+
+指定要发送给翻译引擎的其他上下文信息。此选项可多次使用，以提供多个上下文字符串。上下文信息有助于翻译引擎理解背景并生成更准确的翻译。
+
+=item B<--xlate-glossary>=I<glossary>
+
+指定用于翻译的词汇表 ID。该选项仅在使用 DeepL 引擎时可用。词汇表 ID 应从您的 DeepL 账户获取，可确保特定术语翻译的一致性。
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 在STDERR输出中可以看到实时的翻译结果。

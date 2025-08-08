@@ -198,6 +198,18 @@ Bu arayüz deneyseldir ve gelecekte değişikliğe tabidir.
 
     API'ye bir seferde gönderilecek metnin maksimum uzunluğunu belirtin. Varsayılan değer, ücretsiz DeepL hesap servisi için ayarlanmıştır: API için 128K (**--xlate**) ve pano arayüzü için 5000 (**--xlate-labor**). Pro servisi kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
+- **--xlate-prompt**=_text_
+
+    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanılırken mevcuttur. Yapay zeka modeline belirli talimatlar vererek çeviri davranışını özelleştirebilirsiniz. Eğer istemde `%s` bulunuyorsa, bu kısım hedef dil adıyla değiştirilecektir.
+
+- **--xlate-context**=_text_
+
+    Çeviri motoruna gönderilecek ek bağlam bilgisi belirtin. Bu seçenek birden fazla kez kullanılarak birden fazla bağlam dizesi sağlanabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
+
+- **--xlate-glossary**=_glossary_
+
+    Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken mevcuttur. Sözlük kimliği DeepL hesabınızdan alınmalı ve belirli terimlerin tutarlı şekilde çevrilmesini sağlar.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     API'ye bir seferde gönderilecek maksimum metin satırı sayısını belirtin.

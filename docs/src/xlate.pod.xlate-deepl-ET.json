@@ -180,6 +180,18 @@
       "Määrake selle väärtuseks 1, kui soovite tõlkida ühe rea korraga. See valik on ülimuslik valikust C<--xlate-maxlen>.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Määrake tõlkemootorile saadetav kohandatud üleskutse. See valik on saadaval ainult siis, kui kasutate ChatGPT mootoreid (gpt3, gpt4, gpt4o). Te saate kohandada tõlkekäitumist, andes AI-mudelile konkreetsed juhised. Kui üleskutse sisaldab C<%s>, asendatakse see sihtkeele nimega.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Määrake lisakonteksti teave, mis saadetakse tõlkemootorile. Seda valikut saab kasutada mitu korda, et anda mitu kontekstijada. Kontekstiandmed aitavad tõlkemootoril mõista tausta ja toota täpsemaid tõlkeid.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Määrake sõnastiku ID, mida kasutatakse tõlkimisel. See valik on saadaval ainult siis, kui kasutatakse DeepL mootorit. Sõnastiku ID tuleks saada teie DeepL kontolt ja see tagab konkreetsete terminite järjepideva tõlkimise.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "Näete tõlkimise tulemust reaalajas STDERR-väljundist.\n"
    ],

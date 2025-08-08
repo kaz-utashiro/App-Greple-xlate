@@ -198,6 +198,18 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     Tentukan jumlah baris maksimum teks yang akan dikirim ke API sekaligus.
 
+- **--xlate-prompt**=_text_
+
+    Tentukan prompt khusus yang akan dikirimkan ke mesin terjemahan. Opsi ini hanya tersedia saat menggunakan mesin ChatGPT (gpt3, gpt4, gpt4o). Anda dapat menyesuaikan perilaku terjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi `%s`, maka akan digantikan dengan nama bahasa target.
+
+- **--xlate-context**=_text_
+
+    Tentukan informasi konteks tambahan yang akan dikirimkan ke mesin terjemahan. Opsi ini dapat digunakan beberapa kali untuk memberikan beberapa string konteks. Informasi konteks membantu mesin terjemahan memahami latar belakang dan menghasilkan terjemahan yang lebih akurat.
+
+- **--xlate-glossary**=_glossary_
+
+    Tentukan ID glosarium yang akan digunakan untuk terjemahan. Opsi ini hanya tersedia saat menggunakan mesin DeepL. ID glosarium harus diperoleh dari akun DeepL Anda dan memastikan konsistensi terjemahan istilah tertentu.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Atur nilai ini ke 1 jika Anda ingin menerjemahkan satu baris pada satu waktu. Opsi ini memiliki prioritas lebih tinggi daripada opsi `--xlate-maxlen`.

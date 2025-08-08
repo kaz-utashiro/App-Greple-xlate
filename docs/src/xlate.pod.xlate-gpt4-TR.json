@@ -180,6 +180,18 @@
       "API'ye bir seferde gönderilecek metnin maksimum uzunluğunu belirtin. Varsayılan değer, ücretsiz DeepL hesap servisi için ayarlanmıştır: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro servisi kullanıyorsanız bu değerleri değiştirebilirsiniz.\n"
    ],
    [
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanılırken mevcuttur. Yapay zeka modeline belirli talimatlar vererek çeviri davranışını özelleştirebilirsiniz. Eğer istemde C<%s> bulunuyorsa, bu kısım hedef dil adıyla değiştirilecektir.\n"
+   ],
+   [
+      "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
+      "Çeviri motoruna gönderilecek ek bağlam bilgisi belirtin. Bu seçenek birden fazla kez kullanılarak birden fazla bağlam dizesi sağlanabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.\n"
+   ],
+   [
+      "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
+      "Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken mevcuttur. Sözlük kimliği DeepL hesabınızdan alınmalı ve belirli terimlerin tutarlı şekilde çevrilmesini sağlar.\n"
+   ],
+   [
       "See the tranlsation result in real time in the STDERR output.\n",
       "API'ye bir seferde gönderilecek maksimum metin satırı sayısını belirtin.\n"
    ],
