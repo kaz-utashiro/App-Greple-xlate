@@ -270,6 +270,27 @@ This interface is experimental and subject to change in the future.
     Set this value to 1 if you want to translate one line at a time.  This
     option takes precedence over the `--xlate-maxlen` option.
 
+- **--xlate-prompt**=_text_
+
+    Specify a custom prompt to be sent to the translation engine.  This option
+    is only available when using ChatGPT engines (gpt3, gpt4, gpt4o).  You can
+    customize the translation behavior by providing specific instructions to the
+    AI model.  If the prompt contains `%s`, it will be replaced with the target
+    language name.
+
+- **--xlate-context**=_text_
+
+    Specify additional context information to be sent to the translation
+    engine.  This option can be used multiple times to provide multiple
+    context strings.  The context information helps the translation engine
+    understand the background and produce more accurate translations.
+
+- **--xlate-glossary**=_glossary_
+
+    Specify a glossary ID to be used for translation.  This option is only
+    available when using the DeepL engine.  The glossary ID should be obtained
+    from your DeepL account and ensures consistent translation of specific terms.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     See the tranlsation result in real time in the STDERR output.

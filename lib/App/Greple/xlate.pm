@@ -302,6 +302,27 @@ Specify the maximum lines of text to be sent to the API at once.
 Set this value to 1 if you want to translate one line at a time.  This
 option takes precedence over the C<--xlate-maxlen> option.
 
+=item B<--xlate-prompt>=I<text>
+
+Specify a custom prompt to be sent to the translation engine.  This option
+is only available when using ChatGPT engines (gpt3, gpt4, gpt4o).  You can
+customize the translation behavior by providing specific instructions to the
+AI model.  If the prompt contains C<%s>, it will be replaced with the target
+language name.
+
+=item B<--xlate-context>=I<text>
+
+Specify additional context information to be sent to the translation
+engine.  This option can be used multiple times to provide multiple
+context strings.  The context information helps the translation engine
+understand the background and produce more accurate translations.
+
+=item B<--xlate-glossary>=I<glossary>
+
+Specify a glossary ID to be used for translation.  This option is only
+available when using the DeepL engine.  The glossary ID should be obtained
+from your DeepL account and ensures consistent translation of specific terms.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 See the tranlsation result in real time in the STDERR output.
@@ -544,7 +565,7 @@ use Unicode::EastAsianWidth;
 use List::Util qw(max);
 
 use Exporter 'import';
-our @EXPORT_OK = qw($VERSION &opt);
+our @EXPORT_OK = qw($VERSION &opt %opt);
 our @EXPORT_TAGS = ( all => [ qw($VERSION) ] );
 
 our %opt = (
@@ -567,6 +588,7 @@ our %opt = (
     mask     => \(our $mask),
     maskfile => \(our $maskfile),
     glossary => \(our $glossary),
+    contexts => (\our @contexts),
 );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
@@ -821,6 +843,7 @@ builtin xlate-maxlen=i     $max_length
 builtin xlate-maxline=i    $max_line
 builtin xlate-prompt=s     $prompt
 builtin xlate-glossary=s   $glossary
+builtin xlate-context=s    @contexts
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method
