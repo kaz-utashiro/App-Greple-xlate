@@ -286,6 +286,10 @@ sub gpty {
 	}
     };
     my $system = sprintf($prompt, @vars);
+    # Add context information directly to the main system prompt
+    if (my @contexts = @{$opt{contexts}}) {
+	$system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
+    }
     my @command = (
 	'gpty',
 	'--engine' => $param->{engine},
@@ -304,9 +308,6 @@ sub gpty {
     }
     if (defined $param->{verbosity}) {
 	push @command, '--verbosity' => $param->{verbosity};
-    }
-    if (my @contexts = @{$opt{contexts}}) {
-	push @command, map { ('--system' => "Translation context: $_") } @contexts;
     }
     push @command, '-';
     warn Dumper \@command if opt('debug');
