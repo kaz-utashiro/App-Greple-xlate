@@ -40,7 +40,7 @@ GPT-5 is available in three sizes:
 
 =item * B<Output limit>: 128,000 tokens (including reasoning tokens)
 
-=item * B<Context window>: 256,000 tokens
+=item * B<Total context window>: 400,000 tokens (272,000 input + 128,000 output)
 
 =back
 
@@ -68,7 +68,7 @@ Controls the model's thinking time and reasoning depth:
 
 =item * B<low> - Low reasoning effort, prioritizes speed
 
-=item * B<medium> - Default balanced reasoning (default)
+=item * B<medium> - Balanced reasoning (default)
 
 =item * B<high> - Maximum reasoning effort, prioritizes quality
 
@@ -130,6 +130,8 @@ useful for ensuring valid format generation.
 
 =item * B<gpt-5-nano>: $0.05/1M input tokens, $0.40/1M output tokens
 
+=item * B<Cached input>: $0.125/1M tokens (90% discount on cached input tokens)
+
 =back
 
 =head3 GPT-4 Series (for comparison)
@@ -142,7 +144,7 @@ useful for ensuring valid format generation.
 
 =item * B<gpt-4.1-nano>: $0.10/1M input tokens, $0.40/1M output tokens (1M token context)
 
-=item * B<gpt-4o>: $3/1M input tokens, $10/1M output tokens
+=item * B<gpt-4o>: $3.00/1M input tokens, $10.00/1M output tokens
 
 =item * B<gpt-4o-mini>: $0.15/1M input tokens, $0.60/1M output tokens
 
@@ -150,7 +152,11 @@ useful for ensuring valid format generation.
 
 =back
 
-Note: GPT-4.1 models feature 1,000,000 token context window and prompt caching (25% input cost for cached prefixes). GPT-4.1 is ~26% cheaper than GPT-4o for median queries. GPT-4o represents an 83% price drop for output tokens and 90% drop for input tokens compared to original GPT-4.
+Note: GPT-4.1 models feature 1,000,000 token context window and prompt caching (25% input cost for cached prefixes).
+
+GPT-4.1 is approximately 26% cheaper than GPT-4o for median queries.
+
+GPT-4o represents an 83% price drop for output tokens and 90% drop for input tokens compared to original GPT-4.
 
 =head1 CONFIGURATION
 
@@ -218,7 +224,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright 2024- Kazumasa Utashiro.
+Copyright 2024-2025 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
