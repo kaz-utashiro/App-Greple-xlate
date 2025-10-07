@@ -12,7 +12,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.9912
+Version 0.9913
 
 # DESCRIPTION
 

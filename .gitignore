@@ -34,3 +34,4 @@ MYMETA.*
 
 lib/**/*.xlate-*.json
 .DS_Store
+.claude
