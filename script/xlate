@@ -76,13 +76,13 @@ git_topdir() {
     [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]] || return
     local         dir="$(git rev-parse --show-superproject-working-tree)"
     [[ $dir ]] || dir="$(git rev-parse --show-toplevel)"
-    echo $dir
+    echo "$dir"
 }
 
 get_ip() {
     : get_ip
     local ip=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | tail -1)
-    echo $ip
+    echo "$ip"
 }
 
 dist_dir() {
@@ -141,7 +141,7 @@ container_name() {
 	fi
 	[[ $volume ]] && name+=.${volume##*/}
     fi
-    echo $name
+    echo "$name"
 }
 
 docker_find() {
@@ -150,12 +150,12 @@ docker_find() {
     while getopts "s:" OPT
     do
 	case $OPT in
-	    s) status+=($OPTARG) ;;
+	    s) status+=("$OPTARG") ;;
 	esac
     done
     shift $((OPTIND - 1))
     id=$(docker ps -a -q ${status[@]/#/-f status=} -f name="^/$1\$")
-    [[ $id ]] && echo $id || return 1
+    [[ $id ]] && echo "$id" || return 1
 }
 
 docker_status() {
@@ -201,7 +201,7 @@ do
 	    ;;
 	E) ENV+=("$OPTARG") ;;
 	P) ports+=("$OPTARG") ;;
-	O) others+=($OPTARG) ;;
+	O) others+=("$OPTARG") ;;
 	B) interactive= ;;
 
 	# mount related options
@@ -353,7 +353,7 @@ do
 	    then
 		cat $file
 	    else
-		echo $share
+		echo "$share"
 		ls -1 $share | sed 's/^/\t/'
 	    fi
 	    exit
@@ -378,9 +378,9 @@ shift $((OPTIND - 1))
 find_gmake() {
     local make
     (( $# == 0 )) && set make gmake gnumake
-    for make in $@
+    for make in "$@"
     do
-	[[ $($make --version) =~ GNU ]] && { echo $make; return 0; }
+	[[ $("$make" --version) =~ GNU ]] && { echo "$make"; return 0; }
     done
     return 1
 }
