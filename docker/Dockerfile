@@ -36,6 +36,7 @@ RUN pip install --upgrade \
 
 RUN deepl --version
 RUN gpty --version
+RUN llm --version
 
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
