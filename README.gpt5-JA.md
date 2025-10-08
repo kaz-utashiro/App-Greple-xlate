@@ -8,15 +8,17 @@ App::Greple::xlate - greple のための翻訳サポートモジュール
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** モジュールは、目的のテキストブロックを見つけて翻訳されたテキストに置き換えます。現在、DeepL（`deepl.pm`）と ChatGPT 4.1（`gpt4.pm`）モジュールがバックエンドエンジンとして実装されています。
+**Greple** **xlate** モジュールは、目的のテキストブロックを見つけて翻訳されたテキストに置き換えます。現在、DeepL（`deepl.pm`）、ChatGPT 4.1（`gpt4.pm`）、および GPT-5（`gpt5.pm`）モジュールがバックエンドエンジンとして実装されています。
 
 Perl の POD 形式で書かれた文書内の通常のテキストブロックを翻訳したい場合は、**greple** コマンドに `xlate::deepl` と `perl` モジュールを組み合わせて次のように使用します:
 
@@ -112,6 +114,8 @@ Perl の POD 形式で書かれた文書内の通常のテキストブロック�
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o** のインターフェイスは不安定で、現時点では正しく動作することを保証できません。
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ DeepLとChatGPTのコマンドラインツールをインストールする必�
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

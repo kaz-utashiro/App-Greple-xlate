@@ -8,15 +8,17 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Hetkel on rakendatud DeepL (`deepl.pm`) ja ChatGPT 4.1 (`gpt4.pm`) moodulit kui back-end mootorit.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on moodul DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) ja GPT-5 (`gpt5.pm`) rakendatud back-end mootorina.
 
 Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku **greple** koos `xlate::deepl` ja `perl` mooduliga niimoodi:
 
@@ -112,6 +114,8 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o** liides on ebastabiilne ja hetkel ei saa garanteerida selle korrektset toimimist.
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT.
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

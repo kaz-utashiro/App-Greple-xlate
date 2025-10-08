@@ -2,6 +2,12 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9914 2025-10-08T11:10:18Z
+
+    - add GPT-5 engine support to documentation
+    - add llm version display to Docker build
+    - include gpt5 translations in docs
+
 0.9913 2025-10-07T08:29:37Z
 
     - introduce --xlate-context option

@@ -10,15 +10,17 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9913
+Version 0.9914
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> η μονάδα εντοπίζει επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν τα DeepL (F<deepl.pm>) και ChatGPT 4.1 (F<gpt4.pm>) modules έχουν υλοποιηθεί ως μηχανές back-end.
+B<Greple> B<xlate> η μονάδα εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι μονάδες DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>) και GPT-5 (F<gpt5.pm>) έχουν υλοποιηθεί ως μηχανές παρασκηνίου.
 
 Αν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή B<greple> με τα modules C<xlate::deepl> και C<perl> όπως παρακάτω:
 
@@ -133,6 +135,8 @@ B<Greple> B<xlate> η μονάδα εντοπίζει επιθυμητά τμή�
 =item * B<gpt4o>: gpt-4o-mini
 
 Η διεπαφή του B<gpt-4o> είναι ασταθής και δεν μπορεί να εγγυηθεί ότι θα λειτουργεί σωστά προς το παρόν.
+
+=item * B<gpt5>: gpt-5
 
 =back
 
@@ -368,6 +372,8 @@ L<App::Greple::xlate>
 L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt4>
+
+L<App::Greple::xlate::gpt5>
 
 =over 2
 

@@ -4,8 +4,8 @@
       "App::Greple::xlate - greple용 번역 지원 모듈\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and ChatGPT 4.1 (F<gpt4.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 교체합니다. 현재 DeepL (F<deepl.pm>) 및 ChatGPT 4.1 (F<gpt4.pm>) 모듈이 백엔드 엔진으로 구현되어 있습니다.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>), and GPT-5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>), 그리고 GPT-5 (F<gpt5.pm>) 모듈이 백엔드 엔진으로 구현되어 있습니다.\n"
    ],
    [
       "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
@@ -314,6 +314,10 @@
    [
       "L<App::Greple::xlate::gpt4>\n",
       "L<App::Greple::xlate::gpt4>\n"
+   ],
+   [
+      "L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "Docker container image.\n",

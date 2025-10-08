@@ -8,15 +8,17 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** η μονάδα εντοπίζει επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν τα DeepL (`deepl.pm`) και ChatGPT 4.1 (`gpt4.pm`) modules έχουν υλοποιηθεί ως μηχανές back-end.
+**Greple** **xlate** η μονάδα εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι μονάδες DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) και GPT-5 (`gpt5.pm`) έχουν υλοποιηθεί ως μηχανές παρασκηνίου.
 
 Αν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με τα modules `xlate::deepl` και `perl` όπως παρακάτω:
 
@@ -112,6 +114,8 @@ Version 0.9913
     - **gpt4o**: gpt-4o-mini
 
         Η διεπαφή του **gpt-4o** είναι ασταθής και δεν μπορεί να εγγυηθεί ότι θα λειτουργεί σωστά προς το παρόν.
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ Version 0.9913
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

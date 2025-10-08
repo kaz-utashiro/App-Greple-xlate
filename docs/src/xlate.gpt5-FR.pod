@@ -10,15 +10,17 @@ App::Greple::xlate - module d’assistance à la traduction pour greple
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 =head1 VERSION
 
-Version 0.9913
+Version 0.9914
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, DeepL (F<deepl.pm>) et ChatGPT 4.1 (F<gpt4.pm>) sont implémentés comme moteurs back-end.
+B<Greple> B<xlate> le module trouve les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>) et GPT-5 (F<gpt5.pm>) sont implémentés comme moteur dorsal.
 
 Si vous souhaitez traduire des blocs de texte ordinaires dans un document rédigé au format pod de Perl, utilisez la commande B<greple> avec les modules C<xlate::deepl> et C<perl> comme ceci:
 
@@ -133,6 +135,8 @@ Spécifie le moteur de traduction à utiliser. Si vous spécifiez directement le
 =item * B<gpt4o>: gpt-4o-mini
 
 L’interface de B<gpt-4o> est instable et son bon fonctionnement ne peut pas être garanti pour le moment.
+
+=item * B<gpt5>: gpt-5
 
 =back
 
@@ -368,6 +372,8 @@ L<App::Greple::xlate>
 L<App::Greple::xlate::deepl>
 
 L<App::Greple::xlate::gpt4>
+
+L<App::Greple::xlate::gpt5>
 
 =over 2
 

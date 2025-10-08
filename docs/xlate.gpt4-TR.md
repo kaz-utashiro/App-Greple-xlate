@@ -8,15 +8,17 @@ App::Greple::xlate - greple için çeviri destek modülü
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** modül, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve ChatGPT 4.1 (`gpt4.pm`) modülleri arka uç motoru olarak uygulanmıştır.
+**Greple** **xlate** modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) ve GPT-5 (`gpt5.pm`) modülleri arka uç motoru olarak uygulanmıştır.
 
 Perl'in pod stilinde yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülleriyle şu şekilde kullanın:
 
@@ -112,6 +114,8 @@ Bu arayüz deneyseldir ve gelecekte değişikliğe tabidir.
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o**'ün arayüzü kararsızdır ve şu anda düzgün çalışacağı garanti edilemez.
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 [https://github.com/tecolicom/App-gpty](https://github.com/tecolicom/App-gpty)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

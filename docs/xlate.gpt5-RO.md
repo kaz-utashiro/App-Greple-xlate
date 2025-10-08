@@ -8,15 +8,17 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** modul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și ChatGPT 4.1 (`gpt4.pm`) sunt implementate ca motor back-end.
+**Greple** **xlate** modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) și GPT-5 (`gpt5.pm`) sunt implementate ca motoare back-end.
 
 Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul pod al Perl, folosiți comanda **greple** cu modulele `xlate::deepl` și `perl` astfel:
 
@@ -112,6 +114,8 @@ Această interfață este experimentală și poate suferi modificări în viitor
     - **gpt4o**: gpt-4o-mini
 
         Interfața lui **gpt-4o** este instabilă și nu poate fi garantat că va funcționa corect în acest moment.
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 

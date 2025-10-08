@@ -8,15 +8,17 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
     greple -Mxlate::gpt4 --xlate pattern target-file
 
-    greple -Mxlate --xlate-engine gpt4 --xlate pattern target-file
+    greple -Mxlate::gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 # VERSION
 
-Version 0.9913
+Version 0.9914
 
 # DESCRIPTION
 
-**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini DeepL (`deepl.pm`) dan ChatGPT 4.1 (`gpt4.pm`) telah diimplementasikan sebagai mesin back-end.
+**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`), dan GPT-5 (`gpt5.pm`) telah diimplementasikan sebagai mesin back-end.
 
 Jika Anda ingin menerjemahkan blok teks biasa dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
@@ -112,6 +114,8 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
     - **gpt4o**: gpt-4o-mini
 
         Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin berfungsi dengan benar saat ini.
+
+    - **gpt5**: gpt-5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -324,6 +328,8 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 [https://github.com/tecolicom/App-gpty](https://github.com/tecolicom/App-gpty)
 
 [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
+
+[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
