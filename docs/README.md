@@ -39,3 +39,4 @@
 - [xlate.gpt5-RU.md](xlate.gpt5-RU.md)
 - [xlate.gpt5-TR.md](xlate.gpt5-TR.md)
 - [xlate.gpt5-ZH.md](xlate.gpt5-ZH.md)
+- [xlate.gpt5-AR.md](xlate.gpt5-AR.md)
