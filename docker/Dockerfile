@@ -32,7 +32,7 @@ RUN pip install --upgrade \
        packaging deepl \
        git+https://github.com/tecolicom/App-gpty.git \
        llm \
-    && llm install llm-gemini llm-claude llm-claude-3 llm-perplexity
+    && llm install llm-gemini llm-claude-3 llm-perplexity llm-openrouter
 
 RUN deepl --version
 RUN gpty --version
