@@ -30,17 +30,16 @@ subtest 'missing image error' => sub {
     like($out, qr/image.*must be specified/i, 'error message mentions image');
 };
 
-# Test: option parsing (dry-run style test using debug mode)
+# Test: option parsing (valid options should reach "image must be specified" error)
 subtest 'option parsing' => sub {
-    # Test that options are recognized (will fail due to no image, but options should parse)
-    my $out = `$xrun -I test:image -W -B -R 2>&1`;
-    # Since no Docker, it will try to run and may fail, but options should be parsed
-    unlike($out, qr/不正なオプション|invalid option/i, 'options -W -B -R are recognized');
+    my $out = `$xrun -W -B -R 2>&1`;
+    unlike($out, qr/no such option/i, 'options -W -B -R are recognized');
+    like($out, qr/image.*must be specified/i, 'reaches image check (options parsed successfully)');
 };
 
 # Test: combined options like -KL
 subtest 'combined options' => sub {
-    my $out = `$xrun -I test:image --help 2>&1`;
+    my $out = `$xrun --help 2>&1`;
     like($out, qr/--kill/, '-K option documented');
     like($out, qr/--live/, '-L option documented');
 };
