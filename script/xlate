@@ -57,6 +57,8 @@ define pod <<"=cut"
         -K   kill and remove live container
         -E # specify an environment variable to be inherited
         -I # docker image or version (default: tecolicom/xlate:version)
+        -P # port mapping
+        -O # additional docker option
 
     Control Files:
         *.LANG    translation languages
@@ -71,20 +73,6 @@ define pod <<"=cut"
 
 [[ $pod =~ Version\ +([0-9.]+) ]] && my_version=${BASH_REMATCH[1]}
 
-git_topdir() {
-    : git_topdir
-    [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]] || return
-    local         dir="$(git rev-parse --show-superproject-working-tree)"
-    [[ $dir ]] || dir="$(git rev-parse --show-toplevel)"
-    echo "$dir"
-}
-
-get_ip() {
-    : get_ip
-    local ip=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | tail -1)
-    echo "$ip"
-}
-
 dist_dir() {
     perl -MFile::Share=:all -E "say dist_dir '$1'"
 }
@@ -94,78 +82,24 @@ warn() {
     echo "$@" >&2
 }
 
-topdir=$(git_topdir)
-pwd=$(pwd)
-owner=tecolicom
-image=
-repository=$owner/$myname
-hostname=
-mount=yes
-remove=yes
-interactive=yes
-container=
-version=
-workdir=/work
-mount_mode=rw
-read_only=
-display=
-localtime=/etc/localtime
-givenname=
-detach=
-volume=
-volumes=()
-ports=()
-others=()
-
-ENV=(
-    LANG TZ
-    HTTP_PROXY HTTPS_PROXY
-    http_proxy https_proxy
-    TERM_PROGRAM TERM_BGCOLOR COLORTERM
-    DEEPL_AUTH_KEY
-    OPENAI_API_KEY
-    ANTHROPIC_API_KEY
-    LLM_PERPLEXITY_KEY
-)
-
-container_name() {
-    : container_name
-    local name
-    if [[ $givenname ]]
-    then
-	name="$givenname"
-    else
-	if [[ $image =~ (.*/)?([-_.a-zA-Z]+) ]]
-	then name=${BASH_REMATCH[2]}
-	else name=$myname
-	fi
-	[[ $volume ]] && name+=.${volume##*/}
-    fi
-    echo "$name"
-}
-
-docker_find() {
-    : docker_find
-    local OPT OPTARG OPTIND status id
-    while getopts "s:" OPT
-    do
-	case $OPT in
-	    s) status+=("$OPTARG") ;;
-	esac
-    done
-    shift $((OPTIND - 1))
-    id=$(docker ps -a -q ${status[@]/#/-f status=} -f name="^/$1\$")
-    [[ $id ]] && echo "$id" || return 1
-}
-
-docker_status() {
-    docker inspect --format='{{.State.Status}}' $1
-}
+# Find xrun command
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+XRUN="${SCRIPT_DIR}/xrun"
+[[ -x "$XRUN" ]] || XRUN="xrun"
 
 
 ##
 ## read .xlaterc
 ##
+git_topdir() {
+    [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]] || return
+    local dir="$(git rev-parse --show-superproject-working-tree)"
+    [[ $dir ]] || dir="$(git rev-parse --show-toplevel)"
+    echo "$dir"
+}
+topdir=$(git_topdir)
+pwd=$(pwd)
+
 declare -a rcpath=(.)
 [[ $topdir && $topdir != $pwd ]] && rcpath+=($topdir)
 [[ $HOME != $pwd ]] && rcpath+=($HOME)
@@ -179,142 +113,71 @@ do
 done
 
 ##
-## Docker
+## Docker - delegate to xrun
 ##
-if [[ $topdir && $topdir != $pwd ]]
-then
-    volume="$topdir"
-fi
-while getopts :dq${DOCKER_OPT:=dJ:URAI:E:WHP:O:BV:GN:KSALCD} OPT
+declare -a xrun_opts=()
+version=
+image=
+
+# Set default image with version
+set_default_image() {
+    [[ $image ]] && return
+    repository=tecolicom/$myname
+    [[ ! $version && $my_version =~ ^[0-9]+\.[0-9_]+$ ]] && version=$my_version
+    image="${repository}${version:+:$version}"
+}
+
+while getopts :dq${DOCKER_OPT:=I:E:WHP:O:BV:RUN:KLCD} OPT
 do
     [[ $XLATE_RUNNING_ON_DOCKER ]] && break
     case $OPT in
 	d) debug=yes ; set -x ;;
-	q) quiet=yes ;;
+	q) quiet=yes ; xrun_opts+=(-q) ;;
 	I)
-	    if [[ $OPTARG =~ ^:(.+)$ ]]
-	    then
+	    if [[ $OPTARG =~ ^:(.+)$ ]]; then
 		version="${BASH_REMATCH[1]}"
-	    else 
+	    else
 		image="$OPTARG"
 	    fi
 	    ;;
-	E) ENV+=("$OPTARG") ;;
-	P) ports+=("$OPTARG") ;;
-	O) others+=("$OPTARG") ;;
-	B) interactive= ;;
-
-	# mount related options
-	J) workdir="$OPTARG" ;;
-	U) mount= ;;
-	R) mount_mode=ro ;;
-	V) volumes+=("$OPTARG") ;;
-	W|H|G)
-	    case $OPT in
-		W)  volume="$pwd" ;;
-		H)  volume="$HOME"
-		    ENV+=(HOME=$workdir)
-		    ;;
-		G)  ;;
-	    esac
-	    ;;
-
-	N) givenname="$OPTARG" ;;
+	E) xrun_opts+=(-E "$OPTARG") ;;
+	P) xrun_opts+=(-P "$OPTARG") ;;
+	O) xrun_opts+=(-O "$OPTARG") ;;
+	B) xrun_opts+=(-B) ;;
+	U) xrun_opts+=(-U) ;;
+	R) xrun_opts+=(-R) ;;
+	V) xrun_opts+=(-V "$OPTARG") ;;
+	W) xrun_opts+=(-W) ;;
+	H) xrun_opts+=(-H) ;;
+	N) xrun_opts+=(-N "$OPTARG") ;;
 	K)
-	    : ${container:=$(container_name)}
-	    if id=$(docker_find "$container")
-	    then
-		docker rm -f "$container" | sed -e "s/\$/ ($id) is removed/"
+	    # Check if -L follows
+	    if [[ ${@:$OPTIND:1} =~ ^-.*L ]]; then
+		# -L will add -I, just add -K here
+		xrun_opts+=(-K)
+	    else
+		set_default_image
+		xrun_opts+=(-I "$image" -K)
+		exec "$XRUN" "${xrun_opts[@]}"
 	    fi
-	    [[ ${@:$OPTIND:1} =~ L ]] && (( OPTIND++ )) || exit
-	    ;&
+	    ;;
 	L)
-	    : ${container:=$(container_name)}
-	    if id=$(docker_find "$container")
-	    then
-		status=$(docker_status $id)
-		case $status in
-		    exited)
-			warn start the "$container ($id)"
-			id=$(docker start $id) || exit 1
-			;;
-		    paused)
-			warn unpause the "$container ($id)"
-			id=$(docker unpause $id) || exit 1
-			;;
-		    running)
-			;;
-		    *)
-			warn unknown status $status of "$container ($id)"
-			;;
-		esac
-	    fi
-	    if id=$(docker_find -s running "$container")
-	    then
-		shift $((OPTIND - 1))
-		if (( $# > 0 ))
-		then
-		    declare -a dockopt
-		    [ $interactive ] && dockopt+=(--interactive)
-		    [ $interactive ] && [ -t 0 ] && dockopt+=(--tty)
-		    export DOCKER_CLI_HINTS=false
-		    exec docker exec ${dockopt[@]} $id "$@" || exit 1
-		else
-		    warn attach to the "$container ($id)"
-		    exec docker attach $id || exit 1
-		fi
-		exit
-	    fi
-	    warn create live conainer \"$container\"
-	    remove=
-	    ;&
-	C|D)
-	    if [[ $mount && $volume && $volume != $pwd ]]
-	    then
-		warn "Mount $volume to $workdir"
-		[[ ${pwd#$volume/} != $pwd ]] && relative="${pwd#$volume/}"
-	    fi
-	    if [[ $DISPLAY && "${ip:=$(get_ip)}" ]]
-	    then
-		display="$ip:0"
-	    fi
-	    if [[ ! $version && $my_version =~ ^[0-9]+\.[0-9_]+$ ]]
-	    then
-		version=$my_version
-	    fi
-	    declare -a command
-	    case "$OPT" in
-		D) command=(xlate) ;;
-		*) shift $((OPTIND - 1)) ;;
-	    esac
-	    command+=("$@")
-	    : ${image:=${repository}${version:+:$version}}
-	    : ${hostname:=$(<<< ${image} sed -e s:.*/:: -e s/:.*//)}
-	    declare -a dockopt=(
-		-e XLATE_RUNNING_ON_DOCKER=1
-		--init
-	    )
-	    [[ $interactive ]]  && dockopt+=(--interactive)
-	    [[ $interactive ]]  && [[ -t 0 ]] && dockopt+=(--tty)
-	    [[ $remove ]]       && dockopt+=(--rm)
-	    [[ $remove ]]       || dockopt+=(${container:+--name "$container"})
-	    [[ -e $localtime ]] && dockopt+=(-v $localtime:$localtime:ro)
-	    [[ $mount ]]        && dockopt+=(
-		    -v "${volume:-$pwd}:${workdir}:${mount_mode}" 
-		    -w "${workdir}${relative:+/${relative}}"
-		)
-	    dockopt+=(
-		${detach:+--detach}
-		${read_only:+--read-only}
-		${hostname:+--hostname "${hostname}"}
-		${display:+-e DISPLAY="$display"}
-		${ports[@]:+${ports[@]/#/-p }}
-		${volumes[@]:+${volumes[@]/#/-v }}
-		${others[@]}
-		${ENV[@]/#/-e }
-	    )
-	    exec=(docker run "${dockopt[@]}" "${image}" "${command[@]}")
-	    exec "${exec[@]}" || exit 1
+	    set_default_image
+	    xrun_opts+=(-I "$image" -L)
+	    shift $((OPTIND - 1))
+	    exec "$XRUN" "${xrun_opts[@]}" -- "$@"
+	    ;;
+	C)
+	    set_default_image
+	    xrun_opts+=(-I "$image")
+	    shift $((OPTIND - 1))
+	    exec "$XRUN" "${xrun_opts[@]}" -- "$@"
+	    ;;
+	D)
+	    set_default_image
+	    xrun_opts+=(-I "$image")
+	    shift $((OPTIND - 1))
+	    exec "$XRUN" "${xrun_opts[@]}" -- xlate "$@"
 	    ;;
     esac
 done
@@ -549,46 +412,17 @@ Available formats: xtxt, cm, ifdef, space, space+, colon
 
 =head2 Docker Support
 
-B<xlate> offers seamless integration with Docker, providing a powerful
-and flexible environment for translation tasks.  This approach
-combines the strengths of xlate's translation capabilities with
-Docker's containerization benefits.
+B<xlate> offers seamless integration with Docker through the B<xrun>
+command.  Use C<-D> to run xlate in a container, or C<-C> to run
+arbitrary commands.
 
-=head3 Key Concepts
+    xlate -D -t JA file.txt      # run xlate in container
+    xlate -C make                # run make in container
+    xlate -DM -t 'EN FR' *.docx  # combine with make
 
-=over 4
-
-=item B<Git Friendly>
-
-If you are working in a git environment, the git top directory is
-automatically mounted, which works seamlessly with git commands.
-Otherwise the current directory is mounted.
-
-=item B<Containerized Environment>
-
-By running xlate in a Docker container, you ensure a consistent and
-isolated environment for all translation tasks.  This eliminates
-issues related to system dependencies or conflicting software
-versions.
-
-=item B<Integration with Make>
-
-The Docker functionality can be combined with xlate's B<make> feature,
-allowing for complex, multi-file translation projects to be managed
-efficiently within a containerized environment. For example:
-
-    xlate -DM -t 'EN FR DE' project_files/*.docx
-
-This command runs B<xlate> in a Docker container, utilizing make to
-process multiple files with specified target languages.
-
-=item B<Environment Variable Handling>
-
-With the ability to pass specific environment variables into the
-container (C<-E>), you can easily manage API keys and other
-configuration settings without modifying the container itself.
-
-=back
+Docker options (C<-I>, C<-E>, C<-W>, C<-H>, C<-V>, C<-U>, C<-R>,
+C<-B>, C<-N>, C<-K>, C<-L>, C<-P>, C<-O>) are passed to B<xrun>.  For details
+on live containers, container naming, and configuration, see L<xrun>.
 
 =head2 Make Support
 
@@ -762,129 +596,54 @@ options.
 
 =over 7
 
-=item B<-D> I<options>
+=item B<-D>
 
-Run B<xlate> script on the Docker container with the rest of the
-parameters.
+Run B<xlate> on the Docker container with the rest of the parameters.
 
 =item B<-C> [ I<command> ]
 
-Execute the following command on the Docker container, or run a shell
-if no command is provided.
+Execute command on the Docker container, or run shell if no command.
 
 =item B<-L> [ I<command> ]
 
-When executed without arguments, option C<-L> attaches to a running
-container (performs C<docker attach>).  If the container does not
-exist, a new container is created, and if there is a stopped
-container, it is restarted before attaching.
+Use live (persistent) container.  See L<xrun> for details.
 
-If executed with command arguments, the command is executed on the
-running container (performs C<docker exec>).  If the container does
-not exist, it creates a new container executing the given command.
-Therefore, the next time it attaches, it connects to the container
-that executes that command.
+=item B<-W>, B<-H>, B<-U>, B<-R>
 
-Target container is distinguished by name.  The default container name
-is C<xlate>.  The image name (the part after the last slash in the
-Docker image name) is used as the container name.  If a directory to
-mount is specified, the name of that directory is added after a dot
-(C<.>).  For example, if you run C<ubuntu:latest> image with mounting
-home directory (C<-H>), the container name will be C<ubuntu.yourname>.
-
-=begin comment
-
-Naturally, the other docker options only apply the first time the
-container is launched.  Use the C<-K> option to remove the existing
-container before starting.  The C<-KA> option can be used to restart
-the container.
-
-=end comment
-
-=back
-
-When running in a Docker environment, the L<git(1)> top directory is
-mounted if you are in a directory under git, otherwise current
-directory is mounted.  The working directory inside the container will
-be set to the corresponding location within that tree.
-
-=over 7
-
-=item B<-W>
-
-Mount current working directory.
-
-=item B<-H>
-
-Mount user's home directory.  The environment variable C<HOME> is set
-to the mount point.
-
-=begin comment
-
-=item B<-G>
-
-Mount L<git(1)> top-level directory.  This is the default behavior, so
-it does virtually nothing.
-
-=end comment
-
-=item B<-U>
-
-Do not mount any directory.
-
-=item B<-R>
-
-Mount directory as read-only.
+Mount options: current directory (C<-W>), home directory (C<-H>),
+no mount (C<-U>), read-only (C<-R>).
 
 =item B<-V> I<from>:I<to>
 
-Specify an additional directory to be mounted.
-Repeatable.
+Additional volume mount.  Repeatable.
 
 =item B<-E> I<name>[=I<value>]
 
-Specify environment variable to be inherited in Docker.
-Repeatable.
+Environment variable to inherit.  Repeatable.
 
 =item B<-I> I<image>
 
-Specify Docker image name.  If it begins with a colon (C<:>), it is
-treated as a version of the default image.
-
-Setting an empty string will invalidate any previous settings and use
-the default image.
-
-=begin comment
-
-=item B<-J> I<directory>
-
-Specify the working directory (default: C</work>).
-
-=end comment
+Docker image.  Prefix with colon (C<:version>) for default image version.
 
 =item B<-B>
 
-Run the container in batch mode.  Specifically, run C<docker> command
-without the C<--interactive> and C<--tty> options.
+Batch mode (non-interactive).
 
-=item B<-N>
+=item B<-N> I<name>
 
-Specifies the name of the live container explicitly.  Once you have
-created a container named C<xlate>, you can connect to it with just
-the C<-L> option.
+Container name for live container.
 
 =item B<-K>
 
-Kill and remove the existing live container.  If a container with the
-specified name (default is C<xlate>) exists, it will be stopped and
-removed.
+Kill and remove the live container.
 
-=begin comment
+=item B<-P> I<port>
 
-If specified as C<-KL>, then a new container is launched after the
-existing container is removed.
+Port mapping (e.g., C<8080:80>).  Repeatable.
 
-=end comment
+=item B<-O> I<option>
+
+Additional docker option.  Repeatable.
 
 =back
 
@@ -949,6 +708,8 @@ Specifies translation engine.
 =head1 SEE ALSO
 
 L<App::Greple::xlate>
+
+L<xrun> - Generic Docker runner used by xlate for container operations
 
 =head1 AUTHOR
 

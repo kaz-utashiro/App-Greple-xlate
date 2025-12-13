@@ -1,0 +1,638 @@
+#!/usr/bin/env bash
+# vim: filetype=bash :  -*- mode: sh; sh-shell: bash; -*-
+
+set -euo pipefail
+
+define() { IFS='\n' read -r -d '' ${1} || true ; }
+
+myname="${0##*/}"
+
+define pod <<"=cut"
+
+=encoding utf-8
+
+=head1 NAME
+
+    xrun - Generic Docker Runner
+
+=head1 SYNOPSIS
+
+    xrun -I IMAGE [ options ] [ command ... ]
+
+        -h   , --help       show help
+        -d   , --debug      debug mode
+        -q   , --quiet      quiet mode
+
+    Docker options:
+        -I # , --image      Docker image (required)
+        -E # , --env        environment variable to inherit (repeatable)
+        -W   , --mount-cwd  mount current working directory
+        -H   , --mount-home mount home directory
+        -V # , --addvol     additional volume to mount (repeatable)
+        -U   , --unmount    do not mount any directory
+             , --mount-mode mount mode (rw or ro, default: rw)
+        -R   , --mount-ro   mount read-only (shortcut for --mount-mode=ro)
+        -B   , --batch      batch mode (non-interactive)
+        -N # , --name       live container name
+        -K   , --kill       kill and remove existing container
+        -L   , --live       use live (persistent) container
+        -P # , --port       port mapping (repeatable)
+        -O # , --other      additional docker options (repeatable)
+
+=head1 VERSION
+
+    Version 0.01
+
+=cut
+
+[[ $pod =~ Version\ +([0-9.]+) ]] && my_version=${BASH_REMATCH[1]}
+
+##############################################################################
+# Utility functions
+##############################################################################
+
+warn() {
+    [[ ${quiet:-} ]] && return
+    echo "$myname: $*" >&2
+}
+
+die() {
+    echo "$myname: $*" >&2
+    exit 1
+}
+
+git_topdir() {
+    [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]] || return
+    local dir="$(git rev-parse --show-superproject-working-tree)"
+    [[ $dir ]] || dir="$(git rev-parse --show-toplevel)"
+    echo "$dir"
+}
+
+get_ip() {
+    local ip=$(ifconfig 2>/dev/null | awk '/inet /{print $2}' | tail -1)
+    echo "$ip"
+}
+
+container_name() {
+    local name
+    if [[ ${givenname:-} ]]
+    then
+        name="$givenname"
+    else
+        if [[ ${image:-} =~ (.*/)?([-_.a-zA-Z0-9]+) ]]
+        then name=${BASH_REMATCH[2]}
+        else name=$myname
+        fi
+        [[ ${volume:-} ]] && name+=.${volume##*/}
+    fi
+    echo "$name"
+}
+
+docker_find() {
+    local OPT OPTARG OPTIND status=() id
+    while getopts "s:" OPT
+    do
+        case $OPT in
+            s) status+=("$OPTARG") ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    id=$(docker ps -a -q ${status[@]/#/-f status=} -f name="^/$1\$")
+    [[ $id ]] && echo "$id" || return 1
+}
+
+docker_status() {
+    docker inspect --format='{{.State.Status}}' $1
+}
+
+##############################################################################
+# Main
+##############################################################################
+
+# Find script directory and source getoptlong.sh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="${SCRIPT_DIR}/../lib/getoptlong"
+[[ -f "${LIB_DIR}/getoptlong.sh" ]] || die "getoptlong.sh not found"
+source "${LIB_DIR}/getoptlong.sh"
+
+# Default environment variables to inherit
+DEFAULT_ENV=(
+    LANG TZ
+    HTTP_PROXY HTTPS_PROXY
+    http_proxy https_proxy
+    TERM_PROGRAM TERM_BGCOLOR COLORTERM
+    DEEPL_AUTH_KEY
+    OPENAI_API_KEY
+    ANTHROPIC_API_KEY
+    LLM_PERPLEXITY_KEY
+)
+
+# Initialize variables
+topdir=$(git_topdir) || topdir=
+pwd=$(pwd)
+repository=
+hostname=
+workdir=/work
+localtime=/etc/localtime
+detach=
+volume=
+container=
+relative=
+display=
+
+# Set default volume based on git directory
+if [[ $topdir && $topdir != $pwd ]]; then
+    volume="$topdir"
+fi
+
+define USAGE <<END
+$myname - Generic Docker Runner
+
+Usage: $myname [ options ] [ command ... ]
+END
+
+declare -A OPTS=(
+    [&USAGE]="$USAGE"
+    [     debug | d   # enable debug mode               ]=
+    [     quiet | q   # quiet mode                      ]=
+    [     image | I : # Docker image                    ]=
+    [       env | E @                                   ]=
+    [ mount-cwd | W   # mount current working directory ]=
+    [mount-home | H   # mount home directory            ]=
+    [    addvol | V @                                   ]=
+    [   unmount | U   # do not mount                    ]=
+    [mount-mode     : # mount mode (rw or ro)           ]=rw
+    [  mount-ro | R   # mount read-only                 ]=
+    [     batch | B   # batch mode (non-interactive)    ]=
+    [      name | N : # live container name             ]=
+    [      kill | K   # kill existing container         ]=
+    [      live | L   # use live container              ]=
+    [      port | P @                                   ]=
+    [     other | O @                                   ]=
+)
+
+##############################################################################
+# Read .xrunrc
+##############################################################################
+
+# Collect .xrunrc paths in reverse priority order (lowest first)
+declare -a rcpath=()
+[[ $HOME != $pwd ]] && rcpath+=("$HOME")
+[[ $topdir && $topdir != $pwd ]] && rcpath+=("$topdir")
+rcpath+=(.)
+
+# Collect options from .xrunrc files
+declare -a rc_opts=()
+for dir in "${rcpath[@]}"; do
+    rc="$dir/.xrunrc"
+    [[ -r $rc ]] || continue
+    warn "reading $rc"
+    while IFS= read -r line; do
+        [[ $line =~ ^# ]] && continue
+        [[ -z $line ]] && continue
+        rc_opts+=($line)
+    done < "$rc"
+done
+
+##############################################################################
+# Parse options
+##############################################################################
+
+getoptlong init OPTS PERMUTE=
+getoptlong parse "${rc_opts[@]}" "$@" && eval "$(getoptlong set)"
+
+# Debug mode
+[[ ${debug:-} ]] && set -x
+
+# Apply options
+[[ ${mount_cwd:-} ]] && volume="$pwd"
+[[ ${mount_home:-} ]] && { volume="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
+[[ ${mount_ro:-} ]] && mount_mode=ro  # -R overrides --mount-mode
+givenname="${name:-}"
+
+# Merge environment variables
+ENV=("${DEFAULT_ENV[@]}")
+(( ${#env[@]} > 0 )) && ENV+=("${env[@]}")
+
+##############################################################################
+# Kill container
+##############################################################################
+
+if [[ ${kill:-} ]]; then
+    container=$(container_name)
+    if id=$(docker_find "$container"); then
+        docker rm -f "$container" | sed -e "s/\$/ ($id) is removed/"
+    fi
+    [[ ${live:-} ]] || exit 0
+fi
+
+##############################################################################
+# Live container handling
+##############################################################################
+
+if [[ ${live:-} ]]; then
+    container=$(container_name)
+    if id=$(docker_find "$container"); then
+        status=$(docker_status $id)
+        case $status in
+            exited)
+                warn "start the $container ($id)"
+                id=$(docker start $id) || exit 1
+                ;;
+            paused)
+                warn "unpause the $container ($id)"
+                id=$(docker unpause $id) || exit 1
+                ;;
+            running)
+                ;;
+            *)
+                warn "unknown status $status of $container ($id)"
+                ;;
+        esac
+    fi
+    if id=$(docker_find -s running "$container"); then
+        if (( $# > 0 )); then
+            declare -a dockopt
+            [[ ! ${batch:-} ]] && dockopt+=(--interactive)
+            [[ ! ${batch:-} ]] && [[ -t 0 ]] && dockopt+=(--tty)
+            export DOCKER_CLI_HINTS=false
+            exec docker exec "${dockopt[@]}" $id "$@"
+        else
+            warn "attach to the $container ($id)"
+            exec docker attach $id
+        fi
+    fi
+    warn "create live container \"$container\""
+fi
+
+##############################################################################
+# Run container
+##############################################################################
+
+: ${image:=${repository}}
+[[ -z "$image" ]] && die "Docker image must be specified with -I option"
+
+if [[ ! ${unmount:-} && $volume && $volume != $pwd ]]; then
+    warn "Mount $volume to $workdir"
+    [[ ${pwd#$volume/} != $pwd ]] && relative="${pwd#$volume/}"
+fi
+
+if [[ ${DISPLAY:-} ]]; then
+    ip=$(get_ip)
+    [[ $ip ]] && display="$ip:0"
+fi
+: ${hostname:=$(<<< "${image}" sed -e 's:.*/::' -e 's/:.*//' | tr -d '[:space:]')}
+
+declare -a dockopt=(
+    -e XRUN_RUNNING_ON_DOCKER=1
+    -e XLATE_RUNNING_ON_DOCKER=1
+    --init
+)
+[[ ! ${batch:-} ]]  && dockopt+=(--interactive)
+[[ ! ${batch:-} ]]  && [[ -t 0 ]] && dockopt+=(--tty)
+[[ ! ${live:-} ]]   && dockopt+=(--rm)
+[[   ${live:-} ]]   && dockopt+=(${container:+--name "$container"})
+[[ -e $localtime ]] && dockopt+=(-v $localtime:$localtime:ro)
+[[ ! ${unmount:-} ]] && dockopt+=(
+        -v "${volume:-$pwd}:${workdir}:${mount_mode}"
+        -w "${workdir}${relative:+/${relative}}"
+    )
+# Add additional volumes
+if (( ${#addvol[@]} > 0 )); then
+    for v in "${addvol[@]}"; do
+        dockopt+=(-v "$v")
+    done
+fi
+
+# Add ports
+if (( ${#port[@]} > 0 )); then
+    for p in "${port[@]}"; do
+        dockopt+=(-p "$p")
+    done
+fi
+
+# Add other options
+if (( ${#other[@]} > 0 )); then
+    for o in "${other[@]}"; do
+        dockopt+=("$o")
+    done
+fi
+
+dockopt+=(
+    ${detach:+--detach}
+    ${hostname:+--hostname "${hostname}"}
+    ${display:+-e DISPLAY="$display"}
+)
+
+# Add environment variables
+for e in "${ENV[@]}"; do
+    dockopt+=(-e "$e")
+done
+
+exec docker run "${dockopt[@]}" "${image}" "$@"
+
+: <<'=cut'
+
+=head1 DESCRIPTION
+
+B<xrun> is a generic Docker runner that simplifies running commands in
+Docker containers. It provides automatic Git repository detection,
+live container support, and environment variable inheritance.
+
+=head2 Key Features
+
+=over 4
+
+=item B<Git Friendly>
+
+If you are working in a git environment, the git top directory is
+automatically mounted. Otherwise the current directory is mounted.
+
+=item B<Live Container>
+
+Use C<-L> to create or attach to a persistent container that survives
+between invocations.
+
+=item B<Auto Container Name>
+
+Container names are automatically generated from the image name and
+mount directory.
+
+=item B<Configuration File>
+
+Use C<.xrunrc> to set default options. Searched in current directory,
+git top directory, and home directory.
+
+=back
+
+=head1 OPTIONS
+
+=over 7
+
+=item B<-h>, B<--help>
+
+Show help message.
+
+=item B<-d>, B<--debug>
+
+Enable debug mode.
+
+=item B<-q>, B<--quiet>
+
+Quiet mode.
+
+=item B<-I> I<image>, B<--image>=I<image>
+
+Specify Docker image.
+
+=item B<-E> I<name>[=I<value>], B<--env>=I<name>[=I<value>]
+
+Specify environment variable to inherit. Repeatable.
+
+=item B<-W>, B<--mount-cwd>
+
+Mount current working directory.
+
+=item B<-H>, B<--mount-home>
+
+Mount home directory.
+
+=item B<-V> I<from>:I<to>, B<--addvol>=I<from>:I<to>
+
+Specify additional directory to mount. Repeatable.
+
+=item B<-U>, B<--unmount>
+
+Do not mount any directory.
+
+=item B<--mount-mode>=I<mode>
+
+Set mount mode. I<mode> is either C<rw> (read-write, default) or C<ro>
+(read-only).
+
+=item B<-R>, B<--mount-ro>
+
+Mount directory as read-only. Shortcut for C<--mount-mode=ro>.
+
+=item B<-B>, B<--batch>
+
+Run in batch mode (non-interactive).
+
+=item B<-N> I<name>, B<--name>=I<name>
+
+Specify container name explicitly.
+
+=item B<-K>, B<--kill>
+
+Kill and remove existing container.
+
+=item B<-L>, B<--live>
+
+Use live (persistent) container.
+
+=item B<-P> I<port>, B<--port>=I<port>
+
+Specify port mapping (e.g., C<8080:80>). Repeatable.
+
+=item B<-O> I<option>, B<--other>=I<option>
+
+Specify additional docker options. Repeatable.
+
+=back
+
+=head1 LIVE CONTAINER
+
+The C<-L> option enables live (persistent) container mode. Unlike
+normal mode where containers are removed after execution (C<--rm>),
+live containers persist between invocations, allowing you to maintain
+state and reduce startup overhead.
+
+=head2 Container Lifecycle
+
+When C<-L> is specified, B<xrun> behaves as follows:
+
+=over 4
+
+=item 1. B<Container exists and is running>
+
+If a command is given, execute it using C<docker exec>. Otherwise,
+attach to the container using C<docker attach>.
+
+=item 2. B<Container exists but is exited>
+
+Start the container with C<docker start>, then proceed as above.
+
+=item 3. B<Container exists but is paused>
+
+Unpause the container with C<docker unpause>, then proceed as above.
+
+=item 4. B<Container does not exist>
+
+Create a new persistent container (without C<--rm> flag).
+
+=back
+
+=head2 Container Naming
+
+Container names are automatically generated in the format:
+
+    <image_name>.<mount_directory>
+
+For example, if you run:
+
+    xrun -I tecolicom/xlate -L
+
+from C</home/user/project>, the container name would be
+C<xlate.project>.
+
+You can override the auto-generated name using the C<-N> option:
+
+    xrun -I tecolicom/xlate -L -N mycontainer
+
+=head2 Managing Live Containers
+
+=over 4
+
+=item B<Attach to existing container>
+
+    xrun -I myimage -L
+
+If no command is given, attaches to the container's main process.
+
+=item B<Execute command in existing container>
+
+    xrun -I myimage -L ls -la
+
+Runs the command in the existing container using C<docker exec>.
+
+=item B<Kill and recreate container>
+
+    xrun -I myimage -KL
+
+The C<-K> option removes the existing container before C<-L> creates
+a new one. Useful when you need a fresh container state.
+
+=item B<Kill container only>
+
+    xrun -I myimage -K
+
+Without C<-L>, the container is removed and the command exits.
+
+=back
+
+=head2 Interactive Mode
+
+In live container mode, interactive mode (C<-i> and C<-t> flags for
+Docker) is automatically enabled when:
+
+=over 4
+
+=item * Standard input is a terminal (TTY)
+
+=item * The C<-B> (batch) option is not specified
+
+=back
+
+This allows seamless interactive use when attaching to containers or
+running interactive commands.
+
+=head1 CONFIGURATION FILE
+
+C<.xrunrc> is searched in the following order:
+
+=over 4
+
+=item 1. Current directory
+
+=item 2. Git top directory (if different)
+
+=item 3. Home directory
+
+=back
+
+All matching files are read and their options are prepended to
+the command line arguments. This means you can use any command
+line option in the configuration file:
+
+    # Example .xrunrc
+    -I tecolicom/xlate:latest
+    -L
+    -E CUSTOM_VAR=value
+    -V /data:/data
+
+Lines starting with C<#> are treated as comments.
+
+=head2 Option Priority
+
+Options are processed in this order (later values override earlier):
+
+=over 4
+
+=item 1. Home directory C<.xrunrc>
+
+=item 2. Git top directory C<.xrunrc>
+
+=item 3. Current directory C<.xrunrc>
+
+=item 4. Command line arguments
+
+=back
+
+=head1 ENVIRONMENT
+
+=head2 Inherited Variables
+
+The following environment variables are inherited by default:
+
+    LANG TZ
+    HTTP_PROXY HTTPS_PROXY http_proxy https_proxy
+    TERM_PROGRAM TERM_BGCOLOR COLORTERM
+    DEEPL_AUTH_KEY OPENAI_API_KEY ANTHROPIC_API_KEY LLM_PERPLEXITY_KEY
+
+=head2 Container Variables
+
+The following environment variables are set inside the container:
+
+=over 4
+
+=item C<XRUN_RUNNING_ON_DOCKER=1>
+
+Indicates the command is running inside a container started by xrun.
+
+=item C<XLATE_RUNNING_ON_DOCKER=1>
+
+For compatibility with xlate. Used to prevent recursive Docker
+invocation when xlate is run inside the container.
+
+=back
+
+=head1 EXAMPLES
+
+    # Run a command in container
+    xrun -I ubuntu:latest echo hello
+
+    # Attach to live container
+    xrun -I myimage:v1 -L
+
+    # Run bash with specific image
+    xrun -I myimage:v1 bash
+
+    # Kill and restart live container
+    xrun -I myimage:v1 -KL
+
+=head1 SEE ALSO
+
+L<xlate>
+
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
+=head1 LICENSE
+
+Copyright © 2025 Kazumasa Utashiro.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
