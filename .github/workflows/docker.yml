@@ -6,44 +6,78 @@ on:
       - '*.*'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PACKAGE: tecolicom/xlate
+
 jobs:
   build:
-    runs-on: ubuntu-latest
     if: github.ref_type == 'tag'
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Version and Package
+      - name: Set version
         run: |
-          PACKAGE=tecolicom/xlate
-          sed 's/^ *//' << END >> $GITHUB_ENV
-              PACKAGE=$PACKAGE
-          END
-          if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]
-          then
-              VERSION="${BASH_REMATCH[1]}"
-              echo VERSION_TAG="$PACKAGE:$VERSION"
-              echo REPO_URL="https://github.com/$GITHUB_REPOSITORY.git@$VERSION"
-          else
-              echo REPO_URL="https://github.com/$GITHUB_REPOSITORY.git"
-          fi >> $GITHUB_ENV
+          if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]; then
+            echo "VERSION=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "REPO_URL=https://github.com/$GITHUB_REPOSITORY.git@${BASH_REMATCH[1]}" >> $GITHUB_ENV
+          fi
 
-      # Build Docker Image
-      - uses: docker/login-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
         with:
           context: docker
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/${{ matrix.arch }}
           push: true
           build-args: |
             REPO_URL=${{ env.REPO_URL }}
           tags: |
-            ${{ env.PACKAGE }}:latest
-            ${{ env.VERSION_TAG }}
+            ${{ env.PACKAGE }}:${{ env.VERSION }}-${{ matrix.arch }}
+            ${{ env.PACKAGE }}:latest-${{ matrix.arch }}
+
+  manifest:
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set version
+        run: |
+          if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]; then
+            echo "VERSION=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+          fi
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Create and push manifest
+        run: |
+          for tag in $VERSION latest; do
+            docker buildx imagetools create \
+              -t $PACKAGE:$tag \
+              $PACKAGE:${tag}-amd64 \
+              $PACKAGE:${tag}-arm64
+          done
