@@ -194,7 +194,7 @@ library() {
         cat "$file"
     else
         echo "$share"
-        ls -1 "$share" | sed 's/^/\t/'
+        (cd "$share" && find . -type f | sed 's|^\./|\t|')
     fi
     exit 0
 }

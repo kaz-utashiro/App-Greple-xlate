@@ -137,14 +137,14 @@ hostname=
 workdir=/work
 localtime=/etc/localtime
 detach=
-volume=
+mount_dir=
 container=
 relative=
 display=
 
 # Set default volume based on git directory
 if [[ $topdir && $topdir != $pwd ]]; then
-    volume="$topdir"
+    mount_dir="$topdir"
 fi
 
 define USAGE <<END
@@ -206,8 +206,8 @@ done
 [[ ${debug:-} ]] && set -x
 
 # Apply options
-[[ ${mount_cwd:-} ]] && volume="$pwd"
-[[ ${mount_home:-} ]] && { volume="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
+[[ ${mount_cwd:-} ]] && mount_dir="$pwd"
+[[ ${mount_home:-} ]] && { mount_dir="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
 [[ ${mount_ro:-} ]] && mount_mode=ro  # -R overrides --mount-mode
 givenname="${name:-}"
 
@@ -273,9 +273,9 @@ fi
 : ${image:=${repository}}
 [[ -z "$image" ]] && die "Docker image must be specified with -I option"
 
-if [[ ! ${unmount:-} && $volume && $volume != $pwd ]]; then
-    warn "Mount $volume to $workdir"
-    [[ ${pwd#$volume/} != $pwd ]] && relative="${pwd#$volume/}"
+if [[ ! ${unmount:-} && $mount_dir && $mount_dir != $pwd ]]; then
+    warn "Mount $mount_dir to $workdir"
+    [[ ${pwd#$mount_dir/} != $pwd ]] && relative="${pwd#$mount_dir/}"
 fi
 
 if [[ ${DISPLAY:-} ]]; then
@@ -295,7 +295,7 @@ declare -a dockopt=(
 [[   ${live:-}    ]] && dockopt+=(${container:+--name "$container"})
 [[ -e $localtime  ]] && dockopt+=(-v $localtime:$localtime:ro)
 [[ ! ${unmount:-} ]] && dockopt+=(
-        -v "${volume:-$pwd}:${workdir}:${mount_mode}"
+        -v "${mount_dir:-$pwd}:${workdir}:${mount_mode}"
         -w "${workdir}${relative:+/${relative}}"
     )
 # Add additional volumes
