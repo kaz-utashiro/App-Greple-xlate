@@ -11,7 +11,7 @@ my $xrun = File::Spec->rel2abs('script/xrun');
 ok(-x $xrun, 'xrun is executable');
 
 # Check if getoptlong.sh exists
-ok(-f 'lib/getoptlong/getoptlong.sh', 'getoptlong.sh exists');
+ok(-f 'share/getoptlong/getoptlong.sh', 'getoptlong.sh exists');
 
 # Test: help option
 subtest 'help option' => sub {
