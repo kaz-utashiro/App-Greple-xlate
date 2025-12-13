@@ -9,10 +9,9 @@ static_install = "auto"
 [release]
 branch = "main"
 hooks = [
-    "cp share/getoptlong/getoptlong.sh share/getoptlong.sh",
     "make -C docs",
     "perl -Ilib -MApp::Greple::xlate=\$VERSION -i -pE 's/^\s*Version \K([\d.]+)/$VERSION/' script/xlate"
 ]
 
 [FileGatherer]
-exclude_match = [ '^images/.*', '^share/getoptlong/' ]
+exclude_match = [ '^images/.*', '^share/getoptlong/(?!getoptlong\.sh)' ]

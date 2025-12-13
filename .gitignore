@@ -36,4 +36,3 @@ lib/**/*.xlate-*.json
 .DS_Store
 .claude
 
-/share/getoptlong.sh
