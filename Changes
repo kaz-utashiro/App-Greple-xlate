@@ -2,6 +2,14 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9917 2025-12-13T15:04:34Z
+
+    - use native ARM64 runner for faster Docker image builds
+    - add concurrency control to Docker workflow
+    - add xrun to release hook for automatic version updates
+    - move API and Docker tests to xt/author to prevent
+      unintended API calls and image downloads during cpanm install
+
 0.9916 2025-12-13T13:24:26Z
 
     - implement GNU-style long options using getoptlong.sh library
