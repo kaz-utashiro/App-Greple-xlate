@@ -260,8 +260,16 @@
       "Seda moodulit saab hõlpsasti kasutada käsurealt, kasutades jaotuses sisalduvat käsku C<xlate>. Kasutamise kohta vaata man-lehte C<xlate>.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "Käsk C<xlate> toetab GNU stiilis pikki valikuid nagu C<--to-lang>, C<--from-lang>, C<--engine> ja C<--file>. Kasutage C<xlate -h>, et näha kõiki olemasolevaid valikuid.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "C<xlate> käsk töötab koos Dockeri keskkonnaga, nii et isegi kui teil ei ole midagi paigaldatud, saate seda kasutada, kui Docker on saadaval. Kasutage valikut C<-D> või C<-C>.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Dockeri operatsioone teostab skript C<xrun>, mida saab kasutada ka iseseisva käsuna. Skript C<xrun> toetab C<.xrunrc> konfiguratsioonifaili püsivate konteineri seadete jaoks.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "Dockeri konteineri kujutis.\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "C<getoptlong.sh> raamatukogu, mida kasutatakse C<xlate> ja C<xrun> skriptide valikute parsimiseks.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

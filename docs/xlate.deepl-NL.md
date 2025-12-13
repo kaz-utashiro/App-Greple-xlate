@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.9915
+Version 0.9916
 
 # DESCRIPTION
 
@@ -277,7 +277,11 @@ Gebruik **--xlate-cache=clear** om cachebeheer te starten of om alle bestaande c
 
 Je kunt deze module eenvoudig vanaf de commandoregel gebruiken met het `xlate` commando dat bij de distributie zit. Zie de `xlate` man pagina voor het gebruik.
 
+Het `xlate` commando ondersteunt GNU-stijl lange opties zoals `--to-lang`, `--from-lang`, `--engine`, en `--file`. Gebruik `xlate -h` om alle beschikbare opties te zien.
+
 Het `xlate` commando werkt samen met de Docker omgeving, dus zelfs als je niets geïnstalleerd hebt, kun je het gebruiken zolang Docker beschikbaar is. Gebruik de optie `-D` of `-C`.
+
+Docker-operaties worden afgehandeld door het `xrun` script, dat ook als zelfstandig commando kan worden gebruikt. Het `xrun` script ondersteunt het `.xrunrc` configuratiebestand voor persistente containerinstellingen.
 
 Omdat er makefiles voor verschillende documentstijlen worden meegeleverd, is vertaling naar andere talen mogelijk zonder speciale specificaties. Gebruik de optie `-M`.
 
@@ -334,6 +338,10 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Docker containerafbeelding.
+
+- [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
+
+    De `getoptlong.sh` bibliotheek wordt gebruikt voor het parsen van opties in de `xlate` en `xrun` scripts.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

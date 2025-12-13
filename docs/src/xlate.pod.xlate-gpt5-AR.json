@@ -260,8 +260,16 @@
       "يمكنك استخدام هذه الوحدة بسهولة من سطر الأوامر باستخدام أمر C<xlate> المُضمَّن في التوزيعة. راجع صفحة الدليل C<xlate> للاستخدام.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "يدعم الأمر C<xlate> خيارات طويلة بأسلوب GNU مثل C<--to-lang> وC<--from-lang> وC<--engine> وC<--file>. استخدم C<xlate -h> لرؤية جميع الخيارات المتاحة.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "يعمل أمر C<xlate> بالتنسيق مع بيئة Docker، لذا حتى إذا لم يكن لديك أي شيء مُثبّت محليًا، يمكنك استخدامه طالما أن Docker متاح. استخدم خيار C<-D> أو C<-C>.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "تتم إدارة عمليات Docker بواسطة البرنامج النصي C<xrun>، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي C<xrun> ملف التهيئة C<.xrunrc> لإعدادات الحاوية الدائمة.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "صورة حاوية Docker.\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "تُستخدم مكتبة C<getoptlong.sh> لتحليل الخيارات في البرنامجين النصيين C<xlate> وC<xrun>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

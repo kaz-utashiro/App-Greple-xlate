@@ -14,7 +14,7 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
 # VERSION
 
-Version 0.9915
+Version 0.9916
 
 # DESCRIPTION
 
@@ -277,7 +277,11 @@ Version 0.9915
 
 Αυτή η επιλογή αναγκάζει την ενημέρωση του αρχείου cache ακόμα κι αν δεν είναι απαραίτητο.
 
+Η εντολή `xlate` υποστηρίζει επιλογές μεγάλου μήκους τύπου GNU όπως `--to-lang`, `--from-lang`, `--engine` και `--file`. Χρησιμοποιήστε `xlate -h` για να δείτε όλες τις διαθέσιμες επιλογές.
+
 Μπορείτε εύκολα να χρησιμοποιήσετε αυτήν τη μονάδα από τη γραμμή εντολών χρησιμοποιώντας την εντολή `xlate` που περιλαμβάνεται στη διανομή. Δείτε τη σελίδα man `xlate` για οδηγίες χρήσης.
+
+Οι λειτουργίες Docker διαχειρίζονται από το script `xrun`, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το script `xrun` υποστηρίζει το αρχείο ρυθμίσεων `.xrunrc` για μόνιμες ρυθμίσεις κοντέινερ.
 
 Η εντολή `xlate` λειτουργεί σε συνδυασμό με το περιβάλλον Docker, οπότε ακόμα κι αν δεν έχετε τίποτα εγκατεστημένο τοπικά, μπορείτε να το χρησιμοποιήσετε αρκεί να είναι διαθέσιμο το Docker. Χρησιμοποιήστε την επιλογή `-D` ή `-C`.
 
@@ -334,6 +338,10 @@ Version 0.9915
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
+
+- [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
+
+    Η βιβλιοθήκη `getoptlong.sh` χρησιμοποιείται για την ανάλυση επιλογών στα scripts `xlate` και `xrun`.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -260,8 +260,16 @@
       "Vous pouvez facilement utiliser ce module à partir de la ligne de commande en utilisant la commande C<xlate> incluse dans la distribution. Voir la page de manuel C<xlate> pour l'utilisation.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "La commande C<xlate> prend en charge les options longues de style GNU telles que C<--to-lang>, C<--from-lang>, C<--engine> et C<--file>. Utilisez C<xlate -h> pour voir toutes les options disponibles.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "La commande C<xlate> fonctionne de concert avec l'environnement Docker, donc même si vous n'avez rien d'installé, vous pouvez l'utiliser tant que Docker est disponible. Utilisez l'option C<-D> ou C<-C>.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Les opérations Docker sont gérées par le script C<xrun>, qui peut également être utilisé comme une commande autonome. Le script C<xrun> prend en charge le fichier de configuration C<.xrunrc> pour les paramètres persistants des conteneurs.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "Image de conteneur Docker.\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "La bibliothèque C<getoptlong.sh> est utilisée pour l'analyse des options dans les scripts C<xlate> et C<xrun>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

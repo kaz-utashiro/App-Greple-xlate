@@ -260,8 +260,16 @@
       "Diese Option erzwingt die Aktualisierung der Cache-Datei, auch wenn dies nicht notwendig ist.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "Der C<xlate>-Befehl unterstützt GNU-ähnliche Langoptionen wie C<--to-lang>, C<--from-lang>, C<--engine> und C<--file>. Verwenden Sie C<xlate -h>, um alle verfügbaren Optionen anzuzeigen.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "Sie können dieses Modul einfach über die Befehlszeile mit dem in der Distribution enthaltenen C<xlate>-Befehl verwenden. Siehe die C<xlate>-Manpage für die Verwendung.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Docker-Operationen werden vom C<xrun>-Skript verarbeitet, das auch als eigenständiger Befehl verwendet werden kann. Das C<xrun>-Skript unterstützt die C<.xrunrc>-Konfigurationsdatei für persistente Container-Einstellungen.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "Docker-Container-Image.\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "Die C<getoptlong.sh>-Bibliothek wird für die Optionsauswertung in den C<xlate>- und C<xrun>-Skripten verwendet.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

@@ -260,8 +260,16 @@
       "Μπορείτε εύκολα να χρησιμοποιήσετε αυτήν την ενότητα από τη γραμμή εντολών χρησιμοποιώντας την εντολή C<xlate> που περιλαμβάνεται στη διανομή. Ανατρέξτε στη σελίδα man C<xlate> για τη χρήση.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "Η εντολή C<xlate> υποστηρίζει μακρές επιλογές τύπου GNU, όπως C<--to-lang>, C<--from-lang>, C<--engine> και C<--file>. Χρησιμοποιήστε την εντολή C<xlate -h> για να δείτε όλες τις διαθέσιμες επιλογές.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "Η εντολή C<xlate> λειτουργεί σε συνεργασία με το περιβάλλον Docker, οπότε ακόμα και αν δεν έχετε τίποτα εγκατεστημένο στο χέρι, μπορείτε να τη χρησιμοποιήσετε εφόσον το Docker είναι διαθέσιμο. Χρησιμοποιήστε την επιλογή C<-D> ή C<-C>.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Οι λειτουργίες Docker διεκπεραιώνονται από το σενάριο C<xrun>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το σενάριο C<xrun> υποστηρίζει το αρχείο ρυθμίσεων C<.xrunrc> για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "Εικόνα εμπορευματοκιβωτίου Docker.\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση των επιλογών στα σενάρια C<xlate> και C<xrun>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

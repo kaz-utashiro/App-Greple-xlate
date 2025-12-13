@@ -14,7 +14,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.9915
+Version 0.9916
 
 # DESCRIPTION
 
@@ -277,7 +277,11 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
 Bu modülü, dağıtımda bulunan `xlate` komutunu kullanarak komut satırından kolayca kullanabilirsiniz. Kullanım için `xlate` man sayfasına bakın.
 
+`xlate` komutu, `--to-lang`, `--from-lang`, `--engine` ve `--file` gibi GNU tarzı uzun seçenekleri destekler. Kullanılabilir tüm seçenekleri görmek için `xlate -h` kullanın.
+
 `xlate` komutu Docker ortamı ile uyumlu olarak çalışır, bu nedenle elinizde kurulu bir şey olmasa bile Docker mevcut olduğu sürece kullanabilirsiniz. `-D` veya `-C` seçeneğini kullanın.
+
+Docker işlemleri, bağımsız bir komut olarak da kullanılabilen `xrun` betiği tarafından gerçekleştirilir. `xrun` betiği, kalıcı konteyner ayarları için `.xrunrc` yapılandırma dosyasını destekler.
 
 Ayrıca, çeşitli belge stilleri için makefiles sağlandığından, özel bir belirtim olmadan diğer dillere çeviri mümkündür. `-M` seçeneğini kullanın.
 
@@ -334,6 +338,10 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Docker konteyner görüntüsü.
+
+- [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
+
+    `getoptlong.sh` kütüphanesi, `xlate` ve `xrun` komut dosyalarında seçenek ayrıştırma için kullanılır.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

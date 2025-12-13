@@ -260,8 +260,16 @@
       "你可以通过使用发行版中包含的C<xlate>命令，从命令行轻松使用该模块。用法请参见C<xlate>手册页。\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "命令 C<xlate> 支持 GNU 风格的长选项，例如 C<--to-lang>、C<--from-lang>、C<--engine> 和 C<--file>。使用 C<xlate -h> 查看所有可用选项。\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "C<xlate>命令与 Docker 环境协同工作，因此即使本地未安装任何东西，只要有 Docker 可用就能使用。请使用C<-D>或C<-C>选项。\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Docker 操作由 C<xrun> 脚本处理，它也可以作为独立命令使用。C<xrun> 脚本支持使用 C<.xrunrc> 配置文件来持久化容器设置。\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "Docker 容器镜像。\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "C<getoptlong.sh> 库用于在 C<xlate> 和 C<xrun> 脚本中解析选项。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

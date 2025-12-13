@@ -260,8 +260,16 @@
       "Αυτή η επιλογή αναγκάζει την ενημέρωση του αρχείου cache ακόμα κι αν δεν είναι απαραίτητο.\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "Η εντολή C<xlate> υποστηρίζει επιλογές μεγάλου μήκους τύπου GNU όπως C<--to-lang>, C<--from-lang>, C<--engine> και C<--file>. Χρησιμοποιήστε C<xlate -h> για να δείτε όλες τις διαθέσιμες επιλογές.\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "Μπορείτε εύκολα να χρησιμοποιήσετε αυτήν τη μονάδα από τη γραμμή εντολών χρησιμοποιώντας την εντολή C<xlate> που περιλαμβάνεται στη διανομή. Δείτε τη σελίδα man C<xlate> για οδηγίες χρήσης.\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Οι λειτουργίες Docker διαχειρίζονται από το script C<xrun>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το script C<xrun> υποστηρίζει το αρχείο ρυθμίσεων C<.xrunrc> για μόνιμες ρυθμίσεις κοντέινερ.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "L<App::Greple::xlate::deepl>\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση επιλογών στα scripts C<xlate> και C<xrun>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

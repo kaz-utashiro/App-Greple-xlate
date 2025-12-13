@@ -260,8 +260,16 @@
       "配布に含まれるC<xlate>コマンドを使うことで、このモジュールをコマンドラインから簡単に利用できます。使い方はC<xlate>のmanページを参照してください。\n"
    ],
    [
+      "The C<xlate> command supports GNU-style long options such as C<--to-lang>, C<--from-lang>, C<--engine>, and C<--file>. Use C<xlate -h> to see all available options.\n",
+      "C<xlate> コマンドは、C<--to-lang>、C<--from-lang>、C<--engine>、C<--file> などの GNU スタイルのロングオプションをサポートしています。利用可能なすべてのオプションを表示するには C<xlate -h> を使用してください。\n"
+   ],
+   [
       "The C<xlate> command works in concert with the Docker environment, so even if you do not have anything installed on hand, you can use it as long as Docker is available. Use C<-D> or C<-C> option.\n",
       "C<xlate>コマンドはDocker環境と連携して動作するため、手元に何もインストールされていなくてもDockerが利用できれば使用可能です。C<-D>またはC<-C>オプションを使用してください。\n"
+   ],
+   [
+      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
+      "Docker の操作は C<xrun> スクリプトによって処理され、スタンドアロンコマンドとしても使用できます。C<xrun> スクリプトは、永続的なコンテナ設定のために C<.xrunrc> 設定ファイルをサポートしています。\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -322,6 +330,10 @@
    [
       "Docker container image.\n",
       "L<App::Greple::xlate::gpt3>\n"
+   ],
+   [
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
+      "C<getoptlong.sh> ライブラリは、C<xlate> および C<xrun> スクリプトでのオプション解析に使用されています。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
