@@ -20,6 +20,7 @@ define pod <<"=cut"
     xrun -I IMAGE [ options ] [ command ... ]
 
         -h   , --help       show help
+        -v   , --version    show version
         -d   , --debug      debug mode
         -q   , --quiet      quiet mode
 
@@ -155,6 +156,7 @@ END
 
 declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
+    [    version | v   # show version                    ]=
     [      debug | d   # enable debug mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
@@ -201,6 +203,9 @@ done
 ##############################################################################
 
 . getoptlong.sh OPTS "${rc_opts[@]}" "$@" || die "getoptlong.sh not found"
+
+# Version display
+[[ ${version:-} ]] && { echo "$my_version"; exit 0; }
 
 # Debug mode
 [[ ${debug:-} ]] && set -x
