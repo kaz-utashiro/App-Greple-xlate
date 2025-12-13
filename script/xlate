@@ -281,9 +281,7 @@ declare -A OPTS=(
 # Save args for get_remaining_args (used by callbacks)
 declare -a PARSE_ARGS=("$@")
 
-. getoptlong.sh || die "getoptlong.sh not found"
-getoptlong init OPTS
-getoptlong parse "${PARSE_ARGS[@]}" && eval "$(getoptlong set)"
+. getoptlong.sh OPTS "${PARSE_ARGS[@]}" || die "getoptlong.sh not found"
 
 # Debug mode
 [[ ${debug:-} ]] && set -x
