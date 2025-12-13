@@ -2,5 +2,5 @@
 	path = t/runner
 	url = git@github.com:kaz-utashiro/p5-script-runner.git
 [submodule "lib/getoptlong"]
-	path = lib/getoptlong
+	path = share/getoptlong
 	url = https://github.com/tecolicom/getoptlong

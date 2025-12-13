@@ -109,11 +109,11 @@ docker_status() {
 # Main
 ##############################################################################
 
-# Find script directory and source getoptlong.sh
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LIB_DIR="${SCRIPT_DIR}/../lib/getoptlong"
-[[ -f "${LIB_DIR}/getoptlong.sh" ]] || die "getoptlong.sh not found"
-source "${LIB_DIR}/getoptlong.sh"
+# Set PATH for getoptlong.sh
+dist_dir() {
+    perl -MFile::Share=:all -E "say dist_dir '$1'"
+}
+PATH="$(dist_dir App-Greple-xlate 2>/dev/null):$PATH"
 
 # Default environment variables to inherit
 DEFAULT_ENV=(
@@ -152,14 +152,14 @@ Usage: $myname [ options ] [ command ... ]
 END
 
 declare -A OPTS=(
-    [&USAGE]="$USAGE"
+    [&USAGE]="$USAGE" [&PERMUTE]=
     [     debug | d   # enable debug mode               ]=
     [     quiet | q   # quiet mode                      ]=
     [     image | I : # Docker image                    ]=
-    [       env | E @                                   ]=
+    [       env | E @ # environment variable to inherit ]=
     [ mount-cwd | W   # mount current working directory ]=
     [mount-home | H   # mount home directory            ]=
-    [    addvol | V @                                   ]=
+    [    addvol | V @ # additional volume to mount      ]=
     [   unmount | U   # do not mount                    ]=
     [mount-mode     : # mount mode (rw or ro)           ]=rw
     [  mount-ro | R   # mount read-only                 ]=
@@ -167,8 +167,8 @@ declare -A OPTS=(
     [      name | N : # live container name             ]=
     [      kill | K   # kill existing container         ]=
     [      live | L   # use live container              ]=
-    [      port | P @                                   ]=
-    [     other | O @                                   ]=
+    [      port | P @ # port mapping                    ]=
+    [     other | O @ # additional docker option        ]=
 )
 
 ##############################################################################
@@ -198,8 +198,7 @@ done
 # Parse options
 ##############################################################################
 
-getoptlong init OPTS PERMUTE=
-getoptlong parse "${rc_opts[@]}" "$@" && eval "$(getoptlong set)"
+. getoptlong.sh OPTS "${rc_opts[@]}" "$@" || die "getoptlong.sh not found"
 
 # Debug mode
 [[ ${debug:-} ]] && set -x
@@ -288,11 +287,11 @@ declare -a dockopt=(
     -e XLATE_RUNNING_ON_DOCKER=1
     --init
 )
-[[ ! ${batch:-} ]]  && dockopt+=(--interactive)
-[[ ! ${batch:-} ]]  && [[ -t 0 ]] && dockopt+=(--tty)
-[[ ! ${live:-} ]]   && dockopt+=(--rm)
-[[   ${live:-} ]]   && dockopt+=(${container:+--name "$container"})
-[[ -e $localtime ]] && dockopt+=(-v $localtime:$localtime:ro)
+[[ ! ${batch:-}   ]] && dockopt+=(--interactive)
+[[ ! ${batch:-}   ]] && [[ -t 0 ]] && dockopt+=(--tty)
+[[ ! ${live:-}    ]] && dockopt+=(--rm)
+[[   ${live:-}    ]] && dockopt+=(${container:+--name "$container"})
+[[ -e $localtime  ]] && dockopt+=(-v $localtime:$localtime:ro)
 [[ ! ${unmount:-} ]] && dockopt+=(
         -v "${volume:-$pwd}:${workdir}:${mount_mode}"
         -w "${workdir}${relative:+/${relative}}"
