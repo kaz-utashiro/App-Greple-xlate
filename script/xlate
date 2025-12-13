@@ -30,7 +30,7 @@ define pod <<"=cut"
         -b, --from-lang # base language (informational)
         -e, --engine #   translation engine (*deepl, gpt5, ...)
         -p, --pattern #  pattern string to determine translation area
-        -f, --patternfile # pattern file to determine translation area
+        -f, --file #     pattern file to determine translation area
         -o, --format #   output format (*xtxt, cm, ifdef, space, space+, colon)
         -x, --maskfile # file containing mask patterns
         -g, --glossary # glossary file
@@ -125,7 +125,7 @@ image=
 
 # Option arrays (initialized for set -u)
 declare -a pattern=()
-declare -a patternfile=()
+declare -a file=()
 declare -a env=()
 declare -a volume=()
 declare -a port=()
@@ -229,49 +229,46 @@ END
 declare -A OPTS=(
     [&USAGE]="$USAGE"
     # Basic options
-    [    debug | d     # debug mode                      ]=
-    [    quiet | q     # quiet mode                      ]=
+    [     debug | d     # debug mode                       ]=
+    [     quiet | q     # quiet mode                       ]=
+    [      help | h  !  # show help                        ]=
+    [   version | v  !  # show version                     ]=
     # Translation options
-    [      api | a     # use API                         ]=
-    [    check | c     # just check translation area     ]=
-    [  refresh | r     # refresh cache                   ]=
-    [   update | u     # force update cache              ]=
-    [   silent | s     # silent mode                     ]=
-    [   dryrun | n     # dry-run                         ]=
-    [   engine | e :   # translation engine              ]=
-    [     wrap | w :   # wrap line width                 ]=
-    [   format | o :   # output format                   ]=
-    [from-lang | b :   # base language                   ]=
-    [  to-lang | t :   # target language                 ]=
-    [   maxlen | m :   # max length per API call         ]=
-    [ maskfile | x :   # mask patterns file              ]=
-    [ glossary | g :   # glossary file                   ]=
-    [  pattern | p @   # pattern to determine area       ]=
-    [ patternfile| f @ # pattern file                    ]=
+    [       api | a     # use API                          ]=
+    [     check | c     # just check translation area      ]=
+    [   refresh | r     # refresh cache                    ]=
+    [    update | u     # force update cache               ]=
+    [    silent | s     # silent mode                      ]=
+    [    dryrun | n     # dry-run                          ]=
+    [    engine | e :   # translation engine               ]=
+    [      wrap | w :   # wrap line width                  ]=
+    [    format | o :   # output format                    ]=
+    [ from-lang | b :   # base language                    ]=
+    [   to-lang | t :   # target language                  ]=
+    [    maxlen | m :   # max length per API call          ]=
+    [  maskfile | x :   # mask patterns file               ]=
+    [  glossary | g :   # glossary file                    ]=
+    [   pattern | p @   # pattern to determine area        ]=
+    [      file | f @   # pattern file                     ]=
+    [   library | l :!  # show library files               ]=
     # Make option
-    [     make | M     # run make                        ]=
-    # Library option (callback)
-    [  library | l :!  # show library files              ]=
-    # Help options (callback)
-    [     help | h  !  # show help                       ]=
-    [  version | v  !  # show version                    ]=
-    # Docker passthrough options
-    [    image | I :!  # Docker image                    ]=
-    [      env | E @>xrun_opts # environment variable    ]=
-    [mount-cwd | W  >xrun_opts # mount cwd               ]=
-    [mount-home| H  >xrun_opts # mount home              ]=
-    [   volume | V @>xrun_opts # additional volume       ]=
-    [  unmount | U  >xrun_opts # do not mount            ]=
-    [ mount-ro | R  >xrun_opts # mount read-only         ]=
-    [    batch | B  >xrun_opts # batch mode              ]=
-    [     name | N :>xrun_opts # container name          ]=
-    [     port | P @>xrun_opts # port mapping            ]=
-    [    other | O @>xrun_opts # additional docker option]=
-    # Docker action options (callback)
-    [     kill | K  !  # kill container                  ]=
-    [   docker | D  !  # run xlate on Docker             ]=
-    [  command | C  !  # run command on Docker           ]=
-    [     live | L  !  # use live container              ]=
+    [      make | M     # run make                         ]=
+    # Docker options
+    [     image | I :!          # Docker image             ]=
+    [    docker | D  !          # run xlate on Docker      ]=
+    [   command | C  !          # run command on Docker    ]=
+    [      live | L  !          # use live container       ]=
+    [      kill | K  !          # kill container           ]=
+    [       env | E @>xrun_opts # environment variable     ]=
+    [ mount-cwd | W  >xrun_opts # mount cwd                ]=
+    [ mount-home| H  >xrun_opts # mount home               ]=
+    [    volume | V @>xrun_opts # additional volume        ]=
+    [   unmount | U  >xrun_opts # do not mount             ]=
+    [  mount-ro | R  >xrun_opts # mount read-only          ]=
+    [     batch | B  >xrun_opts # batch mode               ]=
+    [      name | N :>xrun_opts # container name           ]=
+    [      port | P @>xrun_opts # port mapping             ]=
+    [     other | O @>xrun_opts # additional docker option ]=
 )
 
 ##############################################################################
@@ -391,8 +388,8 @@ if (( ${#pattern[@]} > 0 )); then
         pattern_opts+=(-E "$p")
     done
 fi
-if (( ${#patternfile[@]} > 0 )); then
-    for f in "${patternfile[@]}"; do
+if (( ${#file[@]} > 0 )); then
+    for f in "${file[@]}"; do
         pattern_opts+=(-f "$f")
     done
 fi
@@ -584,7 +581,7 @@ Specify the translation engine to use.
 Specify a pattern to determine the translation area.
 See L<App::Greple::xlate/NORMALIZATION>.
 
-=item B<-f> I<file>, B<--patternfile>=I<file>
+=item B<-f> I<file>, B<--file>=I<file>
 
 Specify a file containing patterns to determine the translation area.
 See L<App::Greple::xlate/NORMALIZATION>.

@@ -155,22 +155,22 @@ END
 
 declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
-    [     debug | d   # enable debug mode               ]=
-    [     quiet | q   # quiet mode                      ]=
-    [     image | I : # Docker image                    ]=
-    [       env | E @ # environment variable to inherit ]=
-    [ mount-cwd | W   # mount current working directory ]=
-    [mount-home | H   # mount home directory            ]=
-    [    volume | V @ # additional volume to mount      ]=
-    [   unmount | U   # do not mount                    ]=
-    [mount-mode     : # mount mode (rw or ro)           ]=rw
-    [  mount-ro | R   # mount read-only                 ]=
-    [     batch | B   # batch mode (non-interactive)    ]=
-    [      name | N : # live container name             ]=
-    [      kill | K   # kill existing container         ]=
-    [      live | L   # use live container              ]=
-    [      port | P @ # port mapping                    ]=
-    [     other | O @ # additional docker option        ]=
+    [      debug | d   # enable debug mode               ]=
+    [      quiet | q   # quiet mode                      ]=
+    [      image | I : # Docker image                    ]=
+    [        env | E @ # environment variable to inherit ]=
+    [  mount-cwd | W   # mount current working directory ]=
+    [ mount-home | H   # mount home directory            ]=
+    [     volume | V @ # additional volume to mount      ]=
+    [    unmount | U   # do not mount                    ]=
+    [ mount-mode     : # mount mode (rw or ro)           ]=rw
+    [   mount-ro | R   # mount read-only                 ]=
+    [      batch | B   # batch mode (non-interactive)    ]=
+    [       name | N : # live container name             ]=
+    [       kill | K   # kill existing container         ]=
+    [       live | L   # use live container              ]=
+    [       port | P @ # port mapping                    ]=
+    [      other | O @ # additional docker option        ]=
 )
 
 ##############################################################################
