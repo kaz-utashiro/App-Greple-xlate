@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 define() { IFS='\n' read -r -d '' ${1} || true ; }
 
 myname="${0##*/}"
@@ -73,170 +75,237 @@ define pod <<"=cut"
 
 [[ $pod =~ Version\ +([0-9.]+) ]] && my_version=${BASH_REMATCH[1]}
 
+##############################################################################
+# Utility functions
+##############################################################################
+
 dist_dir() {
-    perl -MFile::Share=:all -E "say dist_dir '$1'"
+    local mod=$1
+    perl -M$mod -MFile::Share=:all -E "say dist_dir '${mod//::/-}'"
 }
 
 warn() {
-    [[ $quiet ]] && return
+    [[ ${quiet:-} ]] && return
     echo "$@" >&2
 }
 
-# Find xrun command
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-XRUN="${SCRIPT_DIR}/xrun"
-[[ -x "$XRUN" ]] || XRUN="xrun"
+die() {
+    echo "$myname: $*" >&2
+    exit 1
+}
 
-
-##
-## read .xlaterc
-##
 git_topdir() {
     [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]] || return
     local dir="$(git rev-parse --show-superproject-working-tree)"
     [[ $dir ]] || dir="$(git rev-parse --show-toplevel)"
     echo "$dir"
 }
-topdir=$(git_topdir)
+
+##############################################################################
+# Setup
+##############################################################################
+
+# Set PATH for getoptlong.sh
+share=$(dist_dir App::Greple::xlate)
+PATH="$share:$PATH"
+
+# Find xrun command
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+XRUN="${SCRIPT_DIR}/xrun"
+[[ -x "$XRUN" ]] || XRUN="xrun"
+
+topdir=$(git_topdir) || topdir=
 pwd=$(pwd)
 
-declare -a rcpath=(.)
-[[ $topdir && $topdir != $pwd ]] && rcpath+=($topdir)
-[[ $HOME != $pwd ]] && rcpath+=($HOME)
-for dir in ${rcpath[@]}
-do
-    rc="$dir/.xlaterc"
-    [[ -r $rc ]] || continue
-    mapfile -t OPTS < <(grep -v ^# "$rc")
-    warn "$myname: ${OPTS[@]}"
-    set -- ${OPTS[@]} "$@"
-done
-
-##
-## Docker - delegate to xrun
-##
+# Docker related variables
 declare -a xrun_opts=()
 version=
 image=
 
-# Set default image with version
+# Option arrays (initialized for set -u)
+declare -a pattern=()
+declare -a patternfile=()
+declare -a env=()
+declare -a volume=()
+declare -a port=()
+declare -a other=()
+
 set_default_image() {
-    [[ $image ]] && return
+    [[ ${image:-} ]] && return
     repository=tecolicom/$myname
-    [[ ! $version && $my_version =~ ^[0-9]+\.[0-9_]+$ ]] && version=$my_version
+    [[ ! ${version:-} && $my_version =~ ^[0-9]+\.[0-9_]+$ ]] && version=$my_version
     image="${repository}${version:+:$version}"
 }
 
-while getopts :dq${DOCKER_OPT:=I:E:WHP:O:BV:RUN:KLCD} OPT
-do
-    [[ $XLATE_RUNNING_ON_DOCKER ]] && break
-    case $OPT in
-	d) debug=yes ; set -x ;;
-	q) quiet=yes ; xrun_opts+=(-q) ;;
-	I)
-	    if [[ $OPTARG =~ ^:(.+)$ ]]; then
-		version="${BASH_REMATCH[1]}"
-	    else
-		image="$OPTARG"
-	    fi
-	    ;;
-	E) xrun_opts+=(-E "$OPTARG") ;;
-	P) xrun_opts+=(-P "$OPTARG") ;;
-	O) xrun_opts+=(-O "$OPTARG") ;;
-	B) xrun_opts+=(-B) ;;
-	U) xrun_opts+=(-U) ;;
-	R) xrun_opts+=(-R) ;;
-	V) xrun_opts+=(-V "$OPTARG") ;;
-	W) xrun_opts+=(-W) ;;
-	H) xrun_opts+=(-H) ;;
-	N) xrun_opts+=(-N "$OPTARG") ;;
-	K)
-	    # Check if -L follows
-	    if [[ ${@:$OPTIND:1} =~ ^-.*L ]]; then
-		# -L will add -I, just add -K here
-		xrun_opts+=(-K)
-	    else
-		set_default_image
-		xrun_opts+=(-I "$image" -K)
-		exec "$XRUN" "${xrun_opts[@]}"
-	    fi
-	    ;;
-	L)
-	    set_default_image
-	    xrun_opts+=(-I "$image" -L)
-	    shift $((OPTIND - 1))
-	    exec "$XRUN" "${xrun_opts[@]}" -- "$@"
-	    ;;
-	C)
-	    set_default_image
-	    xrun_opts+=(-I "$image")
-	    shift $((OPTIND - 1))
-	    exec "$XRUN" "${xrun_opts[@]}" -- "$@"
-	    ;;
-	D)
-	    set_default_image
-	    xrun_opts+=(-I "$image")
-	    shift $((OPTIND - 1))
-	    exec "$XRUN" "${xrun_opts[@]}" -- xlate "$@"
-	    ;;
+##############################################################################
+# Callback functions for Docker options
+##############################################################################
+
+# -I callback: handle :version syntax
+image() {
+    local opt="$1" val="$2"
+    if [[ $val =~ ^:(.+)$ ]]; then
+        version="${BASH_REMATCH[1]}"
+    else
+        image="$val"
+    fi
+}
+
+# Docker action callback: -D, -C, -L, -K
+docker_action() {
+    [[ ${XLATE_RUNNING_ON_DOCKER:-} ]] && return
+    [[ ${quiet:-} ]] && xrun_opts+=(-q)
+    local opt="$1"
+    case $opt in
+        kill)
+            # Check if -L follows
+            if [[ ${PARSE_ARGS[$((OPTIND-1))]:-} =~ ^-.*L ]]; then
+                # -KL: just add -K, -L will handle the rest
+                xrun_opts+=(-K)
+                return
+            else
+                # -K alone: kill and exit
+                set_default_image
+                xrun_opts+=(-I "$image" -K)
+                exec "$XRUN" "${xrun_opts[@]}"
+            fi
+            ;;
+        live)
+            xrun_opts+=(-L)
+            ;;
     esac
+    set_default_image
+    xrun_opts+=(-I "$image")
+    local -a cmd=("${PARSE_ARGS[@]:$((OPTIND-1))}")
+    [[ $opt == docker ]] && cmd=(xlate "${cmd[@]}")
+    exec "$XRUN" "${xrun_opts[@]}" -- "${cmd[@]}"
+}
+docker()  { docker_action "$@"; }
+command() { docker_action "$@"; }
+live()    { docker_action "$@"; }
+kill()    { docker_action "$@"; }
+
+# -l callback: show library files
+library() {
+    local opt="$1" val="$2"
+    local file="$share/$val"
+    if [[ -f $file ]]; then
+        cat "$file"
+    else
+        echo "$share"
+        ls -1 "$share" | sed 's/^/\t/'
+    fi
+    exit 0
+}
+
+# -h callback: show help
+help() {
+    sed -r \
+        -e '/^$/N' \
+        -e '/^\n*(#|=encoding)/d' \
+        -e 's/^(\n*)=[a-z]+[0-9]* */\1/' \
+        -e '/Version/q' \
+        <<< "$pod"
+    exit 0
+}
+
+# -v callback: show version
+version() {
+    echo "$my_version"
+    exit 0
+}
+
+##############################################################################
+# Option definitions
+##############################################################################
+
+define USAGE <<END
+$myname - Translation CLI front-end
+
+Usage: $myname [ options ] -t LANG FILE [ greple options ]
+END
+
+declare -A OPTS=(
+    [&USAGE]="$USAGE"
+    # Basic options
+    [    debug | d     # debug mode                      ]=
+    [    quiet | q     # quiet mode                      ]=
+    # Translation options
+    [      api | a     # use API                         ]=
+    [    check | c     # just check translation area     ]=
+    [  refresh | r     # refresh cache                   ]=
+    [   update | u     # force update cache              ]=
+    [   silent | s     # silent mode                     ]=
+    [   dryrun | n     # dry-run                         ]=
+    [   engine | e :   # translation engine              ]=
+    [     wrap | w :   # wrap line width                 ]=
+    [   format | o :   # output format                   ]=
+    [ base-lang| b :   # base language                   ]=
+    [  tgt-lang| t :   # target language                 ]=
+    [   maxlen | m :   # max length per API call         ]=
+    [ maskfile | x :   # mask patterns file              ]=
+    [ glossary | g :   # glossary file                   ]=
+    [  pattern | p @   # pattern to determine area       ]=
+    [ patternfile| f @ # pattern file                    ]=
+    # Make option
+    [     make | M     # run make                        ]=
+    # Library option (callback)
+    [  library | l :!  # show library files              ]=
+    # Help options (callback)
+    [     help | h  !  # show help                       ]=
+    [  version | v  !  # show version                    ]=
+    # Docker passthrough options
+    [    image | I :!  # Docker image                    ]=
+    [      env | E @>xrun_opts # environment variable    ]=
+    [mount-cwd | W  >xrun_opts # mount cwd               ]=
+    [mount-home| H  >xrun_opts # mount home              ]=
+    [   volume | V @>xrun_opts # additional volume       ]=
+    [  unmount | U  >xrun_opts # do not mount            ]=
+    [ mount-ro | R  >xrun_opts # mount read-only         ]=
+    [    batch | B  >xrun_opts # batch mode              ]=
+    [     name | N :>xrun_opts # container name          ]=
+    [     port | P @>xrun_opts # port mapping            ]=
+    [    other | O @>xrun_opts # additional docker option]=
+    # Docker action options (callback)
+    [     kill | K  !  # kill container                  ]=
+    [   docker | D  !  # run xlate on Docker             ]=
+    [  command | C  !  # run command on Docker           ]=
+    [     live | L  !  # use live container              ]=
+)
+
+##############################################################################
+# Read .xlaterc
+##############################################################################
+
+declare -a rcpath=(.)
+[[ ${topdir:-} && $topdir != $pwd ]] && rcpath+=("$topdir")
+[[ $HOME != $pwd ]] && rcpath+=("$HOME")
+
+declare -a rc_opts=()
+for dir in "${rcpath[@]}"; do
+    rc="$dir/.xlaterc"
+    [[ -r $rc ]] || continue
+    warn "$myname: reading $rc"
+    while IFS= read -r line; do
+        [[ $line =~ ^# ]] && continue
+        [[ -z $line ]] && continue
+        rc_opts+=($line)
+    done < "$rc"
 done
-OPTIND=1
 
-share=$(dist_dir App-Greple-xlate)
+##############################################################################
+# Parse options
+##############################################################################
 
-declare -a pattern
+# Save args for get_remaining_args (used by callbacks)
+declare -a PARSE_ARGS=("${rc_opts[@]}" "$@")
 
-while getopts dq"${DOCKER_OPT}"'Macrusne:w:o:b:t:m:x:g:p:f:l:hv' OPT
-do
-    case $OPT in
-	[$DOCKER_OPT]) : ;;
-	d)     debug=yes ; set -x ;;
-	q)     quiet=yes ;;
-	M)  run_make=yes ;;
-	a)   use_api=yes ;;
-	c)     check=yes ;;
-	r)   refresh=yes ;;
-	u)    update=yes ;;
-	s)    silent=yes ;;
-	n)    dryrun=yes ;;
-	e)    engine="$OPTARG" ;;
-	w)      wrap="$OPTARG" ;;
-	o)    format="$OPTARG" ;;
-	b) base_lang="$OPTARG" ;;
-	t)  tgt_lang="$OPTARG" ;;
-	m)       max="$OPTARG" ;;
-	x)  maskfile="$OPTARG" ;;
-	g)  glossary="$OPTARG" ;;
-	p)  pattern+=(-E "$OPTARG") ;;
-	f)  pattern+=(-f "$OPTARG") ;;
-	l)
-	    file="$share/$OPTARG"
-	    if [[ -f $file ]]
-	    then
-		cat $file
-	    else
-		echo "$share"
-		ls -1 $share | sed 's/^/\t/'
-	    fi
-	    exit
-	    ;;
-	h)
-	    sed -r \
-		-e '/^$/N' \
-		-e '/^\n*(#|=encoding)/d' \
-		-e 's/^(\n*)=[a-z]+[0-9]* */\1/' \
-		-e '/Version/q' \
-		<<< $pod
-	    exit
-	    ;;
-	v)
-	    echo $my_version
-	    exit
-	    ;;
-    esac
-done	
-shift $((OPTIND - 1))
+. getoptlong.sh || die "getoptlong.sh not found"
+getoptlong init OPTS
+getoptlong parse "${PARSE_ARGS[@]}" && eval "$(getoptlong set)"
+
+# Debug mode
+[[ ${debug:-} ]] && set -x
 
 find_gmake() {
     local make
@@ -251,38 +320,34 @@ find_gmake() {
 ##
 ## Make
 ##
-if [[ $run_make == yes ]]
-then
+if [[ ${make:-} ]]; then
     declare -a opt
-    for m in "$@"
-    do
-	if [[ -f $m ]]
-	then
-	    # GNU Make behaves differently in different versions with
-	    # respect to double-quoted strings and spaces within them.
-	    files="${files:+$files|||}$m"
-	else
-	    opt+=("$m")
-	fi
+    for m in "$@"; do
+        if [[ -f $m ]]; then
+            # GNU Make behaves differently in different versions with
+            # respect to double-quoted strings and spaces within them.
+            files="${files:+$files|||}$m"
+        else
+            opt+=("$m")
+        fi
     done
     unset MAKELEVEL
     gmake=$(find_gmake) || { warn "GNU Make is required."; exit 1; }
-    exec $gmake -f $share/XLATE.mk \
-	 ${dryrun:+-n} \
-	 XLATE_LANG=\""$tgt_lang"\" \
-	 XLATE_DEBUG=$debug \
-	 XLATE_MAXLEN=$max \
-	 XLATE_USEAPI=$use_api \
-	 XLATE_UPDATE=$update \
-	 ${engine:+XLATE_ENGINE=\""$engine"\"} \
-	 ${format:+XLATE_FORMAT=\""$format"\"} \
-	 ${files:+XLATE_FILES=\""$files"\"} \
-	 ${opt[@]} \
+    exec $gmake -f "$share/XLATE.mk" \
+         ${dryrun:+-n} \
+         XLATE_LANG=\""${tgt_lang:-}"\" \
+         XLATE_DEBUG=${debug:-} \
+         XLATE_MAXLEN=${maxlen:-} \
+         XLATE_USEAPI=${api:-} \
+         XLATE_UPDATE=${update:-} \
+         ${engine:+XLATE_ENGINE=\""$engine"\"} \
+         ${format:+XLATE_FORMAT=\""$format"\"} \
+         ${files:+XLATE_FILES=\""$files"\"} \
+         "${opt[@]}" \
     || exit 1
 fi
 
-if [[ ! $tgt_lang ]]
-then
+if [[ ! ${tgt_lang:-} ]]; then
     warn "$myname: -t option is required."
     exit 1
 fi
@@ -290,33 +355,32 @@ fi
 : ${format:=xtxt}
 : ${engine:=deepl}
 
-if [[ $format =~ ^(.+)-fold$ ]]
-then
+if [[ $format =~ ^(.+)-fold$ ]]; then
     format=${BASH_REMATCH[1]}
     : ${wrap:=76}
 fi
 
 declare -a module option
 
-module+=(-Mxlate) 
+module+=(-Mxlate)
 option+=(--xlate-engine="$engine")
 option+=(--xlate-to="$tgt_lang" --xlate-format="$format" --xlate-cache=yes)
 option+=(--all)
 
-[[ $base_lang      ]] && option+=(--xlate-from "$base_lang")
-[[ $use_api == yes ]] || use_clipboard=yes
-[[ $check   == yes ]] || option+=(--xlate${use_clipboard:+-labor})
-[[ $wrap           ]] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
-[[ $debug   == yes ]] && option+=(-dmo)
-[[ $refresh == yes ]] && option+=(--xlate-cache=clear)
-[[ $update  == yes ]] && option+=(--xlate-update)
-[[ $silent  == yes ]] && option+=(--no-xlate-progress)
-[[ $max            ]] && option+=(--xlate-maxlen="$max")
-[[ $maskfile       ]] && option+=(--xlate-setopt "maskfile=$maskfile")
-[[ $glossary       ]] && option+=(--xlate-glossary "$glossary")
+[[ ${base_lang:-}  ]] && option+=(--xlate-from "$base_lang")
+[[ ${api:-}        ]] || use_clipboard=yes
+[[ ${check:-}      ]] || option+=(--xlate${use_clipboard:+-labor})
+[[ ${wrap:-}       ]] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
+[[ ${debug:-}      ]] && option+=(-dmo)
+[[ ${refresh:-}    ]] && option+=(--xlate-cache=clear)
+[[ ${update:-}     ]] && option+=(--xlate-update)
+[[ ${silent:-}     ]] && option+=(--no-xlate-progress)
+[[ ${maxlen:-}     ]] && option+=(--xlate-maxlen="$maxlen")
+[[ ${maskfile:-}   ]] && option+=(--xlate-setopt "maskfile=$maskfile")
+[[ ${glossary:-}   ]] && option+=(--xlate-glossary "$glossary")
 
 declare -a area
-case $1 in
+case ${1:-} in
     *.txt)
 	area=(-E '^(.+\n)+')
 	;;
@@ -341,15 +405,27 @@ case $1 in
 	;;
 esac
 
-if (( ${#pattern[@]} > 0))
-then
-    option+=("${pattern[@]}")
+# Build pattern options from -p and -f
+declare -a pattern_opts=()
+if (( ${#pattern[@]} > 0 )); then
+    for p in "${pattern[@]}"; do
+        pattern_opts+=(-E "$p")
+    done
+fi
+if (( ${#patternfile[@]} > 0 )); then
+    for f in "${patternfile[@]}"; do
+        pattern_opts+=(-f "$f")
+    done
+fi
+
+if (( ${#pattern_opts[@]} > 0 )); then
+    option+=("${pattern_opts[@]}")
 else
     option+=("${area[@]}")
 fi
 
 exec=(greple "${module[@]}" "${option[@]}" "$@")
-[[ $dryrun ]] && exec=(echo "${exec[@]}")
+[[ ${dryrun:-} ]] && exec=(echo "${exec[@]}")
 
 exec "${exec[@]}"
 
