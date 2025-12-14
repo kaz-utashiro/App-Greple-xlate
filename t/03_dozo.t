@@ -51,4 +51,32 @@ subtest 'combined options' => sub {
     like($out, qr/--live/, '-L option documented');
 };
 
+# Test: .dozorc parsing with quoted arguments
+subtest '.dozorc parsing' => sub {
+    my $test_dir = tempdir(CLEANUP => 1);
+    my $rc_file = "$test_dir/.dozorc";
+
+    local $ENV{HOME} = $test_dir;
+    chdir $test_dir or die "Cannot chdir to $test_dir: $!";
+
+    # Test simple option: -I should set the image
+    open my $fh, '>', $rc_file or die "Cannot create $rc_file: $!";
+    print $fh "-I testimage:latest\n";
+    close $fh;
+
+    # With -I set in .dozorc, should not get "image must be specified" error
+    my $out = `$dozo echo test 2>&1`;
+    unlike($out, qr/image.*must be specified/i, '.dozorc -I option is parsed');
+
+    # Test quoted argument with spaces
+    open $fh, '>', $rc_file or die "Cannot create $rc_file: $!";
+    print $fh qq{-E "TEST_VAR=hello world"\n};
+    close $fh;
+
+    # Should still get "image must be specified" (no -I), but no parse error
+    $out = `$dozo echo test 2>&1`;
+    like($out, qr/image.*must be specified/i, '.dozorc with quoted args is parsed without error');
+    unlike($out, qr/xargs|error|unterminated/i, 'no parsing error for quoted args');
+};
+
 done_testing;

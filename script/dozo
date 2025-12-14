@@ -15,6 +15,9 @@ define pod <<"=cut"
 
     dozo - Generic Docker Runner
 
+The name "dozo" comes from the Japanese word meaning "please" or "go
+ahead", and also stands for "Docker Zone".
+
 =head1 SYNOPSIS
 
     dozo -I IMAGE [ options ] [ command ... ]
@@ -194,7 +197,9 @@ for dir in "${rcpath[@]}"; do
     while IFS= read -r line; do
         [[ $line =~ ^# ]] && continue
         [[ $line ]] || continue
-        rc_opts+=("$line")
+        while IFS= read -r -d '' arg; do
+            rc_opts+=("$arg")
+        done < <(xargs printf '%s\0' <<< "$line")
     done < "$rc"
 done
 
