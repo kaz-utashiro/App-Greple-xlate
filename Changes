@@ -2,6 +2,13 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9920 2025-12-14T10:42:27Z
+
+    - fix dist_dir to not load App::Greple::xlate module
+      (avoids Text::ANSI::Fold dependency error in CPAN test)
+    - simplify dockopt array construction in dozo
+    - use prove -b in GitHub Actions for CPAN-like test environment
+
 0.9919 2025-12-14T07:00:34Z
 
     - rename xrun to dozo (Docker Zone)

@@ -16,7 +16,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 =head1 VERSION
 
-Version 0.9919
+Version 0.9920
 
 =head1 DESCRIPTION
 
