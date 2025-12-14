@@ -7,9 +7,9 @@ use File::Spec;
 use File::Temp qw(tempdir);
 
 my $xlate = File::Spec->rel2abs('script/xlate');
-my $xrun = File::Spec->rel2abs('script/xrun');
+my $dozo = File::Spec->rel2abs('script/dozo');
 
-# Use empty temp dir to avoid reading any .xrunrc (HOME, git top, cwd)
+# Use empty temp dir to avoid reading any .dozorc (HOME, git top, cwd)
 my $empty_home = tempdir(CLEANUP => 1);
 $ENV{HOME} = $empty_home;
 chdir $empty_home or die "Cannot chdir to $empty_home: $!";

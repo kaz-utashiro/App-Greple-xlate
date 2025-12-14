@@ -385,9 +385,9 @@ The `xlate` command works in concert with the Docker environment, so
 even if you do not have anything installed on hand, you can use it as
 long as Docker is available.  Use `-D` or `-C` option.
 
-Docker operations are handled by the `xrun` script, which can also be
-used as a standalone command.  The `xrun` script supports the
-`.xrunrc` configuration file for persistent container settings.
+Docker operations are handled by the `dozo` script, which can also be
+used as a standalone command.  The `dozo` script supports the
+`.dozorc` configuration file for persistent container settings.
 
 Also, since makefiles for various document styles are provided,
 translation into other languages is possible without special
@@ -455,7 +455,7 @@ You have to install command line tools for DeepL and ChatGPT.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     The `getoptlong.sh` library used for option parsing in the `xlate`
-    and `xrun` scripts.
+    and `dozo` scripts.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

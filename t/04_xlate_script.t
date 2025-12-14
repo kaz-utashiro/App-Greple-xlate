@@ -7,9 +7,9 @@ use File::Spec;
 use File::Temp qw(tempdir);
 
 my $xlate = File::Spec->rel2abs('script/xlate');
-my $xrun = File::Spec->rel2abs('script/xrun');
+my $dozo = File::Spec->rel2abs('script/dozo');
 
-# Use empty temp dir to avoid reading any .xrunrc (HOME, git top, cwd)
+# Use empty temp dir to avoid reading any .dozorc (HOME, git top, cwd)
 my $empty_home = tempdir(CLEANUP => 1);
 $ENV{HOME} = $empty_home;
 chdir $empty_home or die "Cannot chdir to $empty_home: $!";
@@ -17,8 +17,8 @@ chdir $empty_home or die "Cannot chdir to $empty_home: $!";
 # Check if xlate script exists
 ok(-x $xlate, 'xlate script is executable');
 
-# Check if xrun exists (xlate depends on it for Docker operations)
-ok(-x $xrun, 'xrun script is executable');
+# Check if dozo exists (xlate depends on it for Docker operations)
+ok(-x $dozo, 'dozo script is executable');
 
 # Test: help option
 subtest 'help option' => sub {
@@ -57,7 +57,7 @@ subtest 'option parsing' => sub {
     unlike($out, qr/不正なオプション|invalid option/i, '-o option is recognized');
 };
 
-# Test: Docker options are passed to xrun
+# Test: Docker options are passed to dozo
 subtest 'Docker option delegation' => sub {
     # Set environment to simulate running on Docker (to prevent actual execution)
     local $ENV{XLATE_RUNNING_ON_DOCKER} = 1;

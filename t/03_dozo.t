@@ -6,24 +6,24 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 
-my $xrun = File::Spec->rel2abs('script/xrun');
+my $dozo = File::Spec->rel2abs('script/dozo');
 my $getoptlong = File::Spec->rel2abs('share/getoptlong/getoptlong.sh');
 
-# Use empty temp dir to avoid reading any .xrunrc (HOME, git top, cwd)
+# Use empty temp dir to avoid reading any .dozorc (HOME, git top, cwd)
 my $empty_home = tempdir(CLEANUP => 1);
 $ENV{HOME} = $empty_home;
 chdir $empty_home or die "Cannot chdir to $empty_home: $!";
 
-# Check if xrun exists
-ok(-x $xrun, 'xrun is executable');
+# Check if dozo exists
+ok(-x $dozo, 'dozo is executable');
 
 # Check if getoptlong.sh exists
 ok(-f $getoptlong, 'getoptlong.sh exists');
 
 # Test: help option
 subtest 'help option' => sub {
-    my $out = `$xrun --help 2>&1`;
-    like($out, qr/xrun.*Docker Runner/i, '--help shows description');
+    my $out = `$dozo --help 2>&1`;
+    like($out, qr/dozo.*Docker Runner/i, '--help shows description');
     like($out, qr/--image/, '--help shows --image option');
     like($out, qr/--live/, '--help shows --live option');
     like($out, qr/--kill/, '--help shows --kill option');
@@ -31,7 +31,7 @@ subtest 'help option' => sub {
 
 # Test: missing image error
 subtest 'missing image error' => sub {
-    my $out = `$xrun echo hello 2>&1`;
+    my $out = `$dozo echo hello 2>&1`;
     my $status = $? >> 8;
     isnt($status, 0, 'exits with error when no image specified');
     like($out, qr/image.*must be specified/i, 'error message mentions image');
@@ -39,14 +39,14 @@ subtest 'missing image error' => sub {
 
 # Test: option parsing (valid options should reach "image must be specified" error)
 subtest 'option parsing' => sub {
-    my $out = `$xrun -W -B -R 2>&1`;
+    my $out = `$dozo -W -B -R 2>&1`;
     unlike($out, qr/no such option/i, 'options -W -B -R are recognized');
     like($out, qr/image.*must be specified/i, 'reaches image check (options parsed successfully)');
 };
 
 # Test: combined options like -KL
 subtest 'combined options' => sub {
-    my $out = `$xrun --help 2>&1`;
+    my $out = `$dozo --help 2>&1`;
     like($out, qr/--kill/, '-K option documented');
     like($out, qr/--live/, '-L option documented');
 };

@@ -110,16 +110,16 @@ git_topdir() {
 share=$(dist_dir App::Greple::xlate)
 PATH="$share:$share/getoptlong:$PATH"
 
-# Find xrun command
+# Find dozo command
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-XRUN="${SCRIPT_DIR}/xrun"
-[[ -x "$XRUN" ]] || XRUN="xrun"
+DOZO="${SCRIPT_DIR}/dozo"
+[[ -x "$DOZO" ]] || DOZO="dozo"
 
 topdir=$(git_topdir) || topdir=
 pwd=$(pwd)
 
 # Docker related variables
-declare -a xrun_opts=()
+declare -a dozo_opts=()
 version=
 image=
 
@@ -155,31 +155,31 @@ image() {
 # Docker action callback: -D, -C, -L, -K
 docker_action() {
     [[ ${XLATE_RUNNING_ON_DOCKER:-} ]] && return
-    [[ ${quiet:-} ]] && xrun_opts+=(-q)
+    [[ ${quiet:-} ]] && dozo_opts+=(-q)
     local opt="$1"
     case $opt in
         kill)
             # Check if -L follows
             if [[ ${PARSE_ARGS[$((OPTIND-1))]:-} =~ ^-.*L ]]; then
                 # -KL: just add -K, -L will handle the rest
-                xrun_opts+=(-K)
+                dozo_opts+=(-K)
                 return
             else
                 # -K alone: kill and exit
                 set_default_image
-                xrun_opts+=(-I "$image" -K)
-                exec "$XRUN" "${xrun_opts[@]}"
+                dozo_opts+=(-I "$image" -K)
+                exec "$DOZO" "${dozo_opts[@]}"
             fi
             ;;
         live)
-            xrun_opts+=(-L)
+            dozo_opts+=(-L)
             ;;
     esac
     set_default_image
-    xrun_opts+=(-I "$image")
+    dozo_opts+=(-I "$image")
     local -a cmd=("${PARSE_ARGS[@]:$((OPTIND-1))}")
     [[ $opt == docker ]] && cmd=(xlate "${cmd[@]}")
-    exec "$XRUN" "${xrun_opts[@]}" -- "${cmd[@]}"
+    exec "$DOZO" "${dozo_opts[@]}" -- "${cmd[@]}"
 }
 docker()  { docker_action "$@"; }
 command() { docker_action "$@"; }
@@ -259,16 +259,16 @@ declare -A OPTS=(
     [   command | C  !          # run command on Docker    ]=
     [      live | L  !          # use live container       ]=
     [      kill | K  !          # kill container           ]=
-    [       env | E @>xrun_opts # environment variable     ]=
-    [ mount-cwd | W  >xrun_opts # mount cwd                ]=
-    [ mount-home| H  >xrun_opts # mount home               ]=
-    [    volume | V @>xrun_opts # additional volume        ]=
-    [   unmount | U  >xrun_opts # do not mount             ]=
-    [  mount-ro | R  >xrun_opts # mount read-only          ]=
-    [     batch | B  >xrun_opts # batch mode               ]=
-    [      name | N :>xrun_opts # container name           ]=
-    [      port | P @>xrun_opts # port mapping             ]=
-    [     other | O @>xrun_opts # additional docker option ]=
+    [       env | E @>dozo_opts # environment variable     ]=
+    [ mount-cwd | W  >dozo_opts # mount cwd                ]=
+    [ mount-home| H  >dozo_opts # mount home               ]=
+    [    volume | V @>dozo_opts # additional volume        ]=
+    [   unmount | U  >dozo_opts # do not mount             ]=
+    [  mount-ro | R  >dozo_opts # mount read-only          ]=
+    [     batch | B  >dozo_opts # batch mode               ]=
+    [      name | N :>dozo_opts # container name           ]=
+    [      port | P @>dozo_opts # port mapping             ]=
+    [     other | O @>dozo_opts # additional docker option ]=
 )
 
 ##############################################################################
@@ -464,7 +464,7 @@ Available formats: xtxt, cm, ifdef, space, space+, colon
 
 =head2 Docker Support
 
-B<xlate> offers seamless integration with Docker through the B<xrun>
+B<xlate> offers seamless integration with Docker through the B<dozo>
 command.  Use C<-D> to run xlate in a container, or C<-C> to run
 arbitrary commands.
 
@@ -473,8 +473,8 @@ arbitrary commands.
     xlate -DM -t 'EN FR' *.docx  # combine with make
 
 Docker options (C<-I>, C<-E>, C<-W>, C<-H>, C<-V>, C<-U>, C<-R>,
-C<-B>, C<-N>, C<-K>, C<-L>, C<-P>, C<-O>) are passed to B<xrun>.  For details
-on live containers, container naming, and configuration, see L<xrun>.
+C<-B>, C<-N>, C<-K>, C<-L>, C<-P>, C<-O>) are passed to B<dozo>.  For details
+on live containers, container naming, and configuration, see L<dozo>.
 
 =head2 Make Support
 
@@ -646,7 +646,7 @@ Execute command on the Docker container, or run shell if no command.
 
 =item B<-L> [ I<command> ], B<--live>
 
-Use live (persistent) container.  See L<xrun> for details.
+Use live (persistent) container.  See L<dozo> for details.
 
 =item B<-W>, B<--mount-cwd>
 
@@ -760,7 +760,7 @@ Specifies translation engine.
 
 L<App::Greple::xlate>
 
-L<xrun> - Generic Docker runner used by xlate for container operations
+L<dozo> - Generic Docker runner used by xlate for container operations
 
 =head1 AUTHOR
 

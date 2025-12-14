@@ -13,11 +13,11 @@ define pod <<"=cut"
 
 =head1 NAME
 
-    xrun - Generic Docker Runner
+    dozo - Generic Docker Runner
 
 =head1 SYNOPSIS
 
-    xrun -I IMAGE [ options ] [ command ... ]
+    dozo -I IMAGE [ options ] [ command ... ]
 
         -h   , --help       show help
         -v   , --version    show version
@@ -26,7 +26,7 @@ define pod <<"=cut"
 
     Docker options:
         -I # , --image      Docker image (required unless -D)
-        -D   , --default    use default image (XRUN_DEFAULT_IMAGE or tecolicom/xlate)
+        -D   , --default    use default image (DOZO_DEFAULT_IMAGE or tecolicom/xlate)
         -E # , --env        environment variable to inherit (repeatable)
         -W   , --mount-cwd  mount current working directory
         -H   , --mount-home mount home directory
@@ -176,19 +176,19 @@ declare -A OPTS=(
 )
 
 ##############################################################################
-# Read .xrunrc
+# Read .dozorc
 ##############################################################################
 
-# Collect .xrunrc paths in reverse priority order (lowest first)
+# Collect .dozorc paths in reverse priority order (lowest first)
 declare -a rcpath=()
 [[ $HOME != $cwd ]] && rcpath+=("$HOME")
 [[ $top_dir && $top_dir != $cwd ]] && rcpath+=("$top_dir")
 rcpath+=(.)
 
-# Collect options from .xrunrc files
+# Collect options from .dozorc files
 declare -a rc_opts=()
 for dir in "${rcpath[@]}"; do
-    rc="$dir/.xrunrc"
+    rc="$dir/.dozorc"
     [[ -r $rc ]] || continue
     warn "reading $rc"
     while IFS= read -r line; do
@@ -215,7 +215,7 @@ for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
 [[ ${debug:-} ]] && set -x
 
 # Apply options
-[[ ${default:-} ]] && [[ ! ${image:-} ]] && image="${XRUN_DEFAULT_IMAGE:-$default_image}"
+[[ ${default:-} ]] && [[ ! ${image:-} ]] && image="${DOZO_DEFAULT_IMAGE:-$default_image}"
 [[ ${mount_cwd:-} ]] && mount_dir="$cwd"
 [[ ${mount_home:-} ]] && { mount_dir="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
 [[ ${mount_ro:-} ]] && mount_mode=ro  # -R overrides --mount-mode
@@ -294,7 +294,7 @@ fi
 : ${hostname:=$(<<< "${image}" sed -e 's:.*/::' -e 's/:.*//' | tr -d '[:space:]')}
 
 declare -a dockopt=(
-    -e XRUN_RUNNING_ON_DOCKER=1
+    -e DOZO_RUNNING_ON_DOCKER=1
     -e XLATE_RUNNING_ON_DOCKER=1
     --init
 )
@@ -345,17 +345,17 @@ exec docker run "${dockopt[@]}" "${image}" "$@"
 
 =head1 DESCRIPTION
 
-B<xrun> is a generic Docker runner that simplifies running commands in
+B<dozo> is a generic Docker runner that simplifies running commands in
 Docker containers. It automatically configures the tedious Docker
 options such as volume mounts, environment variables, working
 directories, and interactive terminal settings, so you can focus on
 the command you want to run.
 
-B<xrun> is installed as part of L<App::Greple::xlate> and is used by
+B<dozo> is installed as part of L<App::Greple::xlate> and is used by
 L<xlate> for Docker operations, but it can also be used independently
 as a general-purpose Docker runner.
 
-B<xrun> uses L<getoptlong.sh|https://github.com/tecolicom/getoptlong>
+B<dozo> uses L<getoptlong.sh|https://github.com/tecolicom/getoptlong>
 for option parsing.
 
 =head2 Key Features
@@ -392,15 +392,15 @@ passed to the container, enabling GUI applications.
 
 =item B<Configuration File>
 
-Use C<.xrunrc> to set default options. Searched in current directory,
+Use C<.dozorc> to set default options. Searched in current directory,
 git top directory, and home directory.
 
 =item B<Standalone Operation>
 
-B<xrun> can operate independently of L<xlate>. If the
-L<App::Greple::xlate> module is installed, B<xrun> uses
+B<dozo> can operate independently of L<xlate>. If the
+L<App::Greple::xlate> module is installed, B<dozo> uses
 C<getoptlong.sh> bundled with the module. Otherwise, it searches for
-C<getoptlong.sh> in the standard C<PATH>. This allows B<xrun> to be
+C<getoptlong.sh> in the standard C<PATH>. This allows B<dozo> to be
 used as a general-purpose Docker runner even without the xlate module.
 
 =back
@@ -424,13 +424,13 @@ Quiet mode.
 =item B<-I> I<image>, B<--image>=I<image>
 
 Specify Docker image. Required unless C<-D> is given, but you can put
-it in F<.xrunrc> so you don't have to type it every time.
+it in F<.dozorc> so you don't have to type it every time.
 
 =item B<-D>, B<--default>
 
-Use the default Docker image. If C<XRUN_DEFAULT_IMAGE> environment
+Use the default Docker image. If C<DOZO_DEFAULT_IMAGE> environment
 variable is set, use that image. Otherwise, use
-C<tecolicom/xlate:VERSION> where VERSION is the current xrun version.
+C<tecolicom/xlate:VERSION> where VERSION is the current dozo version.
 See L</DEFAULT IMAGE> section for details about the default image.
 
 =item B<-E> I<name>[=I<value>], B<--env>=I<name>[=I<value>]
@@ -497,7 +497,7 @@ state and reduce startup overhead.
 
 =head2 Container Lifecycle
 
-When C<-L> is specified, B<xrun> behaves as follows:
+When C<-L> is specified, B<dozo> behaves as follows:
 
 =over 4
 
@@ -528,14 +528,14 @@ Container names are automatically generated in the format:
 
 For example, if you run:
 
-    xrun -I tecolicom/xlate -L
+    dozo -I tecolicom/xlate -L
 
 from C</home/user/project>, the container name would be
 C<xlate.project>.
 
 You can override the auto-generated name using the C<-N> option:
 
-    xrun -I tecolicom/xlate -L -N mycontainer
+    dozo -I tecolicom/xlate -L -N mycontainer
 
 =head2 Managing Live Containers
 
@@ -543,26 +543,26 @@ You can override the auto-generated name using the C<-N> option:
 
 =item B<Attach to existing container>
 
-    xrun -I myimage -L
+    dozo -I myimage -L
 
 If no command is given, attaches to the container's main process.
 
 =item B<Execute command in existing container>
 
-    xrun -I myimage -L ls -la
+    dozo -I myimage -L ls -la
 
 Runs the command in the existing container using C<docker exec>.
 
 =item B<Kill and recreate container>
 
-    xrun -I myimage -KL
+    dozo -I myimage -KL
 
 The C<-K> option removes the existing container before C<-L> creates
 a new one. Useful when you need a fresh container state.
 
 =item B<Kill container only>
 
-    xrun -I myimage -K
+    dozo -I myimage -K
 
 Without C<-L>, the container is removed and the command exits.
 
@@ -586,7 +586,7 @@ running interactive commands.
 
 =head1 CONFIGURATION FILE
 
-C<.xrunrc> is searched in the following order:
+C<.dozorc> is searched in the following order:
 
 =over 4
 
@@ -602,7 +602,7 @@ All matching files are read and their options are prepended to
 the command line arguments. This means you can use any command
 line option in the configuration file:
 
-    # Example .xrunrc
+    # Example .dozorc
     -I tecolicom/xlate:latest
     -L
     -E CUSTOM_VAR=value
@@ -616,11 +616,11 @@ Options are processed in this order (later values override earlier):
 
 =over 4
 
-=item 1. Home directory C<.xrunrc>
+=item 1. Home directory C<.dozorc>
 
-=item 2. Git top directory C<.xrunrc>
+=item 2. Git top directory C<.dozorc>
 
-=item 3. Current directory C<.xrunrc>
+=item 3. Current directory C<.dozorc>
 
 =item 4. Command line arguments
 
@@ -680,7 +680,7 @@ Multiple L<App::Greple> extension modules are pre-installed:
 =head2 Git Integration
 
 The image includes a pre-configured git environment optimized for
-document comparison and review. Since B<xrun> automatically mounts
+document comparison and review. Since B<dozo> automatically mounts
 the git top directory by default, git commands work seamlessly with
 full repository context:
 
@@ -732,11 +732,11 @@ and PowerPoint (.pptx) files directly with git
 
 =over 4
 
-=item C<XRUN_DEFAULT_IMAGE>
+=item C<DOZO_DEFAULT_IMAGE>
 
 Specifies the default Docker image used when C<-D> (C<--default>) option
 is given. If not set, C<tecolicom/xlate:VERSION> is used where VERSION
-is the current xrun version.
+is the current dozo version.
 
 =back
 
@@ -755,9 +755,9 @@ The following environment variables are set inside the container:
 
 =over 4
 
-=item C<XRUN_RUNNING_ON_DOCKER=1>
+=item C<DOZO_RUNNING_ON_DOCKER=1>
 
-Indicates the command is running inside a container started by xrun.
+Indicates the command is running inside a container started by dozo.
 
 =item C<XLATE_RUNNING_ON_DOCKER=1>
 
@@ -769,16 +769,16 @@ invocation when xlate is run inside the container.
 =head1 EXAMPLES
 
     # Run a command in container
-    xrun -I ubuntu:latest echo hello
+    dozo -I ubuntu:latest echo hello
 
     # Attach to live container
-    xrun -I myimage:v1 -L
+    dozo -I myimage:v1 -L
 
     # Run bash with specific image
-    xrun -I myimage:v1 bash
+    dozo -I myimage:v1 bash
 
     # Kill and restart live container
-    xrun -I myimage:v1 -KL
+    dozo -I myimage:v1 -KL
 
 =head1 SEE ALSO
 

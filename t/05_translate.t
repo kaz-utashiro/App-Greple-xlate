@@ -12,7 +12,7 @@ use t::Util;
 
 $ENV{NO_COLOR} = 1;
 
-# Use empty HOME to avoid reading user's .xrunrc
+# Use empty HOME to avoid reading user's .dozorc
 my $empty_home = tempdir(CLEANUP => 1);
 $ENV{HOME} = $empty_home;
 
