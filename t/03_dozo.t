@@ -23,7 +23,7 @@ ok(-f $getoptlong, 'getoptlong.sh exists');
 # Test: help option
 subtest 'help option' => sub {
     my $out = `$dozo --help 2>&1`;
-    like($out, qr/dozo.*Docker Runner/i, '--help shows description');
+    like($out, qr/dozo.*Docker.*Zero Overhead/i, '--help shows description');
     like($out, qr/--image/, '--help shows --image option');
     like($out, qr/--live/, '--help shows --live option');
     like($out, qr/--kill/, '--help shows --kill option');
