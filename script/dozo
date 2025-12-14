@@ -161,10 +161,9 @@ docker_status() {
 
 # Set PATH for getoptlong.sh
 dist_dir() {
-    local mod=$1
-    perl -M$mod -MFile::Share=:all -E "say dist_dir '${mod//::/-}'" 2>/dev/null || true
+    perl -MFile::Share=:all -E "say dist_dir '$1'" 2>/dev/null || true
 }
-share=$(dist_dir App::Greple::xlate)
+share=$(dist_dir App-Greple-xlate)
 PATH="${share:+$share:$share/getoptlong:}$PATH"
 
 # Default environment variables to inherit
