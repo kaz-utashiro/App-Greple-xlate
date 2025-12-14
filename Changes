@@ -2,6 +2,8 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+    - fix -D option to override -I from .dozorc (use hook)
+
 0.9920 2025-12-14T10:42:27Z
 
     - fix dist_dir to not load App::Greple::xlate module

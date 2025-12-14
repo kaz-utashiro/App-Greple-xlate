@@ -202,6 +202,8 @@ $myname - Generic Docker Runner
 Usage: $myname [ options ] [ command ... ]
 END
 
+default() { image="${DOZO_DEFAULT_IMAGE:-$default_image}"; }
+
 declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
     [       help | h ! # show help                       ]=
@@ -209,7 +211,7 @@ declare -A OPTS=(
     [      debug | d   # enable debug mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
-    [    default | D   # use default image               ]=
+    [    default | D ! # use default image               ]=
     [        env | E @ # environment variable to inherit ]=
     [  mount-cwd | W   # mount current working directory ]=
     [ mount-home | H   # mount home directory            ]=
@@ -267,7 +269,6 @@ for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
 [[ ${debug:-} ]] && set -x
 
 # Apply options
-[[ ${default:-} ]] && [[ ! ${image:-} ]] && image="${DOZO_DEFAULT_IMAGE:-$default_image}"
 [[ ${mount_cwd:-} ]] && mount_dir="$cwd"
 [[ ${mount_home:-} ]] && { mount_dir="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
 [[ ${mount_ro:-} ]] && mount_mode=ro  # -R overrides --mount-mode
