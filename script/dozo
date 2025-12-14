@@ -48,6 +48,36 @@ ahead", and also stands for "Docker Zone".
 
     Version 0.9918
 
+=head1 USAGE
+
+When executed without arguments, dozo starts an interactive shell
+inside the container.  When arguments are given, they are executed as
+a command.
+
+    dozo -I alpine                  # start shell
+    dozo -I alpine ls -la           # run command
+
+By setting C<-D> or your favorite image with C<-I> in F<~/.dozorc>:
+
+    $ dozo                          # start shell
+    $ dozo git log                  # run git log
+
+With C<-L> option, you can use a persistent container.  Tools
+installed in the container will remain available for subsequent use.
+
+    $ dozo -L                       # start shell and create container
+    # apt update && apt install -y cowsay
+    # exit
+    $ dozo -L /usr/games/cowsay Hello
+     _______
+    < Hello >
+     -------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
 =cut
 
 [[ $pod =~ Version\ +([0-9.]+) ]] && my_version=${BASH_REMATCH[1]}
