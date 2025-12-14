@@ -52,6 +52,23 @@ ahead", and also stands for "Docker Zone".
 
 [[ $pod =~ Version\ +([0-9.]+) ]] && my_version=${BASH_REMATCH[1]}
 
+# -h callback: show help from POD
+help() {
+    sed -r \
+        -e '/^$/N' \
+        -e '/^\n*(#|=encoding)/d' \
+        -e 's/^(\n*)=[a-z]+[0-9]* */\1/' \
+        -e '/Version/q' \
+        <<< "$pod"
+    exit 0
+}
+
+# -v callback: show version
+version() {
+    echo "$my_version"
+    exit 0
+}
+
 ##############################################################################
 # Utility functions
 ##############################################################################
@@ -158,7 +175,8 @@ END
 
 declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
-    [    version | v   # show version                    ]=
+    [      help | h  ! # show help                       ]=
+    [   version | v  ! # show version                    ]=
     [      debug | d   # enable debug mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
