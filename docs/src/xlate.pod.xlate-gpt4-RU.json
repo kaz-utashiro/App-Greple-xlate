@@ -268,8 +268,8 @@
       "Вы можете легко использовать этот модуль из командной строки с помощью команды C<xlate>, включённой в дистрибутив. Смотрите страницу руководства C<xlate> для использования.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Операции Docker обрабатываются скриптом C<xrun>, который также может использоваться как отдельная команда. Скрипт C<xrun> поддерживает конфигурационный файл C<.xrunrc> для постоянных настроек контейнера.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Операции с Docker обрабатываются скриптом C<dozo>, который также может использоваться как отдельная команда. Скрипт C<dozo> поддерживает файл конфигурации C<.dozorc> для постоянных настроек контейнера.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "Библиотека C<getoptlong.sh> используется для разбора опций в скриптах C<xlate> и C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "Библиотека C<getoptlong.sh> используется для разбора опций в скриптах C<xlate> и C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

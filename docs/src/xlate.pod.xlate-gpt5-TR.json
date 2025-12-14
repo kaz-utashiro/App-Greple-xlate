@@ -268,8 +268,8 @@
       "C<xlate> komutu Docker ortamıyla birlikte çalışır; bu nedenle elinizde hiçbir şey kurulu olmasa bile Docker mevcut olduğu sürece kullanabilirsiniz. C<-D> veya C<-C> seçeneğini kullanın.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Docker işlemleri, bağımsız bir komut olarak da kullanılabilen C<xrun> betiği tarafından yönetilir. C<xrun> betiği, kalıcı konteyner ayarları için C<.xrunrc> yapılandırma dosyasını destekler.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker işlemleri, bağımsız bir komut olarak da kullanılabilen C<dozo> betiği tarafından yönetilir. C<dozo> betiği, kalıcı kapsayıcı ayarları için C<.dozorc> yapılandırma dosyasını destekler.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Docker konteyner imajı.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "C<xlate> ve C<xrun> betiklerinde seçenek ayrıştırma için kullanılan C<getoptlong.sh> kütüphanesi.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "C<xlate> ve C<dozo> betiklerinde seçenek ayrıştırma için kullanılan C<getoptlong.sh> kütüphanesi.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

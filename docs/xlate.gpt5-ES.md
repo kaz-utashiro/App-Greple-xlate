@@ -14,7 +14,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ El comando `xlate` admite opciones largas al estilo GNU como `--to-lang`, `--fro
 
 El comando `xlate` funciona en conjunto con el entorno Docker, por lo que, incluso si no tienes nada instalado localmente, puedes usarlo siempre que Docker esté disponible. Usa la opción `-D` o `-C`.
 
-Las operaciones de Docker son manejadas por el script `xrun`, que también puede usarse como un comando independiente. El script `xrun` admite el archivo de configuración `.xrunrc` para ajustes persistentes del contenedor.
+Las operaciones de Docker son gestionadas por el script `dozo`, que también puede utilizarse como un comando independiente. El script `dozo` admite el archivo de configuración `.dozorc` para configuraciones persistentes del contenedor.
 
 Además, dado que se proporcionan makefiles para varios estilos de documentos, es posible la traducción a otros idiomas sin especificaciones especiales. Usa la opción `-M`.
 
@@ -341,7 +341,7 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    La biblioteca `getoptlong.sh` se usa para el análisis de opciones en los scripts `xlate` y `xrun`.
+    La biblioteca `getoptlong.sh` se utiliza para el análisis de opciones en los scripts `xlate` y `dozo`.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

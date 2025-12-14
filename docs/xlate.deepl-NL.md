@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ Het `xlate` commando ondersteunt GNU-stijl lange opties zoals `--to-lang`, `--fr
 
 Het `xlate` commando werkt samen met de Docker omgeving, dus zelfs als je niets geïnstalleerd hebt, kun je het gebruiken zolang Docker beschikbaar is. Gebruik de optie `-D` of `-C`.
 
-Docker-operaties worden afgehandeld door het `xrun` script, dat ook als zelfstandig commando kan worden gebruikt. Het `xrun` script ondersteunt het `.xrunrc` configuratiebestand voor persistente containerinstellingen.
+Docker-operaties worden afgehandeld door het `dozo` script, dat ook als zelfstandig commando kan worden gebruikt. Het `dozo` script ondersteunt het `.dozorc` configuratiebestand voor persistente containerinstellingen.
 
 Omdat er makefiles voor verschillende documentstijlen worden meegeleverd, is vertaling naar andere talen mogelijk zonder speciale specificaties. Gebruik de optie `-M`.
 
@@ -341,7 +341,7 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    De `getoptlong.sh` bibliotheek wordt gebruikt voor het parsen van opties in de `xlate` en `xrun` scripts.
+    De `getoptlong.sh` bibliotheek wordt gebruikt voor het parsen van opties in de `xlate` en `dozo` scripts.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

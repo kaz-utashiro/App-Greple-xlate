@@ -268,8 +268,8 @@
       "Puteți folosi cu ușurință acest modul din linia de comandă folosind comanda C<xlate> inclusă în distribuție. Consultați pagina de manual C<xlate> pentru utilizare.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Operațiunile Docker sunt gestionate de scriptul C<xrun>, care poate fi folosit și ca o comandă de sine stătătoare. Scriptul C<xrun> suportă fișierul de configurare C<.xrunrc> pentru setări persistente ale containerului.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Operațiunile Docker sunt gestionate de scriptul C<dozo>, care poate fi folosit și ca o comandă de sine stătătoare. Scriptul C<dozo> suportă fișierul de configurare C<.dozorc> pentru setările persistente ale containerului.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "L<App::Greple::xlate::gpt3>\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "Biblioteca C<getoptlong.sh> este folosită pentru analiza opțiunilor în scripturile C<xlate> și C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "Biblioteca C<getoptlong.sh> este folosită pentru analiza opțiunilor în scripturile C<xlate> și C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

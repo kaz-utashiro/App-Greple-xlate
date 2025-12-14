@@ -14,7 +14,7 @@ App::Greple::xlate - greple을 위한 번역 지원 모듈입니다.
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ DeepL은 이러한 경우, 번역에서 제외할 부분을 XML 태그로 변환
 
 `xlate` 명령은 Docker 환경과 연동되어, 별도의 설치가 없어도 Docker만 있으면 사용할 수 있습니다. `-D` 또는 `-C` 옵션을 사용하세요.
 
-Docker 작업은 `xrun` 스크립트에서 처리되며, 이 스크립트는 독립 실행형 명령으로도 사용할 수 있습니다. `xrun` 스크립트는 지속적인 컨테이너 설정을 위한 `.xrunrc` 구성 파일을 지원합니다.
+Docker 작업은 `dozo` 스크립트에 의해 처리되며, 이 스크립트는 독립 실행형 명령으로도 사용할 수 있습니다. `dozo` 스크립트는 영구 컨테이너 설정을 위한 `.dozorc` 구성 파일을 지원합니다.
 
 또한 다양한 문서 스타일용 메이크파일이 제공되므로, 특별한 지정 없이도 다른 언어로 번역이 가능합니다. `-M` 옵션을 사용하세요.
 
@@ -341,7 +341,7 @@ DeepL과 ChatGPT용 커맨드라인 도구를 설치해야 합니다.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    `getoptlong.sh` 라이브러리는 `xlate` 및 `xrun` 스크립트에서 옵션 파싱에 사용됩니다.
+    `xlate` 및 `dozo` 스크립트에서 옵션 파싱에 사용되는 `getoptlong.sh` 라이브러리입니다.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

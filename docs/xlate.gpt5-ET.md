@@ -14,7 +14,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ Käsk `xlate` toetab GNU-stiilis pikki valikuid nagu `--to-lang`, `--from-lang`,
 
 Käsk `xlate` töötab kooskõlas Dockeri keskkonnaga, seega isegi kui sul pole midagi lokaalselt paigaldatud, saad seda kasutada seni, kuni Docker on saadaval. Kasuta valikut `-D` või `-C`.
 
-Dockeri toiminguid haldab skript `xrun`, mida saab kasutada ka iseseisva käsuna. Skript `xrun` toetab püsivate konteineri seadistuste jaoks konfiguratsioonifaili `.xrunrc`.
+Dockeri toiminguid haldab skript `dozo`, mida saab kasutada ka iseseisva käsuna. Skript `dozo` toetab püsivate konteinerisätete jaoks konfiguratsioonifaili `.dozorc`.
 
 Samuti, kuna on pakutud mitmesuguste dokumendistiilide makefile’e, on tõlkimine teistesse keeltesse võimalik ilma erisäteteta. Kasuta valikut `-M`.
 
@@ -341,7 +341,7 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    Teek `getoptlong.sh` kasutatakse valikute parsimiseks skriptides `xlate` ja `xrun`.
+    Teek `getoptlong.sh` kasutatakse valikute parsimiseks skriptides `xlate` ja `dozo`.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

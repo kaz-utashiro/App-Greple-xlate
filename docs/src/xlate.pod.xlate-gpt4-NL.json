@@ -268,8 +268,8 @@
       "U kunt deze module eenvoudig vanaf de opdrachtregel gebruiken met het C<xlate>-commando dat bij de distributie is inbegrepen. Zie de C<xlate>-manpagina voor gebruik.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Docker-bewerkingen worden afgehandeld door het C<xrun> script, dat ook als een zelfstandige opdracht kan worden gebruikt. Het C<xrun> script ondersteunt het C<.xrunrc> configuratiebestand voor persistente containerinstellingen.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker-bewerkingen worden afgehandeld door het C<dozo> script, dat ook als een zelfstandige opdracht kan worden gebruikt. Het C<dozo> script ondersteunt het C<.dozorc> configuratiebestand voor blijvende containerinstellingen.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Docker container image.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "De C<getoptlong.sh> bibliotheek wordt gebruikt voor optieparsing in de C<xlate> en C<xrun> scripts.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "De C<getoptlong.sh> bibliotheek wordt gebruikt voor optieparsing in de C<xlate> en C<dozo> scripts.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

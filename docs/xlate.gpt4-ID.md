@@ -14,7 +14,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ Perintah `xlate` mendukung opsi panjang gaya GNU seperti `--to-lang`, `--from-la
 
 Anda dapat dengan mudah menggunakan modul ini dari baris perintah dengan menggunakan perintah `xlate` yang disertakan dalam distribusi. Lihat halaman manual `xlate` untuk penggunaannya.
 
-Operasi Docker ditangani oleh skrip `xrun`, yang juga dapat digunakan sebagai perintah mandiri. Skrip `xrun` mendukung file konfigurasi `.xrunrc` untuk pengaturan kontainer yang persisten.
+Operasi Docker ditangani oleh skrip `dozo`, yang juga dapat digunakan sebagai perintah mandiri. Skrip `dozo` mendukung file konfigurasi `.dozorc` untuk pengaturan kontainer yang persisten.
 
 Perintah `xlate` bekerja bersama dengan lingkungan Docker, jadi meskipun Anda tidak memiliki apa pun yang terinstal, Anda dapat menggunakannya selama Docker tersedia. Gunakan opsi `-D` atau `-C`.
 
@@ -341,7 +341,7 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    Pustaka `getoptlong.sh` digunakan untuk parsing opsi di skrip `xlate` dan `xrun`.
+    Library `getoptlong.sh` digunakan untuk parsing opsi dalam skrip `xlate` dan `dozo`.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -268,8 +268,8 @@
       "您可以通过分发包中包含的 C<xlate> 命令在命令行中轻松使用此模块。用法请参见 C<xlate> man 页面。\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Docker 操作由 C<xrun> 脚本处理，该脚本也可以作为独立命令使用。C<xrun> 脚本支持 C<.xrunrc> 配置文件以实现容器设置的持久化。\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker 操作由 C<dozo> 脚本处理，该脚本也可以作为独立命令使用。C<dozo> 脚本支持 C<.dozorc> 配置文件用于持久化容器设置。\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Docker 容器镜像。\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "C<getoptlong.sh> 库用于 C<xlate> 和 C<xrun> 脚本中的选项解析。\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "C<getoptlong.sh> 库用于 C<xlate> 和 C<dozo> 脚本中的选项解析。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

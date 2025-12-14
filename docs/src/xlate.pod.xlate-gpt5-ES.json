@@ -268,8 +268,8 @@
       "El comando C<xlate> funciona en conjunto con el entorno Docker, por lo que, incluso si no tienes nada instalado localmente, puedes usarlo siempre que Docker esté disponible. Usa la opción C<-D> o C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Las operaciones de Docker son manejadas por el script C<xrun>, que también puede usarse como un comando independiente. El script C<xrun> admite el archivo de configuración C<.xrunrc> para ajustes persistentes del contenedor.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Las operaciones de Docker son gestionadas por el script C<dozo>, que también puede utilizarse como un comando independiente. El script C<dozo> admite el archivo de configuración C<.dozorc> para configuraciones persistentes del contenedor.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Imagen de contenedor Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "La biblioteca C<getoptlong.sh> se usa para el análisis de opciones en los scripts C<xlate> y C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "La biblioteca C<getoptlong.sh> se utiliza para el análisis de opciones en los scripts C<xlate> y C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

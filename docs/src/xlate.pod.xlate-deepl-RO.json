@@ -268,8 +268,8 @@
       "Comanda C<xlate> funcționează de comun acord cu mediul Docker, astfel încât, chiar dacă nu aveți nimic instalat la îndemână, îl puteți utiliza atâta timp cât Docker este disponibil. Utilizați opțiunea C<-D> sau C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Operațiunile Docker sunt gestionate de scriptul C<xrun>, care poate fi utilizat și ca o comandă de sine stătătoare. Scriptul C<xrun> acceptă fișierul de configurare C<.xrunrc> pentru setările persistente ale containerului.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Operațiunile Docker sunt gestionate de scriptul C<dozo>, care poate fi utilizat și ca o comandă de sine stătătoare. Scriptul C<dozo> acceptă fișierul de configurare C<.dozorc> pentru setările persistente ale containerului.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Imagine container Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scripturile C<xlate> și C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scripturile C<xlate> și C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

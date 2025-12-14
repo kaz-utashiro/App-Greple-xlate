@@ -268,8 +268,8 @@
       "Perintah C<xlate> bekerja bersama dengan lingkungan Docker, jadi meskipun Anda tidak memiliki apa pun yang terinstal, Anda dapat menggunakannya selama Docker tersedia. Gunakan opsi C<-D> atau C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Operasi Docker ditangani oleh skrip C<xrun>, yang juga dapat digunakan sebagai perintah mandiri. Skrip C<xrun> mendukung berkas konfigurasi C<.xrunrc> untuk pengaturan kontainer persisten.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Operasi Docker ditangani oleh skrip C<dozo>, yang juga dapat digunakan sebagai perintah mandiri. Skrip C<dozo> mendukung berkas konfigurasi C<.dozorc> untuk pengaturan kontainer persisten.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Gambar kontainer Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "Pustaka C<getoptlong.sh> digunakan untuk penguraian opsi dalam skrip C<xlate> dan C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "Pustaka C<getoptlong.sh> digunakan untuk penguraian opsi dalam skrip C<xlate> dan C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

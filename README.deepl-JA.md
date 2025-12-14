@@ -14,7 +14,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ PerlのPodスタイルで書かれた文書中の通常のテキストブロッ�
 
 `xlate`コマンドはDocker環境と協調して動作するため、手元に何もインストールされていなくても、Dockerが利用可能であれば使用することができます。`-D`または`-C`オプションを使用してください。
 
-Dockerの操作は`xrun`スクリプトによって処理されます。`xrun`スクリプトは、コンテナ設定を永続化するための`.xrunrc`設定ファイルをサポートします。
+Dockerの操作は`dozo`スクリプトで処理されます。`dozo`スクリプトは、永続的なコンテナ設定のための`.dozorc`設定ファイルをサポートします。
 
 また、様々なドキュメントスタイルに対応したmakefileが提供されているので、特別な指定なしに他言語への翻訳が可能です。`-M`オプションを使用してください。
 
@@ -341,7 +341,7 @@ DeepLおよびChatGPT用のコマンドラインツールをインストール�
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    `getoptlong.sh` ライブラリは `xlate` と `xrun` スクリプトのオプション解析に使用されます。
+    `getoptlong.sh` ライブラリは `xlate` と `dozo` スクリプトのオプション解析に使われます。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

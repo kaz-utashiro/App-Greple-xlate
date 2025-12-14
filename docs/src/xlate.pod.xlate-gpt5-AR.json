@@ -268,8 +268,8 @@
       "يعمل أمر C<xlate> بالتنسيق مع بيئة Docker، لذا حتى إذا لم يكن لديك أي شيء مُثبّت محليًا، يمكنك استخدامه طالما أن Docker متاح. استخدم خيار C<-D> أو C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "تتم إدارة عمليات Docker بواسطة البرنامج النصي C<xrun>، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي C<xrun> ملف التهيئة C<.xrunrc> لإعدادات الحاوية الدائمة.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "تُدار عمليات Docker بواسطة البرنامج النصي C<dozo>، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي C<dozo> ملف التهيئة C<.dozorc> لإعدادات الحاوية الدائمة.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "صورة حاوية Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "تُستخدم مكتبة C<getoptlong.sh> لتحليل الخيارات في البرنامجين النصيين C<xlate> وC<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "تُستخدم مكتبة C<getoptlong.sh> لتحليل الخيارات في البرنامجين النصيين C<xlate> وC<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

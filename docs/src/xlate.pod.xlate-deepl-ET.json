@@ -268,8 +268,8 @@
       "C<xlate> käsk töötab koos Dockeri keskkonnaga, nii et isegi kui teil ei ole midagi paigaldatud, saate seda kasutada, kui Docker on saadaval. Kasutage valikut C<-D> või C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Dockeri operatsioone teostab skript C<xrun>, mida saab kasutada ka iseseisva käsuna. Skript C<xrun> toetab C<.xrunrc> konfiguratsioonifaili püsivate konteineri seadete jaoks.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Dockeri toiminguid teostab skript C<dozo>, mida saab kasutada ka iseseisva käsuna. C<dozo> skript toetab C<.dozorc> konfiguratsioonifaili püsivate konteineri seadete jaoks.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Dockeri konteineri kujutis.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "C<getoptlong.sh> raamatukogu, mida kasutatakse C<xlate> ja C<xrun> skriptide valikute parsimiseks.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "C<getoptlong.sh> raamatukogu, mida kasutatakse C<xlate> ja C<dozo> skriptide valikute parsimiseks.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

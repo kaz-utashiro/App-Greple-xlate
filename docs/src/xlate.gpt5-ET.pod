@@ -16,7 +16,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 =head1 VERSION
 
-Version 0.9918
+Version 0.9919
 
 =head1 DESCRIPTION
 
@@ -323,7 +323,7 @@ Käsk C<xlate> toetab GNU-stiilis pikki valikuid nagu C<--to-lang>, C<--from-lan
 
 Käsk C<xlate> töötab kooskõlas Dockeri keskkonnaga, seega isegi kui sul pole midagi lokaalselt paigaldatud, saad seda kasutada seni, kuni Docker on saadaval. Kasuta valikut C<-D> või C<-C>.
 
-Dockeri toiminguid haldab skript C<xrun>, mida saab kasutada ka iseseisva käsuna. Skript C<xrun> toetab püsivate konteineri seadistuste jaoks konfiguratsioonifaili C<.xrunrc>.
+Dockeri toiminguid haldab skript C<dozo>, mida saab kasutada ka iseseisva käsuna. Skript C<dozo> toetab püsivate konteinerisätete jaoks konfiguratsioonifaili C<.dozorc>.
 
 Samuti, kuna on pakutud mitmesuguste dokumendistiilide makefile’e, on tõlkimine teistesse keeltesse võimalik ilma erisäteteta. Kasuta valikut C<-M>.
 
@@ -387,7 +387,7 @@ Dockeri konteineripilt.
 
 =item * L<https://github.com/tecolicom/getoptlong>
 
-Teek C<getoptlong.sh> kasutatakse valikute parsimiseks skriptides C<xlate> ja C<xrun>.
+Teek C<getoptlong.sh> kasutatakse valikute parsimiseks skriptides C<xlate> ja C<dozo>.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

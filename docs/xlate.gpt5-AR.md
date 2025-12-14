@@ -14,7 +14,7 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ Version 0.9918
 
 يعمل أمر `xlate` بالتنسيق مع بيئة Docker، لذا حتى إذا لم يكن لديك أي شيء مُثبّت محليًا، يمكنك استخدامه طالما أن Docker متاح. استخدم خيار `-D` أو `-C`.
 
-تتم إدارة عمليات Docker بواسطة البرنامج النصي `xrun`، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي `xrun` ملف التهيئة `.xrunrc` لإعدادات الحاوية الدائمة.
+تُدار عمليات Docker بواسطة البرنامج النصي `dozo`، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي `dozo` ملف التهيئة `.dozorc` لإعدادات الحاوية الدائمة.
 
 أيضًا، نظرًا لتوفّر ملفات make لأنماط مستندات متنوعة، فإن الترجمة إلى لغات أخرى ممكنة دون مواصفات خاصة. استخدم خيار `-M`.
 
@@ -341,7 +341,7 @@ Version 0.9918
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    تُستخدم مكتبة `getoptlong.sh` لتحليل الخيارات في البرنامجين النصيين `xlate` و`xrun`.
+    تُستخدم مكتبة `getoptlong.sh` لتحليل الخيارات في البرنامجين النصيين `xlate` و`dozo`.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

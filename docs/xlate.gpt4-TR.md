@@ -14,7 +14,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 0.9918
+Version 0.9919
 
 # DESCRIPTION
 
@@ -281,7 +281,7 @@ Varsayılan davranış olarak, kullanılmayan veriler önbellek dosyasından kal
 
 Bu seçenek, gerek olmasa bile önbellek dosyasını güncellemeye zorlar.
 
-Docker işlemleri, bağımsız bir komut olarak da kullanılabilen `xrun` betiği tarafından yönetilir. `xrun` betiği, kalıcı konteyner ayarları için `.xrunrc` yapılandırma dosyasını destekler.
+Docker işlemleri, bağımsız bir komut olarak da kullanılabilen `dozo` betiği tarafından yönetilir. `dozo` betiği, kalıcı konteyner ayarları için `.dozorc` yapılandırma dosyasını destekler.
 
 Bu modülü komut satırından kolayca kullanmak için dağıtıma dahil edilen `xlate` komutunu kullanabilirsiniz. Kullanımı için `xlate` man sayfasına bakın.
 
@@ -341,7 +341,7 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    `getoptlong.sh` kütüphanesi, `xlate` ve `xrun` betiklerinde seçenek ayrıştırma için kullanılır.
+    `xlate` ve `dozo` betiklerinde seçenek ayrıştırma için kullanılan `getoptlong.sh` kütüphanesi.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -16,7 +16,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 =head1 VERSION
 
-Version 0.9918
+Version 0.9919
 
 =head1 DESCRIPTION
 
@@ -323,7 +323,7 @@ Comanda C<xlate> acceptă opțiuni lungi în stil GNU precum C<--to-lang>, C<--f
 
 Comanda C<xlate> funcționează în concert cu mediul Docker, deci chiar dacă nu ai nimic instalat local, o poți folosi atâta timp cât Docker este disponibil. Folosește opțiunea C<-D> sau C<-C>.
 
-Operațiunile Docker sunt gestionate de scriptul C<xrun>, care poate fi folosit și ca o comandă independentă. Scriptul C<xrun> acceptă fișierul de configurare C<.xrunrc> pentru setări persistente ale containerului.
+Operațiunile Docker sunt gestionate de scriptul C<dozo>, care poate fi folosit și ca o comandă de sine stătătoare. Scriptul C<dozo> acceptă fișierul de configurare C<.dozorc> pentru setările persistente ale containerului.
 
 De asemenea, deoarece sunt furnizate makefile-uri pentru diverse stiluri de documente, traducerea în alte limbi este posibilă fără specificații speciale. Folosește opțiunea C<-M>.
 
@@ -387,7 +387,7 @@ Imagine de container Docker.
 
 =item * L<https://github.com/tecolicom/getoptlong>
 
-Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scripturile C<xlate> și C<xrun>.
+Biblioteca C<getoptlong.sh> folosită pentru analizarea opțiunilor în scripturile C<xlate> și C<dozo>.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

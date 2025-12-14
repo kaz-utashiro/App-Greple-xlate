@@ -268,8 +268,8 @@
       "Η εντολή C<xlate> λειτουργεί σε συνεργασία με το περιβάλλον Docker, οπότε ακόμα και αν δεν έχετε τίποτα εγκατεστημένο στο χέρι, μπορείτε να τη χρησιμοποιήσετε εφόσον το Docker είναι διαθέσιμο. Χρησιμοποιήστε την επιλογή C<-D> ή C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<xrun> script, which can also be used as a standalone command. The C<xrun> script supports the C<.xrunrc> configuration file for persistent container settings.\n",
-      "Οι λειτουργίες Docker διεκπεραιώνονται από το σενάριο C<xrun>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το σενάριο C<xrun> υποστηρίζει το αρχείο ρυθμίσεων C<.xrunrc> για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.\n"
+      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Οι λειτουργίες του Docker διεκπεραιώνονται από το σενάριο C<dozo>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το σενάριο C<dozo> υποστηρίζει το αρχείο ρυθμίσεων C<.dozorc> για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -332,8 +332,8 @@
       "Εικόνα εμπορευματοκιβωτίου Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<xrun> scripts.\n",
-      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση των επιλογών στα σενάρια C<xlate> και C<xrun>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
+      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση επιλογών στα σενάρια C<xlate> και C<dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

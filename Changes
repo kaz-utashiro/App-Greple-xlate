@@ -2,6 +2,13 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9919 2025-12-14T07:00:34Z
+
+    - rename xrun to dozo (Docker Zone)
+    - fix .dozorc parsing to handle quoted arguments using xargs
+    - use POD for dozo help output
+    - add USAGE section with practical examples
+
 0.9918 2025-12-14T02:43:25Z
 
     - add --version option to xrun
