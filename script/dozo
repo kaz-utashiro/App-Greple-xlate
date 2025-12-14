@@ -205,8 +205,8 @@ END
 
 declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
-    [      help | h  ! # show help                       ]=
-    [   version | v  ! # show version                    ]=
+    [       help | h ! # show help                       ]=
+    [    version | v ! # show version                    ]=
     [      debug | d   # enable debug mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
@@ -275,8 +275,7 @@ for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
 given_name="${name:-}"
 
 # Merge environment variables
-ENV=("${DEFAULT_ENV[@]}")
-(( ${#env[@]} > 0 )) && ENV+=("${env[@]}")
+ENV=("${DEFAULT_ENV[@]}" "${env[@]}")
 
 ##############################################################################
 # Kill container
@@ -360,37 +359,16 @@ declare -a dockopt=(
         -v "${mount_dir:-$cwd}:${workdir}:${mount_mode}"
         -w "${workdir}${relative:+/${relative}}"
     )
-# Add additional volumes
-if (( ${#volume[@]} > 0 )); then
-    for v in "${volume[@]}"; do
-        dockopt+=(-v "$v")
-    done
-fi
-
-# Add ports
-if (( ${#port[@]} > 0 )); then
-    for p in "${port[@]}"; do
-        dockopt+=(-p "$p")
-    done
-fi
-
-# Add other options
-if (( ${#other[@]} > 0 )); then
-    for o in "${other[@]}"; do
-        dockopt+=("$o")
-    done
-fi
+for v in "${volume[@]}"; do dockopt+=(-v "$v"); done
+for p in   "${port[@]}"; do dockopt+=(-p "$p"); done
+for e in    "${ENV[@]}"; do dockopt+=(-e "$e"); done
 
 dockopt+=(
     ${detach:+--detach}
     ${hostname:+--hostname "${hostname}"}
     ${display:+-e DISPLAY="$display"}
+    "${other[@]}"
 )
-
-# Add environment variables
-for e in "${ENV[@]}"; do
-    dockopt+=(-e "$e")
-done
 
 exec docker run "${dockopt[@]}" "${image}" "$@"
 
