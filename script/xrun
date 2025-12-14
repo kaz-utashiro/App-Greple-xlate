@@ -25,7 +25,8 @@ define pod <<"=cut"
         -q   , --quiet      quiet mode
 
     Docker options:
-        -I # , --image      Docker image (required)
+        -I # , --image      Docker image (required unless -D)
+        -D   , --default    use default image (XRUN_DEFAULT_IMAGE or tecolicom/xlate)
         -E # , --env        environment variable to inherit (repeatable)
         -W   , --mount-cwd  mount current working directory
         -H   , --mount-home mount home directory
@@ -52,10 +53,8 @@ define pod <<"=cut"
 # Utility functions
 ##############################################################################
 
-warn() {
-    [[ ${quiet:-} ]] && return
-    echo "$myname: $*" >&2
-}
+_warn_buffer=()
+warn() { _warn_buffer+=("$*"); }
 
 die() {
     echo "$myname: $*" >&2
@@ -76,15 +75,15 @@ get_ip() {
 
 container_name() {
     local name
-    if [[ ${givenname:-} ]]
+    if [[ ${given_name:-} ]]
     then
-        name="$givenname"
+        name="$given_name"
     else
         if [[ ${image:-} =~ (.*/)?([-_.a-zA-Z0-9]+) ]]
         then name=${BASH_REMATCH[2]}
         else name=$myname
         fi
-        [[ ${volume:-} ]] && name+=.${volume##*/}
+        [[ ${mount_dir:-} ]] && name+=.${mount_dir##*/}
     fi
     echo "$name"
 }
@@ -131,9 +130,9 @@ DEFAULT_ENV=(
 )
 
 # Initialize variables
-topdir=$(git_topdir) || topdir=
-pwd=$(pwd)
-repository=
+top_dir=$(git_topdir) || top_dir=
+cwd=$(pwd)
+default_image=tecolicom/xlate:$my_version
 hostname=
 workdir=/work
 localtime=/etc/localtime
@@ -144,8 +143,8 @@ relative=
 display=
 
 # Set default volume based on git directory
-if [[ $topdir && $topdir != $pwd ]]; then
-    mount_dir="$topdir"
+if [[ $top_dir && $top_dir != $cwd ]]; then
+    mount_dir="$top_dir"
 fi
 
 define USAGE <<END
@@ -160,6 +159,7 @@ declare -A OPTS=(
     [      debug | d   # enable debug mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
+    [    default | D   # use default image               ]=
     [        env | E @ # environment variable to inherit ]=
     [  mount-cwd | W   # mount current working directory ]=
     [ mount-home | H   # mount home directory            ]=
@@ -181,8 +181,8 @@ declare -A OPTS=(
 
 # Collect .xrunrc paths in reverse priority order (lowest first)
 declare -a rcpath=()
-[[ $HOME != $pwd ]] && rcpath+=("$HOME")
-[[ $topdir && $topdir != $pwd ]] && rcpath+=("$topdir")
+[[ $HOME != $cwd ]] && rcpath+=("$HOME")
+[[ $top_dir && $top_dir != $cwd ]] && rcpath+=("$top_dir")
 rcpath+=(.)
 
 # Collect options from .xrunrc files
@@ -193,8 +193,8 @@ for dir in "${rcpath[@]}"; do
     warn "reading $rc"
     while IFS= read -r line; do
         [[ $line =~ ^# ]] && continue
-        [[ -z $line ]] && continue
-        rc_opts+=($line)
+        [[ $line ]] || continue
+        rc_opts+=("$line")
     done < "$rc"
 done
 
@@ -204,6 +204,10 @@ done
 
 . getoptlong.sh OPTS "${rc_opts[@]}" "$@" || die "getoptlong.sh not found"
 
+# Flush buffered warnings
+warn() { [[ ${quiet:-} ]] || echo "$myname: $*" >&2; }
+for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
+
 # Version display
 [[ ${version:-} ]] && { echo "$my_version"; exit 0; }
 
@@ -211,10 +215,11 @@ done
 [[ ${debug:-} ]] && set -x
 
 # Apply options
-[[ ${mount_cwd:-} ]] && mount_dir="$pwd"
+[[ ${default:-} ]] && [[ ! ${image:-} ]] && image="${XRUN_DEFAULT_IMAGE:-$default_image}"
+[[ ${mount_cwd:-} ]] && mount_dir="$cwd"
 [[ ${mount_home:-} ]] && { mount_dir="$HOME"; DEFAULT_ENV+=(HOME=$workdir); }
 [[ ${mount_ro:-} ]] && mount_mode=ro  # -R overrides --mount-mode
-givenname="${name:-}"
+given_name="${name:-}"
 
 # Merge environment variables
 ENV=("${DEFAULT_ENV[@]}")
@@ -258,11 +263,11 @@ if [[ ${live:-} ]]; then
     fi
     if id=$(docker_find -s running "$container"); then
         if (( $# > 0 )); then
-            declare -a dockopt
-            [[ ! ${batch:-} ]] && dockopt+=(--interactive)
-            [[ ! ${batch:-} ]] && [[ -t 0 ]] && dockopt+=(--tty)
+            declare -a exec_opts
+            [[ ! ${batch:-} ]] && exec_opts+=(--interactive)
+            [[ ! ${batch:-} ]] && [[ -t 0 ]] && exec_opts+=(--tty)
             export DOCKER_CLI_HINTS=false
-            exec docker exec "${dockopt[@]}" $id "$@"
+            exec docker exec "${exec_opts[@]}" $id "$@"
         else
             warn "attach to the $container ($id)"
             exec docker attach $id
@@ -275,12 +280,11 @@ fi
 # Run container
 ##############################################################################
 
-: ${image:=${repository}}
-[[ -z "$image" ]] && die "Docker image must be specified with -I option"
+[[ $image ]] || die "Docker image must be specified with -I option"
 
-if [[ ! ${unmount:-} && $mount_dir && $mount_dir != $pwd ]]; then
+if [[ ! ${unmount:-} && $mount_dir && $mount_dir != $cwd ]]; then
     warn "Mount $mount_dir to $workdir"
-    [[ ${pwd#$mount_dir/} != $pwd ]] && relative="${pwd#$mount_dir/}"
+    [[ ${cwd#$mount_dir/} != $cwd ]] && relative="${cwd#$mount_dir/}"
 fi
 
 if [[ ${DISPLAY:-} ]]; then
@@ -300,7 +304,7 @@ declare -a dockopt=(
 [[   ${live:-}    ]] && dockopt+=(${container:+--name "$container"})
 [[ -e $localtime  ]] && dockopt+=(-v $localtime:$localtime:ro)
 [[ ! ${unmount:-} ]] && dockopt+=(
-        -v "${mount_dir:-$pwd}:${workdir}:${mount_mode}"
+        -v "${mount_dir:-$cwd}:${workdir}:${mount_mode}"
         -w "${workdir}${relative:+/${relative}}"
     )
 # Add additional volumes
@@ -419,8 +423,15 @@ Quiet mode.
 
 =item B<-I> I<image>, B<--image>=I<image>
 
-Specify Docker image. Required, but you can put it in F<.xrunrc> so
-you don't have to type it every time.
+Specify Docker image. Required unless C<-D> is given, but you can put
+it in F<.xrunrc> so you don't have to type it every time.
+
+=item B<-D>, B<--default>
+
+Use the default Docker image. If C<XRUN_DEFAULT_IMAGE> environment
+variable is set, use that image. Otherwise, use
+C<tecolicom/xlate:VERSION> where VERSION is the current xrun version.
+See L</DEFAULT IMAGE> section for details about the default image.
 
 =item B<-E> I<name>[=I<value>], B<--env>=I<name>[=I<value>]
 
@@ -615,7 +626,119 @@ Options are processed in this order (later values override earlier):
 
 =back
 
+=head1 DEFAULT IMAGE
+
+The C<tecolicom/xlate> image is specifically designed for document
+translation and text processing tasks, providing a comprehensive
+environment with the following features:
+
+=head2 Translation and AI Tools
+
+=over 4
+
+=item * B<DeepL CLI> - Command-line interface for DeepL translation API
+
+=item * B<gpty> - GPT command-line tool for AI-powered text processing
+
+=item * B<llm> - Unified LLM interface with plugins for multiple providers:
+Gemini, Claude 3, Perplexity, and OpenRouter
+
+=back
+
+=head2 Text Processing Tools
+
+=over 4
+
+=item * B<greple> with xlate module - Pattern-based text extraction and
+translation
+
+=item * B<sdif> - Side-by-side diff viewer with word-level highlighting
+
+=item * B<ansicolumn>, B<ansifold>, B<ansiexpand> - ANSI-aware text
+formatting tools
+
+=item * B<optex textconv> - Document format converter (PDF, Office, etc.)
+
+=back
+
+=head2 Greple Extensions
+
+Multiple L<App::Greple> extension modules are pre-installed:
+
+=over 4
+
+=item * B<msdoc> - Microsoft Office document support
+
+=item * B<xp> - Extended pattern syntax
+
+=item * B<subst> - Text substitution with dictionary
+
+=item * B<frame> - Frame-style output formatting
+
+=back
+
+=head2 Git Integration
+
+The image includes a pre-configured git environment optimized for
+document comparison and review. Since B<xrun> automatically mounts
+the git top directory by default, git commands work seamlessly with
+full repository context:
+
+=over 4
+
+=item * B<Side-by-side diff> - C<git diff>, C<git log>, and C<git show>
+use B<sdif> for word-level side-by-side comparison
+
+=item * B<Colorful blame> - C<git blame> uses B<greple> for enhanced
+label coloring
+
+=item * B<Office document diff> - Compare Word (.docx), Excel (.xlsx),
+and PowerPoint (.pptx) files directly with git
+
+=item * B<PDF diff> - View PDF metadata changes
+
+=item * B<JSON diff> - Normalized JSON comparison using B<jq>
+
+=back
+
+=head2 Additional Utilities
+
+=over 4
+
+=item * B<MeCab> - Japanese morphological analyzer with IPA dictionary
+
+=item * B<poppler-utils> - PDF processing tools (pdftotext, etc.)
+
+=item * B<jq>, B<yq> - JSON and YAML processors
+
+=back
+
+=head2 Environment
+
+=over 4
+
+=item * Based on Ubuntu with Japanese locale (ja_JP.UTF-8)
+
+=item * Perl and Python3 runtime environments
+
+=item * Common API keys are automatically inherited from host
+(DEEPL_AUTH_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
+
+=back
+
 =head1 ENVIRONMENT
+
+=head2 Configuration Variables
+
+=over 4
+
+=item C<XRUN_DEFAULT_IMAGE>
+
+Specifies the default Docker image used when C<-D> (C<--default>) option
+is given. If not set, C<tecolicom/xlate:VERSION> is used where VERSION
+is the current xrun version.
+
+=back
 
 =head2 Inherited Variables
 

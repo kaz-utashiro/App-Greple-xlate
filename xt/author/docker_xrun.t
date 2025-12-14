@@ -4,8 +4,14 @@ use utf8;
 
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 
 my $xrun = File::Spec->rel2abs('script/xrun');
+
+# Use empty temp dir to avoid reading any .xrunrc (HOME, git top, cwd)
+my $empty_home = tempdir(CLEANUP => 1);
+$ENV{HOME} = $empty_home;
+chdir $empty_home or die "Cannot chdir to $empty_home: $!";
 
 # Docker-dependent tests
 SKIP: {

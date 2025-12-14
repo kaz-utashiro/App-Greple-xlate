@@ -5,11 +5,16 @@ use Encode;
 
 use Test::More;
 use Data::Dumper;
+use File::Temp qw(tempdir);
 
 use lib '.';
 use t::Util;
 
 $ENV{NO_COLOR} = 1;
+
+# Use empty HOME to avoid reading user's .xrunrc
+my $empty_home = tempdir(CLEANUP => 1);
+$ENV{HOME} = $empty_home;
 
 # Test with null engine (no API key required)
 subtest 'null engine' => sub {
