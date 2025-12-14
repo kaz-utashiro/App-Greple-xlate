@@ -2,6 +2,12 @@ Revision history for Perl extension App-Greple-xlate
 
 {{$NEXT}}
 
+0.9918 2025-12-14T02:43:25Z
+
+    - add --version option to xrun
+    - add -D/--default option and XRUN_DEFAULT_IMAGE env for default image
+    - improve test isolation from .xrunrc files
+
 0.9917 2025-12-13T15:04:34Z
 
     - use native ARM64 runner for faster Docker image builds

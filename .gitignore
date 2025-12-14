@@ -36,3 +36,4 @@ lib/**/*.xlate-*.json
 .DS_Store
 .claude
 
+.xrunrc
