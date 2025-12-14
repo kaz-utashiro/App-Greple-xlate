@@ -29,8 +29,6 @@ jobs:
           perl-version: ${{ matrix.perl }}
       - name: Install dependencies
         run: cpanm -nq --installdeps .
-      - name: Build and install
-        run: cpanm -nq .
       - name: Test
-        run: prove -v t/
+        run: prove -lv t/
 
