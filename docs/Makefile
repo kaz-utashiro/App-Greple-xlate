@@ -8,7 +8,7 @@ ENGINES     := deepl gpt3 gpt4 gpt4o gpt5
 LANGS_deepl := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 #LANGS_gpt3  := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 #LANGS_gpt4o := DE EL ES ET FR ID JA KO NL RO RU TR ZH
-LANGS_gpt4  := DE EL ES ET FR ID JA KO NL RO RU TR ZH
+#LANGS_gpt4  := DE EL ES ET FR ID JA KO NL RO RU TR ZH
 LANGS_gpt5  := DE EL ES ET FR ID JA KO NL RO RU TR ZH AR
 
 MOD_NAME := $(shell perl -MJSON -0777nE 'say decode_json($$_)->{name}' ../META.json)
