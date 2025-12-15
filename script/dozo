@@ -334,7 +334,7 @@ fi
 [[ $image ]] || die "Docker image must be specified with -I option"
 
 if [[ ! ${unmount:-} && $mount_dir && $mount_dir != $cwd ]]; then
-    warn "Mount $mount_dir to $workdir"
+    warn "mount $mount_dir to $workdir"
     [[ ${cwd#$mount_dir/} != $cwd ]] && relative="${cwd#$mount_dir/}"
 fi
 
@@ -371,6 +371,13 @@ dockopt+=(
     ${display:+-e DISPLAY="$display"}
     "${other[@]}"
 )
+
+# Display docker run info
+info="image=${image}"
+info+=" env=${#ENV[@]}"
+[[ ${live:-} && ${container:-} ]] && info+=" container=${container}"
+(( $# > 0 )) && info+=" command=$*"
+warn "docker run ${info}"
 
 exec docker run "${dockopt[@]}" "${image}" "$@"
 
