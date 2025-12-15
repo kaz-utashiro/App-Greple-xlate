@@ -10,7 +10,7 @@ static_install = "auto"
 branch = "main"
 hooks = [
     "make -C docs",
-    "perl -Ilib -MApp::Greple::xlate=\$VERSION -i -pE 's/^\s*Version \K([\d.]+)/$VERSION/' script/xlate script/dozo",
+    "perl -Ilib -MApp::Greple::xlate=\$VERSION -i -pE 's/^\s*Version \K(\d+(\.\d+)*)$/$VERSION/i' script/xlate script/dozo",
     "sed -i '' '/^1;$/q' lib/App/dozo.pm && greple -Mperl -h --nocolor :pod script/dozo >> lib/App/dozo.pm",
     "sed -i '' '/^1;$/q' lib/App/xlate.pm && greple -Mperl -h --nocolor :pod script/xlate >> lib/App/xlate.pm"
 ]
