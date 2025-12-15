@@ -21,8 +21,8 @@ dozo -I IMAGE [ options ] [ command ... ]
 
     -h, --help         show help
         --version      show version
-    -d, --debug        debug mode (currently enables trace)
-    -t, --trace        trace mode
+    -d, --debug        debug mode (show full command)
+    -x, --trace        trace mode (set -x)
     -q, --quiet        quiet mode
 
     -I, --image=#      Docker image (required unless -D)
@@ -105,6 +105,10 @@ version() {
 
 _warn_buffer=()
 warn() { _warn_buffer+=("$*"); }
+
+debug() {
+    [[ ${debug:-} ]] && echo "$myname: $*" >&2 || true
+}
 
 die() {
     echo "$myname: $*" >&2
@@ -208,8 +212,8 @@ declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
     [       help | h ! # show help                       ]=
     [    version     ! # show version                    ]=
-    [      debug | d   # debug mode (enables trace)      ]=
-    [      trace | t   # enable trace mode               ]=
+    [      debug | d   # debug mode (show full command)  ]=
+    [      trace | x   # trace mode (set -x)             ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
     [    default | D ! # use default image               ]=
@@ -265,9 +269,6 @@ for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
 
 # Version display
 [[ ${version:-} ]] && { echo "$my_version"; exit 0; }
-
-# Debug mode (currently enables trace)
-[[ ${debug:-} ]] && trace=1
 
 # Trace mode
 [[ ${trace:-} ]] && set -x
@@ -378,11 +379,13 @@ dockopt+=(
 )
 
 # Display docker run info
-info="image=${image}"
-info+=" env=${#ENV[@]}"
-[[ ${live:-} && ${container:-} ]] && info+=" container=${container}"
-(( $# > 0 )) && info+=" command=$*"
-warn "docker run ${info}"
+debug "docker run ${dockopt[*]} ${image} $*"
+if [[ ! ${quiet:-} ]]; then
+    info="image=${image} env=${#ENV[@]}"
+    [[ ${live:-} && ${container:-} ]] && info+=" container=${container}"
+    (( $# > 0 )) && info+=" command=$*"
+    warn "docker run ${info}"
+fi
 
 exec docker run "${dockopt[@]}" "${image}" "$@"
 
@@ -463,9 +466,9 @@ Show help message.
 
 =item B<-d>, B<--debug>
 
-Enable debug mode. Currently this enables trace mode.
+Enable debug mode. Shows the full docker command line that will be executed.
 
-=item B<-t>, B<--trace>
+=item B<-x>, B<--trace>
 
 Enable trace mode (set -x).
 

@@ -22,7 +22,7 @@ xlate [ options ] -t LANG FILE [ greple options ]
     -h, --help        help
         --version     show version
     -d, --debug       debug mode (currently enables trace)
-    -t, --trace       trace mode
+        --trace       trace mode
     -n, --dryrun      dry-run
     -a, --api         use API
     -c, --check       just check translation area
@@ -233,7 +233,7 @@ declare -A OPTS=(
     [&USAGE]="$USAGE"
     # Basic options
     [     debug | d     # debug mode (enables trace)       ]=
-    [     trace | t     # trace mode                       ]=
+    [     trace         # trace mode                       ]=
     [     quiet | q     # quiet mode                       ]=
     [      help | h  !  # show help                        ]=
     [   version      !  # show version                     ]=
@@ -553,7 +553,7 @@ Show version information.
 
 Enable debug mode. Currently this enables trace mode.
 
-=item B<-t>, B<--trace>
+=item B<--trace>
 
 Enable trace mode (set -x).
 
