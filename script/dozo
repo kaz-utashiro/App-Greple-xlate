@@ -358,9 +358,12 @@ declare -a dockopt=(
         -v "${mount_dir:-$cwd}:${workdir}:${mount_mode}"
         -w "${workdir}${relative:+/${relative}}"
     )
-for v in "${volume[@]}"; do dockopt+=(-v "$v"); done
-for p in   "${port[@]}"; do dockopt+=(-p "$p"); done
-for e in    "${ENV[@]}"; do dockopt+=(-e "$e"); done
+for v in "${volume[@]}"; do
+    [[ $v == *:* ]] || v="$v:$v"
+    dockopt+=(-v "$v")
+done
+for p in "${port[@]}"; do dockopt+=(-p "$p"); done
+for e in  "${ENV[@]}"; do dockopt+=(-e "$e"); done
 
 dockopt+=(
     ${detach:+--detach}
@@ -478,9 +481,11 @@ Mount current working directory.
 
 Mount home directory.
 
-=item B<-V> I<from>:I<to>, B<--volume>=I<from>:I<to>
+=item B<-V> I<path>, B<-V> I<from>:I<to>, B<--volume>=I<from>:I<to>
 
-Specify additional directory to mount. Repeatable.
+Specify additional directory to mount. If only I<path> is given
+(without C<:>), it is mounted to the same path in the container.
+Repeatable.
 
 =item B<-U>, B<--unmount>
 
@@ -518,6 +523,9 @@ Specify port mapping (e.g., C<8080:80>). Repeatable.
 =item B<-O> I<option>, B<--other>=I<option>
 
 Specify additional docker options. Repeatable.
+
+Note: Spaces and commas in option values are treated as delimiters and
+will split the value into multiple elements.
 
 =back
 
@@ -645,6 +653,24 @@ You can use any command line option in the configuration file:
     -V /data:/data
 
 Lines starting with C<#> are treated as comments.
+
+=head1 DOCKER-IN-DOCKER
+
+To use Docker commands inside the container, mount the host's Docker
+socket:
+
+    # .dozorc for Docker-in-Docker
+    -I docker
+    -V /var/run/docker.sock
+
+This allows you to run Docker commands from within the container using
+the host's Docker daemon:
+
+    $ dozo docker run --rm alpine uname -a
+
+Or run it as a one-liner without C<.dozorc>:
+
+    $ dozo -I docker -V /var/run/docker.sock docker run --rm alpine uname -a
 
 =head1 DEFAULT IMAGE
 

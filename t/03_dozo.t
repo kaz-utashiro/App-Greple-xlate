@@ -79,4 +79,42 @@ subtest '.dozorc parsing' => sub {
     unlike($out, qr/xargs|error|unterminated/i, 'no parsing error for quoted args');
 };
 
+# Test: -V option without colon (same path mount)
+subtest '-V option without colon' => sub {
+    my $test_dir = tempdir(CLEANUP => 1);
+    my $rc_file = "$test_dir/.dozorc";
+
+    local $ENV{HOME} = $test_dir;
+    chdir $test_dir or die "Cannot chdir to $test_dir: $!";
+
+    # Test single path without colon in .dozorc
+    open my $fh, '>', $rc_file or die "Cannot create $rc_file: $!";
+    print $fh "-I alpine\n";
+    print $fh "-V /var/run/docker.sock\n";
+    close $fh;
+
+    # Should parse without error
+    my $out = `$dozo -B echo test 2>&1`;
+    unlike($out, qr/error|invalid/i, '-V without colon is parsed without error');
+
+    # Test multiple paths (comma-separated)
+    open $fh, '>', $rc_file or die "Cannot create $rc_file: $!";
+    print $fh "-I alpine\n";
+    print $fh "-V /tmp,/var/tmp\n";
+    close $fh;
+
+    $out = `$dozo -B echo test 2>&1`;
+    unlike($out, qr/error|invalid/i, '-V with comma-separated paths is parsed without error');
+
+    # Test path with colon (explicit mount) using existing paths
+    open $fh, '>', $rc_file or die "Cannot create $rc_file: $!";
+    print $fh "-I alpine\n";
+    print $fh "-V /tmp:/container/tmp\n";
+    close $fh;
+
+    $out = `$dozo -B echo test 2>&1`;
+    # Docker might fail for other reasons, but there should be no parsing errors
+    unlike($out, qr/no such option|invalid.*option|getoptlong/i, '-V with explicit colon mount has no parsing error');
+};
+
 done_testing;
