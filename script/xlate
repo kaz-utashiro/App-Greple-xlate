@@ -21,24 +21,25 @@ xlate [ options ] -t LANG FILE [ greple options ]
   Translation options:
     -h, --help        help
         --version     show version
-    -d, --debug       debug
+    -d, --debug       debug mode (currently enables trace)
+    -t, --trace       trace mode
     -n, --dryrun      dry-run
     -a, --api         use API
     -c, --check       just check translation area
     -r, --refresh     refresh cache
     -u, --update      force update cache
     -s, --silent      silent mode
-    -t, --to-lang #   target language (required, no default)
-    -b, --from-lang # base language (informational)
-    -e, --engine #    translation engine (*deepl, gpt5, ...)
-    -p, --pattern #   pattern string to determine translation area
-    -f, --file #      pattern file to determine translation area
-    -o, --format #    output format (*xtxt, cm, ifdef, space, space+, colon)
-    -x, --maskfile #  file containing mask patterns
-    -g, --glossary #  glossary file
-    -w, --wrap #      wrap line by # width
-    -m, --maxlen #    max length per API call
-    -l, --library #   show library files (XLATE.mk, xlate.el)
+    -t, --to-lang=#   target language (required, no default)
+    -b, --from-lang=# base language (informational)
+    -e, --engine=#    translation engine (*deepl, gpt5, ...)
+    -p, --pattern=#   pattern string to determine translation area
+    -f, --file=#      pattern file to determine translation area
+    -o, --format=#    output format (*xtxt, cm, ifdef, space, space+, colon)
+    -x, --maskfile=#  file containing mask patterns
+    -g, --glossary=#  glossary file
+    -w, --wrap=#      wrap line by # width
+    -m, --maxlen=#    max length per API call
+    -l, --library=#   show library files (XLATE.mk, xlate.el)
     --                end of option
     N.B. default is marked as *
 
@@ -54,16 +55,16 @@ xlate [ options ] -t LANG FILE [ greple options ]
 
     -W, --mount-cwd    mount current working directory
     -H, --mount-home   mount home directory
-    -V, --volume #     specify mount directory
+    -V, --volume=#     specify mount directory
     -U, --unmount      do not mount
     -R, --mount-ro     mount read-only
     -B, --batch        run container in batch mode
-    -N, --name #       specify the name of live container
+    -N, --name=#       specify the name of live container
     -K, --kill         kill and remove live container
-    -E, --env #        specify an environment variable to be inherited
-    -I, --image #      docker image or version (default: tecolicom/xlate:version)
-    -P, --port #       port mapping
-    -O, --other #      additional docker option
+    -E, --env=#        specify an environment variable to be inherited
+    -I, --image=#      docker image or version (default: tecolicom/xlate:version)
+    -P, --port=#       port mapping
+    -O, --other=#      additional docker option
 
   Control Files:
     *.LANG    translation languages
@@ -231,7 +232,8 @@ END
 declare -A OPTS=(
     [&USAGE]="$USAGE"
     # Basic options
-    [     debug | d     # debug mode                       ]=
+    [     debug | d     # debug mode (enables trace)       ]=
+    [     trace | t     # trace mode                       ]=
     [     quiet | q     # quiet mode                       ]=
     [      help | h  !  # show help                        ]=
     [   version      !  # show version                     ]=
@@ -282,8 +284,11 @@ declare -a PARSE_ARGS=("$@")
 
 . getoptlong.sh OPTS "${PARSE_ARGS[@]}" || die "getoptlong.sh not found"
 
-# Debug mode
-[[ ${debug:-} ]] && set -x
+# Debug mode (currently enables trace)
+[[ ${debug:-} ]] && trace=1
+
+# Trace mode
+[[ ${trace:-} ]] && set -x
 
 find_gmake() {
     local make
@@ -349,7 +354,7 @@ option+=(--all)
 [[ ${api:-}        ]] || use_clipboard=yes
 [[ ${check:-}      ]] || option+=(--xlate${use_clipboard:+-labor})
 [[ ${wrap:-}       ]] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
-[[ ${debug:-}      ]] && option+=(-dmo)
+[[ ${trace:-}      ]] && option+=(-dmo)
 [[ ${refresh:-}    ]] && option+=(--xlate-cache=clear)
 [[ ${update:-}     ]] && option+=(--xlate-update)
 [[ ${silent:-}     ]] && option+=(--no-xlate-progress)
@@ -546,7 +551,11 @@ Show version information.
 
 =item B<-d>, B<--debug>
 
-Enable debug mode.
+Enable debug mode. Currently this enables trace mode.
+
+=item B<-t>, B<--trace>
+
+Enable trace mode (set -x).
 
 =item B<-n>, B<--dryrun>
 

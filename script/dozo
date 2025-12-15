@@ -21,7 +21,8 @@ dozo -I IMAGE [ options ] [ command ... ]
 
     -h, --help         show help
         --version      show version
-    -d, --debug        debug mode
+    -d, --debug        debug mode (currently enables trace)
+    -t, --trace        trace mode
     -q, --quiet        quiet mode
 
     -I, --image=#      Docker image (required unless -D)
@@ -207,7 +208,8 @@ declare -A OPTS=(
     [&USAGE]="$USAGE" [&PERMUTE]=
     [       help | h ! # show help                       ]=
     [    version     ! # show version                    ]=
-    [      debug | d   # enable debug mode               ]=
+    [      debug | d   # debug mode (enables trace)      ]=
+    [      trace | t   # enable trace mode               ]=
     [      quiet | q   # quiet mode                      ]=
     [      image | I : # Docker image                    ]=
     [    default | D ! # use default image               ]=
@@ -264,8 +266,11 @@ for _m in "${_warn_buffer[@]}"; do warn "$_m"; done; _warn_buffer=()
 # Version display
 [[ ${version:-} ]] && { echo "$my_version"; exit 0; }
 
-# Debug mode
-[[ ${debug:-} ]] && set -x
+# Debug mode (currently enables trace)
+[[ ${debug:-} ]] && trace=1
+
+# Trace mode
+[[ ${trace:-} ]] && set -x
 
 # Apply options
 [[ ${mount_cwd:-} ]] && mount_dir="$cwd"
@@ -458,7 +463,11 @@ Show help message.
 
 =item B<-d>, B<--debug>
 
-Enable debug mode.
+Enable debug mode. Currently this enables trace mode.
+
+=item B<-t>, B<--trace>
+
+Enable trace mode (set -x).
 
 =item B<-q>, B<--quiet>
 
