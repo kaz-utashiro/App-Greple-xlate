@@ -1,6 +1,6 @@
 package App::dozo;
 
-our $VERSION = "0.9920";
+our $VERSION = "0.9921";
 
 1;
 =encoding utf-8
@@ -37,7 +37,7 @@ dozo - Docker with Zero Overhead
 
 =head1 VERSION
 
-Version 0.9920
+Version 0.9921
 
 =head1 USAGE
 

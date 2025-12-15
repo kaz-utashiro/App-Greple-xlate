@@ -1,6 +1,6 @@
 package App::xlate;
 
-our $VERSION = "0.9920";
+our $VERSION = "0.9921";
 
 1;
 =encoding utf-8
@@ -65,7 +65,7 @@ our $VERSION = "0.9920";
 
 =head1 VERSION
 
-    Version 0.9920
+    Version 0.9921
 
 =cut
 =head1 DESCRIPTION
