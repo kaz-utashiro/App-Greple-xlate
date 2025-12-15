@@ -43,7 +43,7 @@ dozo -I IMAGE [ options ] [ command ... ]
 
 =head1 VERSION
 
-Version 0.9921
+Version 0.9922
 
 =head1 USAGE
 

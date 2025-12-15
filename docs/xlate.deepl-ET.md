@@ -14,7 +14,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 # VERSION
 
-Version 0.9921
+Version 0.9922
 
 # DESCRIPTION
 

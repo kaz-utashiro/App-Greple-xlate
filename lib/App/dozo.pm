@@ -1,6 +1,6 @@
 package App::dozo;
 
-our $VERSION = "0.9921";
+our $VERSION = "0.9922";
 
 1;
 =encoding utf-8
@@ -11,33 +11,33 @@ dozo - Docker with Zero Overhead
 
 =head1 SYNOPSIS
 
-    dozo -I IMAGE [ options ] [ command ... ]
+dozo -I IMAGE [ options ] [ command ... ]
 
-        -h   , --help       show help
-        -v   , --version    show version
-        -d   , --debug      debug mode
-        -q   , --quiet      quiet mode
+    -h, --help         show help
+        --version      show version
+    -d, --debug        debug mode (show full command)
+    -x, --trace        trace mode (set -x)
+    -q, --quiet        quiet mode
 
-    Docker options:
-        -I # , --image      Docker image (required unless -D)
-        -D   , --default    use default image (DOZO_DEFAULT_IMAGE or tecolicom/xlate)
-        -E # , --env        environment variable to inherit (repeatable)
-        -W   , --mount-cwd  mount current working directory
-        -H   , --mount-home mount home directory
-        -V # , --volume     additional volume to mount (repeatable)
-        -U   , --unmount    do not mount any directory
-             , --mount-mode mount mode (rw or ro, default: rw)
-        -R   , --mount-ro   mount read-only (shortcut for --mount-mode=ro)
-        -B   , --batch      batch mode (non-interactive)
-        -N # , --name       live container name
-        -K   , --kill       kill and remove existing container
-        -L   , --live       use live (persistent) container
-        -P # , --port       port mapping (repeatable)
-        -O # , --other      additional docker options (repeatable)
+    -I, --image=#      Docker image (required unless -D)
+    -D, --default      use default image (DOZO_DEFAULT_IMAGE or tecolicom/xlate)
+    -E, --env=#        environment variable to inherit (repeatable)
+    -W, --mount-cwd    mount current working directory
+    -H, --mount-home   mount home directory
+    -V, --volume=#     additional volume to mount (repeatable)
+    -U, --unmount      do not mount any directory
+        --mount-mode=# mount mode (rw or ro, default: rw)
+    -R, --mount-ro     mount read-only (shortcut for --mount-mode=ro)
+    -B, --batch        batch mode (non-interactive)
+    -N, --name=#       live container name
+    -K, --kill         kill and remove existing container
+    -L, --live         use live (persistent) container
+    -P, --port=#       port mapping (repeatable)
+    -O, --other=#      additional docker options (repeatable)
 
 =head1 VERSION
 
-Version 0.9921
+Version 0.9922
 
 =head1 USAGE
 
@@ -148,7 +148,11 @@ Show help message.
 
 =item B<-d>, B<--debug>
 
-Enable debug mode.
+Enable debug mode. Shows the full docker command line that will be executed.
+
+=item B<-x>, B<--trace>
+
+Enable trace mode (set -x).
 
 =item B<-q>, B<--quiet>
 
@@ -178,9 +182,11 @@ Mount current working directory.
 
 Mount home directory.
 
-=item B<-V> I<from>:I<to>, B<--volume>=I<from>:I<to>
+=item B<-V> I<path>, B<-V> I<from>:I<to>, B<--volume>=I<from>:I<to>
 
-Specify additional directory to mount. Repeatable.
+Specify additional directory to mount. If only I<path> is given
+(without C<:>), it is mounted to the same path in the container.
+Repeatable.
 
 =item B<-U>, B<--unmount>
 
@@ -219,6 +225,9 @@ Specify port mapping (e.g., C<8080:80>). Repeatable.
 
 Specify additional docker options. Repeatable.
 
+Note: Spaces and commas in option values are treated as delimiters and
+will split the value into multiple elements.
+
 =back
 
 =head1 LIVE CONTAINER
@@ -234,22 +243,22 @@ When C<-L> is specified, B<dozo> behaves as follows:
 
 =over 4
 
-=item 1. B<Container exists and is running>
+=item 1. B<Container does not exist>
+
+Create a new persistent container (without C<--rm> flag).
+
+=item 2. B<Container exists and is running>
 
 If a command is given, execute it using C<docker exec>. Otherwise,
 attach to the container using C<docker attach>.
-
-=item 2. B<Container exists but is exited>
-
-Start the container with C<docker start>, then proceed as above.
 
 =item 3. B<Container exists but is paused>
 
 Unpause the container with C<docker unpause>, then proceed as above.
 
-=item 4. B<Container does not exist>
+=item 4. B<Container exists but is exited>
 
-Create a new persistent container (without C<--rm> flag).
+Start the container with C<docker start>, then proceed as above.
 
 =back
 
@@ -319,45 +328,50 @@ running interactive commands.
 
 =head1 CONFIGURATION FILE
 
-C<.dozorc> is searched in the following order:
-
-=over 4
-
-=item 1. Current directory
-
-=item 2. Git top directory (if different)
-
-=item 3. Home directory
-
-=back
-
-All matching files are read and their options are prepended to
-the command line arguments. This means you can use any command
-line option in the configuration file:
-
-    # Example .dozorc
-    -I tecolicom/xlate:latest
-    -L
-    -E CUSTOM_VAR=value
-    -V /data:/data
-
-Lines starting with C<#> are treated as comments.
-
-=head2 Option Priority
-
-Options are processed in this order (later values override earlier):
+C<.dozorc> files are loaded from the following locations in order:
 
 =over 4
 
 =item 1. Home directory C<.dozorc>
 
-=item 2. Git top directory C<.dozorc>
+=item 2. Git top directory C<.dozorc> (if different)
 
 =item 3. Current directory C<.dozorc>
 
 =item 4. Command line arguments
 
 =back
+
+For single-value options (like C<-I>, C<-N>), later values override
+earlier ones. For repeatable options (like C<-E>, C<-V>, C<-P>, C<-O>),
+all values are accumulated in order.
+
+You can use any command line option in the configuration file:
+
+    # Example .dozorc
+    -I tecolicom/xlate:latest
+    -E CUSTOM_VAR=value
+    -V /data:/data
+
+Lines starting with C<#> are treated as comments.
+
+=head1 DOCKER-IN-DOCKER
+
+To use Docker commands inside the container, mount the host's Docker
+socket:
+
+    # .dozorc for Docker-in-Docker
+    -I docker
+    -V /var/run/docker.sock
+
+This allows you to run Docker commands from within the container using
+the host's Docker daemon:
+
+    $ dozo docker run --rm alpine uname -a
+
+Or run it as a one-liner without C<.dozorc>:
+
+    $ dozo -I docker -V /var/run/docker.sock docker run --rm alpine uname -a
 
 =head1 DEFAULT IMAGE
 
