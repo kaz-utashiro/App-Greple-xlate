@@ -19,26 +19,26 @@ dozo - Docker with Zero Overhead
 
 dozo -I IMAGE [ options ] [ command ... ]
 
-    -h   , --help       show help
-           --version    show version
-    -d   , --debug      debug mode
-    -q   , --quiet      quiet mode
+    -h, --help         show help
+        --version      show version
+    -d, --debug        debug mode
+    -q, --quiet        quiet mode
 
-    -I # , --image      Docker image (required unless -D)
-    -D   , --default    use default image (DOZO_DEFAULT_IMAGE or tecolicom/xlate)
-    -E # , --env        environment variable to inherit (repeatable)
-    -W   , --mount-cwd  mount current working directory
-    -H   , --mount-home mount home directory
-    -V # , --volume     additional volume to mount (repeatable)
-    -U   , --unmount    do not mount any directory
-         , --mount-mode mount mode (rw or ro, default: rw)
-    -R   , --mount-ro   mount read-only (shortcut for --mount-mode=ro)
-    -B   , --batch      batch mode (non-interactive)
-    -N # , --name       live container name
-    -K   , --kill       kill and remove existing container
-    -L   , --live       use live (persistent) container
-    -P # , --port       port mapping (repeatable)
-    -O # , --other      additional docker options (repeatable)
+    -I, --image=#      Docker image (required unless -D)
+    -D, --default      use default image (DOZO_DEFAULT_IMAGE or tecolicom/xlate)
+    -E, --env=#        environment variable to inherit (repeatable)
+    -W, --mount-cwd    mount current working directory
+    -H, --mount-home   mount home directory
+    -V, --volume=#     additional volume to mount (repeatable)
+    -U, --unmount      do not mount any directory
+        --mount-mode=# mount mode (rw or ro, default: rw)
+    -R, --mount-ro     mount read-only (shortcut for --mount-mode=ro)
+    -B, --batch        batch mode (non-interactive)
+    -N, --name=#       live container name
+    -K, --kill         kill and remove existing container
+    -L, --live         use live (persistent) container
+    -P, --port=#       port mapping (repeatable)
+    -O, --other=#      additional docker options (repeatable)
 
 =head1 VERSION
 
