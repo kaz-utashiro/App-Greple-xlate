@@ -65,14 +65,12 @@ RUN rm -fr \
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
 ARG DEV
-ARG REPO_URL
-RUN if [ "$REPO_URL" != "" ]; then \
-	cpanm -nf ${REPO_URL} ; \
-    elif [ "$DEV" != "" ]; then \
-	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git@$DEV ; \
-    else \
-	cpanm -qnf https://github.com/kaz-utashiro/App-Greple-xlate.git ; \
-    fi
+RUN git clone --depth 1 --recursive --shallow-submodules \
+        https://github.com/kaz-utashiro/App-Greple-xlate.git \
+    && cd App-Greple-xlate \
+    && if [ -n "$DEV" ]; then git fetch --depth 1 origin $DEV && git checkout $DEV; fi \
+    && cpanm -qnf . \
+    && cd .. && rm -rf App-Greple-xlate
 
 # Set the working directory
 WORKDIR /work
