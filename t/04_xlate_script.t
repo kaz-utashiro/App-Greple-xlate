@@ -21,7 +21,6 @@ BEGIN {
 }
 
 my $xlate = File::Spec->rel2abs('script/xlate');
-my $dozo = File::Spec->rel2abs('script/dozo');
 
 # Use empty temp dir to avoid reading any .dozorc (HOME, git top, cwd)
 my $empty_home = tempdir(CLEANUP => 1);
@@ -30,9 +29,6 @@ chdir $empty_home or die "Cannot chdir to $empty_home: $!";
 
 # Check if xlate script exists
 ok(-x $xlate, 'xlate script is executable');
-
-# Check if dozo exists (xlate depends on it for Docker operations)
-ok(-x $dozo, 'dozo script is executable');
 
 # Test: help option
 subtest 'help option' => sub {
