@@ -66,7 +66,8 @@ RUN rm -fr \
 
 ARG COMMIT
 ARG TAG
-RUN git clone --depth 1 --recursive --shallow-submodules \
+RUN git clone --depth 1 --shallow-submodules \
+        --recurse-submodules=share/getoptlong \
         ${TAG:+--branch $TAG} \
         https://github.com/kaz-utashiro/App-Greple-xlate.git \
     && cd App-Greple-xlate \
