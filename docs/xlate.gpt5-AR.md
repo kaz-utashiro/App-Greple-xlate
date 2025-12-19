@@ -14,7 +14,7 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 # VERSION
 
-Version 0.9922
+Version 0.9923
 
 # DESCRIPTION
 

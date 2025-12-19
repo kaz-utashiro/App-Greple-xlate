@@ -14,7 +14,7 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # VERSION
 
-Version 0.9922
+Version 0.9923
 
 # DESCRIPTION
 

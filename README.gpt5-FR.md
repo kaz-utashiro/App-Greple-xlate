@@ -14,7 +14,7 @@ App::Greple::xlate - module d’assistance à la traduction pour greple
 
 # VERSION
 
-Version 0.9922
+Version 0.9923
 
 # DESCRIPTION
 
