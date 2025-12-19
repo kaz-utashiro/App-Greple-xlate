@@ -1,15 +1,32 @@
+#
+# Docker image for tecolicom/xlate
+#
+# Build arguments:
+#   COMMIT  Commit hash for local development builds
+#   TAG     Version tag for release builds
+#
+# Local build:
+#   docker build --build-arg COMMIT=$(git rev-parse HEAD) -t xlate .
+#
+# Release build (used by GitHub Actions):
+#   docker build --build-arg TAG=0.9922 -t xlate:0.9922 .
+#
+
 FROM ubuntu:latest
 
 ENV HOME=/root
 
+# Locale setup
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get install -yq locales vim \
     && locale-gen ja_JP.UTF-8
 
+# Build tools
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        git curl gcc make perl perl-doc cpanminus
 
+# Perl modules (Greple and related tools)
 RUN cpanm -qn \
     App::optex::textconv \
     App::ansicolumn App::ansifold App::ansiexpand \
@@ -23,10 +40,12 @@ RUN cpanm -qn \
     App::Greple::update App::Greple::type \
     App::Greple::charcode
 
+# Python
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        python3 python3-pip
 
+# Python tools (DeepL, GPT, LLM)
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
 RUN pip install --upgrade \
        packaging deepl \
@@ -34,10 +53,12 @@ RUN pip install --upgrade \
        llm \
     && llm install llm-gemini llm-claude-3 llm-perplexity llm-openrouter
 
+# Verify installations
 RUN deepl --version
 RUN gpty --version
 RUN llm --version
 
+# Additional utilities
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
 	inetutils-ping inetutils-telnet \
@@ -47,6 +68,7 @@ RUN apt-get update && apt-get -yq upgrade \
 	jq yq \
 	diffutils
 
+# Cleanup
 RUN rm -fr \
 	$HOME/.cpanm $HOME/.cache \
 	/var/lib/apt/lists/*
@@ -64,6 +86,10 @@ RUN rm -fr \
 #EXPOSE 22
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
+# Install App::Greple::xlate
+# - TAG: clone specific tag (for release builds)
+# - COMMIT: checkout specific commit after clone (for local builds)
+# - Only share/getoptlong submodule is needed (skip t/runner)
 ARG COMMIT
 ARG TAG
 RUN git clone --depth 1 --shallow-submodules \
@@ -77,16 +103,16 @@ RUN git clone --depth 1 --shallow-submodules \
     && cpanm -qnf . \
     && cd .. && rm -rf App-Greple-xlate
 
-# Set the working directory
 WORKDIR /work
 
+# User configuration
 COPY ./root /root
-# .inputrc
 RUN exec >> $HOME/.inputrc \
     && echo Control-n: history-search-forward \
     && echo Control-p: history-search-backward \
     && echo Control-d: delete-char-or-list
 
+# Environment
 ENV LANG=ja_JP.UTF-8
 ENV LESS=-cR
 ENV LESSANSIENDCHARS=mK

@@ -1,5 +1,15 @@
 ##
-## CACHE=no	do not use cache
+## Docker image build for tecolicom/xlate
+##
+## Usage:
+##   make build          Build image with current origin/HEAD
+##   make build CACHE=no Build without cache
+##   make run            Run container in examples directory
+##   make clean          Remove dangling images
+##
+## Build arguments:
+##   COMMIT  Commit hash for local development builds (used by make build)
+##   TAG     Version tag for release builds (used by GitHub Actions workflow)
 ##
 
 IMAGE:=tecolicom/xlate
@@ -15,9 +25,11 @@ build:
 		-t $(TARGET) \
 		-t $(IMAGE):latest .
 
+## Run container using dozo in examples directory
 run:
 	cd ../examples && dozo
 
+## Remove dangling (untagged) images
 clean:
 	@none="$$(docker image ls | awk '$$1~/<none>/||$$2~/<none>/{print $$3}')" ; \
 	[ "$$none" != "" ] && docker image rm $$none || :
