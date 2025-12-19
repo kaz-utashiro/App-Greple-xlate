@@ -2,7 +2,7 @@
 	log  = sdif --margin=4 -n | less -cR
 	show = sdif --margin=4 -n | less -cR
 	diff = sdif --margin=4 -n | less -cR
-	blame = greple -Mgit --color-blame-label | less -cR
+	blame = greple -Mgit --color-blame-label | ansifold -w= --autoindent '.*?\\)\\S*\\x20' | less -cR
 	branch =
 	tag =
 	grep =
