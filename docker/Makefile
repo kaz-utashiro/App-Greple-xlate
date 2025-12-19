@@ -11,7 +11,7 @@ TARGET:=$(IMAGE):$(VERSION)
 build:
 	docker build \
 		$(if $(findstring $(CACHE),no),--no-cache) \
-		--build-arg DEV=$$(git rev-parse origin/HEAD) \
+		--build-arg COMMIT=$$(git rev-parse origin/HEAD) \
 		-t $(TARGET) \
 		-t $(IMAGE):latest .
 

@@ -64,11 +64,15 @@ RUN rm -fr \
 #EXPOSE 22
 #CMD [ "/usr/sbin/sshd", "-D" ]
 
-ARG DEV
+ARG COMMIT
+ARG TAG
 RUN git clone --depth 1 --recursive --shallow-submodules \
+        ${TAG:+--branch $TAG} \
         https://github.com/kaz-utashiro/App-Greple-xlate.git \
     && cd App-Greple-xlate \
-    && if [ -n "$DEV" ]; then git fetch --depth 1 origin $DEV && git checkout $DEV; fi \
+    && if [ -n "$COMMIT" ] && [ -z "$TAG" ]; then \
+           git fetch --depth 1 origin $COMMIT && git checkout $COMMIT; \
+       fi \
     && cpanm -qnf . \
     && cd .. && rm -rf App-Greple-xlate
 

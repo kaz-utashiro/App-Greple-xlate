@@ -32,7 +32,6 @@ jobs:
         run: |
           if [[ "$GITHUB_REF" =~ ^refs/tags/(.+) ]]; then
             echo "VERSION=${BASH_REMATCH[1]}" >> $GITHUB_ENV
-            echo "REPO_URL=https://github.com/$GITHUB_REPOSITORY.git@${BASH_REMATCH[1]}" >> $GITHUB_ENV
           fi
 
       - name: Login to Docker Hub
@@ -51,7 +50,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           build-args: |
-            REPO_URL=${{ env.REPO_URL }}
+            TAG=${{ env.VERSION }}
           tags: |
             ${{ env.PACKAGE }}:${{ env.VERSION }}-${{ matrix.arch }}
             ${{ env.PACKAGE }}:latest-${{ matrix.arch }}
