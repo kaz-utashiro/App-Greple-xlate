@@ -268,8 +268,8 @@
       "Η εντολή C<xlate> λειτουργεί σε συνεργασία με το περιβάλλον Docker, οπότε ακόμα και αν δεν έχετε τίποτα εγκατεστημένο στο χέρι, μπορείτε να τη χρησιμοποιήσετε εφόσον το Docker είναι διαθέσιμο. Χρησιμοποιήστε την επιλογή C<-D> ή C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Οι λειτουργίες του Docker διεκπεραιώνονται από το σενάριο C<dozo>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το σενάριο C<dozo> υποστηρίζει το αρχείο ρυθμίσεων C<.dozorc> για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Οι λειτουργίες του Docker διεκπεραιώνονται από το L<App::dozo>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Η εντολή C<dozo> υποστηρίζει το αρχείο ρυθμίσεων C<.dozorc> για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες εμπορευματοκιβωτίων\n"
+   ],
+   [
       "Docker container image.\n",
       "Εικόνα εμπορευματοκιβωτίου Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση επιλογών στα σενάρια C<xlate> και C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "Η βιβλιοθήκη C<getoptlong.sh> που χρησιμοποιείται για την ανάλυση των επιλογών στο σενάριο C<xlate> και το L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

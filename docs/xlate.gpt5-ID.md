@@ -281,7 +281,7 @@ Perintah `xlate` mendukung opsi panjang gaya GNU seperti `--to-lang`, `--from-la
 
 Perintah `xlate` bekerja selaras dengan lingkungan Docker, jadi meskipun Anda tidak memasang apa pun secara lokal, Anda dapat menggunakannya selama Docker tersedia. Gunakan opsi `-D` atau `-C`.
 
-Operasi Docker ditangani oleh skrip `dozo`, yang juga dapat digunakan sebagai perintah mandiri. Skrip `dozo` mendukung berkas konfigurasi `.dozorc` untuk pengaturan kontainer yang persisten.
+Operasi Docker ditangani oleh [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), yang juga dapat digunakan sebagai perintah mandiri. Perintah `dozo` mendukung berkas konfigurasi `.dozorc` untuk pengaturan kontainer yang persisten.
 
 Selain itu, karena makefile untuk berbagai gaya dokumen disediakan, penerjemahan ke bahasa lain dimungkinkan tanpa spesifikasi khusus. Gunakan opsi `-M`.
 
@@ -335,13 +335,15 @@ Anda harus memasang alat baris perintah untuk DeepL dan ChatGPT.
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker generik yang digunakan oleh xlate untuk operasi kontainer
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Citra kontainer Docker.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    Pustaka `getoptlong.sh` digunakan untuk penguraian opsi dalam skrip `xlate` dan `dozo`.
+    Pustaka `getoptlong.sh` digunakan untuk penguraian opsi dalam skrip `xlate` dan [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

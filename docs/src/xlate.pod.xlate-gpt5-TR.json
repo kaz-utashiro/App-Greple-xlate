@@ -268,8 +268,8 @@
       "C<xlate> komutu Docker ortamıyla birlikte çalışır; bu nedenle elinizde hiçbir şey kurulu olmasa bile Docker mevcut olduğu sürece kullanabilirsiniz. C<-D> veya C<-C> seçeneğini kullanın.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Docker işlemleri, bağımsız bir komut olarak da kullanılabilen C<dozo> betiği tarafından yönetilir. C<dozo> betiği, kalıcı kapsayıcı ayarları için C<.dozorc> yapılandırma dosyasını destekler.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker işlemleri, bağımsız bir komut olarak da kullanılabilen L<App::dozo> tarafından yönetilir. C<dozo> komutu, kalıcı konteyner ayarları için C<.dozorc> yapılandırma dosyasını destekler.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - xlate tarafından konteyner işlemleri için kullanılan genel amaçlı Docker çalıştırıcısı\n"
+   ],
+   [
       "Docker container image.\n",
       "Docker konteyner imajı.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "C<xlate> ve C<dozo> betiklerinde seçenek ayrıştırma için kullanılan C<getoptlong.sh> kütüphanesi.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "C<getoptlong.sh> kütüphanesi, C<xlate> betiğinde ve L<App::dozo> içinde seçenek ayrıştırma için kullanılır.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

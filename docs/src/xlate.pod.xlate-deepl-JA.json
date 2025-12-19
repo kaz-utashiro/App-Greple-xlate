@@ -268,8 +268,8 @@
       "C<xlate>コマンドはDocker環境と協調して動作するため、手元に何もインストールされていなくても、Dockerが利用可能であれば使用することができます。C<-D>またはC<-C>オプションを使用してください。\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Dockerの操作はC<dozo>スクリプトで処理されます。C<dozo>スクリプトは、永続的なコンテナ設定のためのC<.dozorc>設定ファイルをサポートします。\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Dockerの操作はL<App::dozo>で処理され、スタンドアロンコマンドとしても使用できます。C<dozo>コマンドは、永続的なコンテナ設定のためのC<.dozorc>設定ファイルをサポートします。\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - xlateがコンテナ操作に使用する汎用Dockerランナー。\n"
+   ],
+   [
       "Docker container image.\n",
       "Dockerコンテナイメージ。\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "C<getoptlong.sh> ライブラリは C<xlate> と C<dozo> スクリプトのオプション解析に使われます。\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "C<getoptlong.sh> ライブラリは C<xlate> スクリプトと L<App::dozo> のオプション解析に使われます。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

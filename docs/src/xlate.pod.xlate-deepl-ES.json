@@ -268,8 +268,8 @@
       "El comando C<xlate> funciona conjuntamente con el entorno Docker, por lo que incluso si no tiene nada instalado a mano, puede utilizarlo siempre que Docker esté disponible. Utilice la opción C<-D> o C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Las operaciones Docker son manejadas por el script C<dozo>, que también puede ser utilizado como un comando independiente. El script C<dozo> soporta el archivo de configuración C<.dozorc> para la configuración persistente del contenedor.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Las operaciones Docker son manejadas por L<App::dozo>, que también se puede utilizar como un comando independiente. El comando C<dozo> es compatible con el archivo de configuración C<.dozorc> para la configuración persistente del contenedor.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Corredor Docker genérico utilizado por xlate para operaciones de contenedor.\n"
+   ],
+   [
       "Docker container image.\n",
       "Imagen de contenedor Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "La biblioteca C<getoptlong.sh> se utiliza para el análisis sintáctico de opciones en los scripts C<xlate> y C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "La biblioteca C<getoptlong.sh> utilizada para el análisis sintáctico de opciones en el script C<xlate> y L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

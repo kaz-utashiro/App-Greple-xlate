@@ -281,7 +281,7 @@ El comando `xlate` admite opciones largas al estilo GNU como `--to-lang`, `--fro
 
 El comando `xlate` funciona en conjunto con el entorno Docker, por lo que, incluso si no tienes nada instalado localmente, puedes usarlo siempre que Docker esté disponible. Usa la opción `-D` o `-C`.
 
-Las operaciones de Docker son gestionadas por el script `dozo`, que también puede utilizarse como un comando independiente. El script `dozo` admite el archivo de configuración `.dozorc` para configuraciones persistentes del contenedor.
+Las operaciones de Docker son manejadas por [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), que también puede usarse como un comando independiente. El comando `dozo` admite el archivo de configuración `.dozorc` para ajustes persistentes del contenedor.
 
 Además, dado que se proporcionan makefiles para varios estilos de documentos, es posible la traducción a otros idiomas sin especificaciones especiales. Usa la opción `-M`.
 
@@ -335,13 +335,15 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Ejecutor genérico de Docker utilizado por xlate para operaciones de contenedor
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Imagen de contenedor Docker.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    La biblioteca `getoptlong.sh` se utiliza para el análisis de opciones en los scripts `xlate` y `dozo`.
+    La biblioteca `getoptlong.sh` utilizada para el análisis de opciones en el script `xlate` y [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

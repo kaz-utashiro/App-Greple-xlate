@@ -281,7 +281,7 @@ Dağıtıma dahil edilen `xlate` komutunu kullanarak bu modülü komut satırın
 
 `xlate` komutu Docker ortamıyla birlikte çalışır; bu nedenle elinizde hiçbir şey kurulu olmasa bile Docker mevcut olduğu sürece kullanabilirsiniz. `-D` veya `-C` seçeneğini kullanın.
 
-Docker işlemleri, bağımsız bir komut olarak da kullanılabilen `dozo` betiği tarafından yönetilir. `dozo` betiği, kalıcı kapsayıcı ayarları için `.dozorc` yapılandırma dosyasını destekler.
+Docker işlemleri, bağımsız bir komut olarak da kullanılabilen [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) tarafından yönetilir. `dozo` komutu, kalıcı konteyner ayarları için `.dozorc` yapılandırma dosyasını destekler.
 
 Ayrıca, çeşitli belge stilleri için makefile’lar sağlandığından, özel bir belirtim olmadan diğer dillere çeviri mümkündür. `-M` seçeneğini kullanın.
 
@@ -335,13 +335,15 @@ DeepL ve ChatGPT için komut satırı araçlarını kurmanız gerekir.
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate tarafından konteyner işlemleri için kullanılan genel amaçlı Docker çalıştırıcısı
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Docker konteyner imajı.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    `xlate` ve `dozo` betiklerinde seçenek ayrıştırma için kullanılan `getoptlong.sh` kütüphanesi.
+    `getoptlong.sh` kütüphanesi, `xlate` betiğinde ve [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) içinde seçenek ayrıştırma için kullanılır.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

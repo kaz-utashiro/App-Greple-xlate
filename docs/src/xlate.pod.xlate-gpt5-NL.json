@@ -268,8 +268,8 @@
       "Het commando C<xlate> werkt samen met de Docker-omgeving, dus ook als je niets lokaal hebt geïnstalleerd, kun je het gebruiken zolang Docker beschikbaar is. Gebruik de optie C<-D> of C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Docker-bewerkingen worden afgehandeld door het C<dozo>-script, dat ook als zelfstandige opdracht kan worden gebruikt. Het C<dozo>-script ondersteunt het C<.dozorc>-configuratiebestand voor persistente containerinstellingen.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker-bewerkingen worden afgehandeld door L<App::dozo>, dat ook als zelfstandige opdracht kan worden gebruikt. De opdracht C<dozo> ondersteunt het configuratiebestand C<.dozorc> voor persistente containerinstellingen.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Generieke Docker-runner die door xlate wordt gebruikt voor containeroperaties\n"
+   ],
+   [
       "Docker container image.\n",
       "Docker-containerimage.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "De C<getoptlong.sh>-bibliotheek wordt gebruikt voor het ontleden van opties in de scripts C<xlate> en C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "De bibliotheek C<getoptlong.sh> die wordt gebruikt voor het parseren van opties in het script C<xlate> en L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

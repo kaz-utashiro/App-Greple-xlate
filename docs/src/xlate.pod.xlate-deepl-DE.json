@@ -268,8 +268,8 @@
       "Der Befehl C<xlate> arbeitet mit der Docker-Umgebung zusammen, d. h. selbst wenn Sie nichts installiert haben, können Sie ihn verwenden, solange Docker verfügbar ist. Verwenden Sie die Option C<-D> oder C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Docker-Operationen werden durch das C<dozo>-Skript ausgeführt, das auch als eigenständiger Befehl verwendet werden kann. Das C<dozo>-Skript unterstützt die C<.dozorc>-Konfigurationsdatei für dauerhafte Container-Einstellungen.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker-Operationen werden über L<App::dozo> abgewickelt, das auch als eigenständiger Befehl verwendet werden kann. Der Befehl C<dozo> unterstützt die Konfigurationsdatei C<.dozorc> für dauerhafte Container-Einstellungen.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird.\n"
+   ],
+   [
       "Docker container image.\n",
       "Docker-Container-Abbild.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "Die C<getoptlong.sh>-Bibliothek wird für das Parsen von Optionen in den C<xlate>- und C<dozo>-Skripten verwendet.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "Die C<getoptlong.sh>-Bibliothek, die für das Optionsparsing im C<xlate>-Skript und L<App::dozo> verwendet wird.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

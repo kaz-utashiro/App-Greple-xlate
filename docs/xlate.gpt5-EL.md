@@ -281,7 +281,7 @@ Version 0.9922
 
 Η εντολή `xlate` λειτουργεί σε συνδυασμό με το περιβάλλον Docker, οπότε ακόμα κι αν δεν έχετε τίποτα εγκατεστημένο τοπικά, μπορείτε να τη χρησιμοποιήσετε όσο είναι διαθέσιμο το Docker. Χρησιμοποιήστε την επιλογή `-D` ή `-C`.
 
-Οι λειτουργίες Docker διαχειρίζονται από το script `dozo`, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνονη εντολή. Το script `dozo` υποστηρίζει το αρχείο ρυθμίσεων `.dozorc` για επίμονες ρυθμίσεις κοντέινερ.
+Οι λειτουργίες Docker διαχειρίζονται από το [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Η εντολή `dozo` υποστηρίζει το αρχείο διαμόρφωσης `.dozorc` για επίμονες ρυθμίσεις κοντέινερ.
 
 Επίσης, επειδή παρέχονται makefiles για διάφορα στυλ εγγράφων, είναι δυνατή η μετάφραση σε άλλες γλώσσες χωρίς ειδικές ρυθμίσεις. Χρησιμοποιήστε την επιλογή `-M`.
 
@@ -335,13 +335,15 @@ Version 0.9922
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες κοντέινερ
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Εικόνα κοντέινερ Docker.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    Η βιβλιοθήκη `getoptlong.sh` χρησιμοποιείται για την ανάλυση επιλογών στα scripts `xlate` και `dozo`.
+    Η βιβλιοθήκη `getoptlong.sh` που χρησιμοποιείται για την ανάλυση επιλογών στο σkript `xlate` και στο [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -281,7 +281,7 @@ Käsk `xlate` toetab GNU stiilis pikki valikuid nagu `--to-lang`, `--from-lang`,
 
 `xlate` käsk töötab koos Dockeri keskkonnaga, nii et isegi kui teil ei ole midagi paigaldatud, saate seda kasutada, kui Docker on saadaval. Kasutage valikut `-D` või `-C`.
 
-Dockeri toiminguid teostab skript `dozo`, mida saab kasutada ka iseseisva käsuna. `dozo` skript toetab `.dozorc` konfiguratsioonifaili püsivate konteineri seadete jaoks.
+Dockeri operatsioone käsitletakse [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), mida saab kasutada ka iseseisva käsuna. Käsk `dozo` toetab `.dozorc` konfiguratsioonifaili püsivate konteineri seadete jaoks.
 
 Samuti, kuna makefile'id erinevate dokumendistiilide jaoks on olemas, on tõlkimine teistesse keeltesse võimalik ilma spetsiaalse täpsustuseta. Kasutage valikut `-M`.
 
@@ -335,13 +335,15 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT.
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - üldine Docker runner, mida xlate kasutab konteineroperatsioonideks.
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Dockeri konteineri kujutis.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    `getoptlong.sh` raamatukogu, mida kasutatakse `xlate` ja `dozo` skriptide valikute parsimiseks.
+    `getoptlong.sh` raamatukogu, mida kasutatakse `xlate` skripti ja [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) valikute parsimiseks.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

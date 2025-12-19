@@ -281,7 +281,7 @@ Version 0.9922
 
 Η εντολή `xlate` λειτουργεί σε συνεργασία με το περιβάλλον Docker, οπότε ακόμα και αν δεν έχετε τίποτα εγκατεστημένο στο χέρι, μπορείτε να τη χρησιμοποιήσετε εφόσον το Docker είναι διαθέσιμο. Χρησιμοποιήστε την επιλογή `-D` ή `-C`.
 
-Οι λειτουργίες του Docker διεκπεραιώνονται από το σενάριο `dozo`, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Το σενάριο `dozo` υποστηρίζει το αρχείο ρυθμίσεων `.dozorc` για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.
+Οι λειτουργίες του Docker διεκπεραιώνονται από το [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Η εντολή `dozo` υποστηρίζει το αρχείο ρυθμίσεων `.dozorc` για μόνιμες ρυθμίσεις εμπορευματοκιβωτίων.
 
 Επίσης, δεδομένου ότι παρέχονται makefiles για διάφορα στυλ εγγράφων, η μετάφραση σε άλλες γλώσσες είναι δυνατή χωρίς ειδικές προδιαγραφές. Χρησιμοποιήστε την επιλογή `-M`.
 
@@ -335,13 +335,15 @@ Version 0.9922
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες εμπορευματοκιβωτίων
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Εικόνα εμπορευματοκιβωτίου Docker.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    Η βιβλιοθήκη `getoptlong.sh` χρησιμοποιείται για την ανάλυση επιλογών στα σενάρια `xlate` και `dozo`.
+    Η βιβλιοθήκη `getoptlong.sh` που χρησιμοποιείται για την ανάλυση των επιλογών στο σενάριο `xlate` και το [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

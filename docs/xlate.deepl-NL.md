@@ -281,7 +281,7 @@ Het `xlate` commando ondersteunt GNU-stijl lange opties zoals `--to-lang`, `--fr
 
 Het `xlate` commando werkt samen met de Docker omgeving, dus zelfs als je niets geïnstalleerd hebt, kun je het gebruiken zolang Docker beschikbaar is. Gebruik de optie `-D` of `-C`.
 
-Docker-operaties worden afgehandeld door het `dozo` script, dat ook als zelfstandig commando kan worden gebruikt. Het `dozo` script ondersteunt het `.dozorc` configuratiebestand voor persistente containerinstellingen.
+Docker-operaties worden afgehandeld door [App::dozo](https://metacpan.org/pod/App%3A%3Adozo), dat ook als zelfstandig commando kan worden gebruikt. Het `dozo` commando ondersteunt het `.dozorc` configuratiebestand voor persistente containerinstellingen.
 
 Omdat er makefiles voor verschillende documentstijlen worden meegeleverd, is vertaling naar andere talen mogelijk zonder speciale specificaties. Gebruik de optie `-M`.
 
@@ -335,13 +335,15 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generieke Docker runner gebruikt door xlate voor containeroperaties
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     Docker containerafbeelding.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    De `getoptlong.sh` bibliotheek wordt gebruikt voor het parsen van opties in de `xlate` en `dozo` scripts.
+    De `getoptlong.sh` bibliotheek gebruikt voor optie parsing in het `xlate` script en [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

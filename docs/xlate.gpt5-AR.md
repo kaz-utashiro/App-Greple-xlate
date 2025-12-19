@@ -281,7 +281,7 @@ Version 0.9922
 
 يعمل أمر `xlate` بالتنسيق مع بيئة Docker، لذا حتى إذا لم يكن لديك أي شيء مُثبّت محليًا، يمكنك استخدامه طالما أن Docker متاح. استخدم خيار `-D` أو `-C`.
 
-تُدار عمليات Docker بواسطة البرنامج النصي `dozo`، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم البرنامج النصي `dozo` ملف التهيئة `.dozorc` لإعدادات الحاوية الدائمة.
+تتم إدارة عمليات Docker بواسطة [App::dozo](https://metacpan.org/pod/App%3A%3Adozo)، والذي يمكن استخدامه أيضًا كأمر مستقل. يدعم أمر `dozo` ملف الإعدادات `.dozorc` لإعدادات الحاوية الدائمة.
 
 أيضًا، نظرًا لتوفّر ملفات make لأنماط مستندات متنوعة، فإن الترجمة إلى لغات أخرى ممكنة دون مواصفات خاصة. استخدم خيار `-M`.
 
@@ -335,13 +335,15 @@ Version 0.9922
 
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
+[App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
+
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
     صورة حاوية Docker.
 
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
-    تُستخدم مكتبة `getoptlong.sh` لتحليل الخيارات في البرنامجين النصيين `xlate` و`dozo`.
+    مكتبة `getoptlong.sh` المستخدمة لتحليل الخيارات في البرنامج النصي `xlate` و[App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

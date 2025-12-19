@@ -268,8 +268,8 @@
       "C<xlate>命令与 Docker 环境协同工作，因此即使本地未安装任何东西，只要有 Docker 可用就能使用。请使用C<-D>或C<-C>选项。\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Docker 操作由 C<dozo> 脚本处理，也可以作为独立命令使用。C<dozo> 脚本支持使用 C<.dozorc> 配置文件来持久化容器设置。\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Docker 操作由L<App::dozo>处理，它也可以作为独立命令使用。C<dozo>命令支持C<.dozorc>配置文件以持久化容器设置。\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - 由 xlate 用于容器操作的通用 Docker 运行器\n"
+   ],
+   [
       "Docker container image.\n",
       "Docker 容器镜像。\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "C<getoptlong.sh> 库用于在 C<xlate> 和 C<dozo> 脚本中进行选项解析。\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "用于在C<xlate>脚本和L<App::dozo>中进行选项解析的C<getoptlong.sh>库。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

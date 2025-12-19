@@ -268,8 +268,8 @@
       "Η εντολή C<xlate> λειτουργεί σε συνδυασμό με το περιβάλλον Docker, οπότε ακόμα κι αν δεν έχετε τίποτα εγκατεστημένο τοπικά, μπορείτε να τη χρησιμοποιήσετε όσο είναι διαθέσιμο το Docker. Χρησιμοποιήστε την επιλογή C<-D> ή C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Οι λειτουργίες Docker διαχειρίζονται από το script C<dozo>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνονη εντολή. Το script C<dozo> υποστηρίζει το αρχείο ρυθμίσεων C<.dozorc> για επίμονες ρυθμίσεις κοντέινερ.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Οι λειτουργίες Docker διαχειρίζονται από το L<App::dozo>, το οποίο μπορεί επίσης να χρησιμοποιηθεί ως αυτόνομη εντολή. Η εντολή C<dozo> υποστηρίζει το αρχείο διαμόρφωσης C<.dozorc> για επίμονες ρυθμίσεις κοντέινερ.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες κοντέινερ\n"
+   ],
+   [
       "Docker container image.\n",
       "Εικόνα κοντέινερ Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "Η βιβλιοθήκη C<getoptlong.sh> χρησιμοποιείται για την ανάλυση επιλογών στα scripts C<xlate> και C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "Η βιβλιοθήκη C<getoptlong.sh> που χρησιμοποιείται για την ανάλυση επιλογών στο σkript C<xlate> και στο L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

@@ -268,8 +268,8 @@
       "Käsk C<xlate> töötab kooskõlas Dockeri keskkonnaga, seega isegi kui sul pole midagi lokaalselt paigaldatud, saad seda kasutada seni, kuni Docker on saadaval. Kasuta valikut C<-D> või C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Dockeri toiminguid haldab skript C<dozo>, mida saab kasutada ka iseseisva käsuna. Skript C<dozo> toetab püsivate konteinerisätete jaoks konfiguratsioonifaili C<.dozorc>.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Dockeri toiminguid haldab L<App::dozo>, mida saab kasutada ka iseseisva käsuna. Käsk C<dozo> toetab püsivate konteineri sätete jaoks konfiguratsioonifaili C<.dozorc>.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - xlate’i poolt konteineri toiminguteks kasutatav üldine Dockeri käitaja\n"
+   ],
+   [
       "Docker container image.\n",
       "Dockeri konteineripilt.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "Teek C<getoptlong.sh> kasutatakse valikute parsimiseks skriptides C<xlate> ja C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "C<getoptlong.sh> teek, mida kasutatakse valikute parsimiseks skriptis C<xlate> ja L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

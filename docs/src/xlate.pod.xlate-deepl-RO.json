@@ -268,8 +268,8 @@
       "Comanda C<xlate> funcționează de comun acord cu mediul Docker, astfel încât, chiar dacă nu aveți nimic instalat la îndemână, îl puteți utiliza atâta timp cât Docker este disponibil. Utilizați opțiunea C<-D> sau C<-C>.\n"
    ],
    [
-      "Docker operations are handled by the C<dozo> script, which can also be used as a standalone command. The C<dozo> script supports the C<.dozorc> configuration file for persistent container settings.\n",
-      "Operațiunile Docker sunt gestionate de scriptul C<dozo>, care poate fi utilizat și ca o comandă de sine stătătoare. Scriptul C<dozo> acceptă fișierul de configurare C<.dozorc> pentru setările persistente ale containerului.\n"
+      "Docker operations are handled by L<App::dozo>, which can also be used as a standalone command. The C<dozo> command supports the C<.dozorc> configuration file for persistent container settings.\n",
+      "Operațiunile Docker sunt gestionate de L<App::dozo>, care poate fi utilizată și ca o comandă de sine stătătoare. Comanda C<dozo> acceptă fișierul de configurare C<.dozorc> pentru setările persistente ale containerului.\n"
    ],
    [
       "Also, since makefiles for various document styles are provided, translation into other languages is possible without special specification. Use C<-M> option.\n",
@@ -328,12 +328,16 @@
       "L<App::Greple::xlate::gpt5>\n"
    ],
    [
+      "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
+      "L<App::dozo> - Docker runner generic utilizat de xlate pentru operațiunile cu containere\n"
+   ],
+   [
       "Docker container image.\n",
       "Imagine container Docker.\n"
    ],
    [
-      "The C<getoptlong.sh> library used for option parsing in the C<xlate> and C<dozo> scripts.\n",
-      "Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scripturile C<xlate> și C<dozo>.\n"
+      "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
+      "Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scriptul C<xlate> și L<App::dozo>.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",
