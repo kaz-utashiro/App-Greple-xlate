@@ -487,15 +487,41 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head1 SEE ALSO
 
-L<App::Greple::xlate>
+=head2 MODULES
 
-L<App::Greple::xlate::deepl>
-
-L<App::Greple::xlate::gpt4>
-
+L<App::Greple::xlate::deepl>,
+L<App::Greple::xlate::gpt4>,
 L<App::Greple::xlate::gpt5>
 
 L<App::dozo> - Generic Docker runner used by xlate for container operations
+
+=head2 RELATED MODULES
+
+=over 2
+
+=item * L<App::Greple>
+
+See the B<greple> manual for the detail about target text pattern.
+Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to
+limit the matching area.
+
+=item * L<App::Greple::update>
+
+You can use C<-Mupdate> module to modify files by the result of
+B<greple> command.
+
+=item * L<App::sdif>
+
+Use B<sdif> to show conflict marker format side by side with B<-V>
+option.
+
+=item * L<App::Greple::stripe>
+
+Greple B<stripe> module use by B<--xlate-stripe> option.
+
+=back
+
+=head2 RESOURCES
 
 =over 2
 
@@ -519,26 +545,6 @@ OpenAI Python Library
 =item * L<https://github.com/tecolicom/App-gpty>
 
 OpenAI command line interface
-
-=item * L<App::Greple>
-
-See the B<greple> manual for the detail about target text pattern.
-Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to
-limit the matching area.
-
-=item * L<App::Greple::update>
-
-You can use C<-Mupdate> module to modify files by the result of
-B<greple> command.
-
-=item * L<App::sdif>
-
-Use B<sdif> to show conflict marker format side by side with B<-V>
-option.
-
-=item * L<App::Greple::stripe>
-
-Greple B<stripe> module use by B<--xlate-stripe> option.
 
 =back
 
