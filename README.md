@@ -440,15 +440,37 @@ You have to install command line tools for DeepL and ChatGPT.
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl),
+[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4),
 [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generic Docker runner used by xlate for container operations
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    See the **greple** manual for the detail about target text pattern.
+    Use **--inside**, **--outside**, **--include**, **--exclude** options to
+    limit the matching area.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    You can use `-Mupdate` module to modify files by the result of
+    **greple** command.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Use **sdif** to show conflict marker format side by side with **-V**
+    option.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** module use by **--xlate-stripe** option.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -470,26 +492,6 @@ You have to install command line tools for DeepL and ChatGPT.
 - [https://github.com/tecolicom/App-gpty](https://github.com/tecolicom/App-gpty)
 
     OpenAI command line interface
-
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    See the **greple** manual for the detail about target text pattern.
-    Use **--inside**, **--outside**, **--include**, **--exclude** options to
-    limit the matching area.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    You can use `-Mupdate` module to modify files by the result of
-    **greple** command.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Use **sdif** to show conflict marker format side by side with **-V**
-    option.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Greple **stripe** module use by **--xlate-stripe** option.
 
 ## ARTICLES
 
