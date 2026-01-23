@@ -586,7 +586,7 @@ use utf8;
 use Data::Dumper;
 
 use Text::ANSI::Fold ':constants';
-use App::cdif::Command;
+use Command::Run;
 use Hash::Util qw(lock_keys);
 use Unicode::EastAsianWidth;
 use List::Util qw(max);
