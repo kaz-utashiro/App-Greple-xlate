@@ -89,11 +89,9 @@ RUN rm -fr \
 # Install App::Greple::xlate
 # - TAG: clone specific tag (for release builds)
 # - COMMIT: checkout specific commit after clone (for local builds)
-# - Only share/getoptlong submodule is needed (skip t/runner)
 ARG COMMIT
 ARG TAG
-RUN git clone --depth 1 --shallow-submodules \
-        --recurse-submodules=share/getoptlong \
+RUN git clone --depth 1 \
         ${TAG:+--branch $TAG} \
         https://github.com/kaz-utashiro/App-Greple-xlate.git \
     && cd App-Greple-xlate \
