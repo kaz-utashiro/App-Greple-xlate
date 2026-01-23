@@ -114,14 +114,11 @@ git_topdir() {
 # Setup
 ##############################################################################
 
-# Set PATH for getoptlong.sh
+# Get share directory
 share=$(dist_dir App::Greple::xlate 2>/dev/null) || share=
 basedir="${0%/*/*}"
-if [[ $share ]]; then
-    PATH="$share/getoptlong:$PATH"
-elif [[ -f $basedir/share/getoptlong/getoptlong.sh ]]; then
+if [[ ! $share && -d $basedir/share ]]; then
     share="$basedir/share"
-    PATH="$share/getoptlong:$PATH"
 fi
 
 # Find dozo command
