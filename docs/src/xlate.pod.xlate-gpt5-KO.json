@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - 컨테이너 작업을 위해 xlate에서 사용하는 범용 Docker 실행기\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "B<greple> 매뉴얼에서 대상 텍스트 패턴에 대한 자세한 내용을 확인하십시오. 일치 범위를 제한하려면 B<--inside>, B<--outside>, B<--include>, B<--exclude> 옵션을 사용하십시오.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "B<greple> 명령 결과로 파일을 수정하려면 C<-Mupdate> 모듈을 사용할 수 있습니다.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "B<-V> 옵션과 함께 B<sdif>을 사용하여 충돌 마커 형식을 나란히 표시하십시오.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Greple B<stripe> 모듈은 B<--xlate-stripe> 옵션으로 사용합니다.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "OpenAI 명령줄 인터페이스\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "B<greple> 매뉴얼에서 대상 텍스트 패턴에 대한 자세한 내용을 확인하십시오. 일치 범위를 제한하려면 B<--inside>, B<--outside>, B<--include>, B<--exclude> 옵션을 사용하십시오.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "B<greple> 명령 결과로 파일을 수정하려면 C<-Mupdate> 모듈을 사용할 수 있습니다.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "B<-V> 옵션과 함께 B<sdif>을 사용하여 충돌 마커 형식을 나란히 표시하십시오.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "Greple B<stripe> 모듈은 B<--xlate-stripe> 옵션으로 사용합니다.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

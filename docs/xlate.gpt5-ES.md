@@ -14,7 +14,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 # VERSION
 
-Version 0.9924
+Version 1.00
 
 # DESCRIPTION
 
@@ -327,15 +327,31 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
-[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Ejecutor genérico de Docker utilizado por xlate para operaciones de contenedor
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    Consulta el manual **greple** para más detalles sobre el patrón de texto objetivo. Usa las opciones **--inside**, **--outside**, **--include**, **--exclude** para limitar el área de coincidencia.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    Puedes usar el módulo `-Mupdate` para modificar archivos con el resultado del comando **greple**.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Usa **sdif** para mostrar el formato de marcador de conflicto junto con la opción **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Módulo de Greple **stripe** usado con la opción **--xlate-stripe**.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -357,22 +373,6 @@ Debes instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
     Interfaz de línea de comandos de OpenAI
 
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    Consulta el manual **greple** para más detalles sobre el patrón de texto objetivo. Usa las opciones **--inside**, **--outside**, **--include**, **--exclude** para limitar el área de coincidencia.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    Puedes usar el módulo `-Mupdate` para modificar archivos con el resultado del comando **greple**.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Usa **sdif** para mostrar el formato de marcador de conflicto junto con la opción **-V**.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Módulo de Greple **stripe** usado con la opción **--xlate-stripe**.
-
 ## ARTICLES
 
 - [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
@@ -393,7 +393,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023-2025 Kazumasa Utashiro.
+Copyright © 2023-2026 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

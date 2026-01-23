@@ -14,7 +14,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # VERSION
 
-Version 0.9924
+Version 1.00
 
 # DESCRIPTION
 
@@ -327,15 +327,31 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
-[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate’i poolt konteineri toiminguteks kasutatav üldine Dockeri käitaja
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    Vaata sihtteksti mustri üksikasju käsiraamatust **greple**. Kasuta valikuid **--inside**, **--outside**, **--include**, **--exclude** vastendusala piiramiseks.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    Saad kasutada moodulit `-Mupdate`, et muuta faile käsu **greple** tulemuste põhjal.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Kasuta **sdif**, et näidata konfliktimärgendite formaati kõrvuti valikuga **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** moodulit kasutatakse valikuga **--xlate-stripe**.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -357,22 +373,6 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 
     OpenAI käsurea liides
 
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    Vaata sihtteksti mustri üksikasju käsiraamatust **greple**. Kasuta valikuid **--inside**, **--outside**, **--include**, **--exclude** vastendusala piiramiseks.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    Saad kasutada moodulit `-Mupdate`, et muuta faile käsu **greple** tulemuste põhjal.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Kasuta **sdif**, et näidata konfliktimärgendite formaati kõrvuti valikuga **-V**.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Greple **stripe** moodulit kasutatakse valikuga **--xlate-stripe**.
-
 ## ARTICLES
 
 - [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
@@ -393,7 +393,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023-2025 Kazumasa Utashiro.
+Copyright © 2023-2026 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

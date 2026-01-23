@@ -14,7 +14,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 # VERSION
 
-Version 0.9924
+Version 1.00
 
 # DESCRIPTION
 
@@ -327,15 +327,31 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl).
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
-[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Docker runner generic utilizat de xlate pentru operațiunile cu containere
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    Consultați manualul **greple** pentru detalii despre modelul de text țintă. Utilizați opțiunile **--inside**, **--outside**, **--include**, **--exclude** pentru a limita zona de potrivire.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    Puteți utiliza modulul `-Mupdate` pentru a modifica fișierele în funcție de rezultatul comenzii **greple**.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Folosiți **sdif** pentru a afișa formatul markerilor de conflict unul lângă altul cu opțiunea **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Utilizarea modulului Greple **stripe** prin opțiunea **--xlate-stripe**.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -357,22 +373,6 @@ Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatG
 
     Interfață de linie de comandă OpenAI
 
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    Consultați manualul **greple** pentru detalii despre modelul de text țintă. Utilizați opțiunile **--inside**, **--outside**, **--include**, **--exclude** pentru a limita zona de potrivire.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    Puteți utiliza modulul `-Mupdate` pentru a modifica fișierele în funcție de rezultatul comenzii **greple**.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Folosiți **sdif** pentru a afișa formatul markerilor de conflict unul lângă altul cu opțiunea **-V**.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Utilizarea modulului Greple **stripe** prin opțiunea **--xlate-stripe**.
-
 ## ARTICLES
 
 - [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
@@ -393,7 +393,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023-2025 Kazumasa Utashiro.
+Copyright © 2023-2026 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

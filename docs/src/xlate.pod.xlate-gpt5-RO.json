@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - Runner Docker generic folosit de xlate pentru operațiuni cu containere\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "Vezi manualul B<greple> pentru detalii despre modelul de text țintă. Folosește opțiunile B<--inside>, B<--outside>, B<--include>, B<--exclude> pentru a limita zona de potrivire.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "Poți folosi modulul C<-Mupdate> pentru a modifica fișierele în funcție de rezultatul comenzii B<greple>.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "Folosește B<sdif> pentru a afișa formatul marcatorilor de conflict alăturat cu opțiunea B<-V>.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Modulul Greple B<stripe> este folosit prin opțiunea B<--xlate-stripe>.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "Interfața de linie de comandă OpenAI\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "Vezi manualul B<greple> pentru detalii despre modelul de text țintă. Folosește opțiunile B<--inside>, B<--outside>, B<--include>, B<--exclude> pentru a limita zona de potrivire.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "Poți folosi modulul C<-Mupdate> pentru a modifica fișierele în funcție de rezultatul comenzii B<greple>.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "Folosește B<sdif> pentru a afișa formatul marcatorilor de conflict alăturat cu opțiunea B<-V>.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "Modulul Greple B<stripe> este folosit prin opțiunea B<--xlate-stripe>.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

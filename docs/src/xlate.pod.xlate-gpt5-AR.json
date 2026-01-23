@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "راجع دليل B<greple> للتفاصيل حول نمط نص الهدف. استخدم الخيارات B<--inside> وB<--outside> وB<--include> وB<--exclude> لتقييد منطقة المطابقة.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "يمكنك استخدام وحدة C<-Mupdate> لتعديل الملفات بنتيجة أمر B<greple>.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "استخدم B<sdif> لإظهار تنسيق علامات التعارض جنبًا إلى جنب مع خيار B<-V>.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "تُستخدم وحدة Greple B<stripe> بواسطة خيار B<--xlate-stripe>.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "واجهة سطر الأوامر لـ OpenAI\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "راجع دليل B<greple> للتفاصيل حول نمط نص الهدف. استخدم الخيارات B<--inside> وB<--outside> وB<--include> وB<--exclude> لتقييد منطقة المطابقة.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "يمكنك استخدام وحدة C<-Mupdate> لتعديل الملفات بنتيجة أمر B<greple>.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "استخدم B<sdif> لإظهار تنسيق علامات التعارض جنبًا إلى جنب مع خيار B<-V>.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "تُستخدم وحدة Greple B<stripe> بواسطة خيار B<--xlate-stripe>.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

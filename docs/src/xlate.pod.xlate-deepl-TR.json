@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - xlate tarafından konteyner işlemleri için kullanılan genel Docker çalıştırıcısı\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "Hedef metin kalıbı hakkında ayrıntılı bilgi için B<greple> kılavuzuna bakın. Eşleşen alanı sınırlamak için B<--inside>, B<--outside>, B<--include>, B<--exclude> seçeneklerini kullanın.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "Dosyaları B<greple> komutunun sonucuna göre değiştirmek için C<-Mupdate> modülünü kullanabilirsiniz.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "B<-V> seçeneği ile çakışma işaretleyici formatını yan yana göstermek için B<sdif> kullanın.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "B<--xlate-stripe> seçeneği ile Greple B<stripe> modülü kullanımı.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "OpenAI komut satırı arayüzü\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "Hedef metin kalıbı hakkında ayrıntılı bilgi için B<greple> kılavuzuna bakın. Eşleşen alanı sınırlamak için B<--inside>, B<--outside>, B<--include>, B<--exclude> seçeneklerini kullanın.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "Dosyaları B<greple> komutunun sonucuna göre değiştirmek için C<-Mupdate> modülünü kullanabilirsiniz.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "B<-V> seçeneği ile çakışma işaretleyici formatını yan yana göstermek için B<sdif> kullanın.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "B<--xlate-stripe> seçeneği ile Greple B<stripe> modülü kullanımı.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

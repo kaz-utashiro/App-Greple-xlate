@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 0.9924
+Version 1.00
 
 # DESCRIPTION
 
@@ -327,15 +327,31 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
-[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generieke Docker runner gebruikt door xlate voor containeroperaties
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    Zie de **greple** handleiding voor de details over het doeltekstpatroon. Gebruik **--inside**, **--outside**, **--include**, **--exclude** opties om het overeenkomende gebied te beperken.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    U kunt de module `-Mupdate` gebruiken om bestanden te wijzigen door het resultaat van het commando **greple**.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Gebruik **sdif** om het formaat van de conflictmarkering naast de optie **-V** te tonen.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** module gebruik door **--xlate-stripe** optie.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -357,22 +373,6 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
     OpenAI opdrachtregelinterface
 
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    Zie de **greple** handleiding voor de details over het doeltekstpatroon. Gebruik **--inside**, **--outside**, **--include**, **--exclude** opties om het overeenkomende gebied te beperken.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    U kunt de module `-Mupdate` gebruiken om bestanden te wijzigen door het resultaat van het commando **greple**.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Gebruik **sdif** om het formaat van de conflictmarkering naast de optie **-V** te tonen.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Greple **stripe** module gebruik door **--xlate-stripe** optie.
-
 ## ARTICLES
 
 - [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
@@ -393,7 +393,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023-2025 Kazumasa Utashiro.
+Copyright © 2023-2026 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

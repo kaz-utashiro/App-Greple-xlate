@@ -14,7 +14,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # VERSION
 
-Version 0.9924
+Version 1.00
 
 # DESCRIPTION
 
@@ -327,15 +327,31 @@ Version 0.9924
 
 # SEE ALSO
 
-[App::Greple::xlate](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate)
+## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
-
-[App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4)
-
-[App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες εμπορευματοκιβωτίων
+
+## RELATED MODULES
+
+- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
+
+    Ανατρέξτε στο εγχειρίδιο **greple** για λεπτομέρειες σχετικά με το μοτίβο κειμένου-στόχου. Χρησιμοποιήστε τις επιλογές **--inside**, **--outside**, **--include**, **--exclude** για να περιορίσετε την περιοχή αντιστοίχισης.
+
+- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
+
+    Μπορείτε να χρησιμοποιήσετε την ενότητα `-Mupdate` για να τροποποιήσετε αρχεία με βάση το αποτέλεσμα της εντολής **greple**.
+
+- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
+
+    Χρησιμοποιήστε την εντολή **sdif** για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή **-V**.
+
+- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
+
+    Greple **stripe** χρήση της μονάδας **--xlate-stripe** με την επιλογή **--xlate-stripe**.
+
+## RESOURCES
 
 - [https://hub.docker.com/r/tecolicom/xlate](https://hub.docker.com/r/tecolicom/xlate)
 
@@ -357,22 +373,6 @@ Version 0.9924
 
     Διεπαφή γραμμής εντολών OpenAI
 
-- [App::Greple](https://metacpan.org/pod/App%3A%3AGreple)
-
-    Ανατρέξτε στο εγχειρίδιο **greple** για λεπτομέρειες σχετικά με το μοτίβο κειμένου-στόχου. Χρησιμοποιήστε τις επιλογές **--inside**, **--outside**, **--include**, **--exclude** για να περιορίσετε την περιοχή αντιστοίχισης.
-
-- [App::Greple::update](https://metacpan.org/pod/App%3A%3AGreple%3A%3Aupdate)
-
-    Μπορείτε να χρησιμοποιήσετε την ενότητα `-Mupdate` για να τροποποιήσετε αρχεία με βάση το αποτέλεσμα της εντολής **greple**.
-
-- [App::sdif](https://metacpan.org/pod/App%3A%3Asdif)
-
-    Χρησιμοποιήστε την εντολή **sdif** για να εμφανίσετε τη μορφή του δείκτη σύγκρουσης δίπλα-δίπλα με την επιλογή **-V**.
-
-- [App::Greple::stripe](https://metacpan.org/pod/App%3A%3AGreple%3A%3Astripe)
-
-    Greple **stripe** χρήση της μονάδας **--xlate-stripe** με την επιλογή **--xlate-stripe**.
-
 ## ARTICLES
 
 - [https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250](https://qiita.com/kaz-utashiro/items/1c1a51a4591922e18250)
@@ -393,7 +393,7 @@ Kazumasa Utashiro
 
 # LICENSE
 
-Copyright © 2023-2025 Kazumasa Utashiro.
+Copyright © 2023-2026 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

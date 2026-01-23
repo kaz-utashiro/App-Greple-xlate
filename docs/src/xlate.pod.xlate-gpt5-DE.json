@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "Siehe das Handbuch B<greple> für Details zum Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den Abgleichsbereich einzuschränken.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu ändern.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "Verwenden Sie B<sdif>, um das Konfliktmarker-Format nebeneinander mit der Option B<-V> anzuzeigen.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "Greple-Modul B<stripe> wird mit der Option B<--xlate-stripe> verwendet.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "OpenAI-Kommandozeilenschnittstelle\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "Siehe das Handbuch B<greple> für Details zum Zieltextmuster. Verwenden Sie die Optionen B<--inside>, B<--outside>, B<--include>, B<--exclude>, um den Abgleichsbereich einzuschränken.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "Sie können das Modul C<-Mupdate> verwenden, um Dateien anhand des Ergebnisses des Befehls B<greple> zu ändern.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "Verwenden Sie B<sdif>, um das Konfliktmarker-Format nebeneinander mit der Option B<-V> anzuzeigen.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "Greple-Modul B<stripe> wird mit der Option B<--xlate-stripe> verwendet.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

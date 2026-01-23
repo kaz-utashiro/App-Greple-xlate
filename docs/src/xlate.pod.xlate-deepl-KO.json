@@ -312,24 +312,28 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate>\n",
-      "L<App::Greple::xlate>\n"
-   ],
-   [
-      "L<App::Greple::xlate::deepl>\n",
-      "L<App::Greple::xlate::deepl>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt4>\n",
-      "L<App::Greple::xlate::gpt4>\n"
-   ],
-   [
-      "L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
       "L<App::dozo> - xlate에서 컨테이너 작업에 사용하는 일반 Docker 러너입니다.\n"
+   ],
+   [
+      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
+      "대상 텍스트 패턴에 대한 자세한 내용은 B<greple> 매뉴얼을 참조하세요. B<--내부>, B<--외부>, B<--포함>, B<--제외> 옵션을 사용하여 일치하는 영역을 제한할 수 있습니다.\n"
+   ],
+   [
+      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
+      "C<-Mupdate> 모듈을 사용하여 B<greple> 명령의 결과에 따라 파일을 수정할 수 있습니다.\n"
+   ],
+   [
+      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
+      "충돌 마커 형식을 B<-V> 옵션과 함께 나란히 표시하려면 B<에스디프>를 사용합니다.\n"
+   ],
+   [
+      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
+      "회색 B<줄무늬> 모듈은 B<--xlate-stripe> 옵션으로 사용합니다.\n"
    ],
    [
       "Docker container image.\n",
@@ -350,22 +354,6 @@
    [
       "OpenAI command line interface\n",
       "OpenAI 명령줄 인터페이스\n"
-   ],
-   [
-      "See the B<greple> manual for the detail about target text pattern. Use B<--inside>, B<--outside>, B<--include>, B<--exclude> options to limit the matching area.\n",
-      "대상 텍스트 패턴에 대한 자세한 내용은 B<greple> 매뉴얼을 참조하세요. B<--내부>, B<--외부>, B<--포함>, B<--제외> 옵션을 사용하여 일치하는 영역을 제한할 수 있습니다.\n"
-   ],
-   [
-      "You can use C<-Mupdate> module to modify files by the result of B<greple> command.\n",
-      "C<-Mupdate> 모듈을 사용하여 B<greple> 명령의 결과에 따라 파일을 수정할 수 있습니다.\n"
-   ],
-   [
-      "Use B<sdif> to show conflict marker format side by side with B<-V> option.\n",
-      "충돌 마커 형식을 B<-V> 옵션과 함께 나란히 표시하려면 B<에스디프>를 사용합니다.\n"
-   ],
-   [
-      "Greple B<stripe> module use by B<--xlate-stripe> option.\n",
-      "회색 B<줄무늬> 모듈은 B<--xlate-stripe> 옵션으로 사용합니다.\n"
    ],
    [
       "Greple module to translate and replace only the necessary parts with DeepL API (in Japanese)\n",

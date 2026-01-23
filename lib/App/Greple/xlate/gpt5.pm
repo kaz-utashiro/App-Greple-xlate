@@ -1,6 +1,6 @@
 package App::Greple::xlate::gpt5;
 
-our $VERSION = "0.9924";
+our $VERSION = "1.00";
 
 =head1 NAME
 
