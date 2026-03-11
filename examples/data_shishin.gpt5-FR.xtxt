@@ -1,0 +1,199 @@
+[ "data_shishin.docx" word/document.xml ]
+
+Lignes directrices fondamentales sur les données ouvertes
+
+30 mai 2017 (ère Heisei 29)
+
+Quartier général pour la promotion de la société en réseau d’information avancée
+
+Décision du Conseil de stratégie pour la promotion de l’utilisation des données publiques et privées
+
+Révision du 7 juin 2019 (ère Reiwa 1)
+
+Révision du 15 juin 2021 (ère Reiwa 3)
+
+　Au Japon, depuis le grand séisme de l’Est du Japon du 11 mars 2011 (ère Heisei 23), la sensibilisation à la publication et à l’utilisation des données détenues par le gouvernement, les collectivités territoriales et les opérateurs s’est accrue.[^2]
+
+　Le gouvernement, sur la base notamment de la « Stratégie d’open data pour l’administration électronique » (décision du 4 juillet 2012 par le Quartier général pour la promotion de la société en réseau d’information avancée), qui reconnaît que les données publiques sont un patrimoine commun des citoyens, a promu les initiatives d’open data.
+
+　Dans « Vers un nouveau déploiement de l’open data » (décision du 30 juin 2015 par le même Quartier général) et « Open Data 2.0 » (décision du 20 mai 2016 par le même Quartier général), l’orientation a été donnée de passer d’initiatives centrées sur la publication des données à une « promotion de l’open data axée sur la résolution de problèmes » fondée sur l’utilisation des données.
+
+　La « Loi fondamentale pour la promotion de l’utilisation des données publiques et privées » (ci-après la « Loi sur les données publiques et privées »), promulguée et entrée en vigueur le 14 décembre 2016 (ère Heisei 28), vise à contribuer à la réalisation d’une société où les citoyens peuvent vivre en sécurité et en tranquillité ainsi que d’un environnement de vie confortable grâce à la promotion de l’utilisation des données publiques et privées, et prévoit, pour l’État, les collectivités territoriales et les entreprises, la facilitation de l’utilisation desdites données.
+
+　Le présent document, sur la base des initiatives menées jusqu’à présent, compile des lignes directrices fondamentales, selon l’approche Open Data by Design[^3], pour la publication et l’utilisation des données publiques par l’État, les collectivités territoriales et les entreprises à l’avenir.
+
+1. Portée et importance de l’open data
+
+　La publication des données publiques sous une forme réutilisable et la promotion de leur utilisation ont les objectifs suivants.
+
+(1) Résolution des divers enjeux et revitalisation économique grâce à la participation citoyenne et à la collaboration public-privé
+
+　Avec l’avancée de l’utilisation des données publiques par un large éventail d’acteurs, la fourniture rapide et efficace de services diversifiés faisant appel à l’ingéniosité, ainsi que la prestation et l’amélioration des services publics par la collaboration public-privé deviennent possibles, ce qui permet de répondre de manière appropriée aux évolutions du contexte telles que la diversification des besoins et des valeurs et l’innovation technologique, et contribue à résoudre les divers défis auxquels notre pays est confronté, notamment la situation budgétaire difficile et l’accélération du vieillissement démographique.
+
+　En outre, la création de nouveaux services et modèles d’affaires variés par des start-up, l’amélioration de l’efficacité des activités des entreprises, etc., sont encouragées, ce qui conduit à la revitalisation de l’économie nationale dans son ensemble.
+
+(2) Sophistication et efficience de l’administration
+
+　Lorsque, au sein de l’État et des collectivités territoriales, la planification et l’élaboration des politiques et mesures s’appuient sur les informations obtenues par l’utilisation des données (EBPM : Evidence Based Policy Making), cela conduit à une administration plus efficace et efficiente.
+
+(3) Amélioration de la transparence et de la confiance
+
+　La publication des données publiques utilisées pour l’élaboration des politiques permet aux citoyens d’effectuer des analyses et des jugements suffisants concernant ces politiques, accroissant la transparence administrative et la confiance des citoyens envers l’administration.
+
+2. Définition de l’open data
+
+　Parmi les données publiques et privées détenues par l’État, les collectivités territoriales et les entreprises, sont définies comme données ouvertes celles qui sont publiées de manière à ce que tous les citoyens puissent facilement les utiliser (traitement, édition, redistribution, etc.) via Internet, et qui satisfont à tous les critères suivants.[^4]
+
+Soumises à des règles autorisant la réutilisation secondaire, à des fins lucratives ou non lucratives
+
+Adaptées à la lecture par machine[^5]
+
+Utilisables gratuitement[^6]
+
+3. Règles fondamentales relatives à l’open data
+
+(1) Principe de publication en open data des données administratives
+
+　Partant de la reconnaissance que les données publiques sont un patrimoine commun des citoyens, et y compris les données ayant servi de base à la planification et à l’élaboration des politiques (y compris lois et budgets), il est de principe que toutes les données détenues par les ministères et agences soient publiées en open data.[^7]
+
+　Si une demande de publication vise des informations dont la publication est inappropriée, telles que i) des informations contenant des données personnelles, ii) celles susceptibles de compromettre la sécurité nationale ou l’ordre public, ou iii) celles susceptibles de porter atteinte aux droits et intérêts d’entités morales ou de personnes, le principe est de publier les raisons pour lesquelles elles ne peuvent pas être publiées en tant que données ouvertes.[^8][^9]
+
+(2) Règles relatives à la réutilisation des données publiées
+
+Pour les données publiées sur les sites Web[^10] des ministères et agences, le Règlement d’utilisation standard du gouvernement[^11] s’applique en principe, et, sauf pour les cas où la réutilisation secondaire n’est pas autorisée sur la base de motifs concrets et raisonnables, la réutilisation des données publiées est activement encouragée.
+
+(3) Environnement de publication
+
+　Chaque ministère et agence publie les données sur son site Web sous une forme facilement recherchable et utilisable. En particulier, pour les données utiles telles que « les données que seuls les ministères et agences peuvent fournir », « des données hautement fiables pouvant servir de références de base dans divers domaines[^12] » ou « des données en temps réel[^13] », dont on suppose une forte demande sociale, une publication proactive sera promue. De plus, du point de vue de la commodité des utilisateurs, de la charge des systèmes et de l’efficacité, l’introduction de mécanismes permettant le téléchargement en bloc et la fourniture via API sera encouragée.
+
+En outre, afin de permettre la recherche transversale de l’ensemble des données ouvertes du gouvernement et de promouvoir leur utilisation, les métadonnées[^14] telles que le résumé et le format des données seront traitées sous la licence « CC0 1.0 universelle »[^15] définie par Creative Commons, puis enregistrées et publiées sur le site catalogue de données du gouvernement « DATA.GO.JP ».
+
+(4) Formats des données publiées, etc.
+
+　En principe, les données publiées doivent être mises en ligne avec une structure et des formats de données adaptés à la lecture par machine[^16][^17]. En se référant à la « notation 5 étoiles »[^18] utilisée comme indicateur d’évaluation du degré d’ouverture des données et aux cadres tels que la base de vocabulaire commun, il convient de s’efforcer de publier dans des terminologies et des formats facilitant davantage l’utilisation.
+
+Du point de vue de l’accès à l’information par les citoyens, la publication dans des formats adaptés à la lecture humaine, qui est le mode d’utilisation traditionnel, sera également poursuivie, mais même dans ce cas, la recherche et l’extraction de texte doivent être possibles.
+
+Les données particulièrement faciles à structurer[^19] doivent, en principe, être publiées au niveau « 3 étoiles[^20] (formats tels que CSV[^21] ou XML) » ou supérieur, qui sont des formats facilitant davantage l’utilisation. En outre, pour toutes les données publiées incluant des données difficiles à structurer, des efforts seront faits pour mettre en place un environnement propice à la publication des métadonnées, notamment via l’utilisation du site catalogue de données, afin de faciliter la visualisation et l’utilisation via API.
+
+　Le Bureau de la stratégie informatique du Cabinet (IT) poursuivra, en collaboration avec les ministères et agences concernés, la standardisation des structures et formats de données. Pour les données incluant des informations sur les personnes morales, le numéro d’entreprise sera annexé.
+
+(5) Publication limitée des données non publiées
+
+Comme indiqué en 2., le principe veut que toutes les données détenues par chaque ministère et agence soient publiées comme données ouvertes, mais il existe également des informations[^22] qu’il est difficile de publier immédiatement en tant que données ouvertes pour diverses raisons. Lorsque la publication, en tant que données ouvertes, de données actuellement non publiées risque d’entraver, par exemple, le maintien de la sécurité de la vie des citoyens, il est nécessaire de comparer au préalable les effets et les risques. Pour ces données, dans la perspective de faire progresser l’ouverture par étapes, il est efficace de les publier en limitant l’objectif d’utilisation, le périmètre, les destinataires, etc., afin d’en promouvoir l’exploitation (ci-après « publication limitée »). En outre, les ministères et agences qui pratiquent la publication limitée publieront conjointement les raisons et la logique (notamment des plans montrant comment les données seront utilisées entre les parties prenantes dans le cadre de la publication limitée).
+
+Cet examen doit se dérouler, avec les conditions nécessaires telles que la détermination de l’objectif d’utilisation des données concernées, dans un environnement fermé comme une séance à huis clos (« in camera ») au sein de parties prenantes dignes de confiance. Il est souhaitable que la publication limitée soit réalisée en vue d’une future ouverture des données, mais si, à l’issue de l’examen, l’ouverture des données est jugée problématique, le principe sera d’en publier les raisons.
+
+（6） Principes relatifs à la publication de données payantes
+
+　Comme indiqué dans la définition en 2., lorsqu’il s’agit de couvrir les coûts de maintenance et d’exploitation d’un système de fourniture de données par la perception de redevances auprès d’utilisateurs limités, il ne s’agit pas de données ouvertes, mais il est souhaitable d’appliquer des règles autorisant la réutilisation secondaire par analogie (sauf lorsque la réutilisation secondaire n’est pas autorisée sur la base de motifs concrets et raisonnables). En outre, pour lesdites redevances, après avoir précisé le fondement de calcul des coûts liés à la fourniture ainsi que des moments déterminés de réexamen, il convient de procéder à une révision selon les perspectives suivantes.
+
+Étudier la réduction des coûts de fourniture en recourant à des technologies récentes peu coûteuses et sûres
+
+Étudier des initiatives visant à augmenter le nombre d’utilisateurs et à réduire le montant de la charge par utilisateur
+
+Réexaminer si une fourniture à la charge des utilisateurs est socialement et économiquement appropriée[^23]
+
+（7） Mise à jour des données déjà publiées
+
+　Pour les données dont la publication rapide et le maintien de l’actualité sont importants, les publier aussi rapidement que possible et procéder à des mises à jour en temps utile et appropriées. En outre, préciser la périodicité des mises à jour, etc., afin que les utilisateurs puissent connaître à l’avance le moment des mises à jour.
+
+4. Dispositifs pour promouvoir la publication et l’exploitation des données ouvertes
+
+（1） Promotion de l’Open Data by Design
+
+Chaque ministère et agence, sur la base du concept d’Open Data by Design, prendra les mesures nécessaires dès la phase de planification et de conception des procédures administratives et des systèmes d’information afin de publier les données détenues par l’administration sous une forme facile à exploiter par les utilisateurs. Le Bureau de la stratégie informatique (IT) du Cabinet, sous l’autorité du CIO du gouvernement, fournira les conseils nécessaires concernant les initiatives de chaque ministère et agence.
+
+（2） Prise en compte des besoins des utilisateurs
+
+Dans la promotion des données ouvertes, il est important d’avancer tout en reflétant fidèlement les besoins des utilisateurs. À cette fin, chaque ministère et agence publiera une liste recensant les données détenues et leur état de publication[^24], afin de saisir les besoins des utilisateurs, y compris latents, et de s’employer à publier les données sous une forme conforme à ces besoins.
+
+5. Dispositif de promotion
+
+（1） Mise en place d’un guichet de consultation
+
+　Afin de recueillir et comprendre activement les besoins (demandes) et opinions des utilisateurs concernant les données ouvertes et de les refléter dans une action gouvernementale cohérente, un guichet de consultation global sur les données ouvertes sera établi au Bureau de la stratégie informatique (IT) du Cabinet. En outre, chaque ministère et agence mettra également en place un guichet de consultation et répondra activement aux demandes individuelles des utilisateurs concernant les données ouvertes.
+
+（2） Dispositif de promotion
+
+　Le Bureau de la stratégie informatique (IT) du Cabinet, sous l’autorité du CIO du gouvernement, élaborera et coordonnera de manière globale les politiques relatives aux données ouvertes à l’échelle de l’ensemble du gouvernement en collaboration avec chaque ministère et agence, et promouvra une action unifiée en matière de données ouvertes en menant, entre autres, des revues et des suivis de chaque mesure, y compris de l’état de publication des données par chaque ministère et agence. En outre, le Bureau de la stratégie informatique (IT) du Cabinet coopérera avec les ministères et agences concernés pour promouvoir les initiatives au sein des collectivités locales.
+
+　Les responsables de l’informatisation de chaque ministère et agence (CIO ministériel) feront progresser les initiatives relatives aux données ouvertes au sein de leur ministère et agence et encourageront les initiatives d’organismes administratifs indépendants, d’opérateurs de services d’intérêt public, etc. De plus, les directeurs adjoints à l’informatisation, etc. (vice-CIO ministériels) assisteront les CIO ministériels et assureront la direction et la supervision internes relatives aux politiques en matière de données ouvertes.
+
+6. Initiatives en matière de données ouvertes au sein des collectivités locales, des agences administratives indépendantes et des opérateurs
+
+（1） Collectivités locales
+
+　L’article 11, paragraphe 1, de la Loi sur les données publiques et privées stipule que les collectivités locales, à l’instar de l’État, doivent prendre les mesures nécessaires pour que les citoyens puissent facilement utiliser les données qu’elles détiennent.
+
+　Il est demandé aux collectivités locales de promouvoir les données ouvertes en tenant compte de l’esprit de la Loi sur les données publiques et privées et des présentes lignes directrices fondamentales.
+
+　Lors de la promotion, il est souhaitable de s’efforcer de publier selon des formats et des règles standard afin de permettre l’utilisation transversale des données publiées par l’État et les collectivités locales. En outre, des initiatives telles que la mise en place conjointe d’un portail de données ouvertes par plusieurs entités sont également efficaces.
+
+Le gouvernement soutiendra activement les initiatives de données ouvertes au sein des collectivités locales en dépêchant des experts en données ouvertes, en présentant des domaines et des éléments de données dont la publication est particulièrement souhaitable dans les collectivités locales, en fournissant des recueils d’exemples d’initiatives avancées et des guides, ainsi que des outils de développement des compétences.
+
+（2） Opérateurs
+
+　L’article 11, paragraphe 2, de la Loi sur les données publiques et privées stipule que les opérateurs (y compris les agences administratives indépendantes) doivent s’efforcer de prendre les mesures nécessaires pour que les citoyens puissent facilement utiliser les données contribuant à l’accroissement de l’intérêt public.
+
+　Dans les agences administratives indépendantes, les universités, etc., compte tenu du fait qu’elles sont financées par des fonds publics ou qu’elles mènent des activités ou des recherches, il est souhaitable de promouvoir les initiatives en matière de données ouvertes conformément aux présentes lignes directrices fondamentales[^25].
+
+　Par ailleurs, pour les opérateurs des secteurs de services d’intérêt public tels que l’électricité et le gaz, les communications et la radiodiffusion, les transports, etc., au vu de leur caractère d’utilité publique, il est souhaitable de promouvoir les données ouvertes en tenant compte des présentes lignes directrices fondamentales et des besoins des utilisateurs.
+
+7. Révision des présentes lignes directrices fondamentales
+
+　Les présentes lignes directrices fondamentales seront révisées de manière flexible en fonction de l’évolution des technologies, de l’environnement international, etc., tout en tenant compte des résultats des diverses mesures ainsi que des opinions et demandes des citoyens et des opérateurs, etc.
+
+(Fin)
+
+
+[ "data_shishin.docx" word/footnotes.xml ]
+
+[^2]: En ce qui concerne la fourniture d’informations liées aux catastrophes sismiques, des demandes de coopération ont été formulées pour fournir des informations dans des formats de fichiers facilitant le traitement des informations, et des informations telles que l’état de circulation routière détenues par des opérateurs ont été publiées et utilisées.
+
+[^3]: Pour les données publiques, il s’agit de planifier, d’aménager et d’exploiter l’ensemble des systèmes d’information et des processus opérationnels en partant du principe des données ouvertes.
+
+[^4]: Toutefois, pour des raisons de sécurité, il est possible que des mesures telles que l’exigence d’une inscription préalable des utilisateurs ou des restrictions sur les méthodes d’accès aux données soient mises en place.
+
+[^5]: « Lecture par machine » désigne la capacité d’un programme informatique à traiter et éditer automatiquement des données, etc.
+
+[^6]: Bien qu’il ne s’agisse pas de données ouvertes, il existe des cas où les coûts de maintenance et d’exploitation d’un système de fourniture de données sont couverts par la perception de redevances auprès d’utilisateurs limités.
+
+[^7]: À l’avenir, pour les données créées à des fins administratives, il est nécessaire d’assurer qu’elles soient préparées en envisageant leur publication comme données ouvertes conformément aux présentes lignes directrices, et il est demandé au Bureau de la stratégie informatique du Cabinet de saisir l’état de préparation de chaque ministère et agence et d’effectuer les coordinations nécessaires.
+
+[^8]: Lorsqu’en vertu d’une loi ou d’un fondement raisonnable il est impossible de publier des données comme données ouvertes (y compris lorsqu’il existe des restrictions à la réutilisation), cela doit être indiqué de manière spécifique.
+
+[^9]: Si la seule publication des raisons de non-divulgation conduit à divulguer des informations qui ne peuvent être publiées (informations non divulguables), il est possible de ne pas publier ces raisons.
+
+[^10]: Terme englobant largement les sites web, sites de bases de données, sites d’activités individuelles, etc. sur Internet ouverts sous leur propre nom par les ministères et agences (y compris les organismes d’installations, les bureaux régionaux, et les organisations relevant des ministères et agences).
+
+[^11]: Règles d’utilisation des sites web des ministères et agences, présentées comme un modèle unifié afin de promouvoir la réutilisation des données publiées sur les sites web des organismes gouvernementaux. Annexe 1 « Conditions d’utilisation standard du gouvernement (version 2.0) » du document « Approche de base (guidelines) concernant la publication des données des ministères pour promouvoir la réutilisation ».
+
+[^12]: Par exemple, les données statistiques publiées par chaque ministère et agence.
+
+[^13]: Données nécessitant une mise à jour périodique, telles que les informations sur les événements, les taux d’encombrement des transports publics, ou les informations sur les catastrophes et la prévention des catastrophes.
+
+[^14]: Informations indiquant la nature des données publiées. Par exemple, des informations de propriété telles que le titre, le nom de l’organisation publiant, l’auteur (nom du département), ainsi que des mots-clés pour la recherche de données. Pour plus de détails sur d’autres éléments, voir sur Data.go.jp « Informations pour les développeurs » la section « (2) Informations concernant les métadonnées fournies par le site du catalogue de données » (https://www.data.go.jp/for-developer/for-developer)
+
+[^15]: Pour la définition de « CC0 1.0 Universel », se référer au « Code juridique Creative Commons ». (https://creativecommons.org/publicdomain/zero/1.0/legalcode.ja)
+
+[^16]: Le « degré d’adéquation à la lecture par machine » comporte plusieurs niveaux selon la mesure dans laquelle un ordinateur peut réutiliser les données sans intervention humaine. Pour que l’ordinateur réutilise automatiquement des données, il doit pouvoir identifier (lire) la structure logique des données et être capable de traiter les valeurs dans la structure (nombres, textes contenus dans des tableaux, etc.).
+
+[^17]: Voir « 3. Approche de l’expansion de la publication dans des formats aisément lisibles par machine » et l’Annexe 2 « Points d’attention lors de la création de données numériques (tableaux), textuelles et d’informations géospatiales » dans les « Approches de base (guidelines) concernant la publication des données des ministères pour promouvoir la réutilisation ».
+
+[^18]: Indicateur en cinq niveaux proposé par Tim Berners-Lee, le fondateur du Web : quel que soit le format de fichier, satisfaire à une licence permettant la réutilisation correspond au premier niveau, et le format CSV, relativement lisible par machine, correspond au troisième niveau. (http://5stardata.info/ja/)
+
+[^19]: Informations pouvant être représentées par des matrices ou des hiérarchies, telles que les informations statistiques.
+
+[^20]: Formats utilisables de manière commune sans se limiter à des fonctions spécifiques (CSV, XML).
+
+[^21]: Lors de la publication en CSV de données contenant des tableaux, se référer à la section « 8.3.2 Directives concernant les données tabulaires » de « Open Data Guide version 2.1 ». (http://www.vled.or.jp/results/OpenDataGuide_v21_fix.pdf)
+
+[^22]: Sont exclues les informations déjà rendues publiques, y compris via la divulgation d’informations, en réponse aux demandes des utilisateurs, y compris celles sur support papier. Par ailleurs, s’il y a lieu, l’approche et l’exploitation des données faisant l’objet d’une publication restreinte (processus de décision de la publication restreinte, système de suivi et d’évaluation de l’avancement, etc.) feront l’objet d’examens supplémentaires à l’avenir.
+
+[^23]: Par exemple, il est envisageable que certaines données soient payantes tandis que le reste soit gratuit.
+
+[^24]: Pour établir une telle liste, un inventaire des données détenues par chaque ministère et agence sera effectué au cours de l’exercice 2017, la liste correspondante sera publiée, puis un tour de table sera organisé afin de débattre entre secteurs public et privé (le privé incluant entreprises, chercheurs, citoyens, etc.) des modalités de publication et d’utilisation des données dans les domaines à forte demande. Le tour de table discutera des modalités de publication et d’utilisation des données publiques-privées, y compris les données détenues par les collectivités territoriales et les entreprises (y compris les établissements administratifs indépendants).
+
+[^25]: Dans « À propos de la promotion de la science ouverte dans notre pays » (30 mars 2015), il est indiqué que, parmi les résultats de recherche financés par des fonds publics, les articles et les données de recherche servant de preuves pour les articles sont en principe à publier, et qu’il est souhaitable de publier dans la mesure du possible les autres données de recherche en tant que résultats de R-D.
+
