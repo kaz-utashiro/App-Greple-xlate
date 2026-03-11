@@ -1,9 +1,9 @@
 name: test
 on:
   push:
-    paths: [ 'script/**', 'lib/**', 't/**', '.github/workflows/**' ]
+    paths: [ 'script/**', 'lib/**', 't/**', 'cpanfile', 'META.json', '.github/workflows/**' ]
   pull_request:
-    paths: [ 'script/**', 'lib/**', 't/**', '.github/workflows/**' ]
+    paths: [ 'script/**', 'lib/**', 't/**', 'cpanfile', 'META.json', '.github/workflows/**' ]
 jobs:
   build:
     runs-on: ubuntu-latest
