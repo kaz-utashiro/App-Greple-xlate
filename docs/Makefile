@@ -44,7 +44,7 @@ GREPLE := PERL5LIB=../lib$${PERL5LIB:+:$$PERL5LIB} greple
 
 PODIFY := $(GREPLE) -Mperl --nocolor --le :pod
 $(foreach mod,$(ORIGIN),$(eval \
-  $(SRCPATH)$(subst .pm,.pod,$(notdir $(mod))): $(mod) Makefile; $(PODIFY) $$< > $$@ \
+  $(SRCPATH)$(subst .pm,.pod,$(notdir $(mod))): $(mod) Makefile; $$(PODIFY) $$< > $$@ \
 ))
 
 XLATE := $(GREPLE) -Mxlate
