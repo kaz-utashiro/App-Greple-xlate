@@ -68,8 +68,8 @@
       "Terkadang, ada bagian teks yang tidak ingin Anda terjemahkan. Misalnya, tag dalam berkas markdown. DeepL menyarankan bahwa dalam kasus seperti itu, bagian teks yang dikecualikan diubah menjadi tag XML, diterjemahkan, lalu dipulihkan setelah terjemahan selesai. Untuk mendukung ini, dimungkinkan untuk menentukan bagian yang akan dimask dari terjemahan.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Ini akan menafsirkan setiap baris dari berkas `MASKPATTERN` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikan setelah pemrosesan. Baris yang dimulai dengan C<#> diabaikan.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Ini akan menafsirkan setiap baris dari berkas C<MASKPATTERN> sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan C<#> akan diabaikan.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

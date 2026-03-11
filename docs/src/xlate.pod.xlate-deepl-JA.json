@@ -68,8 +68,8 @@
       "時々、翻訳してほしくないテキストの部分があります。例えば、マークダウン・ファイルのタグなどです。DeepL では、このような場合、除外するテキストの部分を XML タグに変換して翻訳し、翻訳完了後に復元することを推奨しています。これをサポートするために、翻訳からマスクする部分を指定できます。\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "これはファイル `MASKPATTERN` の各行を正規表現として解釈し、それにマッチする文字列を翻訳し、処理後に元に戻します。C<#>で始まる行は無視される。\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "ファイルC<MASKPATTERN>の各行を正規表現として解釈し、一致する文字列を翻訳後、処理後に元に戻します。C<#>で始まる行は無視されます。\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

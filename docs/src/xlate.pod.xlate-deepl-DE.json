@@ -68,8 +68,8 @@
       "Gelegentlich gibt es Textteile, die Sie nicht übersetzt haben möchten. Zum Beispiel Tags in Markdown-Dateien. DeepL schlägt vor, in solchen Fällen den auszuschließenden Teil des Textes in XML-Tags umzuwandeln, zu übersetzen und dann nach Abschluss der Übersetzung wiederherzustellen. Um dies zu unterstützen, ist es möglich, die Teile anzugeben, die von der Übersetzung ausgenommen werden sollen.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Dadurch wird jede Zeile der Datei `MASKPATTERN` als regulärer Ausdruck interpretiert, die entsprechenden Zeichenfolgen werden übersetzt und nach der Verarbeitung wiederhergestellt. Zeilen, die mit C<#> beginnen, werden ignoriert.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Dadurch wird jede Zeile der Datei C<MASKPATTERN> als regulärer Ausdruck interpretiert, übereinstimmende Zeichenfolgen werden übersetzt und nach der Verarbeitung wieder zurückgesetzt. Zeilen, die mit C<#> beginnen, werden ignoriert.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

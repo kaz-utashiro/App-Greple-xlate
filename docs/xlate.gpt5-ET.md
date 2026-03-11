@@ -14,7 +14,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ Mõnikord on tekstis osasid, mida te ei soovi tõlkida. Näiteks sildid markdown
 
     --xlate-setopt maskfile=MASKPATTERN
 
-See tõlgendab faili \`MASKPATTERN\` iga rida regulaaravaldiseina, tõlgib sellega sobivad stringid ja taastab need pärast töötlemist. Ridu, mis algavad `#`, eiratakse.
+See tõlgendab faili iga rida `MASKPATTERN` kui regulaaravaldis, tõlgib sellega vastavad stringid ja taastab algse oleku pärast töötlemist. Ridu, mis algavad `#`, eiratakse.
 
 Keerukat mustrit saab kirjutada mitmele reale, kasutades taandejärgset reavahetust tagurpidi kaldkriipsuga.
 

@@ -14,7 +14,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ Ocazional, există părți din text pe care nu doriți să le traduceți. De exe
 
     --xlate-setopt maskfile=MASKPATTERN
 
-Aceasta va interpreta fiecare linie din fișierul \`MASKPATTERN\` ca o expresie regulată, va traduce șirurile care se potrivesc și va reveni după procesare. Liniile care încep cu `#` sunt ignorate.
+Aceasta va interpreta fiecare linie a fișierului `MASKPATTERN` ca o expresie regulată, va traduce șirurile care se potrivesc cu aceasta și va reveni după procesare. Liniile care încep cu `#` sunt ignorate.
 
 Un tipar complex poate fi scris pe mai multe linii cu newline scăpat prin backslash.
 

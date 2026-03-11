@@ -68,8 +68,8 @@
       "有时会有不想被翻译的文本部分。例如，Markdown 文件中的标签。DeepL 建议在这种情况下，将需要排除的文本部分转换为 XML 标签，进行翻译后再恢复。为支持此流程，可以指定从翻译中屏蔽的部分。\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "这会将文件 `MASKPATTERN` 的每一行作为正则表达式解释，翻译匹配的字符串，并在处理后恢复。以 C<#> 开头的行会被忽略。\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "这将把文件的每一行 C<MASKPATTERN> 解释为正则表达式，翻译与其匹配的字符串，并在处理后还原。以 C<#> 开头的行将被忽略。\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

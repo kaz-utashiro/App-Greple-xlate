@@ -14,7 +14,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ Terkadang, ada bagian teks yang tidak ingin Anda terjemahkan. Misalnya, tag dala
 
     --xlate-setopt maskfile=MASKPATTERN
 
-Ini akan menafsirkan setiap baris dari berkas \`MASKPATTERN\` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikan setelah pemrosesan. Baris yang dimulai dengan `#` diabaikan.
+Ini akan menafsirkan setiap baris dari berkas `MASKPATTERN` sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan `#` akan diabaikan.
 
 Pola kompleks dapat ditulis dalam beberapa baris dengan baris baru yang di-escape dengan backslash.
 

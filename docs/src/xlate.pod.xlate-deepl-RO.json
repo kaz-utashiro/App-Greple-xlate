@@ -68,8 +68,8 @@
       "Ocazional, există părți de text pe care nu le doriți traduse. De exemplu, etichetele din fișierele markdown. DeepL sugerează ca, în astfel de cazuri, partea de text care trebuie exclusă să fie convertită în etichete XML, tradusă și apoi restaurată după finalizarea traducerii. Pentru a sprijini acest lucru, este posibil să se specifice părțile care urmează să fie mascate de la traducere.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Aceasta va interpreta fiecare linie din fișierul `MASKPATTERN` ca o expresie regulată, va traduce șirurile care corespund acesteia și va reveni după procesare. Liniile care încep cu C<#> sunt ignorate.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Acest lucru va interpreta fiecare linie a fișierului C<MASKPATTERN> ca o expresie regulată, va traduce șirurile care se potrivesc și va reveni la starea inițială după procesare. Liniile care încep cu C<#> sunt ignorate.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

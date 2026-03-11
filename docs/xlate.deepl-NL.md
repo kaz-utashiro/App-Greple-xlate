@@ -14,7 +14,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ Soms zijn er delen van tekst die je niet vertaald wilt hebben. Bijvoorbeeld tags
 
     --xlate-setopt maskfile=MASKPATTERN
 
-Dit zal elke lijn van het bestand \`MASKPATTERN\` interpreteren als een reguliere expressie, strings vertalen die hiermee overeenstemmen en na verwerking terugzetten. Regels die beginnen met `#` worden genegeerd.
+Hierdoor wordt elke regel van het bestand `MASKPATTERN` geïnterpreteerd als een reguliere expressie, worden strings die hiermee overeenkomen vertaald en wordt na verwerking de oorspronkelijke tekst hersteld. Regels die beginnen met `#` worden genegeerd.
 
 Complexe patronen kunnen op meerdere regels worden geschreven met backslash escpaed newline.
 

@@ -68,8 +68,8 @@
       "Soms zijn er delen van de tekst die je niet wilt vertalen. Bijvoorbeeld tags in markdown-bestanden. DeepL stelt voor om in dergelijke gevallen het te uitsluiten deel van de tekst om te zetten naar XML-tags, te vertalen en daarna na voltooiing van de vertaling te herstellen. Ter ondersteuning hiervan is het mogelijk om de delen die van vertaling moeten worden gemaskeerd op te geven.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Hiermee wordt elke regel van het bestand `MASKPATTERN` geïnterpreteerd als een reguliere expressie, worden overeenkomende tekenreeksen vertaald en wordt na de verwerking teruggedraaid. Regels die beginnen met C<#> worden genegeerd.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Dit zal elke regel van het bestand C<MASKPATTERN> interpreteren als een reguliere expressie, strings die ermee overeenkomen vertalen en terugdraaien na verwerking. Regels die beginnen met C<#> worden genegeerd.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

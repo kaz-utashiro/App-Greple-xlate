@@ -68,8 +68,8 @@
       "Il arrive qu’il y ait des parties du texte que vous ne souhaitez pas traduire. Par exemple, des balises dans des fichiers Markdown. DeepL suggère que, dans de tels cas, la partie du texte à exclure soit convertie en balises XML, traduite, puis restaurée une fois la traduction terminée. Pour prendre cela en charge, il est possible de spécifier les parties à masquer de la traduction.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Chaque ligne du fichier `MASKPATTERN` sera interprétée comme une expression régulière, les chaînes correspondantes seront traduites, puis restaurées après traitement. Les lignes commençant par C<#> sont ignorées.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Cela interprétera chaque ligne du fichier C<MASKPATTERN> comme une expression régulière, traduira les chaînes qui y correspondent, puis reviendra en arrière après le traitement. Les lignes commençant par C<#> sont ignorées.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

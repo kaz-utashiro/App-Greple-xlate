@@ -68,8 +68,8 @@
       "أحيانًا توجد أجزاء من النص لا تريد ترجمتها. على سبيل المثال، الوسوم في ملفات Markdown. تقترح DeepL في مثل هذه الحالات تحويل الجزء المراد استثناؤه إلى وسوم XML، ثم ترجمته، ثم استعادته بعد اكتمال الترجمة. لدعم ذلك، يمكن تحديد الأجزاء التي سيتم حجبها من الترجمة.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "سيفسر كل سطر من الملف `MASKPATTERN` كتع表达 نمطي (regular expression)، تُترجم السلاسل المطابقة له، ثم تُعاد إلى حالتها بعد المعالجة. تُتجاهل الأسطر التي تبدأ بـ C<#>.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "سيتم تفسير كل سطر من الملف C<MASKPATTERN> كتعبير منتظم، وترجمة السلاسل المطابقة له، ثم الرجوع عن التغييرات بعد المعالجة. يتم تجاهل الأسطر التي تبدأ بـ C<#>.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

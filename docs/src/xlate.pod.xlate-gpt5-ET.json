@@ -68,8 +68,8 @@
       "Mõnikord on tekstis osasid, mida te ei soovi tõlkida. Näiteks sildid markdown-failides. DeepL soovitab sellistel juhtudel tõlkimisest välja jäetav osa teisendada XML-siltideks, lasta see läbi tõlke ja taastada pärast tõlkimise lõppu. Selle toetamiseks on võimalik määrata osad, mis tuleb tõlkimise eest maskeerida.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "See tõlgendab faili `MASKPATTERN` iga rida regulaaravaldiseina, tõlgib sellega sobivad stringid ja taastab need pärast töötlemist. Ridu, mis algavad C<#>, eiratakse.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "See tõlgendab faili iga rida C<MASKPATTERN> kui regulaaravaldis, tõlgib sellega vastavad stringid ja taastab algse oleku pärast töötlemist. Ridu, mis algavad C<#>, eiratakse.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

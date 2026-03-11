@@ -68,8 +68,8 @@
       "Περιστασιακά, υπάρχουν τμήματα κειμένου που δεν θέλετε να μεταφραστούν. Για παράδειγμα, ετικέτες σε αρχεία markdown. Η DeepL προτείνει ότι σε τέτοιες περιπτώσεις, το τμήμα του κειμένου που θα αποκλειστεί να μετατραπεί σε ετικέτες XML, να μεταφραστεί και στη συνέχεια να αποκατασταθεί μετά την ολοκλήρωση της μετάφρασης. Για να υποστηριχθεί αυτό, είναι δυνατό να καθοριστούν τα τμήματα που θα καλυφθούν (masked) από τη μετάφραση.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Αυτό θα ερμηνεύσει κάθε γραμμή του αρχείου `MASKPATTERN` ως κανονική έκφραση, θα μεταφράσει τις συμβολοσειρές που ταιριάζουν και θα τις επαναφέρει μετά την επεξεργασία. Γραμμές που αρχίζουν με C<#> αγνοούνται.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Αυτό θα ερμηνεύσει κάθε γραμμή του αρχείου C<MASKPATTERN> ως κανονική έκφραση, θα μεταφράσει τις συμβολοσειρές που την αντιστοιχούν και θα επανέλθει μετά την επεξεργασία. Γραμμές που αρχίζουν με C<#> αγνοούνται.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

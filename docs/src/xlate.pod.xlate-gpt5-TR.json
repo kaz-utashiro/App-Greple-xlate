@@ -68,8 +68,8 @@
       "Bazen, çevrilmesini istemediğiniz metin bölümleri vardır. Örneğin, markdown dosyalarındaki etiketler. DeepL, böyle durumlarda hariç tutulacak metin kısmının XML etiketlerine dönüştürülmesini, çevrilmesini ve çeviri tamamlandıktan sonra geri yüklenmesini önerir. Bunu desteklemek için, çeviriden masklanacak kısımları belirtmek mümkündür.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Bu, dosya `MASKPATTERN`ın her satırını bir düzenli ifade olarak yorumlar, ona uyan dizeleri çevirir ve işlemden sonra geri alır. C<#> ile başlayan satırlar yok sayılır.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Bu, dosyanın her bir satırını C<MASKPATTERN> olarak yorumlayacak, onunla eşleşen dizeleri çevirecek ve işleme bittikten sonra geri alacaktır. C<#> ile başlayan satırlar yok sayılır.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

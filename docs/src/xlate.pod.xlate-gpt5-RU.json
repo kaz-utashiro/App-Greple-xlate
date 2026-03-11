@@ -68,8 +68,8 @@
       "Иногда встречаются части текста, которые не нужно переводить. Например, теги в файлах Markdown. DeepL рекомендует в таких случаях преобразовать исключаемую часть текста в XML‑теги, выполнить перевод, а затем восстановить её после завершения перевода. Для поддержки этого можно указать части, которые следует маскировать от перевода.\n"
    ],
    [
-      "This will interpret each line of the file `MASKPATTERN` as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
-      "Каждая строка файла `MASKPATTERN` будет интерпретироваться как регулярное выражение, соответствующие ему строки будут переведены и восстановлены после обработки. Строки, начинающиеся с C<#>, игнорируются.\n"
+      "This will interpret each line of the file C<MASKPATTERN> as a regular expression, translate strings matching it, and revert after processing. Lines beginning with C<#> are ignored.\n",
+      "Это будет интерпретировать каждую строку файла C<MASKPATTERN> как регулярное выражение, переводить соответствующие ему строки и откатывать изменения после обработки. Строки, начинающиеся с C<#>, игнорируются.\n"
    ],
    [
       "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",

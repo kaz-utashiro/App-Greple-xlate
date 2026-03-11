@@ -14,7 +14,7 @@ App::Greple::xlate - módulo de traducción para greple
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ En ocasiones, hay partes del texto que no desea traducir. Por ejemplo, las etiqu
 
     --xlate-setopt maskfile=MASKPATTERN
 
-Esto interpretará cada línea del fichero \`MASKPATTERN\` como una expresión regular, traducirá las cadenas que coincidan con ella, y revertirá tras el proceso. Las líneas que empiezan por `#` se ignoran.
+Esto interpretará cada línea del archivo `MASKPATTERN` como una expresión regular, traducirá las cadenas que coincidan con ella y revertirá después del procesamiento. Las líneas que comienzan con `#` se ignoran.
 
 Un patrón complejo puede escribirse en varias líneas con una barra invertida y una nueva línea.
 

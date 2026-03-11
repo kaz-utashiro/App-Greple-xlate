@@ -14,7 +14,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # VERSION
 
-Version 1.00
+Version 1.01
 
 # DESCRIPTION
 
@@ -77,7 +77,7 @@ Bazen, çevrilmesini istemediğiniz metin bölümleri olabilir. Örneğin, markd
 
     --xlate-setopt maskfile=MASKPATTERN
 
-Bu, \`MASKPATTERN\` dosyasının her satırını düzenli bir ifade olarak yorumlayacak, bununla eşleşen dizeleri çevirecek ve işlemden sonra geri dönecektir. `#` ile başlayan satırlar yok sayılır.
+Bu, `MASKPATTERN` dosyasının her satırını düzenli bir ifade olarak yorumlayacak, eşleşen dizeleri çevirecek ve işleme sonra geri döndürecektir. `#` ile başlayan satırlar yok sayılır.
 
 Karmaşık desen ters eğik çizgi ile birden fazla satıra yazılabilir.
 
