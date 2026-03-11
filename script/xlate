@@ -238,7 +238,7 @@ Usage: $myname [ options ] -t LANG FILE [ greple options ]
 END
 
 declare -A OPTS=(
-    [&USAGE]="$USAGE" [&REQUIRE]=0.2
+    [&USAGE]="$USAGE" [&REQUIRE]=0.8 [&PERMUTE]=
     # Basic options
     [     debug | d     # debug mode (enables trace)       ]=
     [     trace         # trace mode                       ]=
