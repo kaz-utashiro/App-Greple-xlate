@@ -130,7 +130,7 @@ translation.
 
     --xlate-setopt maskfile=MASKPATTERN
 
-This will interpret each line of the file `MASKPATTERN` as a regular
+This will interpret each line of the file C<MASKPATTERN> as a regular
 expression, translate strings matching it, and revert after
 processing.  Lines beginning with C<#> are ignored.
 
