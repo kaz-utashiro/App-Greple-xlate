@@ -22,9 +22,12 @@ RUN apt-get update && apt-get -yq upgrade \
     && locale-gen ja_JP.UTF-8
 
 # Build tools
+# libcrypt-dev provides crypt.h, required to build XS modules against perl
+# 5.40+ (Ubuntu 26.04); without it Term::ReadKey/List::BinarySearch::XS and
+# the whole App::Greple toolchain fail to compile.
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
-       git curl gcc make perl perl-doc cpanminus
+       git curl gcc make perl perl-doc cpanminus libcrypt-dev
 
 # Perl modules (Greple and related tools)
 RUN cpanm -qn \
