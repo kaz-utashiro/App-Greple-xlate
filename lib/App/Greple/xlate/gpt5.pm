@@ -154,11 +154,25 @@ This module uses the following default parameters:
 
 =over 4
 
-=item * B<OPENAI_API_KEY> - Required OpenAI API key
+=item * B<OPENAI_API_KEY> - Required OpenAI API key, read by the C<gpty> command
 
-=item * B<XLATE_DEBUG> - Enable debug output
+=back
 
-=item * B<XLATE_MAXLEN> - Override maximum batch length
+=head1 RELATED OPTIONS
+
+Batching and debugging are controlled through the standard
+L<App::Greple::xlate> command-line options, not environment variables:
+
+=over 4
+
+=item * B<--xlate-maxlen>=I<chars> - Maximum characters sent per request
+(defaults to this engine's value of 10000 when unset)
+
+=item * B<--xlate-maxline>=I<n> - Maximum lines sent per request
+(default 0 = unlimited); useful as a safety valve if a large batch causes a
+response element-count mismatch
+
+=item * B<--xlate-debug> - Dump the C<gpty> command and parameters
 
 =back
 
@@ -322,6 +336,7 @@ sub xlate {
     my @from = map { /\n\z/ ? $_ : "$_\n" } @_;
     my @to;
     my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
+    my $maxline = $App::Greple::xlate::max_line;
     if (my @len = grep { $_ > $max } map length, @from) {
 	die "Contain lines longer than max length (@len > $max).\n";
     }
@@ -333,6 +348,7 @@ sub xlate {
 	    last if $len + $next > $max;
 	    $len += $next;
 	    push @tmp, shift @from;
+	    last if $maxline > 0 and @tmp >= $maxline;
 	}
 	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
 	push @to, xlate_each @tmp;
