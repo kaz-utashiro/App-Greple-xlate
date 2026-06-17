@@ -12,7 +12,7 @@ App::Greple::xlate - greple용 번역 지원 모듈
 
 # VERSION
 
-Version 1.02
+Version 1.0201
 
 # DESCRIPTION
 
