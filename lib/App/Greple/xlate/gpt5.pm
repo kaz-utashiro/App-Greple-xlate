@@ -142,11 +142,11 @@ This module uses the following default parameters:
 
 =item * B<temperature>: 1 (fixed for GPT-5.5)
 
-=item * B<max_length>: 3000 characters per batch
+=item * B<max_length>: 10000 characters per batch
 
 =item * B<reasoning_effort>: none (for translation tasks; fastest)
 
-=item * B<max_completion_tokens>: 4000
+=item * B<max_completion_tokens>: 16000
 
 =back
 
@@ -228,8 +228,8 @@ our $auth_key;
 our $method = __PACKAGE__ =~ s/.*://r;
 
 my %param = (
-    gpt5 => { engine => 'gpt-5.5', temp => '1', max => 3000, sub => \&gpty,
-              reasoning_effort => 'none', verbosity => 'low', max_completion_tokens => 4000,
+    gpt5 => { engine => 'gpt-5.5', temp => '1', max => 10000, sub => \&gpty,
+              reasoning_effort => 'none', verbosity => 'low', max_completion_tokens => 16000,
 	      prompt => <<END
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.
