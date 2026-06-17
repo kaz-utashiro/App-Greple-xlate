@@ -12,7 +12,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 # VERSION
 
-Version 1.01
+Version 1.02
 
 # DESCRIPTION
 

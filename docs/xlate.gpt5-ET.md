@@ -12,7 +12,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # VERSION
 
-Version 1.01
+Version 1.02
 
 # DESCRIPTION
 
