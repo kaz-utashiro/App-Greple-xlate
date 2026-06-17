@@ -46,10 +46,14 @@ RUN cpanm -qn \
 # Python
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
-       python3 python3-pip
+       python3 python3-venv
 
-# Python tools (DeepL, GPT, LLM)
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
+# Python tools (DeepL, GPT, LLM) in an isolated virtualenv.
+# Ubuntu 26.04's system Python is externally-managed (PEP 668): installing
+# into it makes pip fail to upgrade apt-managed packages such as "packaging"
+# ("Cannot uninstall ...: no RECORD file"). A venv avoids this entirely.
+RUN python3 -m venv /opt/venv
+ENV PATH=/opt/venv/bin:$PATH
 RUN pip install --upgrade \
        packaging deepl \
        git+https://github.com/tecolicom/App-gpty.git \
