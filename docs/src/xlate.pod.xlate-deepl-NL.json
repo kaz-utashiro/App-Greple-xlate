@@ -4,8 +4,8 @@
       "App::Greple::xlate - vertaalondersteuningsmodule voor greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>), and GPT-5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> module zoek de gewenste tekstblokken en vervang ze door de vertaalde tekst. Momenteel zijn DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>) en GPT-5 (F<gpt5.pm>) module geïmplementeerd als back-end engine.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate>-module zoekt de gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn de DeepL (F<deepl.pm>)- en GPT-5.5 (F<gpt5.pm>)-modules geïmplementeerd als back-end-engine.\n"
    ],
    [
       "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
@@ -180,8 +180,8 @@
       "Stel deze waarde in op 1 als je één regel per keer wilt vertalen. Deze optie heeft voorrang op de C<--xlate-maxlen> optie.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Geef een aangepaste prompt op die naar de vertaalmachine moet worden gestuurd. Deze optie is alleen beschikbaar bij gebruik van ChatGPT engines (gpt3, gpt4, gpt4o). Je kunt het vertaalgedrag aanpassen door specifieke instructies te geven aan het AI-model. Als de prompt C<%s> bevat, wordt deze vervangen door de naam van de doeltaal.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Geef een aangepaste prompt op die naar de vertaalengine moet worden verzonden. Deze optie is alleen beschikbaar bij gebruik van ChatGPT-engines (gpt3, gpt4o, gpt5). U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt C<%s> bevat, wordt dit vervangen door de naam van de doeltaal.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

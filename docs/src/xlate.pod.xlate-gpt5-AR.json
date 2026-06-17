@@ -4,8 +4,8 @@
       "App::Greple::xlate - وحدة دعم الترجمة لأداة greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>), and GPT-5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المُترجَم. حاليًا تم تنفيذ وحدات DeepL (F<deepl.pm>)، وChatGPT 4.1 (F<gpt4.pm>)، وGPT-5 (F<gpt5.pm>) كمحرّكات خلفية.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpt5.pm>) كمحرك خلفي.\n"
    ],
    [
       "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
@@ -180,8 +180,8 @@
       "عيّن هذه القيمة إلى 1 إذا كنت تريد ترجمة سطر واحد في كل مرة. لهذا الخيار أولوية على خيار C<--xlate-maxlen>.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "حدد موجهًا مخصصًا ليُرسل إلى محرك الترجمة. هذا الخيار متاح فقط عند استخدام محركات ChatGPT (gpt3 وgpt4 وgpt4o). يمكنك تخصيص سلوك الترجمة بتقديم تعليمات محددة لنموذج الذكاء الاصطناعي. إذا كان الموجه يحتوي على C<%s>، فسيتم استبداله باسم اللغة المستهدفة.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. لا يتوفر هذا الخيار إلا عند استخدام محركات ChatGPT (gpt3، gpt4o، gpt5). يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على C<%s>، فسيُستبدل باسم اللغة الهدف.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

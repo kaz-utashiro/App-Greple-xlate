@@ -6,8 +6,6 @@ App::Greple::xlate - módulo de traducción para greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-El módulo **Greple** **xlate** encuentra los bloques de texto deseados y los sustituye por el texto traducido. Actualmente DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`), y GPT-5 (`gpt5.pm`) módulo se implementan como un motor de back-end.
+**Greple** **xlate** El módulo busca los bloques de texto deseados y los sustituye por el texto traducido. Actualmente, los módulos DeepL (`deepl.pm`) y GPT-5.5 (`gpt5.pm`) están implementados como motores de fondo.
 
 Si desea traducir bloques de texto normal en un documento escrito en el estilo vaina de Perl, utilice el comando **greple** con el módulo `xlate::deepl` y `perl` de la siguiente manera:
 
@@ -110,12 +108,11 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         La interfaz de **gpt-4o** es inestable y no se puede garantizar que funcione correctamente por el momento.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 - **--xlate-prompt**=_text_
 
-    Especifique un mensaje personalizado que se enviará al motor de traducción. Esta opción sólo está disponible cuando se utilizan motores ChatGPT (gpt3, gpt4, gpt4o). Puede personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la instrucción contiene `%s`, se sustituirá por el nombre del idioma de destino.
+    Especifica una indicación personalizada que se enviará al motor de traducción. Esta opción solo está disponible cuando se utilizan los motores de ChatGPT (gpt3, gpt4o, gpt5). Puedes personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la indicación contiene `%s`, se sustituirá por el nombre del idioma de destino.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Corredor Docker genérico utilizado por xlate para operaciones de contenedor.
 

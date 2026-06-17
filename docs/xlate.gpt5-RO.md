@@ -6,8 +6,6 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) și GPT-5 (`gpt5.pm`) sunt implementate ca motoare back-end.
+**Greple** **xlate** modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, DeepL (`deepl.pm`) și modulul GPT-5.5 (`gpt5.pm`) sunt implementate ca motor back-end.
 
 Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul pod al Perl, folosiți comanda **greple** cu modulele `xlate::deepl` și `perl` astfel:
 
@@ -110,12 +108,11 @@ Această interfață este experimentală și poate suferi modificări în viitor
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         Interfața lui **gpt-4o** este instabilă și nu poate fi garantat că va funcționa corect în acest moment.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Această interfață este experimentală și poate suferi modificări în viitor
 
 - **--xlate-prompt**=_text_
 
-    Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă doar atunci când folosiți motoarele ChatGPT (gpt3, gpt4, gpt4o). Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului AI. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
+    Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă numai când se folosesc motoare ChatGPT (gpt3, gpt4o, gpt5). Puteți personaliza comportamentul traducerii furnizând instrucțiuni specifice modelului AI. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker generic folosit de xlate pentru operațiuni cu containere
 

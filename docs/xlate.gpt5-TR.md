@@ -6,8 +6,6 @@ App::Greple::xlate - greple için çeviri destek modülü
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda arka uç motoru olarak DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) ve GPT-5 (`gpt5.pm`) modülleri uygulanmıştır.
+**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve GPT-5.5 (`gpt5.pm`) modülleri arka uç motor olarak uygulanmıştır.
 
 Perl'in pod tarzında yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülüyle aşağıdaki gibi kullanın:
 
@@ -110,12 +108,11 @@ Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o** arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
 - **--xlate-prompt**=_text_
 
-    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4, gpt4o) kullanılırken kullanılabilir. Yapay zekâ modeline belirli talimatlar vererek çeviri davranışını özelleştirebilirsiniz. İstem `%s` içeriyorsa hedef dil adıyla değiştirilir.
+    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4o, gpt5) kullanılırken kullanılabilir. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem `%s` içeriyorsa, hedef dil adıyla değiştirilecektir.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ DeepL ve ChatGPT için komut satırı araçlarını kurmanız gerekir.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate tarafından konteyner işlemleri için kullanılan genel amaçlı Docker çalıştırıcısı
 

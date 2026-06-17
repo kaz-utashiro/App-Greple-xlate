@@ -6,8 +6,6 @@ App::Greple::xlate - μονάδα υποστήριξης μετάφρασης γ
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** η μονάδα εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι μονάδες DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) και GPT-5 (`gpt5.pm`) έχουν υλοποιηθεί ως μηχανές παρασκηνίου.
+**Greple** **xlate** η ενότητα βρίσκει τα επιθυμητά μπλοκ κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, οι ενότητες DeepL (`deepl.pm`) και GPT-5.5 (`gpt5.pm`) έχουν υλοποιηθεί ως μηχανή back-end.
 
 Αν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με τα modules `xlate::deepl` και `perl` όπως παρακάτω:
 
@@ -110,12 +108,11 @@ Version 1.01
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         Η διεπαφή του **gpt-4o** είναι ασταθής και δεν μπορεί να εγγυηθεί ότι θα λειτουργεί σωστά προς το παρόν.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Version 1.01
 
 - **--xlate-prompt**=_text_
 
-    Καθορίστε ένα προσαρμοσμένο prompt που θα σταλεί στη μηχανή μετάφρασης. Αυτή η επιλογή είναι διαθέσιμη μόνο όταν χρησιμοποιούνται μηχανές ChatGPT (gpt3, gpt4, gpt4o). Μπορείτε να προσαρμόσετε τη συμπεριφορά της μετάφρασης παρέχοντας συγκεκριμένες οδηγίες στο μοντέλο AI. Αν το prompt περιέχει `%s`, θα αντικατασταθεί με το όνομα της γλώσσας-στόχου.
+    Καθορίστε μια προσαρμοσμένη προτροπή που θα σταλεί στη μηχανή μετάφρασης. Αυτή η επιλογή είναι διαθέσιμη μόνο όταν χρησιμοποιούνται μηχανές ChatGPT (gpt3, gpt4o, gpt5). Μπορείτε να προσαρμόσετε τη συμπεριφορά μετάφρασης παρέχοντας συγκεκριμένες οδηγίες στο μοντέλο AI. Αν η προτροπή περιέχει `%s`, θα αντικατασταθεί με το όνομα της γλώσσας-στόχου.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Version 1.01
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες κοντέινερ
 

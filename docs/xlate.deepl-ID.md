@@ -6,8 +6,6 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-Modul **Greple** **xlate** mencari blok teks yang diinginkan dan menggantinya dengan teks yang telah diterjemahkan. Saat ini modul DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`), dan GPT-5 (`gpt5.pm`) diimplementasikan sebagai mesin back-end.
+**Greple** **xlate** modul akan menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (`deepl.pm`) dan GPT-5.5 (`gpt5.pm`) telah diimplementasikan sebagai mesin back-end.
 
 Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
 
@@ -110,12 +108,11 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin untuk bekerja dengan benar saat ini.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
 - **--xlate-prompt**=_text_
 
-    Tentukan perintah khusus yang akan dikirim ke mesin penerjemah. Opsi ini hanya tersedia ketika menggunakan mesin ChatGPT (gpt3, gpt4, gpt4o). Anda dapat menyesuaikan perilaku terjemahan dengan memberikan instruksi khusus ke model AI. Jika perintah berisi `%s`, maka akan diganti dengan nama bahasa target.
+    Tentukan prompt khusus yang akan dikirim ke mesin terjemahan. Opsi ini hanya tersedia saat menggunakan mesin ChatGPT (gpt3, gpt4o, gpt5). Anda dapat menyesuaikan perilaku terjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi `%s`, maka akan diganti dengan nama bahasa target.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker Generik yang digunakan oleh xlate untuk operasi kontainer
 

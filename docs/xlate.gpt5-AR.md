@@ -6,8 +6,6 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المُترجَم. حاليًا تم تنفيذ وحدات DeepL (`deepl.pm`)، وChatGPT 4.1 (`gpt4.pm`)، وGPT-5 (`gpt5.pm`) كمحرّكات خلفية.
+**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (`deepl.pm`) ووحدة GPT-5.5 (`gpt5.pm`) كمحرك خلفي.
 
 إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب POD الخاص بلغة Perl، فاستخدم أمر **greple** مع الوحدة `xlate::deepl` و`perl` بهذا الشكل:
 
@@ -110,12 +108,11 @@ Version 1.01
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         واجهة **gpt-4o** غير مستقرة ولا يمكن ضمان عملها بشكل صحيح في الوقت الحالي.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Version 1.01
 
 - **--xlate-prompt**=_text_
 
-    حدد موجهًا مخصصًا ليُرسل إلى محرك الترجمة. هذا الخيار متاح فقط عند استخدام محركات ChatGPT (gpt3 وgpt4 وgpt4o). يمكنك تخصيص سلوك الترجمة بتقديم تعليمات محددة لنموذج الذكاء الاصطناعي. إذا كان الموجه يحتوي على `%s`، فسيتم استبداله باسم اللغة المستهدفة.
+    حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. لا يتوفر هذا الخيار إلا عند استخدام محركات ChatGPT (gpt3، gpt4o، gpt5). يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على `%s`، فسيُستبدل باسم اللغة الهدف.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Version 1.01
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
 

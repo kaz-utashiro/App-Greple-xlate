@@ -4,8 +4,8 @@
       "App::Greple::xlate - greple 的翻译支持模块\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>), ChatGPT 4.1 (F<gpt4.pm>), and GPT-5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> 模块查找所需的文本块，并将其替换为翻译后的文本。目前已实现 DeepL（F<deepl.pm>）、ChatGPT 4.1（F<gpt4.pm>）和 GPT-5（F<gpt5.pm>）模块作为后端引擎。\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> 模块查找所需的文本块，并用翻译后的文本替换它们。目前 DeepL（F<deepl.pm>）和 GPT-5.5（F<gpt5.pm>）模块已作为后端引擎实现。\n"
    ],
    [
       "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
@@ -180,8 +180,8 @@
       "如果希望逐行翻译，将此值设为 1。此选项优先于C<--xlate-maxlen>选项。\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4, gpt4o). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "指定要发送给翻译引擎的自定义提示词。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4、gpt4o）时可用。您可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示词包含C<%s>，将被替换为目标语言名称。\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "指定要发送给翻译引擎的自定义提示。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4o、gpt5）时可用。你可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示包含 C<%s>，它将被替换为目标语言名称。\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt4>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

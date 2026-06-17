@@ -6,8 +6,6 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** module zoek de gewenste tekstblokken en vervang ze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) en GPT-5 (`gpt5.pm`) module geïmplementeerd als back-end engine.
+**Greple** **xlate**-module zoekt de gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn de DeepL (`deepl.pm`)- en GPT-5.5 (`gpt5.pm`)-modules geïmplementeerd als back-end-engine.
 
 Als je normale tekstblokken wilt vertalen in een document dat geschreven is in de pod-stijl van Perl, gebruik dan het commando **greple** met de module `xlate::deepl` en `perl` als volgt:
 
@@ -110,12 +108,11 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         De interface van **gpt-4o** is instabiel en er kan op dit moment niet gegarandeerd worden dat deze correct werkt.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
 - **--xlate-prompt**=_text_
 
-    Geef een aangepaste prompt op die naar de vertaalmachine moet worden gestuurd. Deze optie is alleen beschikbaar bij gebruik van ChatGPT engines (gpt3, gpt4, gpt4o). Je kunt het vertaalgedrag aanpassen door specifieke instructies te geven aan het AI-model. Als de prompt `%s` bevat, wordt deze vervangen door de naam van de doeltaal.
+    Geef een aangepaste prompt op die naar de vertaalengine moet worden verzonden. Deze optie is alleen beschikbaar bij gebruik van ChatGPT-engines (gpt3, gpt4o, gpt5). U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt dit vervangen door de naam van de doeltaal.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generieke Docker runner gebruikt door xlate voor containeroperaties
 

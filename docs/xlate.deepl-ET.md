@@ -6,8 +6,6 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt4 --xlate pattern target-file
-
     greple -Mxlate::gpt5 --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
@@ -18,7 +16,7 @@ Version 1.01
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on moodul DeepL (`deepl.pm`), ChatGPT 4.1 (`gpt4.pm`) ja GPT-5 (`gpt5.pm`) rakendatud back-end mootorina.
+**Greple** **xlate** moodul leiab soovitud tekstilõigud ja asendab need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (`deepl.pm`) ja GPT-5.5 (`gpt5.pm`) moodulid.
 
 Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku **greple** koos `xlate::deepl` ja `perl` mooduliga niimoodi:
 
@@ -110,12 +108,11 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
     - **deepl**: DeepL API
     - **gpt3**: gpt-3.5-turbo
-    - **gpt4**: gpt-4.1
     - **gpt4o**: gpt-4o-mini
 
         **gpt-4o** liides on ebastabiilne ja hetkel ei saa garanteerida selle korrektset toimimist.
 
-    - **gpt5**: gpt-5
+    - **gpt5**: gpt-5.5
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,7 +201,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 - **--xlate-prompt**=_text_
 
-    Määrake tõlkemootorile saadetav kohandatud üleskutse. See valik on saadaval ainult siis, kui kasutate ChatGPT mootoreid (gpt3, gpt4, gpt4o). Te saate kohandada tõlkekäitumist, andes AI-mudelile konkreetsed juhised. Kui üleskutse sisaldab `%s`, asendatakse see sihtkeele nimega.
+    Määrake tõlkemootorile saadetav kohandatud käsk. See valik on saadaval ainult ChatGPT-mootorite (gpt3, gpt4o, gpt5) kasutamisel. Võite kohandada tõlkimiskäitumist, andes AI-mudelile konkreetseid juhiseid. Kui käsk sisaldab `%s`, asendatakse see sihtkeele nimega.
 
 - **--xlate-context**=_text_
 
@@ -329,7 +326,7 @@ Peate installima käsurea tööriistad DeepL ja ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt4](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt4), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - üldine Docker runner, mida xlate kasutab konteineroperatsioonideks.
 
