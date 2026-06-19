@@ -35,13 +35,20 @@ prove -lv t/02_run.t
 ## Project Architecture
 
 ### Core Module Structure
-- `lib/App/Greple/xlate.pm` - Main module with translation logic
-- `lib/App/Greple/xlate/` - Translation engine implementations:
+- `lib/App/Greple/xlate.pm` - Main module with translation logic. The engine
+  loader resolves `--xlate-engine=NAME` backend-first: it tries
+  `App::Greple::xlate::gpty::NAME` before the bare `App::Greple::xlate::NAME`.
+- `lib/App/Greple/xlate/` - Translation engines and support modules:
   - `deepl.pm` - DeepL API integration
-  - `gpt3.pm` - GPT-3.5 integration  
+  - `null.pm` - No-op engine (used by tests)
+  - Supporting modules: `Cache.pm`, `Filter.pm`, `Lang.pm`, `Mask.pm`, `Text.pm`
+- `lib/App/Greple/xlate/gpty/` - Engines that shell out to the `gpty` command:
+  - `gpt3.pm` - GPT-3.5 integration
   - `gpt4.pm` - GPT-4 integration
   - `gpt4o.pm` - GPT-4o integration
-  - Supporting modules: `Cache.pm`, `Filter.pm`, `Lang.pm`, `Mask.pm`, `Text.pm`
+  - `gpt5.pm` - GPT-5.5 integration (engine name is still `gpt5`)
+  - These are reached as `--xlate-engine=gpt3` etc.; the cache file name keeps
+    the bare engine name (e.g. `gpt5`), unaffected by the gpty namespace.
 
 ### Command Line Interface
 - `script/xlate` - Main CLI command
