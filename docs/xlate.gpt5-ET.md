@@ -4,9 +4,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina implementeeritud DeepL (`deepl.pm`) ja GPT-5.5 (`gpt5.pm`) moodul.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina rakendatud DeepL-i (`deepl.pm`) ja GPT-5.5 (`gpty/gpt5.pm`) moodul.
 
-Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku **greple** koos `xlate::deepl` ja `perl` mooduliga järgmiselt:
+Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku **greple** koos moodulitega `--xlate-engine deepl` ja `perl` järgmiselt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Selles käsus tähendab mustrijada `^([\w\pP].*\n)+` järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgi märgiga. See käsk näitab tõlkimiseks valitud ala esiletõstetuna. Valikut **--all** kasutatakse kogu teksti kuvamiseks.
 
@@ -102,7 +100,7 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 - **--xlate-engine**=_engine_
 
-    Määrab kasutatava tõlkemootori. Kui täpsustate mootori mooduli otse, näiteks `-Mxlate::deepl`, ei pea te seda valikut kasutama.
+    Määrab kasutatava tõlkemootori.
 
     Praegu on saadaval järgmised mootorid
 
@@ -326,7 +324,7 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate’i poolt konteineri toiminguteks kasutatav üldine Dockeri käitaja
 

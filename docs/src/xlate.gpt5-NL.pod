@@ -6,9 +6,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate>-module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn DeepL (F<deepl.pm>) en de GPT-5.5 (F<gpt5.pm>)-module geïmplementeerd als back-end-engine.
+B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn DeepL (F<deepl.pm>) en de GPT-5.5-module (F<gpty/gpt5.pm>) geïmplementeerd als back-end-engine.
 
-Als je normale tekstblokken in een document in Perl's pod-stijl wilt vertalen, gebruik dan het B<greple>-commando met de C<xlate::deepl>- en C<perl>-module zoals dit:
+Als u normale tekstblokken wilt vertalen in een document dat is geschreven in de pod-stijl van Perl, gebruik dan de opdracht B<greple> met de modules C<--xlate-engine deepl> en C<perl> zoals dit:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In dit commando betekent de patroonstring C<^([\w\pP].*\n)+> opeenvolgende regels die beginnen met alfanumerieke en leestekens. Dit commando toont het te vertalen gebied gemarkeerd. Optie B<--all> wordt gebruikt om de volledige tekst te produceren.
 
@@ -118,7 +116,7 @@ Met optie B<--xlate-fold> wordt geconverteerde tekst opgevouwen tot de opgegeven
 
 =item B<--xlate-engine>=I<engine>
 
-Specificeert de te gebruiken vertaalengine. Als je de enginemodule direct specificeert, zoals C<-Mxlate::deepl>, hoef je deze optie niet te gebruiken.
+Specificeert de te gebruiken vertaalengine.
 
 Op dit moment zijn de volgende engines beschikbaar
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Generieke Docker-runner die door xlate wordt gebruikt voor containeroperaties
 

@@ -4,9 +4,7 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, DeepL (`deepl.pm`) și modulul GPT-5.5 (`gpt5.pm`) sunt implementate ca motor back-end.
+**Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și GPT-5.5 (`gpty/gpt5.pm`) sunt implementate ca motor back-end.
 
-Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul pod al Perl, folosiți comanda **greple** cu modulele `xlate::deepl` și `perl` astfel:
+Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda **greple** cu modulele `--xlate-engine deepl` și `perl` astfel:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 În această comandă, șirul de tipar `^([\w\pP].*\n)+` înseamnă linii consecutive care încep cu litere și cifre și semne de punctuație. Această comandă arată zona ce urmează a fi tradusă evidențiată. Opțiunea **--all** este folosită pentru a produce textul integral.
 
@@ -102,7 +100,7 @@ Această interfață este experimentală și poate suferi modificări în viitor
 
 - **--xlate-engine**=_engine_
 
-    Specifică motorul de traducere care va fi folosit. Dacă specificați direct modulul motor, cum ar fi `-Mxlate::deepl`, nu este necesar să folosiți această opțiune.
+    Specifică motorul de traducere care va fi utilizat.
 
     În acest moment, sunt disponibile următoarele motoare
 
@@ -326,7 +324,7 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker generic folosit de xlate pentru operațiuni cu containere
 

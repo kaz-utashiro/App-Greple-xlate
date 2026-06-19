@@ -4,12 +4,12 @@
       "App::Greple::xlate - greple のための翻訳サポートモジュール\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate>モジュールは目的のテキストブロックを見つけ、翻訳されたテキストで置き換えます。現在、DeepL（F<deepl.pm>）およびGPT-5.5（F<gpt5.pm>）モジュールがバックエンドエンジンとして実装されています。\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。現在、DeepL（F<deepl.pm>）およびGPT-5.5（F<gpty/gpt5.pm>）モジュールがバックエンドエンジンとして実装されています。\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "Perl の POD 形式で書かれた文書内の通常のテキストブロックを翻訳したい場合は、B<greple> コマンドに C<xlate::deepl> と C<perl> モジュールを組み合わせて次のように使用します:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "Perlのpodスタイルで書かれた文書内の通常のテキストブロックを翻訳したい場合は、次のようにC<--xlate-engine deepl>およびC<perl>モジュールとともにB<greple>コマンドを使用してください。\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "B<--xlate-fold> オプションを指定すると、変換後のテキストは指定した幅で折り返されます。デフォルト幅は 70 で、B<--xlate-fold-width> オプションで設定できます。先頭に 4 桁分が突き出し用に予約されるため、1 行あたり最大 74 文字まで保持できます。\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "使用する翻訳エンジンを指定します。C<-Mxlate::deepl> のようにエンジンモジュールを直接指定する場合は、このオプションを使う必要はありません。\n"
+      "Specifies the translation engine to be used.\n",
+      "使用する翻訳エンジンを指定します。\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

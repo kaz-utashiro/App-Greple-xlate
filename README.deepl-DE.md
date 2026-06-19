@@ -4,9 +4,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** Das Modul sucht die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (`deepl.pm`) und das GPT-5.5-Modul (`gpt5.pm`) als Backend-Engine implementiert.
+Das Modul **Greple** **xlate** findet die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (`deepl.pm`) und das GPT-5.5-Modul (`gpty/gpt5.pm`) als Backend-Engine implementiert.
 
-Wenn Sie normale Textblöcke in einem Dokument übersetzen wollen, das im Pod-Stil von Perl geschrieben ist, verwenden Sie den Befehl **greple** mit dem Modul `xlate::deepl` und `perl` wie folgt:
+Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil verfasst ist, verwenden Sie den Befehl **greple** zusammen mit den Modulen `--xlate-engine deepl` und `perl` wie folgt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In diesem Befehl bedeutet die Zeichenkette `^([\w\pP].*\n)+` aufeinanderfolgende Zeilen, die mit einem alphanumerischen und einem Interpunktionsbuchstaben beginnen. Mit diesem Befehl wird der zu übersetzende Bereich hervorgehoben dargestellt. Die Option **--all** wird verwendet, um den gesamten Text zu übersetzen.
 
@@ -102,7 +100,7 @@ Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
 - **--xlate-engine**=_engine_
 
-    Gibt das zu verwendende Übersetzungsmodul an. Wenn Sie das Modul direkt angeben, z. B. `-Mxlate::deepl`, müssen Sie diese Option nicht verwenden.
+    Legt die zu verwendende Übersetzungs-Engine fest.
 
     Zur Zeit sind die folgenden Engines verfügbar
 
@@ -326,7 +324,7 @@ Sie müssen die Befehlszeilentools für DeepL und ChatGPT installieren.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird.
 

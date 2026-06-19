@@ -4,12 +4,12 @@
       "App::Greple::xlate - модуль поддержки перевода для greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> модуль находит нужные текстовые блоки и заменяет их переведённым текстом. В настоящее время в качестве бэкэнд-движка реализованы модули DeepL (F<deepl.pm>) и GPT-5.5 (F<gpt5.pm>).\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> модуль находит нужные текстовые блоки и заменяет их переведённым текстом. В настоящее время в качестве бэкэнд-движка реализованы DeepL (F<deepl.pm>) и модуль GPT-5.5 (F<gpty/gpt5.pm>).\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле Perl's pod, используйте команду B<greple> с модулем C<xlate::deepl> и C<perl> следующим образом:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле pod языка Perl, используйте команду B<greple> с модулями C<--xlate-engine deepl> и C<perl> следующим образом:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "С опцией B<--xlate-fold> преобразованный текст сворачивается на указанную ширину. Ширина по умолчанию равна 70 и может быть задана опцией B<--xlate-fold-width>. Для обкатки зарезервировано четыре колонки, поэтому в каждой строке может содержаться не более 74 символов.\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "Определяет используемый движок перевода. Если вы указываете модуль движка напрямую, например C<-Mxlate::deepl>, то этот параметр использовать не нужно.\n"
+      "Specifies the translation engine to be used.\n",
+      "Указывает движок перевода, который будет использоваться.\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

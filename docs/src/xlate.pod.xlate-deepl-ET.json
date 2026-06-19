@@ -4,12 +4,12 @@
       "App::Greple::xlate - Greple tõlkimise tugimoodul\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> moodul leiab soovitud tekstilõigud ja asendab need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpt5.pm>) moodulid.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> moodulid leiavad soovitud tekstilõigud ja asendavad need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpty/gpt5.pm>) moodulid.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku B<greple> koos C<xlate::deepl> ja C<perl> mooduliga niimoodi:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "Kui soovite tõlkida tavalisi tekstilõike dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine deepl> ja C<perl> järgmiselt:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "Valikuga B<--xlate-fold> volditakse konverteeritud tekst määratud laiusega. Vaikimisi laius on 70 ja seda saab määrata valikuga B<--xlate-fold-width>. Neli veergu on reserveeritud sisselülitamiseks, nii et iga rida võib sisaldada maksimaalselt 74 märki.\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "Määratleb kasutatava tõlkemootori. Kui määrate mootori mooduli otse, näiteks C<-Mxlate::deepl>, ei pea seda valikut kasutama.\n"
+      "Specifies the translation engine to be used.\n",
+      "Määrab kasutatava tõlkemootori.\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

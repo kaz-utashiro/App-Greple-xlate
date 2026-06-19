@@ -4,9 +4,7 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (`deepl.pm`) ووحدة GPT-5.5 (`gpt5.pm`) كمحرك خلفي.
+**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (`deepl.pm`) ووحدة GPT-5.5 (`gpty/gpt5.pm`) كمحرك خلفي.
 
-إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب POD الخاص بلغة Perl، فاستخدم أمر **greple** مع الوحدة `xlate::deepl` و`perl` بهذا الشكل:
+إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر **greple** مع وحدتي `--xlate-engine deepl` و`perl` كما يلي:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 في هذا الأمر، تعني سلسلة النمط `^([\w\pP].*\n)+` أسطرًا متتالية تبدأ بحروف وأرقام وعلامات ترقيم. يعرض هذا الأمر المنطقة المراد ترجمتها مميّزة. يُستخدم الخيار **--all** لإنتاج النص الكامل.
 
@@ -102,7 +100,7 @@ Version 1.0202
 
 - **--xlate-engine**=_engine_
 
-    يحدد محرك الترجمة المراد استخدامه. إذا حددت وحدة المحرك مباشرة مثل `-Mxlate::deepl`، فلست بحاجة لاستخدام هذا الخيار.
+    يحدد محرك الترجمة المراد استخدامه.
 
     في هذا الوقت، المحركات التالية متاحة
 
@@ -326,7 +324,7 @@ Version 1.0202
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
 

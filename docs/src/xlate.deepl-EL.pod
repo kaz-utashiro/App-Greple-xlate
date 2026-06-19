@@ -6,9 +6,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Το module εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, τα modules DeepL (F<deepl.pm>) και GPT-5.5 (F<gpt5.pm>) έχουν υλοποιηθεί ως μηχανές back-end.
+B<Greple> B<xlate> Το module εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, τα modules DeepL (F<deepl.pm>) και GPT-5.5 (F<gpty/gpt5.pm>) έχουν υλοποιηθεί ως μηχανές back-end.
 
-Αν θέλετε να μεταφράσετε κανονικά μπλοκ κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή B<greple> με την ενότητα C<xlate::deepl> και C<perl> ως εξής:
+Αν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο γραμμένο σε στυλ pod της Perl, χρησιμοποιήστε την εντολή B<greple> με τα modules C<--xlate-engine deepl> και C<perl> ως εξής:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Στην εντολή αυτή, η συμβολοσειρά προτύπων C<^([\w\pP].*\n)+> σημαίνει διαδοχικές γραμμές που αρχίζουν με αλφαριθμητικά και γράμματα στίξης. Αυτή η εντολή δείχνει την περιοχή που πρόκειται να μεταφραστεί επισημασμένη. Η επιλογή B<--all> χρησιμοποιείται για την παραγωγή ολόκληρου του κειμένου.
 
@@ -118,7 +116,7 @@ B<Greple> B<xlate> Το module εντοπίζει τα επιθυμητά τμή
 
 =item B<--xlate-engine>=I<engine>
 
-Καθορίζει τη μηχανή μετάφρασης που θα χρησιμοποιηθεί. Αν καθορίσετε απευθείας τη μονάδα μηχανής, όπως C<-Mxlate::deepl>, δεν χρειάζεται να χρησιμοποιήσετε αυτή την επιλογή.
+Καθορίζει τον μηχανισμό μετάφρασης που θα χρησιμοποιηθεί.
 
 Αυτή τη στιγμή, οι ακόλουθες μηχανές είναι διαθέσιμες
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες εμπορευματοκιβωτίων
 

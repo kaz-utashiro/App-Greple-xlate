@@ -4,9 +4,7 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate**-module vindt gewenste tekstblokken en vervangt ze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en de GPT-5.5 (`gpt5.pm`)-module geïmplementeerd als back-end-engine.
+**Greple** **xlate** module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en de GPT-5.5-module (`gpty/gpt5.pm`) geïmplementeerd als back-end-engine.
 
-Als je normale tekstblokken in een document in Perl's pod-stijl wilt vertalen, gebruik dan het **greple**-commando met de `xlate::deepl`- en `perl`-module zoals dit:
+Als u normale tekstblokken wilt vertalen in een document dat is geschreven in de pod-stijl van Perl, gebruik dan de opdracht **greple** met de modules `--xlate-engine deepl` en `perl` zoals dit:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In dit commando betekent de patroonstring `^([\w\pP].*\n)+` opeenvolgende regels die beginnen met alfanumerieke en leestekens. Dit commando toont het te vertalen gebied gemarkeerd. Optie **--all** wordt gebruikt om de volledige tekst te produceren.
 
@@ -102,7 +100,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
 - **--xlate-engine**=_engine_
 
-    Specificeert de te gebruiken vertaalengine. Als je de enginemodule direct specificeert, zoals `-Mxlate::deepl`, hoef je deze optie niet te gebruiken.
+    Specificeert de te gebruiken vertaalengine.
 
     Op dit moment zijn de volgende engines beschikbaar
 
@@ -326,7 +324,7 @@ Je moet commandoregelhulpmiddelen voor DeepL en ChatGPT installeren.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generieke Docker-runner die door xlate wordt gebruikt voor containeroperaties
 

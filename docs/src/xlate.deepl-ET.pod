@@ -6,9 +6,7 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul leiab soovitud tekstilõigud ja asendab need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpt5.pm>) moodulid.
+B<Greple> B<xlate> moodulid leiavad soovitud tekstilõigud ja asendavad need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpty/gpt5.pm>) moodulid.
 
-Kui soovite tõlkida tavalisi tekstiplokke Perli pod-stiilis kirjutatud dokumendis, kasutage käsku B<greple> koos C<xlate::deepl> ja C<perl> mooduliga niimoodi:
+Kui soovite tõlkida tavalisi tekstilõike dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine deepl> ja C<perl> järgmiselt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Selles käsus tähendab musterjada C<^([\w\pP].*\n)+> järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgiga. See käsk näitab tõlgitavat ala esile tõstetud kujul. Valikut B<--all> kasutatakse kogu teksti koostamiseks.
 
@@ -118,7 +116,7 @@ Valikuga B<--xlate-fold> volditakse konverteeritud tekst määratud laiusega. Va
 
 =item B<--xlate-engine>=I<engine>
 
-Määratleb kasutatava tõlkemootori. Kui määrate mootori mooduli otse, näiteks C<-Mxlate::deepl>, ei pea seda valikut kasutama.
+Määrab kasutatava tõlkemootori.
 
 Praegu on saadaval järgmised mootorid
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - üldine Docker runner, mida xlate kasutab konteineroperatsioonideks.
 

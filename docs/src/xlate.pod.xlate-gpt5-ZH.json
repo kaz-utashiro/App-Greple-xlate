@@ -4,12 +4,12 @@
       "App::Greple::xlate - greple 的翻译支持模块\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> 模块查找所需的文本块，并用翻译后的文本替换它们。目前 DeepL（F<deepl.pm>）和 GPT-5.5（F<gpt5.pm>）模块已作为后端引擎实现。\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> 模块查找所需的文本块，并将其替换为翻译后的文本。目前已将 DeepL（F<deepl.pm>）和 GPT-5.5（F<gpty/gpt5.pm>）模块实现为后端引擎。\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，可像这样将 B<greple> 命令与 C<xlate::deepl> 和 C<perl> 模块一起使用：\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请像这样将 B<greple> 命令与 C<--xlate-engine deepl> 和 C<perl> 模块一起使用：\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "使用 B<--xlate-fold> 选项时，转换后的文本按指定宽度折行。默认宽度为 70，可由 B<--xlate-fold-width> 选项设置。为行内操作预留四列，因此每行最多可容纳 74 个字符。\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "指定要使用的翻译引擎。如果直接指定引擎模块，例如 C<-Mxlate::deepl>，则无需使用此选项。\n"
+      "Specifies the translation engine to be used.\n",
+      "指定要使用的翻译引擎。\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

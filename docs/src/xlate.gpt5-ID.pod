@@ -6,9 +6,7 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks yang diterjemahkan. Saat ini modul DeepL (F<deepl.pm>) dan GPT-5.5 (F<gpt5.pm>) diimplementasikan sebagai mesin back-end.
+B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (F<deepl.pm>) dan GPT-5.5 (F<gpty/gpt5.pm>) diimplementasikan sebagai mesin back-end.
 
-Jika Anda ingin menerjemahkan blok teks normal dalam sebuah dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:
+Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<--xlate-engine deepl> dan C<perl> seperti ini:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Dalam perintah ini, string pola C<^([\w\pP].*\n)+> berarti baris-baris berurutan yang dimulai dengan huruf angka dan tanda baca. Perintah ini menampilkan area yang akan diterjemahkan dengan sorotan. Opsi B<--all> digunakan untuk menghasilkan seluruh teks.
 
@@ -118,7 +116,7 @@ Dengan opsi B<--xlate-fold>, teks yang dikonversi dilipat berdasarkan lebar yang
 
 =item B<--xlate-engine>=I<engine>
 
-Menentukan mesin terjemahan yang akan digunakan. Jika Anda menentukan modul mesin secara langsung, seperti C<-Mxlate::deepl>, Anda tidak perlu menggunakan opsi ini.
+Menentukan mesin penerjemahan yang akan digunakan.
 
 Saat ini, mesin berikut tersedia
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Runner Docker generik yang digunakan oleh xlate untuk operasi kontainer
 

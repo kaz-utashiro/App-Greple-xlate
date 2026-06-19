@@ -6,9 +6,7 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpt5.pm>) كمحرك خلفي.
+B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpty/gpt5.pm>) كمحرك خلفي.
 
-إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب POD الخاص بلغة Perl، فاستخدم أمر B<greple> مع الوحدة C<xlate::deepl> وC<perl> بهذا الشكل:
+إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر B<greple> مع وحدتي C<--xlate-engine deepl> وC<perl> كما يلي:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 في هذا الأمر، تعني سلسلة النمط C<^([\w\pP].*\n)+> أسطرًا متتالية تبدأ بحروف وأرقام وعلامات ترقيم. يعرض هذا الأمر المنطقة المراد ترجمتها مميّزة. يُستخدم الخيار B<--all> لإنتاج النص الكامل.
 
@@ -118,7 +116,7 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =item B<--xlate-engine>=I<engine>
 
-يحدد محرك الترجمة المراد استخدامه. إذا حددت وحدة المحرك مباشرة مثل C<-Mxlate::deepl>، فلست بحاجة لاستخدام هذا الخيار.
+يحدد محرك الترجمة المراد استخدامه.
 
 في هذا الوقت، المحركات التالية متاحة
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
 

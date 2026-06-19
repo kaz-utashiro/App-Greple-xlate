@@ -4,9 +4,7 @@ App::Greple::xlate - modul dukungan penerjemahan untuk greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** modul akan menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (`deepl.pm`) dan GPT-5.5 (`gpt5.pm`) telah diimplementasikan sebagai mesin back-end.
+**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini, modul DeepL (`deepl.pm`) dan GPT-5.5 (`gpty/gpt5.pm`) telah diimplementasikan sebagai mesin back-end.
 
-Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dengan gaya pod Perl, gunakan perintah **greple** dengan modul `xlate::deepl` dan `perl` seperti ini:
+Jika Anda ingin menerjemahkan blok teks biasa dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan modul `--xlate-engine deepl` dan `perl` seperti ini:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Dalam perintah ini, string pola `^([\w\pP].*\n)+` berarti baris berurutan yang dimulai dengan alfanumerik dan tanda baca. Perintah ini menunjukkan area yang akan diterjemahkan dengan disorot. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
 
@@ -102,7 +100,7 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
 - **--xlate-engine**=_engine_
 
-    Menentukan mesin penerjemahan yang akan digunakan. Jika Anda menentukan modul mesin secara langsung, seperti `-Mxlate::deepl`, Anda tidak perlu menggunakan opsi ini.
+    Menentukan mesin terjemahan yang akan digunakan.
 
     Pada saat ini, mesin berikut ini tersedia
 
@@ -326,7 +324,7 @@ Anda harus menginstal alat baris perintah untuk DeepL dan ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker Generik yang digunakan oleh xlate untuk operasi kontainer
 

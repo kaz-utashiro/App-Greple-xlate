@@ -4,12 +4,12 @@
       "App::Greple::xlate - modul de suport pentru traducere pentru greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, DeepL (F<deepl.pm>) și modulul GPT-5.5 (F<gpt5.pm>) sunt implementate ca motor back-end.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și GPT-5.5 (F<gpty/gpt5.pm>) sunt implementate ca motor back-end.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "Dacă doriți să traduceți blocuri de text normale într-un document scris în stilul pod al Perl, folosiți comanda B<greple> cu modulele C<xlate::deepl> și C<perl> astfel:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda B<greple> cu modulele C<--xlate-engine deepl> și C<perl> astfel:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "Cu opțiunea B<--xlate-fold>, textul convertit este împărțit la lățimea specificată. Lățimea implicită este 70 și poate fi setată prin opțiunea B<--xlate-fold-width>. Patru coloane sunt rezervate pentru operația run-in, astfel încât fiecare linie poate conține cel mult 74 de caractere.\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "Specifică motorul de traducere care va fi folosit. Dacă specificați direct modulul motor, cum ar fi C<-Mxlate::deepl>, nu este necesar să folosiți această opțiune.\n"
+      "Specifies the translation engine to be used.\n",
+      "Specifică motorul de traducere care va fi utilizat.\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

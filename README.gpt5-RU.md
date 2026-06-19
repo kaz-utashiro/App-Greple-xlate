@@ -4,9 +4,7 @@ App::Greple::xlate — модуль поддержки перевода для g
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** модуль находит нужные текстовые блоки и заменяет их переведенным текстом. В настоящее время DeepL (`deepl.pm`) и модуль GPT-5.5 (`gpt5.pm`) реализованы как серверный движок.
+**Greple** **xlate** модуль находит нужные текстовые блоки и заменяет их переведённым текстом. В настоящее время DeepL (`deepl.pm`) и модуль GPT-5.5 (`gpty/gpt5.pm`) реализованы как бэкенд-движок.
 
-Если вы хотите переводить обычные текстовые блоки в документе, написанном в стиле pod языка Perl, используйте команду **greple** с модулями `xlate::deepl` и `perl` следующим образом:
+Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле pod Perl, используйте команду **greple** с модулями `--xlate-engine deepl` и `perl` следующим образом:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 В этой команде строка шаблона `^([\w\pP].*\n)+` означает последовательные строки, начинающиеся с буквенно-цифрового символа и знака пунктуации. Эта команда показывает подсвеченную область для перевода. Опция **--all** используется для вывода всего текста.
 
@@ -102,7 +100,7 @@ Version 1.0202
 
 - **--xlate-engine**=_engine_
 
-    Указывает, какой использовать движок перевода. Если вы укажете модуль движка напрямую, например `-Mxlate::deepl`, эту опцию можно не использовать.
+    Указывает используемый движок перевода.
 
     В настоящее время доступны следующие движки
 
@@ -326,7 +324,7 @@ Version 1.0202
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) — универсальный запускатель Docker, используемый xlate для операций с контейнерами
 

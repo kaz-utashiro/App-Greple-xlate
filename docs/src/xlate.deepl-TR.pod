@@ -6,9 +6,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve GPT-5.5 (F<gpt5.pm>) modülleri arka uç motoru olarak uygulanmaktadır.
+B<Greple> B<xlate> modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (F<deepl.pm>) ve GPT-5.5 (F<gpty/gpt5.pm>) modülleri arka uç motoru olarak uygulanmaktadır.
 
-Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<xlate::deepl> ve C<perl> modülü ile aşağıdaki gibi kullanın:
+Perl'in pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, B<greple> komutunu C<--xlate-engine deepl> ve C<perl> modülleriyle şu şekilde kullanın:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Bu komutta, C<^([\w\pP].*\n)+> kalıp dizesi alfa-sayısal ve noktalama harfleriyle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. B<--all> seçeneği metnin tamamını üretmek için kullanılır.
 
@@ -118,7 +116,7 @@ B<--xlate-fold> seçeneği ile, dönüştürülen metin belirtilen genişlikte k
 
 =item B<--xlate-engine>=I<engine>
 
-Kullanılacak çeviri motorunu belirtir. Motor modülünü C<-Mxlate::deepl> gibi doğrudan belirtirseniz, bu seçeneği kullanmanıza gerek yoktur.
+Kullanılacak çeviri motorunu belirtir.
 
 Şu anda, aşağıdaki motorlar mevcuttur
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - xlate tarafından konteyner işlemleri için kullanılan genel Docker çalıştırıcısı
 

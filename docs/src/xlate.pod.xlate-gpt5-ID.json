@@ -4,12 +4,12 @@
       "App::Greple::xlate - modul dukungan terjemahan untuk greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks yang diterjemahkan. Saat ini modul DeepL (F<deepl.pm>) dan GPT-5.5 (F<gpt5.pm>) diimplementasikan sebagai mesin back-end.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (F<deepl.pm>) dan GPT-5.5 (F<gpty/gpt5.pm>) diimplementasikan sebagai mesin back-end.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "Jika Anda ingin menerjemahkan blok teks normal dalam sebuah dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<xlate::deepl> dan C<perl> seperti ini:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<--xlate-engine deepl> dan C<perl> seperti ini:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "Dengan opsi B<--xlate-fold>, teks yang dikonversi dilipat berdasarkan lebar yang ditentukan. Lebar default adalah 70 dan dapat diatur oleh opsi B<--xlate-fold-width>. Empat kolom dicadangkan untuk operasi run-in, jadi setiap baris dapat memuat paling banyak 74 karakter.\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "Menentukan mesin terjemahan yang akan digunakan. Jika Anda menentukan modul mesin secara langsung, seperti C<-Mxlate::deepl>, Anda tidak perlu menggunakan opsi ini.\n"
+      "Specifies the translation engine to be used.\n",
+      "Menentukan mesin penerjemahan yang akan digunakan.\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

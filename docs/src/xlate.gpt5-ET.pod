@@ -6,9 +6,7 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina implementeeritud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpt5.pm>) moodul.
+B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina rakendatud DeepL-i (F<deepl.pm>) ja GPT-5.5 (F<gpty/gpt5.pm>) moodul.
 
-Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos C<xlate::deepl> ja C<perl> mooduliga järgmiselt:
+Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine deepl> ja C<perl> järgmiselt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Selles käsus tähendab mustrijada C<^([\w\pP].*\n)+> järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgi märgiga. See käsk näitab tõlkimiseks valitud ala esiletõstetuna. Valikut B<--all> kasutatakse kogu teksti kuvamiseks.
 
@@ -118,7 +116,7 @@ Valikuga B<--xlate-fold> murtakse teisendatud tekst etteantud laiusele. Vaikelai
 
 =item B<--xlate-engine>=I<engine>
 
-Määrab kasutatava tõlkemootori. Kui täpsustate mootori mooduli otse, näiteks C<-Mxlate::deepl>, ei pea te seda valikut kasutama.
+Määrab kasutatava tõlkemootori.
 
 Praegu on saadaval järgmised mootorid
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - xlate’i poolt konteineri toiminguteks kasutatav üldine Dockeri käitaja
 

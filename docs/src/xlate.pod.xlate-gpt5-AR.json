@@ -4,12 +4,12 @@
       "App::Greple::xlate - وحدة دعم الترجمة لأداة greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpt5.pm>) كمحرك خلفي.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
+      "B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpty/gpt5.pm>) كمحرك خلفي.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<xlate::deepl> and C<perl> module like this:\n",
-      "إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب POD الخاص بلغة Perl، فاستخدم أمر B<greple> مع الوحدة C<xlate::deepl> وC<perl> بهذا الشكل:\n"
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
+      "إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر B<greple> مع وحدتي C<--xlate-engine deepl> وC<perl> كما يلي:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
@@ -104,8 +104,8 @@
       "مع خيار B<--xlate-fold>، يُطوى النص المحول بعرض محدد. العرض الافتراضي 70 ويمكن تعيينه بواسطة خيار B<--xlate-fold-width>. تُحجز أربع أعمدة لعملية الإدراج، لذا يمكن لكل سطر أن يحمل حتى 74 حرفًا كحد أقصى.\n"
    ],
    [
-      "Specifies the translation engine to be used. If you specify the engine module directly, such as C<-Mxlate::deepl>, you do not need to use this option.\n",
-      "يحدد محرك الترجمة المراد استخدامه. إذا حددت وحدة المحرك مباشرة مثل C<-Mxlate::deepl>، فلست بحاجة لاستخدام هذا الخيار.\n"
+      "Specifies the translation engine to be used.\n",
+      "يحدد محرك الترجمة المراد استخدامه.\n"
    ],
    [
       "At this time, the following engines are available\n",
@@ -312,8 +312,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>\n"
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
+      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",

@@ -6,9 +6,7 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für Greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> Das Modul sucht die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (F<deepl.pm>) und das GPT-5.5-Modul (F<gpt5.pm>) als Backend-Engine implementiert.
+Das Modul B<Greple> B<xlate> findet die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (F<deepl.pm>) und das GPT-5.5-Modul (F<gpty/gpt5.pm>) als Backend-Engine implementiert.
 
-Wenn Sie normale Textblöcke in einem Dokument übersetzen wollen, das im Pod-Stil von Perl geschrieben ist, verwenden Sie den Befehl B<greple> mit dem Modul C<xlate::deepl> und C<perl> wie folgt:
+Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil verfasst ist, verwenden Sie den Befehl B<greple> zusammen mit den Modulen C<--xlate-engine deepl> und C<perl> wie folgt:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In diesem Befehl bedeutet die Zeichenkette C<^([\w\pP].*\n)+> aufeinanderfolgende Zeilen, die mit einem alphanumerischen und einem Interpunktionsbuchstaben beginnen. Mit diesem Befehl wird der zu übersetzende Bereich hervorgehoben dargestellt. Die Option B<--all> wird verwendet, um den gesamten Text zu übersetzen.
 
@@ -118,7 +116,7 @@ Mit der Option B<--xlate-fold> wird der konvertierte Text um die angegebene Brei
 
 =item B<--xlate-engine>=I<engine>
 
-Gibt das zu verwendende Übersetzungsmodul an. Wenn Sie das Modul direkt angeben, z. B. C<-Mxlate::deepl>, müssen Sie diese Option nicht verwenden.
+Legt die zu verwendende Übersetzungs-Engine fest.
 
 Zur Zeit sind die folgenden Engines verfügbar
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird.
 

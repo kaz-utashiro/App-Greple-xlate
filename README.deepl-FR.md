@@ -4,9 +4,7 @@ App::Greple::xlate - module d'aide à la traduction pour greple
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** : le module recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et GPT-5.5 (`gpt5.pm`) sont implémentés en tant que moteurs back-end.
+**Greple** **xlate** : ces modules permettent de rechercher les blocs de texte souhaités et de les remplacer par le texte traduit. Actuellement, les modules DeepL (`deepl.pm`) et GPT-5.5 (`gpty/gpt5.pm`) sont implémentés en tant que moteurs back-end.
 
-Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style Perl's pod, utilisez la commande **greple** avec les modules `xlate::deepl` et `perl` comme suit :
+Si vous souhaitez traduire des blocs de texte normaux dans un document rédigé au format Pod de Perl, utilisez la commande **greple** avec les modules `--xlate-engine deepl` et `perl` comme suit :
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Dans cette commande, la chaîne de caractères `^([\w\p].*\n)+` signifie des lignes consécutives commençant par des lettres alphanumériques et de ponctuation. Cette commande permet de mettre en évidence la zone à traduire. L'option **-tout** est utilisée pour produire un texte entier.
 
@@ -102,7 +100,7 @@ Cette interface est expérimentale et peut être modifiée à l'avenir.
 
 - **--xlate-engine**=_engine_
 
-    Spécifie le moteur de traduction à utiliser. Si vous spécifiez directement le module du moteur, tel que `-Mxlate::deepl`, vous n'avez pas besoin d'utiliser cette option.
+    Spécifie le moteur de traduction à utiliser.
 
     À l'heure actuelle, les moteurs suivants sont disponibles
 
@@ -326,7 +324,7 @@ Vous devez installer les outils de ligne de commande pour DeepL et ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Exécutant Docker générique utilisé par xlate pour les opérations sur les conteneurs.
 

@@ -4,9 +4,7 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve GPT-5.5 (`gpt5.pm`) modülleri arka uç motoru olarak uygulanmaktadır.
+**Greple** **xlate** modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve GPT-5.5 (`gpty/gpt5.pm`) modülleri arka uç motoru olarak uygulanmaktadır.
 
-Perl'ün pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `xlate::deepl` ve `perl` modülü ile aşağıdaki gibi kullanın:
+Perl'in pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `--xlate-engine deepl` ve `perl` modülleriyle şu şekilde kullanın:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Bu komutta, `^([\w\pP].*\n)+` kalıp dizesi alfa-sayısal ve noktalama harfleriyle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. **--all** seçeneği metnin tamamını üretmek için kullanılır.
 
@@ -102,7 +100,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
 - **--xlate-engine**=_engine_
 
-    Kullanılacak çeviri motorunu belirtir. Motor modülünü `-Mxlate::deepl` gibi doğrudan belirtirseniz, bu seçeneği kullanmanıza gerek yoktur.
+    Kullanılacak çeviri motorunu belirtir.
 
     Şu anda, aşağıdaki motorlar mevcuttur
 
@@ -326,7 +324,7 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate tarafından konteyner işlemleri için kullanılan genel Docker çalıştırıcısı
 

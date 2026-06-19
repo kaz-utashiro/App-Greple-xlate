@@ -6,9 +6,7 @@ App::Greple::xlate - módulo de soporte de traducción para greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -18,11 +16,11 @@ Version 1.0202
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> módulo busca los bloques de texto deseados y los reemplaza por el texto traducido. Actualmente, DeepL (F<deepl.pm>) y el módulo GPT-5.5 (F<gpt5.pm>) están implementados como motor de back-end.
+B<Greple> B<xlate> module encuentra los bloques de texto deseados y los reemplaza por el texto traducido. Actualmente, DeepL (F<deepl.pm>) y el módulo GPT-5.5 (F<gpty/gpt5.pm>) están implementados como motor de back-end.
 
-Si desea traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, use el comando B<greple> con los módulos C<xlate::deepl> y C<perl> de esta manera:
+Si desea traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, use el comando B<greple> con los módulos C<--xlate-engine deepl> y C<perl> así:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 En este comando, la cadena de patrón C<^([\w\pP].*\n)+> significa líneas consecutivas que comienzan con letras alfanuméricas y signos de puntuación. Este comando muestra el área a traducir resaltada. La opción B<--all> se utiliza para producir el texto completo.
 
@@ -118,7 +116,7 @@ Con la opción B<--xlate-fold>, el texto convertido se ajusta al ancho especific
 
 =item B<--xlate-engine>=I<engine>
 
-Especifica el motor de traducción a utilizar. Si especifica directamente el módulo del motor, como C<-Mxlate::deepl>, no necesita usar esta opción.
+Especifica el motor de traducción que se utilizará.
 
 En este momento, están disponibles los siguientes motores
 
@@ -369,7 +367,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Ejecutor genérico de Docker utilizado por xlate para operaciones de contenedor
 

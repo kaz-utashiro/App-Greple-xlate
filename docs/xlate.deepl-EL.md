@@ -4,9 +4,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
-
-    greple -Mxlate::gpt5 --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -16,11 +14,11 @@ Version 1.0202
 
 # DESCRIPTION
 
-**Greple** **xlate** Το module εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, τα modules DeepL (`deepl.pm`) και GPT-5.5 (`gpt5.pm`) έχουν υλοποιηθεί ως μηχανές back-end.
+**Greple** **xlate** Το module εντοπίζει τα επιθυμητά τμήματα κειμένου και τα αντικαθιστά με το μεταφρασμένο κείμενο. Προς το παρόν, τα modules DeepL (`deepl.pm`) και GPT-5.5 (`gpty/gpt5.pm`) έχουν υλοποιηθεί ως μηχανές back-end.
 
-Αν θέλετε να μεταφράσετε κανονικά μπλοκ κειμένου σε ένα έγγραφο γραμμένο στο στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με την ενότητα `xlate::deepl` και `perl` ως εξής:
+Αν θέλετε να μεταφράσετε κανονικά τμήματα κειμένου σε ένα έγγραφο γραμμένο σε στυλ pod της Perl, χρησιμοποιήστε την εντολή **greple** με τα modules `--xlate-engine deepl` και `perl` ως εξής:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Στην εντολή αυτή, η συμβολοσειρά προτύπων `^([\w\pP].*\n)+` σημαίνει διαδοχικές γραμμές που αρχίζουν με αλφαριθμητικά και γράμματα στίξης. Αυτή η εντολή δείχνει την περιοχή που πρόκειται να μεταφραστεί επισημασμένη. Η επιλογή **--all** χρησιμοποιείται για την παραγωγή ολόκληρου του κειμένου.
 
@@ -102,7 +100,7 @@ Version 1.0202
 
 - **--xlate-engine**=_engine_
 
-    Καθορίζει τη μηχανή μετάφρασης που θα χρησιμοποιηθεί. Αν καθορίσετε απευθείας τη μονάδα μηχανής, όπως `-Mxlate::deepl`, δεν χρειάζεται να χρησιμοποιήσετε αυτή την επιλογή.
+    Καθορίζει τον μηχανισμό μετάφρασης που θα χρησιμοποιηθεί.
 
     Αυτή τη στιγμή, οι ακόλουθες μηχανές είναι διαθέσιμες
 
@@ -326,7 +324,7 @@ Version 1.0202
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpt5)
+[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Γενικός δρομέας Docker που χρησιμοποιείται από το xlate για λειτουργίες εμπορευματοκιβωτίων
 
