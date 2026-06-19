@@ -12,8 +12,6 @@ App::Greple::xlate - translation support module for greple
 
     greple -Mxlate::deepl --xlate pattern target-file
 
-    greple -Mxlate::gpt5 --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
 =head1 VERSION
@@ -24,7 +22,7 @@ Version 1.0202
 
 B<Greple> B<xlate> module find desired text blocks and replace them by
 the translated text.  Currently DeepL (F<deepl.pm>) and GPT-5.5
-(F<gpt5.pm>) module are implemented as a back-end engine.
+(F<gpty/gpt5.pm>) module are implemented as a back-end engine.
 
 If you want to translate normal text blocks in a document written in
 the Perl's pod style, use B<greple> command with C<xlate::deepl> and
@@ -486,7 +484,7 @@ L<https://github.com/tecolicom/App-gpty>
 =head2 MODULES
 
 L<App::Greple::xlate::deepl>,
-L<App::Greple::xlate::gpt5>
+L<App::Greple::xlate::gpty::gpt5>
 
 L<App::dozo> - Generic Docker runner used by xlate for container operations
 
@@ -676,12 +674,21 @@ sub setup {
 	}
     }
     if ($xlate_engine) {
-	my $mod = __PACKAGE__ . "::$xlate_engine";
-	if (eval "require $mod") {
-	    $mod->import;
-	} else {
-	    die "Engine $xlate_engine is not available.\n";
+	# Resolve the engine module.  Backend-based engines live under a
+	# backend namespace (e.g. gpty::gpt5); others live directly under
+	# App::Greple::xlate (e.g. deepl, null).  Try the backend namespace
+	# FIRST so that --xlate-engine=gpt5 binds to gpty::gpt5 even if a
+	# stale top-level App::Greple::xlate::gpt5 lingers in @INC from an
+	# older install.  This also makes the future llm backend selectable
+	# the same way.
+	my $backend = 'gpty';
+	my $mod;
+	for my $cand (__PACKAGE__ . "::$backend\::$xlate_engine",
+		      __PACKAGE__ . "::$xlate_engine") {
+	    if (eval "require $cand; 1") { $mod = $cand; last }
 	}
+	$mod or die "Engine $xlate_engine is not available.\n";
+	$mod->import;
 	no strict 'refs';
 	${"$mod\::lang_from"} = $lang_from;
 	${"$mod\::lang_to"} = $lang_to;

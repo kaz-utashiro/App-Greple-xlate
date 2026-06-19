@@ -1,10 +1,10 @@
-package App::Greple::xlate::gpt5;
+package App::Greple::xlate::gpty::gpt5;
 
 our $VERSION = "1.0202";
 
 =head1 NAME
 
-App::Greple::xlate::gpt5 - GPT-5.5 translation engine for greple xlate module
+App::Greple::xlate::gpty::gpt5 - GPT-5.5 translation engine (gpty backend) for greple xlate module
 
 =head1 SYNOPSIS
 
