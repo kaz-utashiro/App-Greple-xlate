@@ -10,7 +10,7 @@ App::Greple::xlate - translation support module for greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate::deepl --xlate pattern target-file
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
 
@@ -25,10 +25,10 @@ the translated text.  Currently DeepL (F<deepl.pm>) and GPT-5.5
 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.
 
 If you want to translate normal text blocks in a document written in
-the Perl's pod style, use B<greple> command with C<xlate::deepl> and
-C<perl> module like this:
+the Perl's pod style, use B<greple> command with C<--xlate-engine deepl>
+and C<perl> module like this:
 
-    greple -Mxlate::deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In this command, pattern string C<^([\w\pP].*\n)+> means consecutive
 lines starting with alpha-numeric and punctuation letter.  This
@@ -169,9 +169,7 @@ could hold 74 characters at most.
 
 =item B<--xlate-engine>=I<engine>
 
-Specifies the translation engine to be used. If you specify the engine
-module directly, such as C<-Mxlate::deepl>, you do not need to use
-this option.
+Specifies the translation engine to be used.
 
 At this time, the following engines are available
 

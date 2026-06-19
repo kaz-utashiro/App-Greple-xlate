@@ -196,9 +196,9 @@ response element-count mismatch
 
 =item * L<App::Greple::xlate::deepl>
 
-=item * L<App::Greple::xlate::gpt3>
+=item * L<App::Greple::xlate::gpty::gpt3>
 
-=item * L<App::Greple::xlate::gpt4o>
+=item * L<App::Greple::xlate::gpty::gpt4o>
 
 =item * OpenAI GPT-5.5 Documentation: L<https://developers.openai.com/api/docs/models/gpt-5.5>
 

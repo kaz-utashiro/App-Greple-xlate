@@ -1,4 +1,4 @@
-package App::Greple::xlate::gpt4o;
+package App::Greple::xlate::gpty::gpt4o;
 
 our $VERSION = "1.0202";
 

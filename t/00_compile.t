@@ -5,9 +5,9 @@ use_ok $_ for qw(
     App::Greple::xlate
     App::Greple::xlate::null
     App::Greple::xlate::deepl
-    App::Greple::xlate::gpt3
-    App::Greple::xlate::gpt4
-    App::Greple::xlate::gpt4o
+    App::Greple::xlate::gpty::gpt3
+    App::Greple::xlate::gpty::gpt4
+    App::Greple::xlate::gpty::gpt4o
     App::Greple::xlate::gpty::gpt5
     App::Greple::xlate::Cache
     App::Greple::xlate::Mask
