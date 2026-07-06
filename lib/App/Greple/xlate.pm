@@ -337,7 +337,7 @@ file.  Useful for periodic reports: seed the new issue's cache with
 the previous issue's, so unchanged paragraphs are not re-translated
 and edited paragraphs keep the previous issue's wording.  The seed
 is used only when the target cache is empty; otherwise it is
-ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also
+ignored with a warning.  With the default C<--xlate-cache=auto>, specifying a seed also
 implies creating the new document's cache file.
 
 =item B<--xlate-glossary>=I<glossary>
