@@ -53,4 +53,12 @@ subtest 'failure modes' => sub {
     ok(!eval { JSON::PP->new->decode($r->{data}); 1 }, 'badjson mode returns non-JSON');
 };
 
+subtest 'tag-shaped spans survive the transform' => sub {
+    my $r = run_stub(stdin => q(["see <person id=1 /> and text\n"]));
+    is($r->{result}, 0, 'exit 0');
+    is_deeply(JSON::PP->new->decode($r->{data}),
+              [ "SEE <person id=1 /> AND TEXT\n" ],
+              'tag kept verbatim, rest uppercased');
+};
+
 done_testing;

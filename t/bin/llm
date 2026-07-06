@@ -54,6 +54,14 @@ if ($mode eq 'badjson') {
 }
 
 my $list = JSON::PP->new->decode($input);
-my @out = map { uc } @$list;
+# A well-behaved model keeps XML-style marker tags verbatim; mimic
+# that: uppercase everything except tag-shaped spans.
+sub transform {
+    my $s = shift;
+    join '', map {
+        /\A<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ *\/>\z/ ? $_ : uc
+    } split /(<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ *\/>)/, $s;
+}
+my @out = map { transform($_) } @$list;
 pop @out if $mode eq 'short';
 print JSON::PP->new->canonical->encode(\@out), "\n";
