@@ -179,4 +179,13 @@ subtest 'no frontmatter option: behavior unchanged' => sub {
     like($payload, qr/key: value/, 'without the option fm is ordinary text');
 };
 
+subtest 'warn when front matter runs into the body' => sub {
+    my $doc = "$dir/fmwarn.txt";
+    write_file($doc, "---\nkey: value\n---\nbody starts immediately\n");
+    write_file("$doc.xlate-gpt5-EN-US.json", '');
+    my $r = run_xlate($doc, '--xlate-frontmatter');
+    like($r->stdout, qr/no blank line after front matter/,
+         'straddle warning printed');
+};
+
 done_testing;
