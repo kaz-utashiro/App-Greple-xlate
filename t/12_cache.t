@@ -174,4 +174,22 @@ subtest 'seed ignored when cache has entries' => sub {
     ok((grep { /seed ignored/ } @warn), 'warned about ignored seed');
 };
 
+subtest 'seed implies cache creation in auto mode' => sub {
+    require App::Greple::xlate;
+    local $App::Greple::xlate::current_file = "$dir/newdoc.txt";
+    local $App::Greple::xlate::xlate_engine = 'gpt5';
+    local $App::Greple::xlate::lang_to = 'EN-US';
+    local $App::Greple::xlate::cache_method = 'auto';
+    {
+        local $App::Greple::xlate::cache_seed = undef;
+        is(App::Greple::xlate::cache_file(), undef,
+           'auto without seed: no cache for a fresh document');
+    }
+    {
+        local $App::Greple::xlate::cache_seed = "$dir/whatever.json";
+        like(App::Greple::xlate::cache_file(), qr/newdoc\.txt\.xlate-gpt5-EN-US\.json$/,
+           'auto with seed: cache file is created for a fresh document');
+    }
+};
+
 done_testing;

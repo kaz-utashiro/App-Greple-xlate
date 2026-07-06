@@ -619,7 +619,7 @@ our %opt = (
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
 
-my $current_file;
+our $current_file;
 my $colon_count = 7;
 
 our %formatter = (
@@ -808,7 +808,9 @@ sub cache_file {
     my $file = sprintf("%s.xlate-%s-%s.json",
                        $current_file, $xlate_engine, $lang_to);
     if ($cache_method eq 'auto') {
-        -f $file ? $file : undef;
+        # Seeding targets a document whose cache does not exist yet,
+        # so a seed implies cache creation even in auto mode.
+        (-f $file or defined $cache_seed) ? $file : undef;
     } else {
         if ($cache_method and -f $current_file) {
             $file;
