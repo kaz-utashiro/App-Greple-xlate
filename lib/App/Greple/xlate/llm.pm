@@ -88,9 +88,25 @@ sub llm_command {
     @command;
 }
 
+sub _llm_in_path {
+    grep { -x "$_/llm" } split /:/, $ENV{PATH} // '';
+}
+
+sub _not_found {
+    "llm: command not found.\n" .
+    "Install llm <https://llm.datasette.io/> with " .
+    "\"pip install llm\" or \"pipx install llm\".\n";
+}
+
 sub run_llm {
     state $run = Command::Run->new;
     my($param, $text) = @_;
+    ##
+    ## Check PATH before forking: Command::Run's forked child has no
+    ## exit guard after a failed exec, so reaching that path would let
+    ## the child escape into the caller's code.
+    ##
+    _llm_in_path() or die _not_found();
     my @command = llm_command($param, build_system($param));
     warn Dumper \@command if opt('debug');
     my $result = $run->command(@command)
@@ -109,10 +125,8 @@ sub run_llm {
 sub diagnose {
     my($param, $result) = @_;
     my $stderr = $result->{error} // '';
-    if (! grep { -x "$_/llm" } split /:/, $ENV{PATH} // '') {
-	return "llm: command not found.\n" .
-	       "Install llm <https://llm.datasette.io/> with " .
-	       "\"pip install llm\" or \"pipx install llm\".\n";
+    if (! _llm_in_path()) {
+	return _not_found();
     }
     my $model = $param->{model};
     my $models = Command::Run->new->command('llm', 'models')
