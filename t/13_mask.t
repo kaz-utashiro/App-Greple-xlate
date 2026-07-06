@@ -180,4 +180,17 @@ END
     }, qr/lit.*reserved/i, 'lit mark dies');
 };
 
+subtest 'dictionary: line continuation' => sub {
+    my $f = "$dir/cont.txt";
+    write_file($f, "person   Very Long\\\nName\n");
+    my $m = App::Greple::xlate::Mask->new(STABLE => 1);
+    $m->load_anonymize_file($f);
+    my @t = ("meet Very Long\nName today\n");
+    $m->mask(@t);
+    like($t[0], qr/<person id=1 \/>/, 'continued literal pattern matches');
+    $m->unmask(@t);
+    is($t[0], "meet Very Long\nName today\n", 'restored');
+    $m->reset;
+};
+
 done_testing;

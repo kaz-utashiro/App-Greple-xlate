@@ -130,7 +130,7 @@ sub load_anonymize_file {
         my @lines = map s/\\(?=\n)//gr, split /(?<!\\)\n/, $data;
         for my $line (@lines) {
             next if $line =~ /^\s*(#|$)/;
-            my($cat, $pat) = $line =~ /^\s*(\S+)\s+(.*?)\s*$/
+            my($cat, $pat) = $line =~ /\A\s*(\S+)\s+(.*?)\s*\z/s
                 or die "$path: unparsable line: $line\n";
             _check_category($cat);
             if ($pat =~ m{\A/(.*)/\z}s) {
