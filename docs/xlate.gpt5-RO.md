@@ -81,6 +81,36 @@ Modul în care textul este transformat prin mascarea poate fi văzut prin opțiu
 
 Această interfață este experimentală și poate suferi modificări în viitor.
 
+# ANONYMIZATION AND TEMPLATES
+
+Pentru documente de tip formular (rapoarte trimestriale și altele asemenea), definiți actorii în avans și faceți referire la ei în corp:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Traduceți șablonul o singură dată pentru fiecare limbă cu `--xlate-template` (și `--xlate-frontmatter` când valorile sunt păstrate în fișier), apoi redați fiecare caz cu modul autonom **pandoc-embedz** -- valorile de sub `global:` dintr-o configurație externă nu ajung niciodată la API-ul de traducere:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Pentru marcaje inline, furnizarea unei configurații de definiție a macrocomenzilor face ca același șablon tradus să redea fie numele reale, fie o versiune redactată:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Excludeți blocurile embedz de la traducere atunci când un document le conține:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 # OPTIONS
 
 - **--xlate**
@@ -111,6 +141,8 @@ Această interfață este experimentală și poate suferi modificări în viitor
         Interfața lui **gpt-4o** este instabilă și nu poate fi garantat că va funcționa corect în acest moment.
 
     - **gpt5**: gpt-5.5
+
+    Modulele de motor sunt căutate mai întâi în spațiile de nume backend (`llm`, apoi `gpty`), apoi direct sub `App::Greple::xlate`. Astfel, `gpt5` încarcă `App::Greple::xlate::llm::gpt5`, care apelează comanda `llm`, în timp ce `gpt4o` revine la `App::Greple::xlate::gpty::gpt4o`. Folosiți `--xlate-setopt backend=gpty` pentru a forța un backend specific.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,6 +236,54 @@ Această interfață este experimentală și poate suferi modificări în viitor
 - **--xlate-context**=_text_
 
     Specificați informații contextuale suplimentare care să fie trimise motorului de traducere. Această opțiune poate fi utilizată de mai multe ori pentru a furniza multiple șiruri de context. Informațiile de context ajută motorul de traducere să înțeleagă fundalul și să producă traduceri mai precise.
+
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Numărul de blocuri traduse înconjurătoare transmise ca context de referință la retraducerea blocurilor modificate (implicit 2). Contextul include și textul sursă brut din jurul regiunii modificate (titluri, structura listelor, legende) și, când este disponibilă, versiunea anterioară a textului modificat recuperată din cache, astfel încât formulările neschimbate să fie păstrate. Setați la 0 pentru a dezactiva complet traducerea conștientă de context. Rețineți că fiecare regiune modificată este tradusă în propriul apel API, iar contextul poate adăuga până la aproximativ 8000 de caractere la promptul de sistem, astfel încât traducerea conștientă de context schimbă un cost suplimentar pentru consecvență.
+
+- **--xlate-cache-seed**=_file_
+
+    Inițializați cache-ul unui document nou din fișierul cache al altui document. Util pentru rapoarte periodice: inițializați cache-ul noului număr cu cel al numărului anterior, astfel încât paragrafele neschimbate să nu fie retraduse și paragrafele editate să păstreze formularea numărului anterior. Sămânța este folosită numai când cache-ul țintă este gol; altfel este ignorată cu un avertisment. Cu valoarea implicită `--xlate-cache=auto`, specificarea unei semințe implică și crearea fișierului cache al noului document.
+
+- **--xlate-anonymize**=_file_
+
+    Anonimizați șirurile sensibile înainte ca acestea să fie trimise către API-ul de traducere și restaurați-le în ieșire. Fișierul dicționar oferă câte o intrare pentru fiecare element: în JSON (canonic, generabil de mașină)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    sau într-un format simplu pe linii (`category pattern`, `/.../` pentru regex). Fiecare element este înlocuit cu o etichetă de categorie precum `<person id=1 />`; același șir primește întotdeauna aceeași etichetă, astfel încât modelul să poată ține evidența cine este cine. Câmpurile JSON necunoscute sunt ignorate, astfel încât generatoarele (de ex. un LLM local care extrage entități) își pot adăuga propriile adnotări. Categoria `lit` este rezervată. Fișierele cache locale stochează în continuare text simplu restaurat: ținta mascării este doar transmiterea către API.
+
+    Un dicționar poate fi generat de un instrument extern -- de exemplu un model local care extrage entități sensibile:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Un BOM UTF-8 în fișier este tolerat. Valorile din formatul de linie front matter pot avea un comentariu final numai pe propria lor linie, nu după valoare.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Colectați intrări de anonimizare din marcaje inline în documentul însuși. Marcați prima apariție ca `{{ person("山田太郎") }}` și fiecare apariție a șirului în întregul document este anonimizată. Marcajul însuși rămâne în sursă și în traducere, astfel încât un document poate fi procesat și de un procesor de macrocomenzi în stil Jinja2 (definiți macrocomanda `person` pentru a afișa sau redacta numele). Un _regex_ personalizat trebuie să conțină capturi numite `(?<category>...)` și `(?<text>...)`.
+
+    Rețineți că, pentru o opțiune cu valoare opțională ca aceasta, un argument de fișier următor ar fi luat drept valoare: scrieți `--xlate-anonymize-mark=` (cu un `=` final) când folosiți notația implicită.
+
+    Notații alternative pot fi configurate, de exemplu `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` pentru marcaje în stil `@@person:NAME@@`, sau o formă de comentariu HTML care rămâne invizibilă în Markdown redat. Regulile de marcaj sunt colectate per document: un șir marcat într-un fișier de intrare nu este ascuns în alt fișier din aceeași rulare (spre deosebire de valorile front matter, care se acumulează între fișiere).
+
+- **--xlate-template**\[=_regex_\]
+
+    Tratați expresiile de șablon (implicit: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) ca substituenți opaci: instruiți modelul să le copieze neschimbate și verificați, pentru fiecare bloc, că răspunsul conține exact aceleași expresii, fiecare de același număr de ori. Ordinea lor se poate schimba, deoarece traducerea le reordonează legitim pentru a urma ordinea cuvintelor din limba țintă. O expresie deteriorată abandonează rularea; cache-ul este checkpointat și înghețat, astfel încât nimic plătit nu se pierde.
+
+    Rețineți că, în cazul unei opțiuni cu valoare opțională ca aceasta, un argument de fișier care urmează ar fi luat drept valoare: scrieți `--xlate-template=` (cu un `=` la sfârșit) când utilizați notația implicită.
+
+- **--xlate-frontmatter**
+
+    Tratați un bloc inițial `---` ... `---` ca front matter YAML: excludeți-l de la traducere și din feliile de context din faza 2 și adăugați valorile sale plate `key: value` la regulile de anonimizare (categoria `var`) ca plasă de siguranță. Cu mai multe fișiere de intrare, valorile colectate se acumulează (greșind în favoarea ascunderii).
+
+    Lăsați întotdeauna o linie goală după `---` de închidere. Cu un tipar de potrivire de tip paragraf, front matter-ul care intră direct în textul corpului formează un singur bloc suprapus pe care excluderea nu îl poate suprima (în acest caz se afișează un avertisment); valorile sunt totuși anonimizate, dar front matter-ul însuși ar fi trimis pentru traducere.
 
 - **--xlate-glossary**=_glossary_
 

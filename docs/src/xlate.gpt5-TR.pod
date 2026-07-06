@@ -92,6 +92,36 @@ Metnin maskeleme ile nasıl dönüştürüldüğü B<--xlate-mask> seçeneğiyle
 
 Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
+=head1 ANONYMIZATION AND TEMPLATES
+
+Form belgeleri (üç aylık raporlar ve benzerleri) için, aktörleri baştan tanımlayın ve gövdede onlara başvurun:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Şablonu dil başına bir kez C<--xlate-template> ile (C<--xlate-frontmatter> değerler dosyada tutulduğunda) çevirin, ardından her durumu B<pandoc-embedz> bağımsız moduyla işleyin -- harici bir yapılandırmada C<global:> altındaki değerler çeviri API'sine hiçbir zaman ulaşmaz:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Satır içi işaretler için, bir makro tanım yapılandırması sağlamak aynı çevrilmiş şablonun gerçek adları veya sansürlenmiş bir sürümü işlemesini sağlar:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 =head1 OPTIONS
 
 =over 7
@@ -133,6 +163,8 @@ B<gpt-4o> arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edi
 =item * B<gpt5>: gpt-5.5
 
 =back
+
+Motor modülleri önce arka uç ad alanlarında aranır (C<llm>, ardından C<gpty>), sonra doğrudan C<App::Greple::xlate> altında aranır. Bu nedenle C<gpt5>, C<llm> komutunu çağıran C<App::Greple::xlate::llm::gpt5>'i yüklerken, C<gpt4o> C<App::Greple::xlate::gpty::gpt4o>'e geri döner. Belirli bir arka ucu zorlamak için C<--xlate-setopt backend=gpty> kullanın.
 
 =item B<--xlate-labor>
 
@@ -232,6 +264,54 @@ Her seferinde tek bir satırı çevirmek istiyorsanız bu değeri 1 olarak ayarl
 =item B<--xlate-context>=I<text>
 
 Çeviri motoruna gönderilecek ek bağlam bilgisi belirtin. Birden çok bağlam dizesi sağlamak için bu seçenek birden çok kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
+
+=item B<--xlate-context-window>=I<n>
+
+(Context-aware engines only, e.g. C<gpt5> on the llm backend)
+Değişen bloklar yeniden çevrilirken referans bağlam olarak geçirilen çevredeki çevrilmiş blok sayısı (varsayılan 2). Bağlam ayrıca değişen bölgenin etrafındaki ham kaynak metni (başlıklar, liste yapısı, açıklamalar) ve kullanılabilir olduğunda, değişmemiş ifadelerin korunması için önbellekten kurtarılan değişen metnin önceki sürümünü içerir. Bağlama duyarlı çeviriyi tamamen devre dışı bırakmak için 0 olarak ayarlayın. Her değişen bölgenin kendi API çağrısında çevrildiğini ve bağlamın sistem istemine yaklaşık 8000 karaktere kadar ekleyebileceğini unutmayın; bu nedenle bağlama duyarlı çeviri, tutarlılık için bir miktar ek maliyeti göze alır.
+
+=item B<--xlate-cache-seed>=I<file>
+
+Yeni bir belgenin önbelleğini başka bir belgenin önbellek dosyasından başlatın. Periyodik raporlar için kullanışlıdır: yeni sayının önbelleğini önceki sayınınkiyle tohumlayın; böylece değişmemiş paragraflar yeniden çevrilmez ve düzenlenmiş paragraflar önceki sayının ifade biçimini korur. Tohum yalnızca hedef önbellek boş olduğunda kullanılır; aksi takdirde bir uyarıyla yok sayılır. Varsayılan C<--xlate-cache=auto> ile, bir tohum belirtmek yeni belgenin önbellek dosyasının oluşturulacağını da ima eder.
+
+=item B<--xlate-anonymize>=I<file>
+
+Hassas dizeleri çeviri API'sine gönderilmeden önce anonimleştirin ve çıktıda geri yükleyin. Sözlük dosyası öğe başına bir giriş verir: JSON biçiminde (kanonik, makine tarafından üretilebilir)
+
+    [ { "category": "person",  "text": "山田太郎" },
+      { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+veya basit bir satır biçiminde (C<category pattern>, regex için C</.../>). Her öğe C<< <person id=1 /> >> gibi bir kategori etiketiyle değiştirilir; aynı dize her zaman aynı etiketi alır, böylece model kimin kim olduğunu takip edebilir. Bilinmeyen JSON alanları yok sayılır; bu nedenle üreteçler (örn. varlıkları çıkaran yerel bir LLM) kendi ek açıklamalarını ekleyebilir. C<lit> kategorisi ayrılmıştır. Yerel önbellek dosyaları hâlâ geri yüklenmiş düz metni saklar: gizleme hedefi yalnızca API iletimidir.
+
+Bir sözlük harici bir araç tarafından üretilebilir -- örneğin hassas varlıkları çıkaran yerel bir model:
+
+    llm -m <local-model> \
+        -s 'Extract sensitive entities as a JSON array of objects
+            with "category" and "text" fields.' \
+        < report.md > report.anon.json
+    greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+Dosyadaki UTF-8 BOM tolere edilir. Front matter satır biçimindeki değerler, yalnızca kendi satırlarında sonda bir yorum taşıyabilir; değerden sonra değil.
+
+=item B<--xlate-anonymize-mark>[=I<regex>]
+
+Anonimleştirme girişlerini belgenin içindeki satır içi işaretlerden toplayın. İlk oluşumu C<{{ person("山田太郎") }}> gibi işaretleyin; dizenin belge genelindeki her oluşumu anonimleştirilir. İşaretin kendisi kaynakta ve çeviride kalır; böylece bir belge Jinja2 tarzı bir makro işlemcisiyle de işlenebilir (C<person> makrosunu adı yazdıracak veya redakte edecek şekilde tanımlayın). Özel bir I<regex>, C<< (?<category>...) >> ve C<< (?<text>...) >> adlı yakalamalarını içermelidir.
+
+Bunun gibi isteğe bağlı değer alan bir seçenekle, ardından gelen bir dosya argümanının değer olarak alınacağını unutmayın: varsayılan gösterimi kullanırken C<--xlate-anonymize-mark=> yazın (sonunda bir C<=> ile).
+
+Alternatif gösterimler yapılandırılabilir; örneğin C<@@person:NAME@@> tarzı işaretler için C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@' >> veya işlenmiş Markdown'da görünmez kalan bir HTML yorumu biçimi. İşaret kuralları belge başına toplanır: bir girdi dosyasında işaretlenen bir dize, aynı çalıştırmadaki başka bir dosyada gizlenmez (dosyalar arasında biriken front matter değerlerinin aksine).
+
+=item B<--xlate-template>[=I<regex>]
+
+Şablon ifadelerini (varsayılan: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) opak yer tutucular olarak ele alın: modele bunları değiştirmeden kopyalamasını söyleyin ve yanıtın her blok için tam olarak aynı ifadeleri, her birini aynı sayıda içerdiğini doğrulayın. Sıraları değişebilir, çünkü çeviri onları hedef dilin sözcük sırasını izlemek için meşru şekilde yeniden sıralar. Bozuk bir ifade çalıştırmayı iptal eder; önbellek denetim noktasına alınır ve dondurulur, böylece ödenmiş hiçbir şey kaybolmaz.
+
+Bunun gibi isteğe bağlı değer alan bir seçenekle, izleyen bir dosya bağımsız değişkeninin değer olarak alınacağını unutmayın: varsayılan gösterimi kullanırken C<--xlate-template=> yazın (sonunda bir C<=> ile).
+
+=item B<--xlate-frontmatter>
+
+Baştaki C<---> ... C<---> bloğunu YAML front matter olarak ele alın: onu çeviriden ve phase-2 bağlam dilimlerinden hariç tutun ve düz C<key: value> değerlerini bir güvenlik ağı olarak anonimleştirme kurallarına (kategori C<var>) ekleyin. Birden çok girdi dosyasıyla toplanan değerler birikir (gizleme tarafında hata yaparak).
+
+Kapanış C<---> sonrasında her zaman boş bir satır bırakın. Paragraf tarzı bir eşleşme kalıbıyla, doğrudan gövde metnine bağlanan front matter, dışlamanın bastıramayacağı, iki tarafa yayılan tek bir blok oluşturur (bu durumda bir uyarı yazdırılır); değerler yine de anonimleştirilir, ancak front matter'ın kendisi çeviri için gönderilir.
 
 =item B<--xlate-glossary>=I<glossary>
 

@@ -81,6 +81,36 @@ Kuidas tekst maskeerimise käigus muundatakse, on nähtav valikuga **--xlate-mas
 
 See liides on eksperimentaalne ja võib tulevikus muutuda.
 
+# ANONYMIZATION AND TEMPLATES
+
+Vormidokumentide (kvartaliaruanded ja muu sarnane) puhul määratlege osalised kohe alguses ja viidake neile põhitekstis:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Tõlkige mall iga keele jaoks üks kord käsuga `--xlate-template` (ja `--xlate-frontmatter`, kui väärtused hoitakse failis), seejärel renderdage iga juhtum **pandoc-embedz** eraldiseisvas režiimis -- välises konfiguratsioonis `global:` all olevad väärtused ei jõua tõlke-API-sse üldse:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Reasiseste märgendite puhul võimaldab makrodefinitsiooni konfiguratsiooni andmine samal tõlgitud mallil renderduda kas pärisnimedega või redigeeritud versioonina:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 # OPTIONS
 
 - **--xlate**
@@ -111,6 +141,8 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
         **gpt-4o** liides on ebastabiilne ja praegu ei saa selle korrektset toimimist garanteerida.
 
     - **gpt5**: gpt-5.5
+
+    Mootorimooduleid otsitakse esmalt taustsüsteemi nimeruumidest (`llm`, seejärel `gpty`), seejärel otse `App::Greple::xlate` alt. Seega `gpt5` laadib `App::Greple::xlate::llm::gpt5`, mis kutsub käsku `llm`, samas kui `gpt4o` langeb tagasi `App::Greple::xlate::gpty::gpt4o` peale. Kasutage `--xlate-setopt backend=gpty`, et sundida kasutama konkreetset taustsüsteemi.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,6 +236,54 @@ See liides on eksperimentaalne ja võib tulevikus muutuda.
 - **--xlate-context**=_text_
 
     Määra täiendav kontekstiinfo, mis saadetakse tõlkemootorile. Seda valikut saab kasutada mitu korda, et edastada mitu kontekstistringi. Kontekst aitab tõlkemootoril tausta mõista ja anda täpsemaid tõlkeid.
+
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Ümbritsevate tõlgitud plokkide arv, mis antakse muudetud plokkide uuesti tõlkimisel viitekontekstina (vaikimisi 2). Kontekst sisaldab ka muudetud piirkonda ümbritsevat toorest lähteksti (pealkirjad, loendistruktuur, pildiallkirjad) ning võimaluse korral vahemälust taastatud muudetud teksti eelmist versiooni, et muutmata sõnastus säiliks. Määrake väärtuseks 0, et kontekstiteadlik tõlge täielikult keelata. Pange tähele, et iga muudetud piirkond tõlgitakse eraldi API-kutses ja kontekst võib süsteemiviibale lisada kuni umbes 8000 märki, seega vahetab kontekstiteadlik tõlge järjepidevuse nimel mõningase lisakulu vastu.
+
+- **--xlate-cache-seed**=_file_
+
+    Lähtesta uue dokumendi vahemälu teise dokumendi vahemälufailist. Kasulik perioodiliste aruannete puhul: külva uue väljaande vahemälu eelmise väljaande omaga, et muutmata lõike ei tõlgitaks uuesti ja muudetud lõigud säilitaksid eelmise väljaande sõnastuse. Seemet kasutatakse ainult siis, kui sihtvahemälu on tühi; vastasel juhul eiratakse seda hoiatusega. Vaikimisi `--xlate-cache=auto` korral tähendab seemne määramine ka uue dokumendi vahemälufaili loomist.
+
+- **--xlate-anonymize**=_file_
+
+    Anonümiseeri tundlikud stringid enne nende saatmist tõlke-API-le ja taasta need väljundis. Sõnastikufail annab iga üksuse kohta ühe kirje: JSON-is (kanoniline, masinaga genereeritav)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    või lihtsas reaformaadis (`category pattern`, `/.../` regexi jaoks). Iga üksus asendatakse kategooriasildiga, näiteks `<person id=1 />`; sama string saab alati sama sildi, nii et mudel saab jälgida, kes on kes. Tundmatuid JSON-välju eiratakse, seega võivad generaatorid (nt kohalik LLM, mis ekstraheerib olemeid) lisada oma annotatsioone. Kategooria `lit` on reserveeritud. Kohalikud vahemälufailid talletavad endiselt taastatud lihtteksti: varjamise siht on ainult API-edastus.
+
+    Sõnastiku saab genereerida välise tööriistaga -- näiteks kohalik mudel, mis ekstraheerib tundlikke olemeid:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Failis olev UTF-8 BOM on lubatud. Front matter'i reaformaadis võivad väärtustel olla lõpus kommentaarid ainult eraldi real, mitte väärtuse järel.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Kogu anonümiseerimiskirjed dokumendi enda sisestest märgetest. Märgi esimene esinemine kujul `{{ person("山田太郎") }}` ja iga selle stringi esinemine kogu dokumendis anonümiseeritakse. Märge ise jääb lähtekoodi ja tõlkesse, nii et dokumenti saab töödelda ka Jinja2-stiilis makrotöötlejaga (määratle makro `person`, et nimi printida või redigeerida). Kohandatud _regex_ peab sisaldama nimega hõiveid `(?<category>...)` ja `(?<text>...)`.
+
+    Pange tähele, et sellise valikulise väärtusega valiku korral võetaks järgnev failiargument väärtuseks: kirjutage `--xlate-anonymize-mark=` (lõpus oleva `=`-ga), kui kasutate vaikimisi märgistust.
+
+    Alternatiivseid märgistusi saab konfigureerida, näiteks `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` `@@person:NAME@@`-stiilis märgete jaoks, või HTML-kommentaari vormi, mis jääb renderdatud Markdownis nähtamatuks. Märkereeglid kogutakse dokumendipõhiselt: ühes sisendfailis märgitud stringi ei varjata sama käivituse teises failis (erinevalt front matter'i väärtustest, mis kogunevad failide vahel).
+
+- **--xlate-template**\[=_regex_\]
+
+    Käsitle malliväljendeid (vaikimisi: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) läbipaistmatute kohatäitjatena: juhenda mudelit neid muutmata kopeerima ja kontrolli iga ploki kohta, et vastus sisaldaks täpselt samu väljendeid, igaüht sama arv kordi. Nende järjekord võib muutuda, sest tõlkimisel järjestatakse need õigustatult ümber, et järgida sihtkeele sõnajärge. Katkine väljend katkestab käivituse; vahemälu salvestatakse kontrollpunktina ja külmutatakse, nii et midagi tasulist kaotsi ei lähe.
+
+    Pange tähele, et sellise valikulise väärtusega valiku korral võetaks järgnev failargument väärtusena: kasutage vaikemärgistuse korral `--xlate-template=` (lõpus oleva `=`-ga).
+
+- **--xlate-frontmatter**
+
+    Käsitle alguses olevat `---` ... `---` plokki YAML-i esiosana: jäta see tõlkimisest ja 2. faasi kontekstilõikudest välja ning lisa selle lamedad `key: value` väärtused anonüümimisreeglitesse (kategooria `var`) turvavõrguna. Mitme sisendfaili korral kogutud väärtused kuhjuvad (pigem varjamise kasuks eksides).
+
+    Jäta alati tühi rida pärast sulgevat `---`. Lõigustiilis vastemustriga moodustab otse põhitekstiga kokku jooksev esiosa ühe üle piiri ulatuva ploki, mida välistamine ei suuda maha suruda (sellisel juhul prinditakse hoiatus); väärtused anonüümitakse siiski, kuid esiosa ise saadetaks tõlkimiseks.
 
 - **--xlate-glossary**=_glossary_
 

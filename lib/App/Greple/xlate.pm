@@ -458,7 +458,7 @@ flat C<key: value> values to the anonymization rules (category
 C<var>) as a safety net.  With multiple input files the collected
 values accumulate (erring on the side of concealment).
 
-B<Leave a blank line after the closing C<--->.>  With a
+Always leave a blank line after the closing C<--->.  With a
 paragraph-style match pattern, front matter that runs directly into
 the body text forms one straddling block that the exclusion cannot
 suppress (a warning is printed in that case); the values are still

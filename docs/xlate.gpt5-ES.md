@@ -81,6 +81,36 @@ Cómo se transforma el texto mediante el enmascaramiento puede verse con la opci
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
+# ANONYMIZATION AND TEMPLATES
+
+Para documentos de formulario (informes trimestrales y similares), defina los actores al principio y haga referencia a ellos en el cuerpo:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Traduzca la plantilla una vez por idioma con `--xlate-template` (y `--xlate-frontmatter` cuando los valores se mantengan en el archivo), luego renderice cada caso con el modo autónomo de **pandoc-embedz**: los valores bajo `global:` en una configuración externa nunca llegan en absoluto a la API de traducción:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Para marcas en línea, proporcionar una configuración de definición de macros hace que la misma plantilla traducida renderice los nombres reales o una versión redactada:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Excluya los bloques embedz de la traducción cuando un documento los contenga:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 # OPTIONS
 
 - **--xlate**
@@ -111,6 +141,8 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
         La interfaz de **gpt-4o** es inestable y no se puede garantizar que funcione correctamente en este momento.
 
     - **gpt5**: gpt-5.5
+
+    Los módulos de motor se buscan primero en los espacios de nombres de backend (`llm`, luego `gpty`), y después directamente bajo `App::Greple::xlate`. Por tanto, `gpt5` carga `App::Greple::xlate::llm::gpt5`, que llama al comando `llm`, mientras que `gpt4o` recurre a `App::Greple::xlate::gpty::gpt4o`. Use `--xlate-setopt backend=gpty` para forzar un backend específico.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,6 +236,54 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 - **--xlate-context**=_text_
 
     Especifique información de contexto adicional que se enviará al motor de traducción. Esta opción se puede usar varias veces para proporcionar múltiples cadenas de contexto. La información de contexto ayuda al motor de traducción a comprender el trasfondo y producir traducciones más precisas.
+
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Número de bloques traducidos circundantes que se pasan como contexto de referencia al volver a traducir bloques modificados (predeterminado 2). El contexto también incluye el texto fuente sin procesar alrededor de la región modificada (encabezados, estructura de listas, leyendas) y, cuando está disponible, la versión anterior del texto modificado recuperada de la caché, de modo que se conserve la redacción sin cambios. Establézcalo en 0 para desactivar por completo la traducción con conocimiento del contexto. Tenga en cuenta que cada región modificada se traduce en su propia llamada a la API y que el contexto puede añadir hasta unos 8000 caracteres al prompt del sistema, por lo que la traducción con conocimiento del contexto intercambia algo de coste adicional por coherencia.
+
+- **--xlate-cache-seed**=_file_
+
+    Inicialice la caché de un documento nuevo a partir del archivo de caché de otro documento. Útil para informes periódicos: inicialice la caché del nuevo número con la del número anterior, de modo que los párrafos sin cambios no se vuelvan a traducir y los párrafos editados conserven la redacción del número anterior. La semilla se usa solo cuando la caché de destino está vacía; de lo contrario, se ignora con una advertencia. Con el `--xlate-cache=auto` predeterminado, especificar una semilla también implica crear el archivo de caché del nuevo documento.
+
+- **--xlate-anonymize**=_file_
+
+    Anonimice las cadenas sensibles antes de que se envíen a la API de traducción y restáurelas en la salida. El archivo de diccionario proporciona una entrada por elemento: en JSON (canónico, generable por máquina)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    o en un formato de línea simple (`category pattern`, `/.../` para regex). Cada elemento se reemplaza por una etiqueta de categoría como `<person id=1 />`; la misma cadena siempre obtiene la misma etiqueta, por lo que el modelo puede llevar la cuenta de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extrae entidades) pueden añadir sus propias anotaciones. La categoría `lit` está reservada. Los archivos de caché locales siguen almacenando texto plano restaurado: el objetivo de la ocultación es únicamente la transmisión a la API.
+
+    Un diccionario puede generarse mediante una herramienta externa; por ejemplo, un modelo local que extrae entidades sensibles:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Se tolera una BOM UTF-8 en el archivo. Los valores en el formato de línea de front matter pueden llevar un comentario final solo en su propia línea, no después del valor.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Recoja entradas de anonimización de marcas en línea en el propio documento. Marque la primera aparición como `{{ person("山田太郎") }}` y cada aparición de la cadena en todo el documento se anonimizará. La marca en sí permanece en el origen y en la traducción, de modo que un documento también pueda ser procesado por un procesador de macros de estilo Jinja2 (defina la macro `person` para imprimir o redactar el nombre). Un _regex_ personalizado debe contener capturas con nombre `(?<category>...)` y `(?<text>...)`.
+
+    Tenga en cuenta que, con una opción de valor opcional como esta, un argumento de archivo siguiente se tomaría como el valor: escriba `--xlate-anonymize-mark=` (con un `=` final) cuando use la notación predeterminada.
+
+    Se pueden configurar notaciones alternativas, por ejemplo `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` para marcas de estilo `@@person:NAME@@`, o una forma de comentario HTML que permanezca invisible en el Markdown renderizado. Las reglas de marca se recopilan por documento: una cadena marcada en un archivo de entrada no se oculta en otro archivo de la misma ejecución (a diferencia de los valores de front matter, que se acumulan entre archivos).
+
+- **--xlate-template**\[=_regex_\]
+
+    Trate las expresiones de plantilla (predeterminado: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) como marcadores de posición opacos: indique al modelo que las copie sin cambios y verifique, por bloque, que la respuesta contenga exactamente las mismas expresiones, cada una el mismo número de veces. Su orden puede cambiar, ya que la traducción las reordena legítimamente para seguir el orden de palabras del idioma de destino. Una expresión dañada aborta la ejecución; la caché se guarda en un punto de control y se congela, de modo que no se pierde nada pagado.
+
+    Tenga en cuenta que, con una opción de valor opcional como esta, un argumento de archivo siguiente se tomaría como el valor: escriba `--xlate-template=` (con un `=` final) al usar la notación predeterminada.
+
+- **--xlate-frontmatter**
+
+    Trate un bloque inicial `---` ... `---` como front matter YAML: exclúyalo de la traducción y de los fragmentos de contexto de la fase 2, y agregue sus valores planos `key: value` a las reglas de anonimización (categoría `var`) como red de seguridad. Con múltiples archivos de entrada, los valores recopilados se acumulan (pecando por exceso de ocultación).
+
+    Deje siempre una línea en blanco después del `---` de cierre. Con un patrón de coincidencia de estilo párrafo, el front matter que se une directamente al texto del cuerpo forma un bloque superpuesto que la exclusión no puede suprimir (en ese caso se imprime una advertencia); los valores siguen anonimizándose, pero el propio front matter se enviaría para traducción.
 
 - **--xlate-glossary**=_glossary_
 

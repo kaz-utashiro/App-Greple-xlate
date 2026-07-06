@@ -81,6 +81,36 @@ Bagaimana teks diubah oleh masking dapat dilihat dengan opsi **--xlate-mask**.
 
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.
 
+# ANONYMIZATION AND TEMPLATES
+
+Untuk dokumen formulir (laporan triwulanan dan sejenisnya), definisikan aktor di awal dan rujuk mereka di isi:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Terjemahkan templat sekali per bahasa dengan `--xlate-template` (dan `--xlate-frontmatter` ketika nilainya disimpan di berkas), lalu render setiap kasus dengan mode mandiri **pandoc-embedz** -- nilai di bawah `global:` dalam konfigurasi eksternal sama sekali tidak pernah mencapai API terjemahan:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Untuk tanda inline, menyediakan konfigurasi definisi makro membuat templat terjemahan yang sama merender baik nama asli maupun versi yang disamarkan:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 # OPTIONS
 
 - **--xlate**
@@ -111,6 +141,8 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.
         Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin berfungsi dengan benar saat ini.
 
     - **gpt5**: gpt-5.5
+
+    Modul mesin dicari terlebih dahulu di namespace backend (`llm`, lalu `gpty`), kemudian langsung di bawah `App::Greple::xlate`. Jadi `gpt5` memuat `App::Greple::xlate::llm::gpt5` yang memanggil perintah `llm`, sementara `gpt4o` kembali menggunakan `App::Greple::xlate::gpty::gpt4o`. Gunakan `--xlate-setopt backend=gpty` untuk memaksa backend tertentu.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,6 +236,54 @@ Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.
 - **--xlate-context**=_text_
 
     Tentukan informasi konteks tambahan yang akan dikirim ke mesin terjemahan. Opsi ini dapat digunakan beberapa kali untuk menyediakan beberapa string konteks. Informasi konteks membantu mesin terjemahan memahami latar belakang dan menghasilkan terjemahan yang lebih akurat.
+
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Jumlah blok terjemahan di sekitarnya yang diteruskan sebagai konteks referensi saat menerjemahkan ulang blok yang berubah (default 2). Konteks juga mencakup teks sumber mentah di sekitar wilayah yang berubah (heading, struktur daftar, caption) dan, bila tersedia, versi sebelumnya dari teks yang berubah yang dipulihkan dari cache, sehingga susunan kata yang tidak berubah dipertahankan. Atur ke 0 untuk menonaktifkan terjemahan sadar konteks sepenuhnya. Perhatikan bahwa setiap wilayah yang berubah diterjemahkan dalam panggilan API-nya sendiri dan konteks dapat menambah hingga sekitar 8000 karakter ke prompt sistem, sehingga terjemahan sadar konteks menukar sedikit biaya tambahan demi konsistensi.
+
+- **--xlate-cache-seed**=_file_
+
+    Inisialisasi cache dokumen baru dari file cache dokumen lain. Berguna untuk laporan berkala: isi awal cache edisi baru dengan cache edisi sebelumnya, sehingga paragraf yang tidak berubah tidak diterjemahkan ulang dan paragraf yang diedit mempertahankan susunan kata edisi sebelumnya. Seed hanya digunakan ketika cache target kosong; jika tidak, seed diabaikan dengan peringatan. Dengan `--xlate-cache=auto` default, menentukan seed juga menyiratkan pembuatan file cache dokumen baru.
+
+- **--xlate-anonymize**=_file_
+
+    Anonimkan string sensitif sebelum dikirim ke API terjemahan, dan pulihkan string tersebut dalam keluaran. File kamus memberikan satu entri per item: dalam JSON (kanonis, dapat dihasilkan mesin)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    atau dalam format baris sederhana (`category pattern`, `/.../` untuk regex). Setiap item diganti dengan tag kategori seperti `<person id=1 />`; string yang sama selalu mendapatkan tag yang sama, sehingga model dapat melacak siapa itu siapa. Field JSON yang tidak dikenal diabaikan, sehingga generator (mis. LLM lokal yang mengekstrak entitas) dapat menambahkan anotasi mereka sendiri. Kategori `lit` dicadangkan. File cache lokal tetap menyimpan teks biasa yang dipulihkan: target penyembunyian hanya transmisi API.
+
+    Kamus dapat dihasilkan oleh alat eksternal -- misalnya model lokal yang mengekstrak entitas sensitif:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    BOM UTF-8 dalam file ditoleransi. Nilai dalam format baris front matter boleh memiliki komentar akhir hanya pada barisnya sendiri, bukan setelah nilai.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Kumpulkan entri anonimisasi dari mark inline dalam dokumen itu sendiri. Tandai kemunculan pertama seperti `{{ person("山田太郎") }}` dan setiap kemunculan string di seluruh dokumen dianonimkan. Mark itu sendiri tetap berada di sumber dan dalam terjemahan, sehingga dokumen juga dapat diproses oleh pemroses makro bergaya Jinja2 (definisikan makro `person` untuk mencetak atau menyunting nama). _regex_ kustom harus berisi named capture `(?<category>...)` dan `(?<text>...)`.
+
+    Perhatikan bahwa dengan opsi bernilai opsional seperti ini, argumen file berikutnya akan dianggap sebagai nilainya: tulis `--xlate-anonymize-mark=` (dengan `=` di akhir) saat menggunakan notasi default.
+
+    Notasi alternatif dapat dikonfigurasi, misalnya `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` untuk mark bergaya `@@person:NAME@@`, atau bentuk komentar HTML yang tetap tidak terlihat dalam Markdown yang dirender. Aturan mark dikumpulkan per dokumen: string yang ditandai dalam satu file input tidak disembunyikan dalam file lain pada run yang sama (berbeda dengan nilai front matter, yang terakumulasi di seluruh file).
+
+- **--xlate-template**\[=_regex_\]
+
+    Perlakukan ekspresi templat (default: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) sebagai placeholder buram: instruksikan model untuk menyalinnya tanpa perubahan dan verifikasi, per blok, bahwa respons berisi ekspresi yang sama persis, masing-masing dengan jumlah kemunculan yang sama. Urutannya boleh berubah, karena terjemahan secara sah menyusun ulang ekspresi tersebut agar mengikuti urutan kata bahasa target. Ekspresi yang rusak membatalkan run; cache di-checkpoint dan dibekukan, sehingga tidak ada yang sudah dibayar menjadi hilang.
+
+    Perhatikan bahwa dengan opsi bernilai opsional seperti ini, argumen file berikutnya akan diambil sebagai nilainya: tulis `--xlate-template=` (dengan `=` di akhir) saat menggunakan notasi default.
+
+- **--xlate-frontmatter**
+
+    Perlakukan blok awal `---` ... `---` sebagai YAML front matter: kecualikan dari terjemahan dan dari irisan konteks fase-2, serta tambahkan nilai `key: value` datarnya ke aturan anonimisasi (kategori `var`) sebagai jaring pengaman. Dengan beberapa file input, nilai yang dikumpulkan akan terakumulasi (lebih memilih sisi penyembunyian).
+
+    Selalu sisakan satu baris kosong setelah penutup `---`. Dengan pola pencocokan bergaya paragraf, front matter yang langsung menyambung ke teks isi membentuk satu blok yang melintang yang tidak dapat ditekan oleh pengecualian (peringatan dicetak dalam kasus tersebut); nilainya tetap dianonimkan, tetapi front matter itu sendiri akan dikirim untuk diterjemahkan.
 
 - **--xlate-glossary**=_glossary_
 

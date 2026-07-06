@@ -84,6 +84,22 @@
       "이 인터페이스는 실험적이며 향후 변경될 수 있습니다.\n"
    ],
    [
+      "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
+      "양식 문서(분기 보고서 등)의 경우, 먼저 행위자를 정의하고 본문에서 참조합니다:\n"
+   ],
+   [
+      "Translate the template once per language with C<--xlate-template> (and C<--xlate-frontmatter> when the values are kept in the file), then render each case with B<pandoc-embedz> standalone mode -- values under C<global:> in an external config never reach the translation API at all:\n",
+      "C<--xlate-template> 를 사용하여 언어별로 템플릿을 한 번 번역하고(값이 파일에 유지되는 경우 C<--xlate-frontmatter> 도 함께), 그런 다음 B<pandoc-embedz> 독립 실행 모드로 각 사례를 렌더링합니다. 외부 설정의 C<global:> 아래에 있는 값은 번역 API에 전혀 전달되지 않습니다:\n"
+   ],
+   [
+      "For inline marks, providing a macro definition config makes the same translated template render either the real names or a redacted version:\n",
+      "인라인 마크의 경우, 매크로 정의 설정을 제공하면 동일한 번역된 템플릿이 실제 이름이나 익명 처리된 버전 중 하나로 렌더링됩니다:\n"
+   ],
+   [
+      "Exclude embedz blocks from translation when a document contains them:\n",
+      "문서에 embedz 블록이 포함되어 있을 때는 해당 블록을 번역에서 제외합니다:\n"
+   ],
+   [
       "Invoke the translation process for each matched area.\n",
       "일치한 각 영역에 대해 번역 프로세스를 호출합니다.\n"
    ],
@@ -114,6 +130,10 @@
    [
       "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
       "B<gpt-4o> 의 인터페이스는 불안정하며 현재 올바르게 동작함을 보장할 수 없습니다.\n"
+   ],
+   [
+      "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
+      "엔진 모듈은 먼저 백엔드 네임스페이스(C<llm>, 그다음 C<gpty>)에서 검색한 다음, C<App::Greple::xlate> 바로 아래에서 검색합니다. 따라서 C<gpt5> 는 C<llm> 명령을 호출하는 C<App::Greple::xlate::llm::gpt5> 를 로드하는 반면, C<gpt4o> 는 C<App::Greple::xlate::gpty::gpt4o> 로 폴백합니다. 특정 백엔드를 강제로 사용하려면 C<--xlate-setopt backend=gpty> 를 사용하십시오.\n"
    ],
    [
       "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n",
@@ -186,6 +206,58 @@
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
       "번역 엔진으로 전송할 추가 컨텍스트 정보를 지정합니다. 이 옵션은 여러 번 사용하여 여러 컨텍스트 문자열을 제공할 수 있습니다. 컨텍스트 정보는 번역 엔진이 배경을 이해하고 더 정확한 번역을 생성하는 데 도움이 됩니다.\n"
+   ],
+   [
+      "Number of surrounding translated blocks passed as reference context when re-translating changed blocks (default 2). The context also includes the raw source text around the changed region (headings, list structure, captions) and, when available, the previous version of the changed text recovered from the cache, so that unchanged wording is preserved. Set to 0 to disable context-aware translation entirely. Note that each changed region is translated in its own API call and the context can add up to about 8000 characters to the system prompt, so context-aware translation trades some extra cost for consistency.\n",
+      "변경된 블록을 다시 번역할 때 참조 컨텍스트로 전달할 주변 번역 블록 수(기본값 2)를 지정합니다. 컨텍스트에는 변경된 영역 주변의 원시 소스 텍스트(제목, 목록 구조, 캡션)도 포함되며, 사용 가능한 경우 캐시에서 복원한 변경된 텍스트의 이전 버전도 포함되어 변경되지 않은 표현이 보존됩니다. 컨텍스트 인식 번역을 완전히 비활성화하려면 0으로 설정합니다. 각 변경 영역은 자체 API 호출로 번역되며 컨텍스트는 시스템 프롬프트에 최대 약 8000자를 추가할 수 있으므로, 컨텍스트 인식 번역은 일관성을 위해 약간의 추가 비용을 감수한다는 점에 유의하십시오.\n"
+   ],
+   [
+      "Initialize a new document's cache from another document's cache file. Useful for periodic reports: seed the new issue's cache with the previous issue's, so unchanged paragraphs are not re-translated and edited paragraphs keep the previous issue's wording. The seed is used only when the target cache is empty; otherwise it is ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also implies creating the new document's cache file.\n",
+      "새 문서의 캐시를 다른 문서의 캐시 파일로 초기화합니다. 정기 보고서에 유용합니다. 새 호의 캐시에 이전 호의 캐시를 시드하여 변경되지 않은 단락은 다시 번역하지 않고 편집된 단락은 이전 호의 표현을 유지하도록 합니다. 시드는 대상 캐시가 비어 있을 때만 사용되며, 그렇지 않으면 경고와 함께 무시됩니다. 기본 C<--xlate-cache=auto>에서는 시드를 지정하면 새 문서의 캐시 파일 생성도 암시합니다.\n"
+   ],
+   [
+      "Anonymize sensitive strings before they are sent to the translation API, and restore them in the output. The dictionary file gives one entry per item: in JSON (canonical, machine-generatable)\n",
+      "민감한 문자열이 번역 API로 전송되기 전에 익명화하고 출력에서 복원합니다. 사전 파일은 항목당 하나의 엔트리를 제공합니다: JSON(정규 형식, 기계 생성 가능)\n"
+   ],
+   [
+      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=1 /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
+      "또는 단순한 줄 형식(C<category pattern>, regex의 경우 C</.../>)입니다. 각 항목은 C<< <person id=1 /> >>와 같은 범주 태그로 대체됩니다. 동일한 문자열은 항상 동일한 태그를 받으므로 모델은 누가 누구인지 추적할 수 있습니다. 알 수 없는 JSON 필드는 무시되므로 생성기(예: 엔티티를 추출하는 로컬 LLM)는 자체 주석을 추가할 수 있습니다. 범주 C<lit>는 예약되어 있습니다. 로컬 캐시 파일은 여전히 복원된 일반 텍스트를 저장합니다. 은닉 대상은 API 전송에만 한정됩니다.\n"
+   ],
+   [
+      "A dictionary can be generated by an external tool -- for example a local model extracting sensitive entities:\n",
+      "사전은 외부 도구로 생성할 수 있습니다. 예를 들어 민감한 엔티티를 추출하는 로컬 모델이 있습니다:\n"
+   ],
+   [
+      "A UTF-8 BOM in the file is tolerated. Values in the front matter line format may carry a trailing comment only on their own line, not after the value.\n",
+      "파일의 UTF-8 BOM은 허용됩니다. front matter 줄 형식의 값은 값 뒤가 아니라 별도의 줄에만 후행 주석을 가질 수 있습니다.\n"
+   ],
+   [
+      "Collect anonymization entries from inline marks in the document itself. Mark the first occurrence like C<{{ person(\"山田太郎\") }}> and every occurrence of the string document-wide is anonymized. The mark itself stays in the source and in the translation, so a document can also be processed by a Jinja2-style macro processor (define the C<person> macro to print or redact the name). A custom I<regex> must contain C<< (?<category>...) >> and C<< (?<text>...) >> named captures.\n",
+      "문서 자체의 인라인 표시에서 익명화 엔트리를 수집합니다. 첫 번째 출현을 C<{{ person(\"山田太郎\") }}>처럼 표시하면 문서 전체에서 해당 문자열의 모든 출현이 익명화됩니다. 표시 자체는 소스와 번역에 그대로 남으므로, 문서는 Jinja2 스타일 매크로 프로세서로도 처리할 수 있습니다(C<person> 매크로를 정의하여 이름을 출력하거나 편집 처리하십시오). 사용자 지정 I<regex>에는 C<< (?<category>...) >> 및 C<< (?<text>...) >> 명명 캡처가 포함되어야 합니다.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-anonymize-mark=> (with a trailing C<=>) when using the default notation.\n",
+      "이와 같은 선택적 값 옵션에서는 뒤따르는 파일 인수가 값으로 간주된다는 점에 유의하십시오. 기본 표기법을 사용할 때는 C<--xlate-anonymize-mark=>(뒤에 C<=> 포함)라고 작성하십시오.\n"
+   ],
+   [
+      "Alternative notations can be configured, for example C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> for C<@@person:NAME@@>-style marks, or an HTML-comment form that stays invisible in rendered Markdown. Mark rules are collected per document: a string marked in one input file is not concealed in another file of the same run (unlike front matter values, which accumulate across files).\n",
+      "대체 표기법을 구성할 수 있습니다. 예를 들어 C<@@person:NAME@@> 스타일 표시에는 C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >>를, 렌더링된 Markdown에서 보이지 않는 HTML 주석 형식을 사용할 수 있습니다. 표시 규칙은 문서별로 수집됩니다. 한 입력 파일에 표시된 문자열은 같은 실행의 다른 파일에서는 은닉되지 않습니다(파일 간에 누적되는 front matter 값과는 다릅니다).\n"
+   ],
+   [
+      "Treat template expressions (default: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the model to copy them unchanged and verify, per block, that the response contains exactly the same expressions, each the same number of times. Their order may change, since translation legitimately reorders them to follow the target language word order. A broken expression aborts the run; the cache is checkpointed and frozen, so nothing paid for is lost.\n",
+      "템플릿 표현식(기본값: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>)을 불투명한 플레이스홀더로 취급합니다. 모델에 이를 변경하지 않고 복사하도록 지시하고, 블록별로 응답에 정확히 동일한 표현식이 각각 동일한 횟수만큼 포함되어 있는지 검증합니다. 번역에서는 대상 언어의 어순에 맞추기 위해 이를 합법적으로 재정렬할 수 있으므로 순서는 바뀔 수 있습니다. 손상된 표현식이 있으면 실행이 중단됩니다. 캐시는 체크포인트되고 고정되므로 비용이 지불된 것은 손실되지 않습니다.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-template=> (with a trailing C<=>) when using the default notation.\n",
+      "이와 같은 선택적 값 옵션에서는 뒤따르는 파일 인수가 값으로 간주된다는 점에 유의하십시오. 기본 표기법을 사용할 때는 C<--xlate-template=>(뒤에 C<=>를 붙여서)라고 작성하십시오.\n"
+   ],
+   [
+      "Treat a leading C<---> ... C<---> block as YAML front matter: exclude it from translation and from the phase-2 context slices, and add its flat C<key: value> values to the anonymization rules (category C<var>) as a safety net. With multiple input files the collected values accumulate (erring on the side of concealment).\n",
+      "선행 C<---> ... C<---> 블록을 YAML 프런트 매터로 취급합니다. 이를 번역 및 phase-2 컨텍스트 슬라이스에서 제외하고, 안전망으로 그 평면 C<key: value> 값들을 익명화 규칙(범주 C<var>)에 추가합니다. 입력 파일이 여러 개인 경우 수집된 값은 누적됩니다(은폐 쪽으로 치우쳐 처리).\n"
+   ],
+   [
+      "Always leave a blank line after the closing C<--->. With a paragraph-style match pattern, front matter that runs directly into the body text forms one straddling block that the exclusion cannot suppress (a warning is printed in that case); the values are still anonymized, but the front matter itself would be sent for translation.\n",
+      "항상 닫는 C<---> 뒤에 빈 줄을 남겨 두십시오. 문단 스타일의 일치 패턴에서는 본문 텍스트로 바로 이어지는 프런트 매터가 제외로 억제할 수 없는 걸친 블록 하나를 형성합니다(이 경우 경고가 출력됩니다). 값들은 여전히 익명화되지만, 프런트 매터 자체는 번역 대상으로 전송됩니다.\n"
    ],
    [
       "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",

@@ -81,6 +81,36 @@ Metnin maskeleme ile nasıl dönüştürüldüğü **--xlate-mask** seçeneğiyl
 
 Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
+# ANONYMIZATION AND TEMPLATES
+
+Form belgeleri (üç aylık raporlar ve benzerleri) için, aktörleri baştan tanımlayın ve gövdede onlara başvurun:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Şablonu dil başına bir kez `--xlate-template` ile (`--xlate-frontmatter` değerler dosyada tutulduğunda) çevirin, ardından her durumu **pandoc-embedz** bağımsız moduyla işleyin -- harici bir yapılandırmada `global:` altındaki değerler çeviri API'sine hiçbir zaman ulaşmaz:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Satır içi işaretler için, bir makro tanım yapılandırması sağlamak aynı çevrilmiş şablonun gerçek adları veya sansürlenmiş bir sürümü işlemesini sağlar:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 # OPTIONS
 
 - **--xlate**
@@ -111,6 +141,8 @@ Bu arayüz deneyseldir ve gelecekte değişime tabidir.
         **gpt-4o** arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.
 
     - **gpt5**: gpt-5.5
+
+    Motor modülleri önce arka uç ad alanlarında aranır (`llm`, ardından `gpty`), sonra doğrudan `App::Greple::xlate` altında aranır. Bu nedenle `gpt5`, `llm` komutunu çağıran `App::Greple::xlate::llm::gpt5`'i yüklerken, `gpt4o` `App::Greple::xlate::gpty::gpt4o`'e geri döner. Belirli bir arka ucu zorlamak için `--xlate-setopt backend=gpty` kullanın.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -204,6 +236,54 @@ Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 - **--xlate-context**=_text_
 
     Çeviri motoruna gönderilecek ek bağlam bilgisi belirtin. Birden çok bağlam dizesi sağlamak için bu seçenek birden çok kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
+
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Değişen bloklar yeniden çevrilirken referans bağlam olarak geçirilen çevredeki çevrilmiş blok sayısı (varsayılan 2). Bağlam ayrıca değişen bölgenin etrafındaki ham kaynak metni (başlıklar, liste yapısı, açıklamalar) ve kullanılabilir olduğunda, değişmemiş ifadelerin korunması için önbellekten kurtarılan değişen metnin önceki sürümünü içerir. Bağlama duyarlı çeviriyi tamamen devre dışı bırakmak için 0 olarak ayarlayın. Her değişen bölgenin kendi API çağrısında çevrildiğini ve bağlamın sistem istemine yaklaşık 8000 karaktere kadar ekleyebileceğini unutmayın; bu nedenle bağlama duyarlı çeviri, tutarlılık için bir miktar ek maliyeti göze alır.
+
+- **--xlate-cache-seed**=_file_
+
+    Yeni bir belgenin önbelleğini başka bir belgenin önbellek dosyasından başlatın. Periyodik raporlar için kullanışlıdır: yeni sayının önbelleğini önceki sayınınkiyle tohumlayın; böylece değişmemiş paragraflar yeniden çevrilmez ve düzenlenmiş paragraflar önceki sayının ifade biçimini korur. Tohum yalnızca hedef önbellek boş olduğunda kullanılır; aksi takdirde bir uyarıyla yok sayılır. Varsayılan `--xlate-cache=auto` ile, bir tohum belirtmek yeni belgenin önbellek dosyasının oluşturulacağını da ima eder.
+
+- **--xlate-anonymize**=_file_
+
+    Hassas dizeleri çeviri API'sine gönderilmeden önce anonimleştirin ve çıktıda geri yükleyin. Sözlük dosyası öğe başına bir giriş verir: JSON biçiminde (kanonik, makine tarafından üretilebilir)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    veya basit bir satır biçiminde (`category pattern`, regex için `/.../`). Her öğe `<person id=1 />` gibi bir kategori etiketiyle değiştirilir; aynı dize her zaman aynı etiketi alır, böylece model kimin kim olduğunu takip edebilir. Bilinmeyen JSON alanları yok sayılır; bu nedenle üreteçler (örn. varlıkları çıkaran yerel bir LLM) kendi ek açıklamalarını ekleyebilir. `lit` kategorisi ayrılmıştır. Yerel önbellek dosyaları hâlâ geri yüklenmiş düz metni saklar: gizleme hedefi yalnızca API iletimidir.
+
+    Bir sözlük harici bir araç tarafından üretilebilir -- örneğin hassas varlıkları çıkaran yerel bir model:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Dosyadaki UTF-8 BOM tolere edilir. Front matter satır biçimindeki değerler, yalnızca kendi satırlarında sonda bir yorum taşıyabilir; değerden sonra değil.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Anonimleştirme girişlerini belgenin içindeki satır içi işaretlerden toplayın. İlk oluşumu `{{ person("山田太郎") }}` gibi işaretleyin; dizenin belge genelindeki her oluşumu anonimleştirilir. İşaretin kendisi kaynakta ve çeviride kalır; böylece bir belge Jinja2 tarzı bir makro işlemcisiyle de işlenebilir (`person` makrosunu adı yazdıracak veya redakte edecek şekilde tanımlayın). Özel bir _regex_, `(?<category>...)` ve `(?<text>...)` adlı yakalamalarını içermelidir.
+
+    Bunun gibi isteğe bağlı değer alan bir seçenekle, ardından gelen bir dosya argümanının değer olarak alınacağını unutmayın: varsayılan gösterimi kullanırken `--xlate-anonymize-mark=` yazın (sonunda bir `=` ile).
+
+    Alternatif gösterimler yapılandırılabilir; örneğin `@@person:NAME@@` tarzı işaretler için `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` veya işlenmiş Markdown'da görünmez kalan bir HTML yorumu biçimi. İşaret kuralları belge başına toplanır: bir girdi dosyasında işaretlenen bir dize, aynı çalıştırmadaki başka bir dosyada gizlenmez (dosyalar arasında biriken front matter değerlerinin aksine).
+
+- **--xlate-template**\[=_regex_\]
+
+    Şablon ifadelerini (varsayılan: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) opak yer tutucular olarak ele alın: modele bunları değiştirmeden kopyalamasını söyleyin ve yanıtın her blok için tam olarak aynı ifadeleri, her birini aynı sayıda içerdiğini doğrulayın. Sıraları değişebilir, çünkü çeviri onları hedef dilin sözcük sırasını izlemek için meşru şekilde yeniden sıralar. Bozuk bir ifade çalıştırmayı iptal eder; önbellek denetim noktasına alınır ve dondurulur, böylece ödenmiş hiçbir şey kaybolmaz.
+
+    Bunun gibi isteğe bağlı değer alan bir seçenekle, izleyen bir dosya bağımsız değişkeninin değer olarak alınacağını unutmayın: varsayılan gösterimi kullanırken `--xlate-template=` yazın (sonunda bir `=` ile).
+
+- **--xlate-frontmatter**
+
+    Baştaki `---` ... `---` bloğunu YAML front matter olarak ele alın: onu çeviriden ve phase-2 bağlam dilimlerinden hariç tutun ve düz `key: value` değerlerini bir güvenlik ağı olarak anonimleştirme kurallarına (kategori `var`) ekleyin. Birden çok girdi dosyasıyla toplanan değerler birikir (gizleme tarafında hata yaparak).
+
+    Kapanış `---` sonrasında her zaman boş bir satır bırakın. Paragraf tarzı bir eşleşme kalıbıyla, doğrudan gövde metnine bağlanan front matter, dışlamanın bastıramayacağı, iki tarafa yayılan tek bir blok oluşturur (bu durumda bir uyarı yazdırılır); değerler yine de anonimleştirilir, ancak front matter'ın kendisi çeviri için gönderilir.
 
 - **--xlate-glossary**=_glossary_
 

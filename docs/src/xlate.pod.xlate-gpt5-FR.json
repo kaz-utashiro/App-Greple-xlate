@@ -84,6 +84,22 @@
       "Cette interface est expérimentale et susceptible d’évoluer à l’avenir.\n"
    ],
    [
+      "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
+      "Pour les documents de formulaire (rapports trimestriels et similaires), définissez les acteurs en amont et référencez-les dans le corps :\n"
+   ],
+   [
+      "Translate the template once per language with C<--xlate-template> (and C<--xlate-frontmatter> when the values are kept in the file), then render each case with B<pandoc-embedz> standalone mode -- values under C<global:> in an external config never reach the translation API at all:\n",
+      "Traduisez le modèle une fois par langue avec C<--xlate-template> (et C<--xlate-frontmatter> lorsque les valeurs sont conservées dans le fichier), puis générez chaque cas avec le mode autonome B<pandoc-embedz> -- les valeurs sous C<global:> dans une configuration externe n’atteignent jamais du tout l’API de traduction :\n"
+   ],
+   [
+      "For inline marks, providing a macro definition config makes the same translated template render either the real names or a redacted version:\n",
+      "Pour les marques en ligne, fournir une configuration de définition de macros permet au même modèle traduit d’afficher soit les vrais noms, soit une version expurgée :\n"
+   ],
+   [
+      "Exclude embedz blocks from translation when a document contains them:\n",
+      "Excluez les blocs embedz de la traduction lorsqu’un document en contient :\n"
+   ],
+   [
       "Invoke the translation process for each matched area.\n",
       "Lancer le processus de traduction pour chaque zone correspondante.\n"
    ],
@@ -114,6 +130,10 @@
    [
       "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
       "L’interface de B<gpt-4o> est instable et son bon fonctionnement ne peut pas être garanti pour le moment.\n"
+   ],
+   [
+      "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
+      "Les modules de moteur sont d’abord recherchés dans les espaces de noms backend (C<llm>, puis C<gpty>), puis directement sous C<App::Greple::xlate>. Ainsi, C<gpt5> charge C<App::Greple::xlate::llm::gpt5>, qui appelle la commande C<llm>, tandis que C<gpt4o> se rabat sur C<App::Greple::xlate::gpty::gpt4o>. Utilisez C<--xlate-setopt backend=gpty> pour forcer un backend spécifique.\n"
    ],
    [
       "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n",
@@ -186,6 +206,58 @@
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
       "Spécifiez des informations de contexte supplémentaires à envoyer au moteur de traduction. Cette option peut être utilisée plusieurs fois pour fournir plusieurs chaînes de contexte. Les informations de contexte aident le moteur de traduction à comprendre l’arrière-plan et à produire des traductions plus précises.\n"
+   ],
+   [
+      "Number of surrounding translated blocks passed as reference context when re-translating changed blocks (default 2). The context also includes the raw source text around the changed region (headings, list structure, captions) and, when available, the previous version of the changed text recovered from the cache, so that unchanged wording is preserved. Set to 0 to disable context-aware translation entirely. Note that each changed region is translated in its own API call and the context can add up to about 8000 characters to the system prompt, so context-aware translation trades some extra cost for consistency.\n",
+      "Nombre de blocs traduits environnants transmis comme contexte de référence lors de la retraduction de blocs modifiés (par défaut 2). Le contexte inclut également le texte source brut autour de la région modifiée (titres, structure de liste, légendes) et, lorsqu’elle est disponible, la version précédente du texte modifié récupérée depuis le cache, afin que les formulations inchangées soient préservées. Définissez à 0 pour désactiver entièrement la traduction tenant compte du contexte. Notez que chaque région modifiée est traduite dans son propre appel API et que le contexte peut ajouter jusqu’à environ 8000 caractères à l’invite système, de sorte que la traduction tenant compte du contexte échange un coût supplémentaire contre de la cohérence.\n"
+   ],
+   [
+      "Initialize a new document's cache from another document's cache file. Useful for periodic reports: seed the new issue's cache with the previous issue's, so unchanged paragraphs are not re-translated and edited paragraphs keep the previous issue's wording. The seed is used only when the target cache is empty; otherwise it is ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also implies creating the new document's cache file.\n",
+      "Initialisez le cache d’un nouveau document à partir du fichier de cache d’un autre document. Utile pour les rapports périodiques : amorcez le cache du nouveau numéro avec celui du numéro précédent, afin que les paragraphes inchangés ne soient pas retraduits et que les paragraphes modifiés conservent la formulation du numéro précédent. L’amorce n’est utilisée que lorsque le cache cible est vide ; sinon, elle est ignorée avec un avertissement. Avec la valeur par défaut C<--xlate-cache=auto>, spécifier une amorce implique également de créer le fichier de cache du nouveau document.\n"
+   ],
+   [
+      "Anonymize sensitive strings before they are sent to the translation API, and restore them in the output. The dictionary file gives one entry per item: in JSON (canonical, machine-generatable)\n",
+      "Anonymisez les chaînes sensibles avant qu’elles ne soient envoyées à l’API de traduction, et restaurez-les dans la sortie. Le fichier de dictionnaire fournit une entrée par élément : en JSON (canonique, générable par machine)\n"
+   ],
+   [
+      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=1 /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
+      "ou dans un format simple par ligne (C<category pattern>, C</.../> pour les regex). Chaque élément est remplacé par une étiquette de catégorie telle que C<< <person id=1 /> >> ; la même chaîne reçoit toujours la même étiquette, de sorte que le modèle peut suivre qui est qui. Les champs JSON inconnus sont ignorés, de sorte que les générateurs (par exemple un LLM local extrayant des entités) peuvent ajouter leurs propres annotations. La catégorie C<lit> est réservée. Les fichiers de cache locaux stockent toujours le texte brut restauré : la cible de la dissimulation est uniquement la transmission à l’API.\n"
+   ],
+   [
+      "A dictionary can be generated by an external tool -- for example a local model extracting sensitive entities:\n",
+      "Un dictionnaire peut être généré par un outil externe — par exemple un modèle local extrayant des entités sensibles :\n"
+   ],
+   [
+      "A UTF-8 BOM in the file is tolerated. Values in the front matter line format may carry a trailing comment only on their own line, not after the value.\n",
+      "Un BOM UTF-8 dans le fichier est toléré. Les valeurs dans le format de ligne de front matter peuvent porter un commentaire final uniquement sur leur propre ligne, pas après la valeur.\n"
+   ],
+   [
+      "Collect anonymization entries from inline marks in the document itself. Mark the first occurrence like C<{{ person(\"山田太郎\") }}> and every occurrence of the string document-wide is anonymized. The mark itself stays in the source and in the translation, so a document can also be processed by a Jinja2-style macro processor (define the C<person> macro to print or redact the name). A custom I<regex> must contain C<< (?<category>...) >> and C<< (?<text>...) >> named captures.\n",
+      "Collectez les entrées d’anonymisation à partir des marques inline dans le document lui-même. Marquez la première occurrence comme C<{{ person(\"山田太郎\") }}> et chaque occurrence de la chaîne dans l’ensemble du document est anonymisée. La marque elle-même reste dans la source et dans la traduction, de sorte qu’un document peut également être traité par un processeur de macros de style Jinja2 (définissez la macro C<person> pour imprimer ou rédacter le nom). Un I<regex> personnalisé doit contenir des captures nommées C<< (?<category>...) >> et C<< (?<text>...) >>.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-anonymize-mark=> (with a trailing C<=>) when using the default notation.\n",
+      "Notez qu’avec une option à valeur facultative comme celle-ci, un argument de fichier suivant serait pris comme valeur : écrivez C<--xlate-anonymize-mark=> (avec un C<=> final) lorsque vous utilisez la notation par défaut.\n"
+   ],
+   [
+      "Alternative notations can be configured, for example C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> for C<@@person:NAME@@>-style marks, or an HTML-comment form that stays invisible in rendered Markdown. Mark rules are collected per document: a string marked in one input file is not concealed in another file of the same run (unlike front matter values, which accumulate across files).\n",
+      "Des notations alternatives peuvent être configurées, par exemple C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> pour des marques de style C<@@person:NAME@@>, ou une forme de commentaire HTML qui reste invisible dans le Markdown rendu. Les règles de marque sont collectées par document : une chaîne marquée dans un fichier d’entrée n’est pas dissimulée dans un autre fichier de la même exécution (contrairement aux valeurs de front matter, qui s’accumulent entre les fichiers).\n"
+   ],
+   [
+      "Treat template expressions (default: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the model to copy them unchanged and verify, per block, that the response contains exactly the same expressions, each the same number of times. Their order may change, since translation legitimately reorders them to follow the target language word order. A broken expression aborts the run; the cache is checkpointed and frozen, so nothing paid for is lost.\n",
+      "Traitez les expressions de modèle (par défaut : Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) comme des espaces réservés opaques : indiquez au modèle de les copier sans les modifier et vérifiez, pour chaque bloc, que la réponse contient exactement les mêmes expressions, chacune le même nombre de fois. Leur ordre peut changer, car la traduction les réordonne légitimement pour respecter l’ordre des mots de la langue cible. Une expression cassée interrompt l’exécution ; le cache est enregistré à un point de contrôle et gelé, de sorte que rien de ce qui a été payé n’est perdu.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-template=> (with a trailing C<=>) when using the default notation.\n",
+      "Notez qu’avec une option à valeur facultative comme celle-ci, un argument de fichier suivant serait pris comme valeur : écrivez C<--xlate-template=> (avec un C<=> final) lorsque vous utilisez la notation par défaut.\n"
+   ],
+   [
+      "Treat a leading C<---> ... C<---> block as YAML front matter: exclude it from translation and from the phase-2 context slices, and add its flat C<key: value> values to the anonymization rules (category C<var>) as a safety net. With multiple input files the collected values accumulate (erring on the side of concealment).\n",
+      "Traitez un bloc initial C<---> ... C<---> comme un front matter YAML : excluez-le de la traduction et des tranches de contexte de phase 2, et ajoutez ses valeurs C<key: value> plates aux règles d’anonymisation (catégorie C<var>) comme filet de sécurité. Avec plusieurs fichiers d’entrée, les valeurs collectées s’accumulent (en privilégiant la dissimulation en cas de doute).\n"
+   ],
+   [
+      "Always leave a blank line after the closing C<--->. With a paragraph-style match pattern, front matter that runs directly into the body text forms one straddling block that the exclusion cannot suppress (a warning is printed in that case); the values are still anonymized, but the front matter itself would be sent for translation.\n",
+      "Laissez toujours une ligne vide après le C<---> de fermeture. Avec un motif de correspondance de style paragraphe, un front matter qui se poursuit directement dans le texte du corps forme un bloc chevauchant que l’exclusion ne peut pas supprimer (un avertissement est affiché dans ce cas) ; les valeurs sont tout de même anonymisées, mais le front matter lui-même serait envoyé à la traduction.\n"
    ],
    [
       "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
