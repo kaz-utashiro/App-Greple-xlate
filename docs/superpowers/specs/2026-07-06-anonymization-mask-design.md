@@ -147,11 +147,23 @@ maskfile と同じ規則。
   YAML パーサの新規依存は入れない)
 - builtin オプション: `xlate-frontmatter! $use_frontmatter`
   (%opt キー `frontmatter`)
-- **汎用テンプレートのレシピ(POD に記載、実装なし)**: インスタンス
-  文書 = front matter(値+外部テンプレート参照)のみ。テンプレート
-  本体を言語ごとに一度 xlate で翻訳し(F1 有効)、レンダリング
-  (jinja2/pandoc 等、xlate の外)が front matter の値を訳文
-  テンプレートに注入する。インスタンス側には翻訳対象が存在しない
+- **汎用テンプレートのレシピ(POD に記載、実装なし)**: レンダラの
+  第一想定は **pandoc-embedz のスタンドアロンモード**
+  (<https://github.com/tecolicom/pandoc-embedz>、Jinja2 完全対応。
+  2026-07-06 ユーザー方針)。実名は embedz の外部 config
+  (`-c vars.yaml`、繰り返し指定可)に置くのが最も強い構成 —
+  訳文テンプレートにも xlate にも API にも実名が一切流れない:
+
+```sh
+# テンプレートを言語ごとに一度翻訳(F1 有効。実名はどこにも無い)
+greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+       --xlate-template report-template.md > report-template.EN.md
+# 案件ごとのレンダリング(xlate の外)
+pandoc-embedz --standalone report-template.EN.md -c case-123.yaml -o report-123.EN.md
+```
+
+  F2 の front matter 方式は、embedz を使わない/1 ファイルで完結させたい
+  簡易ケース用の位置づけとする:
 
 ```markdown
 ---
@@ -161,6 +173,12 @@ template: incident-report.j2
 ---
 (個別の本文があればここに)
 ```
+
+- **```embedz フェンスブロックの除外**: embedz のコードブロック
+  (設定 YAML+テンプレート)は翻訳対象にしない運用を POD レシピに
+  記載する(`--exclude` パターン例:
+  `^```embedz\n(?s:.*?)^```\n`)。ブロック内テンプレート文言の翻訳は
+  将来課題
 
 ### インラインマーク(--xlate-anonymize-mark[=REGEX])
 
