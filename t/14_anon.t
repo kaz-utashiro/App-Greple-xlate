@@ -174,4 +174,16 @@ subtest 'dryrun previews the anonymized form' => sub {
     is($after, $before, 'cache untouched by dryrun');
 };
 
+subtest 'progress From display shows the masked form' => sub {
+    my $doc = "$dir/prog.txt";
+    my $cache = "$doc.xlate-gpt5-EN-US.json";
+    write_file($doc, "yamada taro visited acme corporation\n");
+    write_file($cache, '');
+    my $r = run_xlate($doc, "--xlate-anonymize=$dict");
+    is($r->status, 0, 'run succeeds');
+    my($from) = $r->stdout =~ /^\[xlate\.pm\] From:\n(.*)$/m;
+    like($from, qr/<person id=1 \/>/, 'From line shows the masked payload');
+    unlike($from, qr/yamada taro/, 'From line has no plaintext secret');
+};
+
 done_testing;

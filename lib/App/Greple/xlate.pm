@@ -1055,8 +1055,6 @@ sub cache_update {
         _progress({label => "From"}, @preview);
         return @from;
     }
-    _progress({label => "From"}, @from);
-
     my @result = eval {
         my $masked_context = $context;
         if ($anonobj) {
@@ -1072,6 +1070,9 @@ sub cache_update {
             }
         }
         $maskobj->mask(@from) if $maskobj;
+        # Show the payload as it will be transmitted, consistent with
+        # the dryrun preview and the --xlate-mask display.
+        _progress({label => "From"}, @from);
         warn Dumper $masked_context if $context and opt('debug');
         my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
         my @to = do {
