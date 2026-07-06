@@ -163,7 +163,9 @@ maskfile と同じ規則。
 ```sh
 # テンプレートを言語ごとに一度翻訳(F1 有効。実名はどこにも無い)
 greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
-       --xlate-template report-template.md > report-template.EN.md
+       --xlate-template= --xlate-format=xtxt \
+       --match-paragraph --all --need=0 \
+       report-template.md > report-template.EN.md
 # 案件ごとのレンダリング(xlate の外)
 pandoc-embedz --standalone report-template.EN.md -c case-123.yaml \
               -o report-123.EN.md < /dev/null

@@ -156,7 +156,9 @@ values under C<global:> in an external config never reach the
 translation API at all:
 
     greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
-           --xlate-template report-template.md > report-template.EN.md
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
     pandoc-embedz --standalone report-template.EN.md \
                   -c case-123.yaml -o report-123.EN.md < /dev/null
 
