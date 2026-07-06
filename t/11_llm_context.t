@@ -84,4 +84,27 @@ subtest 'single changed paragraph goes through region path' => sub {
     like($r->stdout, qr/ALPHA PARAGRAPH ORIGINAL TEXT/, 'others from cache');
 };
 
+subtest 'duplicate paragraphs do not fake cache hits' => sub {
+    my $dup = "$dir/dup.txt";
+    write_file($dup, <<'END');
+alpha duplicated text
+
+alpha duplicated text
+
+beta unique text
+END
+    write_file("$dup.xlate-gpt5-EN-US.json", '');
+    my $log = "$dir/dup.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($dup);
+    is($r->status, 0, 'run succeeds');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'all-miss doc with duplicates: single flat call');
+    is_deeply(JSON::PP->new->decode($calls[0]{stdin}),
+              [ "alpha duplicated text\n", "beta unique text\n" ],
+              'duplicates deduped, no false hit classification');
+    like($r->stdout, qr/ALPHA DUPLICATED TEXT.*ALPHA DUPLICATED TEXT.*BETA UNIQUE TEXT/s,
+         'both occurrences rendered from the single translation');
+};
+
 done_testing;

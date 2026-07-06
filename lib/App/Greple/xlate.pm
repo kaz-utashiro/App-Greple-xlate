@@ -728,6 +728,7 @@ use App::Greple::xlate::Text;
 sub postgrep {
     my $grep = shift;
     my @blocks;
+    my %pending;
     for my $r ($grep->result) {
         my($b, @match) = @$r;
         for my $m (@match) {
@@ -735,8 +736,10 @@ sub postgrep {
             my $key = App::Greple::xlate::Text
                 ->new($grep->cut(@$m), paragraph => ($i % 2 == 0))
                 ->normalized;
-            my $hit = exists $cache{$key};
-            $cache{$key} = undef if not $hit;
+            my $hit = !$pending{$key} && exists $cache{$key};
+            if (not $hit and not $pending{$key}++) {
+                $cache{$key} = undef;
+            }
             push @blocks, { key => $key, s => $s, e => $e, hit => $hit };
         }
     }
@@ -754,10 +757,11 @@ sub postgrep {
         && $context_window > 0
         && grep { $_->{hit} } @blocks;
     if ($with_context) {
+        my %queued;
         for my $region (@regions) {
-            my %seen;
-            my @texts = grep { not $seen{$_}++ }
+            my @texts = grep { not $queued{$_}++ }
                         map $blocks[$_]{key}, $region->[0] .. $region->[1];
+            next unless @texts;
             cache_update({
                 texts   => \@texts,
                 context => region_context(\@blocks, @$region),
