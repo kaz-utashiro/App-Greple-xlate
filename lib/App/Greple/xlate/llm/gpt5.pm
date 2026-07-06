@@ -126,6 +126,7 @@ use App::Greple::xlate::llm;
 our $lang_from //= 'ORIGINAL';
 our $lang_to   //= 'JA';
 our $method = __PACKAGE__ =~ s/.*://r;
+our $XLATE_CONTEXT = 1;     # consumes $App::Greple::xlate::call_context
 
 my %param = (
     model   => 'gpt-5.5',

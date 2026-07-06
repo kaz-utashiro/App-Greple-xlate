@@ -614,12 +614,16 @@ our %opt = (
     glossary => \(our $glossary),
     backend  => \(our $engine_backend = ''),
     cache_seed => \(our $cache_seed),
+    context_window => \(our $context_window = 2),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
 sub opt :lvalue { ${$opt{+shift}} }
 
 our $current_file;
+my $current_text;              # whole document, set in begin()
+our $call_context;             # per-call context for context-aware engines
+our $engine_supports_context;  # engine declares $XLATE_CONTEXT
 my $colon_count = 7;
 
 our %formatter = (
@@ -706,6 +710,7 @@ sub setup {
         ${"$mod\::lang_from"} = $lang_from;
         ${"$mod\::lang_to"} = $lang_to;
         *XLATE = \&{"$mod\::xlate"};
+        $engine_supports_context = ${"$mod\::XLATE_CONTEXT"};
         if (not defined &XLATE) {
             die "No \"xlate\" function in $mod.\n";
         }
@@ -722,7 +727,7 @@ use App::Greple::xlate::Text;
 
 sub postgrep {
     my $grep = shift;
-    my @miss;
+    my @blocks;
     for my $r ($grep->result) {
         my($b, @match) = @$r;
         for my $m (@match) {
@@ -730,13 +735,49 @@ sub postgrep {
             my $key = App::Greple::xlate::Text
                 ->new($grep->cut(@$m), paragraph => ($i % 2 == 0))
                 ->normalized;
-            if (not exists $cache{$key}) {
-                $cache{$key} = undef;
-                push @miss, $key;
-            }
+            my $hit = exists $cache{$key};
+            $cache{$key} = undef if not $hit;
+            push @blocks, { key => $key, s => $s, e => $e, hit => $hit };
         }
     }
-    cache_update(@miss) if @miss;
+    my @regions;
+    my $i = 0;
+    while ($i < @blocks) {
+        if ($blocks[$i]{hit}) { $i++; next }
+        my $j = $i;
+        $j++ while $j < @blocks and not $blocks[$j]{hit};
+        push @regions, [ $i, $j - 1 ];
+        $i = $j;
+    }
+    return if not @regions;
+    my $with_context = $engine_supports_context
+        && $context_window > 0
+        && grep { $_->{hit} } @blocks;
+    if ($with_context) {
+        for my $region (@regions) {
+            my %seen;
+            my @texts = grep { not $seen{$_}++ }
+                        map $blocks[$_]{key}, $region->[0] .. $region->[1];
+            cache_update({
+                texts   => \@texts,
+                context => region_context(\@blocks, @$region),
+            });
+        }
+    } else {
+        my %seen;
+        my @texts = grep { not $seen{$_}++ }
+                    map $blocks[$_]{key},
+                    map { $_->[0] .. $_->[1] } @regions;
+        cache_update({ texts => \@texts, context => undef });
+    }
+}
+
+##
+## Build the per-region context (surrounding source slices, neighbor
+## pairs, previous-version pairs).  Implemented in the next task.
+##
+sub region_context {
+    return undef;
 }
 
 sub _progress {
@@ -757,19 +798,37 @@ sub _progress {
 sub cache_update {
     binmode STDERR, ':encoding(utf8)';
 
-    my @from = @_;
+    my $region = ref $_[0] eq 'HASH' ? shift : { texts => [ @_ ] };
+    my @from = @{$region->{texts}};
+    my $context = $region->{context};
+
+    if ($context) {
+        my $refs = @{$context->{hits_before} // []}
+                 + @{$context->{hits_after} // []};
+        my $olds = @{$context->{old_pairs} // []};
+        _progress({label => "Context"},
+                  sprintf("%d reference pair(s), %d previous pair(s)",
+                          $refs, $olds));
+        warn Dumper $context if opt('debug');
+    }
     _progress({label => "From"}, @from);
     return @from if $dryrun;
 
     $maskobj->mask(@from) if $maskobj;
     my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
-    my @to = map { s/ +$//mgr } &XLATE(@from);
+    my @to = do {
+        local $call_context = $context;
+        map { s/ +$//mgr } &XLATE(@from);
+    };
     chop @to[@chop];
     $maskobj->unmask(@to)->reset if $maskobj;
 
     _progress({label => "To"}, @to);
     die "Unmatched response:\n@to" if @from != @to;
-    @cache{@_} = @to;
+    @cache{@{$region->{texts}}} = @to;
+    if (my $obj = tied %cache) {
+        $obj->checkpoint;
+    }
 }
 
 sub fold_lines {
@@ -830,6 +889,7 @@ sub begin {
     my %args = @_;
     $current_file = delete $args{&::FILELABEL} or die;
     s/\z/\n/ if /.\z/;
+    $current_text = $_;
     if (not defined $xlate_engine) {
         die "Select translation engine.\n";
     }
@@ -891,6 +951,7 @@ builtin xlate-maxline=i    $max_line
 builtin xlate-prompt=s     $prompt
 builtin xlate-glossary=s   $glossary
 builtin xlate-context=s    @contexts
+builtin xlate-context-window=i $context_window
 builtin xlate-cache-seed=s $cache_seed
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
