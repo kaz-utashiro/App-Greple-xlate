@@ -920,8 +920,20 @@ sub cache_update {
                           $refs, $olds));
         warn Dumper $context if opt('debug');
     }
+    if ($dryrun) {
+        my @preview = @from;
+        if ($anonobj) {
+            $anonobj->mask(@preview);
+            $anonobj->reset;
+        }
+        if ($maskobj) {
+            $maskobj->mask(@preview);
+            $maskobj->reset;
+        }
+        _progress({label => "From"}, @preview);
+        return @from;
+    }
     _progress({label => "From"}, @from);
-    return @from if $dryrun;
 
     my @result = eval {
         my $masked_context = $context;

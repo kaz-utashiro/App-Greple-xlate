@@ -160,4 +160,19 @@ END
     like($r->stdout, qr/YAMADA TARO|yamada taro/i, 'name restored');
 };
 
+subtest 'dryrun previews the anonymized form' => sub {
+    my $doc = "$dir/dry.txt";
+    my $cache = "$doc.xlate-gpt5-EN-US.json";
+    write_file($doc, "yamada taro visited acme corporation\n");
+    write_file($cache, '');
+    my $before = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    my $r = run_xlate($doc, '--xlate-dryrun', "--xlate-anonymize=$dict");
+    is($r->status, 0, 'dryrun succeeds');
+    like($r->stdout, qr/<person id=1 \/> visited <company id=1 \/>/,
+         'From preview shows the anonymized payload');
+    my $after = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    is($after, $before, 'cache untouched by dryrun');
+};
+
 done_testing;
+

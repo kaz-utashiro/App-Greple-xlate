@@ -282,7 +282,7 @@ greple -Mxlate --xlate-anonymize report.anon.json --xlate ... report.md
 ```
 mask:   ①退避層  — 本文: 追跡 / 文脈: 参照モード
         ②匿名化  — 本文: 追跡 / 文脈: 参照モード
-        ③maskfile — 本文: 追跡 / 文脈: 参照モード
+        ③maskfile — 本文: 追跡(文脈には適用しない — 旧経路に参照モードが無いため)
 unmask: ③maskfile → ②匿名化 → ①退避層 の逆順。
         欠落検証は本文由来(追跡)のタグのみ(現行同様 die)
 ```
