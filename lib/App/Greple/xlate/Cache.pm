@@ -60,6 +60,9 @@ for my $key (keys %default) {
 sub new {
     my $class = shift;
     my $obj = bless { %default }, $class;
+    $obj->{accessed} = {};
+    $obj->{order} = [];
+    $obj->{saved_order} = [];
     lock_keys %{$obj};
     pairmap { $obj->{$a} = $b } @_;
     $obj->open if $obj->name;
