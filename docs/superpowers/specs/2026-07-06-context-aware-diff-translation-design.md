@@ -17,8 +17,12 @@ xlate の差分翻訳は「変更された段落だけ」を API に送るが、
 
 ## 決定事項(ブレインストーミング承認済み)
 
-- 文脈 = **周辺段落の原文+既訳** と **変更前の旧対訳**(既存の静的
-  `--xlate-context` は従来通り併用)
+- 文脈 = **周辺原文スライス(構造要素込み)** と **周辺段落の原文+既訳**
+  と **変更前の旧対訳**(既存の静的 `--xlate-context` は従来通り併用)。
+  周辺原文スライスは、翻訳対象にならない構造要素(見出し、箇条書き、
+  キャプション、コードブロック等)が文脈から欠落する問題への対策で、
+  ギャップ領域の前後の文書バッファを**マッチ・非マッチを問わず生のまま**
+  切り出して渡す。フォーマット非依存(書式ごとの見出し検出は不要)
 - 旧訳の対応付けは**位置ベース(挟み撃ち)**: キャッシュ list が文書順を
   保存していることを利用。段落の移動には対応しない(その場合は旧訳なしで翻訳)
 - 呼び出し単位は**ギャップ領域**(連続ミス段落の列)ごと。全段落ミス
@@ -65,10 +69,12 @@ postgrep:
   if (エンジンの $XLATE_CONTEXT && context_window > 0 && hit が 1 個以上) {
       ギャップ領域ごとに:
         region = {
-          texts       => [ギャップ内の miss キー列(文書順)],
-          hits_before => [直前の hit 最大 W 個の [原文, 訳文](近い順に外へ)],
-          hits_after  => [直後の hit 最大 W 個の [原文, 訳文]],
-          old_pairs   => [挟み撃ちで得た旧 [原文, 訳文] 列(下記)],
+          texts         => [ギャップ内の miss キー列(文書順)],
+          source_before => 領域直前の原文スライス(生テキスト、下記),
+          source_after  => 領域直後の原文スライス(生テキスト),
+          hits_before   => [直前の hit 最大 W 個の [原文, 訳文](近い順に外へ)],
+          hits_after    => [直後の hit 最大 W 個の [原文, 訳文]],
+          old_pairs     => [挟み撃ちで得た旧 [原文, 訳文] 列(下記)],
         }
         cache_update($region)
   } else {
@@ -79,6 +85,12 @@ postgrep:
 
 - W = `--xlate-context-window`(既定 2)。フランクは miss を飛ばして
   外側へ走査し、hit だけを最大 W 個集める
+- **原文スライス**: 文書バッファ上で、領域開始オフセットの手前
+  `$CONTEXT_SOURCE_MAX`(内部定数 2000)文字以内(行頭に切り上げ)を
+  `source_before`、領域終了オフセットの直後同量以内(行末で切り捨て)を
+  `source_after` として生のまま切り出す。マッチしなかった行(見出し・
+  箇条書き・キャプション・コード等)もそのまま含まれる。翻訳対象の
+  テキスト自体はスライスに含めない(ペイロードとして別途送るため)
 - `cache_update` は領域ごとに: dryrun 処理 → マスク →
   `local $call_context = 文脈` を設定して `XLATE(@texts)` → アンマスク →
   検証 → `%cache` へ格納 → **checkpoint 書き出し**(下記)
@@ -117,9 +129,11 @@ tied ハッシュからオブジェクトへは `tied %cache` でアクセスす
 
 ```perl
 {
-  hits_before => [ [src, trans], ... ],   # 近い順
-  hits_after  => [ [src, trans], ... ],   # 近い順
-  old_pairs   => [ [src, trans], ... ],   # 文書順
+  source_before => "...",                   # 生テキスト('' 可)
+  source_after  => "...",                   # 生テキスト('' 可)
+  hits_before   => [ [src, trans], ... ],   # 近い順
+  hits_after    => [ [src, trans], ... ],   # 近い順
+  old_pairs     => [ [src, trans], ... ],   # 文書順
 }
 ```
 
@@ -130,10 +144,17 @@ tied ハッシュからオブジェクトへは `tied %cache` でアクセスす
 ### プロンプト構成(llm.pm build_system の拡張)
 
 `$call_context` が真のとき、system プロンプト(既存の prompt 展開 +
-`--xlate-context` 追記のあと)に以下の 2 節を追記する。対訳は
+`--xlate-context` 追記のあと)に以下の 3 節を追記する。対訳は
 JSON 配列(`[{"source":...,"translation":...},...]`)で埋め込む:
 
 ```
+Surrounding document source, shown for context only.
+Do NOT translate or output any of it. The passage you will be asked
+to translate sits at the [...] marker:
+<source_before>
+[...]
+<source_after>
+
 Reference translations from the surrounding document.
 Match their style, tone, and terminology:
 <hits_before + hits_after の JSON>
@@ -146,12 +167,14 @@ the source changes require:
 <old_pairs の JSON>
 ```
 
-- 節は対応する配列が空なら省略する
+- 節は対応する内容が空なら省略する(スライスは両側空のとき省略)
 - **切り詰め**: 文脈の合計文字数(JSON 化後)が上限
-  `$CONTEXT_MAX`(内部定数 8000 文字)を超える場合、優先度
-  「old_pairs > 近いフランク > 遠いフランク」で、遠いフランクから
-  削って上限内に収める。old_pairs だけで超える場合は old_pairs の
-  端(文書順で遠い側)から削る
+  `$CONTEXT_MAX`(内部定数 8000 文字)を超える場合、次の順に削って
+  上限内に収める:
+  1. 遠いフランク対訳(W 個のうち外側)から削る
+  2. 原文スライスを両側それぞれ 500 文字まで(領域から遠い側を)縮める
+  3. 近いフランク対訳を削る
+  4. old_pairs の端(文書順で遠い側)から削る
 - この指示文はプロトコル指示(JSON 配列で返せ等)と別の節なので、
   `--xlate-prompt` によるユーザ全置換とは干渉しない(全置換時も
   文脈節は追記される)
@@ -230,8 +253,9 @@ die $@ unless $@ =~ /^Can't locate \Q$path.pm\E /;
    - 準備: 3〜5 段落の原文と、その全対訳が入ったキャッシュ JSON を
      生成(スタブの uc 変換で作ると自己整合的)
    - 中央の 1 段落を変更して実行 → llm 呼び出しは 1 回、system に
-     Reference 節(前後の対訳)と Previous version 節(旧ペア)が
-     含まれ、訳文が正しく差し替わる
+     Surrounding source 節(翻訳対象でない見出し行・箇条書き行を
+     含むこと)、Reference 節(前後の対訳)、Previous version 節
+     (旧ペア)が含まれ、訳文が正しく差し替わる
    - 離れた 2 段落を変更 → 呼び出し 2 回、各領域の文脈が各自の
      近傍のみを含む
    - `--xlate-context-window=0` → 呼び出し 1 回(従来バッチ)、
@@ -267,8 +291,9 @@ die $@ unless $@ =~ /^Can't locate \Q$path.pm\E /;
 
 ## ③(匿名化)との接続
 
-文脈節に含まれる周辺原文・旧訳は**マスク前の平文**である点に注意
-(現行の mask は cache_update 内で対象テキストにだけ適用される)。
+文脈節に含まれる周辺原文(スライス・対訳ペア)・旧訳は**マスク前の
+平文**である点に注意(現行の mask は cache_update 内で対象テキストに
+だけ適用される)。
 ③で機密マスクを導入する際は、文脈節にも同じマスクを適用する必要が
 ある。本設計では文脈組み立てとマスクの適用順を cache_update 内に
 集約してあるため、③での拡張点は cache_update 1 箇所で済む。
