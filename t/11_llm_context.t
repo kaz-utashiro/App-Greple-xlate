@@ -107,4 +107,57 @@ END
          'both occurrences rendered from the single translation');
 };
 
+subtest 'context sections appear in the system prompt' => sub {
+    # 前 subtest の続き: 現キャッシュは beta 改訂版を含む
+    (my $mod = $DOC) =~ s/beta paragraph original/beta paragraph rerevised/;
+    write_file($doc, $mod);
+    my $log = "$dir/context.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc);
+    is($r->status, 0, 'run succeeds');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'one llm call');
+    my $sys = sys_of($calls[0]);
+
+    like($sys, qr/Surrounding document source/, 'source slice section');
+    like($sys, qr/## SECTION ONE/, 'slice contains non-translated heading');
+    like($sys, qr/\Q[...]\E/, 'slice has the passage marker');
+
+    like($sys, qr/Reference translations/, 'reference section');
+    like($sys, qr/alpha paragraph original text/, 'neighbor source');
+    like($sys, qr/ALPHA PARAGRAPH ORIGINAL TEXT/, 'neighbor translation');
+
+    like($sys, qr/Previous version of the passage/, 'previous section');
+    like($sys, qr/beta paragraph revised text/, 'old source pair');
+    like($sys, qr/BETA PARAGRAPH REVISED TEXT/, 'old translation pair');
+
+    like($r->stdout, qr/BETA PARAGRAPH REREVISED TEXT/, 'output updated');
+};
+
+subtest 'truncation drops far flanks first' => sub {
+    require App::Greple::xlate::llm;
+    my $big = "x" x 5000;
+    local $App::Greple::xlate::call_context = {
+        source_before => "line before\n",
+        source_after  => "line after\n",
+        hits_before   => [ [ "near b\n", "NEAR B\n" ],
+                           [ "$big\n",   "FAR B\n"  ] ],
+        hits_after    => [ [ "near a\n", "NEAR A\n" ],
+                           [ "$big\n",   "FAR A\n"  ] ],
+        old_pairs     => [ [ "old src\n", "OLD TRANS\n" ] ],
+    };
+    my $text = App::Greple::xlate::llm::context_sections();
+    cmp_ok(length($text), '<=', $App::Greple::xlate::llm::CONTEXT_MAX,
+           'within limit');
+    like($text, qr/NEAR B/, 'near flank kept');
+    like($text, qr/NEAR A/, 'near flank kept (after)');
+    unlike($text, qr/FAR B/, 'far flank dropped');
+    like($text, qr/OLD TRANS/, 'old pair survives truncation');
+};
+
+subtest 'empty context renders nothing' => sub {
+    local $App::Greple::xlate::call_context = undef;
+    is(App::Greple::xlate::llm::context_sections(), '', 'undef context');
+};
+
 done_testing;

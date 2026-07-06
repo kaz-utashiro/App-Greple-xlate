@@ -776,12 +776,72 @@ sub postgrep {
     }
 }
 
+our $CONTEXT_SOURCE_MAX = 2000;   # per-side raw source slice limit
+
 ##
 ## Build the per-region context (surrounding source slices, neighbor
-## pairs, previous-version pairs).  Implemented in the next task.
+## pairs, previous-version pairs).
 ##
 sub region_context {
-    return undef;
+    my($blocks, $from, $to) = @_;
+    my(@before, @after);
+    for (my $k = $from - 1; $k >= 0 and @before < $context_window; $k--) {
+        next unless $blocks->[$k]{hit};
+        my $v = $cache{$blocks->[$k]{key}};
+        push @before, [ $blocks->[$k]{key}, $v ] if defined $v;
+    }
+    for (my $k = $to + 1; $k < @$blocks and @after < $context_window; $k++) {
+        next unless $blocks->[$k]{hit};
+        my $v = $cache{$blocks->[$k]{key}};
+        push @after, [ $blocks->[$k]{key}, $v ] if defined $v;
+    }
+    my @old;
+    if (my $tied = tied %cache) {
+        my %is_hit = map { $_->{key} => 1 } grep { $_->{hit} } @$blocks;
+        my($lo, $hi);
+        for (my $k = $from - 1; $k >= 0; $k--) {
+            next unless $blocks->[$k]{hit};
+            my $pos = $tied->old_position($blocks->[$k]{key});
+            if (defined $pos) { $lo = $pos + 1; last }
+        }
+        for (my $k = $to + 1; $k < @$blocks; $k++) {
+            next unless $blocks->[$k]{hit};
+            my $pos = $tied->old_position($blocks->[$k]{key});
+            if (defined $pos) { $hi = $pos - 1; last }
+        }
+        $lo //= 0;
+        $hi //= $tied->old_size - 1;
+        @old = grep { not $is_hit{$_->[0]} }
+               $tied->old_entries_slice($lo, $hi);
+    }
+    return {
+        source_before => source_slice_before($blocks->[$from]{s}),
+        source_after  => source_slice_after($blocks->[$to]{e}),
+        hits_before   => \@before,
+        hits_after    => \@after,
+        old_pairs     => \@old,
+    };
+}
+
+sub source_slice_before {
+    my $end = shift;
+    return '' unless defined $current_text and $end > 0;
+    my $start = $end - $CONTEXT_SOURCE_MAX;
+    $start = 0 if $start < 0;
+    my $s = substr($current_text, $start, $end - $start);
+    $s =~ s/\A[^\n]*\n// if $start > 0;    # round up to a line start
+    $s;
+}
+
+sub source_slice_after {
+    my $start = shift;
+    return '' unless defined $current_text
+        and $start < length($current_text);
+    my $s = substr($current_text, $start, $CONTEXT_SOURCE_MAX);
+    if ($start + $CONTEXT_SOURCE_MAX < length($current_text)) {
+        $s =~ s/(?<=\n)[^\n]*\z//;         # drop trailing partial line
+    }
+    $s;
 }
 
 sub _progress {

@@ -51,6 +51,10 @@ use App::Greple::xlate qw(%opt &opt);
 use App::Greple::xlate::Lang qw(%LANGNAME);
 
 my $json = JSON->new->canonical->pretty;
+my $json_flat = JSON->new->canonical;
+
+our $CONTEXT_MAX = 8000;          # total rendered context limit
+our $CONTEXT_SOURCE_MIN = 500;    # slice floor while truncating
 
 sub _progress {
     print STDERR @_ if opt('progress');
@@ -75,7 +79,88 @@ sub build_system {
     if (my @contexts = @{$opt{contexts}}) {
         $system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
     }
+    $system .= context_sections();
     $system;
+}
+
+sub _pairs_json {
+    $json_flat->encode(
+        [ map { +{ source => $_->[0], translation => $_->[1] } } @_ ]);
+}
+
+##
+## Render the three context sections from $call_context, trimming to
+## $CONTEXT_MAX in the spec's priority order: far flank pairs, source
+## slices (down to $CONTEXT_SOURCE_MIN per side), near flank pairs,
+## then old pairs from the far end.
+##
+sub context_sections {
+    my $ctx = $App::Greple::xlate::call_context or return '';
+    my @before = @{$ctx->{hits_before} // []};   # near to far
+    my @after  = @{$ctx->{hits_after}  // []};   # near to far
+    my @old    = @{$ctx->{old_pairs}   // []};   # document order
+    my $sb = $ctx->{source_before} // '';
+    my $sa = $ctx->{source_after}  // '';
+
+    my $render = sub {
+        my $out = '';
+        if (length $sb or length $sa) {
+            $out .= "\n\nSurrounding document source, shown for context only.\n"
+                  . "Do NOT translate or output any of it. The passage you will be\n"
+                  . "asked to translate sits at the [...] marker:\n"
+                  . "$sb\[...]\n$sa";
+        }
+        if (@before or @after) {
+            $out .= "\n\nReference translations from the surrounding document.\n"
+                  . "Match their style, tone, and terminology:\n"
+                  . _pairs_json(reverse(@before), @after);
+        }
+        if (@old) {
+            $out .= "\n\nPrevious version of the passage you are about to translate\n"
+                  . "(source and translation before the source was edited).\n"
+                  . "Where the new source text is unchanged from this previous\n"
+                  . "version, keep the previous translation's wording exactly;\n"
+                  . "change only what the source changes require:\n"
+                  . _pairs_json(@old);
+        }
+        $out;
+    };
+
+    my @trim = (
+        sub {
+            if    (@before > 1) { pop @before; 1 }
+            elsif (@after  > 1) { pop @after;  1 }
+            else  { 0 }
+        },
+        sub {
+            if (length($sb) > $CONTEXT_SOURCE_MIN) {
+                $sb = substr($sb, -$CONTEXT_SOURCE_MIN);
+                $sb =~ s/\A[^\n]*\n//;
+                return 1;
+            }
+            if (length($sa) > $CONTEXT_SOURCE_MIN) {
+                $sa = substr($sa, 0, $CONTEXT_SOURCE_MIN);
+                $sa =~ s/(?<=\n)[^\n]*\z//;
+                return 1;
+            }
+            0;
+        },
+        sub {
+            if    (@before) { pop @before; 1 }
+            elsif (@after)  { pop @after;  1 }
+            else  { 0 }
+        },
+        sub { @old ? do { pop @old; 1 } : 0 },
+    );
+    my $text = $render->();
+    STEP: for my $step (@trim) {
+        while (length($text) > $CONTEXT_MAX) {
+            $step->() or next STEP;
+            $text = $render->();
+        }
+        last;
+    }
+    $text;
 }
 
 sub llm_command {
