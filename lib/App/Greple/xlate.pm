@@ -732,6 +732,7 @@ our %opt = (
     anonymize => \(our $anonymize_file),
     anonymize_mark => \(our $anonymize_mark),
     template => \(our $template_option),
+    frontmatter => \(our $use_frontmatter = 0),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
@@ -739,6 +740,7 @@ sub opt :lvalue { ${$opt{+shift}} }
 
 our $current_file;
 my $current_text;              # whole document, set in begin()
+my $frontmatter_len = 0;       # body starts after this offset
 our $call_context;             # per-call context for context-aware engines
 our $engine_supports_context;  # engine declares $XLATE_CONTEXT
 my $colon_count = 7;
@@ -956,9 +958,9 @@ sub region_context {
 
 sub source_slice_before {
     my $end = shift;
-    return '' unless defined $current_text and $end > 0;
+    return '' unless defined $current_text and $end > $frontmatter_len;
     my $start = $end - $CONTEXT_SOURCE_MAX;
-    $start = 0 if $start < 0;
+    $start = $frontmatter_len if $start < $frontmatter_len;
     my $s = substr($current_text, $start, $end - $start);
     $s =~ s/\A[^\n]*\n// if $start > 0;    # round up to a line start
     $s;
@@ -1154,6 +1156,25 @@ sub begin {
     $current_file = delete $args{&::FILELABEL} or die;
     s/\z/\n/ if /.\z/;
     $current_text = $_;
+    $frontmatter_len = 0;
+    if ($use_frontmatter
+        and $current_text =~ /\A(---\n(?s:.*?)^---\n)/m) {
+        my $fm = $1;
+        $frontmatter_len = length $fm;
+        my @values;
+        for my $line (split /\n/, $fm) {
+            next if $line =~ /^---/;
+            my($k, $v) = $line =~ /^([^\s:#][^:]*):\s*(.+?)\s*$/ or next;
+            push @values, $v;
+        }
+        if (@values) {
+            if (not $anonobj) {
+                $anonobj = App::Greple::xlate::Mask->new(STABLE => 1);
+                $anonobj->add_escape_rule;
+            }
+            $anonobj->add_rule(var => quotemeta($_)) for @values;
+        }
+    }
     if ($anonobj and defined $anonymize_mark) {
         my $regex = length($anonymize_mark)
             ? $anonymize_mark : $App::Greple::xlate::Mask::DEFAULT_MARK;
@@ -1252,6 +1273,10 @@ option --xlate-mask \
         --callback &__PACKAGE__::mask_string
 
 option --cache-clear --xlate-cache=clear
+
+option --xlate-frontmatter \
+        --xlate-setopt frontmatter=1 \
+        --exclude '\A---\n(?s:.*?)^---\n'
 
 option --match-all       --re '\A(?s).+\z'
 option --match-entire    --match-all

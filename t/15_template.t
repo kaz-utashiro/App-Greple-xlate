@@ -123,4 +123,60 @@ END
          'expression restored with the real name inside');
 };
 
+subtest 'front matter: excluded, values anonymized, slices adjusted' => sub {
+    my $doc = "$dir/fm.txt";
+    my $cache = "$doc.xlate-gpt5-EN-US.json";
+    write_file($doc, <<'END');
+---
+template: report.j2
+報告者: yamada taro
+発注会社: acme corporation
+---
+opening paragraph of the body
+
+the visitor was yamada taro that day
+
+closing paragraph of the body
+END
+    write_file($cache, '');
+    my $log0 = "$dir/fm0.log";
+    {
+        local $ENV{LLM_STUB_LOG} = $log0;
+        my $r0 = run_xlate($doc, '--xlate-frontmatter');
+        is($r0->status, 0, 'initial run succeeds');
+        my @calls = stub_calls($log0);
+        my $payload = join '', map $_->{stdin}, @calls;
+        unlike($payload, qr/report\.j2|template:/,
+               'front matter is not a translation target');
+        unlike($payload, qr/yamada taro/, 'value anonymized in body');
+        like($payload, qr/<var id=\d+ \/>/, 'var category tag used');
+    }
+    # 文脈スライスにも front matter が出ないこと(1 段落変更)
+    (my $mod = do { open my $fh, '<', $doc or die; local $/; <$fh> })
+        =~ s/visitor was/visitor happened to be/;
+    write_file($doc, $mod);
+    my $log = "$dir/fm.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc, '--xlate-frontmatter');
+    is($r->status, 0, 'second run succeeds');
+    my @calls = stub_calls($log);
+    my $sys = sys_of($calls[0]);
+    unlike($sys, qr/template: report\.j2/, 'slice does not show front matter');
+    unlike($sys, qr/yamada taro|acme corporation/,
+           'values hidden from context too');
+};
+
+subtest 'no frontmatter option: behavior unchanged' => sub {
+    my $doc = "$dir/nofm.txt";
+    write_file($doc, "---\nkey: value\n---\nbody paragraph here\n");
+    write_file("$doc.xlate-gpt5-EN-US.json", '');
+    my $log = "$dir/nofm.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc);
+    is($r->status, 0, 'runs');
+    my @calls = stub_calls($log);
+    my $payload = join '', map $_->{stdin}, @calls;
+    like($payload, qr/key: value/, 'without the option fm is ordinary text');
+};
+
 done_testing;
