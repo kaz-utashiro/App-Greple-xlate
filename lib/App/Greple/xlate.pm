@@ -640,6 +640,8 @@ our %opt = (
     backend  => \(our $engine_backend = ''),
     cache_seed => \(our $cache_seed),
     context_window => \(our $context_window = 2),
+    anonymize => \(our $anonymize_file),
+    anonymize_mark => \(our $anonymize_mark),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
@@ -697,6 +699,7 @@ my %cache;
 
 use App::Greple::xlate::Mask;
 my $maskobj;
+my $anonobj;
 
 sub setup {
     return if state $once_called++;
@@ -745,6 +748,12 @@ sub setup {
     }
     if (my $patfile = opt('maskfile')) {
         $maskobj = App::Greple::xlate::Mask->new(file => $patfile);
+    }
+    if (defined $anonymize_file or defined $anonymize_mark) {
+        $anonobj = App::Greple::xlate::Mask->new(STABLE => 1);
+        $anonobj->add_escape_rule;
+        $anonobj->load_anonymize_file($anonymize_file)
+            if defined $anonymize_file;
     }
 }
 
@@ -884,6 +893,17 @@ sub _progress {
     }
 }
 
+sub clone_context {
+    my $ctx = shift;
+    return {
+        source_before => $ctx->{source_before},
+        source_after  => $ctx->{source_after},
+        hits_before   => [ map [ @$_ ], @{$ctx->{hits_before} // []} ],
+        hits_after    => [ map [ @$_ ], @{$ctx->{hits_after}  // []} ],
+        old_pairs     => [ map [ @$_ ], @{$ctx->{old_pairs}   // []} ],
+    };
+}
+
 sub cache_update {
     binmode STDERR, ':encoding(utf8)';
 
@@ -904,14 +924,31 @@ sub cache_update {
     return @from if $dryrun;
 
     my @result = eval {
+        my $masked_context = $context;
+        if ($anonobj) {
+            $anonobj->mask(@from);
+            if ($context) {
+                $masked_context = clone_context($context);
+                $anonobj->mask_reference(
+                    $masked_context->{source_before},
+                    $masked_context->{source_after});
+                for my $pairs (@{$masked_context}{qw(hits_before hits_after old_pairs)}) {
+                    $anonobj->mask_reference(@$_) for @$pairs;
+                }
+            }
+        }
         $maskobj->mask(@from) if $maskobj;
         my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
         my @to = do {
-            local $call_context = $context;
+            local $call_context = $masked_context;
             map { s/ +$//mgr } &XLATE(@from);
         };
         chop @to[@chop];
         $maskobj->unmask(@to)->reset if $maskobj;
+        if ($anonobj) {
+            $anonobj->unmask(@to);
+            $anonobj->reset;
+        }
 
         _progress({label => "To"}, @to);
         die "Unmatched response:\n@to" if @from != @to;
@@ -964,6 +1001,9 @@ sub callback { goto &xlate }
 
 sub mask_string {
     my($s) = +{ @_ }->{match};
+    if ($anonobj) {
+        $anonobj->mask($s);
+    }
     if ($maskobj) {
         $maskobj->mask($s);
     }
@@ -992,6 +1032,12 @@ sub begin {
     $current_file = delete $args{&::FILELABEL} or die;
     s/\z/\n/ if /.\z/;
     $current_text = $_;
+    if ($anonobj and defined $anonymize_mark) {
+        my $regex = length($anonymize_mark)
+            ? $anonymize_mark : $App::Greple::xlate::Mask::DEFAULT_MARK;
+        $anonobj->file_rules(
+            App::Greple::xlate::Mask::extract_marks($current_text, $regex));
+    }
     if (not defined $xlate_engine) {
         die "Select translation engine.\n";
     }
@@ -1057,6 +1103,8 @@ builtin xlate-prompt=s     $prompt
 builtin xlate-glossary=s   $glossary
 builtin xlate-context=s    @contexts
 builtin xlate-context-window=i $context_window
+builtin xlate-anonymize=s      $anonymize_file
+builtin xlate-anonymize-mark:s $anonymize_mark
 builtin xlate-cache-seed=s $cache_seed
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
