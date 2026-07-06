@@ -163,12 +163,17 @@ sub update {
     my $obj = shift;
     my $file = $obj->name || return;
     if (not $obj->force_update and $obj->updated == 0) {
-        if (%{$obj->saved} == 0) {
-            return;
-        } elsif ($obj->accumulate) {
-            for (keys %{$obj->saved}) {
-                $obj->current->{$_} //= delete $obj->saved->{$_};
-            }
+        # accumulate: nothing changed, disk content is already right.
+        # otherwise: return only when there is nothing to purge.
+        return if $obj->accumulate or %{$obj->saved} == 0;
+    }
+    if ($obj->accumulate) {
+        # POD promises unused entries survive: adopt them unconditionally
+        for my $k (@{$obj->saved_order}, sort keys %{$obj->saved}) {
+            next if $obj->accessed->{$k};
+            defined(my $v = delete $obj->saved->{$k}) or next;
+            $obj->current->{$k} //= $v;
+            $obj->access($k);
         }
     }
     while (my($k, $v) = each %{$obj->current}) {
@@ -181,6 +186,38 @@ sub update {
         my $json = $json_obj->encode($data);
         print $fh $json;
         warn "write cache to $file\n";
+    } else {
+        warn "$file: $!\n";
+    }
+}
+
+##
+## Write out the merged state (saved and current, current wins)
+## WITHOUT purging unused entries.  Called after each translation
+## batch so that an interrupted run does not lose paid API results.
+## The final write (update) keeps the purging semantics.
+##
+sub checkpoint {
+    my $obj = shift;
+    my $file = $obj->name || return;
+    my(@list, %done);
+    for my $key (@{$obj->saved_order}) {
+        next if $done{$key}++;
+        my $v = $obj->current->{$key} // $obj->saved->{$key};
+        push @list, [ $key => $v ] if defined $v;
+    }
+    for my $key (@{$obj->order}) {
+        next if $done{$key}++;
+        my $v = $obj->current->{$key};
+        push @list, [ $key => $v ] if defined $v;
+    }
+    for my $key (sort keys %{$obj->saved}) {   # legacy HASH caches
+        next if $done{$key}++;
+        my $v = $obj->saved->{$key};
+        push @list, [ $key => $v ] if defined $v;
+    }
+    if (CORE::open my $fh, '>', $file) {
+        print $fh &json->encode(\@list);
     } else {
         warn "$file: $!\n";
     }

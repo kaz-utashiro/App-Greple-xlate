@@ -87,4 +87,55 @@ subtest 'no warning for accessed-but-unset keys (dryrun case)' => sub {
     is_deeply($data, [ $PAIRS[0] ], 'undef entry is silently dropped');
 };
 
+subtest 'checkpoint keeps unused entries (no purge)' => sub {
+    my $file = "$dir/ckpt.json";
+    write_json($file, \@PAIRS);
+    my $c = App::Greple::xlate::Cache->new(name => $file);
+    # src2 だけアクセスし、新規 1 件を格納
+    $c->access("src2\n"); $c->get("src2\n");
+    $c->access("new1\n"); $c->set("new1\n" => "NEW1\n");
+    $c->checkpoint;
+    my $data = read_json($file);
+    is_deeply($data,
+              [ @PAIRS, [ "new1\n" => "NEW1\n" ] ],
+              'checkpoint: all old entries in order + new appended');
+    # 最終書き出しは従来通り purge する
+    $c->update;
+    $data = read_json($file);
+    is_deeply($data,
+              [ $PAIRS[1], [ "new1\n" => "NEW1\n" ] ],
+              'final update still purges unused entries');
+    $c->name = '';
+};
+
+subtest 'accumulate keeps unused entries even with new translations' => sub {
+    my $file = "$dir/accum.json";
+    write_json($file, \@PAIRS);
+    my $c = App::Greple::xlate::Cache->new(name => $file, accumulate => 1);
+    $c->access("src2\n"); $c->get("src2\n");                  # 使用
+    $c->access("new1\n"); $c->set("new1\n" => "NEW1\n");      # 新規翻訳あり
+    $c->update;
+    my $data = read_json($file);
+    my %got = map @$_, @$data;
+    is(scalar @$data, 6, 'accumulate: all 5 old + 1 new survive');
+    is($got{"src4\n"}, "trans4\n", 'unused old entry survived');
+    is($got{"new1\n"}, "NEW1\n", 'new entry saved');
+    $c->name = '';
+};
+
+subtest 'accumulate with no changes skips rewrite' => sub {
+    my $file = "$dir/accum2.json";
+    write_json($file, \@PAIRS);
+    my $mtime_probe = "$dir/probe";
+    my $c = App::Greple::xlate::Cache->new(name => $file, accumulate => 1);
+    $c->access("src1\n"); $c->get("src1\n");
+    my @warn;
+    {
+        local $SIG{__WARN__} = sub { push @warn, $_[0] };
+        $c->update;
+    }
+    ok(!(grep { /write cache/ } @warn), 'no rewrite when nothing changed');
+    $c->name = '';
+};
+
 done_testing;
