@@ -188,6 +188,12 @@ correctly at the moment.
 
 =back
 
+Engine modules are searched in backend namespaces first (C<llm>, then
+C<gpty>), then directly under C<App::Greple::xlate>.  So C<gpt5> loads
+C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while
+C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>.  Use
+C<--xlate-setopt backend=gpty> to force a specific backend.
+
 =item B<--xlate-labor>
 
 =item B<--xlabor>
