@@ -32,10 +32,10 @@ is($argv[0], '-m', 'first option is -m');
 is($argv[1], 'gpt-5.5', 'model is gpt-5.5');
 like($argv_str, qr/-o reasoning_effort none/, 'reasoning_effort none');
 like($argv_str, qr/-o verbosity low/, 'verbosity low');
-like($argv_str, qr/-o max_tokens 16000/, 'max_tokens 16000');
 like($argv_str, qr/--no-stream/, 'no-stream');
 like($argv_str, qr/--no-log/, 'no-log');
 unlike($argv_str, qr/temperature/, 'temperature is not sent');
+unlike($argv_str, qr/max_tokens/, 'max_tokens is not sent (llm 0.31 Chat API rejects it)');
 
 my($i) = grep { $argv[$_] eq '-s' } 0 .. $#argv;
 my $system = $argv[$i + 1];

@@ -105,16 +105,19 @@ App::Greple::xlate::llm::xlate_with(\%param, @from);  # 訳文リストを返す
 model   => 'gpt-5.5',
 max     => 3000,
 options => [ [ reasoning_effort => 'none' ],
-             [ verbosity        => 'low'  ],
-             [ max_tokens       => 16000  ] ],
+             [ verbosity        => 'low'  ] ],
 prompt  => (gpty/gpt5.pm の prompt と一字一句同一),
 ```
 
 - **temperature は渡さない**。llm は指定時のみ送信し、reasoning モデルは既定外
   の temperature を拒否するため、省略が正しい(llm-backend-reference.md §3)。
   gpty 版の `temp => '1'` は移設しない
-- `max_completion_tokens` は llm では `-o max_tokens`(Responses API では
-  `max_output_tokens` として送られる)
+- **max_tokens も渡さない**(2026-07-06 の実機検証で発見し修正)。llm 0.31 の
+  gpt-5.5 は Chat Completions 経由のため、reasoning モデルが `max_tokens` を
+  400 エラーで拒否する(API は `max_completion_tokens` を要求するが llm は
+  それを公開していない)。0.32+ の Responses 経路では `max_output_tokens` に
+  変換されて通るが、両バージョンで動作する「送らない」を採用した。翻訳の
+  出力量は入力に律速されるため実害はない
 - `initialize()` は現行同様
   `setopt(default => "-Mxlate --xlate-engine=gpt5")`
 - `our $lang_from //= 'ORIGINAL'; our $lang_to //= 'JA';` は現行踏襲

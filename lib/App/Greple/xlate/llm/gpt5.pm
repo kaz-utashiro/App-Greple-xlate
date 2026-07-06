@@ -38,14 +38,20 @@ This engine uses the following defaults:
 
 =item * B<verbosity>: low
 
-=item * B<max_tokens>: 16000
-
 =item * B<max_length>: 3000 characters per batch
 
 =back
 
 No C<temperature> option is sent: reasoning models reject non-default
 temperatures, and C<llm> only sends the option when specified.
+
+No C<max_tokens> option is sent either.  On llm 0.31 the gpt-5.5
+model goes through the Chat Completions API, which rejects
+C<max_tokens> for reasoning models (it requires
+C<max_completion_tokens>, which llm does not expose); on llm 0.32+
+the Responses API would accept it as C<max_output_tokens>.  Omitting
+the cap works on both, and translation output is naturally bounded
+by the input size.
 
 =head1 ENVIRONMENT VARIABLES
 
@@ -125,8 +131,7 @@ my %param = (
     model   => 'gpt-5.5',
     max     => 3000,
     options => [ [ reasoning_effort => 'none' ],
-                 [ verbosity        => 'low'  ],
-                 [ max_tokens       => 16000  ] ],
+                 [ verbosity        => 'low'  ] ],
     prompt  => <<'END',
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.

@@ -22,7 +22,6 @@ printf '%s' "$json" | llm -m gpt-5.5 \
     --system "$system_prompt" \
     -o reasoning_effort none \
     -o verbosity low \
-    -o max_tokens 16000 \
     --no-stream --no-log
 ```
 
@@ -80,6 +79,11 @@ reasoning モデルの追加オプション:
 
 - **`max_tokens`** が出力上限。Responses API モデルでは
   `max_output_tokens` として送られる（gpty の `--max-completion-tokens`）。
+  **注意 (2026-07-06 実機確認)**: llm 0.31 の Chat Completions 経路では
+  `max_tokens` がそのまま送られ、reasoning モデル (gpt-5.5) は 400 で拒否
+  する（API は `max_completion_tokens` を要求するが llm 0.31 は公開して
+  いない）。したがって **xlate は `-o max_tokens` を送らない**
+  （0.31/0.32+ 両対応。翻訳出力は入力量に律速されるため上限なしで実害なし）。
 - **`temperature`**: gpt-5.5 では**渡さない**こと。llm はオプションを指定した
   ときだけ temperature を送る。reasoning モデルは既定以外の temperature を
   拒否するので、付けないのが正しい（gpty は特別処理していたが、llm では単に
@@ -95,7 +99,7 @@ reasoning モデルの追加オプション:
 | `--system TEXT` | `-s TEXT` |
 | `--reasoning-effort none` | `-o reasoning_effort none` |
 | `--verbosity low` | `-o verbosity low` |
-| `--max-completion-tokens 16000` | `-o max_tokens 16000` |
+| `--max-completion-tokens 16000` | *（送らない — §3 の注意参照）* |
 | `--temperature 1`（gpt-5* では無視） | *（省略）* |
 | stdin `-` | stdin（パイプ） |
 
@@ -181,7 +185,8 @@ gpty より llm を選ぶ理由＝プラグインで他プロバイダに対応�
 
 - **バックエンド呼び出し**: `gpty/gpt5.pm` の `gpty()` シェルアウトを `llm`
   シェルアウト（Command::Run）に置換。JSON 配列を stdin に流し、`-s` で
-  system、`-o` で reasoning_effort/verbosity/max_tokens、加えて
+  system、`-o` で reasoning_effort/verbosity（max_tokens は §3 の注意により
+  送らない）、加えて
   `--no-stream --no-log`。JSON 配列プロトコル（`xlate`/`xlate_each`）は
   バックエンド非依存なのでそのまま再利用。
 - **モデル検出**: バージョン番号でなく「`llm models` に対象モデルが居るか」で
