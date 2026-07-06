@@ -613,6 +613,7 @@ our %opt = (
     maskfile => \(our $maskfile),
     glossary => \(our $glossary),
     backend  => \(our $engine_backend = ''),
+    cache_seed => \(our $cache_seed),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
@@ -840,6 +841,9 @@ sub begin {
         if ($force_update) {
             push @opt, force_update => 1;
         }
+        if (defined $cache_seed) {
+            push @opt, seed => $cache_seed;
+        }
         require App::Greple::xlate::Cache;
         tie %cache, 'App::Greple::xlate::Cache', $file, @opt;
         die "skip $current_file" if $cache_method eq 'create';
@@ -880,6 +884,7 @@ builtin xlate-maxline=i    $max_line
 builtin xlate-prompt=s     $prompt
 builtin xlate-glossary=s   $glossary
 builtin xlate-context=s    @contexts
+builtin xlate-cache-seed=s $cache_seed
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
 builtin deepl-method=s     $App::Greple::xlate::deepl::method

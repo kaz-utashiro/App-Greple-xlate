@@ -138,4 +138,40 @@ subtest 'accumulate with no changes skips rewrite' => sub {
     $c->name = '';
 };
 
+subtest 'seeding an empty cache' => sub {
+    my $seed_file = "$dir/seed-src.json";
+    write_json($seed_file, \@PAIRS);
+    my $file = "$dir/seeded.json";
+    write_json($file, []);          # 空のキャッシュ(saved なし)
+
+    my $c = App::Greple::xlate::Cache->new(name => $file, seed => $seed_file);
+    ok($c->seeded, 'seeded flag set');
+    is($c->old_size, 5, 'seed entries loaded with order');
+    is($c->get("src1\n"), "trans1\n", 'seeded value readable');
+
+    # 全ヒット・新規なしでも update が対象ファイルへ書き出す
+    $c->access($_) , $c->get($_) for map $_->[0], @PAIRS;
+    $c->update;
+    my $data = read_json($file);
+    is_deeply($data, \@PAIRS, 'seeded content persisted to target cache');
+    $c->name = '';
+};
+
+subtest 'seed ignored when cache has entries' => sub {
+    my $seed_file = "$dir/seed-src2.json";
+    write_json($seed_file, [ [ "other\n" => "OTHER\n" ] ]);
+    my $file = "$dir/nonempty.json";
+    write_json($file, [ $PAIRS[0] ]);
+    my @warn;
+    {
+        local $SIG{__WARN__} = sub { push @warn, $_[0] };
+        my $c = App::Greple::xlate::Cache->new(name => $file,
+                                               seed => $seed_file);
+        ok(!$c->seeded, 'seeded flag not set');
+        is($c->old_position("other\n"), undef, 'seed content not loaded');
+        $c->name = '';
+    }
+    ok((grep { /seed ignored/ } @warn), 'warned about ignored seed');
+};
+
 done_testing;

@@ -50,6 +50,8 @@ my %default = (
     updated => 0,	# number of updated entries
     format => 'list',	# saving cache file format
     old_pos => undef,   # memoized key-to-position map of saved_order
+    seed => undef,      # seed cache file for a fresh cache
+    seeded => 0,        # true when the seed was actually loaded
 );
 
 for my $key (keys %default) {
@@ -117,6 +119,20 @@ sub open {
         $obj->load_data($data) if $data ne '';
         warn "read cache from $file\n";
     }
+    if (my $seed = $obj->seed) {
+        if (%{$obj->saved}) {
+            warn "$seed: seed ignored (cache exists)\n";
+        } elsif (CORE::open my $fh, $seed) {
+            my $data = do { local $/; <$fh> };
+            if ($data ne '') {
+                $obj->load_data($data);
+                $obj->seeded = 1;
+                warn "seed cache from $seed\n";
+            }
+        } else {
+            warn "$seed: $!\n";
+        }
+    }
     $obj;
 }
 
@@ -168,7 +184,7 @@ sub update {
     if (not $obj->force_update and $obj->updated == 0) {
         # accumulate: nothing changed, disk content is already right.
         # otherwise: return only when there is nothing to purge.
-        return if $obj->accumulate or %{$obj->saved} == 0;
+        return if not $obj->seeded and ($obj->accumulate or %{$obj->saved} == 0);
     }
     if ($obj->accumulate) {
         # POD promises unused entries survive: adopt them unconditionally
