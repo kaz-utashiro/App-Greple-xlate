@@ -1,5 +1,6 @@
 use v5.14;
 use warnings;
+no warnings 'once';
 use utf8;
 
 use Test::More;
