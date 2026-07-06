@@ -160,4 +160,114 @@ subtest 'empty context renders nothing' => sub {
     is(App::Greple::xlate::llm::context_sections(), '', 'undef context');
 };
 
+subtest 'two distant changes make two isolated regions' => sub {
+    # 状態リセット: 原文とキャッシュを作り直す
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    (my $mod = $DOC) =~ s/alpha paragraph original/alpha paragraph revised/;
+    $mod =~ s/delta paragraph original/delta paragraph revised/;
+    write_file($doc, $mod);
+    my $log = "$dir/distant.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc);
+    is($r->status, 0, 'run succeeds');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 2, 'two llm calls for two gaps');
+    my($sys1, $sys2) = map sys_of($_), @calls;
+    # Previous 節は最後の節なので、その見出し以降に何が居るかで判定する
+    # (原文スライス節には他領域のテキストが正当に現れ得るため)
+    like($sys1, qr/Previous version.*alpha paragraph original/s,
+         'region 1 previous pair is alpha');
+    unlike($sys1, qr/Previous version.*delta paragraph original/s,
+           'region 1 does not carry delta as previous');
+    like($sys2, qr/Previous version.*delta paragraph original/s,
+         'region 2 previous pair is delta');
+};
+
+subtest 'consecutive changes form one region with both old pairs' => sub {
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    (my $mod = $DOC) =~ s/beta paragraph original/beta paragraph revised/;
+    $mod =~ s/gamma paragraph original/gamma paragraph revised/;
+    write_file($doc, $mod);
+    my $log = "$dir/consec.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc);
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'one llm call for adjacent misses');
+    my $sys = sys_of($calls[0]);
+    like($sys, qr/beta paragraph original/, 'old pair for beta');
+    like($sys, qr/gamma paragraph original/, 'old pair for gamma');
+    is_deeply(JSON::PP->new->decode($calls[0]{stdin}),
+              [ "beta paragraph revised text\n",
+                "gamma paragraph revised text\n" ],
+              'both paragraphs in one payload');
+};
+
+subtest 'window=0 disables context and falls back to flat batch' => sub {
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    (my $mod = $DOC) =~ s/gamma paragraph original/gamma paragraph revised/;
+    write_file($doc, $mod);
+    my $log = "$dir/nowin.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc, '--xlate-context-window=0');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'one call');
+    my $sys = sys_of($calls[0]);
+    unlike($sys, qr/Reference translations/, 'no reference section');
+    unlike($sys, qr/Surrounding document source/, 'no slice section');
+};
+
+subtest 'all-miss (fresh document) falls back without context' => sub {
+    my $doc2 = "$dir/fresh.txt";
+    write_file($doc2, $DOC);
+    write_file("$doc2.xlate-gpt5-EN-US.json", '');
+    my $log = "$dir/fresh.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc2);
+    is($r->status, 0, 'run succeeds');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'single flat batch');
+    my $sys = sys_of($calls[0]);
+    unlike($sys, qr/Reference translations/, 'no context sections');
+};
+
+subtest 'cache seeding carries pairs across documents' => sub {
+    # doc.txt のキャッシュを整えてから、それを seed に新文書を翻訳
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    (my $mod = $DOC) =~ s/beta paragraph original/beta paragraph seeded/;
+    my $doc3 = "$dir/issue2.txt";
+    my $cache3 = "$doc3.xlate-gpt5-EN-US.json";
+    write_file($doc3, $mod);
+    write_file($cache3, '');
+    my $log = "$dir/seed.log";
+    local $ENV{LLM_STUB_LOG} = $log;
+    my $r = run_xlate($doc3, "--xlate-cache-seed=$cache");
+    is($r->status, 0, 'seeded run succeeds');
+    my @calls = stub_calls($log);
+    is(scalar @calls, 1, 'only the changed paragraph is translated');
+    my $sys = sys_of($calls[0]);
+    like($sys, qr/beta paragraph original/, 'old pair comes from the seed');
+    like($r->stdout, qr/ALPHA PARAGRAPH ORIGINAL TEXT/,
+         'unchanged paragraphs come from the seed without API calls');
+
+    # 2 回目: 対象キャッシュが実体化済みなので seed は無視される
+    $mod =~ s/beta paragraph seeded/beta paragraph reseeded/;
+    write_file($doc3, $mod);
+    my $log2 = "$dir/seed2.log";
+    local $ENV{LLM_STUB_LOG} = $log2;
+    my $r2 = run_xlate($doc3, "--xlate-cache-seed=$cache");
+    my @calls2 = stub_calls($log2);
+    is(scalar @calls2, 1, 'second run: one call');
+    my $sys2 = sys_of($calls2[0]);
+    like($sys2, qr/beta paragraph seeded/,
+         'previous pair comes from own cache, not the seed');
+};
+
 done_testing;
