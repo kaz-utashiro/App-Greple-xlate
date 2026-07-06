@@ -192,4 +192,42 @@ subtest 'seed implies cache creation in auto mode' => sub {
     }
 };
 
+subtest 'seeded cache persists even without any access' => sub {
+    my $seed_file = "$dir/seed-src3.json";
+    write_json($seed_file, \@PAIRS);
+    my $file = "$dir/seed-noaccess.json";
+    write_json($file, []);
+    my $c = App::Greple::xlate::Cache->new(name => $file, seed => $seed_file);
+    ok($c->seeded, 'seeded');
+    $c->update;    # nothing accessed at all
+    my $data = read_json($file);
+    is_deeply($data, \@PAIRS, 'seed content persisted despite no access');
+    $c->name = '';
+};
+
+subtest 'readonly cache never writes' => sub {
+    my $file = "$dir/readonly.json";
+    write_json($file, [ $PAIRS[0] ]);
+    my $c = App::Greple::xlate::Cache->new(name => $file, readonly => 1);
+    $c->access("src1\n"); $c->get("src1\n");
+    $c->access("new1\n"); $c->set("new1\n" => "NEW1\n");
+    $c->checkpoint;
+    $c->update;
+    my $data = read_json($file);
+    is_deeply($data, [ $PAIRS[0] ], 'file unchanged by checkpoint and update');
+    $c->name = '';
+};
+
+subtest 'pincer retry: outer flank bounds the slice when nearest is missing' => sub {
+    my $file = "$dir/pincer.json";
+    write_json($file, \@PAIRS);   # src1..src5 in order
+    my $c = App::Greple::xlate::Cache->new(name => $file);
+    is($c->old_position("not-there\n"), undef, 'nearest flank key missing from old list');
+    is($c->old_position("src2\n"), 1, 'outer flank found');
+    my @old = $c->old_entries_slice(2, $c->old_size - 1);
+    is_deeply([ map $_->[0], @old ], [ "src3\n", "src4\n", "src5\n" ],
+              'slice bounded by the outer flank position');
+    $c->name = '';
+};
+
 done_testing;

@@ -270,4 +270,36 @@ subtest 'cache seeding carries pairs across documents' => sub {
          'previous pair comes from own cache, not the seed');
 };
 
+subtest 'failed llm call preserves the whole cache' => sub {
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    my $before = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    (my $mod = $DOC) =~ s/gamma paragraph original/gamma paragraph doomed/;
+    write_file($doc, $mod);
+    {
+        local $ENV{LLM_STUB_MODE} = 'fail';
+        my $r = run_xlate($doc);
+        isnt($r->status, 0, 'run fails when llm fails');
+    }
+    my $after = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    my %pairs = map @$_, @{ JSON::PP->new->decode($after) };
+    is(scalar keys %pairs, 4, 'all four cached pairs survive the failure');
+    is($pairs{"gamma paragraph original text\n"}, "GAMMA PARAGRAPH ORIGINAL TEXT\n",
+       'old pair of the edited paragraph survives for the retry');
+};
+
+subtest 'dryrun leaves the cache file untouched' => sub {
+    write_file($doc, $DOC);
+    write_file($cache, '');
+    run_xlate($doc);
+    my $before = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    (my $mod = $DOC) =~ s/beta paragraph original/beta paragraph dryrun/;
+    write_file($doc, $mod);
+    my $r = run_xlate($doc, '--xlate-dryrun');
+    is($r->status, 0, 'dryrun succeeds');
+    my $after = do { open my $fh, '<', $cache or die; local $/; <$fh> };
+    is($after, $before, 'cache file is byte-identical after dryrun');
+};
+
 done_testing;
