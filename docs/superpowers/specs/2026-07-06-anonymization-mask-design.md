@@ -150,17 +150,36 @@ maskfile と同じ規則。
 - **汎用テンプレートのレシピ(POD に記載、実装なし)**: レンダラの
   第一想定は **pandoc-embedz のスタンドアロンモード**
   (<https://github.com/tecolicom/pandoc-embedz>、Jinja2 完全対応。
-  2026-07-06 ユーザー方針)。実名は embedz の外部 config
-  (`-c vars.yaml`、繰り返し指定可)に置くのが最も強い構成 —
-  訳文テンプレートにも xlate にも API にも実名が一切流れない:
+  2026-07-06 ユーザー方針)。**実測確認済み(v0.22.3)**:
+  スタンドアロンモードはファイル全体を Jinja2 として展開し
+  (本文の `{{ 報告者 }}` 参照・`{% if %}` も処理)、日本語の変数名も
+  使える。値は `-c` config の **`global:`(または `with:`)配下**に
+  置く(`bind:` は式評価用で文字列には不適)。実名は外部 config に
+  置くのが最も強い構成 — 訳文テンプレートにも xlate にも API にも
+  実名が一切流れない:
 
 ```sh
 # テンプレートを言語ごとに一度翻訳(F1 有効。実名はどこにも無い)
 greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
        --xlate-template report-template.md > report-template.EN.md
 # 案件ごとのレンダリング(xlate の外)
-pandoc-embedz --standalone report-template.EN.md -c case-123.yaml -o report-123.EN.md
+pandoc-embedz --standalone report-template.EN.md -c case-123.yaml \
+              -o report-123.EN.md < /dev/null
+# case-123.yaml:
+#   global:
+#     報告者: 山田太郎
+#     発注会社: アクメ株式会社
 ```
+
+  (スクリプトから使う場合は stdin を閉じる — embedz は stdin が
+  開いていると入力を待つことがある)
+- **インラインマークと embedz の連携(実測確認済み)**: マクロ未定義の
+  まま embedz を通すと `UndefinedError: 'person' is undefined` で明確に
+  失敗する(定義忘れに気づける)。POD に標準マクロ config の例を載せる:
+  本名版 `{% macro person(name) %}{{ name }}{% endmacro %}` と
+  伏せ字版(例 `{% macro person(name) %}(関係者){% endmacro %}`)を
+  差し替えるだけで、同じ訳文テンプレートから本名版/匿名版を出し分け
+  られる
 
   F2 の front matter 方式は、embedz を使わない/1 ファイルで完結させたい
   簡易ケース用の位置づけとする:
