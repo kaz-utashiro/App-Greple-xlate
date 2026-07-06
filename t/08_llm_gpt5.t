@@ -42,6 +42,8 @@ my $system = $argv[$i + 1];
 like($system, qr/\ATranslate the following JSON array into American English\./,
      'system prompt with language expanded');
 like($system, qr/XML-style marker tag/, 'mask tag instruction preserved');
+like($system, qr/conventions for that kind of element/,
+     'element-type convention instruction present');
 
 is_deeply(JSON::PP->new->decode($rec->{stdin}), ["hello world\n"],
           'stdin is JSON array of lines');
