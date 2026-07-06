@@ -40,6 +40,7 @@ sub DESTROY {
 my %default = (
     name => '',		# cache filename
     saved => undef,	# saved hash
+    saved_order => [],  # keys of saved data in file order
     current => undef,	# current using hash
     clear => 0,		# clean up cache data
     accessed => {},	# accessed keys
@@ -48,6 +49,7 @@ my %default = (
     force_update => 0,	# update cache file anyway
     updated => 0,	# number of updated entries
     format => 'list',	# saving cache file format
+    old_pos => undef,   # memoized key-to-position map of saved_order
 );
 
 for my $key (keys %default) {
@@ -102,23 +104,58 @@ sub open {
     my $file = $obj->name || return;
     if ($obj->clear) {
         warn "created $file\n" unless -f $file;
-        open my $fh, '>', $file or die "$file: $!\n";
+        CORE::open my $fh, '>', $file or die "$file: $!\n";
         print $fh "{}\n";
     }
-    my $json_obj //= &json;
+    $obj->{saved} = {};
+    $obj->{saved_order} = [];
     if (CORE::open my $fh, $file) {
         my $data = do { local $/; <$fh> };
-        my $json = $data eq '' ? {} : $json_obj->decode($data);
-        $obj->{saved} = do {
-            if    (ref $json eq 'HASH')  { $json }
-            elsif (ref $json eq 'ARRAY') { +{ map @{$_}[0,1], @$json } }
-            else  { die "unexpected json data." }
-        };
+        $obj->load_data($data) if $data ne '';
         warn "read cache from $file\n";
-    } else {
-        $obj->{saved} = {};
     }
     $obj;
+}
+
+sub load_data {
+    my($obj, $data) = @_;
+    my $json = &json->decode($data);
+    if (ref $json eq 'HASH') {
+        $obj->{saved} = $json;
+        $obj->{saved_order} = [];   # legacy format: no order info
+    } elsif (ref $json eq 'ARRAY') {
+        $obj->{saved} = +{ map @{$_}[0,1], @$json };
+        $obj->{saved_order} = [ map $_->[0], @$json ];
+    } else {
+        die "unexpected json data.";
+    }
+}
+
+sub old_size {
+    my $obj = shift;
+    scalar @{$obj->saved_order};
+}
+
+sub old_position {
+    my($obj, $key) = @_;
+    my $pos = $obj->{old_pos} //= do {
+        my $order = $obj->saved_order;
+        +{ map { $order->[$_] => $_ } 0 .. $#$order };
+    };
+    $pos->{$key};
+}
+
+sub old_entries_slice {
+    my($obj, $lo, $hi) = @_;
+    my $order = $obj->saved_order;
+    $lo = 0 if $lo < 0;
+    $hi = $#$order if $hi > $#$order;
+    my @out;
+    for my $k (@$order[$lo .. $hi]) {
+        my $v = $obj->saved->{$k} // $obj->current->{$k};
+        push @out, [ $k, $v ] if defined $v;
+    }
+    @out;
 }
 
 sub update {
@@ -158,11 +195,8 @@ sub list_data {
     my %hash = %{$obj->current};
     my @list;
     for my $key (@{$obj->order}) {
-        if (exists $hash{$key}) {
-            push @list, [ $key => delete $hash{$key} ];
-        } else {
-            warn "$key: not in cache.";
-        }
+        next unless exists $hash{$key};
+        push @list, [ $key => delete $hash{$key} ];
     }
     for my $key (sort keys %hash) {
         warn "$key: not in order list.";
