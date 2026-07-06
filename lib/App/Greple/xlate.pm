@@ -917,6 +917,7 @@ sub cache_update {
 
     my $region = ref $_[0] eq 'HASH' ? shift : { texts => [ @_ ] };
     my @from = @{$region->{texts}};
+    my @pristine = @from;
     my $context = $region->{context};
 
     if ($context) {
@@ -972,13 +973,14 @@ sub cache_update {
 
         _progress({label => "To"}, @to);
         if (defined(my $tre = template_regex())) {
-            for my $i (0 .. $#from) {
-                my @want = $from[$i] =~ /($tre)/g;
+            for my $i (0 .. $#pristine) {
+                my @want = $pristine[$i] =~ /($tre)/g;
                 my @got  = ($to[$i] // '') =~ /($tre)/g;
-                if ("@want" ne "@got") {
+                if (@want != @got
+                    or grep { $want[$_] ne $got[$_] } 0 .. $#want) {
                     die sprintf("Template expressions broken in response:\n" .
                                 "  expected: %s\n  got: %s\n",
-                                "@want", "@got");
+                                join(' ', @want), join(' ', @got));
                 }
             }
         }

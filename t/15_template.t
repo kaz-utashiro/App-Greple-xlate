@@ -86,17 +86,41 @@ subtest 'cache preserved on verification failure' => sub {
 first stable paragraph here
 
 second stable paragraph here
+
+third closing paragraph here
 END
     write_file($cache, '');
-    run_xlate($doc);                       # キャッシュ作成(template なし)
-    my $before = do { open my $fh, '<', $cache or die; local $/; <$fh> };
-    (my $mod = "first stable paragraph here\n\nhandled by {{ reporter }} now\n");
-    write_file($doc, $mod);
+    run_xlate($doc);            # 3 対訳のキャッシュを作る
+    # 同一実行内で: 領域 1(先頭段落の修正)は成功して checkpoint、
+    # 領域 2(末尾段落の式化)は検証 die → freeze
+    write_file($doc, <<'END');
+first amended paragraph here
+
+second stable paragraph here
+
+handled by {{ reporter }} now
+END
     my $r = run_xlate($doc, '--xlate-template=');
-    isnt($r->status, 0, 'run fails');
+    isnt($r->status, 0, 'run fails on the second region');
     my $after = do { open my $fh, '<', $cache or die; local $/; <$fh> };
-    like($after, qr/FIRST STABLE PARAGRAPH/,
-         'existing pairs survive the failure (checkpoint+freeze)');
+    like($after, qr/FIRST AMENDED PARAGRAPH/,
+         'earlier region result was checkpointed before the failure');
+    like($after, qr/third closing paragraph here/,
+         "failing region's old pair survives thanks to the freeze");
+};
+
+subtest 'anonymized text inside expressions verifies correctly' => sub {
+    my $dict = "$dir/t4dict.json";
+    write_file($dict, '[ { "category": "person", "text": "yamada taro" } ]');
+    my $doc = "$dir/combo.txt";
+    write_file($doc, <<'END');
+the client {{ yamada taro }} agreed
+END
+    write_file("$doc.xlate-gpt5-EN-US.json", '');
+    my $r = run_xlate($doc, '--xlate-template=', "--xlate-anonymize=$dict");
+    is($r->status, 0, 'no false-positive die');
+    like($r->stdout, qr/\{\{ yamada taro \}\}/,
+         'expression restored with the real name inside');
 };
 
 done_testing;
