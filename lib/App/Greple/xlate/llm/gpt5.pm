@@ -141,7 +141,7 @@ my %param = (
     prompt  => <<'END',
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.
-If an element is a blank string or an XML-style marker tag (e.g., "<m id=1 />"), leave it unchanged and do not translate it.
+If an element is a blank string or an XML-style marker tag (e.g., "<m id=1 />" or "<person id=2 />"), leave it unchanged and do not translate it.
 If an element is a heading, list item, caption, or other structural element rather than body text, follow the target language's conventions for that kind of element (e.g. heading capitalization).
 Do not output the original (pre-translation) text under any circumstances.
 The number and order of output elements must always match the input exactly: output element n must correspond to input element n.
