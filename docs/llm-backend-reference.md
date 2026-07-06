@@ -184,8 +184,9 @@ gpty より llm を選ぶ理由＝プラグインで他プロバイダに対応�
   system、`-o` で reasoning_effort/verbosity/max_tokens、加えて
   `--no-stream --no-log`。JSON 配列プロトコル（`xlate`/`xlate_each`）は
   バックエンド非依存なのでそのまま再利用。
-- **バージョンガード**: `gpt-5.5` を知る程度に新しい llm（0.32+）を要求/検出。
-  足りなければ明確なメッセージで失敗させる。
+- **モデル検出**: バージョン番号でなく「`llm models` に対象モデルが居るか」で
+  検出し、無ければ明確なメッセージで失敗させる（§4 の実機確認どおり 0.31 でも
+  gpt-5.5 は使えるため。実装は xlate::llm の diagnose）。
 - **再現性/同等性**: 同一モデル＋`reasoning_effort none` なら gpty バックエンド
   と同等の結果になる前提（移行の仮定）なので、共通の `gpt5` キャッシュは有効
   のまま。厳密に合わせたい場合は `-o chat_completions 1` で gpty と同じ
