@@ -36,12 +36,18 @@ xlate の差分翻訳は「変更された段落だけ」を API に送るが、
   対象言語の慣習(英語見出しの capitalization 等)に従うよう、ベース
   プロンプトに一般指示を 1 文追加する。パターン別の種別ラベル(案 B)は
   将来課題
+- **キャッシュ種付け(`--xlate-cache-seed`)**: 四半期・年次報告書のような
+  「前号と大部分が共通の新規文書」のために、別ファイルのキャッシュを
+  新文書のキャッシュの初期値(saved 側)として読み込む。未変更段落は
+  ヒット(再翻訳なし)、修正段落は前号の訳が旧対訳として言い回し維持に
+  使われ、使われなかったエントリは最終書き出しの purge が掃除する —
+  ②の機構がそのまま文書(号)をまたいで働く
 
 ## スコープ
 
 - lib/App/Greple/xlate.pm — postgrep のギャップ領域化、cache_update の
-  領域単位化、`$call_context`、`--xlate-context-window` オプション、
-  ローダのエラー処理修正
+  領域単位化、`$call_context`、`--xlate-context-window` と
+  `--xlate-cache-seed` オプション、ローダのエラー処理修正
 - lib/App/Greple/xlate/Cache.pm — 旧リスト順序の保持、
   `old_entries_between`、checkpoint 書き出し、accumulate 修正、警告修正
 - lib/App/Greple/xlate/llm.pm — `build_system` の文脈節追記と切り詰め
@@ -205,7 +211,28 @@ conventions for that kind of element (e.g. heading capitalization).
 - `builtin xlate-context-window=i $context_window`(既定 2)
 - `%opt` キー `context_window`。0 で本機能を完全無効化(postgrep は
   従来フロー)
+- `builtin xlate-cache-seed=s $cache_seed`(既定なし)。下記
 - POD に追記: 機能説明、既定値、無効化方法、コストへの影響
+
+### キャッシュ種付け(--xlate-cache-seed=FILE)
+
+- 対象ファイルのキャッシュに **saved エントリが 1 件もない**とき
+  (キャッシュファイル不在・空・新規作成時)に限り、FILE(別文書の
+  キャッシュ JSON)を saved 側として順序ごと読み込む
+- 対象キャッシュに既存エントリがある場合、seed は **warn して無視**
+  (進行中の翻訳を上書きしない)
+- 読み込み後の動作は通常とまったく同じ: 一致段落はヒット、変更段落は
+  ギャップ領域として挟み撃ちで旧対訳(=前号の訳)を得る、未使用
+  エントリは最終書き出しで purge
+- dryrun と組み合わせると「新しい号で何段落が再翻訳になるか」を
+  費用ゼロで見積もれる
+- 想定ワークフロー例(四半期報告書):
+
+```sh
+greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+       --xlate-cache-seed report-2026Q1.md.xlate-gpt5-EN-US.json \
+       --match-paragraph report-2026Q2.md
+```
 
 ### キャッシュ逐次書き出し(checkpoint)
 
@@ -283,6 +310,10 @@ die $@ unless $@ =~ /^Can't locate \Q$path.pm\E /;
      文脈節なし
    - キャッシュなし(全ミス)→ 従来バッチ、文脈節なし
    - 連続 2 段落変更 → 1 領域 1 呼び出し、old_pairs に 2 旧ペア
+   - **種付け**: 新規ファイル + `--xlate-cache-seed=別キャッシュ` で、
+     一致段落は呼び出しなし、変更段落は seed 由来の旧対訳が
+     Previous version 節に入ること。既存キャッシュがあるときは
+     warn して seed が無視されること
 2. **t/12_cache.t(単体)**
    - `old_entries_between` の区間・端・hit 除外・空リスト
    - checkpoint: 途中書き出しに未アクセスの saved が残る(purge
@@ -322,15 +353,19 @@ die $@ unless $@ =~ /^Can't locate \Q$path.pm\E /;
   対応する(本設計とは独立の小改修)
 - **訳文の後処理フィルタ**: capitalize のような決定的整形は
   `deepl_JA_FILTER`(ですます調変換)と同様の後処理としても実現できる
-- **翻訳メモリ検索層 + MCP サーバ(2 層構成)**: プロジェクト中の
+- **翻訳メモリ検索層 + MCP サーバ(2 層構成)→ サブプロジェクト④として
+  ②の次に実施(2026-07-06 決定。③匿名化より先)**: プロジェクト中の
   `.xlate-*.json` 群は実質的な対訳コーパスだが、現在は同一ファイルの
-  近傍しか文脈に使われない。将来、(1) 検索層(例 `xlate::TM`)が
+  近傍しか文脈に使われない。(1) 検索層(例 `xlate::TM`)が
   キャッシュ群を索引して「関連既訳ペア上位 k 件・用語の既訳」を返し、
   (2) バッチパイプラインはそれをプロンプト組み立て時に push
   (本設計の文脈に第 4 の節として追加可能。サーバ不要・再現性維持)、
   (3) MCP サーバは同じ検索層の薄いラッパーとして対話的エージェント向けに
   公開する。バッチ翻訳自体を pull 型(ツール呼び出し)にはしない
-  (レイテンシ・コスト・再現性の観点で push が優る)
+  (レイテンシ・コスト・再現性の観点で push が優る)。
+  索引対象は現行キャッシュ群に加えて**キャッシュファイルの git 履歴**
+  (過去コミットの blob)も含め、「過去のバージョン(過年度の報告書等)で
+  どう訳されていたか」を検索可能にする(四半期・年次報告書ユースケース)
 
 ## ③(匿名化)との接続
 
