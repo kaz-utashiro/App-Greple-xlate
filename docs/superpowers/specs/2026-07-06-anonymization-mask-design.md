@@ -171,8 +171,10 @@ pandoc-embedz --standalone report-template.EN.md -c case-123.yaml \
 #     発注会社: アクメ株式会社
 ```
 
-  (スクリプトから使う場合は stdin を閉じる — embedz は stdin が
-  開いていると入力を待つことがある)
+  (embedz の stdin は**データ入力チャネル**(仕様):
+  `... | pandoc-embedz -s template.md -f csv` で `data` 変数に入る。
+  データを渡さない呼び出しを非対話スクリプトから行うときは
+  `< /dev/null` で stdin を閉じる — 開いたままだとデータ待ちになる)
 - **インラインマークと embedz の連携(実測確認済み)**: マクロ未定義の
   まま embedz を通すと `UndefinedError: 'person' is undefined` で明確に
   失敗する(定義忘れに気づける)。POD に標準マクロ config の例を載せる:
