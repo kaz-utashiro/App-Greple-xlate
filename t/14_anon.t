@@ -175,4 +175,3 @@ subtest 'dryrun previews the anonymized form' => sub {
 };
 
 done_testing;
-
