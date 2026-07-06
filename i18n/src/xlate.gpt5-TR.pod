@@ -6,21 +6,23 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda arka uç motoru olarak DeepL (F<deepl.pm>) ve GPT-5.5 (F<gpty/gpt5.pm>) modülü uygulanmıştır.
+B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Birincil motor, L<llm|https://llm.datasette.io/> komutunu çağıran GPT-5.5 (F<llm/gpt5.pm>)'tir; DeepL (F<deepl.pm>) ve eski B<gpty> tabanlı motorlar da dahildir.
 
-Perl'in pod tarzında yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, C<--xlate-engine deepl> ve C<perl> modülüyle birlikte B<greple> komutunu şu şekilde kullanın:
+Çeviriler dosya başına önbelleğe alınır, bu nedenle bir komutu yeniden çalıştırmak değişmemiş metin için hiçbir maliyet getirmez. Bir belge düzenlendiğinde, yalnızca değiştirilen paragraflar API'ye yeniden gönderilir; bağlamdan haberdar bir motor ayrıca çevredeki çevirileri, değişikliğin etrafındaki ham kaynak metni ve düzenlenen paragrafın önceki sürümünü de alır, böylece yeni çeviri yerleşik ifadeleri korur (bkz. B<--xlate-context-window>). Hassas dizgeler iletimden önce gizlenebilir (bkz. L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Perl'in pod tarzında yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, C<--xlate-engine gpt5> ve C<perl> modülüyle birlikte B<greple> komutunu şu şekilde kullanın:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Bu komutta, C<^([\w\pP].*\n)+> desen dizgesi, alfa-sayısal ve noktalama harfiyle başlayan ardışık satırlar anlamına gelir. Bu komut, çevrilecek alanı vurgulanmış olarak gösterir. B<--all> seçeneği, tüm metni üretmek için kullanılır.
 
@@ -28,7 +30,7 @@ Bu komutta, C<^([\w\pP].*\n)+> desen dizgesi, alfa-sayısal ve noktalama harfiyl
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Ardından seçili alanı çevirmek için C<--xlate> seçeneğini ekleyin. Böylece, istenen bölümleri bulur ve bunları B<deepl> komut çıktısıyla değiştirir.
+Ardından seçili alanı çevirmek için C<--xlate> seçeneğini ekleyin. Böylece, istenen bölümleri bulur ve bunları çeviri motorunun çıktısıyla değiştirir.
 
 Varsayılan olarak, özgün ve çevrilmiş metin L<git(1)> ile uyumlu "çatışma işaretleyicisi" biçiminde yazdırılır. C<ifdef> biçimini kullanarak, L<unifdef(1)> komutuyla istenen kısmı kolayca alabilirsiniz. Çıktı biçimi B<--xlate-format> seçeneğiyle belirtilebilir.
 
@@ -90,9 +92,13 @@ Karmaşık desen, ters eğik çizgi ile kaçışlı satır sonları kullanılara
 
 Metnin maskeleme ile nasıl dönüştürüldüğü B<--xlate-mask> seçeneğiyle görülebilir.
 
+Maskeleme, işaretlemenin çevrilmesini önler. Hassas dizeleri çeviri hizmetinin kendisinden gizlemek için bkz. L</ANONYMIZATION AND TEMPLATES>; ikisi birlikte kullanılabilir.
+
 Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
 =head1 ANONYMIZATION AND TEMPLATES
+
+Hassas dizgeler çeviri API'sine gönderilmeden önce gizlenebilir ve çıktıda geri yüklenebilir. Üç anonimleştirme kuralı kaynağı kullanılabilir: sözlük dosyası (B<--xlate-anonymize>), belgenin içindeki satır içi işaretler (B<--xlate-anonymize-mark>) ve YAML front matter değerleri (B<--xlate-frontmatter>). Her dizge iletim sırasında C<< <person id=1 /> >> gibi bir kategori etiketiyle değiştirilir. Gizleme hedefi yalnızca API iletimidir: yerel önbellek dosyaları geri yüklenmiş düz metni saklar. Tam olarak neyin iletileceğini incelemek için B<--xlate-dryrun> kullanın.
 
 Form belgeleri (üç aylık raporlar ve benzerleri) için, aktörleri baştan tanımlayın ve gövdede onlara başvurun:
 
@@ -152,15 +158,13 @@ Kullanılacak çeviri motorunu belirtir.
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-B<gpt-4o> arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
 
@@ -174,7 +178,11 @@ Motor modülleri önce arka uç ad alanlarında aranır (C<llm>, ardından C<gpt
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Hedef dili belirtin. B<DeepL> motorunu kullanırken, kullanılabilir dilleri C<deepl languages> komutuyla alabilirsiniz.
+Hedef dili belirtin. LLM motorları, modelin anladığı herhangi bir dil adını veya kodunu kabul eder; çeviri istemine yerleştirilir. B<DeepL> motorunu kullanırken, kullanılabilir dilleri C<deepl languages> komutuyla alabilirsiniz.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+C<conflict>, C<colon> ve C<ifdef> çıktı biçimlerinde orijinal metin için kullanılan etiket. B<DeepL> motoruyla, varsayılan olmayan bir değer de kaynak dil olarak iletilir.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -249,7 +257,7 @@ Biçim C<xtxt> (çevirilmiş metin) ya da bilinmeyense, yalnızca çevrilmiş me
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Bir seferde API’ye gönderilecek metnin azami uzunluğunu belirtin. Öntanımlı değer, ücretsiz DeepL hesap hizmetine göredir: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+Bir seferde API’ye gönderilecek metnin azami uzunluğunu belirtin. Öntanımlı değer 0, motorun kendi sınırı anlamına gelir: ücretsiz DeepL hesap hizmeti için bu, API için 128K (B<--xlate>) ve pano arayüzü için 5000’dir (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -259,7 +267,7 @@ Her seferinde tek bir satırı çevirmek istiyorsanız bu değeri 1 olarak ayarl
 
 =item B<--xlate-prompt>=I<text>
 
-Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4o, gpt5) kullanılırken kullanılabilir. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem C<%s> içeriyorsa, hedef dil adıyla değiştirilecektir.
+Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek LLM motorları (C<gpt3>, C<gpt4o>, C<gpt5>) için kullanılabilir, ancak DeepL için kullanılamaz. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem C<%s> içeriyorsa, hedef dil adıyla değiştirilecektir.
 
 =item B<--xlate-context>=I<text>
 
@@ -317,9 +325,13 @@ Kapanış C<---> sonrasında her zaman boş bir satır bırakın. Paragraf tarz�
 
 Çeviri için kullanılacak bir sözlük (glossary) kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalı ve belirli terimlerin tutarlı çevirisini sağlar.
 
+=item B<--xlate-dryrun>
+
+Çeviri API'sini çağırmayın; bunun yerine, ilerleme göstergesi aracılığıyla her payload'u tam olarak iletileceği şekilde (anonimleştirme ve maskelemeden sonra) gösterin. Makineden neyin çıktığını kontrol etmek ve bir çalıştırmanın maliyetini tahmin etmek için kullanışlıdır.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Çeviri sonucunu gerçek zamanlı olarak STDERR çıktısında görün.
+Çeviri sonucunu gerçek zamanlı olarak STDERR çıktısında görün. C<From> payload'u, anonimleştirme ve maskelemeden sonra iletildiği gibi gösterilir.
 
 =item B<--xlate-stripe>
 
@@ -425,7 +437,11 @@ DeepL hizmeti için kimlik doğrulama anahtarınızı ayarlayın.
 
 =item OPENAI_API_KEY
 
-OpenAI kimlik doğrulama anahtarı.
+Eski B<gpty> motorları tarafından kullanılan OpenAI kimlik doğrulama anahtarı. C<llm> tabanlı B<gpt5> motoru da bu değişkeni okur, ancak C<llm keys set openai> ile saklanan anahtarlar da çalışır.
+
+=item GREPLE_XLATE_CACHE
+
+Varsayılan önbellek stratejisini ayarlayın (bkz. L</CACHE OPTIONS>).
 
 =back
 
@@ -437,7 +453,9 @@ OpenAI kimlik doğrulama anahtarı.
 
 =head2 TOOLS
 
-DeepL ve ChatGPT için komut satırı araçlarını kurmanız gerekir.
+Kullandığınız motor için komut satırı aracını kurun: B<gpt5> motoru için C<llm>, DeepL için C<deepl>, eski GPT motorları için C<gpty>.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -447,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - xlate tarafından konteyner işlemleri için kullanılan genel amaçlı Docker çalıştırıcısı
 
@@ -484,6 +502,10 @@ Docker konteyner imajı.
 =item * L<https://github.com/tecolicom/getoptlong>
 
 C<getoptlong.sh> kütüphanesi, C<xlate> betiğinde ve L<App::dozo> içinde seçenek ayrıştırma için kullanılır.
+
+=item * L<https://llm.datasette.io/>
+
+LLM modellerine erişmek için B<gpt5> motoru tarafından kullanılan C<llm> komutu.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

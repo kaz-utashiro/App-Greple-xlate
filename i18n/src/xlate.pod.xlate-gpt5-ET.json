@@ -4,20 +4,24 @@
       "App::Greple::xlate - tõlke tugimoodul greple jaoks\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina rakendatud DeepL-i (F<deepl.pm>) ja GPT-5.5 (F<gpty/gpt5.pm>) moodul.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Peamine mootor on GPT-5.5 (F<llm/gpt5.pm>), mis kutsub käsku L<llm|https://llm.datasette.io/>; samuti on kaasas DeepL (F<deepl.pm>) ja pärandmootorid, mis põhinevad B<gpty>-l.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine deepl> ja C<perl> järgmiselt:\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "Tõlked salvestatakse vahemällu failipõhiselt, nii et käsu uuesti käivitamine ei maksa muutmata teksti puhul midagi. Kui dokumenti redigeeritakse, saadetakse API-le uuesti ainult muudetud lõigud; kontekstiteadlik mootor saab ka ümbritsevad tõlked, muudatuse ümber oleva töötlemata lähteteksti ja redigeeritud lõigu eelmise versiooni, nii et uus tõlge säilitab väljakujunenud sõnastuse (vt B<--xlate-context-window>). Tundlikke stringe saab enne edastamist varjata (vt L</ANONYMIZATION AND TEMPLATES>).\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos C<--xlate-engine gpt5> ja mooduliga C<perl> järgmiselt:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "Selles käsus tähendab mustrijada C<^([\\w\\pP].*\\n)+> järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgi märgiga. See käsk näitab tõlkimiseks valitud ala esiletõstetuna. Valikut B<--all> kasutatakse kogu teksti kuvamiseks.\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "Seejärel lisage valik C<--xlate>, et tõlkida valitud ala. Seejärel leiab see soovitud jaotised ja asendab need käsu B<deepl> väljundiga.\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "Seejärel lisage valik C<--xlate>, et tõlkida valitud ala. Seejärel leiab see soovitud jaotised ja asendab need tõlkemootori väljundiga.\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,16 +76,24 @@
       "See tõlgendab faili iga rida C<MASKPATTERN> kui regulaaravaldis, tõlgib sellega vastavad stringid ja taastab algse oleku pärast töötlemist. Ridu, mis algavad C<#>, eiratakse.\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
-      "Keerukat mustrit saab kirjutada mitmele reale, kasutades taandejärgset reavahetust tagurpidi kaldkriipsuga.\n"
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
+      "Keerukat mustrit saab kirjutada mitmele reale, kasutades tagurpidi kaldkriipsuga paojärjestatud reavahetust.\n"
    ],
    [
       "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
       "Kuidas tekst maskeerimise käigus muundatakse, on nähtav valikuga B<--xlate-mask>.\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "Maskeerimine kaitseb märgistust tõlkimise eest. Tundlike stringide peitmiseks tõlketeenuse enda eest vt L</ANONYMIZATION AND TEMPLATES>; mõlemat saab kasutada koos.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "See liides on eksperimentaalne ja võib tulevikus muutuda.\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "Tundlikud stringid saab peita enne nende saatmist tõlke-API-sse ja väljundis taastada. Saadaval on kolm anonüümimisreeglite allikat: sõnastikufail (B<--xlate-anonymize>), dokumendis endas olevad reasisesed märgid (B<--xlate-anonymize-mark>) ja YAML-i front matter väärtused (B<--xlate-frontmatter>). Iga string asendatakse edastamise ajal kategooriasildiga, näiteks C<< <person id=1 /> >>. Peitmise sihtmärk on ainult API-edastus: kohalikud vahemälufailid salvestavad taastatud lihtteksti. Kasutage käsku B<--xlate-dryrun>, et kontrollida täpselt, mida edastataks.\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -128,10 +140,6 @@
       "Praegu on saadaval järgmised mootorid\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "B<gpt-4o> liides on ebastabiilne ja praegu ei saa selle korrektset toimimist garanteerida.\n"
-   ],
-   [
       "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
       "Mootorimooduleid otsitakse esmalt taustsüsteemi nimeruumidest (C<llm>, seejärel C<gpty>), seejärel otse C<App::Greple::xlate> alt. Seega C<gpt5> laadib C<App::Greple::xlate::llm::gpt5>, mis kutsub käsku C<llm>, samas kui C<gpt4o> langeb tagasi C<App::Greple::xlate::gpty::gpt4o> peale. Kasutage C<--xlate-setopt backend=gpty>, et sundida kasutama konkreetset taustsüsteemi.\n"
    ],
@@ -140,8 +148,12 @@
       "Tõlkemootori kutsumise asemel eeldatakse, et teete töö ise. Pärast tõlgitava teksti ettevalmistamist kopeeritakse need lõikepuhvrisse. Eeldatakse, et kleebite need vormi, kopeerite tulemuse lõikepuhvrisse ja vajutate Enter.\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "Määrake sihtkeel. Saadavalolevaid keeli saate C<deepl languages> käsuga, kui kasutate mootorit B<DeepL>.\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Määrake sihtkeel. LLM-mootorid aktsepteerivad mis tahes keelenime või -koodi, mida mudel mõistab; see interpoleeritakse tõlkeviipa. Saadavalolevaid keeli saate C<deepl languages> käsuga, kui kasutate mootorit B<DeepL>.\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "Originaalteksti jaoks kasutatav silt väljundvormingutes C<conflict>, C<colon> ja C<ifdef>. Mootori B<DeepL> puhul edastatakse mittevaikeväärtus ka lähtekeelena.\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -188,8 +200,8 @@
       "Kui vorming on C<xtxt> (tõlgitud tekst) või tundmatu, prinditakse ainult tõlgitud tekst.\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "Määra maksimaalne teksti pikkus, mis korraga API-le saadetakse. Vaikeväärtus on määratud DeepL tasuta konto teenuse järgi: 128K API jaoks (B<--xlate>) ja 5000 lõikepuhvri liidese jaoks (B<--xlate-labor>). Kui kasutad Pro-teenust, võid neid väärtusi muuta.\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Määra maksimaalne teksti pikkus, mis korraga API-le saadetakse. Vaikeväärtus 0 tähendab mootori enda piirangut: DeepL tasuta konto teenuse puhul on see 128K API jaoks (B<--xlate>) ja 5000 lõikepuhvri liidese jaoks (B<--xlate-labor>). Kui kasutad Pro-teenust, võid neid väärtusi muuta.\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -200,8 +212,8 @@
       "Sea see väärtus 1, kui soovid tõlkida ühe rea kaupa. See valik on ülimuslik valiku C<--xlate-maxlen> suhtes.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Määrake tõlkemootorile saadetav kohandatud viip. See valik on saadaval ainult ChatGPT mootorite (gpt3, gpt4o, gpt5) kasutamisel. Saate tõlkekäitumist kohandada, andes tehisintellekti mudelile konkreetsed juhised. Kui viip sisaldab C<%s>, asendatakse see sihtkeele nimega.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Määrake tõlkemootorile saadetav kohandatud viip. See valik on saadaval LLM-mootorite (C<gpt3>, C<gpt4o>, C<gpt5>) jaoks, kuid mitte DeepL-i jaoks. Saate tõlkekäitumist kohandada, andes tehisintellekti mudelile konkreetsed juhised. Kui viip sisaldab C<%s>, asendatakse see sihtkeele nimega.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -264,8 +276,12 @@
       "Määra sõnastiku ID, mida tõlkimisel kasutada. See valik on saadaval ainult DeepL mootori kasutamisel. Sõnastiku ID tuleb hankida oma DeepL kontolt ning see tagab kindlate terminite ühtlase tõlke.\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "Vaata tõlketulemust reaalajas STDERR-väljundis.\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "Ära kutsu tõlke-API-t; selle asemel näita edenemiskuva kaudu iga payload täpselt sellisena, nagu see edastataks (pärast anonüümimist ja maskimist). Kasulik kontrollimaks, mis masinast väljub, ning käivituse maksumuse hindamiseks.\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "Vaata tõlketulemust reaalajas STDERR-väljundis. C<From> payload kuvatakse edastatud kujul, pärast anonüümimist ja maskimist.\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -368,12 +384,20 @@
       "Sea oma DeepL teenuse autentimisvõti.\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "OpenAI autentimisvõti.\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "OpenAI autentimisvõti, mida kasutavad pärand-B<gpty> mootorid. C<llm>-põhine B<gpt5> mootor loeb samuti seda muutujat, kuid töötavad ka võtmed, mis on salvestatud käsuga C<llm keys set openai>.\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "Sea vaikimisi vahemälustrateegia (vt L</CACHE OPTIONS>).\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "Paigalda kasutatava mootori käsurea tööriist: C<llm> B<gpt5> mootori jaoks, C<deepl> DeepL-i jaoks, C<gpty> pärand-GPT mootorite jaoks.\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -384,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -414,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "C<getoptlong.sh> teek, mida kasutatakse valikute parsimiseks skriptis C<xlate> ja L<App::dozo>.\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "Käsk C<llm>, mida mootor B<gpt5> kasutab LLM-mudelitele juurdepääsuks.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

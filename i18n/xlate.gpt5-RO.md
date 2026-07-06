@@ -4,21 +4,23 @@ App::Greple::xlate - modul de suport pentru traducere pentru greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (`deepl.pm`) și GPT-5.5 (`gpty/gpt5.pm`) sunt implementate ca motor back-end.
+**Greple** **xlate** găsește blocurile de text dorite și le înlocuiește cu textul tradus. Motorul principal este GPT-5.5 (`llm/gpt5.pm`), care apelează comanda [llm](https://llm.datasette.io/); DeepL (`deepl.pm`) și motoarele moștenite bazate pe **gpty** sunt de asemenea incluse.
 
-Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda **greple** cu modulele `--xlate-engine deepl` și `perl` astfel:
+Traducerile sunt puse în cache pe fișier, astfel încât rerularea unei comenzi nu costă nimic pentru textul neschimbat. Când un document este editat, numai paragrafele modificate sunt trimise din nou la API; un motor conștient de context primește, de asemenea, traducerile înconjurătoare, textul sursă brut din jurul modificării și versiunea anterioară a paragrafului editat, astfel încât noua traducere păstrează formularea stabilită (vedeți **--xlate-context-window**). Șirurile sensibile pot fi mascate înainte de transmitere (vedeți ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda **greple** cu `--xlate-engine gpt5` și modulul `perl` astfel:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 În această comandă, șirul de tipar `^([\w\pP].*\n)+` înseamnă linii consecutive care încep cu litere și cifre și semne de punctuație. Această comandă arată zona ce urmează a fi tradusă evidențiată. Opțiunea **--all** este folosită pentru a produce textul integral.
 
@@ -28,7 +30,7 @@ Dacă doriți să traduceți blocuri de text obișnuite într-un document scris 
     </p>
 </div>
 
-Apoi adăugați opțiunea `--xlate` pentru a traduce zona selectată. Atunci va găsi secțiunile dorite și le va înlocui cu ieșirea comenzii **deepl**.
+Apoi adăugați opțiunea `--xlate` pentru a traduce zona selectată. Atunci va găsi secțiunile dorite și le va înlocui cu ieșirea motorului de traducere.
 
 Implicit, textul original și cel tradus sunt tipărite în formatul „conflict marker” compatibil cu [git(1)](http://man.he.net/man1/git). Folosind formatul `ifdef`, puteți obține partea dorită cu comanda [unifdef(1)](http://man.he.net/man1/unifdef) ușor. Formatul ieșirii poate fi specificat prin opțiunea **--xlate-format**.
 
@@ -79,9 +81,13 @@ Un tipar complex poate fi scris pe mai multe linii cu newline scăpat prin backs
 
 Modul în care textul este transformat prin mascarea poate fi văzut prin opțiunea **--xlate-mask**.
 
+Mascarea protejează marcajul împotriva traducerii. Pentru a ascunde șirurile sensibile de serviciul de traducere însuși, consultați ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); ambele pot fi utilizate împreună.
+
 Această interfață este experimentală și poate suferi modificări în viitor.
 
 # ANONYMIZATION AND TEMPLATES
+
+Șirurile sensibile pot fi ascunse înainte de a fi trimise către API-ul de traducere și restaurate în ieșire. Sunt disponibile trei surse de reguli de anonimizare: un fișier dicționar (**--xlate-anonymize**), marcaje inline în documentul însuși (**--xlate-anonymize-mark**) și valori YAML front matter (**--xlate-frontmatter**). Fiecare șir este înlocuit cu o etichetă de categorie, cum ar fi `<person id=1 />`, în timpul transmiterii. Ținta ascunderii este doar transmiterea către API: fișierele cache locale stochează text simplu restaurat. Folosiți **--xlate-dryrun** pentru a inspecta exact ce ar fi transmis.
 
 Pentru documente de tip formular (rapoarte trimestriale și altele asemenea), definiți actorii în avans și faceți referire la ei în corp:
 
@@ -134,13 +140,10 @@ Excludeți blocurile embedz de la traducere atunci când un document le conține
 
     În acest moment, sunt disponibile următoarele motoare
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        Interfața lui **gpt-4o** este instabilă și nu poate fi garantat că va funcționa corect în acest moment.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     Modulele de motor sunt căutate mai întâi în spațiile de nume backend (`llm`, apoi `gpty`), apoi direct sub `App::Greple::xlate`. Astfel, `gpt5` încarcă `App::Greple::xlate::llm::gpt5`, care apelează comanda `llm`, în timp ce `gpt4o` revine la `App::Greple::xlate::gpty::gpt4o`. Folosiți `--xlate-setopt backend=gpty` pentru a forța un backend specific.
 
@@ -151,7 +154,11 @@ Excludeți blocurile embedz de la traducere atunci când un document le conține
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Specificați limba țintă. Puteți obține limbile disponibile cu comanda `deepl languages` când folosiți motorul **DeepL**.
+    Specificați limba țintă. Motoarele LLM acceptă orice nume de limbă sau cod pe care modelul îl înțelege; acesta este interpolat în promptul de traducere. Puteți obține limbile disponibile cu comanda `deepl languages` când folosiți motorul **DeepL**.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Etichetă utilizată pentru textul original în formatele de ieșire `conflict`, `colon` și `ifdef`. Cu motorul **DeepL**, o valoare diferită de cea implicită este transmisă și ca limbă sursă.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Excludeți blocurile embedz de la traducere atunci când un document le conține
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Specificați lungimea maximă a textului care va fi trimis la API dintr-o singură dată. Valoarea implicită este setată pentru serviciul contului DeepL gratuit: 128K pentru API (**--xlate**) și 5000 pentru interfața clipboard (**--xlate-labor**). Este posibil să puteți schimba aceste valori dacă utilizați serviciul Pro.
+    Specificați lungimea maximă a textului care va fi trimis la API dintr-o singură dată. Valoarea implicită 0 înseamnă limita proprie a motorului: pentru serviciul contului DeepL gratuit, aceasta este 128K pentru API (**--xlate**) și 5000 pentru interfața clipboard (**--xlate-labor**). Este posibil să puteți schimba aceste valori dacă utilizați serviciul Pro.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Excludeți blocurile embedz de la traducere atunci când un document le conține
 
 - **--xlate-prompt**=_text_
 
-    Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă numai când se folosesc motoare ChatGPT (gpt3, gpt4o, gpt5). Puteți personaliza comportamentul traducerii furnizând instrucțiuni specifice modelului AI. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
+    Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă pentru motoarele LLM (`gpt3`, `gpt4o`, `gpt5`), dar nu pentru DeepL. Puteți personaliza comportamentul traducerii furnizând instrucțiuni specifice modelului AI. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Excludeți blocurile embedz de la traducere atunci când un document le conține
 
     Specificați un ID de glosar care să fie utilizat pentru traducere. Această opțiune este disponibilă doar atunci când se folosește motorul DeepL. ID-ul glosarului trebuie obținut din contul dvs. DeepL și asigură traducerea consecventă a termenilor specifici.
 
+- **--xlate-dryrun**
+
+    Nu apelați API-ul de traducere; în schimb, afișați prin afișajul de progres fiecare payload exact așa cum ar fi transmis (după anonimizare și mascare). Util pentru a verifica ce părăsește mașina și pentru a estima costul unei rulări.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Vedeți rezultatul traducerii în timp real în ieșirea STDERR.
+    Vedeți rezultatul traducerii în timp real în ieșirea STDERR. Payload-ul `From` este afișat așa cum a fost transmis, după anonimizare și mascare.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Citește articolul în japoneză din secțiunea ["SEE ALSO"](#see-also) pentru d
 
 - OPENAI\_API\_KEY
 
-    Cheie de autentificare OpenAI.
+    Cheie de autentificare OpenAI, folosită de motoarele vechi **gpty**. Motorul **gpt5** bazat pe `llm` citește și el această variabilă, dar funcționează și cheile stocate cu `llm keys set openai`.
+
+- GREPLE\_XLATE\_CACHE
+
+    Setează strategia implicită de cache (vezi ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Citește articolul în japoneză din secțiunea ["SEE ALSO"](#see-also) pentru d
 
 ## TOOLS
 
-Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGPT.
+Instalează instrumentul de linie de comandă pentru motorul pe care îl folosești: `llm` pentru motorul **gpt5**, `deepl` pentru DeepL, `gpty` pentru motoarele GPT vechi.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker generic folosit de xlate pentru operațiuni cu containere
 
@@ -435,6 +452,10 @@ Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGP
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     Biblioteca `getoptlong.sh` utilizată pentru analizarea opțiunilor în scriptul `xlate` și [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    Comanda `llm` utilizată de motorul **gpt5** pentru a accesa modelele LLM.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

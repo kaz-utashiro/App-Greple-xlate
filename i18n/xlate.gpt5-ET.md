@@ -4,21 +4,23 @@ App::Greple::xlate - tõlke tugimoodul greple jaoks
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Praegu on taustamootorina rakendatud DeepL-i (`deepl.pm`) ja GPT-5.5 (`gpty/gpt5.pm`) moodul.
+**Greple** **xlate** moodul leiab soovitud tekstiplokid ja asendab need tõlgitud tekstiga. Peamine mootor on GPT-5.5 (`llm/gpt5.pm`), mis kutsub käsku [llm](https://llm.datasette.io/); samuti on kaasas DeepL (`deepl.pm`) ja pärandmootorid, mis põhinevad **gpty**-l.
 
-Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku **greple** koos moodulitega `--xlate-engine deepl` ja `perl` järgmiselt:
+Tõlked salvestatakse vahemällu failipõhiselt, nii et käsu uuesti käivitamine ei maksa muutmata teksti puhul midagi. Kui dokumenti redigeeritakse, saadetakse API-le uuesti ainult muudetud lõigud; kontekstiteadlik mootor saab ka ümbritsevad tõlked, muudatuse ümber oleva töötlemata lähteteksti ja redigeeritud lõigu eelmise versiooni, nii et uus tõlge säilitab väljakujunenud sõnastuse (vt **--xlate-context-window**). Tundlikke stringe saab enne edastamist varjata (vt ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Kui soovite tõlkida tavalisi tekstiplokke dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku **greple** koos `--xlate-engine gpt5` ja mooduliga `perl` järgmiselt:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Selles käsus tähendab mustrijada `^([\w\pP].*\n)+` järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgi märgiga. See käsk näitab tõlkimiseks valitud ala esiletõstetuna. Valikut **--all** kasutatakse kogu teksti kuvamiseks.
 
@@ -28,7 +30,7 @@ Selles käsus tähendab mustrijada `^([\w\pP].*\n)+` järjestikuseid ridu, mis a
     </p>
 </div>
 
-Seejärel lisage valik `--xlate`, et tõlkida valitud ala. Seejärel leiab see soovitud jaotised ja asendab need käsu **deepl** väljundiga.
+Seejärel lisage valik `--xlate`, et tõlkida valitud ala. Seejärel leiab see soovitud jaotised ja asendab need tõlkemootori väljundiga.
 
 Vaikimisi prinditakse originaal ja tõlgitud tekst „konfliktimärgi” vormingus, mis on ühilduv [git(1)](http://man.he.net/man1/git)-ga. Kasutades vormingut `ifdef`, saate soovitud osa hõlpsasti kätte käsuga [unifdef(1)](http://man.he.net/man1/unifdef). Väljundvormingut saab määrata valikuga **--xlate-format**.
 
@@ -75,13 +77,17 @@ Mõnikord on tekstis osasid, mida te ei soovi tõlkida. Näiteks sildid markdown
 
 See tõlgendab faili iga rida `MASKPATTERN` kui regulaaravaldis, tõlgib sellega vastavad stringid ja taastab algse oleku pärast töötlemist. Ridu, mis algavad `#`, eiratakse.
 
-Keerukat mustrit saab kirjutada mitmele reale, kasutades taandejärgset reavahetust tagurpidi kaldkriipsuga.
+Keerukat mustrit saab kirjutada mitmele reale, kasutades tagurpidi kaldkriipsuga paojärjestatud reavahetust.
 
 Kuidas tekst maskeerimise käigus muundatakse, on nähtav valikuga **--xlate-mask**.
+
+Maskeerimine kaitseb märgistust tõlkimise eest. Tundlike stringide peitmiseks tõlketeenuse enda eest vt ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); mõlemat saab kasutada koos.
 
 See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 # ANONYMIZATION AND TEMPLATES
+
+Tundlikud stringid saab peita enne nende saatmist tõlke-API-sse ja väljundis taastada. Saadaval on kolm anonüümimisreeglite allikat: sõnastikufail (**--xlate-anonymize**), dokumendis endas olevad reasisesed märgid (**--xlate-anonymize-mark**) ja YAML-i front matter väärtused (**--xlate-frontmatter**). Iga string asendatakse edastamise ajal kategooriasildiga, näiteks `<person id=1 />`. Peitmise sihtmärk on ainult API-edastus: kohalikud vahemälufailid salvestavad taastatud lihtteksti. Kasutage käsku **--xlate-dryrun**, et kontrollida täpselt, mida edastataks.
 
 Vormidokumentide (kvartaliaruanded ja muu sarnane) puhul määratlege osalised kohe alguses ja viidake neile põhitekstis:
 
@@ -134,13 +140,10 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
 
     Praegu on saadaval järgmised mootorid
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        **gpt-4o** liides on ebastabiilne ja praegu ei saa selle korrektset toimimist garanteerida.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     Mootorimooduleid otsitakse esmalt taustsüsteemi nimeruumidest (`llm`, seejärel `gpty`), seejärel otse `App::Greple::xlate` alt. Seega `gpt5` laadib `App::Greple::xlate::llm::gpt5`, mis kutsub käsku `llm`, samas kui `gpt4o` langeb tagasi `App::Greple::xlate::gpty::gpt4o` peale. Kasutage `--xlate-setopt backend=gpty`, et sundida kasutama konkreetset taustsüsteemi.
 
@@ -151,7 +154,11 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Määrake sihtkeel. Saadavalolevaid keeli saate `deepl languages` käsuga, kui kasutate mootorit **DeepL**.
+    Määrake sihtkeel. LLM-mootorid aktsepteerivad mis tahes keelenime või -koodi, mida mudel mõistab; see interpoleeritakse tõlkeviipa. Saadavalolevaid keeli saate `deepl languages` käsuga, kui kasutate mootorit **DeepL**.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Originaalteksti jaoks kasutatav silt väljundvormingutes `conflict`, `colon` ja `ifdef`. Mootori **DeepL** puhul edastatakse mittevaikeväärtus ka lähtekeelena.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Määra maksimaalne teksti pikkus, mis korraga API-le saadetakse. Vaikeväärtus on määratud DeepL tasuta konto teenuse järgi: 128K API jaoks (**--xlate**) ja 5000 lõikepuhvri liidese jaoks (**--xlate-labor**). Kui kasutad Pro-teenust, võid neid väärtusi muuta.
+    Määra maksimaalne teksti pikkus, mis korraga API-le saadetakse. Vaikeväärtus 0 tähendab mootori enda piirangut: DeepL tasuta konto teenuse puhul on see 128K API jaoks (**--xlate**) ja 5000 lõikepuhvri liidese jaoks (**--xlate-labor**). Kui kasutad Pro-teenust, võid neid väärtusi muuta.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
 
 - **--xlate-prompt**=_text_
 
-    Määrake tõlkemootorile saadetav kohandatud viip. See valik on saadaval ainult ChatGPT mootorite (gpt3, gpt4o, gpt5) kasutamisel. Saate tõlkekäitumist kohandada, andes tehisintellekti mudelile konkreetsed juhised. Kui viip sisaldab `%s`, asendatakse see sihtkeele nimega.
+    Määrake tõlkemootorile saadetav kohandatud viip. See valik on saadaval LLM-mootorite (`gpt3`, `gpt4o`, `gpt5`) jaoks, kuid mitte DeepL-i jaoks. Saate tõlkekäitumist kohandada, andes tehisintellekti mudelile konkreetsed juhised. Kui viip sisaldab `%s`, asendatakse see sihtkeele nimega.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
 
     Määra sõnastiku ID, mida tõlkimisel kasutada. See valik on saadaval ainult DeepL mootori kasutamisel. Sõnastiku ID tuleb hankida oma DeepL kontolt ning see tagab kindlate terminite ühtlase tõlke.
 
+- **--xlate-dryrun**
+
+    Ära kutsu tõlke-API-t; selle asemel näita edenemiskuva kaudu iga payload täpselt sellisena, nagu see edastataks (pärast anonüümimist ja maskimist). Kasulik kontrollimaks, mis masinast väljub, ning käivituse maksumuse hindamiseks.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Vaata tõlketulemust reaalajas STDERR-väljundis.
+    Vaata tõlketulemust reaalajas STDERR-väljundis. `From` payload kuvatakse edastatud kujul, pärast anonüümimist ja maskimist.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Laadi repositooriumis olev `xlate.el` fail, et kasutada Emacsis käsku `xlate`. 
 
 - OPENAI\_API\_KEY
 
-    OpenAI autentimisvõti.
+    OpenAI autentimisvõti, mida kasutavad pärand-**gpty** mootorid. `llm`-põhine **gpt5** mootor loeb samuti seda muutujat, kuid töötavad ka võtmed, mis on salvestatud käsuga `llm keys set openai`.
+
+- GREPLE\_XLATE\_CACHE
+
+    Sea vaikimisi vahemälustrateegia (vt ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Laadi repositooriumis olev `xlate.el` fail, et kasutada Emacsis käsku `xlate`. 
 
 ## TOOLS
 
-Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
+Paigalda kasutatava mootori käsurea tööriist: `llm` **gpt5** mootori jaoks, `deepl` DeepL-i jaoks, `gpty` pärand-GPT mootorite jaoks.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate’i poolt konteineri toiminguteks kasutatav üldine Dockeri käitaja
 
@@ -435,6 +452,10 @@ Pead paigaldama käsurea tööriistad DeepL-i ja ChatGPT jaoks.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     `getoptlong.sh` teek, mida kasutatakse valikute parsimiseks skriptis `xlate` ja [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    Käsk `llm`, mida mootor **gpt5** kasutab LLM-mudelitele juurdepääsuks.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -6,25 +6,35 @@ App::Greple::xlate - translation support module for greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
 B<Greple> B<xlate> module find desired text blocks and replace them by
-the translated text.  Currently DeepL (F<deepl.pm>) and GPT-5.5
-(F<gpty/gpt5.pm>) module are implemented as a back-end engine.
+the translated text.  The primary engine is GPT-5.5 (F<llm/gpt5.pm>),
+which calls the L<llm|https://llm.datasette.io/> command; DeepL
+(F<deepl.pm>) and legacy B<gpty>-based engines are also included.
+
+Translations are cached per file, so re-running a command costs
+nothing for unchanged text.  When a document is edited, only the
+changed paragraphs are sent to the API again; a context-aware engine
+also receives the surrounding translations, the raw source text
+around the change, and the previous version of the edited paragraph,
+so the new translation keeps the established wording (see
+B<--xlate-context-window>).  Sensitive strings can be concealed
+before transmission (see L</ANONYMIZATION AND TEMPLATES>).
 
 If you want to translate normal text blocks in a document written in
-the Perl's pod style, use B<greple> command with C<--xlate-engine deepl>
+the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5>
 and C<perl> module like this:
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In this command, pattern string C<^([\w\pP].*\n)+> means consecutive
 lines starting with alpha-numeric and punctuation letter.  This
@@ -36,8 +46,8 @@ is used to produce entire text.
 </p>
 
 Then add C<--xlate> option to translate the selected area.  Then, it
-will find the desired sections and replace them by the B<deepl>
-command output.
+will find the desired sections and replace them by the translation
+engine's output.
 
 By default, original and translated text is printed in the "conflict
 marker" format compatible with L<git(1)>.  Using C<ifdef> format, you
@@ -127,14 +137,29 @@ expression, translate strings matching it, and revert after
 processing.  Lines beginning with C<#> are ignored.
 
 Complex pattern can be written on multiple lines with backslash
-escpaed newline.
+escaped newline.
 
 How the text is transformed by masking can be seen by B<--xlate-mask>
 option.
 
+Masking protects markup from being translated.  To conceal sensitive
+strings from the translation service itself, see L</ANONYMIZATION AND
+TEMPLATES>; both can be used together.
+
 This interface is experimental and subject to change in the future.
 
 =head1 ANONYMIZATION AND TEMPLATES
+
+Sensitive strings can be concealed before they are sent to the
+translation API and restored in the output.  Three sources of
+anonymization rules are available: a dictionary file
+(B<--xlate-anonymize>), inline marks in the document itself
+(B<--xlate-anonymize-mark>), and YAML front matter values
+(B<--xlate-frontmatter>).  Each string is replaced by a category tag
+such as C<< <person id=1 /> >> during transmission.  The concealment
+target is API transmission only: local cache files store restored
+plain text.  Use B<--xlate-dryrun> to inspect exactly what would be
+transmitted.
 
 For form documents (quarterly reports and the like), define the
 actors up front and reference them in the body:
@@ -208,16 +233,13 @@ At this time, the following engines are available
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-B<gpt-4o>'s interface is unstable and cannot be guaranteed to work
-correctly at the moment.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
 
@@ -238,8 +260,16 @@ result to the clipboard, and hit return.
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Specify the target language.  You can get available languages by
-C<deepl languages> command when using B<DeepL> engine.
+Specify the target language.  LLM engines accept any language name
+or code the model understands; it is interpolated into the
+translation prompt.  You can get available languages by C<deepl
+languages> command when using B<DeepL> engine.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+Label used for the original text in C<conflict>, C<colon> and
+C<ifdef> output formats.  With the B<DeepL> engine a non-default
+value is also passed as the source language.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -325,10 +355,10 @@ text is printed.
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
 Specify the maximum length of text to be sent to the API at once.
-Default value is set as for free DeepL account service: 128K for the
-API (B<--xlate>) and 5000 for the clipboard interface
-(B<--xlate-labor>).  You may be able to change these value if you are
-using Pro service.
+The default value 0 means the engine's own limit: for the free DeepL
+account service that is 128K for the API (B<--xlate>) and 5000 for
+the clipboard interface (B<--xlate-labor>).  You may be able to
+change these value if you are using Pro service.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -339,11 +369,11 @@ option takes precedence over the C<--xlate-maxlen> option.
 
 =item B<--xlate-prompt>=I<text>
 
-Specify a custom prompt to be sent to the translation engine.  This option
-is only available when using ChatGPT engines (gpt3, gpt4o, gpt5).  You can
-customize the translation behavior by providing specific instructions to the
-AI model.  If the prompt contains C<%s>, it will be replaced with the target
-language name.
+Specify a custom prompt to be sent to the translation engine.  This
+option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>)
+but not for DeepL.  You can customize the translation behavior by
+providing specific instructions to the AI model.  If the prompt
+contains C<%s>, it will be replaced with the target language name.
 
 =item B<--xlate-context>=I<text>
 
@@ -467,9 +497,18 @@ Specify a glossary ID to be used for translation.  This option is only
 available when using the DeepL engine.  The glossary ID should be obtained
 from your DeepL account and ensures consistent translation of specific terms.
 
+=item B<--xlate-dryrun>
+
+Do not call the translation API; instead show, through the progress
+display, each payload exactly as it would be transmitted (after
+anonymization and masking).  Useful for checking what leaves the
+machine and for estimating the cost of a run.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-See the tranlsation result in real time in the STDERR output.
+See the translation result in real time in the STDERR output.  The
+C<From> payload is shown as transmitted, after anonymization and
+masking.
 
 =item B<--xlate-stripe>
 
@@ -607,7 +646,13 @@ Set your authentication key for DeepL service.
 
 =item OPENAI_API_KEY
 
-OpenAI authentication key.
+OpenAI authentication key, used by the legacy B<gpty> engines.  The
+C<llm>-based B<gpt5> engine reads this variable too, but keys stored
+with C<llm keys set openai> also work.
+
+=item GREPLE_XLATE_CACHE
+
+Set the default cache strategy (see L</CACHE OPTIONS>).
 
 =back
 
@@ -619,7 +664,11 @@ OpenAI authentication key.
 
 =head2 TOOLS
 
-You have to install command line tools for DeepL and ChatGPT.
+Install the command line tool for the engine you use: C<llm> for the
+B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT
+engines.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -629,8 +678,8 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>,
-L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>,
+L<App::Greple::xlate::deepl>
 
 L<App::dozo> - Generic Docker runner used by xlate for container operations
 
@@ -672,6 +721,10 @@ Docker container image.
 
 The C<getoptlong.sh> library used for option parsing in the C<xlate>
 script and L<App::dozo>.
+
+=item * L<https://llm.datasette.io/>
+
+The C<llm> command used by the B<gpt5> engine to access LLM models.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

@@ -4,21 +4,23 @@ App::Greple::xlate - vertaalondersteuningsmodule voor greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate**-module zoekt de gewenste tekstblokken en vervangt deze door de vertaalde tekst. Momenteel zijn DeepL (`deepl.pm`) en de GPT-5.5 (`gpty/gpt5.pm`)-module geïmplementeerd als back-end-engine.
+**Greple** **xlate**-module zoekt de gewenste tekstblokken en vervangt deze door de vertaalde tekst. De primaire engine is GPT-5.5 (`llm/gpt5.pm`), die het [llm](https://llm.datasette.io/)-commando aanroept; DeepL (`deepl.pm`) en oudere, op **gpty** gebaseerde engines zijn ook inbegrepen.
 
-Als je normale tekstblokken wilt vertalen in een document dat is geschreven in de Perl pod-stijl, gebruik dan de opdracht **greple** in combinatie met de modules `--xlate-engine deepl` en `perl`, zoals hier:
+Vertalingen worden per bestand in de cache opgeslagen, dus het opnieuw uitvoeren van een commando kost niets voor ongewijzigde tekst. Wanneer een document wordt bewerkt, worden alleen de gewijzigde alinea’s opnieuw naar de API verzonden; een contextbewuste engine ontvangt ook de omringende vertalingen, de onbewerkte brontekst rondom de wijziging en de vorige versie van de bewerkte alinea, zodat de nieuwe vertaling de gevestigde bewoording behoudt (zie **--xlate-context-window**). Gevoelige tekenreeksen kunnen vóór verzending worden verborgen (zie ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Als u normale tekstblokken wilt vertalen in een document dat is geschreven in de pod-stijl van Perl, gebruikt u het **greple**-commando met de `--xlate-engine gpt5`- en `perl`-module als volgt:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In deze opdracht betekent patroontekenreeks `^([\w\pP].*\n)+` opeenvolgende regels die beginnen met alfanumerieke letters en leestekens. Deze opdracht laat het te vertalen gebied gemarkeerd zien. Optie **--all** wordt gebruikt om de volledige tekst te produceren.
 
@@ -28,7 +30,7 @@ In deze opdracht betekent patroontekenreeks `^([\w\pP].*\n)+` opeenvolgende rege
     </p>
 </div>
 
-Voeg dan de optie `--xlate` toe om het geselecteerde gebied te vertalen. Vervolgens worden de gewenste secties gevonden en vervangen door de uitvoer van de opdracht **deepl**.
+Voeg vervolgens de optie `--xlate` toe om het geselecteerde gebied te vertalen. Vervolgens worden de gewenste secties gevonden en vervangen door de uitvoer van de vertaalengine.
 
 Standaard wordt originele en vertaalde tekst afgedrukt in het "conflict marker" formaat dat compatibel is met [git(1)](http://man.he.net/man1/git). Door `ifdef` formaat te gebruiken, kun je gemakkelijk het gewenste deel krijgen met [unifdef(1)](http://man.he.net/man1/unifdef) commando. Uitvoerformaat kan gespecificeerd worden met **--xlate-format** optie.
 
@@ -75,11 +77,45 @@ Soms zijn er delen van tekst die je niet vertaald wilt hebben. Bijvoorbeeld tags
 
 Hierdoor wordt elke regel van het bestand `MASKPATTERN` geïnterpreteerd als een reguliere expressie, worden strings die hiermee overeenkomen vertaald en wordt na verwerking de oorspronkelijke tekst hersteld. Regels die beginnen met `#` worden genegeerd.
 
-Complexe patronen kunnen op meerdere regels worden geschreven met backslash escpaed newline.
+Complexe patronen kunnen over meerdere regels worden geschreven met een door een backslash geëscapeerde regeleinde.
 
 Hoe de tekst door het maskeren wordt omgezet, kun je zien met de optie **--xlate-mask**.
 
+Door maskering wordt markup beschermd tegen vertaling. Om gevoelige tekenreeksen te verbergen voor de vertaaldienst zelf, zie ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); beide kunnen samen worden gebruikt.
+
 Deze interface is experimenteel en kan in de toekomst veranderen.
+
+# ANONYMIZATION AND TEMPLATES
+
+Gevoelige tekenreeksen kunnen worden verborgen voordat ze naar de vertaal-API worden verzonden en in de uitvoer weer worden weergegeven. Er zijn drie bronnen voor anonimiseringsregels beschikbaar: een woordenboekbestand (**--xlate-anonymize**), inline-markeringen in het document zelf (**--xlate-anonymize-mark**) en YAML-frontmatter-waarden (**--xlate-frontmatter**). Elke tekenreeks wordt tijdens de overdracht vervangen door een categorietag, zoals `<person id=1 />`. Het verbergen geldt alleen voor de API-overdracht: lokale cachebestanden slaan de herstelde platte tekst op. Gebruik **--xlate-dryrun** om precies te controleren wat er zou worden verzonden.
+
+Voor formulierdocumenten (kwartaalrapporten en dergelijke) definieer je de actoren vooraf en verwijs je ernaar in de hoofdtekst:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Vertaal het sjabloon één keer per taal met `--xlate-template` (en `--xlate-frontmatter` wanneer de waarden in het bestand worden bewaard), en geef vervolgens elk geval weer met **pandoc-embedz** in de standalone-modus — waarden onder `global:` in een externe configuratie bereiken de vertaal-API helemaal niet:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Voor inline-markeringen zorgt het opgeven van een macrodefinitieconfiguratie ervoor dat dezelfde vertaalde sjabloon ofwel de echte namen ofwel een geredigeerde versie weergeeft:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Sluit embedz-blokken uit van vertaling wanneer een document deze bevat:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 # OPTIONS
 
@@ -104,13 +140,12 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
     Op dit moment zijn de volgende engines beschikbaar
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
-        De interface van **gpt-4o** is instabiel en er kan op dit moment niet gegarandeerd worden dat deze correct werkt.
-
-    - **gpt5**: gpt-5.5
+    Engine-modules worden eerst doorzocht in backend-naamruimten (`llm`, daarna `gpty`), vervolgens direct onder `App::Greple::xlate`. Dus `gpt5` laadt `App::Greple::xlate::llm::gpt5`, dat het `llm`-commando aanroept, terwijl `gpt4o` terugvalt op `App::Greple::xlate::gpty::gpt4o`. Gebruik `--xlate-setopt backend=gpty` om een specifieke backend te forceren.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -119,7 +154,11 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Geef de doeltaal op. U kunt de beschikbare talen krijgen met het commando `deepl languages` wanneer u de engine **DeepL** gebruikt.
+    Geef de doeltaal op. LLM-engines accepteren elke taalnaam of -code die het model begrijpt; deze wordt in de vertaalprompt geïnterpoleerd. Je kunt de beschikbare talen opvragen met het `deepl languages`-commando wanneer je de **DeepL**-engine gebruikt.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Label dat wordt gebruikt voor de oorspronkelijke tekst in de uitvoerformaten `conflict`, `colon` en `ifdef`. Bij de **DeepL**-engine wordt ook een niet-standaardwaarde doorgegeven als brontaal.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -189,7 +228,7 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Geef de maximale lengte van de tekst op die in één keer naar de API moet worden gestuurd. De standaardwaarde is ingesteld zoals voor de gratis DeepL account service: 128K voor de API (**--xlate**) en 5000 voor de klembordinterface (**--xlate-labor**). U kunt deze waarden wijzigen als u Pro-service gebruikt.
+    Geef de maximale lengte op van de tekst die in één keer naar de API mag worden verzonden. De standaardwaarde 0 betekent de eigen limiet van de engine: voor de gratis DeepL-accountservice is dat 128K voor de API (**--xlate**) en 5000 voor de klembordinterface (**--xlate-labor**). U kunt deze waarden mogelijk wijzigen als u de Pro-service gebruikt.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -199,19 +238,71 @@ Deze interface is experimenteel en kan in de toekomst veranderen.
 
 - **--xlate-prompt**=_text_
 
-    Geef een aangepaste prompt op die naar de vertaalengine moet worden verzonden. Deze optie is alleen beschikbaar bij gebruik van ChatGPT-engines (gpt3, gpt4o, gpt5). U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt dit vervangen door de naam van de doeltaal.
+    Geef een aangepaste prompt op die naar de vertaalengine moet worden verzonden. Deze optie is beschikbaar voor de LLM-engines (`gpt3`, `gpt4o`, `gpt5`), maar niet voor DeepL. U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt dit vervangen door de naam van de doeltaal.
 
 - **--xlate-context**=_text_
 
     Geef aanvullende contextinformatie op die naar de vertaalmachine moet worden gestuurd. Deze optie kan meerdere keren worden gebruikt om meerdere contextstrings op te geven. De contextinformatie helpt de vertaalmachine om de achtergrond te begrijpen en nauwkeurigere vertalingen te produceren.
 
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Aantal omliggende vertaalde blokken die als referentiecontext worden doorgegeven bij het opnieuw vertalen van gewijzigde blokken (standaard 2). De context omvat ook de onbewerkte brontekst rondom het gewijzigde gebied (koppen, lijststructuur, bijschriften) en, indien beschikbaar, de vorige versie van de gewijzigde tekst die uit de cache is opgehaald, zodat ongewijzigde bewoordingen behouden blijven. Stel deze waarde in op 0 om contextbewuste vertaling volledig uit te schakelen. Houd er rekening mee dat elk gewijzigd gebied in een eigen API-aanroep wordt vertaald en dat de context tot ongeveer 8000 tekens aan de systeemprompt kan toevoegen; contextbewuste vertaling brengt dus enige extra kosten met zich mee in ruil voor consistentie.
+
+- **--xlate-cache-seed**=_file_
+
+    Initialiseer de cache van een nieuw document vanuit het cachebestand van een ander document. Handig voor periodieke rapporten: vul de cache van de nieuwe uitgave aan met die van de vorige uitgave, zodat ongewijzigde alinea’s niet opnieuw worden vertaald en bewerkte alinea’s de formulering van de vorige uitgave behouden. De seed wordt alleen gebruikt als de doelcache leeg is; anders wordt deze genegeerd en wordt er een waarschuwing gegeven. Met de standaardinstelling `--xlate-cache=auto` houdt het opgeven van een seed ook in dat het cachebestand van het nieuwe document wordt aangemaakt.
+
+- **--xlate-anonymize**=_file_
+
+    Anonimiseer gevoelige tekenreeksen voordat ze naar de vertaal-API worden verzonden, en herstel ze in de uitvoer. Het woordenboekbestand bevat één vermelding per item: in JSON (canonisch, machinaal genereerbaar)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    of in een eenvoudig regelformaat (`category pattern`, `/.../` voor regex). Elk item wordt vervangen door een categorietag zoals `<person id=1 />`; dezelfde tekenreeks krijgt altijd dezelfde tag, zodat het model kan bijhouden wie wie is. Onbekende JSON-velden worden genegeerd, zodat generatoren (bijv. een lokale LLM die entiteiten extraheert) hun eigen annotaties kunnen toevoegen. Categorie `lit` is gereserveerd. Lokale cachebestanden slaan nog steeds de herstelde platte tekst op: het verbergen is uitsluitend bedoeld voor API-overdracht.
+
+    Een woordenboek kan worden gegenereerd door een externe tool – bijvoorbeeld een lokaal model dat gevoelige entiteiten extraheert:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Een UTF-8 BOM in het bestand wordt getolereerd. Waarden in het ‘front matter’-regelformaat mogen alleen een afsluitende opmerking op hun eigen regel bevatten, niet na de waarde.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Verzamel anonimiseringsvermeldingen uit inline-markeringen in het document zelf. Markeer de eerste keer dat de tekenreeks voorkomt als `{{ person("山田太郎") }}` en elke keer dat de tekenreeks in het hele document voorkomt, wordt deze geanonimiseerd. De markering zelf blijft in de bron en in de vertaling staan, zodat een document ook kan worden verwerkt door een Jinja2-achtige macroprocessor (definieer de `person`-macro om de naam af te drukken of te redigeren). Een aangepaste _regex_ moet de benoemde captures `(?<category>...)` en `(?<text>...)` bevatten.
+
+    Merk op dat bij een optie met een optionele waarde zoals deze, een volgend bestandsargument als waarde wordt beschouwd: schrijf `--xlate-anonymize-mark=` (met een afsluitende `=`) bij gebruik van de standaardnotatie.
+
+    Alternatieve notaties kunnen worden geconfigureerd, bijvoorbeeld `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` voor markeringen in de stijl van `@@person:NAME@@`, of een HTML-commentaarvorm die onzichtbaar blijft in weergegeven Markdown. Markeringsregels worden per document verzameld: een tekenreeks die in één invoerbestand is gemarkeerd, wordt niet verborgen in een ander bestand van dezelfde run (in tegenstelling tot front-matter-waarden, die over bestanden heen worden opgeteld).
+
+- **--xlate-template**\[=_regex_\]
+
+    Behandel sjabloonuitdrukkingen (standaard: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) als ondoorzichtige plaatshouders: geef het model de opdracht om ze ongewijzigd te kopiëren en controleer per blok of het antwoord precies dezelfde uitdrukkingen bevat, elk even vaak. Hun volgorde kan veranderen, aangezien de vertaling ze terecht herschikt om de woordvolgorde van de doeltaal te volgen. Een ongeldige uitdrukking breekt de run af; de cache wordt vastgelegd en bevroren, zodat niets waarvoor betaald is, verloren gaat.
+
+    Merk op dat bij een optie met een optionele waarde zoals deze, een volgend bestandsargument als de waarde zou worden beschouwd: schrijf `--xlate-template=` (met een afsluitend `=`) bij gebruik van de standaardnotatie.
+
+- **--xlate-frontmatter**
+
+    Behandel een inleidend `---` ... `---`-blok als YAML-frontmatter: sluit het uit van de vertaling en van de fase-2-contextfragmenten, en voeg de platte `key: value`-waarden ervan toe aan de anonimiseringsregels (categorie `var`) als vangnet. Bij meerdere invoerbestanden worden de verzamelde waarden opgeteld (waarbij het zekere voor het onzekere wordt genomen).
+
+    Laat altijd een lege regel achter na de afsluitende `---`. Bij een overeenkomend patroon in paragraafstijl vormt front matter dat direct overgaat in de hoofdtekst één blok dat de uitsluiting niet kan onderdrukken (in dat geval wordt een waarschuwing weergegeven); de waarden worden nog steeds geanonimiseerd, maar de voorpagina zelf zou voor vertaling worden verzonden.
+
 - **--xlate-glossary**=_glossary_
 
     Geef een woordenlijst-ID op die moet worden gebruikt voor vertaling. Deze optie is alleen beschikbaar wanneer je de DeepL engine gebruikt. De woordenlijst-ID moet verkregen worden via je DeepL account en zorgt voor een consistente vertaling van specifieke termen.
 
+- **--xlate-dryrun**
+
+    Roep de vertaal-API niet aan; toon in plaats daarvan via de voortgangsbalk elke payload precies zoals deze zou worden verzonden (na anonimisering en maskering). Handig om te controleren wat de machine verlaat en om de kosten van een vertaalrun in te schatten.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Zie het resultaat van de vertaling in real time in de STDERR uitvoer.
+    Bekijk het vertaalresultaat in realtime in de STDERR-uitvoer. De `From`-payload wordt weergegeven zoals deze wordt verzonden, na anonimisering en maskering.
 
 - **--xlate-stripe**
 
@@ -304,7 +395,11 @@ Laad het `xlate.el` bestand in het archief om het `xlate` commando te gebruiken 
 
 - OPENAI\_API\_KEY
 
-    OpenAI authenticatiesleutel.
+    OpenAI-authenticatiesleutel, gebruikt door de oudere **gpty**-engines. De op `llm` gebaseerde **gpt5**-engine leest deze variabele ook, maar sleutels die met `llm keys set openai` zijn opgeslagen, werken eveneens.
+
+- GREPLE\_XLATE\_CACHE
+
+    Stel de standaardcachestrategie in (zie ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -314,7 +409,9 @@ Laad het `xlate.el` bestand in het archief om het `xlate` commando te gebruiken 
 
 ## TOOLS
 
-Je moet commandoregeltools installeren voor DeepL en ChatGPT.
+Installeer het opdrachtregelprogramma voor de engine die je gebruikt: `llm` voor de **gpt5**-engine, `deepl` voor DeepL, `gpty` voor de verouderde GPT-engines.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -324,7 +421,7 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generieke Docker runner gebruikt door xlate voor containeroperaties
 
@@ -355,6 +452,10 @@ Je moet commandoregeltools installeren voor DeepL en ChatGPT.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     De `getoptlong.sh` bibliotheek gebruikt voor optie parsing in het `xlate` script en [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    Het `llm`-commando dat door de **gpt5**-engine wordt gebruikt om toegang te krijgen tot LLM-modellen.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

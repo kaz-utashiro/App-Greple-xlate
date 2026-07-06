@@ -6,21 +6,23 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate>-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (F<deepl.pm>) und das GPT-5.5- (F<gpty/gpt5.pm>) Modul als Backend-Engine implementiert.
+B<Greple> B<xlate>-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.5 (F<llm/gpt5.pm>), die den Befehl L<llm|https://llm.datasette.io/> aufruft; DeepL (F<deepl.pm>) und ältere auf B<gpty> basierende Engines sind ebenfalls enthalten.
 
-Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den Befehl B<greple> mit den Modulen C<--xlate-engine deepl> und C<perl> wie folgt:
+Übersetzungen werden pro Datei zwischengespeichert, sodass das erneute Ausführen eines Befehls für unveränderten Text nichts kostet. Wenn ein Dokument bearbeitet wird, werden nur die geänderten Absätze erneut an die API gesendet; eine kontextbewusste Engine erhält außerdem die umgebenden Übersetzungen, den rohen Quelltext um die Änderung herum und die vorherige Version des bearbeiteten Absatzes, sodass die neue Übersetzung die etablierte Wortwahl beibehält (siehe B<--xlate-context-window>). Vertrauliche Zeichenketten können vor der Übertragung verborgen werden (siehe L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den Befehl B<greple> mit C<--xlate-engine gpt5> und dem Modul C<perl> wie folgt:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In diesem Befehl bedeutet die Zeichenkette C<^([\w\pP].*\n)+> aufeinanderfolgende Zeilen, die mit alphanumerischen und Interpunktionszeichen beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option B<--all> wird verwendet, um den gesamten Text auszugeben.
 
@@ -28,7 +30,7 @@ In diesem Befehl bedeutet die Zeichenkette C<^([\w\pP].*\n)+> aufeinanderfolgend
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe des Befehls B<deepl> ersetzt.
+Fügen Sie dann die Option C<--xlate> hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe der Übersetzungs-Engine ersetzt.
 
 Standardmäßig werden Original- und übersetzter Text im „Konfliktmarker“-Format ausgegeben, das mit L<git(1)> kompatibel ist. Mit dem Format C<ifdef> können Sie den gewünschten Teil einfach mit dem Befehl L<unifdef(1)> erhalten. Das Ausgabeformat kann mit der Option B<--xlate-format> angegeben werden.
 
@@ -90,9 +92,13 @@ Komplexe Muster können mit einem durch Backslash maskierten Zeilenumbruch über
 
 Wie der Text durch Maskierung transformiert wird, kann mit der Option B<--xlate-mask> gesehen werden.
 
+Maskierung schützt Markup davor, übersetzt zu werden. Um sensible Zeichenfolgen vor dem Übersetzungsdienst selbst zu verbergen, siehe L</ANONYMIZATION AND TEMPLATES>; beides kann zusammen verwendet werden.
+
 Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
 =head1 ANONYMIZATION AND TEMPLATES
+
+Sensible Zeichenketten können verborgen werden, bevor sie an die Übersetzungs-API gesendet werden, und in der Ausgabe wiederhergestellt werden. Drei Quellen für Anonymisierungsregeln stehen zur Verfügung: eine Wörterbuchdatei (B<--xlate-anonymize>), Inline-Markierungen im Dokument selbst (B<--xlate-anonymize-mark>) und YAML-Front-Matter-Werte (B<--xlate-frontmatter>). Jede Zeichenkette wird während der Übertragung durch ein Kategorie-Tag wie C<< <person id=1 /> >> ersetzt. Das Ziel der Verschleierung ist nur die API-Übertragung: lokale Cache-Dateien speichern wiederhergestellten Klartext. Verwenden Sie B<--xlate-dryrun>, um genau zu prüfen, was übertragen würde.
 
 Definieren Sie bei Formulardokumenten (Quartalsberichte und dergleichen) die Akteure im Voraus und verweisen Sie im Haupttext auf sie:
 
@@ -152,15 +158,13 @@ Derzeit sind die folgenden Engines verfügbar
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-Die Schnittstelle von B<gpt-4o> ist instabil und kann derzeit nicht garantiert korrekt funktionieren.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
 
@@ -174,7 +178,11 @@ Anstatt die Übersetzungs-Engine aufzurufen, wird erwartet, dass Sie die Arbeit 
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Geben Sie die Zielsprache an. Verfügbare Sprachen erhalten Sie mit dem Befehl C<deepl languages>, wenn Sie die Engine B<DeepL> verwenden.
+Geben Sie die Zielsprache an. LLM-Engines akzeptieren jeden Sprachnamen oder -code, den das Modell versteht; er wird in den Übersetzungs-Prompt interpoliert. Verfügbare Sprachen erhalten Sie mit dem Befehl C<deepl languages>, wenn Sie die Engine B<DeepL> verwenden.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+Bezeichnung, die für den Originaltext in den Ausgabeformaten C<conflict>, C<colon> und C<ifdef> verwendet wird. Bei der Engine B<DeepL> wird ein vom Standard abweichender Wert auch als Ausgangssprache übergeben.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -249,7 +257,7 @@ Wenn das Format C<xtxt> (übersetzter Text) oder unbekannt ist, wird nur der üb
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Geben Sie die maximale Textlänge an, die auf einmal an die API gesendet wird. Der Standardwert ist für den kostenlosen DeepL-Konto-Dienst festgelegt: 128K für die API (B<--xlate>) und 5000 für die Zwischenablage-Schnittstelle (B<--xlate-labor>). Wenn Sie den Pro-Dienst verwenden, können Sie diese Werte möglicherweise ändern.
+Geben Sie die maximale Textlänge an, die auf einmal an die API gesendet wird. Der Standardwert 0 bedeutet das eigene Limit der Engine: Für den kostenlosen DeepL-Konto-Dienst sind das 128K für die API (B<--xlate>) und 5000 für die Zwischenablage-Schnittstelle (B<--xlate-labor>). Wenn Sie den Pro-Dienst verwenden, können Sie diese Werte möglicherweise ändern.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -259,7 +267,7 @@ Setzen Sie diesen Wert auf 1, wenn Sie eine Zeile nach der anderen übersetzen m
 
 =item B<--xlate-prompt>=I<text>
 
-Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist nur verfügbar, wenn ChatGPT-Engines (gpt3, gpt4o, gpt5) verwendet werden. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt C<%s> enthält, wird er durch den Namen der Zielsprache ersetzt.
+Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (C<gpt3>, C<gpt4o>, C<gpt5>) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt C<%s> enthält, wird er durch den Namen der Zielsprache ersetzt.
 
 =item B<--xlate-context>=I<text>
 
@@ -317,9 +325,13 @@ Lassen Sie immer eine Leerzeile nach dem abschließenden C<--->. Bei einem Absat
 
 Geben Sie eine Glossar-ID an, die für die Übersetzung verwendet werden soll. Diese Option ist nur bei Verwendung der DeepL-Engine verfügbar. Die Glossar-ID sollte aus Ihrem DeepL-Konto stammen und sorgt für eine konsistente Übersetzung spezifischer Begriffe.
 
+=item B<--xlate-dryrun>
+
+Rufen Sie die Übersetzungs-API nicht auf; zeigen Sie stattdessen über die Fortschrittsanzeige jede Payload genau so an, wie sie übertragen würde (nach Anonymisierung und Maskierung). Nützlich, um zu prüfen, was die Maschine verlässt, und um die Kosten eines Laufs abzuschätzen.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe.
+Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe. Die C<From>-Payload wird so angezeigt, wie sie nach Anonymisierung und Maskierung übertragen wurde.
 
 =item B<--xlate-stripe>
 
@@ -425,7 +437,11 @@ Legen Sie Ihren Authentifizierungsschlüssel für den DeepL-Dienst fest.
 
 =item OPENAI_API_KEY
 
-OpenAI-Authentifizierungsschlüssel.
+OpenAI-Authentifizierungsschlüssel, der von den alten B<gpty>-Engines verwendet wird. Die auf C<llm> basierende B<gpt5>-Engine liest diese Variable ebenfalls, aber mit C<llm keys set openai> gespeicherte Schlüssel funktionieren ebenfalls.
+
+=item GREPLE_XLATE_CACHE
+
+Legen Sie die Standard-Cache-Strategie fest (siehe L</CACHE OPTIONS>).
 
 =back
 
@@ -437,7 +453,9 @@ OpenAI-Authentifizierungsschlüssel.
 
 =head2 TOOLS
 
-Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
+Installieren Sie das Kommandozeilentool für die von Ihnen verwendete Engine: C<llm> für die B<gpt5>-Engine, C<deepl> für DeepL, C<gpty> für die alten GPT-Engines.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -447,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird
 
@@ -484,6 +502,10 @@ Docker-Container-Image.
 =item * L<https://github.com/tecolicom/getoptlong>
 
 Die Bibliothek C<getoptlong.sh>, die für die Optionsanalyse im Skript C<xlate> und L<App::dozo> verwendet wird.
+
+=item * L<https://llm.datasette.io/>
+
+Der Befehl C<llm>, der von der Engine B<gpt5> verwendet wird, um auf LLM-Modelle zuzugreifen.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

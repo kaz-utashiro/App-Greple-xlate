@@ -6,21 +6,23 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (F<deepl.pm>) ووحدة GPT-5.5 (F<gpty/gpt5.pm>) كمحرك خلفي.
+B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. المحرك الأساسي هو GPT-5.5 (F<llm/gpt5.pm>)، والذي يستدعي الأمر L<llm|https://llm.datasette.io/>؛ كما يتم تضمين DeepL (F<deepl.pm>) والمحركات القديمة المستندة إلى B<gpty>.
 
-إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر B<greple> مع وحدتي C<--xlate-engine deepl> وC<perl> كما يلي:
+تُخزَّن الترجمات مؤقتًا لكل ملف، لذا فإن إعادة تشغيل الأمر لا تكلّف شيئًا للنص غير المتغيّر. عند تحرير مستند، تُرسل الفقرات التي تغيّرت فقط إلى واجهة API مرة أخرى؛ ويتلقى المحرك الواعي بالسياق أيضًا الترجمات المحيطة، ونص المصدر الخام حول التغيير، والإصدار السابق من الفقرة المحررة، بحيث تحافظ الترجمة الجديدة على الصياغة المعتمدة (انظر B<--xlate-context-window>). يمكن إخفاء السلاسل الحساسة قبل الإرسال (انظر L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر B<greple> مع C<--xlate-engine gpt5> ووحدة C<perl> كما يلي:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 في هذا الأمر، تعني سلسلة النمط C<^([\w\pP].*\n)+> أسطرًا متتالية تبدأ بحروف وأرقام وعلامات ترقيم. يعرض هذا الأمر المنطقة المراد ترجمتها مميّزة. يُستخدم الخيار B<--all> لإنتاج النص الكامل.
 
@@ -28,7 +30,7 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-ثم أضف الخيار C<--xlate> لترجمة المنطقة المحددة. عندها سيعثر على الأقسام المطلوبة ويستبدلها بمخرجات أمر B<deepl>.
+ثم أضف الخيار C<--xlate> لترجمة المنطقة المحددة. عندها سيعثر على الأقسام المطلوبة ويستبدلها بمخرجات محرك الترجمة.
 
 افتراضيًا، يُطبع النص الأصلي والمُترجَم بصيغة "علامات التعارض" المتوافقة مع L<git(1)>. باستخدام صيغة C<ifdef> يمكنك الحصول على الجزء المطلوب بواسطة أمر L<unifdef(1)> بسهولة. يمكن تحديد تنسيق الإخراج عبر الخيار B<--xlate-format>.
 
@@ -90,9 +92,13 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 يمكن رؤية كيفية تحويل النص بواسطة الحجب عبر خيار B<--xlate-mask>.
 
+يحمي الحجب العلامات من الترجمة. لإخفاء السلاسل الحساسة عن خدمة الترجمة نفسها، راجع L</ANONYMIZATION AND TEMPLATES>؛ ويمكن استخدامهما معًا.
+
 هذا الواجهة تجريبية وقابلة للتغيير في المستقبل.
 
 =head1 ANONYMIZATION AND TEMPLATES
+
+يمكن إخفاء السلاسل الحساسة قبل إرسالها إلى واجهة API للترجمة ثم استعادتها في المخرجات. تتوفر ثلاثة مصادر لقواعد إخفاء الهوية: ملف قاموس (B<--xlate-anonymize>)، وعلامات مضمنة في المستند نفسه (B<--xlate-anonymize-mark>)، وقيم YAML front matter (B<--xlate-frontmatter>). تُستبدل كل سلسلة بوسم فئة مثل C<< <person id=1 /> >> أثناء الإرسال. هدف الإخفاء هو إرسال واجهة API فقط: تخزن ملفات التخزين المؤقت المحلية النص العادي المستعاد. استخدم B<--xlate-dryrun> لفحص ما سيُرسل بالضبط.
 
 بالنسبة إلى مستندات النماذج (التقارير الفصلية وما شابه)، عرّف الأطراف الفاعلة مسبقًا وأشر إليها في المتن:
 
@@ -152,15 +158,13 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-واجهة B<gpt-4o> غير مستقرة ولا يمكن ضمان عملها بشكل صحيح في الوقت الحالي.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
 
@@ -174,7 +178,11 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-حدد اللغة الهدف. يمكنك الحصول على اللغات المتاحة بواسطة أمر C<deepl languages> عند استخدام محرك B<DeepL>.
+حدد اللغة الهدف. تقبل محركات LLM أي اسم لغة أو رمز يفهمه النموذج؛ ويُدرج ذلك في موجّه الترجمة. يمكنك الحصول على اللغات المتاحة بواسطة أمر C<deepl languages> عند استخدام محرك B<DeepL>.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+التسمية المستخدمة للنص الأصلي في تنسيقات الإخراج C<conflict> وC<colon> وC<ifdef>. مع محرك B<DeepL>، تُمرَّر القيمة غير الافتراضية أيضًا كلغة المصدر.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -249,7 +257,7 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-حدد الحد الأقصى لطول النص الذي سيتم إرساله إلى واجهة برمجة التطبيقات مرة واحدة. القيمة الافتراضية مضبوطة كما في خدمة حساب DeepL المجانية: 128K لواجهة برمجة التطبيقات (B<--xlate>) و5000 لواجهة الحافظة (B<--xlate-labor>). قد تتمكن من تغيير هذه القيم إذا كنت تستخدم خدمة Pro.
+حدد الحد الأقصى لطول النص الذي سيتم إرساله إلى واجهة برمجة التطبيقات مرة واحدة. تعني القيمة الافتراضية 0 حدّ المحرك نفسه: بالنسبة إلى خدمة حساب DeepL المجانية، يكون ذلك 128K لواجهة برمجة التطبيقات (B<--xlate>) و5000 لواجهة الحافظة (B<--xlate-labor>). قد تتمكن من تغيير هذه القيم إذا كنت تستخدم خدمة Pro.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -259,7 +267,7 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =item B<--xlate-prompt>=I<text>
 
-حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. لا يتوفر هذا الخيار إلا عند استخدام محركات ChatGPT (gpt3، gpt4o، gpt5). يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على C<%s>، فسيُستبدل باسم اللغة الهدف.
+حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. يتوفر هذا الخيار لمحركات LLM (C<gpt3>، C<gpt4o>، C<gpt5>) لكنه لا يتوفر لـ DeepL. يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على C<%s>، فسيُستبدل باسم اللغة الهدف.
 
 =item B<--xlate-context>=I<text>
 
@@ -317,9 +325,13 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 حدد معرّف مسرد لاستخدامه في الترجمة. هذا الخيار متاح فقط عند استخدام محرك DeepL. يجب الحصول على معرّف المسرد من حساب DeepL لديك ويضمن ترجمة متسقة للمصطلحات المحددة.
 
+=item B<--xlate-dryrun>
+
+لا تستدعِ واجهة برمجة تطبيقات الترجمة؛ بل اعرض، من خلال عرض التقدم، كل حمولة بالضبط كما كانت ستُرسَل (بعد إخفاء الهوية والتقنيع). مفيد للتحقق مما يغادر الجهاز ولتقدير تكلفة التشغيل.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-اعرض نتيجة الترجمة في الوقت الحقيقي في مخرجات STDERR.
+اعرض نتيجة الترجمة في الوقت الحقيقي في مخرجات STDERR. تُعرض حمولة C<From> كما أُرسلت، بعد إخفاء الهوية والتقنيع.
 
 =item B<--xlate-stripe>
 
@@ -425,7 +437,11 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =item OPENAI_API_KEY
 
-مفتاح مصادقة OpenAI.
+مفتاح مصادقة OpenAI، يُستخدم بواسطة محركات B<gpty> القديمة. يقرأ محرك B<gpt5> المستند إلى C<llm> هذا المتغير أيضًا، لكن المفاتيح المخزنة باستخدام C<llm keys set openai> تعمل أيضًا.
+
+=item GREPLE_XLATE_CACHE
+
+عيّن استراتيجية التخزين المؤقت الافتراضية (انظر L</CACHE OPTIONS>).
 
 =back
 
@@ -437,7 +453,9 @@ B<Greple> B<xlate> تعثر الوحدة على كتل النص المطلوبة
 
 =head2 TOOLS
 
-عليك تثبيت أدوات سطر الأوامر لكل من DeepL وChatGPT.
+ثبّت أداة سطر الأوامر للمحرك الذي تستخدمه: C<llm> لمحرك B<gpt5>، وC<deepl> لـ DeepL، وC<gpty> لمحركات GPT القديمة.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -447,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
 
@@ -484,6 +502,10 @@ L<App::dozo> - مشغّل Docker عام يُستخدم بواسطة xlate لعم
 =item * L<https://github.com/tecolicom/getoptlong>
 
 مكتبة C<getoptlong.sh> المستخدمة لتحليل الخيارات في البرنامج النصي C<xlate> وL<App::dozo>.
+
+=item * L<https://llm.datasette.io/>
+
+الأمر C<llm> الذي يستخدمه المحرك B<gpt5> للوصول إلى نماذج LLM.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

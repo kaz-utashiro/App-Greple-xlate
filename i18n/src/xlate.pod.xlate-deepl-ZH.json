@@ -4,20 +4,24 @@
       "App::Greple::xlate - greple的翻译支持模块\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> 模块会查找目标文本块，并将其替换为翻译后的文本。目前已实现 DeepL (F<deepl.pm>) 和 GPT-5.5 (F<gpty/gpt5.pm>) 模块作为后端引擎。\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> 模块会查找目标文本块并将其替换为翻译后的文本。主要引擎是 GPT-5.5 (F<llm/gpt5.pm>)，它会调用 L<llm|https://llm.datasette.io/> 命令； DeepL (F<deepl.pm>) 以及基于 B<gpty> 的旧版引擎也包含在内。\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "若要翻译采用 Perl POD 风格编写的文档中的普通文本块，请像这样使用 B<greple> 命令，并配合 C<--xlate-engine deepl> 和 C<perl> 模块：\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "翻译结果按文件进行缓存，因此对于未更改的文本，重新运行命令无需额外成本。 当文档被编辑时，仅将更改过的段落再次发送至 API；基于上下文的引擎还会接收周围的翻译内容、更改处周围的原始源文本以及被编辑段落的上一版本，因此新翻译能保持既定的措辞（参见 B<--xlate-context-window>）。 敏感字符串可在传输前进行隐藏（参见 L</ANONYMIZATION AND TEMPLATES>）。\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "若要翻译采用 Perl pod 风格编写的文档中的普通文本块，请像这样结合 C<--xlate-engine gpt5> 和 C<perl> 模块使用 B<greple> 命令：\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "在该命令中，模式字符串 C<^([\\w\\pP].*\\n)+> 表示以字母和标点符号开头的连续行。该命令高亮显示要翻译的区域。选项 B<--all> 用于生成整个文本。\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "然后添加 C<--xlate> 选项来翻译选定区域。然后，它会找到所需的部分，并用 B<deepl> 命令输出将其替换。\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "然后添加 C<--xlate> 选项来翻译选定区域。随后，系统将查找目标段落并用翻译引擎的输出结果替换它们。\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,16 +76,40 @@
       "该指令将把文件中每行以C<MASKPATTERN>开头的文本视为正则表达式，匹配的字符串将被翻译，处理后自动还原。以C<#>开头的行将被忽略。\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
-      "复杂的模式可以用反斜线换行写成多行。\n"
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
+      "复杂模式可以跨多行书写，其中换行符需用反斜杠转义。\n"
    ],
    [
       "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
       "通过 B<--xlate-mask> 选项可以看到屏蔽后文本的转换效果。\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "屏蔽功能可防止标记被翻译。若要向翻译服务本身隐藏敏感字符串，请参阅 L</ANONYMIZATION AND TEMPLATES>；这两种方法可以同时使用。\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "此接口为试验性接口，将来可能会更改。\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "敏感字符串可在发送至翻译 API 之前被隐藏，并在输出中恢复。 提供三种匿名化规则来源：词典文件（B<--xlate-anonymize>）、文档中的内联标记（B<--xlate-anonymize-mark>）以及 YAML 前置信息值（B<--xlate-frontmatter>）。 在传输过程中，每个字符串都会被替换为类别标签，例如 C<< <person id=1 /> >>。隐藏操作仅针对 API 传输：本地缓存文件中存储的是已恢复的纯文本。使用 B<--xlate-dryrun> 可查看实际将要传输的内容。\n"
+   ],
+   [
+      "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
+      "对于表单文档（如季度报告等），请预先定义参与方并在正文中引用它们：\n"
+   ],
+   [
+      "Translate the template once per language with C<--xlate-template> (and C<--xlate-frontmatter> when the values are kept in the file), then render each case with B<pandoc-embedz> standalone mode -- values under C<global:> in an external config never reach the translation API at all:\n",
+      "使用 C<--xlate-template> 将模板按每种语言翻译一次 （当值保存在文件中时使用 C<--xlate-frontmatter>），然后使用 B<pandoc-embedz> 独立模式渲染每个案例——外部配置中 C<global:> 下的值根本不会传送到翻译 API：\n"
+   ],
+   [
+      "For inline marks, providing a macro definition config makes the same translated template render either the real names or a redacted version:\n",
+      "对于内联标记，提供宏定义配置可使同一翻译后的模板渲染真实名称或经过遮蔽处理的版本：\n"
+   ],
+   [
+      "Exclude embedz blocks from translation when a document contains them:\n",
+      "当文档包含 embedz 块时，将其排除在翻译之外：\n"
    ],
    [
       "Invoke the translation process for each matched area.\n",
@@ -112,16 +140,20 @@
       "目前有以下引擎\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "B<gpt-4o> 的接口不稳定，目前无法保证正常工作。\n"
+      "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
+      "引擎模块首先在后端命名空间中搜索（C<llm>，然后是 C<gpty>），然后直接在 C<App::Greple::xlate> 下搜索。 因此，C<gpt5> 会加载 C<App::Greple::xlate::llm::gpt5>，后者调用 C<llm> 命令，而 C<gpt4o> 则回退到 C<App::Greple::xlate::gpty::gpt4o>。使用 C<--xlate-setopt backend=gpty> 可强制指定特定后端。\n"
    ],
    [
       "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n",
       "您需要做的不是调用翻译引擎，而是为其工作。准备好要翻译的文本后，它们会被复制到剪贴板。您需要将它们粘贴到表单中，将结果复制到剪贴板，然后点击回车键。\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "指定目标语言。当使用B<DeepL>引擎时，你可以通过C<deepl languages>命令获得可用语言。\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "指定目标语言。LLM引擎接受模型所理解的任何语言名称或代码；该语言将被插值到翻译提示中。使用B<DeepL>引擎时，可通过C<deepl languages>命令获取可用语言列表。\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "在 C<conflict>、C<colon> 和 C<ifdef> 输出格式中，用于源文本的标签。使用 B<DeepL> 引擎时，非默认值也会作为源语言传递。\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -168,8 +200,8 @@
       "如果格式是C<xtxt>（翻译文本）或不知道，则只打印翻译文本。\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "指定一次发送到 API 的最大文本长度。默认值与 DeepL 免费账户服务一样：API (B<--xlate>) 为 128K，剪贴板界面 (B<--xlate-labor>) 为 5000。如果使用专业版服务，您可以更改这些值。\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "指定一次发送至 API 的文本最大长度。 默认值 0 表示引擎自身的限制：对于 DeepL 免费账户服务，API（B<--xlate>）的限制为 128K，剪贴板接口（B<--xlate-labor>）的限制为 5000。 如果您使用的是 Pro 服务，则可能可以更改这些值。\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -180,20 +212,76 @@
       "如果想一次翻译一行，则将该值设为 1。该选项优先于 C<--xlate-maxlen> 选项。\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "指定要发送给翻译引擎的自定义提示词。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4o、gpt5）时可用。 您可以通过向AI模型提供具体指令来定制翻译行为。如果提示词中包含C<%s>，它将被替换为目标语言名称。\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "指定要发送给翻译引擎的自定义提示词。此选项适用于 LLM 引擎（C<gpt3>、C<gpt4o>、C<gpt5>），但不适用于 DeepL。 您可以通过向 AI 模型提供具体指令来自定义翻译行为。如果提示语中包含 C<%s>，它将被目标语言名称替换。\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
       "指定要发送给翻译引擎的其他上下文信息。此选项可多次使用，以提供多个上下文字符串。上下文信息有助于翻译引擎理解背景并生成更准确的翻译。\n"
    ],
    [
+      "Number of surrounding translated blocks passed as reference context when re-translating changed blocks (default 2). The context also includes the raw source text around the changed region (headings, list structure, captions) and, when available, the previous version of the changed text recovered from the cache, so that unchanged wording is preserved. Set to 0 to disable context-aware translation entirely. Note that each changed region is translated in its own API call and the context can add up to about 8000 characters to the system prompt, so context-aware translation trades some extra cost for consistency.\n",
+      "在重新翻译已修改的块时，作为参考上下文传递的周围已翻译块的数量（默认值为 2）。该上下文还包括已修改区域周围的原始源文本（标题、列表结构、图注），以及（如有）从缓存中恢复的已修改文本的先前版本，以便保留未更改的措辞。 设置为 0 可完全禁用基于上下文的翻译。请注意，每个已更改区域都会通过单独的 API 调用进行翻译，且上下文可能会使系统提示符增加约 8000 个字符，因此基于上下文的翻译是在牺牲部分额外成本的同时换取一致性。\n"
+   ],
+   [
+      "Initialize a new document's cache from another document's cache file. Useful for periodic reports: seed the new issue's cache with the previous issue's, so unchanged paragraphs are not re-translated and edited paragraphs keep the previous issue's wording. The seed is used only when the target cache is empty; otherwise it is ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also implies creating the new document's cache file.\n",
+      "从另一个文档的缓存文件初始化新文档的缓存。这对于定期报告非常有用：使用上一期报告的缓存作为新期报告缓存的初始值，这样未更改的段落就不会被重新翻译，而编辑过的段落则会保留上一期报告的措辞。 仅当目标缓存为空时才会使用该初始化数据；否则将忽略该参数并发出警告。使用默认的 C<--xlate-cache=auto> 时，指定初始化数据也意味着会创建新文档的缓存文件。\n"
+   ],
+   [
+      "Anonymize sensitive strings before they are sent to the translation API, and restore them in the output. The dictionary file gives one entry per item: in JSON (canonical, machine-generatable)\n",
+      "在将敏感字符串发送至翻译 API 之前对其进行匿名化处理，并在输出中恢复其原始内容。词典文件为每个项目提供一条条目：以 JSON 格式（规范的、可由机器生成）\n"
+   ],
+   [
+      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=1 /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
+      "或以简单行格式（C<category pattern>，C</.../> 用于正则表达式）。 每个项目都被替换为类别标签，例如 C<< <person id=1 /> >>；相同的字符串始终获得相同的标签，因此模型可以追踪“谁是谁”。未知 JSON 字段将被忽略，因此生成器（例如提取实体的本地 LLM）可以添加自己的注释。 类别 C<lit> 被保留。本地缓存文件仍会存储恢复后的纯文本：隐藏操作仅针对 API 传输。\n"
+   ],
+   [
+      "A dictionary can be generated by an external tool -- for example a local model extracting sensitive entities:\n",
+      "词典可由外部工具生成——例如用于提取敏感实体的本地模型：\n"
+   ],
+   [
+      "A UTF-8 BOM in the file is tolerated. Values in the front matter line format may carry a trailing comment only on their own line, not after the value.\n",
+      "文件中允许存在 UTF-8 BOM。前置信息行格式的值仅可在单独一行末尾带有尾注，不可紧跟在值之后。\n"
+   ],
+   [
+      "Collect anonymization entries from inline marks in the document itself. Mark the first occurrence like C<{{ person(\"山田太郎\") }}> and every occurrence of the string document-wide is anonymized. The mark itself stays in the source and in the translation, so a document can also be processed by a Jinja2-style macro processor (define the C<person> macro to print or redact the name). A custom I<regex> must contain C<< (?<category>...) >> and C<< (?<text>...) >> named captures.\n",
+      "从文档本身的内联标记中收集匿名化条目。 将首次出现的位置标记为 C<{{ person(\"山田太郎\") }}>，该字符串在整个文档中的所有出现位置均会被匿名化。标记本身会保留在源文档和译文中，因此文档也可通过 Jinja2 风格的宏处理器进行处理（定义 C<person> 宏以打印或屏蔽名称）。 自定义的 I<regex> 必须包含名为 C<< (?<category>...) >> 和 C<< (?<text>...) >> 的命名捕获。\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-anonymize-mark=> (with a trailing C<=>) when using the default notation.\n",
+      "请注意，对于此类可选值的选项，后续的文件参数将被视为该值：在使用默认表示法时，应写为 C<--xlate-anonymize-mark=>（末尾跟一个 C<=>）。\n"
+   ],
+   [
+      "Alternative notations can be configured, for example C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> for C<@@person:NAME@@>-style marks, or an HTML-comment form that stays invisible in rendered Markdown. Mark rules are collected per document: a string marked in one input file is not concealed in another file of the same run (unlike front matter values, which accumulate across files).\n",
+      "可以配置其他表示法，例如 C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> 用于 C<@@person:NAME@@> 风格的标记，或者一种在渲染后的 Markdown 中不可见的 HTML 注释形式。 标记规则按文档收集：在一个输入文件中被标记的字符串不会在同一运行中的另一个文件中被隐藏（这与在前置信息中累积的值不同）。\n"
+   ],
+   [
+      "Treat template expressions (default: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the model to copy them unchanged and verify, per block, that the response contains exactly the same expressions, each the same number of times. Their order may change, since translation legitimately reorders them to follow the target language word order. A broken expression aborts the run; the cache is checkpointed and frozen, so nothing paid for is lost.\n",
+      "将模板表达式（默认：Jinja2 C<{{ ... }}>、C<{% ... %}>、C<{# ... #}>）视为不透明占位符：指示模型将其原样复制，并按块验证响应中是否包含完全相同的表达式，且每个表达式出现的次数完全一致。 这些表达式的顺序可能会发生变化，因为翻译过程中会根据目标语言的词序对其进行合理重新排序。若遇到错误的表达式，运行将终止；此时缓存会被检查点保存并冻结，因此已付费的内容不会丢失。\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-template=> (with a trailing C<=>) when using the default notation.\n",
+      "请注意，对于此类可选值选项，后续的文件参数将被视为该值：在使用默认表示法时，应写为 C<--xlate-template=>（末尾跟 C<=>）。\n"
+   ],
+   [
+      "Treat a leading C<---> ... C<---> block as YAML front matter: exclude it from translation and from the phase-2 context slices, and add its flat C<key: value> values to the anonymization rules (category C<var>) as a safety net. With multiple input files the collected values accumulate (erring on the side of concealment).\n",
+      "将开头的 C<---> ... C<---> 块视为 YAML 前置信息：将其排除在翻译和第二阶段上下文切片之外，并将其中平铺的 C<key: value> 值添加到匿名化规则（类别 C<var>）中作为安全保障。 当存在多个输入文件时，收集的值会累积（宁可多隐瞒也不要少隐瞒）。\n"
+   ],
+   [
+      "Always leave a blank line after the closing C<--->. With a paragraph-style match pattern, front matter that runs directly into the body text forms one straddling block that the exclusion cannot suppress (a warning is printed in that case); the values are still anonymized, but the front matter itself would be sent for translation.\n",
+      "在闭合的 C<---> 之后始终留出一行空行。若采用段落风格的匹配模式，直接与正文相连的前置信息将形成一个跨段块，该块无法被排除规则抑制（此时会输出警告）； 这些值仍会被匿名化，但前置信息本身仍会被发送进行翻译。\n"
+   ],
+   [
       "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
       "指定用于翻译的词汇表 ID。该选项仅在使用 DeepL 引擎时可用。词汇表 ID 应从您的 DeepL 账户获取，可确保特定术语翻译的一致性。\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "在STDERR输出中可以看到实时的翻译结果。\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "请勿调用翻译 API；而是通过进度显示，将每个有效载荷（经过匿名化和遮蔽处理后）以实际传输时的原样展示。这有助于检查系统输出的内容，并估算每次运行的成本。\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "可在 STDERR 输出中实时查看翻译结果。C<From> 有效负载以传输时的形式显示，即经过匿名化和屏蔽处理后的状态。\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -296,12 +384,20 @@
       "为DeepL 服务设置你的认证密钥。\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "OpenAI 验证密钥。\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "OpenAI 认证密钥，由旧版 B<gpty> 引擎使用。 基于 C<llm> 的 B<gpt5> 引擎也会读取此变量，但存储在 C<llm keys set openai> 中的密钥同样有效。\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "您必须安装 DeepL 和 ChatGPT 的命令行工具。\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "设置默认缓存策略（参见 L</CACHE OPTIONS>）。\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "安装您所用引擎对应的命令行工具：C<llm> 用于 B<gpt5> 引擎，C<deepl> 用于 DeepL，C<gpty> 用于旧版 GPT 引擎。\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -312,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -342,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "C<getoptlong.sh> 库，用于在 C<xlate> 脚本和 L<App::dozo> 中进行选项解析。\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "B<gpt5>引擎用于访问LLM模型的C<llm>命令。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

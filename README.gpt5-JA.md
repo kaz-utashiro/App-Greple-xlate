@@ -4,21 +4,23 @@ App::Greple::xlate - greple のための翻訳サポートモジュール
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。現在、DeepL（`deepl.pm`）およびGPT-5.5（`gpty/gpt5.pm`）モジュールがバックエンドエンジンとして実装されています。
+**Greple** **xlate** モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。主要なエンジンは GPT-5.5（`llm/gpt5.pm`）で、[llm](https://llm.datasette.io/) コマンドを呼び出します。DeepL（`deepl.pm`）および従来の **gpty** ベースのエンジンも含まれています。
 
-Perlのpodスタイルで書かれた文書内の通常のテキストブロックを翻訳したい場合は、次のように`--xlate-engine deepl`および`perl`モジュールとともに**greple**コマンドを使用してください。
+翻訳はファイルごとにキャッシュされるため、変更されていないテキストについてはコマンドを再実行してもコストはかかりません。文書が編集された場合、変更された段落だけが再度 API に送信されます。コンテキスト対応エンジンには、周囲の翻訳、変更箇所の周辺の生のソーステキスト、および編集された段落の以前のバージョンも渡されるため、新しい翻訳は確立済みの言い回しを維持します（**--xlate-context-window** を参照）。機密文字列は送信前に隠蔽できます（["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates) を参照）。
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Perlのpodスタイルで書かれた文書内の通常のテキストブロックを翻訳したい場合は、次のように **greple** コマンドを `--xlate-engine gpt5` および `perl` モジュールとともに使用してください。
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 このコマンドにおいて、パターン文字列 `^([\w\pP].*\n)+` は英数字および句読記号で始まる連続行を意味します。このコマンドは翻訳対象の領域をハイライト表示します。オプション **--all** は全文を出力するために使用します。
 
@@ -28,7 +30,7 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
     </p>
 </div>
 
-続いて選択領域を翻訳するために `--xlate` オプションを追加します。すると、所望のセクションを見つけて **deepl** コマンドの出力で置き換えます。
+続いて選択領域を翻訳するために `--xlate` オプションを追加します。すると、所望のセクションを見つけて翻訳エンジンの出力で置き換えます。
 
 デフォルトでは、原文と訳文は [git(1)](http://man.he.net/man1/git) と互換性のある「コンフリクトマーカー」形式で出力されます。`ifdef` 形式を使うと、[unifdef(1)](http://man.he.net/man1/unifdef) コマンドで必要な部分だけを簡単に取得できます。出力形式は **--xlate-format** オプションで指定できます。
 
@@ -79,9 +81,13 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
 マスキングによってテキストがどのように変換されるかは、**--xlate-mask** オプションで確認できます。
 
+マスキングはマークアップが翻訳されないように保護します。翻訳サービス自体から機密文字列を隠蔽するには、["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)を参照してください。両方を併用できます。
+
 このインターフェイスは実験的で、将来変更される可能性があります。
 
 # ANONYMIZATION AND TEMPLATES
+
+機密性の高い文字列は、翻訳 API に送信される前に隠蔽し、出力で復元できます。匿名化ルールのソースは 3 種類あります: 辞書ファイル（**--xlate-anonymize**）、文書自体のインラインマーク（**--xlate-anonymize-mark**）、および YAML フロントマターの値（**--xlate-frontmatter**）です。各文字列は、送信中に `<person id=1 />` のようなカテゴリタグに置き換えられます。隠蔽の対象は API 送信のみです。ローカルキャッシュファイルには復元されたプレーンテキストが保存されます。何が送信されるかを正確に確認するには、**--xlate-dryrun** を使用してください。
 
 フォーム文書（四半期報告書など）では、アクターを最初に定義し、本文で参照します:
 
@@ -134,13 +140,10 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
     現時点では、以下のエンジンが利用可能です。
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        **gpt-4o** のインターフェイスは不安定で、現時点では正しく動作することを保証できません。
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     エンジンモジュールはまずバックエンド名前空間（`llm`、次に `gpty`）で検索され、その後 `App::Greple::xlate` の直下で検索されます。したがって `gpt5` は `llm` コマンドを呼び出す `App::Greple::xlate::llm::gpt5` をロードし、一方 `gpt4o` は `App::Greple::xlate::gpty::gpt4o` にフォールバックします。特定のバックエンドを強制するには `--xlate-setopt backend=gpty` を使用してください。
 
@@ -151,7 +154,11 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
 - **--xlate-to** (Default: `EN-US`)
 
-    ターゲット言語を指定します。**DeepL** エンジン使用時は、`deepl languages` コマンドで利用可能な言語を取得できます。
+    ターゲット言語を指定します。LLM エンジンは、モデルが理解する任意の言語名またはコードを受け付けます。これは翻訳プロンプトに埋め込まれます。**DeepL** エンジン使用時は、`deepl languages` コマンドで利用可能な言語を取得できます。
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    `conflict`、`colon`、`ifdef` 出力形式で原文に使用されるラベルです。**DeepL** エンジンでは、デフォルト以外の値もソース言語として渡されます。
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    一度にAPIへ送信するテキストの最大長を指定します。デフォルト値は無料のDeepLアカウント向けに設定されています: API 用は 128K（**--xlate**）、クリップボードインターフェイス用は 5000（**--xlate-labor**）。Pro サービスを使用している場合は、この値を変更できる場合があります。
+    一度にAPIへ送信するテキストの最大長を指定します。デフォルト値 0 はエンジン自身の制限を意味します: 無料のDeepLアカウントサービスでは、API 用は 128K（**--xlate**）、クリップボードインターフェイス用は 5000（**--xlate-labor**）です。Pro サービスを使用している場合は、この値を変更できる場合があります。
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
 - **--xlate-prompt**=_text_
 
-    翻訳エンジンに送信するカスタムプロンプトを指定します。このオプションは、ChatGPTエンジン（gpt3、gpt4o、gpt5）を使用する場合にのみ利用できます。AIモデルに具体的な指示を与えることで、翻訳の動作をカスタマイズできます。プロンプトに`%s`が含まれている場合、それは対象言語名に置き換えられます。
+    翻訳エンジンに送信するカスタムプロンプトを指定します。このオプションはLLMエンジン（`gpt3`、`gpt4o`、`gpt5`）で利用できますが、DeepLでは利用できません。AIモデルに具体的な指示を与えることで、翻訳の動作をカスタマイズできます。プロンプトに`%s`が含まれている場合、それは対象言語名に置き換えられます。
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
     翻訳に使用する用語集IDを指定します。このオプションは DeepL エンジン使用時のみ有効です。用語集IDは DeepL アカウントから取得し、特定用語の一貫した翻訳を保証します。
 
+- **--xlate-dryrun**
+
+    翻訳 API を呼び出さず、代わりに進捗表示を通じて、各ペイロードを送信されるとおり（匿名化およびマスキング後）正確に表示します。マシンから何が出ていくかを確認し、実行コストを見積もるのに有用です。
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    STDERR 出力で翻訳結果をリアルタイムに確認します。
+    STDERR 出力で翻訳結果をリアルタイムに確認します。`From` ペイロードは、匿名化およびマスキング後に送信されるとおりに表示されます。
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Dockerと`make`オプションを組み合わせて、Docker環境で`make`を�
 
 - OPENAI\_API\_KEY
 
-    OpenAIの認証キー。
+    レガシー**gpty**エンジンで使用されるOpenAIの認証キー。`llm`ベースの**gpt5**エンジンもこの変数を読み取りますが、`llm keys set openai`で保存されたキーも使用できます。
+
+- GREPLE\_XLATE\_CACHE
+
+    デフォルトのキャッシュ戦略を設定します（["CACHE OPTIONS"](#cache-options)を参照）。
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Dockerと`make`オプションを組み合わせて、Docker環境で`make`を�
 
 ## TOOLS
 
-DeepLとChatGPTのコマンドラインツールをインストールする必要があります。
+使用するエンジン用のコマンドラインツールをインストールします。**gpt5**エンジンには`llm`、DeepLには`deepl`、レガシーGPTエンジンには`gpty`を使用します。
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ DeepLとChatGPTのコマンドラインツールをインストールする必�
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate がコンテナ操作に使用する汎用 Docker ランナー
 
@@ -435,6 +452,10 @@ DeepLとChatGPTのコマンドラインツールをインストールする必�
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     `getoptlong.sh`ライブラリは、`xlate`スクリプトおよび[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)でのオプション解析に使用されます。
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    **gpt5**エンジンがLLMモデルにアクセスするために使用する`llm`コマンド。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

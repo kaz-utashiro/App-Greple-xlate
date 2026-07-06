@@ -6,21 +6,23 @@ App::Greple::xlate - greple的翻译支持模块
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> 模块会查找目标文本块，并将其替换为翻译后的文本。目前已实现 DeepL (F<deepl.pm>) 和 GPT-5.5 (F<gpty/gpt5.pm>) 模块作为后端引擎。
+B<Greple> B<xlate> 模块会查找目标文本块并将其替换为翻译后的文本。主要引擎是 GPT-5.5 (F<llm/gpt5.pm>)，它会调用 L<llm|https://llm.datasette.io/> 命令； DeepL (F<deepl.pm>) 以及基于 B<gpty> 的旧版引擎也包含在内。
 
-若要翻译采用 Perl POD 风格编写的文档中的普通文本块，请像这样使用 B<greple> 命令，并配合 C<--xlate-engine deepl> 和 C<perl> 模块：
+翻译结果按文件进行缓存，因此对于未更改的文本，重新运行命令无需额外成本。 当文档被编辑时，仅将更改过的段落再次发送至 API；基于上下文的引擎还会接收周围的翻译内容、更改处周围的原始源文本以及被编辑段落的上一版本，因此新翻译能保持既定的措辞（参见 B<--xlate-context-window>）。 敏感字符串可在传输前进行隐藏（参见 L</ANONYMIZATION AND TEMPLATES>）。
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+若要翻译采用 Perl pod 风格编写的文档中的普通文本块，请像这样结合 C<--xlate-engine gpt5> 和 C<perl> 模块使用 B<greple> 命令：
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 在该命令中，模式字符串 C<^([\w\pP].*\n)+> 表示以字母和标点符号开头的连续行。该命令高亮显示要翻译的区域。选项 B<--all> 用于生成整个文本。
 
@@ -28,7 +30,7 @@ B<Greple> B<xlate> 模块会查找目标文本块，并将其替换为翻译后�
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-然后添加 C<--xlate> 选项来翻译选定区域。然后，它会找到所需的部分，并用 B<deepl> 命令输出将其替换。
+然后添加 C<--xlate> 选项来翻译选定区域。随后，系统将查找目标段落并用翻译引擎的输出结果替换它们。
 
 默认情况下，原文和译文以与 L<git(1)> 兼容的 "冲突标记 "格式打印。使用 C<ifdef> 格式，可以通过 L<unifdef(1)> 命令轻松获得所需的部分。输出格式可以通过 B<--xlate-format> 选项指定。
 
@@ -86,11 +88,45 @@ B<Greple> B<xlate> 模块会查找目标文本块，并将其替换为翻译后�
 
 该指令将把文件中每行以C<MASKPATTERN>开头的文本视为正则表达式，匹配的字符串将被翻译，处理后自动还原。以C<#>开头的行将被忽略。
 
-复杂的模式可以用反斜线换行写成多行。
+复杂模式可以跨多行书写，其中换行符需用反斜杠转义。
 
 通过 B<--xlate-mask> 选项可以看到屏蔽后文本的转换效果。
 
+屏蔽功能可防止标记被翻译。若要向翻译服务本身隐藏敏感字符串，请参阅 L</ANONYMIZATION AND TEMPLATES>；这两种方法可以同时使用。
+
 此接口为试验性接口，将来可能会更改。
+
+=head1 ANONYMIZATION AND TEMPLATES
+
+敏感字符串可在发送至翻译 API 之前被隐藏，并在输出中恢复。 提供三种匿名化规则来源：词典文件（B<--xlate-anonymize>）、文档中的内联标记（B<--xlate-anonymize-mark>）以及 YAML 前置信息值（B<--xlate-frontmatter>）。 在传输过程中，每个字符串都会被替换为类别标签，例如 C<< <person id=1 /> >>。隐藏操作仅针对 API 传输：本地缓存文件中存储的是已恢复的纯文本。使用 B<--xlate-dryrun> 可查看实际将要传输的内容。
+
+对于表单文档（如季度报告等），请预先定义参与方并在正文中引用它们：
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+使用 C<--xlate-template> 将模板按每种语言翻译一次 （当值保存在文件中时使用 C<--xlate-frontmatter>），然后使用 B<pandoc-embedz> 独立模式渲染每个案例——外部配置中 C<global:> 下的值根本不会传送到翻译 API：
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+对于内联标记，提供宏定义配置可使同一翻译后的模板渲染真实名称或经过遮蔽处理的版本：
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+当文档包含 embedz 块时，将其排除在翻译之外：
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 =head1 OPTIONS
 
@@ -122,17 +158,17 @@ B<Greple> B<xlate> 模块会查找目标文本块，并将其替换为翻译后�
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
+
+引擎模块首先在后端命名空间中搜索（C<llm>，然后是 C<gpty>），然后直接在 C<App::Greple::xlate> 下搜索。 因此，C<gpt5> 会加载 C<App::Greple::xlate::llm::gpt5>，后者调用 C<llm> 命令，而 C<gpt4o> 则回退到 C<App::Greple::xlate::gpty::gpt4o>。使用 C<--xlate-setopt backend=gpty> 可强制指定特定后端。
 
 =item B<--xlate-labor>
 
@@ -142,7 +178,11 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-指定目标语言。当使用B<DeepL>引擎时，你可以通过C<deepl languages>命令获得可用语言。
+指定目标语言。LLM引擎接受模型所理解的任何语言名称或代码；该语言将被插值到翻译提示中。使用B<DeepL>引擎时，可通过C<deepl languages>命令获取可用语言列表。
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+在 C<conflict>、C<colon> 和 C<ifdef> 输出格式中，用于源文本的标签。使用 B<DeepL> 引擎时，非默认值也会作为源语言传递。
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -217,7 +257,7 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-指定一次发送到 API 的最大文本长度。默认值与 DeepL 免费账户服务一样：API (B<--xlate>) 为 128K，剪贴板界面 (B<--xlate-labor>) 为 5000。如果使用专业版服务，您可以更改这些值。
+指定一次发送至 API 的文本最大长度。 默认值 0 表示引擎自身的限制：对于 DeepL 免费账户服务，API（B<--xlate>）的限制为 128K，剪贴板接口（B<--xlate-labor>）的限制为 5000。 如果您使用的是 Pro 服务，则可能可以更改这些值。
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -227,19 +267,71 @@ B<gpt-4o> 的接口不稳定，目前无法保证正常工作。
 
 =item B<--xlate-prompt>=I<text>
 
-指定要发送给翻译引擎的自定义提示词。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4o、gpt5）时可用。 您可以通过向AI模型提供具体指令来定制翻译行为。如果提示词中包含C<%s>，它将被替换为目标语言名称。
+指定要发送给翻译引擎的自定义提示词。此选项适用于 LLM 引擎（C<gpt3>、C<gpt4o>、C<gpt5>），但不适用于 DeepL。 您可以通过向 AI 模型提供具体指令来自定义翻译行为。如果提示语中包含 C<%s>，它将被目标语言名称替换。
 
 =item B<--xlate-context>=I<text>
 
 指定要发送给翻译引擎的其他上下文信息。此选项可多次使用，以提供多个上下文字符串。上下文信息有助于翻译引擎理解背景并生成更准确的翻译。
 
+=item B<--xlate-context-window>=I<n>
+
+(Context-aware engines only, e.g. C<gpt5> on the llm backend)
+在重新翻译已修改的块时，作为参考上下文传递的周围已翻译块的数量（默认值为 2）。该上下文还包括已修改区域周围的原始源文本（标题、列表结构、图注），以及（如有）从缓存中恢复的已修改文本的先前版本，以便保留未更改的措辞。 设置为 0 可完全禁用基于上下文的翻译。请注意，每个已更改区域都会通过单独的 API 调用进行翻译，且上下文可能会使系统提示符增加约 8000 个字符，因此基于上下文的翻译是在牺牲部分额外成本的同时换取一致性。
+
+=item B<--xlate-cache-seed>=I<file>
+
+从另一个文档的缓存文件初始化新文档的缓存。这对于定期报告非常有用：使用上一期报告的缓存作为新期报告缓存的初始值，这样未更改的段落就不会被重新翻译，而编辑过的段落则会保留上一期报告的措辞。 仅当目标缓存为空时才会使用该初始化数据；否则将忽略该参数并发出警告。使用默认的 C<--xlate-cache=auto> 时，指定初始化数据也意味着会创建新文档的缓存文件。
+
+=item B<--xlate-anonymize>=I<file>
+
+在将敏感字符串发送至翻译 API 之前对其进行匿名化处理，并在输出中恢复其原始内容。词典文件为每个项目提供一条条目：以 JSON 格式（规范的、可由机器生成）
+
+    [ { "category": "person",  "text": "山田太郎" },
+      { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+或以简单行格式（C<category pattern>，C</.../> 用于正则表达式）。 每个项目都被替换为类别标签，例如 C<< <person id=1 /> >>；相同的字符串始终获得相同的标签，因此模型可以追踪“谁是谁”。未知 JSON 字段将被忽略，因此生成器（例如提取实体的本地 LLM）可以添加自己的注释。 类别 C<lit> 被保留。本地缓存文件仍会存储恢复后的纯文本：隐藏操作仅针对 API 传输。
+
+词典可由外部工具生成——例如用于提取敏感实体的本地模型：
+
+    llm -m <local-model> \
+        -s 'Extract sensitive entities as a JSON array of objects
+            with "category" and "text" fields.' \
+        < report.md > report.anon.json
+    greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+文件中允许存在 UTF-8 BOM。前置信息行格式的值仅可在单独一行末尾带有尾注，不可紧跟在值之后。
+
+=item B<--xlate-anonymize-mark>[=I<regex>]
+
+从文档本身的内联标记中收集匿名化条目。 将首次出现的位置标记为 C<{{ person("山田太郎") }}>，该字符串在整个文档中的所有出现位置均会被匿名化。标记本身会保留在源文档和译文中，因此文档也可通过 Jinja2 风格的宏处理器进行处理（定义 C<person> 宏以打印或屏蔽名称）。 自定义的 I<regex> 必须包含名为 C<< (?<category>...) >> 和 C<< (?<text>...) >> 的命名捕获。
+
+请注意，对于此类可选值的选项，后续的文件参数将被视为该值：在使用默认表示法时，应写为 C<--xlate-anonymize-mark=>（末尾跟一个 C<=>）。
+
+可以配置其他表示法，例如 C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@' >> 用于 C<@@person:NAME@@> 风格的标记，或者一种在渲染后的 Markdown 中不可见的 HTML 注释形式。 标记规则按文档收集：在一个输入文件中被标记的字符串不会在同一运行中的另一个文件中被隐藏（这与在前置信息中累积的值不同）。
+
+=item B<--xlate-template>[=I<regex>]
+
+将模板表达式（默认：Jinja2 C<{{ ... }}>、C<{% ... %}>、C<{# ... #}>）视为不透明占位符：指示模型将其原样复制，并按块验证响应中是否包含完全相同的表达式，且每个表达式出现的次数完全一致。 这些表达式的顺序可能会发生变化，因为翻译过程中会根据目标语言的词序对其进行合理重新排序。若遇到错误的表达式，运行将终止；此时缓存会被检查点保存并冻结，因此已付费的内容不会丢失。
+
+请注意，对于此类可选值选项，后续的文件参数将被视为该值：在使用默认表示法时，应写为 C<--xlate-template=>（末尾跟 C<=>）。
+
+=item B<--xlate-frontmatter>
+
+将开头的 C<---> ... C<---> 块视为 YAML 前置信息：将其排除在翻译和第二阶段上下文切片之外，并将其中平铺的 C<key: value> 值添加到匿名化规则（类别 C<var>）中作为安全保障。 当存在多个输入文件时，收集的值会累积（宁可多隐瞒也不要少隐瞒）。
+
+在闭合的 C<---> 之后始终留出一行空行。若采用段落风格的匹配模式，直接与正文相连的前置信息将形成一个跨段块，该块无法被排除规则抑制（此时会输出警告）； 这些值仍会被匿名化，但前置信息本身仍会被发送进行翻译。
+
 =item B<--xlate-glossary>=I<glossary>
 
 指定用于翻译的词汇表 ID。该选项仅在使用 DeepL 引擎时可用。词汇表 ID 应从您的 DeepL 账户获取，可确保特定术语翻译的一致性。
 
+=item B<--xlate-dryrun>
+
+请勿调用翻译 API；而是通过进度显示，将每个有效载荷（经过匿名化和遮蔽处理后）以实际传输时的原样展示。这有助于检查系统输出的内容，并估算每次运行的成本。
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-在STDERR输出中可以看到实时的翻译结果。
+可在 STDERR 输出中实时查看翻译结果。C<From> 有效负载以传输时的形式显示，即经过匿名化和屏蔽处理后的状态。
 
 =item B<--xlate-stripe>
 
@@ -345,7 +437,11 @@ Docker 操作由 L<App::dozo> 处理，该命令也可作为独立命令使用�
 
 =item OPENAI_API_KEY
 
-OpenAI 验证密钥。
+OpenAI 认证密钥，由旧版 B<gpty> 引擎使用。 基于 C<llm> 的 B<gpt5> 引擎也会读取此变量，但存储在 C<llm keys set openai> 中的密钥同样有效。
+
+=item GREPLE_XLATE_CACHE
+
+设置默认缓存策略（参见 L</CACHE OPTIONS>）。
 
 =back
 
@@ -357,7 +453,9 @@ OpenAI 验证密钥。
 
 =head2 TOOLS
 
-您必须安装 DeepL 和 ChatGPT 的命令行工具。
+安装您所用引擎对应的命令行工具：C<llm> 用于 B<gpt5> 引擎，C<deepl> 用于 DeepL，C<gpty> 用于旧版 GPT 引擎。
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -367,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - xlate 用于容器操作的通用 Docker 运行程序
 
@@ -404,6 +502,10 @@ Docker 容器镜像。
 =item * L<https://github.com/tecolicom/getoptlong>
 
 C<getoptlong.sh> 库，用于在 C<xlate> 脚本和 L<App::dozo> 中进行选项解析。
+
+=item * L<https://llm.datasette.io/>
+
+B<gpt5>引擎用于访问LLM模型的C<llm>命令。
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

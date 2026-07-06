@@ -4,20 +4,24 @@
       "App::Greple::xlate - greple 的翻译支持模块\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> 模块查找所需的文本块，并将其替换为翻译后的文本。目前已将 DeepL（F<deepl.pm>）和 GPT-5.5（F<gpty/gpt5.pm>）模块实现为后端引擎。\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> 模块查找所需的文本块，并将其替换为翻译后的文本。主要引擎是 GPT-5.5（F<llm/gpt5.pm>），它会调用 L<llm|https://llm.datasette.io/> 命令；同时还包含 DeepL（F<deepl.pm>）和基于旧版 B<gpty> 的引擎。\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请像这样将 B<greple> 命令与 C<--xlate-engine deepl> 和 C<perl> 模块一起使用：\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "翻译会按文件缓存，因此对未更改的文本重新运行命令不会产生任何成本。当文档被编辑时，只有已更改的段落会再次发送到 API；上下文感知引擎还会接收周围的翻译、变更周边的原始源文本，以及已编辑段落的上一版本，因此新的翻译会保持既有措辞（见 B<--xlate-context-window>）。敏感字符串可以在传输前隐藏（见 L</ANONYMIZATION AND TEMPLATES>）。\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请像这样将 B<greple> 命令与 C<--xlate-engine gpt5> 和 C<perl> 模块一起使用：\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "在此命令中，模式字符串 C<^([\\w\\pP].*\\n)+> 表示以字母数字和标点符号开头的连续行。该命令会高亮显示将被翻译的区域。选项 B<--all> 用于生成完整文本。\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "然后添加 C<--xlate> 选项以翻译所选区域。接着，它会找到所需的部分并将其替换为 B<deepl> 命令的输出。\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "然后添加 C<--xlate> 选项以翻译所选区域。接着，它会找到所需的部分并将其替换为翻译引擎的输出。\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,7 +76,7 @@
       "这将把文件的每一行 C<MASKPATTERN> 解释为正则表达式，翻译与其匹配的字符串，并在处理后还原。以 C<#> 开头的行将被忽略。\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
       "复杂的模式可以使用反斜杠转义换行写在多行上。\n"
    ],
    [
@@ -80,8 +84,16 @@
       "通过 B<--xlate-mask> 选项可以查看文本经屏蔽转换后的样子。\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "屏蔽可保护标记不被翻译。若要向翻译服务本身隐藏敏感字符串，请参见 L</ANONYMIZATION AND TEMPLATES>；两者可以一起使用。\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "此接口为实验性质，将来可能会改变。\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "敏感字符串可以在发送到翻译 API 之前被隐藏，并在输出中恢复。可使用三种匿名化规则来源：字典文件（B<--xlate-anonymize>）、文档本身中的内联标记（B<--xlate-anonymize-mark>）以及 YAML front matter 值（B<--xlate-frontmatter>）。在传输期间，每个字符串都会被替换为诸如 C<< <person id=1 /> >> 之类的类别标签。隐藏目标仅限于 API 传输：本地缓存文件存储的是已恢复的纯文本。使用 B<--xlate-dryrun> 可以准确检查将被传输的内容。\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -128,10 +140,6 @@
       "目前可用的引擎如下所示\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "B<gpt-4o> 的接口不稳定，目前无法保证能正确工作。\n"
-   ],
-   [
       "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
       "引擎模块会先在后端命名空间中搜索（C<llm>，然后是 C<gpty>），再直接在 C<App::Greple::xlate> 下搜索。因此，C<gpt5> 会加载 C<App::Greple::xlate::llm::gpt5>，后者调用 C<llm> 命令；而 C<gpt4o> 则回退到 C<App::Greple::xlate::gpty::gpt4o>。使用 C<--xlate-setopt backend=gpty> 可强制指定特定后端。\n"
    ],
@@ -140,8 +148,12 @@
       "不调用翻译引擎，而是期望由你手动完成。准备好要翻译的文本后，它们会被复制到剪贴板。你需要将其粘贴到表单中，将结果复制回剪贴板并按回车。\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "指定目标语言。使用 B<DeepL> 引擎时，可以通过 C<deepl languages> 命令获取可用语言。\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "指定目标语言。LLM 引擎接受模型能够理解的任何语言名称或代码；它会被插入到翻译提示中。使用 B<DeepL> 引擎时，可以通过 C<deepl languages> 命令获取可用语言。\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "用于 C<conflict>、C<colon> 和 C<ifdef> 输出格式中原文的标签。使用 B<DeepL> 引擎时，非默认值也会作为源语言传递。\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -188,8 +200,8 @@
       "如果格式是C<xtxt>（译文）或未知，则只打印译文。\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "指定一次发送到 API 的文本最大长度。默认值按 DeepL 免费账户服务设置：API 为 128K（B<--xlate>），剪贴板接口为 5000（B<--xlate-labor>）。如果使用 Pro 服务，您可以更改这些值。\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "指定一次发送到 API 的文本最大长度。默认值 0 表示引擎自身的限制：对于 DeepL 免费账户服务，API 为 128K（B<--xlate>），剪贴板接口为 5000（B<--xlate-labor>）。如果使用 Pro 服务，您可以更改这些值。\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -200,8 +212,8 @@
       "如果希望逐行翻译，将此值设为 1。此选项优先于C<--xlate-maxlen>选项。\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "指定要发送给翻译引擎的自定义提示。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4o、gpt5）时可用。你可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示包含 C<%s>，它将被替换为目标语言名称。\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "指定要发送给翻译引擎的自定义提示。此选项适用于 LLM 引擎（C<gpt3>、C<gpt4o>、C<gpt5>），但不适用于 DeepL。你可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示包含 C<%s>，它将被替换为目标语言名称。\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -264,8 +276,12 @@
       "指定用于翻译的术语库（glossary）ID。此选项仅在使用 DeepL 引擎时可用。术语库 ID 应从您的 DeepL 账户获取，以确保特定术语的一致翻译。\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "在 STDERR 输出中实时查看翻译结果。\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "不要调用翻译 API；而是通过进度显示，逐一展示每个 payload 的确切内容，就像它会被传输时一样（经过匿名化和 masking 之后）。这对于检查哪些内容离开本机以及估算一次运行的成本很有用。\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "在 STDERR 输出中实时查看翻译结果。C<From> payload 会按传输时的形式显示，即经过匿名化和 masking 之后。\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -368,12 +384,20 @@
       "设置你的 DeepL 服务认证密钥。\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "OpenAI 认证密钥。\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "OpenAI 认证密钥，由旧版 B<gpty> 引擎使用。基于 C<llm> 的 B<gpt5> 引擎也会读取此变量，但使用 C<llm keys set openai> 存储的密钥同样可用。\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "你需要安装 DeepL 和 ChatGPT 的命令行工具。\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "设置默认缓存策略（参见 L</CACHE OPTIONS>）。\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "安装你所使用引擎的命令行工具：B<gpt5> 引擎使用 C<llm>，DeepL 使用 C<deepl>，旧版 GPT 引擎使用 C<gpty>。\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -384,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -414,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "用于在C<xlate>脚本和L<App::dozo>中进行选项解析的C<getoptlong.sh>库。\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "B<gpt5> 引擎用于访问 LLM 模型的 C<llm> 命令。\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

@@ -1,6 +1,6 @@
 package App::Greple::xlate::llm::gpt5;
 
-our $VERSION = "1.0202";
+our $VERSION = "2.00";
 
 =encoding utf-8
 

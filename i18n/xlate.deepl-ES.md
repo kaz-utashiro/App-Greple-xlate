@@ -4,21 +4,23 @@ App::Greple::xlate - módulo de traducción para greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate**: el módulo busca los bloques de texto deseados y los sustituye por el texto traducido. Actualmente, los módulos DeepL (`deepl.pm`) y GPT-5.5 (`gpty/gpt5.pm`) están implementados como motores de fondo.
+**Greple** **xlate**: el módulo busca los bloques de texto deseados y los sustituye por el texto traducido. El motor principal es GPT-5.5 (`llm/gpt5.pm`), que ejecuta el comando [llm](https://llm.datasette.io/); También se incluyen DeepL (`deepl.pm`) y motores heredados basados en **gpty**.
 
-Si desea traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, utilice el comando **greple** con los módulos `--xlate-engine deepl` y `perl` de la siguiente manera:
+Las traducciones se almacenan en caché por archivo, por lo que volver a ejecutar un comando no supone ningún coste para el texto que no haya cambiado. Cuando se edita un documento, solo se envían de nuevo a la API los párrafos modificados; además, un motor sensible al contexto recibe las traducciones circundantes, el texto fuente sin procesar que rodea el cambio y la versión anterior del párrafo editado, de modo que la nueva traducción mantiene la redacción establecida (véase **--xlate-context-window**). Las cadenas sensibles pueden ocultarse antes de la transmisión (véase ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Si deseas traducir bloques de texto normales en un documento escrito en el estilo pod de Perl, utiliza el comando **greple** con los módulos `--xlate-engine gpt5` y `perl` de la siguiente manera:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 En este comando, la cadena de patrones `^([\w\pP].*\n)+` significa líneas consecutivas que comienzan con letras alfanuméricas y de puntuación. Este comando muestra resaltada el área a traducir. La opción **--all** se utiliza para producir el texto completo.
 
@@ -28,7 +30,7 @@ En este comando, la cadena de patrones `^([\w\pP].*\n)+` significa líneas conse
     </p>
 </div>
 
-A continuación, añada la opción `--xlate` para traducir el área seleccionada. Entonces, encontrará las secciones deseadas y las reemplazará por la salida del comando **deepl**.
+A continuación, añade la opción `--xlate` para traducir el área seleccionada. De este modo, el sistema localizará las secciones deseadas y las sustituirá por el resultado del motor de traducción.
 
 Por defecto, el texto original y traducido se imprime en el formato "marcador de conflicto" compatible con [git(1)](http://man.he.net/man1/git). Usando el formato `ifdef`, puede obtener la parte deseada mediante el comando [unifdef(1)](http://man.he.net/man1/unifdef) fácilmente. El formato de salida puede especificarse mediante la opción **--xlate-format**.
 
@@ -75,11 +77,45 @@ En ocasiones, hay partes del texto que no desea traducir. Por ejemplo, las etiqu
 
 Esto interpretará cada línea del archivo `MASKPATTERN` como una expresión regular, traducirá las cadenas que coincidan con ella y revertirá después del procesamiento. Las líneas que comienzan con `#` se ignoran.
 
-Un patrón complejo puede escribirse en varias líneas con una barra invertida y una nueva línea.
+Los patrones complejos pueden escribirse en varias líneas con saltos de línea escapados mediante la barra invertida.
 
 Cómo se transforma el texto mediante el enmascaramiento puede verse con la opción **--xlate-mask**.
 
+El enmascaramiento evita que se traduzcan los elementos de marcado. Para ocultar cadenas sensibles al propio servicio de traducción, consulta ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); ambas opciones pueden utilizarse conjuntamente.
+
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
+
+# ANONYMIZATION AND TEMPLATES
+
+Las cadenas sensibles pueden ocultarse antes de enviarlas a la API de traducción y restaurarse en el resultado. Hay tres fuentes de reglas de anonimización disponibles: un archivo de diccionario (**--xlate-anonymize**), marcas en línea en el propio documento (**--xlate-anonymize-mark**) y valores de front matter YAML (**--xlate-frontmatter**). Cada cadena se sustituye por una etiqueta de categoría, como `<person id=1 />`, durante la transmisión. La ocultación se aplica únicamente a la transmisión a la API: los archivos de caché locales almacenan el texto sin formato restaurado. Utiliza **--xlate-dryrun** para comprobar exactamente qué se transmitiría.
+
+Para los documentos de formulario (informes trimestrales y similares), define los actores desde el principio y haz referencia a ellos en el cuerpo:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Traduce la plantilla una vez por idioma con `--xlate-template` (y `--xlate-frontmatter` cuando los valores se mantengan en el archivo); a continuación, genera cada caso con **pandoc-embedz** en modo autónomo; los valores bajo `global:` en una configuración externa nunca llegan a la API de traducción:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+En el caso de las marcas en línea, proporcionar una configuración de definición de macro hace que la misma plantilla traducida muestre los nombres reales o una versión censurada:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Excluye los bloques «embedz» de la traducción cuando un documento los contenga:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 # OPTIONS
 
@@ -104,13 +140,12 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
     En este momento, están disponibles los siguientes motores
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
-        La interfaz de **gpt-4o** es inestable y no se puede garantizar que funcione correctamente por el momento.
-
-    - **gpt5**: gpt-5.5
+    Los módulos del motor se buscan primero en los espacios de nombres del backend (`llm`, luego `gpty`), y después directamente bajo `App::Greple::xlate`. Así, `gpt5` carga `App::Greple::xlate::llm::gpt5`, que a su vez llama al comando `llm`, mientras que `gpt4o` recurre a `App::Greple::xlate::gpty::gpt4o`. Utiliza `--xlate-setopt backend=gpty` para forzar un backend específico.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -119,7 +154,11 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Especifique el idioma de destino. Puede obtener los idiomas disponibles mediante el comando `deepl languages` si utiliza el motor **DeepL**.
+    Especifica el idioma de destino. Los motores LLM aceptan cualquier nombre o código de idioma que el modelo comprenda; este se interpolará en la solicitud de traducción. Puedes obtener los idiomas disponibles mediante el comando `deepl languages` cuando utilices el motor **DeepL**.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Etiqueta utilizada para el texto original en los formatos de salida `conflict`, `colon` y `ifdef`. Con el motor **DeepL**, también se pasa un valor no predeterminado como idioma de origen.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -189,7 +228,7 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Especifique la longitud máxima del texto que se enviará a la API de una sola vez. El valor predeterminado es el mismo que para el servicio gratuito de cuenta DeepL: 128K para la API (**--xlate**) y 5000 para la interfaz del portapapeles (**--xlate-labor**). Puede cambiar estos valores si utiliza el servicio Pro.
+    Especifica la longitud máxima del texto que se enviará a la API de una sola vez. El valor por defecto 0 se refiere al límite propio del motor: para el servicio gratuito de DeepL, este es de 128K para la API (**--xlate**) y de 5000 para la interfaz del portapapeles (**--xlate-labor**). Es posible que puedas modificar estos valores si utilizas el servicio Pro.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -199,19 +238,71 @@ Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 - **--xlate-prompt**=_text_
 
-    Especifica una indicación personalizada que se enviará al motor de traducción. Esta opción solo está disponible cuando se utilizan los motores de ChatGPT (gpt3, gpt4o, gpt5). Puedes personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la indicación contiene `%s`, se sustituirá por el nombre del idioma de destino.
+    Especifica una indicación personalizada que se enviará al motor de traducción. Esta opción está disponible para los motores LLM (`gpt3`, `gpt4o`, `gpt5`), pero no para DeepL. Puedes personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la indicación contiene `%s`, se sustituirá por el nombre del idioma de destino.
 
 - **--xlate-context**=_text_
 
     Especifique la información de contexto adicional que se enviará al motor de traducción. Esta opción puede utilizarse varias veces para proporcionar varias cadenas de contexto. La información de contexto ayuda al motor de traducción a comprender el contexto y producir traducciones más precisas.
 
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Número de bloques traducidos circundantes que se pasan como contexto de referencia al volver a traducir los bloques modificados (por defecto, 2). El contexto también incluye el texto fuente sin procesar que rodea la región modificada (encabezados, estructura de listas, pies de foto) y, cuando esté disponible, la versión anterior del texto modificado recuperada de la caché, de modo que se conserve la redacción no modificada. Establecer en 0 para desactivar por completo la traducción sensible al contexto. Ten en cuenta que cada región modificada se traduce en su propia llamada a la API y que el contexto puede sumar hasta unos 8000 caracteres a la indicación del sistema, por lo que la traducción sensible al contexto implica un coste adicional a cambio de la coherencia.
+
+- **--xlate-cache-seed**=_file_
+
+    Inicializa la caché de un nuevo documento a partir del archivo de caché de otro documento. Resulta útil para informes periódicos: se inicializa la caché del nuevo número con la del número anterior, de modo que los párrafos que no han cambiado no se vuelven a traducir y los párrafos editados conservan la redacción del número anterior. La inicialización solo se utiliza cuando la caché de destino está vacía; de lo contrario, se ignora y se muestra una advertencia. Con el valor predeterminado `--xlate-cache=auto`, especificar una inicialización también implica crear el archivo de caché del nuevo documento.
+
+- **--xlate-anonymize**=_file_
+
+    Anonimiza las cadenas sensibles antes de enviarlas a la API de traducción y las restaura en la salida. El archivo de diccionario proporciona una entrada por elemento: en JSON (canónico, generable por máquina)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    o en un formato de línea simple (`category pattern`, `/.../` para expresiones regulares). Cada elemento se sustituye por una etiqueta de categoría como `<person id=1 />`; a la misma cadena siempre se le asigna la misma etiqueta, de modo que el modelo puede llevar un registro de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extraiga entidades) pueden añadir sus propias anotaciones. La categoría `lit` está reservada. Los archivos de caché locales siguen almacenando el texto sin formato restaurado: el objetivo de ocultación se limita únicamente a la transmisión a través de la API.
+
+    Se puede generar un diccionario mediante una herramienta externa —por ejemplo, un modelo local que extraiga entidades sensibles—:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Se tolera la presencia de un BOM UTF-8 en el archivo. Los valores en formato de línea de encabezado pueden incluir un comentario al final, pero solo en su propia línea, no después del valor.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Recopila las entradas de anonimización a partir de las marcas en línea del propio documento. Marca la primera aparición como `{{ person("山田太郎") }}` y todas las apariciones de la cadena en todo el documento quedarán anonimizadas. La marca en sí permanece en el texto original y en la traducción, por lo que un documento también puede procesarse mediante un procesador de macros al estilo Jinja2 (define la macro `person` para mostrar o ocultar el nombre). Un _regex_ personalizado debe contener capturas con nombre `(?<category>...)` y `(?<text>...)`.
+
+    Ten en cuenta que, con una opción de valor opcional como esta, se tomaría como valor cualquier argumento de archivo que le siguiera: escribe `--xlate-anonymize-mark=` (con un `=` al final) cuando utilices la notación predeterminada.
+
+    Se pueden configurar notaciones alternativas, por ejemplo, `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` para marcas de estilo `@@person:NAME@@`, o un formato de comentario HTML que permanece invisible en el Markdown renderizado. Las reglas de marcado se recopilan por documento: una cadena marcada en un archivo de entrada no se oculta en otro archivo de la misma ejecución (a diferencia de los valores de la parte inicial, que se acumulan entre archivos).
+
+- **--xlate-template**\[=_regex_\]
+
+    Trata las expresiones de plantilla (por defecto: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) como marcadores de posición opacos: indica al modelo que las copie sin cambios y verifica, por bloque, que la respuesta contenga exactamente las mismas expresiones, cada una el mismo número de veces. Su orden puede cambiar, ya que la traducción las reordena legítimamente para seguir el orden de las palabras del idioma de destino. Una expresión errónea interrumpe la ejecución; la caché se guarda en un punto de control y se congela, por lo que no se pierde nada de lo que se haya pagado.
+
+    Ten en cuenta que, con una opción de valor opcional como esta, se tomaría como valor cualquier argumento de archivo que le siguiera: escribe `--xlate-template=` (con un `=` al final) cuando utilices la notación predeterminada.
+
+- **--xlate-frontmatter**
+
+    Trata un bloque que comience por `---` ... `---` como «front matter» de YAML: exclúyelo de la traducción y de los fragmentos de contexto de la fase 2, y añade sus valores planos `key: value` a las reglas de anonimización (categoría `var`) como medida de seguridad. Si hay varios archivos de entrada, los valores recopilados se acumulan (peciando por exceso de cautela).
+
+    Deja siempre una línea en blanco después del cierre `---`. Con un patrón de coincidencia de estilo párrafo, el front matter que se adentra directamente en el cuerpo del texto forma un bloque que abarca ambos y que la exclusión no puede suprimir (en ese caso se muestra una advertencia); los valores siguen estando anonimizados, pero la información preliminar en sí se enviaría a traducir.
+
 - **--xlate-glossary**=_glossary_
 
     Especifique un ID de glosario que se utilizará para la traducción. Esta opción sólo está disponible cuando se utiliza el motor DeepL. El ID del glosario debe obtenerse de su cuenta de DeepL y garantiza la traducción coherente de términos específicos.
 
+- **--xlate-dryrun**
+
+    No llames a la API de traducción; en su lugar, muestra, a través de la pantalla de progreso, cada carga útil exactamente tal y como se transmitiría (tras la anonimización y el enmascaramiento). Resulta útil para comprobar qué sale de la máquina y para estimar el coste de una ejecución.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Ver el resultado de la traducción en tiempo real en la salida STDERR.
+    Consulta el resultado de la traducción en tiempo real en la salida de STDERR. La carga útil `From` se muestra tal y como se transmite, tras la anonimización y el enmascaramiento.
 
 - **--xlate-stripe**
 
@@ -304,7 +395,11 @@ Cargue el fichero `xlate.el` incluido en el repositorio para usar el comando `xl
 
 - OPENAI\_API\_KEY
 
-    Clave de autenticación OpenAI.
+    Clave de autenticación de OpenAI, utilizada por los motores heredados **gpty**. El motor **gpt5** basado en `llm` también lee esta variable, pero las claves almacenadas con `llm keys set openai` también funcionan.
+
+- GREPLE\_XLATE\_CACHE
+
+    Establece la estrategia de caché por defecto (véase ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -314,7 +409,9 @@ Cargue el fichero `xlate.el` incluido en el repositorio para usar el comando `xl
 
 ## TOOLS
 
-Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
+Instala la herramienta de línea de comandos para el motor que utilices: `llm` para el motor **gpt5**, `deepl` para DeepL, `gpty` para los motores GPT heredados.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -324,7 +421,7 @@ Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Corredor Docker genérico utilizado por xlate para operaciones de contenedor.
 
@@ -355,6 +452,10 @@ Debe instalar las herramientas de línea de comandos para DeepL y ChatGPT.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     La biblioteca `getoptlong.sh` utilizada para el análisis sintáctico de opciones en el script `xlate` y [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    El comando `llm` utilizado por el motor **gpt5** para acceder a los modelos LLM.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

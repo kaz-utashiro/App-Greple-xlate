@@ -6,21 +6,23 @@ App::Greple::xlate - Greple tõlkimise tugimoodul
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> moodulid leiavad soovitud tekstilõigud ja asendavad need tõlgitud tekstiga. Praegu on tagapõhimoodulitena rakendatud DeepL (F<deepl.pm>) ja GPT-5.5 (F<gpty/gpt5.pm>) moodulid.
+B<Greple> B<xlate> moodulid leiavad soovitud tekstilõigud ja asendavad need tõlgitud tekstiga. Peamine mootor on GPT-5.5 (F<llm/gpt5.pm>), mis kutsub välja käsu L<llm|https://llm.datasette.io/>; Samuti on kaasatud DeepL (F<deepl.pm>) ja vanemad B<gpty>-põhised mootorid.
 
-Kui soovite tõlkida tavalisi tekstilõike dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine deepl> ja C<perl> järgmiselt:
+Tõlked salvestatakse failipõhiselt vahemällu, seega ei maksa muutumatu teksti puhul käsu uuesti käivitamine midagi. Dokumendi redigeerimisel saadetakse API-le uuesti ainult muudetud lõigud; kontekstist lähtuv mootor saab ka ümbritsevad tõlked, muudatuse ümbruse algteksti ning redigeeritud lõigu eelmise versiooni, nii et uus tõlge säilitab väljakujunenud sõnastuse (vt B<--xlate-context-window>). Tundlikud stringid saab enne edastamist varjata (vt L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Kui soovite tõlkida tavalisi tekstilõike dokumendis, mis on kirjutatud Perli pod-stiilis, kasutage käsku B<greple> koos moodulitega C<--xlate-engine gpt5> ja C<perl> järgmiselt:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Selles käsus tähendab musterjada C<^([\w\pP].*\n)+> järjestikuseid ridu, mis algavad tähtnumbrilise ja kirjavahemärgiga. See käsk näitab tõlgitavat ala esile tõstetud kujul. Valikut B<--all> kasutatakse kogu teksti koostamiseks.
 
@@ -28,7 +30,7 @@ Selles käsus tähendab musterjada C<^([\w\pP].*\n)+> järjestikuseid ridu, mis 
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Seejärel lisatakse valik C<--xlate>, et tõlkida valitud ala. Seejärel leitakse soovitud lõigud ja asendatakse need käsu B<deepl> väljundiga.
+Seejärel lisage valitud ala tõlkimiseks valik C<--xlate>. Seejärel leiab süsteem soovitud lõigud ja asendab need tõlkemootori väljundiga.
 
 Vaikimisi trükitakse algne ja tõlgitud tekst L<git(1)>-ga ühilduvas "konfliktimärkide" formaadis. Kasutades C<ifdef> formaati, saab soovitud osa hõlpsasti kätte käsuga L<unifdef(1)>. Väljundi formaati saab määrata valikuga B<--xlate-format>.
 
@@ -86,11 +88,45 @@ Mõnikord on tekstiosasid, mida te ei soovi tõlkida. Näiteks markdown-failide 
 
 See tõlgendab faili C<MASKPATTERN> iga rida regulaarse väljendina, tõlgib sellega sobivad stringid ja taastab pärast töötlemist. Ridadega, mis algavad C<#>, ei arvestata.
 
-Keerulise mustri võib kirjutada mitmele reale koos kaldkriipsu eskaga newline.
+Keerukaid mustreid saab kirjutada mitmele reale, kasutades tagasikaldkriipsuga eskapitud reavahetust.
 
 Seda, kuidas tekst on maskeerimise abil muudetud, saab näha valiku B<--xlate-mask> abil.
 
+Maskimine kaitseb märgistust tõlkimise eest. Tundlike stringide varjamiseks tõlketeenuse enda eest vaadake L</ANONYMIZATION AND TEMPLATES>; mõlemat saab kasutada koos.
+
 See liides on eksperimentaalne ja võib tulevikus muutuda.
+
+=head1 ANONYMIZATION AND TEMPLATES
+
+Tundlikud stringid saab varjata enne nende saatmist tõlke-API-le ja taastada väljundis. Anonüümimise reegleid on saadaval kolmest allikast: sõnastikufailist (B<--xlate-anonymize>), dokumendis endas olevatest sisseehitatud märgetest (B<--xlate-anonymize-mark>) ja YAML-i esiosade väärtustest (B<--xlate-frontmatter>). Iga string asendatakse edastamise ajal kategooriasildiga, näiteks C<< <person id=1 /> >>. Varjamise sihtmärk on ainult API-edastus: kohalikud vahemälufailid salvestavad taastatud tavateksti. Kasutage B<--xlate-dryrun>, et täpselt kontrollida, mis edastataks.
+
+Vormidokumentide puhul (kvartaliaruanded jms) määrake osalised eelnevalt kindlaks ja viidake neile tekstis:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Tõlkige mall üks kord iga keele kohta, kasutades C<--xlate-template> (ja C<--xlate-frontmatter>, kui väärtused säilitatakse failis), seejärel renderdage iga juhtum B<pandoc-embedz> eraldiseisvas režiimis – väärtused, mis asuvad välises konfiguratsioonis C<global:> all, ei jõua tõlke-API-ni üldse:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Sisestusmärkide puhul võimaldab makrodefinitsiooni konfiguratsiooni esitamine renderida samal tõlgitud mallil kas tegelikud nimed või redigeeritud versiooni:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Jäta embedz-plokid tõlkimisest välja, kui dokument neid sisaldab:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 =head1 OPTIONS
 
@@ -122,17 +158,17 @@ Praegu on saadaval järgmised mootorid
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-B<gpt-4o> liides on ebastabiilne ja hetkel ei saa garanteerida selle korrektset toimimist.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
+
+Mootorimooduleid otsitakse esmalt tagapõhja nimeruumi alt (C<llm>, seejärel C<gpty>), seejärel otse C<App::Greple::xlate> all. Seega laadib C<gpt5> sisse C<App::Greple::xlate::llm::gpt5>, mis kutsub välja käsu C<llm>, samas kui C<gpt4o> kasutab tagavarana C<App::Greple::xlate::gpty::gpt4o>. Kasutage C<--xlate-setopt backend=gpty>, et sundida kasutama konkreetset backendit.
 
 =item B<--xlate-labor>
 
@@ -142,7 +178,11 @@ Selle asemel, et kutsuda tõlkemootorit, oodatakse tööd. Pärast tõlgitava te
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Määrake sihtkeel. B<DeepL> mootori kasutamisel saate saadaval olevad keeled kätte käsuga C<deepl languages>.
+Määrake sihtkeel. LLM-mootorid aktsepteerivad mis tahes keelenime või koodi, mida mudel mõistab; see interpoleeritakse tõlkeprompti. Saadavalolevad keeled saate teada käsu C<deepl languages> abil, kui kasutate mootorit B<DeepL>.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+Silt, mida kasutatakse algteksti jaoks väljundvormingutes C<conflict>, C<colon> ja C<ifdef>. Mootori B<DeepL> puhul edastatakse allikakeelena ka mitte-vaikimisi väärtus.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -217,7 +257,7 @@ Kui formaat on C<xtxt> (tõlgitud tekst) või tundmatu, trükitakse ainult tõlg
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikeväärtus on määratud nagu tasuta DeepL kontoteenuse puhul: 128K API jaoks (B<--xlate>) ja 5000 lõikelaua liidesele (B<--xlate-labor>). Saate neid väärtusi muuta, kui kasutate Pro teenust.
+Määrake API-le korraga saadetava teksti maksimaalne pikkus. Vaikimisi väärtus 0 tähendab mootori enda piirangut: DeepLi tasuta kontoteenuse puhul on see API-le (B<--xlate>) 128K ja lõikelauale (B<--xlate-labor>) 5000. Kui kasutate Pro-teenust, võite neid väärtusi muuta.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -227,19 +267,71 @@ Määrake selle väärtuseks 1, kui soovite tõlkida ühe rea korraga. See valik
 
 =item B<--xlate-prompt>=I<text>
 
-Määrake tõlkemootorile saadetav kohandatud käsk. See valik on saadaval ainult ChatGPT-mootorite (gpt3, gpt4o, gpt5) kasutamisel. Võite kohandada tõlkimiskäitumist, andes AI-mudelile konkreetseid juhiseid. Kui käsk sisaldab C<%s>, asendatakse see sihtkeele nimega.
+Määrake tõlkemootorile saadetav kohandatud käsk. See valik on saadaval LLM-mootorite (C<gpt3>, C<gpt4o>, C<gpt5>) puhul, kuid mitte DeepL-i puhul. Võite kohandada tõlkimiskäitumist, andes AI-mudelile konkreetseid juhiseid. Kui käsk sisaldab C<%s>, asendatakse see sihtkeele nimega.
 
 =item B<--xlate-context>=I<text>
 
 Määrake lisakonteksti teave, mis saadetakse tõlkemootorile. Seda valikut saab kasutada mitu korda, et anda mitu kontekstijada. Kontekstiandmed aitavad tõlkemootoril mõista tausta ja toota täpsemaid tõlkeid.
 
+=item B<--xlate-context-window>=I<n>
+
+(Context-aware engines only, e.g. C<gpt5> on the llm backend)
+Muudetud plokkide uuesti tõlkimisel viitekontekstina edastatavate ümbritsevate tõlgitud plokkide arv (vaikimisi 2). Kontekst hõlmab ka muudetud piirkonna ümbruses olevat töötlemata allikateksti (pealkirjad, loendistruktuur, allkirjad) ning, kui see on kättesaadav, vahemälust taastatud muudetud teksti eelmist versiooni, et säilitada muutmata sõnastus. Määrake väärtuseks 0, et kontekstipõhine tõlkimine täielikult välja lülitada. Pange tähele, et iga muudetud piirkond tõlgitakse omaette API-kõnes ning kontekst võib süsteemi käsklusele lisada kuni umbes 8000 tähemärki, seega kontekstipõhine tõlkimine toob järjepidevuse nimel kaasa mõningaid lisakulusid.
+
+=item B<--xlate-cache-seed>=I<file>
+
+Initsialiseerige uue dokumendi vahemälu teise dokumendi vahemälufaili põhjal. Kasulik perioodiliste aruannete puhul: algandmetena kasutage uue väljaande vahemälus eelmise väljaande andmeid, nii et muutmata lõikeid ei tõlgita uuesti ja muudetud lõigud säilitavad eelmise väljaande sõnastuse. Alustust kasutatakse ainult siis, kui sihtvahemälu on tühi; muidu ignoreeritakse seda koos hoiatusega. Vaikimisi C<--xlate-cache=auto> puhul tähendab alustuse määramine ka uue dokumendi vahemälufaili loomist.
+
+=item B<--xlate-anonymize>=I<file>
+
+Anonüümistage tundlikud stringid enne nende saatmist tõlke-API-le ja taastage need väljundis. Sõnastikufailis on iga elemendi kohta üks kanne: JSON-vormingus (kanoniline, masinloetav)
+
+    [ { "category": "person",  "text": "山田太郎" },
+      { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+või lihtsas ridaformaadis (C<category pattern>, C</.../> regulaaravaldiste jaoks). Iga kirje asendatakse kategooriasildiga, näiteks C<< <person id=1 /> >>; sama string saab alati sama sildi, nii et mudel saab jälgida, kes on kes. Tundmatuid JSON-välju ignoreeritakse, seega võivad genereerijad (nt entiteete eraldav kohalik LLM) lisada oma märkusi. Kategooria C<lit> on reserveeritud. Kohalikud vahemälufailid salvestavad endiselt taastatud lihtteksti: varjamise eesmärk on ainult API-ülekande puhul.
+
+Sõnastiku saab genereerida välise tööriistaga – näiteks tundlikke entiteete eraldava kohaliku mudeliga:
+
+    llm -m <local-model> \
+        -s 'Extract sensitive entities as a JSON array of objects
+            with "category" and "text" fields.' \
+        < report.md > report.anon.json
+    greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+Failis olevat UTF-8 BOM-i aktsepteeritakse. Esilehe rea formaadis olevad väärtused võivad sisaldada lõpus kommentaari ainult oma eraldi real, mitte väärtuse järel.
+
+=item B<--xlate-anonymize-mark>[=I<regex>]
+
+Koguge anonüümimise kanded dokumendi enda sisseehitatud märkidest. Märgi esimene esinemine näiteks C<{{ person("山田太郎") }}> ja kogu dokumendis esinev string anonüümistatakse. Märge ise jääb nii allikasse kui ka tõlkesse, seega saab dokumenti töödelda ka Jinja2-stiilis makroprotsessoriga (määratle makro C<person> nime väljastamiseks või redigeerimiseks). Kohandatud I<regex> peab sisaldama nimelisi püüdmisi C<< (?<category>...) >> ja C<< (?<text>...) >>.
+
+Pange tähele, et sellise valikulise väärtusega valiku puhul võetakse järgnev failiargument väärtusena: kirjutage C<--xlate-anonymize-mark=> (koos lõpus oleva C<=>-ga), kui kasutate vaikimisi märgistust.
+
+Võimalik on konfigureerida alternatiivseid märkimisviise, näiteks C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@' >> C<@@person:NAME@@>-stiilis märkide jaoks või HTML-kommentaari vorm, mis jääb renderdatud Markdownis nähtamatuks. Märgistuseeskirjad kogutakse dokumendi kaupa: ühes sisendfailis märgistatud stringi ei peeta sama käivituse teises failis varjatuks (erinevalt esilehe väärtustest, mis kogunevad failide vahel).
+
+=item B<--xlate-template>[=I<regex>]
+
+Käsitle malliväljendeid (vaikimisi: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) läbipaistmatute asendusmärkidena: anna mudelile juhis need muutmata kujul kopeerida ja kontrolli iga ploki puhul, et vastus sisaldaks täpselt samu väljendeid, igaüht sama arv kordi. Nende järjekord võib muutuda, kuna tõlkimisel järjestatakse need sihtkeele sõnajärje järgi ümber. Rikkis väljend katkestab töö; vahemälu salvestatakse ja külmutatakse, nii et midagi makstud tööd ei lähe kaotsi.
+
+Pange tähele, et sellise valikulise väärtusega valiku puhul võetakse järgnev failiargument väärtusena: kirjutage C<--xlate-template=> (koos lõpus oleva C<=>-ga), kui kasutate vaikimisi märgistust.
+
+=item B<--xlate-frontmatter>
+
+Käsitlege alguses olevat C<---> ... C<---> plokki kui YAML-i esiosa: jäta see tõlkest ja 2. faasi kontekstilõikudest välja ning lisa selle lihtsad C<key: value> väärtused anonüümimise reeglitesse (kategooria C<var>) turvavõrguna. Mitme sisendfaili korral kogunevad kogutud väärtused (eelistades varjamist).
+
+Jäta alati tühirida sulgevate C<---> järel. Lõigu-stiilis sobitusmustri korral moodustab sissejuhatus, mis ulatub otse põhiteksti sisse, ühe üle ulatuva ploki, mida välistamine ei suuda maha suruda (sel juhul kuvatakse hoiatus); väärtused anonüümistatakse ikkagi, kuid sissejuhatav tekst ise saadetakse tõlkimiseks.
+
 =item B<--xlate-glossary>=I<glossary>
 
 Määrake sõnastiku ID, mida kasutatakse tõlkimisel. See valik on saadaval ainult siis, kui kasutatakse DeepL mootorit. Sõnastiku ID tuleks saada teie DeepL kontolt ja see tagab konkreetsete terminite järjepideva tõlkimise.
 
+=item B<--xlate-dryrun>
+
+Ära kutsu tõlke-API-d; näita selle asemel edastusnäidiku kaudu iga andmepaketti täpselt nii, nagu see edastataks (pärast anonüümistamist ja maskeerimist). See on kasulik selle kontrollimiseks, mis masinast väljub, ning töökäigu maksumuse hindamiseks.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Näete tõlkimise tulemust reaalajas STDERR-väljundist.
+Vaata tõlketulemust reaalajas STDERR-väljundis. Andmepakett C<From> kuvatakse edastatuna, pärast anonüümimist ja maskeerimist.
 
 =item B<--xlate-stripe>
 
@@ -345,7 +437,11 @@ Määrake oma autentimisvõti DeepL teenuse jaoks.
 
 =item OPENAI_API_KEY
 
-OpenAI autentimisvõti.
+OpenAI autentimise võti, mida kasutavad vanemad B<gpty>-mootorid. Ka C<llm>-põhine B<gpt5>-mootor loeb seda muutujat, kuid toimivad ka C<llm keys set openai>-ga salvestatud võtmed.
+
+=item GREPLE_XLATE_CACHE
+
+Määra vaikimisi vahemälustrateegia (vaata L</CACHE OPTIONS>).
 
 =back
 
@@ -357,7 +453,9 @@ OpenAI autentimisvõti.
 
 =head2 TOOLS
 
-Peate installima käsurea tööriistad DeepL ja ChatGPT.
+Paigalda kasutatava mootori jaoks mõeldud käsurea tööriist: C<llm> mootori B<gpt5> jaoks, C<deepl> DeepL-i jaoks, C<gpty> vanemate GPT-mootorite jaoks.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -367,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - üldine Docker runner, mida xlate kasutab konteineroperatsioonideks.
 
@@ -404,6 +502,10 @@ Dockeri konteineri kujutis.
 =item * L<https://github.com/tecolicom/getoptlong>
 
 C<getoptlong.sh> raamatukogu, mida kasutatakse C<xlate> skripti ja L<App::dozo> valikute parsimiseks.
+
+=item * L<https://llm.datasette.io/>
+
+C<llm>-käsk, mida B<gpt5>-mootor kasutab LLM-mudelitele juurdepääsuks.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

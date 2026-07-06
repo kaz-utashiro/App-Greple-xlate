@@ -4,20 +4,24 @@
       "App::Greple::xlate - модуль поддержки перевода для greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> модуль находит нужные текстовые блоки и заменяет их переведённым текстом. В настоящее время в качестве бэкэнд-движка реализованы DeepL (F<deepl.pm>) и модуль GPT-5.5 (F<gpty/gpt5.pm>).\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> модуль находит нужные текстовые блоки и заменяет их переведённым текстом. Основным движком является GPT-5.5 (F<llm/gpt5.pm>), который вызывает команду L<llm|https://llm.datasette.io/>; также включены DeepL (F<deepl.pm>) и устаревшие движки на основе B<gpty>.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "Если вы хотите перевести обычные текстовые блоки в документе, написанном в стиле pod языка Perl, используйте команду B<greple> с модулями C<--xlate-engine deepl> и C<perl> следующим образом:\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "Переводы кэшируются по файлам, поэтому повторный запуск команды не требует затрат для неизменённого текста. При редактировании документа в API повторно отправляются только изменившиеся абзацы; контекстно-зависимый движок также получает окружающие переводы, исходный текст вокруг изменения и предыдущую версию отредактированного абзаца, благодаря чему новый перевод сохраняет устоявшуюся формулировку (см. B<--xlate-context-window>). Конфиденциальные строки можно скрыть перед передачей (см. L</ANONYMIZATION AND TEMPLATES>).\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "Если вы хотите перевести обычные блоки текста в документе, написанном в стиле pod языка Perl, используйте команду B<greple> с модулями C<--xlate-engine gpt5> и C<perl> следующим образом:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "В этой команде шаблонная строка C<^([\\w\\pP].*\\n)+> означает последовательные строки, начинающиеся с букв алфавитно-цифрового ряда и знаков препинания. Эта команда показывает область, которую нужно перевести, выделенной. Опция B<--all> используется для перевода всего текста.\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "Затем добавьте опцию C<--xlate> для перевода выделенной области. После этого программа найдет нужные участки и заменит их выводом команды B<--deepl>.\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "Затем добавьте опцию C<--xlate> для перевода выделенного фрагмента. После этого система найдёт нужные фрагменты и заменит их результатом работы механизма перевода.\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,16 +76,40 @@
       "Это будет интерпретировать каждую строку файла C<MASKPATTERN> как регулярное выражение, переводить строку, соответствующую ему, и возвращать после обработки. Строки, начинающиеся с C<#>, игнорируются.\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
-      "Сложный шаблон может быть записан в нескольких строках с обратным слешем, сопровождаемым новой строкой.\n"
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
+      "Сложный шаблон можно записать на нескольких строках с использованием обратного слеша для экранирования символа новой строки.\n"
    ],
    [
       "How the text is transformed by masking can be seen by B<--xlate-mask> option.\n",
       "Как текст преобразуется при маскировании, можно увидеть с помощью опции B<--xlate-mask>.\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "Маскировка защищает разметку от перевода. Чтобы скрыть конфиденциальные строки от самого сервиса перевода, см. L</ANONYMIZATION AND TEMPLATES>; оба метода можно использовать вместе.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Этот интерфейс является экспериментальным и может быть изменен в будущем.\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "Конфиденциальные строки можно скрыть перед отправкой в API перевода и восстановить в выходных данных. Доступны три источника правил анонимизации: файл словаря (B<--xlate-anonymize>), встроенные метки в самом документе (B<--xlate-anonymize-mark>) и значения в предваряющей части YAML (B<--xlate-frontmatter>). Каждая строка во время передачи заменяется тегом категории, например C<< <person id=1 /> >>. Скрытие распространяется только на передачу через API: в локальных файлах кэша хранится восстановленный обычный текст. Используйте B<--xlate-dryrun>, чтобы проверить, что именно будет передано.\n"
+   ],
+   [
+      "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
+      "Для документов-шаблонов (квартальных отчётов и т. п.) заранее определите участники и ссылайтесь на них в тексте:\n"
+   ],
+   [
+      "Translate the template once per language with C<--xlate-template> (and C<--xlate-frontmatter> when the values are kept in the file), then render each case with B<pandoc-embedz> standalone mode -- values under C<global:> in an external config never reach the translation API at all:\n",
+      "Переведите шаблон один раз на каждый язык с помощью C<--xlate-template> (и C<--xlate-frontmatter>, если значения хранятся в файле), затем отобразите каждый случай с помощью B<pandoc-embedz> в автономном режиме — значения под C<global:> во внешней конфигурации вообще не попадают в API перевода:\n"
+   ],
+   [
+      "For inline marks, providing a macro definition config makes the same translated template render either the real names or a redacted version:\n",
+      "Для встроенных меток предоставление конфигурации определения макроса позволяет одному и тому же переведённому шаблону отображать либо настоящие имена, либо отредактированную версию:\n"
+   ],
+   [
+      "Exclude embedz blocks from translation when a document contains them:\n",
+      "Исключайте блоки embedz из перевода, если документ их содержит:\n"
    ],
    [
       "Invoke the translation process for each matched area.\n",
@@ -112,16 +140,20 @@
       "На данный момент доступны следующие движки\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "Интерфейс B<gpt-4o> нестабилен и в настоящее время не может быть гарантированно корректной работы.\n"
+      "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
+      "Модули движка сначала ищутся в пространствах имён бэкенда (C<llm>, затем C<gpty>), а затем непосредственно под C<App::Greple::xlate>. Таким образом, C<gpt5> загружает C<App::Greple::xlate::llm::gpt5>, который вызывает команду C<llm>, в то время как C<gpt4o> переключается на C<App::Greple::xlate::gpty::gpt4o>. Используйте C<--xlate-setopt backend=gpty>, чтобы принудительно выбрать конкретный бэкенд.\n"
    ],
    [
       "Instead of calling translation engine, you are expected to work for. After preparing text to be translated, they are copied to the clipboard. You are expected to paste them to the form, copy the result to the clipboard, and hit return.\n",
       "Вместо того чтобы вызывать механизм перевода, вы должны работать на него. После подготовки текста для перевода он копируется в буфер обмена. Вы должны вставить их в форму, скопировать результат в буфер обмена и нажать кнопку return.\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "Укажите целевой язык. Вы можете получить доступные языки с помощью команды C<deepl languages> при использовании движка B<DeepL>.\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Укажите целевой язык. Движки LLM принимают любое название или код языка, который понимает модель; он интерполируется в запрос на перевод. Вы можете получить список доступных языков с помощью команды C<deepl languages> при использовании движка B<DeepL>.\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "Метка, используемая для исходного текста в форматах вывода C<conflict>, C<colon> и C<ifdef>. При использовании движка B<DeepL> в качестве языка источника также передаётся значение, отличное от значения по умолчанию.\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -168,8 +200,8 @@
       "Если формат C<xtxt> (переведенный текст) или неизвестен, печатается только переведенный текст.\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "Укажите максимальную длину текста, передаваемого в API за один раз. По умолчанию установлено значение, как для бесплатного сервиса DeepL: 128К для API (B<--xlate>) и 5000 для интерфейса буфера обмена (B<--xlate-labor>). Вы можете изменить эти значения, если используете услугу Pro.\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Укажите максимальную длину текста, отправляемого в API за один раз. Значение по умолчанию 0 означает собственное ограничение движка: для бесплатной учетной записи DeepL оно составляет 128K для API (B<--xlate>) и 5000 для интерфейса буфера обмена (B<--xlate-labor>). Вы можете изменить эти значения, если используете сервис Pro.\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -180,20 +212,76 @@
       "Установите значение 1, если вы хотите переводить по одной строке за раз. Этот параметр имеет приоритет перед параметром C<--xlate-maxlen>.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Укажите пользовательский запрос, который будет отправлен в механизм перевода. Эта опция доступна только при использовании механизмов ChatGPT (gpt3, gpt4o, gpt5). Вы можете настроить поведение перевода, предоставив конкретные инструкции модели ИИ. Если запрос содержит C<%s>, он будет заменен на название целевого языка.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Укажите пользовательский запрос, который будет отправлен в движок перевода. Эта опция доступна для движков LLM (C<gpt3>, C<gpt4o>, C<gpt5>), но не для DeepL. Вы можете настроить поведение перевода, предоставив конкретные инструкции модели ИИ. Если подсказка содержит C<%s>, она будет заменена названием языка перевода.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
       "Укажите дополнительную контекстную информацию, которая будет отправлена механизму перевода. Этот параметр можно использовать несколько раз, чтобы указать несколько контекстных строк. Контекстная информация помогает механизму перевода понять фон и создать более точный перевод.\n"
    ],
    [
+      "Number of surrounding translated blocks passed as reference context when re-translating changed blocks (default 2). The context also includes the raw source text around the changed region (headings, list structure, captions) and, when available, the previous version of the changed text recovered from the cache, so that unchanged wording is preserved. Set to 0 to disable context-aware translation entirely. Note that each changed region is translated in its own API call and the context can add up to about 8000 characters to the system prompt, so context-aware translation trades some extra cost for consistency.\n",
+      "Количество окружающих переведённых блоков, передаваемых в качестве контекста при повторном переводе изменённых блоков (по умолчанию 2). Контекст также включает исходный текст вокруг изменённого участка (заголовки, структуру списка, подписи) и, при наличии, предыдущую версию изменённого текста, восстановленную из кэша, чтобы сохранить неизменённые формулировки. Установите значение 0, чтобы полностью отключить контекстный перевод. Обратите внимание, что каждый измененный участок переводится в рамках отдельного вызова API, а контекст может увеличить системную подсказку примерно на 8000 символов, поэтому контекстный перевод требует дополнительных затрат в обмен на обеспечение согласованности.\n"
+   ],
+   [
+      "Initialize a new document's cache from another document's cache file. Useful for periodic reports: seed the new issue's cache with the previous issue's, so unchanged paragraphs are not re-translated and edited paragraphs keep the previous issue's wording. The seed is used only when the target cache is empty; otherwise it is ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also implies creating the new document's cache file.\n",
+      "Инициализировать кэш нового документа на основе файла кэша другого документа. Полезно для периодических отчётов: инициализировать кэш нового выпуска на основе кэша предыдущего выпуска, чтобы неизменённые абзацы не переводились заново, а отредактированные абзацы сохраняли формулировки предыдущего выпуска. Исходные данные используются только в том случае, если целевой кэш пуст; в противном случае они игнорируются с выводом предупреждения. При использовании значения по умолчанию C<--xlate-cache=auto> указание исходных данных также подразумевает создание файла кэша нового документа.\n"
+   ],
+   [
+      "Anonymize sensitive strings before they are sent to the translation API, and restore them in the output. The dictionary file gives one entry per item: in JSON (canonical, machine-generatable)\n",
+      "Анонимизировать конфиденциальные строки перед отправкой в API перевода и восстанавливать их в выходных данных. Файл словаря содержит по одной записи на каждый элемент: в формате JSON (каноническом, генерируемом машиной)\n"
+   ],
+   [
+      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=1 /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
+      "или в простом строчном формате (C<category pattern>, C</.../> для регулярных выражений). Каждый элемент заменяется тегом категории, например C<< <person id=1 /> >>; одна и та же строка всегда получает один и тот же тег, чтобы модель могла отслеживать, что к чему. Неизвестные поля JSON игнорируются, поэтому генераторы (например, локальный LLM, извлекающий сущности) могут добавлять свои собственные аннотации. Категория C<lit> зарезервирована. В локальных файлах кэша по-прежнему хранится восстановленный обычный текст: скрытие касается только передачи через API.\n"
+   ],
+   [
+      "A dictionary can be generated by an external tool -- for example a local model extracting sensitive entities:\n",
+      "Словарь может быть сгенерирован внешним инструментом — например, локальной моделью, извлекающей конфиденциальные сущности:\n"
+   ],
+   [
+      "A UTF-8 BOM in the file is tolerated. Values in the front matter line format may carry a trailing comment only on their own line, not after the value.\n",
+      "Наличие BOM в формате UTF-8 в файле допускается. Значения, записанные в формате строки вступительной информации, могут сопровождаться комментарием только в отдельной строке, а не после самого значения.\n"
+   ],
+   [
+      "Collect anonymization entries from inline marks in the document itself. Mark the first occurrence like C<{{ person(\"山田太郎\") }}> and every occurrence of the string document-wide is anonymized. The mark itself stays in the source and in the translation, so a document can also be processed by a Jinja2-style macro processor (define the C<person> macro to print or redact the name). A custom I<regex> must contain C<< (?<category>...) >> and C<< (?<text>...) >> named captures.\n",
+      "Соберите записи об анонимизации из встроенных меток в самом документе. Пометьте первое вхождение как C<{{ person(\"山田太郎\") }}>, и каждое вхождение этой строки во всём документе будет анонимизировано. Сама метка остаётся в исходном тексте и в переводе, поэтому документ также можно обработать с помощью макропроцессора в стиле Jinja2 (определите макрос C<person> для вывода или редактирования имени). Пользовательский тег I<regex> должен содержать именованные перехваты C<< (?<category>...) >> и C<< (?<text>...) >>.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-anonymize-mark=> (with a trailing C<=>) when using the default notation.\n",
+      "Обратите внимание, что при использовании такого параметра с опциональным значением в качестве значения будет принят последующий аргумент файла: при использовании нотации по умолчанию запишите C<--xlate-anonymize-mark=> (с последующим C<=>).\n"
+   ],
+   [
+      "Alternative notations can be configured, for example C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> for C<@@person:NAME@@>-style marks, or an HTML-comment form that stays invisible in rendered Markdown. Mark rules are collected per document: a string marked in one input file is not concealed in another file of the same run (unlike front matter values, which accumulate across files).\n",
+      "Можно настроить альтернативные нотации, например C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\\n]+?)@@' >> для меток в стиле C<@@person:NAME@@> или форму HTML-комментария, которая остаётся невидимой в отображаемом Markdown. Правила маркировки собираются по отдельному документу: строка, помеченная в одном входном файле, не скрывается в другом файле того же прогона (в отличие от значений вступительной части, которые накапливаются по всем файлам).\n"
+   ],
+   [
+      "Treat template expressions (default: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the model to copy them unchanged and verify, per block, that the response contains exactly the same expressions, each the same number of times. Their order may change, since translation legitimately reorders them to follow the target language word order. A broken expression aborts the run; the cache is checkpointed and frozen, so nothing paid for is lost.\n",
+      "Рассматривайте выражения шаблонов (по умолчанию: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) как непрозрачные заполнители: дайте модели указание копировать их без изменений и проверяйте для каждого блока, что ответ содержит точно такие же выражения, причём каждое — ровно столько же раз. Их порядок может измениться, поскольку при переводе они могут быть переупорядочены в соответствии с порядком слов в языке перевода. Неверное выражение приводит к прерыванию прогона; кэш фиксируется и замораживается, поэтому ничего из того, за что было заплачено, не теряется.\n"
+   ],
+   [
+      "Note that with an optional-value option like this, a following file argument would be taken as the value: write C<--xlate-template=> (with a trailing C<=>) when using the default notation.\n",
+      "Обратите внимание, что при использовании такого параметра с опциональным значением в качестве значения будет принят последующий аргумент файла: запишите C<--xlate-template=> (с последующим C<=>) при использовании нотации по умолчанию.\n"
+   ],
+   [
+      "Treat a leading C<---> ... C<---> block as YAML front matter: exclude it from translation and from the phase-2 context slices, and add its flat C<key: value> values to the anonymization rules (category C<var>) as a safety net. With multiple input files the collected values accumulate (erring on the side of concealment).\n",
+      "Рассматривайте начальный блок C<---> ... C<---> как вступительную часть YAML: исключить его из перевода и из фрагментов контекста фазы 2, а также добавить его плоские значения C<key: value> в правила анонимизации (категория C<var>) в качестве меры предосторожности. При наличии нескольких входных файлов собранные значения суммируются (при этом предпочтение отдаётся более строгой анонимизации).\n"
+   ],
+   [
+      "Always leave a blank line after the closing C<--->. With a paragraph-style match pattern, front matter that runs directly into the body text forms one straddling block that the exclusion cannot suppress (a warning is printed in that case); the values are still anonymized, but the front matter itself would be sent for translation.\n",
+      "Всегда оставляйте пустую строку после закрывающего тега C<--->. При использовании шаблона сопоставления в стиле абзаца вступительная часть, непосредственно примыкающая к основному тексту, образует один перекрывающийся блок, который исключение не может подавить (в этом случае выводится предупреждение); значения по-прежнему анонимизируются, но сама вступительная часть будет отправлена на перевод.\n"
+   ],
+   [
       "Specify a glossary ID to be used for translation. This option is only available when using the DeepL engine. The glossary ID should be obtained from your DeepL account and ensures consistent translation of specific terms.\n",
       "Укажите идентификатор глоссария, который будет использоваться при переводе. Этот параметр доступен только при использовании механизма DeepL. Идентификатор глоссария должен быть получен из учетной записи DeepL и обеспечивает последовательный перевод специфических терминов.\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "Результат перевода можно увидеть в реальном времени в выводе STDERR.\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "Не вызывайте API перевода; вместо этого отображайте через индикатор прогресса каждый полезный груз точно так, как он будет передан (после анонимизации и маскирования). Это полезно для проверки того, что покидает систему, и для оценки стоимости выполнения задания.\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "Результат перевода можно увидеть в режиме реального времени в выводе STDERR. Данные C<From> отображаются в том виде, в котором они передаются, после анонимизации и маскирования.\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -296,12 +384,20 @@
       "Задайте ключ аутентификации для сервиса DeepL.\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "Ключ аутентификации OpenAI.\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "Ключ аутентификации OpenAI, используемый устаревшими движками B<gpty>. Движок B<gpt5>, основанный на C<llm>, также считывает эту переменную, но ключи, хранящиеся с помощью C<llm keys set openai>, тоже работают.\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "Необходимо установить инструменты командной строки для DeepL и ChatGPT.\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "Установите стратегию кэширования по умолчанию (см. L</CACHE OPTIONS>).\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "Установите инструмент командной строки для используемого вами движка: C<llm> для движка B<gpt5>, C<deepl> для DeepL, C<gpty> для устаревших движков GPT.\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -312,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -342,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "Библиотека C<getoptlong.sh> используется для разбора опций в скрипте C<xlate> и L<App::dozo>.\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "Команда C<llm>, используемая движком B<gpt5> для доступа к моделям LLM.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

@@ -4,21 +4,23 @@ App::Greple::xlate - Übersetzungsunterstützungsmodul für greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate**-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Derzeit sind DeepL (`deepl.pm`) und das GPT-5.5- (`gpty/gpt5.pm`) Modul als Backend-Engine implementiert.
+**Greple** **xlate**-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.5 (`llm/gpt5.pm`), die den Befehl [llm](https://llm.datasette.io/) aufruft; DeepL (`deepl.pm`) und ältere auf **gpty** basierende Engines sind ebenfalls enthalten.
 
-Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den Befehl **greple** mit den Modulen `--xlate-engine deepl` und `perl` wie folgt:
+Übersetzungen werden pro Datei zwischengespeichert, sodass das erneute Ausführen eines Befehls für unveränderten Text nichts kostet. Wenn ein Dokument bearbeitet wird, werden nur die geänderten Absätze erneut an die API gesendet; eine kontextbewusste Engine erhält außerdem die umgebenden Übersetzungen, den rohen Quelltext um die Änderung herum und die vorherige Version des bearbeiteten Absatzes, sodass die neue Übersetzung die etablierte Wortwahl beibehält (siehe **--xlate-context-window**). Vertrauliche Zeichenketten können vor der Übertragung verborgen werden (siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Wenn Sie normale Textblöcke in einem Dokument übersetzen möchten, das im Perl-Pod-Stil geschrieben ist, verwenden Sie den Befehl **greple** mit `--xlate-engine gpt5` und dem Modul `perl` wie folgt:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 In diesem Befehl bedeutet die Zeichenkette `^([\w\pP].*\n)+` aufeinanderfolgende Zeilen, die mit alphanumerischen und Interpunktionszeichen beginnen. Dieser Befehl zeigt den zu übersetzenden Bereich hervorgehoben an. Die Option **--all** wird verwendet, um den gesamten Text auszugeben.
 
@@ -28,7 +30,7 @@ In diesem Befehl bedeutet die Zeichenkette `^([\w\pP].*\n)+` aufeinanderfolgende
     </p>
 </div>
 
-Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe des Befehls **deepl** ersetzt.
+Fügen Sie dann die Option `--xlate` hinzu, um den ausgewählten Bereich zu übersetzen. Dann werden die gewünschten Abschnitte gefunden und durch die Ausgabe der Übersetzungs-Engine ersetzt.
 
 Standardmäßig werden Original- und übersetzter Text im „Konfliktmarker“-Format ausgegeben, das mit [git(1)](http://man.he.net/man1/git) kompatibel ist. Mit dem Format `ifdef` können Sie den gewünschten Teil einfach mit dem Befehl [unifdef(1)](http://man.he.net/man1/unifdef) erhalten. Das Ausgabeformat kann mit der Option **--xlate-format** angegeben werden.
 
@@ -79,9 +81,13 @@ Komplexe Muster können mit einem durch Backslash maskierten Zeilenumbruch über
 
 Wie der Text durch Maskierung transformiert wird, kann mit der Option **--xlate-mask** gesehen werden.
 
+Maskierung schützt Markup davor, übersetzt zu werden. Um sensible Zeichenfolgen vor dem Übersetzungsdienst selbst zu verbergen, siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); beides kann zusammen verwendet werden.
+
 Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
 # ANONYMIZATION AND TEMPLATES
+
+Sensible Zeichenketten können verborgen werden, bevor sie an die Übersetzungs-API gesendet werden, und in der Ausgabe wiederhergestellt werden. Drei Quellen für Anonymisierungsregeln stehen zur Verfügung: eine Wörterbuchdatei (**--xlate-anonymize**), Inline-Markierungen im Dokument selbst (**--xlate-anonymize-mark**) und YAML-Front-Matter-Werte (**--xlate-frontmatter**). Jede Zeichenkette wird während der Übertragung durch ein Kategorie-Tag wie `<person id=1 />` ersetzt. Das Ziel der Verschleierung ist nur die API-Übertragung: lokale Cache-Dateien speichern wiederhergestellten Klartext. Verwenden Sie **--xlate-dryrun**, um genau zu prüfen, was übertragen würde.
 
 Definieren Sie bei Formulardokumenten (Quartalsberichte und dergleichen) die Akteure im Voraus und verweisen Sie im Haupttext auf sie:
 
@@ -134,13 +140,10 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
     Derzeit sind die folgenden Engines verfügbar
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        Die Schnittstelle von **gpt-4o** ist instabil und kann derzeit nicht garantiert korrekt funktionieren.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     Engine-Module werden zuerst in Backend-Namespaces gesucht (`llm`, dann `gpty`), anschließend direkt unter `App::Greple::xlate`. Daher lädt `gpt5` `App::Greple::xlate::llm::gpt5`, das den Befehl `llm` aufruft, während `gpt4o` auf `App::Greple::xlate::gpty::gpt4o` zurückfällt. Verwenden Sie `--xlate-setopt backend=gpty`, um ein bestimmtes Backend zu erzwingen.
 
@@ -151,7 +154,11 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Geben Sie die Zielsprache an. Verfügbare Sprachen erhalten Sie mit dem Befehl `deepl languages`, wenn Sie die Engine **DeepL** verwenden.
+    Geben Sie die Zielsprache an. LLM-Engines akzeptieren jeden Sprachnamen oder -code, den das Modell versteht; er wird in den Übersetzungs-Prompt interpoliert. Verfügbare Sprachen erhalten Sie mit dem Befehl `deepl languages`, wenn Sie die Engine **DeepL** verwenden.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Bezeichnung, die für den Originaltext in den Ausgabeformaten `conflict`, `colon` und `ifdef` verwendet wird. Bei der Engine **DeepL** wird ein vom Standard abweichender Wert auch als Ausgangssprache übergeben.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Geben Sie die maximale Textlänge an, die auf einmal an die API gesendet wird. Der Standardwert ist für den kostenlosen DeepL-Konto-Dienst festgelegt: 128K für die API (**--xlate**) und 5000 für die Zwischenablage-Schnittstelle (**--xlate-labor**). Wenn Sie den Pro-Dienst verwenden, können Sie diese Werte möglicherweise ändern.
+    Geben Sie die maximale Textlänge an, die auf einmal an die API gesendet wird. Der Standardwert 0 bedeutet das eigene Limit der Engine: Für den kostenlosen DeepL-Konto-Dienst sind das 128K für die API (**--xlate**) und 5000 für die Zwischenablage-Schnittstelle (**--xlate-labor**). Wenn Sie den Pro-Dienst verwenden, können Sie diese Werte möglicherweise ändern.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
 - **--xlate-prompt**=_text_
 
-    Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist nur verfügbar, wenn ChatGPT-Engines (gpt3, gpt4o, gpt5) verwendet werden. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt `%s` enthält, wird er durch den Namen der Zielsprache ersetzt.
+    Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (`gpt3`, `gpt4o`, `gpt5`) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt `%s` enthält, wird er durch den Namen der Zielsprache ersetzt.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
     Geben Sie eine Glossar-ID an, die für die Übersetzung verwendet werden soll. Diese Option ist nur bei Verwendung der DeepL-Engine verfügbar. Die Glossar-ID sollte aus Ihrem DeepL-Konto stammen und sorgt für eine konsistente Übersetzung spezifischer Begriffe.
 
+- **--xlate-dryrun**
+
+    Rufen Sie die Übersetzungs-API nicht auf; zeigen Sie stattdessen über die Fortschrittsanzeige jede Payload genau so an, wie sie übertragen würde (nach Anonymisierung und Maskierung). Nützlich, um zu prüfen, was die Maschine verlässt, und um die Kosten eines Laufs abzuschätzen.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe.
+    Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe. Die `From`-Payload wird so angezeigt, wie sie nach Anonymisierung und Maskierung übertragen wurde.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Laden Sie die im Repository enthaltene Datei `xlate.el`, um den Befehl `xlate` a
 
 - OPENAI\_API\_KEY
 
-    OpenAI-Authentifizierungsschlüssel.
+    OpenAI-Authentifizierungsschlüssel, der von den alten **gpty**-Engines verwendet wird. Die auf `llm` basierende **gpt5**-Engine liest diese Variable ebenfalls, aber mit `llm keys set openai` gespeicherte Schlüssel funktionieren ebenfalls.
+
+- GREPLE\_XLATE\_CACHE
+
+    Legen Sie die Standard-Cache-Strategie fest (siehe ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Laden Sie die im Repository enthaltene Datei `xlate.el`, um den Befehl `xlate` a
 
 ## TOOLS
 
-Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
+Installieren Sie das Kommandozeilentool für die von Ihnen verwendete Engine: `llm` für die **gpt5**-Engine, `deepl` für DeepL, `gpty` für die alten GPT-Engines.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Generischer Docker-Runner, der von xlate für Container-Operationen verwendet wird
 
@@ -435,6 +452,10 @@ Sie müssen die Kommandozeilentools für DeepL und ChatGPT installieren.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     Die Bibliothek `getoptlong.sh`, die für die Optionsanalyse im Skript `xlate` und [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) verwendet wird.
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    Der Befehl `llm`, der von der Engine **gpt5** verwendet wird, um auf LLM-Modelle zuzugreifen.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

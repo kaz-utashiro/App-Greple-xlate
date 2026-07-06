@@ -4,20 +4,24 @@
       "App::Greple::xlate - modul de suport pentru traducere pentru greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și GPT-5.5 (F<gpty/gpt5.pm>) sunt implementate ca motor back-end.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> găsește blocurile de text dorite și le înlocuiește cu textul tradus. Motorul principal este GPT-5.5 (F<llm/gpt5.pm>), care apelează comanda L<llm|https://llm.datasette.io/>; DeepL (F<deepl.pm>) și motoarele moștenite bazate pe B<gpty> sunt de asemenea incluse.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda B<greple> cu modulele C<--xlate-engine deepl> și C<perl> astfel:\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "Traducerile sunt puse în cache pe fișier, astfel încât rerularea unei comenzi nu costă nimic pentru textul neschimbat. Când un document este editat, numai paragrafele modificate sunt trimise din nou la API; un motor conștient de context primește, de asemenea, traducerile înconjurătoare, textul sursă brut din jurul modificării și versiunea anterioară a paragrafului editat, astfel încât noua traducere păstrează formularea stabilită (vedeți B<--xlate-context-window>). Șirurile sensibile pot fi mascate înainte de transmitere (vedeți L</ANONYMIZATION AND TEMPLATES>).\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "Dacă doriți să traduceți blocuri de text obișnuite într-un document scris în stilul pod al Perl, utilizați comanda B<greple> cu C<--xlate-engine gpt5> și modulul C<perl> astfel:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "În această comandă, șirul de tipar C<^([\\w\\pP].*\\n)+> înseamnă linii consecutive care încep cu litere și cifre și semne de punctuație. Această comandă arată zona ce urmează a fi tradusă evidențiată. Opțiunea B<--all> este folosită pentru a produce textul integral.\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Atunci va găsi secțiunile dorite și le va înlocui cu ieșirea comenzii B<deepl>.\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Atunci va găsi secțiunile dorite și le va înlocui cu ieșirea motorului de traducere.\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,7 +76,7 @@
       "Aceasta va interpreta fiecare linie a fișierului C<MASKPATTERN> ca o expresie regulată, va traduce șirurile care se potrivesc cu aceasta și va reveni după procesare. Liniile care încep cu C<#> sunt ignorate.\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
       "Un tipar complex poate fi scris pe mai multe linii cu newline scăpat prin backslash.\n"
    ],
    [
@@ -80,8 +84,16 @@
       "Modul în care textul este transformat prin mascarea poate fi văzut prin opțiunea B<--xlate-mask>.\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "Mascarea protejează marcajul împotriva traducerii. Pentru a ascunde șirurile sensibile de serviciul de traducere însuși, consultați L</ANONYMIZATION AND TEMPLATES>; ambele pot fi utilizate împreună.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Această interfață este experimentală și poate suferi modificări în viitor.\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "Șirurile sensibile pot fi ascunse înainte de a fi trimise către API-ul de traducere și restaurate în ieșire. Sunt disponibile trei surse de reguli de anonimizare: un fișier dicționar (B<--xlate-anonymize>), marcaje inline în documentul însuși (B<--xlate-anonymize-mark>) și valori YAML front matter (B<--xlate-frontmatter>). Fiecare șir este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id=1 /> >>, în timpul transmiterii. Ținta ascunderii este doar transmiterea către API: fișierele cache locale stochează text simplu restaurat. Folosiți B<--xlate-dryrun> pentru a inspecta exact ce ar fi transmis.\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -128,10 +140,6 @@
       "În acest moment, sunt disponibile următoarele motoare\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "Interfața lui B<gpt-4o> este instabilă și nu poate fi garantat că va funcționa corect în acest moment.\n"
-   ],
-   [
       "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
       "Modulele de motor sunt căutate mai întâi în spațiile de nume backend (C<llm>, apoi C<gpty>), apoi direct sub C<App::Greple::xlate>. Astfel, C<gpt5> încarcă C<App::Greple::xlate::llm::gpt5>, care apelează comanda C<llm>, în timp ce C<gpt4o> revine la C<App::Greple::xlate::gpty::gpt4o>. Folosiți C<--xlate-setopt backend=gpty> pentru a forța un backend specific.\n"
    ],
@@ -140,8 +148,12 @@
       "În loc să apelați motorul de traducere, se așteaptă să lucrați manual. După pregătirea textului de tradus, acesta este copiat în clipboard. Se așteaptă să îl lipiți în formular, să copiați rezultatul în clipboard și să apăsați Enter.\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "Specificați limba țintă. Puteți obține limbile disponibile cu comanda C<deepl languages> când folosiți motorul B<DeepL>.\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Specificați limba țintă. Motoarele LLM acceptă orice nume de limbă sau cod pe care modelul îl înțelege; acesta este interpolat în promptul de traducere. Puteți obține limbile disponibile cu comanda C<deepl languages> când folosiți motorul B<DeepL>.\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "Etichetă utilizată pentru textul original în formatele de ieșire C<conflict>, C<colon> și C<ifdef>. Cu motorul B<DeepL>, o valoare diferită de cea implicită este transmisă și ca limbă sursă.\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -188,8 +200,8 @@
       "Dacă formatul este C<xtxt> (text tradus) sau necunoscut, se tipărește doar textul tradus.\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "Specificați lungimea maximă a textului care va fi trimis la API dintr-o singură dată. Valoarea implicită este setată pentru serviciul contului DeepL gratuit: 128K pentru API (B<--xlate>) și 5000 pentru interfața clipboard (B<--xlate-labor>). Este posibil să puteți schimba aceste valori dacă utilizați serviciul Pro.\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Specificați lungimea maximă a textului care va fi trimis la API dintr-o singură dată. Valoarea implicită 0 înseamnă limita proprie a motorului: pentru serviciul contului DeepL gratuit, aceasta este 128K pentru API (B<--xlate>) și 5000 pentru interfața clipboard (B<--xlate-labor>). Este posibil să puteți schimba aceste valori dacă utilizați serviciul Pro.\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -200,8 +212,8 @@
       "Setați această valoare la 1 dacă doriți să traduceți câte o linie pe rând. Această opțiune are prioritate față de opțiunea C<--xlate-maxlen>.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă numai când se folosesc motoare ChatGPT (gpt3, gpt4o, gpt5). Puteți personaliza comportamentul traducerii furnizând instrucțiuni specifice modelului AI. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Specificați un prompt personalizat care să fie trimis motorului de traducere. Această opțiune este disponibilă pentru motoarele LLM (C<gpt3>, C<gpt4o>, C<gpt5>), dar nu pentru DeepL. Puteți personaliza comportamentul traducerii furnizând instrucțiuni specifice modelului AI. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -264,8 +276,12 @@
       "Specificați un ID de glosar care să fie utilizat pentru traducere. Această opțiune este disponibilă doar atunci când se folosește motorul DeepL. ID-ul glosarului trebuie obținut din contul dvs. DeepL și asigură traducerea consecventă a termenilor specifici.\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "Vedeți rezultatul traducerii în timp real în ieșirea STDERR.\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "Nu apelați API-ul de traducere; în schimb, afișați prin afișajul de progres fiecare payload exact așa cum ar fi transmis (după anonimizare și mascare). Util pentru a verifica ce părăsește mașina și pentru a estima costul unei rulări.\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "Vedeți rezultatul traducerii în timp real în ieșirea STDERR. Payload-ul C<From> este afișat așa cum a fost transmis, după anonimizare și mascare.\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -368,12 +384,20 @@
       "Setează cheia ta de autentificare pentru serviciul DeepL.\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "Cheie de autentificare OpenAI.\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "Cheie de autentificare OpenAI, folosită de motoarele vechi B<gpty>. Motorul B<gpt5> bazat pe C<llm> citește și el această variabilă, dar funcționează și cheile stocate cu C<llm keys set openai>.\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "Trebuie să instalezi instrumentele de linie de comandă pentru DeepL și ChatGPT.\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "Setează strategia implicită de cache (vezi L</CACHE OPTIONS>).\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "Instalează instrumentul de linie de comandă pentru motorul pe care îl folosești: C<llm> pentru motorul B<gpt5>, C<deepl> pentru DeepL, C<gpty> pentru motoarele GPT vechi.\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -384,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -414,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scriptul C<xlate> și L<App::dozo>.\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "Comanda C<llm> utilizată de motorul B<gpt5> pentru a accesa modelele LLM.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

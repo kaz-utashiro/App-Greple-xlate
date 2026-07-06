@@ -6,21 +6,23 @@ App::Greple::xlate - modul de suport pentru traducere pentru Greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. În prezent, modulele DeepL (F<deepl.pm>) și GPT-5.5 (F<gpty/gpt5.pm>) sunt implementate ca motoare back-end.
+B<Greple> B<xlate> modulul identifică blocurile de text dorite și le înlocuiește cu textul tradus. Motorul principal este GPT-5.5 (F<llm/gpt5.pm>), care apelează comanda L<llm|https://llm.datasette.io/>; Sunt incluse, de asemenea, DeepL (F<deepl.pm>) și motoarele vechi bazate pe B<gpty>.
 
-Dacă doriți să traduceți blocuri de text obișnuite dintr-un document scris în stilul pod al limbajului Perl, utilizați comanda B<greple> împreună cu modulele C<--xlate-engine deepl> și C<perl>, după cum urmează:
+Traducerile sunt stocate în cache pentru fiecare fișier, astfel încât rulați din nou o comandă nu implică costuri suplimentare pentru textul nemodificat. Când un document este editat, doar paragrafele modificate sunt trimise din nou către API; un motor sensibil la context primește, de asemenea, traducerile din jur, textul sursă brut din jurul modificării și versiunea anterioară a paragrafului editat, astfel încât noua traducere păstrează formularea stabilită (vezi B<--xlate-context-window>). Șirurile sensibile pot fi ascunse înainte de transmitere (vezi L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Dacă doriți să traduceți blocuri de text normale dintr-un document scris în stilul pod al limbajului Perl, utilizați comanda B<greple> împreună cu modulele C<--xlate-engine gpt5> și C<perl> astfel:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 În această comandă, șirul de modele C<^([\w\pP].*\n)+> înseamnă linii consecutive care încep cu litere alfanumerice și de punctuație. Această comandă afișează evidențiată zona care urmează să fie tradusă. Opțiunea B<--all> este utilizată pentru a produce întregul text.
 
@@ -28,7 +30,7 @@ Dacă doriți să traduceți blocuri de text obișnuite dintr-un document scris 
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Apoi se adaugă opțiunea C<--xlate> pentru a traduce zona selectată. Apoi, se vor găsi secțiunile dorite și se vor înlocui cu ieșirea comenzii B<deepl>.
+Apoi adăugați opțiunea C<--xlate> pentru a traduce zona selectată. Astfel, se vor identifica secțiunile dorite și se vor înlocui cu rezultatul generat de motorul de traducere.
 
 În mod implicit, textul original și cel tradus sunt tipărite în formatul "conflict marker" compatibil cu L<git(1)>. Utilizând formatul C<ifdef>, puteți obține cu ușurință partea dorită prin comanda L<unifdef(1)>. Formatul de ieșire poate fi specificat prin opțiunea B<--xlate-format>.
 
@@ -86,11 +88,45 @@ Ocazional, există părți de text pe care nu le doriți traduse. De exemplu, et
 
 Acest lucru va interpreta fiecare linie a fișierului C<MASKPATTERN> ca o expresie regulată, va traduce șirurile care se potrivesc și va reveni la starea inițială după procesare. Liniile care încep cu C<#> sunt ignorate.
 
-Modelul complex poate fi scris pe mai multe linii cu backslash escpaed newline.
+Modelele complexe pot fi scrise pe mai multe linii, cu caracterul de linie nouă precedat de o bară oblică inversă.
 
 Modul în care textul este transformat prin mascare poate fi văzut prin opțiunea B<--xlate-mask>.
 
+Mascarea protejează marcajul împotriva traducerii. Pentru a ascunde șirurile sensibile chiar de serviciul de traducere, consultați L</ANONYMIZATION AND TEMPLATES>; ambele opțiuni pot fi utilizate împreună.
+
 Această interfață este experimentală și poate fi modificată în viitor.
+
+=head1 ANONYMIZATION AND TEMPLATES
+
+Șirurile sensibile pot fi ascunse înainte de a fi trimise către API-ul de traducere și restabilite în rezultatul final. Sunt disponibile trei surse de reguli de anonimizare: un fișier dicționar (B<--xlate-anonymize>), marcaje încorporate în documentul propriu-zis (B<--xlate-anonymize-mark>) și valori din secțiunea de antet YAML (B<--xlate-frontmatter>). Fiecare șir este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id=1 /> >>, în timpul transmiterii. Ascunderea vizează doar transmiterea către API: fișierele din cache-ul local stochează textul simplu restaurat. Utilizați B<--xlate-dryrun> pentru a verifica exact ce ar fi transmis.
+
+Pentru documentele de tip formular (rapoarte trimestriale și altele asemenea), definiți actorii de la început și faceți referire la ei în corpul textului:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Traduceți șablonul o singură dată pentru fiecare limbă cu C<--xlate-template> (și C<--xlate-frontmatter> când valorile sunt păstrate în fișier), apoi generați fiecare caz cu B<pandoc-embedz> în modul autonom — valorile de sub C<global:> dintr-o configurație externă nu ajung deloc la API-ul de traducere:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Pentru marcajele încorporate, furnizarea unei configurații de definiție a macro-ului face ca același șablon tradus să afișeze fie numele reale, fie o versiune redactată:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Excludeți blocurile embedz din traducere atunci când un document le conține:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 =head1 OPTIONS
 
@@ -122,17 +158,17 @@ Specifică motorul de traducere care urmează să fie utilizat.
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-Interfața lui B<gpt-4o> este instabilă și nu se poate garanta că funcționează corect în acest moment.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
+
+Modulele motorului sunt căutate mai întâi în spațiile de nume din backend (C<llm>, apoi C<gpty>), apoi direct sub C<App::Greple::xlate>. Astfel, C<gpt5> încarcă C<App::Greple::xlate::llm::gpt5>, care apelează comanda C<llm>, în timp ce C<gpt4o> recurge la C<App::Greple::xlate::gpty::gpt4o>. Utilizați C<--xlate-setopt backend=gpty> pentru a forța un backend specific.
 
 =item B<--xlate-labor>
 
@@ -142,7 +178,11 @@ Interfața lui B<gpt-4o> este instabilă și nu se poate garanta că funcționea
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Specificați limba țintă. Puteți obține limbile disponibile prin comanda C<deepl languages> atunci când se utilizează motorul B<DeepL>.
+Specificați limba țintă. Motoarele LLM acceptă orice nume sau cod de limbă pe care modelul îl înțelege; acesta este interpolat în promptul de traducere. Puteți obține limbile disponibile prin comanda C<deepl languages> atunci când utilizați motorul B<DeepL>.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+Etichetă utilizată pentru textul original în formatele de ieșire C<conflict>, C<colon> și C<ifdef>. Cu motorul B<DeepL>, o valoare non-implicită este, de asemenea, transmisă ca limbă sursă.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -217,7 +257,7 @@ Dacă formatul este C<xtxt> (text tradus) sau necunoscut, se tipărește numai t
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Specificați lungimea maximă a textului care urmează să fie trimis la API deodată. Valoarea implicită este setată ca pentru serviciul de cont gratuit DeepL: 128K pentru API (B<--xlate>) și 5000 pentru interfața clipboard (B<--xlate-labor>). Este posibil să puteți modifica aceste valori dacă utilizați serviciul Pro.
+Specificați lungimea maximă a textului care urmează să fie trimis către API într-o singură tranzacție. Valoarea implicită 0 înseamnă limita proprie a motorului: pentru serviciul gratuit DeepL, aceasta este de 128K pentru API (B<--xlate>) și de 5000 pentru interfața clipboard-ului (B<--xlate-labor>). Puteți modifica aceste valori dacă utilizați serviciul Pro.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -227,19 +267,71 @@ Setați această valoare la 1 dacă doriți să traduceți un rând pe rând. Ac
 
 =item B<--xlate-prompt>=I<text>
 
-Specificați o solicitare personalizată care să fie trimisă motorului de traducere. Această opțiune este disponibilă numai atunci când se utilizează motoarele ChatGPT (gpt3, gpt4o, gpt5). Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului de IA. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.
+Specificați o solicitare personalizată care să fie trimisă motorului de traducere. Această opțiune este disponibilă pentru motoarele LLM (C<gpt3>, C<gpt4o>, C<gpt5>), dar nu și pentru DeepL. Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului de IA. Dacă promptul conține C<%s>, acesta va fi înlocuit cu numele limbii țintă.
 
 =item B<--xlate-context>=I<text>
 
 Specificați informații contextuale suplimentare care urmează să fie trimise motorului de traducere. Această opțiune poate fi utilizată de mai multe ori pentru a furniza mai multe șiruri de context. Informațiile de context ajută motorul de traducere să înțeleagă contextul și să producă traduceri mai precise.
 
+=item B<--xlate-context-window>=I<n>
+
+(Context-aware engines only, e.g. C<gpt5> on the llm backend)
+Numărul de blocuri traduse înconjurătoare transmise ca context de referință la retraducerea blocurilor modificate (implicit 2). Contextul include, de asemenea, textul sursă brut din jurul regiunii modificate (titluri, structura listei, legende) și, atunci când este disponibilă, versiunea anterioară a textului modificat recuperată din cache, astfel încât formularea nemodificată să fie păstrată. Setați la 0 pentru a dezactiva complet traducerea bazată pe context. Rețineți că fiecare regiune modificată este tradusă într-un apel API separat, iar contextul poate adăuga până la aproximativ 8000 de caractere la promptul sistemului, astfel încât traducerea bazată pe context implică un cost suplimentar în schimbul consecvenței.
+
+=item B<--xlate-cache-seed>=I<file>
+
+Inițializați memoria cache a unui document nou pornind de la fișierul de cache al altui document. Util pentru rapoarte periodice: inițializați memoria cache a noii ediții cu cea a ediției anterioare, astfel încât paragrafele nemodificate să nu fie retraduse, iar paragrafele editate să păstreze formularea din ediția anterioară. Initializarea este utilizată numai atunci când memoria cache de destinație este goală; în caz contrar, este ignorată și se afișează un avertisment. Cu valoarea implicită C<--xlate-cache=auto>, specificarea unei inițializări implică, de asemenea, crearea fișierului de cache al noului document.
+
+=item B<--xlate-anonymize>=I<file>
+
+Anonimizează șirurile sensibile înainte ca acestea să fie trimise către API-ul de traducere și le restabilește în rezultatul final. Fișierul dicționar conține o singură intrare pentru fiecare element: în format JSON (canonic, generabil automat)
+
+    [ { "category": "person",  "text": "山田太郎" },
+      { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+sau într-un format simplu pe linii (C<category pattern>, C</.../> pentru expresii regulate). Fiecare element este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id=1 /> >>; același șir primește întotdeauna aceeași etichetă, astfel încât modelul să poată ține evidența identității fiecăruia. Câmpurile JSON necunoscute sunt ignorate, astfel încât generatoarele (de exemplu, un LLM local care extrage entități) pot adăuga propriile adnotări. Categoria C<lit> este rezervată. Fișierele din cache-ul local stochează în continuare textul simplu restaurat: obiectivul ascunderii vizează doar transmiterea prin API.
+
+Un dicționar poate fi generat de un instrument extern — de exemplu, un model local care extrage entități sensibile:
+
+    llm -m <local-model> \
+        -s 'Extract sensitive entities as a JSON array of objects
+            with "category" and "text" fields.' \
+        < report.md > report.anon.json
+    greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+Un BOM UTF-8 în fișier este tolerat. Valorile din formatul de linie de antet pot conține un comentariu final doar pe propria linie, nu după valoare.
+
+=item B<--xlate-anonymize-mark>[=I<regex>]
+
+Colectați intrările de anonimizare din marcajele încorporate din documentul însuși. Marcați prima apariție ca C<{{ person("山田太郎") }}> și fiecare apariție a șirului în întregul document va fi anonimizată. Marca în sine rămâne în sursă și în traducere, astfel încât un document poate fi procesat și de un procesor de macrocomenzi în stil Jinja2 (definiți macrocomanda C<person> pentru a afișa sau a redacta numele). Un I<regex> personalizat trebuie să conțină capturi numite C<< (?<category>...) >> și C<< (?<text>...) >>.
+
+Rețineți că, în cazul unei opțiuni cu valoare opțională precum aceasta, un argument de fișier următor ar fi considerat ca valoare: scrieți C<--xlate-anonymize-mark=> (cu un C<=> la sfârșit) atunci când utilizați notația implicită.
+
+Se pot configura notații alternative, de exemplu C<< --xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@' >> pentru marcaje de tip C<@@person:NAME@@>, sau o formă de comentariu HTML care rămâne invizibilă în Markdown-ul redat. Regulile de marcare sunt colectate pe document: un șir marcat într-un fișier de intrare nu este ascuns într-un alt fișier din aceeași execuție (spre deosebire de valorile din front matter, care se acumulează între fișiere).
+
+=item B<--xlate-template>[=I<regex>]
+
+Tratează expresiile șablonului (implicit: Jinja2 C<{{ ... }}>, C<{% ... %}>, C<{# ... #}>) ca substituenți opaci: instruiește modelul să le copieze nemodificate și verifică, pentru fiecare bloc, dacă răspunsul conține exact aceleași expresii, fiecare de același număr de ori. Ordinea acestora se poate modifica, deoarece traducerea le reordonează în mod legitim pentru a respecta ordinea cuvintelor din limba țintă. O expresie incorectă întrerupe execuția; memoria cache este salvată la un punct de control și înghețată, astfel încât nimic din ceea ce a fost plătit nu se pierde.
+
+Rețineți că, în cazul unei opțiuni cu valoare opțională precum aceasta, un argument de fișier care urmează ar fi considerat ca valoare: scrieți C<--xlate-template=> (cu un C<=> la sfârșit) atunci când utilizați notația implicită.
+
+=item B<--xlate-frontmatter>
+
+Tratați un bloc C<---> de la început... C<---> ca element de front matter YAML: excludeți-l din traducere și din segmentele de context din faza 2 și adăugați valorile sale simple C<key: value> la regulile de anonimizare (categoria C<var>) ca măsură de siguranță. În cazul mai multor fișiere de intrare, valorile colectate se acumulează (preferându-se o abordare mai prudentă în ceea ce privește ascunderea).
+
+Lăsați întotdeauna o linie goală după eticheta de închidere C<--->. Cu un model de potrivire de tip paragraf, front matter-ul care se continuă direct în textul principal formează un bloc care se întinde pe ambele părți și pe care excluderea nu îl poate suprima (în acest caz se afișează un avertisment); valorile sunt totuși anonimizate, dar partea introductivă în sine ar fi trimisă spre traducere.
+
 =item B<--xlate-glossary>=I<glossary>
 
 Specificați un ID de glosar care urmează să fie utilizat pentru traducere. Această opțiune este disponibilă numai atunci când se utilizează motorul DeepL. ID-ul glosarului trebuie obținut din contul dvs. DeepL și asigură traducerea consecventă a termenilor specifici.
 
+=item B<--xlate-dryrun>
+
+Nu apelați API-ul de traducere; în schimb, afișați, prin intermediul indicatorului de progres, fiecare încărcătură exact așa cum ar fi transmisă (după anonimizare și mascare). Este util pentru a verifica ce părăsește sistemul și pentru a estima costul unei rulări.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Vedeți rezultatul traducerii în timp real în ieșirea STDERR.
+Vedeți rezultatul traducerii în timp real în ieșirea STDERR. Datele C<From> sunt afișate așa cum sunt transmise, după anonimizare și mascare.
 
 =item B<--xlate-stripe>
 
@@ -345,7 +437,11 @@ Setați cheia de autentificare pentru serviciul DeepL.
 
 =item OPENAI_API_KEY
 
-Cheia de autentificare OpenAI.
+Cheia de autentificare OpenAI, utilizată de motoarele vechi B<gpty>. Motorul B<gpt5> bazat pe C<llm> citește și această variabilă, dar funcționează și cheile stocate cu C<llm keys set openai>.
+
+=item GREPLE_XLATE_CACHE
+
+Setați strategia implicită de cache (consultați L</CACHE OPTIONS>).
 
 =back
 
@@ -357,7 +453,9 @@ Cheia de autentificare OpenAI.
 
 =head2 TOOLS
 
-Trebuie să instalați instrumentele de linie de comandă pentru DeepL și ChatGPT.
+Instalați instrumentul de linie de comandă pentru motorul pe care îl utilizați: C<llm> pentru motorul B<gpt5>, C<deepl> pentru DeepL, C<gpty> pentru motoarele GPT vechi.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -367,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - Docker runner generic utilizat de xlate pentru operațiunile cu containere
 
@@ -404,6 +502,10 @@ Imagine container Docker.
 =item * L<https://github.com/tecolicom/getoptlong>
 
 Biblioteca C<getoptlong.sh> utilizată pentru analizarea opțiunilor în scriptul C<xlate> și L<App::dozo>.
+
+=item * L<https://llm.datasette.io/>
+
+Comanda C<llm> utilizată de motorul B<gpt5> pentru a accesa modelele LLM.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

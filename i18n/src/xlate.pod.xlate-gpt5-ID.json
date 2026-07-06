@@ -4,20 +4,24 @@
       "App::Greple::xlate - modul dukungan terjemahan untuk greple\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (F<deepl.pm>) dan GPT-5.5 (F<gpty/gpt5.pm>) diimplementasikan sebagai mesin back-end.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Mesin utama adalah GPT-5.5 (F<llm/gpt5.pm>), yang memanggil perintah L<llm|https://llm.datasette.io/>; DeepL (F<deepl.pm>) dan mesin lama berbasis B<gpty> juga disertakan.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan modul C<--xlate-engine deepl> dan C<perl> seperti ini:\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "Terjemahan di-cache per file, sehingga menjalankan ulang perintah tidak memerlukan biaya untuk teks yang tidak berubah. Ketika dokumen diedit, hanya paragraf yang berubah yang dikirim lagi ke API; mesin yang sadar konteks juga menerima terjemahan di sekitarnya, teks sumber mentah di sekitar perubahan, dan versi sebelumnya dari paragraf yang diedit, sehingga terjemahan baru mempertahankan pilihan kata yang sudah ditetapkan (lihat B<--xlate-context-window>). String sensitif dapat disembunyikan sebelum transmisi (lihat L</ANONYMIZATION AND TEMPLATES>).\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah B<greple> dengan C<--xlate-engine gpt5> dan modul C<perl> seperti ini:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "Dalam perintah ini, string pola C<^([\\w\\pP].*\\n)+> berarti baris-baris berurutan yang dimulai dengan huruf angka dan tanda baca. Perintah ini menampilkan area yang akan diterjemahkan dengan sorotan. Opsi B<--all> digunakan untuk menghasilkan seluruh teks.\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "Lalu tambahkan opsi C<--xlate> untuk menerjemahkan area yang dipilih. Kemudian, ini akan menemukan bagian yang diinginkan dan menggantinya dengan keluaran perintah B<deepl>.\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "Lalu tambahkan opsi C<--xlate> untuk menerjemahkan area yang dipilih. Kemudian, ini akan menemukan bagian yang diinginkan dan menggantinya dengan keluaran mesin terjemahan.\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,7 +76,7 @@
       "Ini akan menafsirkan setiap baris dari berkas C<MASKPATTERN> sebagai ekspresi reguler, menerjemahkan string yang cocok dengannya, dan mengembalikannya setelah pemrosesan. Baris yang dimulai dengan C<#> akan diabaikan.\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
       "Pola kompleks dapat ditulis dalam beberapa baris dengan baris baru yang di-escape dengan backslash.\n"
    ],
    [
@@ -80,8 +84,16 @@
       "Bagaimana teks diubah oleh masking dapat dilihat dengan opsi B<--xlate-mask>.\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "Masking melindungi markup agar tidak diterjemahkan. Untuk menyembunyikan string sensitif dari layanan terjemahan itu sendiri, lihat L</ANONYMIZATION AND TEMPLATES>; keduanya dapat digunakan bersama.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam output. Tersedia tiga sumber aturan anonimisasi: berkas kamus (B<--xlate-anonymize>), tanda inline dalam dokumen itu sendiri (B<--xlate-anonymize-mark>), dan nilai front matter YAML (B<--xlate-frontmatter>). Setiap string diganti dengan tag kategori seperti C<< <person id=1 /> >> selama transmisi. Target penyembunyian hanya transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan B<--xlate-dryrun> untuk memeriksa secara persis apa yang akan ditransmisikan.\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -128,10 +140,6 @@
       "Saat ini, mesin berikut tersedia\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "Antarmuka B<gpt-4o> tidak stabil dan tidak dapat dijamin berfungsi dengan benar saat ini.\n"
-   ],
-   [
       "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
       "Modul mesin dicari terlebih dahulu di namespace backend (C<llm>, lalu C<gpty>), kemudian langsung di bawah C<App::Greple::xlate>. Jadi C<gpt5> memuat C<App::Greple::xlate::llm::gpt5> yang memanggil perintah C<llm>, sementara C<gpt4o> kembali menggunakan C<App::Greple::xlate::gpty::gpt4o>. Gunakan C<--xlate-setopt backend=gpty> untuk memaksa backend tertentu.\n"
    ],
@@ -140,8 +148,12 @@
       "Alih-alih memanggil mesin terjemahan, Anda diharapkan bekerja secara manual. Setelah menyiapkan teks yang akan diterjemahkan, teks tersebut disalin ke papan klip. Anda diharapkan menempelkannya ke formulir, menyalin hasilnya ke papan klip, dan menekan return.\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perintah C<deepl languages> saat menggunakan mesin B<DeepL>.\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Tentukan bahasa target. Mesin LLM menerima nama atau kode bahasa apa pun yang dipahami model; nilai tersebut diinterpolasikan ke dalam prompt terjemahan. Anda bisa mendapatkan bahasa yang tersedia dengan perintah C<deepl languages> saat menggunakan mesin B<DeepL>.\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "Label yang digunakan untuk teks asli dalam format keluaran C<conflict>, C<colon> dan C<ifdef>. Dengan mesin B<DeepL>, nilai non-default juga diteruskan sebagai bahasa sumber.\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -188,8 +200,8 @@
       "Jika formatnya C<xtxt> (teks terjemahan) atau tidak dikenal, hanya teks terjemahan yang dicetak.\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan seperti untuk layanan akun DeepL gratis: 128K untuk API (B<--xlate>) dan 5000 untuk antarmuka papan klip (B<--xlate-labor>). Anda mungkin dapat mengubah nilai-nilai ini jika menggunakan layanan Pro.\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default 0 berarti batas milik engine sendiri: untuk layanan akun DeepL gratis, yaitu 128K untuk API (B<--xlate>) dan 5000 untuk antarmuka papan klip (B<--xlate-labor>). Anda mungkin dapat mengubah nilai-nilai ini jika menggunakan layanan Pro.\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -200,8 +212,8 @@
       "Setel nilai ini ke 1 jika Anda ingin menerjemahkan satu baris setiap kali. Opsi ini memiliki prioritas lebih tinggi daripada opsi C<--xlate-maxlen>.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Tentukan prompt khusus untuk dikirim ke mesin penerjemahan. Opsi ini hanya tersedia saat menggunakan mesin ChatGPT (gpt3, gpt4o, gpt5). Anda dapat menyesuaikan perilaku penerjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi C<%s>, itu akan diganti dengan nama bahasa target.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Tentukan prompt khusus untuk dikirim ke mesin penerjemahan. Opsi ini tersedia untuk mesin LLM (C<gpt3>, C<gpt4o>, C<gpt5>) tetapi tidak untuk DeepL. Anda dapat menyesuaikan perilaku penerjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi C<%s>, itu akan diganti dengan nama bahasa target.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -264,8 +276,12 @@
       "Tentukan ID glosarium yang akan digunakan untuk terjemahan. Opsi ini hanya tersedia saat menggunakan mesin DeepL. ID glosarium harus diperoleh dari akun DeepL Anda dan memastikan terjemahan yang konsisten untuk istilah-istilah tertentu.\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "Lihat hasil terjemahan secara waktu nyata di keluaran STDERR.\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "Jangan panggil API terjemahan; sebagai gantinya tampilkan, melalui tampilan progres, setiap payload persis seperti yang akan dikirimkan (setelah anonimisasi dan masking). Berguna untuk memeriksa apa yang keluar dari mesin dan untuk memperkirakan biaya suatu run.\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "Lihat hasil terjemahan secara waktu nyata di keluaran STDERR. Payload C<From> ditampilkan seperti yang dikirimkan, setelah anonimisasi dan masking.\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -368,12 +384,20 @@
       "Atur kunci autentikasi Anda untuk layanan DeepL.\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "Kunci autentikasi OpenAI.\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "Kunci autentikasi OpenAI, digunakan oleh mesin B<gpty> legacy. Mesin B<gpt5> berbasis C<llm> juga membaca variabel ini, tetapi kunci yang disimpan dengan C<llm keys set openai> juga berfungsi.\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "Anda harus memasang alat baris perintah untuk DeepL dan ChatGPT.\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "Atur strategi cache default (lihat L</CACHE OPTIONS>).\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "Pasang alat baris perintah untuk mesin yang Anda gunakan: C<llm> untuk mesin B<gpt5>, C<deepl> untuk DeepL, C<gpty> untuk mesin GPT legacy.\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -384,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -414,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "Pustaka C<getoptlong.sh> digunakan untuk penguraian opsi dalam skrip C<xlate> dan L<App::dozo>.\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "Perintah C<llm> yang digunakan oleh mesin B<gpt5> untuk mengakses model LLM.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

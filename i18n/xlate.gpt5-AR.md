@@ -4,21 +4,23 @@ App::Greple::xlate - وحدة دعم الترجمة لأداة greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. حاليًا تم تنفيذ DeepL (`deepl.pm`) ووحدة GPT-5.5 (`gpty/gpt5.pm`) كمحرك خلفي.
+**Greple** **xlate** تعثر الوحدة على كتل النص المطلوبة وتستبدلها بالنص المترجم. المحرك الأساسي هو GPT-5.5 (`llm/gpt5.pm`)، والذي يستدعي الأمر [llm](https://llm.datasette.io/)؛ كما يتم تضمين DeepL (`deepl.pm`) والمحركات القديمة المستندة إلى **gpty**.
 
-إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر **greple** مع وحدتي `--xlate-engine deepl` و`perl` كما يلي:
+تُخزَّن الترجمات مؤقتًا لكل ملف، لذا فإن إعادة تشغيل الأمر لا تكلّف شيئًا للنص غير المتغيّر. عند تحرير مستند، تُرسل الفقرات التي تغيّرت فقط إلى واجهة API مرة أخرى؛ ويتلقى المحرك الواعي بالسياق أيضًا الترجمات المحيطة، ونص المصدر الخام حول التغيير، والإصدار السابق من الفقرة المحررة، بحيث تحافظ الترجمة الجديدة على الصياغة المعتمدة (انظر **--xlate-context-window**). يمكن إخفاء السلاسل الحساسة قبل الإرسال (انظر ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+إذا كنت تريد ترجمة كتل نصية عادية في مستند مكتوب بأسلوب pod الخاص بـ Perl، فاستخدم أمر **greple** مع `--xlate-engine gpt5` ووحدة `perl` كما يلي:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 في هذا الأمر، تعني سلسلة النمط `^([\w\pP].*\n)+` أسطرًا متتالية تبدأ بحروف وأرقام وعلامات ترقيم. يعرض هذا الأمر المنطقة المراد ترجمتها مميّزة. يُستخدم الخيار **--all** لإنتاج النص الكامل.
 
@@ -28,7 +30,7 @@ Version 1.0202
     </p>
 </div>
 
-ثم أضف الخيار `--xlate` لترجمة المنطقة المحددة. عندها سيعثر على الأقسام المطلوبة ويستبدلها بمخرجات أمر **deepl**.
+ثم أضف الخيار `--xlate` لترجمة المنطقة المحددة. عندها سيعثر على الأقسام المطلوبة ويستبدلها بمخرجات محرك الترجمة.
 
 افتراضيًا، يُطبع النص الأصلي والمُترجَم بصيغة "علامات التعارض" المتوافقة مع [git(1)](http://man.he.net/man1/git). باستخدام صيغة `ifdef` يمكنك الحصول على الجزء المطلوب بواسطة أمر [unifdef(1)](http://man.he.net/man1/unifdef) بسهولة. يمكن تحديد تنسيق الإخراج عبر الخيار **--xlate-format**.
 
@@ -79,9 +81,13 @@ Version 1.0202
 
 يمكن رؤية كيفية تحويل النص بواسطة الحجب عبر خيار **--xlate-mask**.
 
+يحمي الحجب العلامات من الترجمة. لإخفاء السلاسل الحساسة عن خدمة الترجمة نفسها، راجع ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)؛ ويمكن استخدامهما معًا.
+
 هذا الواجهة تجريبية وقابلة للتغيير في المستقبل.
 
 # ANONYMIZATION AND TEMPLATES
+
+يمكن إخفاء السلاسل الحساسة قبل إرسالها إلى واجهة API للترجمة ثم استعادتها في المخرجات. تتوفر ثلاثة مصادر لقواعد إخفاء الهوية: ملف قاموس (**--xlate-anonymize**)، وعلامات مضمنة في المستند نفسه (**--xlate-anonymize-mark**)، وقيم YAML front matter (**--xlate-frontmatter**). تُستبدل كل سلسلة بوسم فئة مثل `<person id=1 />` أثناء الإرسال. هدف الإخفاء هو إرسال واجهة API فقط: تخزن ملفات التخزين المؤقت المحلية النص العادي المستعاد. استخدم **--xlate-dryrun** لفحص ما سيُرسل بالضبط.
 
 بالنسبة إلى مستندات النماذج (التقارير الفصلية وما شابه)، عرّف الأطراف الفاعلة مسبقًا وأشر إليها في المتن:
 
@@ -134,13 +140,10 @@ Version 1.0202
 
     في هذا الوقت، المحركات التالية متاحة
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        واجهة **gpt-4o** غير مستقرة ولا يمكن ضمان عملها بشكل صحيح في الوقت الحالي.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     تُبحث وحدات المحرك أولاً في مساحات أسماء الواجهة الخلفية (`llm`، ثم `gpty`)، ثم مباشرةً تحت `App::Greple::xlate`. لذلك يحمّل `gpt5` الوحدة `App::Greple::xlate::llm::gpt5` التي تستدعي الأمر `llm`، بينما يعود `gpt4o` إلى `App::Greple::xlate::gpty::gpt4o`. استخدم `--xlate-setopt backend=gpty` لفرض واجهة خلفية محددة.
 
@@ -151,7 +154,11 @@ Version 1.0202
 
 - **--xlate-to** (Default: `EN-US`)
 
-    حدد اللغة الهدف. يمكنك الحصول على اللغات المتاحة بواسطة أمر `deepl languages` عند استخدام محرك **DeepL**.
+    حدد اللغة الهدف. تقبل محركات LLM أي اسم لغة أو رمز يفهمه النموذج؛ ويُدرج ذلك في موجّه الترجمة. يمكنك الحصول على اللغات المتاحة بواسطة أمر `deepl languages` عند استخدام محرك **DeepL**.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    التسمية المستخدمة للنص الأصلي في تنسيقات الإخراج `conflict` و`colon` و`ifdef`. مع محرك **DeepL**، تُمرَّر القيمة غير الافتراضية أيضًا كلغة المصدر.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Version 1.0202
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    حدد الحد الأقصى لطول النص الذي سيتم إرساله إلى واجهة برمجة التطبيقات مرة واحدة. القيمة الافتراضية مضبوطة كما في خدمة حساب DeepL المجانية: 128K لواجهة برمجة التطبيقات (**--xlate**) و5000 لواجهة الحافظة (**--xlate-labor**). قد تتمكن من تغيير هذه القيم إذا كنت تستخدم خدمة Pro.
+    حدد الحد الأقصى لطول النص الذي سيتم إرساله إلى واجهة برمجة التطبيقات مرة واحدة. تعني القيمة الافتراضية 0 حدّ المحرك نفسه: بالنسبة إلى خدمة حساب DeepL المجانية، يكون ذلك 128K لواجهة برمجة التطبيقات (**--xlate**) و5000 لواجهة الحافظة (**--xlate-labor**). قد تتمكن من تغيير هذه القيم إذا كنت تستخدم خدمة Pro.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Version 1.0202
 
 - **--xlate-prompt**=_text_
 
-    حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. لا يتوفر هذا الخيار إلا عند استخدام محركات ChatGPT (gpt3، gpt4o، gpt5). يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على `%s`، فسيُستبدل باسم اللغة الهدف.
+    حدّد موجّهًا مخصصًا ليتم إرساله إلى محرك الترجمة. يتوفر هذا الخيار لمحركات LLM (`gpt3`، `gpt4o`، `gpt5`) لكنه لا يتوفر لـ DeepL. يمكنك تخصيص سلوك الترجمة من خلال تقديم تعليمات محددة إلى نموذج الذكاء الاصطناعي. إذا كان الموجّه يحتوي على `%s`، فسيُستبدل باسم اللغة الهدف.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Version 1.0202
 
     حدد معرّف مسرد لاستخدامه في الترجمة. هذا الخيار متاح فقط عند استخدام محرك DeepL. يجب الحصول على معرّف المسرد من حساب DeepL لديك ويضمن ترجمة متسقة للمصطلحات المحددة.
 
+- **--xlate-dryrun**
+
+    لا تستدعِ واجهة برمجة تطبيقات الترجمة؛ بل اعرض، من خلال عرض التقدم، كل حمولة بالضبط كما كانت ستُرسَل (بعد إخفاء الهوية والتقنيع). مفيد للتحقق مما يغادر الجهاز ولتقدير تكلفة التشغيل.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    اعرض نتيجة الترجمة في الوقت الحقيقي في مخرجات STDERR.
+    اعرض نتيجة الترجمة في الوقت الحقيقي في مخرجات STDERR. تُعرض حمولة `From` كما أُرسلت، بعد إخفاء الهوية والتقنيع.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Version 1.0202
 
 - OPENAI\_API\_KEY
 
-    مفتاح مصادقة OpenAI.
+    مفتاح مصادقة OpenAI، يُستخدم بواسطة محركات **gpty** القديمة. يقرأ محرك **gpt5** المستند إلى `llm` هذا المتغير أيضًا، لكن المفاتيح المخزنة باستخدام `llm keys set openai` تعمل أيضًا.
+
+- GREPLE\_XLATE\_CACHE
+
+    عيّن استراتيجية التخزين المؤقت الافتراضية (انظر ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Version 1.0202
 
 ## TOOLS
 
-عليك تثبيت أدوات سطر الأوامر لكل من DeepL وChatGPT.
+ثبّت أداة سطر الأوامر للمحرك الذي تستخدمه: `llm` لمحرك **gpt5**، و`deepl` لـ DeepL، و`gpty` لمحركات GPT القديمة.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Version 1.0202
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - مشغّل Docker عام يُستخدم بواسطة xlate لعمليات الحاويات
 
@@ -435,6 +452,10 @@ Version 1.0202
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     مكتبة `getoptlong.sh` المستخدمة لتحليل الخيارات في البرنامج النصي `xlate` و[App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    الأمر `llm` الذي يستخدمه المحرك **gpt5** للوصول إلى نماذج LLM.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

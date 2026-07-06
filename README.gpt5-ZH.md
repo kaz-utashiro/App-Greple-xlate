@@ -4,21 +4,23 @@ App::Greple::xlate - greple 的翻译支持模块
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** 模块查找所需的文本块，并将其替换为翻译后的文本。目前已将 DeepL（`deepl.pm`）和 GPT-5.5（`gpty/gpt5.pm`）模块实现为后端引擎。
+**Greple** **xlate** 模块查找所需的文本块，并将其替换为翻译后的文本。主要引擎是 GPT-5.5（`llm/gpt5.pm`），它会调用 [llm](https://llm.datasette.io/) 命令；同时还包含 DeepL（`deepl.pm`）和基于旧版 **gpty** 的引擎。
 
-如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请像这样将 **greple** 命令与 `--xlate-engine deepl` 和 `perl` 模块一起使用：
+翻译会按文件缓存，因此对未更改的文本重新运行命令不会产生任何成本。当文档被编辑时，只有已更改的段落会再次发送到 API；上下文感知引擎还会接收周围的翻译、变更周边的原始源文本，以及已编辑段落的上一版本，因此新的翻译会保持既有措辞（见 **--xlate-context-window**）。敏感字符串可以在传输前隐藏（见 ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)）。
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+如果你想翻译以 Perl 的 pod 风格编写的文档中的普通文本块，请像这样将 **greple** 命令与 `--xlate-engine gpt5` 和 `perl` 模块一起使用：
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 在此命令中，模式字符串 `^([\w\pP].*\n)+` 表示以字母数字和标点符号开头的连续行。该命令会高亮显示将被翻译的区域。选项 **--all** 用于生成完整文本。
 
@@ -28,7 +30,7 @@ Version 1.0202
     </p>
 </div>
 
-然后添加 `--xlate` 选项以翻译所选区域。接着，它会找到所需的部分并将其替换为 **deepl** 命令的输出。
+然后添加 `--xlate` 选项以翻译所选区域。接着，它会找到所需的部分并将其替换为翻译引擎的输出。
 
 默认情况下，原文与译文会以与 [git(1)](http://man.he.net/man1/git) 兼容的“冲突标记”格式打印。使用 `ifdef` 格式，你可以轻松通过 [unifdef(1)](http://man.he.net/man1/unifdef) 命令获取所需部分。输出格式可由 **--xlate-format** 选项指定。
 
@@ -79,9 +81,13 @@ Version 1.0202
 
 通过 **--xlate-mask** 选项可以查看文本经屏蔽转换后的样子。
 
+屏蔽可保护标记不被翻译。若要向翻译服务本身隐藏敏感字符串，请参见 ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)；两者可以一起使用。
+
 此接口为实验性质，将来可能会改变。
 
 # ANONYMIZATION AND TEMPLATES
+
+敏感字符串可以在发送到翻译 API 之前被隐藏，并在输出中恢复。可使用三种匿名化规则来源：字典文件（**--xlate-anonymize**）、文档本身中的内联标记（**--xlate-anonymize-mark**）以及 YAML front matter 值（**--xlate-frontmatter**）。在传输期间，每个字符串都会被替换为诸如 `<person id=1 />` 之类的类别标签。隐藏目标仅限于 API 传输：本地缓存文件存储的是已恢复的纯文本。使用 **--xlate-dryrun** 可以准确检查将被传输的内容。
 
 对于表单类文档（季度报告等），请预先定义参与者，并在正文中引用它们：
 
@@ -134,13 +140,10 @@ Version 1.0202
 
     目前可用的引擎如下所示
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        **gpt-4o** 的接口不稳定，目前无法保证能正确工作。
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     引擎模块会先在后端命名空间中搜索（`llm`，然后是 `gpty`），再直接在 `App::Greple::xlate` 下搜索。因此，`gpt5` 会加载 `App::Greple::xlate::llm::gpt5`，后者调用 `llm` 命令；而 `gpt4o` 则回退到 `App::Greple::xlate::gpty::gpt4o`。使用 `--xlate-setopt backend=gpty` 可强制指定特定后端。
 
@@ -151,7 +154,11 @@ Version 1.0202
 
 - **--xlate-to** (Default: `EN-US`)
 
-    指定目标语言。使用 **DeepL** 引擎时，可以通过 `deepl languages` 命令获取可用语言。
+    指定目标语言。LLM 引擎接受模型能够理解的任何语言名称或代码；它会被插入到翻译提示中。使用 **DeepL** 引擎时，可以通过 `deepl languages` 命令获取可用语言。
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    用于 `conflict`、`colon` 和 `ifdef` 输出格式中原文的标签。使用 **DeepL** 引擎时，非默认值也会作为源语言传递。
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Version 1.0202
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    指定一次发送到 API 的文本最大长度。默认值按 DeepL 免费账户服务设置：API 为 128K（**--xlate**），剪贴板接口为 5000（**--xlate-labor**）。如果使用 Pro 服务，您可以更改这些值。
+    指定一次发送到 API 的文本最大长度。默认值 0 表示引擎自身的限制：对于 DeepL 免费账户服务，API 为 128K（**--xlate**），剪贴板接口为 5000（**--xlate-labor**）。如果使用 Pro 服务，您可以更改这些值。
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Version 1.0202
 
 - **--xlate-prompt**=_text_
 
-    指定要发送给翻译引擎的自定义提示。此选项仅在使用 ChatGPT 引擎（gpt3、gpt4o、gpt5）时可用。你可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示包含 `%s`，它将被替换为目标语言名称。
+    指定要发送给翻译引擎的自定义提示。此选项适用于 LLM 引擎（`gpt3`、`gpt4o`、`gpt5`），但不适用于 DeepL。你可以通过向 AI 模型提供特定指令来自定义翻译行为。如果提示包含 `%s`，它将被替换为目标语言名称。
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Version 1.0202
 
     指定用于翻译的术语库（glossary）ID。此选项仅在使用 DeepL 引擎时可用。术语库 ID 应从您的 DeepL 账户获取，以确保特定术语的一致翻译。
 
+- **--xlate-dryrun**
+
+    不要调用翻译 API；而是通过进度显示，逐一展示每个 payload 的确切内容，就像它会被传输时一样（经过匿名化和 masking 之后）。这对于检查哪些内容离开本机以及估算一次运行的成本很有用。
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    在 STDERR 输出中实时查看翻译结果。
+    在 STDERR 输出中实时查看翻译结果。`From` payload 会按传输时的形式显示，即经过匿名化和 masking 之后。
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Docker 操作由[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)处理，它�
 
 - OPENAI\_API\_KEY
 
-    OpenAI 认证密钥。
+    OpenAI 认证密钥，由旧版 **gpty** 引擎使用。基于 `llm` 的 **gpt5** 引擎也会读取此变量，但使用 `llm keys set openai` 存储的密钥同样可用。
+
+- GREPLE\_XLATE\_CACHE
+
+    设置默认缓存策略（参见 ["CACHE OPTIONS"](#cache-options)）。
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Docker 操作由[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)处理，它�
 
 ## TOOLS
 
-你需要安装 DeepL 和 ChatGPT 的命令行工具。
+安装你所使用引擎的命令行工具：**gpt5** 引擎使用 `llm`，DeepL 使用 `deepl`，旧版 GPT 引擎使用 `gpty`。
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Docker 操作由[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)处理，它�
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - 由 xlate 用于容器操作的通用 Docker 运行器
 
@@ -435,6 +452,10 @@ Docker 操作由[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)处理，它�
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     用于在`xlate`脚本和[App::dozo](https://metacpan.org/pod/App%3A%3Adozo)中进行选项解析的`getoptlong.sh`库。
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    **gpt5** 引擎用于访问 LLM 模型的 `llm` 命令。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

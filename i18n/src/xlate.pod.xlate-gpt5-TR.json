@@ -4,20 +4,24 @@
       "App::Greple::xlate - greple için çeviri destek modülü\n"
    ],
    [
-      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. Currently DeepL (F<deepl.pm>) and GPT-5.5 (F<gpty/gpt5.pm>) module are implemented as a back-end engine.\n",
-      "B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda arka uç motoru olarak DeepL (F<deepl.pm>) ve GPT-5.5 (F<gpty/gpt5.pm>) modülü uygulanmıştır.\n"
+      "B<Greple> B<xlate> module find desired text blocks and replace them by the translated text. The primary engine is GPT-5.5 (F<llm/gpt5.pm>), which calls the L<llm|https://llm.datasette.io/> command; DeepL (F<deepl.pm>) and legacy B<gpty>-based engines are also included.\n",
+      "B<Greple> B<xlate> modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Birincil motor, L<llm|https://llm.datasette.io/> komutunu çağıran GPT-5.5 (F<llm/gpt5.pm>)'tir; DeepL (F<deepl.pm>) ve eski B<gpty> tabanlı motorlar da dahildir.\n"
    ],
    [
-      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine deepl> and C<perl> module like this:\n",
-      "Perl'in pod tarzında yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, C<--xlate-engine deepl> ve C<perl> modülüyle birlikte B<greple> komutunu şu şekilde kullanın:\n"
+      "Translations are cached per file, so re-running a command costs nothing for unchanged text. When a document is edited, only the changed paragraphs are sent to the API again; a context-aware engine also receives the surrounding translations, the raw source text around the change, and the previous version of the edited paragraph, so the new translation keeps the established wording (see B<--xlate-context-window>). Sensitive strings can be concealed before transmission (see L</ANONYMIZATION AND TEMPLATES>).\n",
+      "Çeviriler dosya başına önbelleğe alınır, bu nedenle bir komutu yeniden çalıştırmak değişmemiş metin için hiçbir maliyet getirmez. Bir belge düzenlendiğinde, yalnızca değiştirilen paragraflar API'ye yeniden gönderilir; bağlamdan haberdar bir motor ayrıca çevredeki çevirileri, değişikliğin etrafındaki ham kaynak metni ve düzenlenen paragrafın önceki sürümünü de alır, böylece yeni çeviri yerleşik ifadeleri korur (bkz. B<--xlate-context-window>). Hassas dizgeler iletimden önce gizlenebilir (bkz. L</ANONYMIZATION AND TEMPLATES>).\n"
+   ],
+   [
+      "If you want to translate normal text blocks in a document written in the Perl's pod style, use B<greple> command with C<--xlate-engine gpt5> and C<perl> module like this:\n",
+      "Perl'in pod tarzında yazılmış bir belgede normal metin bloklarını çevirmek istiyorsanız, C<--xlate-engine gpt5> ve C<perl> modülüyle birlikte B<greple> komutunu şu şekilde kullanın:\n"
    ],
    [
       "In this command, pattern string C<^([\\w\\pP].*\\n)+> means consecutive lines starting with alpha-numeric and punctuation letter. This command show the area to be translated highlighted. Option B<--all> is used to produce entire text.\n",
       "Bu komutta, C<^([\\w\\pP].*\\n)+> desen dizgesi, alfa-sayısal ve noktalama harfiyle başlayan ardışık satırlar anlamına gelir. Bu komut, çevrilecek alanı vurgulanmış olarak gösterir. B<--all> seçeneği, tüm metni üretmek için kullanılır.\n"
    ],
    [
-      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the B<deepl> command output.\n",
-      "Ardından seçili alanı çevirmek için C<--xlate> seçeneğini ekleyin. Böylece, istenen bölümleri bulur ve bunları B<deepl> komut çıktısıyla değiştirir.\n"
+      "Then add C<--xlate> option to translate the selected area. Then, it will find the desired sections and replace them by the translation engine's output.\n",
+      "Ardından seçili alanı çevirmek için C<--xlate> seçeneğini ekleyin. Böylece, istenen bölümleri bulur ve bunları çeviri motorunun çıktısıyla değiştirir.\n"
    ],
    [
       "By default, original and translated text is printed in the \"conflict marker\" format compatible with L<git(1)>. Using C<ifdef> format, you can get desired part by L<unifdef(1)> command easily. Output format can be specified by B<--xlate-format> option.\n",
@@ -72,7 +76,7 @@
       "Bu, dosyanın her bir satırını C<MASKPATTERN> olarak yorumlayacak, onunla eşleşen dizeleri çevirecek ve işleme bittikten sonra geri alacaktır. C<#> ile başlayan satırlar yok sayılır.\n"
    ],
    [
-      "Complex pattern can be written on multiple lines with backslash escpaed newline.\n",
+      "Complex pattern can be written on multiple lines with backslash escaped newline.\n",
       "Karmaşık desen, ters eğik çizgi ile kaçışlı satır sonları kullanılarak birden çok satıra yazılabilir.\n"
    ],
    [
@@ -80,8 +84,16 @@
       "Metnin maskeleme ile nasıl dönüştürüldüğü B<--xlate-mask> seçeneğiyle görülebilir.\n"
    ],
    [
+      "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
+      "Maskeleme, işaretlemenin çevrilmesini önler. Hassas dizeleri çeviri hizmetinin kendisinden gizlemek için bkz. L</ANONYMIZATION AND TEMPLATES>; ikisi birlikte kullanılabilir.\n"
+   ],
+   [
       "This interface is experimental and subject to change in the future.\n",
       "Bu arayüz deneyseldir ve gelecekte değişime tabidir.\n"
+   ],
+   [
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "Hassas dizgeler çeviri API'sine gönderilmeden önce gizlenebilir ve çıktıda geri yüklenebilir. Üç anonimleştirme kuralı kaynağı kullanılabilir: sözlük dosyası (B<--xlate-anonymize>), belgenin içindeki satır içi işaretler (B<--xlate-anonymize-mark>) ve YAML front matter değerleri (B<--xlate-frontmatter>). Her dizge iletim sırasında C<< <person id=1 /> >> gibi bir kategori etiketiyle değiştirilir. Gizleme hedefi yalnızca API iletimidir: yerel önbellek dosyaları geri yüklenmiş düz metni saklar. Tam olarak neyin iletileceğini incelemek için B<--xlate-dryrun> kullanın.\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -128,10 +140,6 @@
       "Şu anda aşağıdaki motorlar mevcuttur\n"
    ],
    [
-      "B<gpt-4o>'s interface is unstable and cannot be guaranteed to work correctly at the moment.\n",
-      "B<gpt-4o> arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.\n"
-   ],
-   [
       "Engine modules are searched in backend namespaces first (C<llm>, then C<gpty>), then directly under C<App::Greple::xlate>. So C<gpt5> loads C<App::Greple::xlate::llm::gpt5> which calls the C<llm> command, while C<gpt4o> falls back to C<App::Greple::xlate::gpty::gpt4o>. Use C<--xlate-setopt backend=gpty> to force a specific backend.\n",
       "Motor modülleri önce arka uç ad alanlarında aranır (C<llm>, ardından C<gpty>), sonra doğrudan C<App::Greple::xlate> altında aranır. Bu nedenle C<gpt5>, C<llm> komutunu çağıran C<App::Greple::xlate::llm::gpt5>'i yüklerken, C<gpt4o> C<App::Greple::xlate::gpty::gpt4o>'e geri döner. Belirli bir arka ucu zorlamak için C<--xlate-setopt backend=gpty> kullanın.\n"
    ],
@@ -140,8 +148,12 @@
       "Çeviri motorunu çağırmak yerine, sizin çalışmanız beklenir. Çevrilecek metni hazırladıktan sonra, bunlar panoya kopyalanır. Bunları forma yapıştırmanız, sonucu panoya kopyalamanız ve enter'a basmanız beklenir.\n"
    ],
    [
-      "Specify the target language. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
-      "Hedef dili belirtin. B<DeepL> motorunu kullanırken, kullanılabilir dilleri C<deepl languages> komutuyla alabilirsiniz.\n"
+      "Specify the target language. LLM engines accept any language name or code the model understands; it is interpolated into the translation prompt. You can get available languages by C<deepl languages> command when using B<DeepL> engine.\n",
+      "Hedef dili belirtin. LLM motorları, modelin anladığı herhangi bir dil adını veya kodunu kabul eder; çeviri istemine yerleştirilir. B<DeepL> motorunu kullanırken, kullanılabilir dilleri C<deepl languages> komutuyla alabilirsiniz.\n"
+   ],
+   [
+      "Label used for the original text in C<conflict>, C<colon> and C<ifdef> output formats. With the B<DeepL> engine a non-default value is also passed as the source language.\n",
+      "C<conflict>, C<colon> ve C<ifdef> çıktı biçimlerinde orijinal metin için kullanılan etiket. B<DeepL> motoruyla, varsayılan olmayan bir değer de kaynak dil olarak iletilir.\n"
    ],
    [
       "Specify the output format for original and translated text.\n",
@@ -188,8 +200,8 @@
       "Biçim C<xtxt> (çevirilmiş metin) ya da bilinmeyense, yalnızca çevrilmiş metin yazdırılır.\n"
    ],
    [
-      "Specify the maximum length of text to be sent to the API at once. Default value is set as for free DeepL account service: 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
-      "Bir seferde API’ye gönderilecek metnin azami uzunluğunu belirtin. Öntanımlı değer, ücretsiz DeepL hesap hizmetine göredir: API için 128K (B<--xlate>) ve pano arayüzü için 5000 (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.\n"
+      "Specify the maximum length of text to be sent to the API at once. The default value 0 means the engine's own limit: for the free DeepL account service that is 128K for the API (B<--xlate>) and 5000 for the clipboard interface (B<--xlate-labor>). You may be able to change these value if you are using Pro service.\n",
+      "Bir seferde API’ye gönderilecek metnin azami uzunluğunu belirtin. Öntanımlı değer 0, motorun kendi sınırı anlamına gelir: ücretsiz DeepL hesap hizmeti için bu, API için 128K (B<--xlate>) ve pano arayüzü için 5000’dir (B<--xlate-labor>). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.\n"
    ],
    [
       "Specify the maximum lines of text to be sent to the API at once.\n",
@@ -200,8 +212,8 @@
       "Her seferinde tek bir satırı çevirmek istiyorsanız bu değeri 1 olarak ayarlayın. Bu seçenek, C<--xlate-maxlen> seçeneğine göre önceliklidir.\n"
    ],
    [
-      "Specify a custom prompt to be sent to the translation engine. This option is only available when using ChatGPT engines (gpt3, gpt4o, gpt5). You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
-      "Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4o, gpt5) kullanılırken kullanılabilir. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem C<%s> içeriyorsa, hedef dil adıyla değiştirilecektir.\n"
+      "Specify a custom prompt to be sent to the translation engine. This option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>) but not for DeepL. You can customize the translation behavior by providing specific instructions to the AI model. If the prompt contains C<%s>, it will be replaced with the target language name.\n",
+      "Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek LLM motorları (C<gpt3>, C<gpt4o>, C<gpt5>) için kullanılabilir, ancak DeepL için kullanılamaz. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem C<%s> içeriyorsa, hedef dil adıyla değiştirilecektir.\n"
    ],
    [
       "Specify additional context information to be sent to the translation engine. This option can be used multiple times to provide multiple context strings. The context information helps the translation engine understand the background and produce more accurate translations.\n",
@@ -264,8 +276,12 @@
       "Çeviri için kullanılacak bir sözlük (glossary) kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalı ve belirli terimlerin tutarlı çevirisini sağlar.\n"
    ],
    [
-      "See the tranlsation result in real time in the STDERR output.\n",
-      "Çeviri sonucunu gerçek zamanlı olarak STDERR çıktısında görün.\n"
+      "Do not call the translation API; instead show, through the progress display, each payload exactly as it would be transmitted (after anonymization and masking). Useful for checking what leaves the machine and for estimating the cost of a run.\n",
+      "Çeviri API'sini çağırmayın; bunun yerine, ilerleme göstergesi aracılığıyla her payload'u tam olarak iletileceği şekilde (anonimleştirme ve maskelemeden sonra) gösterin. Makineden neyin çıktığını kontrol etmek ve bir çalıştırmanın maliyetini tahmin etmek için kullanışlıdır.\n"
+   ],
+   [
+      "See the translation result in real time in the STDERR output. The C<From> payload is shown as transmitted, after anonymization and masking.\n",
+      "Çeviri sonucunu gerçek zamanlı olarak STDERR çıktısında görün. C<From> payload'u, anonimleştirme ve maskelemeden sonra iletildiği gibi gösterilir.\n"
    ],
    [
       "Use L<App::Greple::stripe> module to show the matched part by zebra striping fashion. This is useful when the matched parts are connected back-to-back.\n",
@@ -368,12 +384,20 @@
       "DeepL hizmeti için kimlik doğrulama anahtarınızı ayarlayın.\n"
    ],
    [
-      "OpenAI authentication key.\n",
-      "OpenAI kimlik doğrulama anahtarı.\n"
+      "OpenAI authentication key, used by the legacy B<gpty> engines. The C<llm>-based B<gpt5> engine reads this variable too, but keys stored with C<llm keys set openai> also work.\n",
+      "Eski B<gpty> motorları tarafından kullanılan OpenAI kimlik doğrulama anahtarı. C<llm> tabanlı B<gpt5> motoru da bu değişkeni okur, ancak C<llm keys set openai> ile saklanan anahtarlar da çalışır.\n"
    ],
    [
-      "You have to install command line tools for DeepL and ChatGPT.\n",
-      "DeepL ve ChatGPT için komut satırı araçlarını kurmanız gerekir.\n"
+      "Set the default cache strategy (see L</CACHE OPTIONS>).\n",
+      "Varsayılan önbellek stratejisini ayarlayın (bkz. L</CACHE OPTIONS>).\n"
+   ],
+   [
+      "Install the command line tool for the engine you use: C<llm> for the B<gpt5> engine, C<deepl> for DeepL, C<gpty> for the legacy GPT engines.\n",
+      "Kullandığınız motor için komut satırı aracını kurun: B<gpt5> motoru için C<llm>, DeepL için C<deepl>, eski GPT motorları için C<gpty>.\n"
+   ],
+   [
+      "L<https://llm.datasette.io/>\n",
+      "L<https://llm.datasette.io/>\n"
    ],
    [
       "L<https://github.com/DeepLcom/deepl-python>\n",
@@ -384,8 +408,8 @@
       "L<https://github.com/tecolicom/App-gpty>\n"
    ],
    [
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n",
-      "L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>\n"
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n",
+      "L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>\n"
    ],
    [
       "L<App::dozo> - Generic Docker runner used by xlate for container operations\n",
@@ -414,6 +438,10 @@
    [
       "The C<getoptlong.sh> library used for option parsing in the C<xlate> script and L<App::dozo>.\n",
       "C<getoptlong.sh> kütüphanesi, C<xlate> betiğinde ve L<App::dozo> içinde seçenek ayrıştırma için kullanılır.\n"
+   ],
+   [
+      "The C<llm> command used by the B<gpt5> engine to access LLM models.\n",
+      "LLM modellerine erişmek için B<gpt5> motoru tarafından kullanılan C<llm> komutu.\n"
    ],
    [
       "DeepL Python library and CLI command.\n",

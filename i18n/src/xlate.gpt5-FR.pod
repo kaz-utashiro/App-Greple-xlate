@@ -6,21 +6,23 @@ App::Greple::xlate - module d’assistance à la traduction pour greple
 
 =head1 SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 =head1 VERSION
 
-Version 1.0202
+Version 2.00
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module recherche les blocs de texte souhaités et les remplace par le texte traduit. Actuellement, les modules DeepL (F<deepl.pm>) et GPT-5.5 (F<gpty/gpt5.pm>) sont implémentés comme moteur dorsal.
+B<Greple> B<xlate> module recherche les blocs de texte souhaités et les remplace par le texte traduit. Le moteur principal est GPT-5.5 (F<llm/gpt5.pm>), qui appelle la commande L<llm|https://llm.datasette.io/> ; DeepL (F<deepl.pm>) et les moteurs hérités basés sur B<gpty> sont également inclus.
 
-Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande B<greple> avec les modules C<--xlate-engine deepl> et C<perl> comme ceci :
+Les traductions sont mises en cache par fichier, de sorte que réexécuter une commande ne coûte rien pour le texte inchangé. Lorsqu’un document est modifié, seuls les paragraphes modifiés sont de nouveau envoyés à l’API ; un moteur sensible au contexte reçoit également les traductions environnantes, le texte source brut autour de la modification et la version précédente du paragraphe modifié, afin que la nouvelle traduction conserve la terminologie établie (voir B<--xlate-context-window>). Les chaînes sensibles peuvent être masquées avant la transmission (voir L</ANONYMIZATION AND TEMPLATES>).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Si vous souhaitez traduire des blocs de texte normaux dans un document écrit dans le style pod de Perl, utilisez la commande B<greple> avec C<--xlate-engine gpt5> et le module C<perl> comme ceci :
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Dans cette commande, la chaîne de motif C<^([\w\pP].*\n)+> signifie des lignes consécutives commençant par des lettres alphanumériques et de ponctuation. Cette commande affiche en surbrillance la zone à traduire. L’option B<--all> est utilisée pour produire le texte entier.
 
@@ -28,7 +30,7 @@ Dans cette commande, la chaîne de motif C<^([\w\pP].*\n)+> signifie des lignes 
 <img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/App-Greple-xlate/main/images/select-area.png">
 </p>
 
-Ajoutez ensuite l’option C<--xlate> pour traduire la zone sélectionnée. Elle trouvera alors les sections souhaitées et les remplacera par la sortie de la commande B<deepl>.
+Ajoutez ensuite l’option C<--xlate> pour traduire la zone sélectionnée. Elle trouvera alors les sections souhaitées et les remplacera par la sortie du moteur de traduction.
 
 Par défaut, le texte original et le texte traduit sont imprimés au format « marqueur de conflit » compatible avec L<git(1)>. En utilisant le format C<ifdef>, vous pouvez obtenir la partie souhaitée facilement avec la commande L<unifdef(1)>. Le format de sortie peut être spécifié par l’option B<--xlate-format>.
 
@@ -90,9 +92,13 @@ Un motif complexe peut être écrit sur plusieurs lignes avec un retour à la li
 
 La manière dont le texte est transformé par le masquage peut être visualisée avec l’option B<--xlate-mask>.
 
+Le masquage protège le balisage contre la traduction. Pour dissimuler les chaînes sensibles au service de traduction lui-même, voir L</ANONYMIZATION AND TEMPLATES> ; les deux peuvent être utilisés ensemble.
+
 Cette interface est expérimentale et susceptible d’évoluer à l’avenir.
 
 =head1 ANONYMIZATION AND TEMPLATES
+
+Les chaînes sensibles peuvent être dissimulées avant d’être envoyées à l’API de traduction et restaurées dans la sortie. Trois sources de règles d’anonymisation sont disponibles : un fichier dictionnaire (B<--xlate-anonymize>), des marques inline dans le document lui-même (B<--xlate-anonymize-mark>) et des valeurs de front matter YAML (B<--xlate-frontmatter>). Chaque chaîne est remplacée par une balise de catégorie telle que C<< <person id=1 /> >> pendant la transmission. La cible de la dissimulation est uniquement la transmission à l’API : les fichiers de cache locaux stockent le texte brut restauré. Utilisez B<--xlate-dryrun> pour examiner exactement ce qui serait transmis.
 
 Pour les documents de formulaire (rapports trimestriels et similaires), définissez les acteurs en amont et référencez-les dans le corps :
 
@@ -152,15 +158,13 @@ Spécifie le moteur de traduction à utiliser.
 
 =over 2
 
-=item * B<deepl>: DeepL API
+=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
 
-=item * B<gpt3>: gpt-3.5-turbo
+=item * B<deepl>: DeepL API (via the C<deepl> command)
 
-=item * B<gpt4o>: gpt-4o-mini
+=item * B<gpt3>: gpt-3.5-turbo (legacy, via the C<gpty> command)
 
-L’interface de B<gpt-4o> est instable et son bon fonctionnement ne peut pas être garanti pour le moment.
-
-=item * B<gpt5>: gpt-5.5
+=item * B<gpt4o>: gpt-4o-mini (legacy, via the C<gpty> command)
 
 =back
 
@@ -174,7 +178,11 @@ Au lieu d’appeler un moteur de traduction, il est attendu que vous travailliez
 
 =item B<--xlate-to> (Default: C<EN-US>)
 
-Spécifiez la langue cible. Vous pouvez obtenir les langues disponibles via la commande C<deepl languages> lorsque vous utilisez le moteur B<DeepL>.
+Spécifiez la langue cible. Les moteurs LLM acceptent tout nom ou code de langue que le modèle comprend ; il est interpolé dans l’invite de traduction. Vous pouvez obtenir les langues disponibles via la commande C<deepl languages> lorsque vous utilisez le moteur B<DeepL>.
+
+=item B<--xlate-from> (Default: C<ORIGINAL>)
+
+Étiquette utilisée pour le texte original dans les formats de sortie C<conflict>, C<colon> et C<ifdef>. Avec le moteur B<DeepL>, une valeur non par défaut est également transmise comme langue source.
 
 =item B<--xlate-format>=I<format> (Default: C<conflict>)
 
@@ -249,7 +257,7 @@ Si le format est C<xtxt> (texte traduit) ou inconnu, seul le texte traduit est i
 
 =item B<--xlate-maxlen>=I<chars> (Default: 0)
 
-Spécifiez la longueur maximale du texte à envoyer à l’API en une seule fois. La valeur par défaut est définie pour le service de compte gratuit DeepL : 128K pour l’API (B<--xlate>) et 5000 pour l’interface presse-papiers (B<--xlate-labor>). Vous pouvez éventuellement modifier ces valeurs si vous utilisez le service Pro.
+Spécifiez la longueur maximale du texte à envoyer à l’API en une seule fois. La valeur par défaut 0 signifie la limite propre au moteur : pour le service de compte gratuit DeepL, elle est de 128K pour l’API (B<--xlate>) et de 5000 pour l’interface presse-papiers (B<--xlate-labor>). Vous pouvez éventuellement modifier ces valeurs si vous utilisez le service Pro.
 
 =item B<--xlate-maxline>=I<n> (Default: 0)
 
@@ -259,7 +267,7 @@ Définissez cette valeur à 1 si vous souhaitez traduire une ligne à la fois. C
 
 =item B<--xlate-prompt>=I<text>
 
-Spécifiez une invite personnalisée à envoyer au moteur de traduction. Cette option n’est disponible que lors de l’utilisation des moteurs ChatGPT (gpt3, gpt4o, gpt5). Vous pouvez personnaliser le comportement de traduction en fournissant des instructions spécifiques au modèle d’IA. Si l’invite contient C<%s>, elle sera remplacée par le nom de la langue cible.
+Spécifiez une invite personnalisée à envoyer au moteur de traduction. Cette option est disponible pour les moteurs LLM (C<gpt3>, C<gpt4o>, C<gpt5>), mais pas pour DeepL. Vous pouvez personnaliser le comportement de traduction en fournissant des instructions spécifiques au modèle d’IA. Si l’invite contient C<%s>, elle sera remplacée par le nom de la langue cible.
 
 =item B<--xlate-context>=I<text>
 
@@ -317,9 +325,13 @@ Laissez toujours une ligne vide après le C<---> de fermeture. Avec un motif de 
 
 Spécifiez un ID de glossaire à utiliser pour la traduction. Cette option n’est disponible qu’avec le moteur DeepL. L’ID de glossaire doit être obtenu depuis votre compte DeepL et garantit une traduction cohérente des termes spécifiques.
 
+=item B<--xlate-dryrun>
+
+N’appelez pas l’API de traduction ; affichez plutôt, via l’affichage de progression, chaque charge utile exactement telle qu’elle serait transmise (après anonymisation et masquage). Utile pour vérifier ce qui quitte la machine et pour estimer le coût d’une exécution.
+
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
-Voir le résultat de la traduction en temps réel dans la sortie STDERR.
+Voir le résultat de la traduction en temps réel dans la sortie STDERR. La charge utile C<From> est affichée telle qu’elle est transmise, après anonymisation et masquage.
 
 =item B<--xlate-stripe>
 
@@ -425,7 +437,11 @@ Définissez votre clé d’authentification pour le service DeepL.
 
 =item OPENAI_API_KEY
 
-Clé d’authentification OpenAI.
+Clé d’authentification OpenAI, utilisée par les moteurs hérités B<gpty>. Le moteur B<gpt5> basé sur C<llm> lit également cette variable, mais les clés stockées avec C<llm keys set openai> fonctionnent aussi.
+
+=item GREPLE_XLATE_CACHE
+
+Définissez la stratégie de cache par défaut (voir L</CACHE OPTIONS>).
 
 =back
 
@@ -437,7 +453,9 @@ Clé d’authentification OpenAI.
 
 =head2 TOOLS
 
-Vous devez installer les outils en ligne de commande pour DeepL et ChatGPT.
+Installez l’outil en ligne de commande pour le moteur que vous utilisez : C<llm> pour le moteur B<gpt5>, C<deepl> pour DeepL, C<gpty> pour les moteurs GPT hérités.
+
+L<https://llm.datasette.io/>
 
 L<https://github.com/DeepLcom/deepl-python>
 
@@ -447,7 +465,7 @@ L<https://github.com/tecolicom/App-gpty>
 
 =head2 MODULES
 
-L<App::Greple::xlate::deepl>, L<App::Greple::xlate::gpty::gpt5>
+L<App::Greple::xlate::llm>, L<App::Greple::xlate::deepl>
 
 L<App::dozo> - Exécuteur Docker générique utilisé par xlate pour les opérations sur les conteneurs
 
@@ -484,6 +502,10 @@ Image de conteneur Docker.
 =item * L<https://github.com/tecolicom/getoptlong>
 
 La bibliothèque C<getoptlong.sh> utilisée pour l’analyse des options dans le script C<xlate> et L<App::dozo>.
+
+=item * L<https://llm.datasette.io/>
+
+La commande C<llm> utilisée par le moteur B<gpt5> pour accéder aux modèles LLM.
 
 =item * L<https://github.com/DeepLcom/deepl-python>
 

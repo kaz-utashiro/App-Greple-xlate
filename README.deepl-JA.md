@@ -4,21 +4,23 @@ App::Greple::xlate - greple 用の翻訳サポートモジュール
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** モジュールは、対象のテキストブロックを検索し、翻訳されたテキストに置き換えます。現在、バックエンドエンジンとして DeepL (`deepl.pm`) および GPT-5.5 (`gpty/gpt5.pm`) モジュールが実装されています。
+**Greple** **xlate** モジュールが対象のテキストブロックを検索し、翻訳されたテキストに置き換えます。メインのエンジンは GPT-5.5 (`llm/gpt5.pm`) で、[llm](https://llm.datasette.io/) コマンドを呼び出します。 DeepL (`deepl.pm`) や、従来の **gpty** ベースのエンジンも含まれています。
 
-Perlのpodスタイルで記述されたドキュメント内の通常のテキストブロックを翻訳したい場合は、次のように**greple**コマンドを`--xlate-engine deepl`および`perl`モジュールと組み合わせて使用してください：
+翻訳結果はファイルごとにキャッシュされるため、変更のないテキストに対してコマンドを再実行してもコストはかかりません。 ドキュメントが編集された場合、変更された段落のみが再度APIに送信されます。また、コンテキスト認識型エンジンには、周囲の翻訳、変更箇所の前後の原文、および編集された段落の以前のバージョンも送信されるため、新しい翻訳でも従来の表現が維持されます（**--xlate-context-window**を参照）。 機密性の高い文字列は、送信前に非表示にすることができます（["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)を参照）。
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Perlのpodスタイルで記述されたドキュメント内の通常のテキストブロックを翻訳したい場合は、**greple**コマンドを`--xlate-engine gpt5`および`perl`モジュールと組み合わせて、次のように使用します：
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 このコマンドのパターン文字列`^([ \wpP].*n)+` は、英数字と句読点で始まる連続した行を意味します。このコマンドは、翻訳される領域が強調表示されます。オプション**--all**はテキスト全体を翻訳するのに使われます。
 
@@ -28,7 +30,7 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
     </p>
 </div>
 
-次に`--xlate`オプションを加えて、選択された範囲を翻訳します。そして、必要な部分を見つけて、**deepl**コマンドの出力で置き換えます。
+その後、`--xlate` オプションを追加して、選択した領域を翻訳します。これにより、対象のセクションが検出され、翻訳エンジンの出力に置き換えられます。
 
 デフォルトでは、原文と訳文は [git(1)](http://man.he.net/man1/git) と互換性のある "conflict marker" フォーマットで出力されます。`ifdef`形式を使えば、[unifdef(1)](http://man.he.net/man1/unifdef)コマンドで簡単に目的の部分を得ることができます。出力形式は**--xlate-format**オプションで指定できます。
 
@@ -75,11 +77,45 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
 
 ファイル`MASKPATTERN`の各行を正規表現として解釈し、一致する文字列を翻訳後、処理後に元に戻します。`#`で始まる行は無視されます。
 
-複雑なパターンは、バックスラッシュとエスケープされた改行で複数行に書くことができます。
+複雑なパターンは、バックスラッシュでエスケープした改行を含めて複数行で記述できます。
 
 マスキングによってテキストがどのように変換されるかは、**--xlate-mask**オプションで見ることができます。
 
+マスキングにより、マークアップが翻訳されるのを防ぐことができます。翻訳サービス自体から機密性の高い文字列を隠すには、["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)を参照してください。両方を併用することも可能です。
+
 このインターフェースは実験的なものであり、将来変更される可能性があります。
+
+# ANONYMIZATION AND TEMPLATES
+
+機密性の高い文字列は、翻訳APIに送信される前に隠蔽し、出力時に復元することができます。 匿名化ルールのソースとして、辞書ファイル（**--xlate-anonymize**）、ドキュメント内のインラインマーク（**--xlate-anonymize-mark**）、YAMLフロントマターの値（**--xlate-frontmatter**）の3つが利用可能です。 各文字列は、送信中に `<person id=1 />` のようなカテゴリタグに置き換えられます。非表示の対象は API への送信時のみです。ローカルのキャッシュファイルには、復元されたプレーンテキストが保存されます。実際に送信される内容を正確に確認するには、**--xlate-dryrun** を使用してください。
+
+定型文書（四半期報告書など）の場合は、事前にアクターを定義し、本文内でそれらを参照します：
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+`--xlate-template` を使用して、テンプレートを言語ごとに一度翻訳し （値がファイル内に保持されている場合は `--xlate-frontmatter` を使用）、その後、**pandoc-embedz** を使用して各ケースをレンダリングします。スタンドアロンモードでは、外部設定ファイル内の `global:` 以下の値は翻訳 API に一切到達しません：
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+インラインマークの場合、マクロ定義設定を指定することで、同じ翻訳済みテンプレートから実名または伏せ字版のいずれかをレンダリングできます：
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+ドキュメントにembedzブロックが含まれている場合は、それらを翻訳対象から除外します：
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 # OPTIONS
 
@@ -104,13 +140,12 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
 
     現時点では、以下のエンジンが利用可能です。
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
-        **gpt-4o**のインターフェイスは不安定で、現時点では正しく動作することを保証できません。
-
-    - **gpt5**: gpt-5.5
+    エンジンモジュールは、まずバックエンドネームスペース（`llm`、次に `gpty`）で検索され、その後 `App::Greple::xlate` の直下で検索されます。 したがって、`gpt5`は`App::Greple::xlate::llm::gpt5`を読み込み、それが`llm`コマンドを呼び出しますが、`gpt4o`は`App::Greple::xlate::gpty::gpt4o`にフォールバックします。特定のバックエンドを強制するには、`--xlate-setopt backend=gpty`を使用してください。
 
 - **--xlate-labor**
 - **--xlabor**
@@ -119,7 +154,11 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
 
 - **--xlate-to** (Default: `EN-US`)
 
-    ターゲット言語を指定します。**DeepL**エンジンを使用している場合は、`deepl languages`コマンドで利用可能な言語を取得できます。
+    対象言語を指定します。LLMエンジンは、モデルが理解できる任意の言語名またはコードを受け付け、それが翻訳プロンプトに挿入されます。**DeepL**エンジンを使用する場合、`deepl languages`コマンドで利用可能な言語を取得できます。
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    `conflict`、`colon`、および`ifdef`出力形式における原文に付与されるラベルです。**DeepL**エンジンを使用する場合、デフォルト以外の値もソース言語として渡されます。
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -189,7 +228,7 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    APIに一度に送信するテキストの最大長を指定します。既定値は、無料のDeepLアカウント・サービスと同様に、API (**--xlate**) では128K、クリップボード・インタフェース (**--xlate-labor**) では5000に設定されています。Pro サービスを使用している場合は、これらの値を変更できます。
+    API に一度に送信するテキストの最大長を指定します。 デフォルト値の 0 は、エンジン独自の制限を意味します。DeepLの無料アカウントサービスの場合、API (**--xlate**) では128K、クリップボードインターフェース (**--xlate-labor**) では5000です。 Proサービスをご利用の場合は、これらの値を変更できる場合があります。
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -199,19 +238,71 @@ Perlのpodスタイルで記述されたドキュメント内の通常のテキ�
 
 - **--xlate-prompt**=_text_
 
-    翻訳エンジンに送信するカスタムプロンプトを指定します。このオプションは、ChatGPTエンジン（gpt3、gpt4o、gpt5）を使用する場合にのみ利用可能です。 AIモデルに具体的な指示を与えることで、翻訳の挙動をカスタマイズできます。プロンプトに `%s` が含まれている場合、それは対象言語名に置き換えられます。
+    翻訳エンジンに送信するカスタムプロンプトを指定します。このオプションはLLMエンジン（`gpt3`、`gpt4o`、`gpt5`）で利用可能ですが、DeepLでは利用できません。 AIモデルに具体的な指示を与えることで、翻訳の挙動をカスタマイズできます。プロンプトに `%s` が含まれている場合、それは対象言語名に置き換えられます。
 
 - **--xlate-context**=_text_
 
     翻訳エンジンに送信する追加コンテキスト情報を指定します。このオプションは、複数のコンテキスト文字列を提供するために複数回使用することができます。コンテキスト情報は、翻訳エンジンが背景を理解し、より正確な翻訳を生成するのに役立ちます。
 
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    変更されたブロックを再翻訳する際に、参照コンテキストとして渡される周囲の翻訳済みブロックの数（デフォルトは 2）。このコンテキストには、変更された領域の周囲の生のソーステキスト（見出し、リスト構造、キャプション）や、利用可能な場合はキャッシュから復元された変更前のテキストも含まれるため、変更されていない表現が保持されます。 コンテキスト対応翻訳を完全に無効にするには、0 に設定します。変更された各領域は個別の API 呼び出しで翻訳され、コンテキストによってシステムプロンプトに最大約 8000 文字が追加される可能性があるため、コンテキスト対応翻訳は一貫性を確保するために多少の追加コストを伴います。
+
+- **--xlate-cache-seed**=_file_
+
+    別のドキュメントのキャッシュファイルから、新しいドキュメントのキャッシュを初期化します。定期的なレポートの作成に有用です。新しい号のキャッシュに前の号のキャッシュをシードすることで、変更されていない段落が再翻訳されるのを防ぎ、編集された段落は前の号の表現を維持します。 シードは、ターゲットキャッシュが空の場合にのみ使用されます。それ以外の場合は、警告が表示され無視されます。デフォルトの `--xlate-cache=auto` では、シードを指定すると、新しいドキュメントのキャッシュファイルも作成されることになります。
+
+- **--xlate-anonymize**=_file_
+
+    機密性の高い文字列を翻訳APIに送信する前に匿名化し、出力時に復元します。辞書ファイルには、項目ごとに1つのエントリが記載されます：JSON形式（標準的、機械生成可能）
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    または単純な行形式（`category pattern`、正規表現の場合は `/.../`）。 各項目は `<person id=1 />` のようなカテゴリタグに置き換えられます。同じ文字列には常に同じタグが割り当てられるため、モデルは各項目を識別できます。未知の JSON フィールドは無視されるため、ジェネレータ（例：エンティティを抽出するローカル LLM）は独自の注釈を追加できます。 カテゴリ `lit` は予約済みです。ローカルキャッシュファイルには、復元されたプレーンテキストが引き続き保存されます。隠蔽の対象はAPI経由の送信のみです。
+
+    辞書は外部ツール（例えば、機密エンティティを抽出するローカルモデルなど）によって生成できます：
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    ファイル内の UTF-8 BOM は許容されます。フロントマター行形式の値には、値の直後ではなく、その行の末尾にのみコメントを付加できます。
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    文書自体に含まれるインラインマークから匿名化エントリを収集します。 最初の出現箇所を `{{ person("山田太郎") }}` のようにマークすると、文書全体におけるその文字列のすべての出現箇所が匿名化されます。マーク自体はソースおよび翻訳文に残るため、文書を Jinja2 スタイルのマクロプロセッサで処理することも可能です（名前を出力または伏字にするには、`person` マクロを定義します）。 カスタム _regex_ には、`(?<category>...)` および `(?<text>...)` という名前のキャプチャが含まれている必要があります。
+
+    このようなオプション値を持つオプションの場合、後続のファイル引数が値として扱われることに注意してください。デフォルトの表記法を使用する場合は、`--xlate-anonymize-mark=`（末尾に `=` を付加）と記述します。
+
+    代替表記を設定することも可能です。例えば、`@@person:NAME@@` 形式のマークには `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` を使用したり、レンダリングされた Markdown では表示されない HTML コメント形式を使用したりできます。 マークルールはドキュメントごとに収集されます。つまり、ある入力ファイルでマークされた文字列は、同じ実行内の別のファイルでは非表示にはなりません（ファイル間で蓄積されるフロントマターの値とは異なります）。
+
+- **--xlate-template**\[=_regex_\]
+
+    テンプレート式（デフォルト：Jinja2 `{{ ... }}`、`{% ... %}`、`{# ... #}`）を不透明なプレースホルダーとして扱います。モデルに対して、それらをそのままコピーし、ブロックごとに、応答にまったく同じ式が、それぞれ同じ回数含まれていることを確認するよう指示します。 翻訳処理において、対象言語の語順に合わせてこれらの順序が変更される可能性があるため、順序は変わる場合があります。式に不備がある場合、実行は中止されます。キャッシュはチェックポイントとして保存され凍結されるため、支払済みの処理内容は失われることはありません。
+
+    このようなオプション値を持つオプションの場合、後続のファイル引数が値として扱われることに注意してください。デフォルトの表記法を使用する場合は、`--xlate-template=`（末尾に `=` を付加）と記述します。
+
+- **--xlate-frontmatter**
+
+    先頭の `---` ... `---` ブロックを YAML フロントマターとして扱う：翻訳およびフェーズ 2 のコンテキストスライスから除外し、そのフラットな `key: value` 値を安全策として匿名化ルール（カテゴリ `var`）に追加します。 入力ファイルが複数ある場合、収集された値は累積されます（隠蔽を優先します）。
+
+    閉じタグ `---` の後には常に空行を挿入してください。段落形式のマッチパターンを使用する場合、本文に直接続くフロントマターは、除外処理では抑制できない1つのまたがりブロックを形成します（その場合は警告が表示されます）。 値自体は匿名化されますが、フロントマター自体は翻訳のために送信されてしまいます。
+
 - **--xlate-glossary**=_glossary_
 
     翻訳に使用する用語集IDを指定します。このオプションは、DeepL エンジンを使用する場合にのみ使用できます。用語集 ID は、DeepL アカウントから取得する必要があり、特定の用語の一貫した翻訳を保証します。
 
+- **--xlate-dryrun**
+
+    翻訳APIを呼び出さないでください。代わりに、進行状況表示を通じて、各ペイロードが（匿名化およびマスキング後に）送信されるのと同じ状態で正確に表示してください。これは、マシンから送信される内容を確認したり、実行コストを見積もったりするのに役立ちます。
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    STDERR出力でリアルタイムにトランザクション結果を見ます。
+    STDERR出力で翻訳結果をリアルタイムで確認できます。`From`のペイロードは、匿名化およびマスキング処理後の送信時のまま表示されます。
 
 - **--xlate-stripe**
 
@@ -304,7 +395,11 @@ Emacsエディタから`xlate`コマンドを使うには、リポジトリに�
 
 - OPENAI\_API\_KEY
 
-    OpenAIの認証キーです。
+    レガシーな**gpty**エンジンで使用されるOpenAI認証キー。 `llm`ベースの**gpt5**エンジンもこの変数を読み取りますが、`llm keys set openai`で保存されたキーも機能します。
+
+- GREPLE\_XLATE\_CACHE
+
+    デフォルトのキャッシュ戦略を設定します（["CACHE OPTIONS"](#cache-options)を参照）。
 
 # INSTALL
 
@@ -314,7 +409,9 @@ Emacsエディタから`xlate`コマンドを使うには、リポジトリに�
 
 ## TOOLS
 
-DeepLおよびChatGPT用のコマンドラインツールをインストールする必要があります。
+使用しているエンジン用のコマンドラインツールをインストールします：`llm`（**gpt5**エンジン用）、`deepl`（DeepL用）、`gpty`（レガシーGPTエンジン用）。
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -324,7 +421,7 @@ DeepLおよびChatGPT用のコマンドラインツールをインストール�
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm)、[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlateがコンテナ操作に使用する汎用Dockerランナー。
 
@@ -355,6 +452,10 @@ DeepLおよびChatGPT用のコマンドラインツールをインストール�
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     `getoptlong.sh` ライブラリは `xlate` スクリプトと [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) のオプション解析に使われます。
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    **gpt5**エンジンがLLMモデルにアクセスするために使用する`llm`コマンド。
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

@@ -4,21 +4,23 @@ App::Greple::xlate - modul dukungan terjemahan untuk greple
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Saat ini modul DeepL (`deepl.pm`) dan GPT-5.5 (`gpty/gpt5.pm`) diimplementasikan sebagai mesin back-end.
+**Greple** **xlate** modul menemukan blok teks yang diinginkan dan menggantinya dengan teks terjemahan. Mesin utama adalah GPT-5.5 (`llm/gpt5.pm`), yang memanggil perintah [llm](https://llm.datasette.io/); DeepL (`deepl.pm`) dan mesin lama berbasis **gpty** juga disertakan.
 
-Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan modul `--xlate-engine deepl` dan `perl` seperti ini:
+Terjemahan di-cache per file, sehingga menjalankan ulang perintah tidak memerlukan biaya untuk teks yang tidak berubah. Ketika dokumen diedit, hanya paragraf yang berubah yang dikirim lagi ke API; mesin yang sadar konteks juga menerima terjemahan di sekitarnya, teks sumber mentah di sekitar perubahan, dan versi sebelumnya dari paragraf yang diedit, sehingga terjemahan baru mempertahankan pilihan kata yang sudah ditetapkan (lihat **--xlate-context-window**). String sensitif dapat disembunyikan sebelum transmisi (lihat ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Jika Anda ingin menerjemahkan blok teks normal dalam dokumen yang ditulis dalam gaya pod Perl, gunakan perintah **greple** dengan `--xlate-engine gpt5` dan modul `perl` seperti ini:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Dalam perintah ini, string pola `^([\w\pP].*\n)+` berarti baris-baris berurutan yang dimulai dengan huruf angka dan tanda baca. Perintah ini menampilkan area yang akan diterjemahkan dengan sorotan. Opsi **--all** digunakan untuk menghasilkan seluruh teks.
 
@@ -28,7 +30,7 @@ Dalam perintah ini, string pola `^([\w\pP].*\n)+` berarti baris-baris berurutan 
     </p>
 </div>
 
-Lalu tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Kemudian, ini akan menemukan bagian yang diinginkan dan menggantinya dengan keluaran perintah **deepl**.
+Lalu tambahkan opsi `--xlate` untuk menerjemahkan area yang dipilih. Kemudian, ini akan menemukan bagian yang diinginkan dan menggantinya dengan keluaran mesin terjemahan.
 
 Secara bawaan, teks asli dan terjemahan dicetak dalam format "penanda konflik" yang kompatibel dengan [git(1)](http://man.he.net/man1/git). Dengan menggunakan format `ifdef`, Anda dapat mengambil bagian yang diinginkan dengan perintah [unifdef(1)](http://man.he.net/man1/unifdef) dengan mudah. Format keluaran dapat ditentukan dengan opsi **--xlate-format**.
 
@@ -79,9 +81,13 @@ Pola kompleks dapat ditulis dalam beberapa baris dengan baris baru yang di-escap
 
 Bagaimana teks diubah oleh masking dapat dilihat dengan opsi **--xlate-mask**.
 
+Masking melindungi markup agar tidak diterjemahkan. Untuk menyembunyikan string sensitif dari layanan terjemahan itu sendiri, lihat ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); keduanya dapat digunakan bersama.
+
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.
 
 # ANONYMIZATION AND TEMPLATES
+
+String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam output. Tersedia tiga sumber aturan anonimisasi: berkas kamus (**--xlate-anonymize**), tanda inline dalam dokumen itu sendiri (**--xlate-anonymize-mark**), dan nilai front matter YAML (**--xlate-frontmatter**). Setiap string diganti dengan tag kategori seperti `<person id=1 />` selama transmisi. Target penyembunyian hanya transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan **--xlate-dryrun** untuk memeriksa secara persis apa yang akan ditransmisikan.
 
 Untuk dokumen formulir (laporan triwulanan dan sejenisnya), definisikan aktor di awal dan rujuk mereka di isi:
 
@@ -134,13 +140,10 @@ Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
 
     Saat ini, mesin berikut tersedia
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        Antarmuka **gpt-4o** tidak stabil dan tidak dapat dijamin berfungsi dengan benar saat ini.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     Modul mesin dicari terlebih dahulu di namespace backend (`llm`, lalu `gpty`), kemudian langsung di bawah `App::Greple::xlate`. Jadi `gpt5` memuat `App::Greple::xlate::llm::gpt5` yang memanggil perintah `llm`, sementara `gpt4o` kembali menggunakan `App::Greple::xlate::gpty::gpt4o`. Gunakan `--xlate-setopt backend=gpty` untuk memaksa backend tertentu.
 
@@ -151,7 +154,11 @@ Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Tentukan bahasa target. Anda bisa mendapatkan bahasa yang tersedia dengan perintah `deepl languages` saat menggunakan mesin **DeepL**.
+    Tentukan bahasa target. Mesin LLM menerima nama atau kode bahasa apa pun yang dipahami model; nilai tersebut diinterpolasikan ke dalam prompt terjemahan. Anda bisa mendapatkan bahasa yang tersedia dengan perintah `deepl languages` saat menggunakan mesin **DeepL**.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    Label yang digunakan untuk teks asli dalam format keluaran `conflict`, `colon` dan `ifdef`. Dengan mesin **DeepL**, nilai non-default juga diteruskan sebagai bahasa sumber.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default ditetapkan seperti untuk layanan akun DeepL gratis: 128K untuk API (**--xlate**) dan 5000 untuk antarmuka papan klip (**--xlate-labor**). Anda mungkin dapat mengubah nilai-nilai ini jika menggunakan layanan Pro.
+    Tentukan panjang maksimum teks yang akan dikirim ke API sekaligus. Nilai default 0 berarti batas milik engine sendiri: untuk layanan akun DeepL gratis, yaitu 128K untuk API (**--xlate**) dan 5000 untuk antarmuka papan klip (**--xlate-labor**). Anda mungkin dapat mengubah nilai-nilai ini jika menggunakan layanan Pro.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
 
 - **--xlate-prompt**=_text_
 
-    Tentukan prompt khusus untuk dikirim ke mesin penerjemahan. Opsi ini hanya tersedia saat menggunakan mesin ChatGPT (gpt3, gpt4o, gpt5). Anda dapat menyesuaikan perilaku penerjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi `%s`, itu akan diganti dengan nama bahasa target.
+    Tentukan prompt khusus untuk dikirim ke mesin penerjemahan. Opsi ini tersedia untuk mesin LLM (`gpt3`, `gpt4o`, `gpt5`) tetapi tidak untuk DeepL. Anda dapat menyesuaikan perilaku penerjemahan dengan memberikan instruksi spesifik kepada model AI. Jika prompt berisi `%s`, itu akan diganti dengan nama bahasa target.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Kecualikan blok embedz dari terjemahan ketika dokumen memuatnya:
 
     Tentukan ID glosarium yang akan digunakan untuk terjemahan. Opsi ini hanya tersedia saat menggunakan mesin DeepL. ID glosarium harus diperoleh dari akun DeepL Anda dan memastikan terjemahan yang konsisten untuk istilah-istilah tertentu.
 
+- **--xlate-dryrun**
+
+    Jangan panggil API terjemahan; sebagai gantinya tampilkan, melalui tampilan progres, setiap payload persis seperti yang akan dikirimkan (setelah anonimisasi dan masking). Berguna untuk memeriksa apa yang keluar dari mesin dan untuk memperkirakan biaya suatu run.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Lihat hasil terjemahan secara waktu nyata di keluaran STDERR.
+    Lihat hasil terjemahan secara waktu nyata di keluaran STDERR. Payload `From` ditampilkan seperti yang dikirimkan, setelah anonimisasi dan masking.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Muat file `xlate.el` yang disertakan dalam repositori untuk menggunakan perintah
 
 - OPENAI\_API\_KEY
 
-    Kunci autentikasi OpenAI.
+    Kunci autentikasi OpenAI, digunakan oleh mesin **gpty** legacy. Mesin **gpt5** berbasis `llm` juga membaca variabel ini, tetapi kunci yang disimpan dengan `llm keys set openai` juga berfungsi.
+
+- GREPLE\_XLATE\_CACHE
+
+    Atur strategi cache default (lihat ["CACHE OPTIONS"](#cache-options)).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Muat file `xlate.el` yang disertakan dalam repositori untuk menggunakan perintah
 
 ## TOOLS
 
-Anda harus memasang alat baris perintah untuk DeepL dan ChatGPT.
+Pasang alat baris perintah untuk mesin yang Anda gunakan: `llm` untuk mesin **gpt5**, `deepl` untuk DeepL, `gpty` untuk mesin GPT legacy.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ Anda harus memasang alat baris perintah untuk DeepL dan ChatGPT.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - Runner Docker generik yang digunakan oleh xlate untuk operasi kontainer
 
@@ -435,6 +452,10 @@ Anda harus memasang alat baris perintah untuk DeepL dan ChatGPT.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     Pustaka `getoptlong.sh` digunakan untuk penguraian opsi dalam skrip `xlate` dan [App::dozo](https://metacpan.org/pod/App%3A%3Adozo).
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    Perintah `llm` yang digunakan oleh mesin **gpt5** untuk mengakses model LLM.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

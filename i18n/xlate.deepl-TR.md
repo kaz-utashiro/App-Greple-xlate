@@ -4,21 +4,23 @@ App::Greple::xlate - greple için çeviri destek modülü
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Şu anda DeepL (`deepl.pm`) ve GPT-5.5 (`gpty/gpt5.pm`) modülleri arka uç motoru olarak uygulanmaktadır.
+**Greple** **xlate** modülü, istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Ana motor, [llm](https://llm.datasette.io/) komutunu çağıran GPT-5.5'tir (`llm/gpt5.pm`); DeepL (`deepl.pm`) ve eski **gpty** tabanlı motorlar da dahildir.
 
-Perl'in pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `--xlate-engine deepl` ve `perl` modülleriyle şu şekilde kullanın:
+Çeviriler dosya başına önbelleğe alınır, bu nedenle değişmemiş metinler için komutu yeniden çalıştırmanın maliyeti yoktur. Bir belge düzenlendiğinde, yalnızca değiştirilen paragraflar API’ye yeniden gönderilir; bağlam farkında bir motor, çevredeki çevirileri, değişikliğin etrafındaki ham kaynak metni ve düzenlenmiş paragrafın önceki sürümünü de alır, böylece yeni çeviri yerleşik ifade biçimini korur (bkz. **--xlate-context-window**). Hassas dizeler, aktarımdan önce gizlenebilir (bkz. ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Perl'in pod stilinde yazılmış bir belgedeki normal metin bloklarını çevirmek istiyorsanız, **greple** komutunu `--xlate-engine gpt5` ve `perl` modülleriyle şu şekilde kullanın:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 Bu komutta, `^([\w\pP].*\n)+` kalıp dizesi alfa-sayısal ve noktalama harfleriyle başlayan ardışık satırlar anlamına gelir. Bu komut çevrilecek alanı vurgulanmış olarak gösterir. **--all** seçeneği metnin tamamını üretmek için kullanılır.
 
@@ -28,7 +30,7 @@ Bu komutta, `^([\w\pP].*\n)+` kalıp dizesi alfa-sayısal ve noktalama harfleriy
     </p>
 </div>
 
-Daha sonra seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. Ardından, istenen bölümleri bulacak ve bunları **deepl** komut çıktısı ile değiştirecektir.
+Ardından, seçilen alanı çevirmek için `--xlate` seçeneğini ekleyin. Böylece, istenen bölümler bulunur ve çeviri motorunun çıktısıyla değiştirilir.
 
 Varsayılan olarak, orijinal ve çevrilmiş metin [git(1)](http://man.he.net/man1/git) ile uyumlu "conflict marker" biçiminde yazdırılır. `ifdef` formatını kullanarak, [unifdef(1)](http://man.he.net/man1/unifdef) komutu ile istediğiniz kısmı kolayca alabilirsiniz. Çıktı biçimi **--xlate-format** seçeneği ile belirtilebilir.
 
@@ -75,11 +77,45 @@ Bazen, çevrilmesini istemediğiniz metin bölümleri olabilir. Örneğin, markd
 
 Bu, `MASKPATTERN` dosyasının her satırını düzenli bir ifade olarak yorumlayacak, eşleşen dizeleri çevirecek ve işleme sonra geri döndürecektir. `#` ile başlayan satırlar yok sayılır.
 
-Karmaşık desen ters eğik çizgi ile birden fazla satıra yazılabilir.
+Karmaşık desenler, ters eğik çizgi ile kaçış işareti eklenmiş satır sonu karakterleri kullanılarak birden fazla satıra yazılabilir.
 
 Maskeleme ile metnin nasıl dönüştürüldüğü **--xlate-mask** seçeneği ile görülebilir.
 
+Maskeleme, işaretlemeyi çeviriden korur. Hassas dizeleri çeviri hizmetinden gizlemek için ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)'e bakın; her ikisi de birlikte kullanılabilir.
+
 Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
+
+# ANONYMIZATION AND TEMPLATES
+
+Hassas dizeler, çeviri API'sına gönderilmeden önce gizlenebilir ve çıktıda geri yüklenebilir. Anonimleştirme kuralları için üç kaynak mevcuttur: bir sözlük dosyası (**--xlate-anonymize**), belgenin içindeki satır içi işaretler (**--xlate-anonymize-mark**) ve YAML ön metin değerleri (**--xlate-frontmatter**). Her dize, aktarım sırasında `<person id=1 />` gibi bir kategori etiketiyle değiştirilir. Gizleme, yalnızca API aktarımını hedefler: yerel önbellek dosyaları, geri yüklenen düz metni saklar. Tam olarak neyin aktarılacağını incelemek için **--xlate-dryrun** kullanın.
+
+Form belgeleri (üç aylık raporlar ve benzeri) için, aktörleri önceden tanımlayın ve metin gövdesinde bunlara atıfta bulunun:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Şablonu her dil için bir kez `--xlate-template` ile çevirin (ve değerler dosyada tutuluyorsa `--xlate-frontmatter` kullanın), ardından her durumu **pandoc-embedz** bağımsız modunda işleyin -- harici bir yapılandırmadaki `global:` altındaki değerler çeviri API'sine hiçbir şekilde ulaşmaz:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template= --xlate-format=xtxt \
+           --match-paragraph --all --need=0 \
+           report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+Satır içi işaretler için, bir makro tanımı yapılandırması sağlamak, aynı çevrilmiş şablonun ya gerçek adları ya da sansürlenmiş bir sürümü görüntülemesini sağlar:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Bir belge embedz blokları içeriyorsa, bunları çeviriden hariç tutun:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
 
 # OPTIONS
 
@@ -104,13 +140,12 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
     Şu anda, aşağıdaki motorlar mevcuttur
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
-        **gpt-4o**'nun arayüzü kararsızdır ve şu anda doğru çalışacağı garanti edilemez.
-
-    - **gpt5**: gpt-5.5
+    Motor modülleri önce arka uç ad alanlarında (`llm`, ardından `gpty`) aranır, ardından doğrudan `App::Greple::xlate` altında aranır. Dolayısıyla `gpt5`, `App::Greple::xlate::llm::gpt5`'yi yükler ve bu da `llm` komutunu çağırırken, `gpt4o` ise `App::Greple::xlate::gpty::gpt4o`'ye geri döner. Belirli bir arka ucu zorlamak için `--xlate-setopt backend=gpty`'yi kullanın.
 
 - **--xlate-labor**
 - **--xlabor**
@@ -119,7 +154,11 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
 - **--xlate-to** (Default: `EN-US`)
 
-    Hedef dili belirtin. **DeepL** motorunu kullanırken `deepl languages` komutu ile mevcut dilleri alabilirsiniz.
+    Hedef dili belirtin. LLM motorları, modelin anladığı herhangi bir dil adını veya kodunu kabul eder; bu, çeviri komut satırına eklenir. **DeepL** motorunu kullanırken `deepl languages` komutuyla kullanılabilir dilleri öğrenebilirsiniz.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    `conflict`, `colon` ve `ifdef` çıktı biçimlerinde orijinal metin için kullanılan etiket. **DeepL** motorunda, varsayılan olmayan bir değer de kaynak dil olarak iletilir.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -189,7 +228,7 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    API'ye bir kerede gönderilecek maksimum metin uzunluğunu belirtin. Varsayılan değer ücretsiz DeepL hesap hizmeti için ayarlanmıştır: API için 128K (**--xlate**) ve pano arayüzü için 5000 (**--xlate-labor**). Pro hizmeti kullanıyorsanız bu değerleri değiştirebilirsiniz.
+    API'ye tek seferde gönderilecek metnin maksimum uzunluğunu belirtin. Varsayılan değer olan 0, motorun kendi sınırını ifade eder: ücretsiz DeepL hesabı hizmeti için bu sınır, API (**--xlate**) için 128K ve panoya arayüzü (**--xlate-labor**) için 5000'dir. Pro hizmetini kullanıyorsanız bu değerleri değiştirebilirsiniz.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -199,19 +238,71 @@ Bu arayüz deneyseldir ve gelecekte değiştirilebilir.
 
 - **--xlate-prompt**=_text_
 
-    Çeviri motoruna gönderilecek özel bir komut belirtin. Bu seçenek yalnızca ChatGPT motorları (gpt3, gpt4o, gpt5) kullanılırken kullanılabilir. AI modeline belirli talimatlar vererek çeviri davranışını özelleştirebilirsiniz. Komut satırı `%s` içeriyorsa, bu hedef dil adıyla değiştirilecektir.
+    Çeviri motoruna gönderilecek özel bir komut belirtin. Bu seçenek LLM motorları (`gpt3`, `gpt4o`, `gpt5`) için kullanılabilir, ancak DeepL için kullanılamaz. AI modeline belirli talimatlar vererek çeviri davranışını özelleştirebilirsiniz. Komut, `%s` içeriyorsa, hedef dil adıyla değiştirilecektir.
 
 - **--xlate-context**=_text_
 
     Çeviri motoruna gönderilecek ek bağlam bilgilerini belirtin. Bu seçenek, birden fazla bağlam dizesi sağlamak için birden fazla kez kullanılabilir. Bağlam bilgisi, çeviri motorunun arka planı anlamasına ve daha doğru çeviriler üretmesine yardımcı olur.
 
+- **--xlate-context-window**=_n_
+
+    (Context-aware engines only, e.g. `gpt5` on the llm backend)
+    Değiştirilen bloklar yeniden çevrilirken referans bağlam olarak geçirilen çevrilmiş çevre blokların sayısı (varsayılan 2). Bağlam, değiştirilen bölgenin etrafındaki ham kaynak metni (başlıklar, liste yapısı, alt yazılar) ve varsa önbellekten kurtarılan değiştirilen metnin önceki sürümünü de içerir; böylece değiştirilmemiş ifadeler korunur. Bağlam duyarlı çeviriyi tamamen devre dışı bırakmak için 0 olarak ayarlayın. Her değiştirilen bölgenin kendi API çağrısında çevrildiğini ve bağlamın sistem komut satırına yaklaşık 8000 karakter ekleyebileceğini unutmayın; bu nedenle bağlam duyarlı çeviri, tutarlılık karşılığında biraz ekstra maliyet gerektirir.
+
+- **--xlate-cache-seed**=_file_
+
+    Başka bir belgenin önbellek dosyasından yeni bir belgenin önbelleğini başlatın. Periyodik raporlar için kullanışlıdır: yeni sayının önbelleğini önceki sayının önbelleğiyle başlatın; böylece değiştirilmemiş paragraflar yeniden çevrilmez ve düzenlenmiş paragraflar önceki sayının ifadesini korur. Başlangıç verisi yalnızca hedef önbellek boş olduğunda kullanılır; aksi takdirde bir uyarı ile göz ardı edilir. Varsayılan `--xlate-cache=auto` ile, bir başlangıç verisi belirtmek aynı zamanda yeni belgenin önbellek dosyasının oluşturulmasını da gerektirir.
+
+- **--xlate-anonymize**=_file_
+
+    Hassas dizeleri çeviri API'sine gönderilmeden önce anonimleştirin ve çıktıda geri yükleyin. Sözlük dosyası, her öğe için bir giriş içerir: JSON biçiminde (kanonik, makine tarafından üretilebilir)
+
+        [ { "category": "person",  "text": "山田太郎" },
+          { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+    veya basit satır biçiminde (`category pattern`, `/.../` düzenli ifade için). Her öğe, `<person id=1 />` gibi bir kategori etiketiyle değiştirilir; aynı dize her zaman aynı etiketi alır, böylece model kimin kim olduğunu takip edebilir. Bilinmeyen JSON alanları göz ardı edilir, bu sayede oluşturucular (ör. varlıkları çıkaran yerel bir LLM) kendi açıklamalarını ekleyebilir. `lit` kategorisi ayrılmıştır. Yerel önbellek dosyaları, geri yüklenen düz metni hâlâ saklar: gizleme hedefi yalnızca API iletimidir.
+
+    Bir sözlük, harici bir araç tarafından oluşturulabilir — örneğin, hassas varlıklarını ayıklayan yerel bir model:
+
+        llm -m <local-model> \
+            -s 'Extract sensitive entities as a JSON array of objects
+                with "category" and "text" fields.' \
+            < report.md > report.anon.json
+        greple -Mxlate --xlate-anonymize=report.anon.json ...
+
+    Dosyadaki bir UTF-8 BOM'u kabul edilir. Ön bilgi satırı biçimindeki değerler, yalnızca kendi satırlarında sonda bir açıklama taşıyabilir; değerin ardından değil.
+
+- **--xlate-anonymize-mark**\[=_regex_\]
+
+    Belgenin kendisindeki satır içi işaretlerden anonimleştirme girdilerini toplayın. İlk geçişi `{{ person("山田太郎") }}` gibi işaretleyin; böylece belge genelinde bu dizenin her geçişi anonimleştirilir. İşaretin kendisi kaynakta ve çeviride kalır; bu sayede bir belge, Jinja2 tarzı bir makro işlemcisi tarafından da işlenebilir (`person` makrosunu, adı yazdırmak veya sansürlemek için tanımlayın). Özel bir _regex_, `(?<category>...)` ve `(?<text>...)` adlı yakalamaları içermelidir.
+
+    Böyle bir isteğe bağlı değer seçeneğinde, takip eden dosya argümanının değer olarak alınacağını unutmayın: varsayılan notasyonu kullanırken `--xlate-anonymize-mark=` (sonunda `=` ile) yazın.
+
+    Alternatif notasyonlar yapılandırılabilir; örneğin, `@@person:NAME@@` tarzı işaretler için `--xlate-anonymize-mark='@@(?<category>[a-z][a-z0-9_]*):(?<text>[^\n]+?)@@'` veya işlenmiş Markdown'da görünmez kalan bir HTML yorum biçimi. İşaretleme kuralları belge bazında toplanır: bir giriş dosyasında işaretlenmiş bir dize, aynı işleme ait başka bir dosyada gizlenmez (dosyalar arasında biriken ön bilgi değerlerinin aksine).
+
+- **--xlate-template**\[=_regex_\]
+
+    Şablon ifadelerini (varsayılan: Jinja2 `{{ ... }}`, `{% ... %}`, `{# ... #}`) opak yer tutucular olarak değerlendirin: modele bunları değiştirmeden kopyalamasını söyleyin ve her blok için yanıtın tam olarak aynı ifadeleri, her biri aynı sayıda içerdiğini doğrulayın. Çeviri işlemi, hedef dilin kelime sırasına uymak için bu ifadelerin sırasını meşru bir şekilde yeniden düzenleyebileceğinden, sıraları değişebilir. Hatalı bir ifade, çalıştırmayı sonlandırır; önbellek kontrol noktası alınarak dondurulur, böylece ücret ödenen hiçbir şey kaybolmaz.
+
+    Böyle bir isteğe bağlı değer seçeneğinde, takip eden dosya argümanının değer olarak kabul edileceğine dikkat edin: varsayılan notasyonu kullanırken `--xlate-template=` (sonunda `=` ile) yazın.
+
+- **--xlate-frontmatter**
+
+    Başındaki `---` ... `---` bloğunu YAML ön metni olarak değerlendirin: bunu çeviriden ve 2. aşama bağlam dilimlerinden hariç tutun ve düz `key: value` değerlerini bir güvenlik ağı olarak anonimleştirme kurallarına (kategori `var`) ekleyin. Birden fazla giriş dosyası olduğunda toplanan değerler birikir (gizlilik lehine hareket edilir).
+
+    Kapanış `---` etiketinden sonra daima bir boş satır bırakın. Paragraf tarzı eşleştirme deseninde, ana metne doğrudan uzanan ön metin, hariç tutma işleminin bastıramayacağı tek bir blok oluşturur (bu durumda bir uyarı görüntülenir); değerler yine de anonimleştirilir, ancak ön metin kendisi çeviri için gönderilir.
+
 - **--xlate-glossary**=_glossary_
 
     Çeviri için kullanılacak bir sözlük kimliği belirtin. Bu seçenek yalnızca DeepL motoru kullanılırken kullanılabilir. Sözlük kimliği DeepL hesabınızdan alınmalıdır ve belirli terimlerin tutarlı bir şekilde çevrilmesini sağlar.
 
+- **--xlate-dryrun**
+
+    Çeviri API’sini çağırmayın; bunun yerine, ilerleme göstergesi aracılığıyla her bir yükü tam olarak iletileceği şekilde (anonimleştirme ve maskeleme işlemlerinden sonra) gösterin. Bu, makineden neyin çıktığını kontrol etmek ve bir çalıştırmanın maliyetini tahmin etmek için yararlıdır.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görün.
+    Çeviri sonucunu STDERR çıktısında gerçek zamanlı olarak görüntüleyin. `From` yükü, anonimleştirme ve maskeleme işlemlerinden sonra iletildiği haliyle gösterilir.
 
 - **--xlate-stripe**
 
@@ -304,7 +395,11 @@ Emacs editöründen `xlate` komutunu kullanmak için depoda bulunan `xlate.el` d
 
 - OPENAI\_API\_KEY
 
-    OpenAI kimlik doğrulama anahtarı.
+    Eski **gpty** motorları tarafından kullanılan OpenAI kimlik doğrulama anahtarı. `llm` tabanlı **gpt5** motoru da bu değişkeni okur, ancak `llm keys set openai` ile depolanan anahtarlar da çalışır.
+
+- GREPLE\_XLATE\_CACHE
+
+    Varsayılan önbellek stratejisini ayarlayın (["CACHE OPTIONS"](#cache-options)'e bakın).
 
 # INSTALL
 
@@ -314,7 +409,9 @@ Emacs editöründen `xlate` komutunu kullanmak için depoda bulunan `xlate.el` d
 
 ## TOOLS
 
-DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
+Kullandığınız motor için komut satırı aracını yükleyin: `llm` motoru için **gpt5**, DeepL için `deepl`, eski GPT motorları için `gpty`.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -324,7 +421,7 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - xlate tarafından konteyner işlemleri için kullanılan genel Docker çalıştırıcısı
 
@@ -355,6 +452,10 @@ DeepL ve ChatGPT için komut satırı araçlarını yüklemeniz gerekir.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     `getoptlong.sh` kütüphanesi, `xlate` komut dosyasında ve [App::dozo](https://metacpan.org/pod/App%3A%3Adozo)'de seçenek ayrıştırma için kullanılır.
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    **gpt5** motorunun LLM modellerine erişmek için kullandığı `llm` komutu.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 

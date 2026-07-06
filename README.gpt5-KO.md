@@ -4,21 +4,23 @@ App::Greple::xlate - greple용 번역 지원 모듈
 
 # SYNOPSIS
 
-    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
-
     greple -Mxlate --xlate-engine gpt5 --xlate pattern target-file
+
+    greple -Mxlate --xlate-engine deepl --xlate pattern target-file
 
 # VERSION
 
-Version 1.0202
+Version 2.00
 
 # DESCRIPTION
 
-**Greple** **xlate** 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 현재 DeepL(`deepl.pm`) 및 GPT-5.5(`gpty/gpt5.pm`) 모듈이 백엔드 엔진으로 구현되어 있습니다.
+**Greple** **xlate** 모듈은 원하는 텍스트 블록을 찾아 번역된 텍스트로 대체합니다. 기본 엔진은 [llm](https://llm.datasette.io/) 명령을 호출하는 GPT-5.5(`llm/gpt5.pm`)이며, DeepL(`deepl.pm`) 및 레거시 **gpty** 기반 엔진도 포함되어 있습니다.
 
-Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 `--xlate-engine deepl` 및 `perl` 모듈과 함께 **greple** 명령을 사용하십시오:
+번역은 파일별로 캐시되므로, 변경되지 않은 텍스트에 대해 명령을 다시 실행해도 비용이 들지 않습니다. 문서가 편집되면 변경된 단락만 API로 다시 전송됩니다. 컨텍스트 인식 엔진은 주변 번역, 변경 주변의 원시 소스 텍스트, 그리고 편집된 단락의 이전 버전도 함께 받으므로 새 번역은 기존에 확립된 문구를 유지합니다(**--xlate-context-window** 참조). 민감한 문자열은 전송 전에 숨길 수 있습니다(["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates) 참조).
 
-    greple -Mxlate --xlate-engine deepl -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
+Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번역하려면 다음과 같이 `--xlate-engine gpt5` 및 `perl` 모듈과 함께 **greple** 명령을 사용하십시오:
+
+    greple -Mxlate --xlate-engine gpt5 -Mperl --pod --re '^([\w\pP].*\n)+' --all foo.pm
 
 이 명령에서 패턴 문자열 `^([\w\pP].*\n)+` 은 영숫자 및 구두점 문자로 시작하는 연속된 줄을 의미합니다. 이 명령은 번역할 영역을 하이라이트하여 표시합니다. 옵션 **--all** 는 전체 텍스트를 생성하는 데 사용됩니다.
 
@@ -28,7 +30,7 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
     </p>
 </div>
 
-그런 다음 선택된 영역을 번역하려면 `--xlate` 옵션을 추가하세요. 그러면 원하는 섹션을 찾아 **deepl** 명령 출력으로 교체합니다.
+그런 다음 선택된 영역을 번역하려면 `--xlate` 옵션을 추가하세요. 그러면 원하는 섹션을 찾아 번역 엔진의 출력으로 교체합니다.
 
 기본적으로 원문과 번역문은 [git(1)](http://man.he.net/man1/git) 와(과) 호환되는 "충돌 마커" 형식으로 출력됩니다. `ifdef` 형식을 사용하면 [unifdef(1)](http://man.he.net/man1/unifdef) 명령으로 원하는 부분을 쉽게 얻을 수 있습니다. 출력 형식은 **--xlate-format** 옵션으로 지정할 수 있습니다.
 
@@ -79,9 +81,13 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
 마스킹에 의해 텍스트가 어떻게 변환되는지는 **--xlate-mask** 옵션으로 확인할 수 있습니다.
 
+마스킹은 마크업이 번역되지 않도록 보호합니다. 번역 서비스 자체로부터 민감한 문자열을 숨기려면 ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)를 참조하십시오. 둘 다 함께 사용할 수 있습니다.
+
 이 인터페이스는 실험적이며 향후 변경될 수 있습니다.
 
 # ANONYMIZATION AND TEMPLATES
+
+민감한 문자열은 번역 API로 전송되기 전에 숨기고 출력에서 복원할 수 있습니다. 익명화 규칙의 소스는 세 가지가 있습니다: 사전 파일(**--xlate-anonymize**), 문서 자체의 인라인 마크(**--xlate-anonymize-mark**), YAML 프런트 매터 값(**--xlate-frontmatter**). 각 문자열은 전송 중에 `<person id=1 />`와 같은 범주 태그로 대체됩니다. 은닉 대상은 API 전송에만 해당합니다. 로컬 캐시 파일에는 복원된 일반 텍스트가 저장됩니다. 실제로 무엇이 전송될지 정확히 확인하려면 **--xlate-dryrun** 를 사용하십시오.
 
 양식 문서(분기 보고서 등)의 경우, 먼저 행위자를 정의하고 본문에서 참조합니다:
 
@@ -134,13 +140,10 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
     현재 다음 엔진들이 사용 가능합니다
 
-    - **deepl**: DeepL API
-    - **gpt3**: gpt-3.5-turbo
-    - **gpt4o**: gpt-4o-mini
-
-        **gpt-4o** 의 인터페이스는 불안정하며 현재 올바르게 동작함을 보장할 수 없습니다.
-
-    - **gpt5**: gpt-5.5
+    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **deepl**: DeepL API (via the `deepl` command)
+    - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
+    - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
 
     엔진 모듈은 먼저 백엔드 네임스페이스(`llm`, 그다음 `gpty`)에서 검색한 다음, `App::Greple::xlate` 바로 아래에서 검색합니다. 따라서 `gpt5` 는 `llm` 명령을 호출하는 `App::Greple::xlate::llm::gpt5` 를 로드하는 반면, `gpt4o` 는 `App::Greple::xlate::gpty::gpt4o` 로 폴백합니다. 특정 백엔드를 강제로 사용하려면 `--xlate-setopt backend=gpty` 를 사용하십시오.
 
@@ -151,7 +154,11 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
 - **--xlate-to** (Default: `EN-US`)
 
-    대상 언어를 지정합니다. **DeepL** 엔진을 사용할 때는 `deepl languages` 명령으로 사용 가능한 언어를 얻을 수 있습니다.
+    대상 언어를 지정합니다. LLM 엔진은 모델이 이해하는 모든 언어 이름이나 코드를 허용하며, 이는 번역 프롬프트에 보간됩니다. **DeepL** 엔진을 사용할 때는 `deepl languages` 명령으로 사용 가능한 언어를 얻을 수 있습니다.
+
+- **--xlate-from** (Default: `ORIGINAL`)
+
+    `conflict`, `colon` 및 `ifdef` 출력 형식에서 원문에 사용되는 레이블입니다. **DeepL** 엔진에서는 기본값이 아닌 값도 원본 언어로 전달됩니다.
 
 - **--xlate-format**=_format_ (Default: `conflict`)
 
@@ -221,7 +228,7 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
 - **--xlate-maxlen**=_chars_ (Default: 0)
 
-    한 번에 API로 전송할 텍스트의 최대 길이를 지정합니다. 기본값은 무료 DeepL 계정 서비스 기준으로 설정되어 있습니다: API의 경우(**--xlate**) 128K, 클립보드 인터페이스(**--xlate-labor**)의 경우 5000입니다. Pro 서비스를 사용 중이라면 이 값을 변경할 수 있습니다.
+    한 번에 API로 전송할 텍스트의 최대 길이를 지정합니다. 기본값 0은 엔진 자체의 제한을 의미합니다: 무료 DeepL 계정 서비스의 경우 API(**--xlate**)는 128K, 클립보드 인터페이스(**--xlate-labor**)는 5000입니다. Pro 서비스를 사용 중이라면 이 값을 변경할 수 있습니다.
 
 - **--xlate-maxline**=_n_ (Default: 0)
 
@@ -231,7 +238,7 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
 - **--xlate-prompt**=_text_
 
-    번역 엔진에 보낼 사용자 지정 프롬프트를 지정합니다. 이 옵션은 ChatGPT 엔진(gpt3, gpt4o, gpt5)을 사용할 때만 사용할 수 있습니다. AI 모델에 특정 지시사항을 제공하여 번역 동작을 사용자 지정할 수 있습니다. 프롬프트에 `%s`가 포함되어 있으면 대상 언어 이름으로 대체됩니다.
+    번역 엔진에 보낼 사용자 지정 프롬프트를 지정합니다. 이 옵션은 LLM 엔진(`gpt3`, `gpt4o`, `gpt5`)에서 사용할 수 있지만 DeepL에서는 사용할 수 없습니다. AI 모델에 특정 지시사항을 제공하여 번역 동작을 사용자 지정할 수 있습니다. 프롬프트에 `%s`가 포함되어 있으면 대상 언어 이름으로 대체됩니다.
 
 - **--xlate-context**=_text_
 
@@ -289,9 +296,13 @@ Perl의 pod 스타일로 작성된 문서에서 일반 텍스트 블록을 번�
 
     번역에 사용할 용어집 ID를 지정합니다. 이 옵션은 DeepL 엔진을 사용할 때만 제공됩니다. 용어집 ID는 DeepL 계정에서 얻어야 하며 특정 용어의 일관된 번역을 보장합니다.
 
+- **--xlate-dryrun**
+
+    번역 API를 호출하지 말고, 대신 진행률 표시를 통해 각 페이로드를 전송될 그대로(익명화 및 마스킹 후) 표시합니다. 머신을 떠나는 내용을 확인하고 실행 비용을 추정하는 데 유용합니다.
+
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
-    STDERR 출력에서 번역 결과를 실시간으로 확인합니다.
+    STDERR 출력에서 번역 결과를 실시간으로 확인합니다. `From` 페이로드는 익명화 및 마스킹 후 전송된 그대로 표시됩니다.
 
 - **--xlate-stripe**
 
@@ -384,7 +395,11 @@ Docker와 `make` 옵션을 조합하여 Docker 환경에서 `make`를 실행할 
 
 - OPENAI\_API\_KEY
 
-    OpenAI 인증 키.
+    레거시 **gpty** 엔진에서 사용하는 OpenAI 인증 키. `llm` 기반 **gpt5** 엔진도 이 변수를 읽지만, `llm keys set openai`로 저장된 키도 작동합니다.
+
+- GREPLE\_XLATE\_CACHE
+
+    기본 캐시 전략을 설정하십시오(["CACHE OPTIONS"](#cache-options) 참조).
 
 # INSTALL
 
@@ -394,7 +409,9 @@ Docker와 `make` 옵션을 조합하여 Docker 환경에서 `make`를 실행할 
 
 ## TOOLS
 
-DeepL과 ChatGPT용 명령줄 도구를 설치해야 합니다.
+사용하는 엔진용 명령줄 도구를 설치하십시오: **gpt5** 엔진에는 `llm`, DeepL에는 `deepl`, 레거시 GPT 엔진에는 `gpty`.
+
+[https://llm.datasette.io/](https://llm.datasette.io/)
 
 [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
@@ -404,7 +421,7 @@ DeepL과 ChatGPT용 명령줄 도구를 설치해야 합니다.
 
 ## MODULES
 
-[App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl), [App::Greple::xlate::gpty::gpt5](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Agpty%3A%3Agpt5)
+[App::Greple::xlate::llm](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Allm), [App::Greple::xlate::deepl](https://metacpan.org/pod/App%3A%3AGreple%3A%3Axlate%3A%3Adeepl)
 
 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo) - 컨테이너 작업을 위해 xlate에서 사용하는 범용 Docker 실행기
 
@@ -435,6 +452,10 @@ DeepL과 ChatGPT용 명령줄 도구를 설치해야 합니다.
 - [https://github.com/tecolicom/getoptlong](https://github.com/tecolicom/getoptlong)
 
     `getoptlong.sh` 라이브러리는 `xlate` 스크립트와 [App::dozo](https://metacpan.org/pod/App%3A%3Adozo)에서 옵션 파싱에 사용됩니다.
+
+- [https://llm.datasette.io/](https://llm.datasette.io/)
+
+    **gpt5** 엔진이 LLM 모델에 액세스하는 데 사용하는 `llm` 명령.
 
 - [https://github.com/DeepLcom/deepl-python](https://github.com/DeepLcom/deepl-python)
 
