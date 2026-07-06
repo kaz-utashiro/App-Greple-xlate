@@ -501,7 +501,7 @@ C<-Mupdate> 모듈을 사용하여 B<greple> 명령의 결과에 따라 파일�
 
 =item * L<https://github.com/tecolicom/getoptlong>
 
-C<getoptlong.sh> - C<xlate> 스크립트 및 L<App::dozo>에서 옵션 구문 분석에 사용되는 <m id=5 /> 라이브러리.
+C<getoptlong.sh> - C<xlate> 스크립트 및 L<App::dozo>에서 옵션 구문 분석에 사용되는 라이브러리.
 
 =item * L<https://llm.datasette.io/>
 
