@@ -63,7 +63,7 @@ sub _progress {
 ##
 sub build_system {
     my $param = shift;
-    my $prompt = $App::Greple::xlate::prompt || opt('prompt') || $param->{prompt};
+    my $prompt = opt('prompt') || $param->{prompt};
     my @vars = do {
 	if ($prompt =~ /%s/) {
 	    $LANGNAME{$param->{lang_to}} // die "$param->{lang_to}: unknown lang.\n";
@@ -72,7 +72,7 @@ sub build_system {
 	}
     };
     my $system = sprintf($prompt, @vars);
-    if (my @contexts = @App::Greple::xlate::contexts) {
+    if (my @contexts = @{$opt{contexts}}) {
 	$system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
     }
     $system;
@@ -89,4 +89,3 @@ sub llm_command {
 }
 
 1;
-

@@ -4,7 +4,7 @@ use utf8;
 
 use Test::More;
 
-use App::Greple::xlate;
+use App::Greple::xlate qw(%opt);
 use App::Greple::xlate::llm;
 
 # quiet progress output during tests
@@ -25,15 +25,19 @@ subtest 'build_system' => sub {
 	 '%s expands to language name');
 
     {
-	local @App::Greple::xlate::contexts = ('background info');
+	my @saved = @{$opt{contexts}};
+	@{$opt{contexts}} = ('background info');
 	my $system = App::Greple::xlate::llm::build_system(\%param);
 	like($system, qr/Translation context:\n- background info/,
 	     '--xlate-context is appended');
+	@{$opt{contexts}} = @saved;
     }
     {
-	local $App::Greple::xlate::prompt = "Custom prompt.";
+	my $saved = ${$opt{prompt}};
+	${$opt{prompt}} = "Custom prompt.";
 	my $system = App::Greple::xlate::llm::build_system(\%param);
 	is($system, "Custom prompt.", '--xlate-prompt replaces the default');
+	${$opt{prompt}} = $saved;
     }
     {
 	my %p = (%param, lang_to => 'XX');
@@ -53,4 +57,3 @@ subtest 'llm_command' => sub {
 };
 
 done_testing;
-
