@@ -188,4 +188,16 @@ subtest 'warn when front matter runs into the body' => sub {
          'straddle warning printed');
 };
 
+subtest 'reordered expressions accepted (multiset check)' => sub {
+    # 翻訳先の語順に合わせた式の並べ替えは正当なので許容する
+    my $doc = "$dir/swap.txt";
+    write_file($doc, "both {{ 報告者 }} and {{ 発注会社 }} appear here\n");
+    write_file("$doc.xlate-gpt5-EN-US.json", '');
+    local $ENV{LLM_STUB_MODE} = 'swap';
+    my $r = run_xlate($doc, '--xlate-template=');
+    is($r->status, 0, 'run succeeds despite reordering');
+    like($r->stdout, qr/\{\{ 発注会社 \}\}.*\{\{ 報告者 \}\}/s,
+         'expressions come back reordered');
+};
+
 done_testing;

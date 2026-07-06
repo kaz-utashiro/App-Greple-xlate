@@ -9,6 +9,8 @@
 ##   nomodel - prompt call fails; "llm models" output lacks gpt-5.5
 ##   short   - drop the last element from the response array
 ##   badjson - return non-JSON text
+##   swap    - swap the first two {{ ... }} expressions in each element
+##             (mimics legitimate word-order changes in translation)
 ## LLM_STUB_LOG: append {"argv":[...],"stdin":"..."} JSON line per call
 ##
 
@@ -63,5 +65,14 @@ sub transform {
     } split /(<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ *\/>)/, $s;
 }
 my @out = map { transform($_) } @$list;
+if ($mode eq 'swap') {
+    for (@out) {
+        my @e = /(\{\{.*?\}\})/g or next;
+        next if @e < 2;
+        s/\Q$e[0]\E/\0/;
+        s/\Q$e[1]\E/$e[0]/;
+        s/\0/$e[1]/;
+    }
+}
 pop @out if $mode eq 'short';
 print JSON::PP->new->canonical->encode(\@out), "\n";

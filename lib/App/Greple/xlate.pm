@@ -439,7 +439,9 @@ accumulate across files).
 Treat template expressions (default: Jinja2 C<{{ ... }}>,
 C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the
 model to copy them unchanged and verify, per block, that the response
-contains exactly the same expression sequence.  A broken expression
+contains exactly the same expressions, each the same number of times.
+Their order may change, since translation legitimately reorders them
+to follow the target language word order.  A broken expression
 aborts the run; the cache is checkpointed and frozen, so nothing paid
 for is lost.
 
@@ -1096,8 +1098,11 @@ sub cache_update {
         _progress({label => "To"}, @to);
         if (defined(my $tre = template_regex())) {
             for my $i (0 .. $#pristine) {
-                my @want = $pristine[$i] =~ /($tre)/g;
-                my @got  = ($to[$i] // '') =~ /($tre)/g;
+                # Translation may legitimately reorder expressions to
+                # follow the target language word order; require the
+                # same multiset, not the same sequence.
+                my @want = sort $pristine[$i] =~ /($tre)/g;
+                my @got  = sort +($to[$i] // '') =~ /($tre)/g;
                 if (@want != @got
                     or grep { $want[$_] ne $got[$_] } 0 .. $#want) {
                     die sprintf("Template expressions broken in response:\n" .
