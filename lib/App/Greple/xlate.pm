@@ -138,6 +138,41 @@ option.
 
 This interface is experimental and subject to change in the future.
 
+=head1 ANONYMIZATION AND TEMPLATES
+
+For form documents (quarterly reports and the like), define the
+actors up front and reference them in the body:
+
+    ---
+    報告者: 山田太郎
+    発注会社: アクメ株式会社
+    ---
+    本件について {{ 報告者 }} が調査を行った。
+
+Translate the template once per language with C<--xlate-template>
+(and C<--xlate-frontmatter> when the values are kept in the file),
+then render each case with B<pandoc-embedz> standalone mode --
+values under C<global:> in an external config never reach the
+translation API at all:
+
+    greple -Mxlate --xlate --xlate-engine=gpt5 --xlate-to=EN-US \
+           --xlate-template report-template.md > report-template.EN.md
+    pandoc-embedz --standalone report-template.EN.md \
+                  -c case-123.yaml -o report-123.EN.md < /dev/null
+
+For inline marks, providing a macro definition config makes the same
+translated template render either the real names or a redacted
+version:
+
+    # macros.yaml           # macros-redacted.yaml
+    preamble: |             preamble: |
+      {% macro person(name) %}{{ name }}{% endmacro %}
+                              {% macro person(name) %}(関係者){% endmacro %}
+
+Exclude embedz blocks from translation when a document contains them:
+
+    --exclude '^```embedz\n(?s:.*?)^```\n'
+
 =head1 OPTIONS
 
 =over 7
@@ -343,6 +378,60 @@ and edited paragraphs keep the previous issue's wording.  The seed
 is used only when the target cache is empty; otherwise it is
 ignored with a warning.  With the default C<--xlate-cache=auto>, specifying a seed also
 implies creating the new document's cache file.
+
+=item B<--xlate-anonymize>=I<file>
+
+Anonymize sensitive strings before they are sent to the translation
+API, and restore them in the output.  The dictionary file gives one
+entry per item: in JSON (canonical, machine-generatable)
+
+    [ { "category": "person",  "text": "山田太郎" },
+      { "category": "company", "regex": "アクメ(株式会社)?" } ]
+
+or in a simple line format (C<category pattern>, C</.../> for regex).
+Each item is replaced by a category tag such as C<< <person id=1 /> >>;
+the same string always gets the same tag, so the model can keep track
+of who is who.  Unknown JSON fields are ignored, so generators (e.g. a
+local LLM extracting entities) may add their own annotations.
+Category C<lit> is reserved.  Local cache files still store restored
+plain text: the concealment target is API transmission only.
+
+=item B<--xlate-anonymize-mark>[=I<regex>]
+
+Collect anonymization entries from inline marks in the document
+itself.  Mark the first occurrence like C<{{ person("山田太郎") }}>
+and every occurrence of the string document-wide is anonymized.  The
+mark itself stays in the source and in the translation, so a document
+can also be processed by a Jinja2-style macro processor (define the
+C<person> macro to print or redact the name).  A custom I<regex> must
+contain C<< (?<category>...) >> and C<< (?<text>...) >> named captures.
+
+Note that with an optional-value option like this, a following
+file argument would be taken as the value: write
+C<--xlate-anonymize-mark=> (with a trailing C<=>) when using the
+default notation.
+
+=item B<--xlate-template>[=I<regex>]
+
+Treat template expressions (default: Jinja2 C<{{ ... }}>,
+C<{% ... %}>, C<{# ... #}>) as opaque placeholders: instruct the
+model to copy them unchanged and verify, per block, that the response
+contains exactly the same expression sequence.  A broken expression
+aborts the run; the cache is checkpointed and frozen, so nothing paid
+for is lost.
+
+Note that with an optional-value option like this, a following
+file argument would be taken as the value: write
+C<--xlate-template=> (with a trailing C<=>) when using the
+default notation.
+
+=item B<--xlate-frontmatter>
+
+Treat a leading C<---> ... C<---> block as YAML front matter: exclude
+it from translation and from the phase-2 context slices, and add its
+flat C<key: value> values to the anonymization rules (category
+C<var>) as a safety net.  With multiple input files the collected
+values accumulate (erring on the side of concealment).
 
 =item B<--xlate-glossary>=I<glossary>
 
