@@ -329,6 +329,10 @@ list structure, captions) and, when available, the previous version
 of the changed text recovered from the cache, so that unchanged
 wording is preserved.  Set to 0 to disable context-aware translation
 entirely.
+Note that each changed region is translated in its own API call and
+the context can add up to about 8000 characters to the system
+prompt, so context-aware translation trades some extra cost for
+consistency.
 
 =item B<--xlate-cache-seed>=I<file>
 
@@ -899,21 +903,34 @@ sub cache_update {
     _progress({label => "From"}, @from);
     return @from if $dryrun;
 
-    $maskobj->mask(@from) if $maskobj;
-    my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
-    my @to = do {
-        local $call_context = $context;
-        map { s/ +$//mgr } &XLATE(@from);
-    };
-    chop @to[@chop];
-    $maskobj->unmask(@to)->reset if $maskobj;
+    my @result = eval {
+        $maskobj->mask(@from) if $maskobj;
+        my @chop = grep { $from[$_] =~ s/(?<!\n)\z/\n/ } keys @from;
+        my @to = do {
+            local $call_context = $context;
+            map { s/ +$//mgr } &XLATE(@from);
+        };
+        chop @to[@chop];
+        $maskobj->unmask(@to)->reset if $maskobj;
 
-    _progress({label => "To"}, @to);
-    die "Unmatched response:\n@to" if @from != @to;
-    @cache{@{$region->{texts}}} = @to;
-    if (my $obj = tied %cache) {
-        $obj->checkpoint;
+        _progress({label => "To"}, @to);
+        die "Unmatched response:\n@to" if @from != @to;
+        @cache{@{$region->{texts}}} = @to;
+        if (my $obj = tied %cache) {
+            $obj->checkpoint;
+        }
+        @to;
+    };
+    if ($@) {
+        # Preserve everything already paid for (including old pairs)
+        # and freeze the cache so global destruction cannot purge it.
+        if (my $obj = tied %cache) {
+            $obj->checkpoint;
+            $obj->readonly = 1;
+        }
+        die $@;
     }
+    @result;
 }
 
 sub fold_lines {
@@ -995,6 +1012,9 @@ sub begin {
         }
         if (defined $cache_seed) {
             push @opt, seed => $cache_seed;
+        }
+        if ($dryrun) {
+            push @opt, readonly => 1;
         }
         require App::Greple::xlate::Cache;
         tie %cache, 'App::Greple::xlate::Cache', $file, @opt;

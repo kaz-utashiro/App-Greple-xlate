@@ -50,8 +50,10 @@ my %default = (
     updated => 0,	# number of updated entries
     format => 'list',	# saving cache file format
     old_pos => undef,   # memoized key-to-position map of saved_order
+    # NOTE: reference-valued defaults must get fresh copies in new()
     seed => undef,      # seed cache file for a fresh cache
     seeded => 0,        # true when the seed was actually loaded
+    readonly => 0,   # suppress all cache file writes
 );
 
 for my $key (keys %default) {
@@ -180,6 +182,7 @@ sub old_entries_slice {
 
 sub update {
     my $obj = shift;
+    return if $obj->readonly;
     my $file = $obj->name || return;
     if (not $obj->force_update and $obj->updated == 0) {
         # accumulate: nothing changed, disk content is already right.
@@ -195,10 +198,22 @@ sub update {
             $obj->access($k);
         }
     }
+    # A key is "used" when it was accessed this run, even if its value
+    # was never FETCHed (e.g. the run died before the output callback
+    # could read it back).  Adopt such entries so they survive.
+    for my $k (grep { $obj->accessed->{$_} } keys %{$obj->saved}) {
+        $obj->current->{$k} //= delete $obj->saved->{$k};
+    }
     while (my($k, $v) = each %{$obj->current}) {
         delete $obj->current->{$k} if not defined $v;
     }
-    %{$obj->current} > 0 or return;
+    if (not %{$obj->current}) {
+        # A seeded cache may end its run without any access (e.g.
+        # --xlate-cache=create dies right after setup); persist the
+        # seed content instead of leaving the created file empty.
+        return $obj->checkpoint if $obj->seeded;
+        return;
+    }
     my $json_obj //= &json; # this is necessary to be called from DESTROY
     if (CORE::open my $fh, '>', $file) {
         my $data = $obj->format eq 'list' ? $obj->list_data : $obj->hash_data;
@@ -216,8 +231,12 @@ sub update {
 ## batch so that an interrupted run does not lose paid API results.
 ## The final write (update) keeps the purging semantics.
 ##
+## Keys stored without going through the tie interface (no access())
+## are not visible to checkpoint.
+##
 sub checkpoint {
     my $obj = shift;
+    return if $obj->readonly;
     my $file = $obj->name || return;
     my(@list, %done);
     for my $key (@{$obj->saved_order}) {
