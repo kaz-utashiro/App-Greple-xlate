@@ -26,6 +26,11 @@ model (llm 0.31 or later ships it built in; check with
 C<llm models | grep gpt-5.5>).  If the call fails, this module
 inspects the environment and reports what is missing.
 
+This engine is context-aware: when re-translating changed blocks it
+receives the surrounding source text, neighboring translation pairs,
+and the previous version of the changed text, controlled by the
+B<--xlate-context-window> option of L<App::Greple::xlate>.
+
 =head1 CONFIGURATION
 
 This engine uses the following defaults:

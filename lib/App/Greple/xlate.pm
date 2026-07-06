@@ -319,6 +319,27 @@ engine.  This option can be used multiple times to provide multiple
 context strings.  The context information helps the translation engine
 understand the background and produce more accurate translations.
 
+=item B<--xlate-context-window>=I<n>
+
+(Context-aware engines only, e.g. C<gpt5> on the llm backend)
+Number of surrounding translated blocks passed as reference context
+when re-translating changed blocks (default 2).  The context also
+includes the raw source text around the changed region (headings,
+list structure, captions) and, when available, the previous version
+of the changed text recovered from the cache, so that unchanged
+wording is preserved.  Set to 0 to disable context-aware translation
+entirely.
+
+=item B<--xlate-cache-seed>=I<file>
+
+Initialize a new document's cache from another document's cache
+file.  Useful for periodic reports: seed the new issue's cache with
+the previous issue's, so unchanged paragraphs are not re-translated
+and edited paragraphs keep the previous issue's wording.  The seed
+is used only when the target cache is empty; otherwise it is
+ignored with a warning. With the default C<--xlate-cache=auto>, specifying a seed also
+implies creating the new document's cache file.
+
 =item B<--xlate-glossary>=I<glossary>
 
 Specify a glossary ID to be used for translation.  This option is only
