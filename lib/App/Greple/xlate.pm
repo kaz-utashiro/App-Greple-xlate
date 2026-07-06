@@ -606,6 +606,7 @@ our %opt = (
     mask     => \(our $mask),
     maskfile => \(our $maskfile),
     glossary => \(our $glossary),
+    backend  => \(our $engine_backend = ''),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
@@ -673,15 +674,17 @@ sub setup {
     }
     if ($xlate_engine) {
 	# Resolve the engine module.  Backend-based engines live under a
-	# backend namespace (e.g. gpty::gpt5); others live directly under
-	# App::Greple::xlate (e.g. deepl, null).  Try the backend namespace
-	# FIRST so that --xlate-engine=gpt5 binds to gpty::gpt5 even if a
-	# stale top-level App::Greple::xlate::gpt5 lingers in @INC from an
-	# older install.  This also makes the future llm backend selectable
-	# the same way.
-	my $backend = 'gpty';
+	# backend namespace (e.g. llm::gpt5, gpty::gpt5); others live
+	# directly under App::Greple::xlate (e.g. deepl, null).  Try
+	# backend namespaces FIRST, in order of preference, so that
+	# --xlate-engine=gpt5 binds to llm::gpt5 even if a stale
+	# top-level App::Greple::xlate::gpt5 lingers in @INC from an
+	# older install.  Use --xlate-setopt backend=NAME to force a
+	# specific backend (e.g. backend=gpty for comparison with the
+	# old gpty engine).
+	my @backend = length($engine_backend // '') ? $engine_backend : qw(llm gpty);
 	my $mod;
-	for my $cand (__PACKAGE__ . "::$backend\::$xlate_engine",
+	for my $cand ((map __PACKAGE__ . "::$_\::$xlate_engine", @backend),
 		      __PACKAGE__ . "::$xlate_engine") {
 	    if (eval "require $cand; 1") { $mod = $cand; last }
 	}
