@@ -93,6 +93,75 @@ sub add_escape_rule {
     $obj;
 }
 
+use JSON;
+
+our $DEFAULT_MARK =
+    q[\{\{\s*(?<category>[a-z][a-z0-9_]*)\(\s*(?<q>["'])(?<text>.+?)\k<q>\s*\)\s*\}\}];
+
+sub _check_category {
+    my $tag = shift;
+    die "lit: reserved category name.\n" if $tag eq 'lit';
+    $tag =~ /\A[a-z][a-z0-9_]*\z/
+        or die "$tag: invalid category name.\n";
+    $tag;
+}
+
+sub load_anonymize_file {
+    my($obj, $path) = @_;
+    open my $fh, '<:encoding(utf8)', $path or die "$path: $!\n";
+    my $data = do { local $/; <$fh> };
+    if ($data =~ /\A\s*\[/) {
+        my $list = JSON->new->decode($data);
+        ref $list eq 'ARRAY' or die "$path: JSON array expected.\n";
+        for my $e (@$list) {
+            ref $e eq 'HASH' or die "$path: object expected.\n";
+            my $cat = _check_category($e->{category}
+                // die "$path: category missing.\n");
+            my $has_text  = defined $e->{text};
+            my $has_regex = defined $e->{regex};
+            die "$path: both text and regex given.\n"
+                if $has_text and $has_regex;
+            die "$path: either text or regex required.\n"
+                unless $has_text or $has_regex;
+            $obj->add_rule($cat,
+                           $has_text ? quotemeta($e->{text}) : $e->{regex});
+        }
+    } else {
+        my @lines = map s/\\(?=\n)//gr, split /(?<!\\)\n/, $data;
+        for my $line (@lines) {
+            next if $line =~ /^\s*(#|$)/;
+            my($cat, $pat) = $line =~ /^\s*(\S+)\s+(.*?)\s*$/
+                or die "$path: unparsable line: $line\n";
+            _check_category($cat);
+            if ($pat =~ m{\A/(.*)/\z}s) {
+                $obj->add_rule($cat, $1);
+            } else {
+                $obj->add_rule($cat, quotemeta($pat));
+            }
+        }
+    }
+    $obj;
+}
+
+sub extract_marks {
+    my($text, $regex) = @_;
+    index($regex, '(?<category>') >= 0 and index($regex, '(?<text>') >= 0
+        or die "mark regex needs (?<category>...) and (?<text>...) named captures.\n";
+    my(%cat, @rules);
+    while ($text =~ /$regex/g) {
+        my($cat, $str) = ($+{category}, $+{text});
+        _check_category($cat);
+        if (exists $cat{$str}) {
+            $cat{$str} eq $cat
+                or die "\"$str\": conflicting categories ($cat{$str} vs $cat).\n";
+            next;
+        }
+        $cat{$str} = $cat;
+        push @rules, [ $cat, quotemeta($str) ];
+    }
+    \@rules;
+}
+
 sub _all_rules {
     my $obj = shift;
     (@{$obj->{RULES}}, @{$obj->{FILERULES}});
