@@ -15,7 +15,7 @@ END
 
 sub probe {
     Command::Run->new->command($^X, '-Ilib', '-e', $probe, @_)
-	->run(stderr => 'capture');
+        ->run(stderr => 'capture');
 }
 
 my $r = probe('gpt5');

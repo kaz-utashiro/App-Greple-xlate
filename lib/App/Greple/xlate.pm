@@ -625,32 +625,32 @@ our %formatter = (
     xtxt => undef,
     none => undef,
     conflict => sub {
-	join '',
-	    "<<<<<<< $lang_from\n",
-	    $_[0],
-	    "=======\n",
-	    $_[1],
-	    ">>>>>>> $lang_to\n";
+        join '',
+            "<<<<<<< $lang_from\n",
+            $_[0],
+            "=======\n",
+            $_[1],
+            ">>>>>>> $lang_to\n";
     },
     cm => 'conflict',
     colon => sub {
-	my $colon = ':' x $colon_count;
-	join '',
-	    "$colon $lang_from\n",
-	    $_[0],
-	    "$colon\n",
-	    "$colon $lang_to\n",
-	    $_[1],
-	    "$colon\n";
+        my $colon = ':' x $colon_count;
+        join '',
+            "$colon $lang_from\n",
+            $_[0],
+            "$colon\n",
+            "$colon $lang_to\n",
+            $_[1],
+            "$colon\n";
     },
     ifdef => sub {
-	join '',
-	    "#ifdef $lang_from\n",
-	    $_[0],
-	    "#endif\n",
-	    "#ifdef $lang_to\n",
-	    $_[1],
-	    "#endif\n";
+        join '',
+            "#ifdef $lang_from\n",
+            $_[0],
+            "#endif\n",
+            "#ifdef $lang_to\n",
+            $_[1],
+            "#endif\n";
     },
     space    => sub { join("\n", @_) },
     'space+' => sub { join("\n", @_) . "\n" },
@@ -671,44 +671,44 @@ my $maskobj;
 sub setup {
     return if state $once_called++;
     if (defined $cache_method) {
-	if ($cache_method eq '') {
-	    $cache_method = 'auto';
-	}
-	if ($cache_method =~ /^(no|never)/i) {
-	    $cache_method = '';
-	}
+        if ($cache_method eq '') {
+            $cache_method = 'auto';
+        }
+        if ($cache_method =~ /^(no|never)/i) {
+            $cache_method = '';
+        }
     }
     if ($xlate_engine) {
-	# Resolve the engine module.  Backend-based engines live under a
-	# backend namespace (e.g. llm::gpt5, gpty::gpt5); others live
-	# directly under App::Greple::xlate (e.g. deepl, null).  Try
-	# backend namespaces FIRST, in order of preference, so that
-	# --xlate-engine=gpt5 binds to llm::gpt5 even if a stale
-	# top-level App::Greple::xlate::gpt5 lingers in @INC from an
-	# older install.  Use --xlate-setopt backend=NAME to force a
-	# specific backend (e.g. backend=gpty for comparison with the
-	# old gpty engine).
-	my @backend = length($engine_backend // '') ? $engine_backend : qw(llm gpty);
-	my $mod;
-	for my $cand ((map __PACKAGE__ . "::$_\::$xlate_engine", @backend),
-		      __PACKAGE__ . "::$xlate_engine") {
-	    if (eval "require $cand; 1") { $mod = $cand; last }
-	}
-	$mod or die "Engine $xlate_engine is not available.\n";
-	$mod->import;
-	no strict 'refs';
-	${"$mod\::lang_from"} = $lang_from;
-	${"$mod\::lang_to"} = $lang_to;
-	*XLATE = \&{"$mod\::xlate"};
-	if (not defined &XLATE) {
-	    die "No \"xlate\" function in $mod.\n";
-	}
+        # Resolve the engine module.  Backend-based engines live under a
+        # backend namespace (e.g. llm::gpt5, gpty::gpt5); others live
+        # directly under App::Greple::xlate (e.g. deepl, null).  Try
+        # backend namespaces FIRST, in order of preference, so that
+        # --xlate-engine=gpt5 binds to llm::gpt5 even if a stale
+        # top-level App::Greple::xlate::gpt5 lingers in @INC from an
+        # older install.  Use --xlate-setopt backend=NAME to force a
+        # specific backend (e.g. backend=gpty for comparison with the
+        # old gpty engine).
+        my @backend = length($engine_backend // '') ? $engine_backend : qw(llm gpty);
+        my $mod;
+        for my $cand ((map __PACKAGE__ . "::$_\::$xlate_engine", @backend),
+                      __PACKAGE__ . "::$xlate_engine") {
+            if (eval "require $cand; 1") { $mod = $cand; last }
+        }
+        $mod or die "Engine $xlate_engine is not available.\n";
+        $mod->import;
+        no strict 'refs';
+        ${"$mod\::lang_from"} = $lang_from;
+        ${"$mod\::lang_to"} = $lang_to;
+        *XLATE = \&{"$mod\::xlate"};
+        if (not defined &XLATE) {
+            die "No \"xlate\" function in $mod.\n";
+        }
     }
     if (my $pat = opt('mask')) {
-	$maskobj = App::Greple::xlate::Mask->new(pattern => $pat);
+        $maskobj = App::Greple::xlate::Mask->new(pattern => $pat);
     }
     if (my $patfile = opt('maskfile')) {
-	$maskobj = App::Greple::xlate::Mask->new(file => $patfile);
+        $maskobj = App::Greple::xlate::Mask->new(file => $patfile);
     }
 }
 
@@ -718,17 +718,17 @@ sub postgrep {
     my $grep = shift;
     my @miss;
     for my $r ($grep->result) {
-	my($b, @match) = @$r;
-	for my $m (@match) {
-	    my($s, $e, $i) = @$m;
-	    my $key = App::Greple::xlate::Text
-		->new($grep->cut(@$m), paragraph => ($i % 2 == 0))
-		->normalized;
-	    if (not exists $cache{$key}) {
-		$cache{$key} = undef;
-		push @miss, $key;
-	    }
-	}
+        my($b, @match) = @$r;
+        for my $m (@match) {
+            my($s, $e, $i) = @$m;
+            my $key = App::Greple::xlate::Text
+                ->new($grep->cut(@$m), paragraph => ($i % 2 == 0))
+                ->normalized;
+            if (not exists $cache{$key}) {
+                $cache{$key} = undef;
+                push @miss, $key;
+            }
+        }
     }
     cache_update(@miss) if @miss;
 }
@@ -738,13 +738,13 @@ sub _progress {
     opt('progress') or return;
     if (my $label = $opt->{label}) { print STDERR "[xlate.pm] $label:\n" }
     for (my @s = @_) {
-	my $i =()= /^/mg;
-	my @m = ($i == 1 ? '╶' : '│') x $i ;
-	@m[0,-1] = qw(┌ └) if $i > 1;
-	s/^/sprintf "%7s ", shift(@m)/mge;
-	s/(?<!\n)\z/\n/;
-	s/( +)$/"␣" x length($1)/mge;
-	print STDERR $_;
+        my $i =()= /^/mg;
+        my @m = ($i == 1 ? '╶' : '│') x $i ;
+        @m[0,-1] = qw(┌ └) if $i > 1;
+        s/^/sprintf "%7s ", shift(@m)/mge;
+        s/(?<!\n)\z/\n/;
+        s/( +)$/"␣" x length($1)/mge;
+        print STDERR $_;
     }
 }
 
@@ -768,11 +768,11 @@ sub cache_update {
 
 sub fold_lines {
     state $fold = Text::ANSI::Fold->new(
-	width     => $fold_width,
-	boundary  => 'word',
-	linebreak => LINEBREAK_ALL,
-	runin     => 4,
-	runout    => 4,
+        width     => $fold_width,
+        boundary  => 'word',
+        linebreak => LINEBREAK_ALL,
+        runin     => 4,
+        runout    => 4,
     );
     local $_ = shift;
     s/(.+)/join "\n", $fold->text($1)->chops/ge;
@@ -783,14 +783,14 @@ sub xlate {
     my $param = { @_ };
     my($index, $text) = $param->@{qw(index match)};
     my $obj = App::Greple::xlate::Text->new($text,
-					    paragraph => ($index % 2 == 0));
+                                            paragraph => ($index % 2 == 0));
     my $s = $cache{$obj->normalized} // "!!! TRANSLATION ERROR !!!\n";
     $obj->unstrip($s);
     $s = fold_lines $s if $fold_line;
     if (state $formatter = $formatter{$output_format}) {
-	return $formatter->($text, $s);
+        return $formatter->($text, $s);
     } else {
-	return $s;
+        return $s;
     }
 }
 sub callback { goto &xlate }
@@ -798,22 +798,22 @@ sub callback { goto &xlate }
 sub mask_string {
     my($s) = +{ @_ }->{match};
     if ($maskobj) {
-	$maskobj->mask($s);
+        $maskobj->mask($s);
     }
     $s;
 }
 
 sub cache_file {
     my $file = sprintf("%s.xlate-%s-%s.json",
-		       $current_file, $xlate_engine, $lang_to);
+                       $current_file, $xlate_engine, $lang_to);
     if ($cache_method eq 'auto') {
-	-f $file ? $file : undef;
+        -f $file ? $file : undef;
     } else {
-	if ($cache_method and -f $current_file) {
-	    $file;
-	} else {
-	    undef;
-	}
+        if ($cache_method and -f $current_file) {
+            $file;
+        } else {
+            undef;
+        }
     }
 }
 
@@ -823,26 +823,26 @@ sub begin {
     $current_file = delete $args{&::FILELABEL} or die;
     s/\z/\n/ if /.\z/;
     if (not defined $xlate_engine) {
-	die "Select translation engine.\n";
+        die "Select translation engine.\n";
     }
     if ($output_format =~ /^(:+)$/) {
-	$colon_count = length($1);
-	$output_format = 'colon';
+        $colon_count = length($1);
+        $output_format = 'colon';
     }
     if (my $file = cache_file) {
-	my @opt;
-	if ($cache_method =~ /create|clear/i) {
-	    push @opt, clear => 1;
-	}
-	if ($cache_method =~ /accumulate/i) {
-	    push @opt, accumulate => 1;
-	}
-	if ($force_update) {
-	    push @opt, force_update => 1;
-	}
-	require App::Greple::xlate::Cache;
-	tie %cache, 'App::Greple::xlate::Cache', $file, @opt;
-	die "skip $current_file" if $cache_method eq 'create';
+        my @opt;
+        if ($cache_method =~ /create|clear/i) {
+            push @opt, clear => 1;
+        }
+        if ($cache_method =~ /accumulate/i) {
+            push @opt, accumulate => 1;
+        }
+        if ($force_update) {
+            push @opt, force_update => 1;
+        }
+        require App::Greple::xlate::Cache;
+        tie %cache, 'App::Greple::xlate::Cache', $file, @opt;
+        die "skip $current_file" if $cache_method eq 'create';
     }
 }
 
@@ -854,9 +854,9 @@ sub end {
 
 sub set {
     while (my($key, $val) = splice @_, 0, 2) {
-	next if $key eq &::FILELABEL;
-	die "$key: Invalid option.\n" if not exists $opt{$key};
-	opt($key) = $val;
+        next if $key eq &::FILELABEL;
+        die "$key: Invalid option.\n" if not exists $opt{$key};
+        opt($key) = $val;
     }
 }
 
@@ -889,18 +889,18 @@ option default --need=1 --no-regioncolor --cm=/544E,/454E,/533E,/353E
 option --xlate-setopt --prologue &__PACKAGE__::set($<shift>)
 
 option --xlate-color \
-	--postgrep &__PACKAGE__::postgrep \
-	--callback &__PACKAGE__::callback \
-	--begin    &__PACKAGE__::begin \
-	--end      &__PACKAGE__::end
+        --postgrep &__PACKAGE__::postgrep \
+        --callback &__PACKAGE__::callback \
+        --begin    &__PACKAGE__::begin \
+        --end      &__PACKAGE__::end
 option --xlate --xlate-color --color=never
 option --xlate-fold --xlate --xlate-fold-line
 option --xlate-labor --xlate --deepl-method=clipboard
 option --xlabor --xlate-labor
 
 option --xlate-mask \
-	--begin    &__PACKAGE__::begin \
-	--callback &__PACKAGE__::mask_string
+        --begin    &__PACKAGE__::begin \
+        --callback &__PACKAGE__::mask_string
 
 option --cache-clear --xlate-cache=clear
 
@@ -915,13 +915,13 @@ option --xlate-stripe --xlate-stripe-auto
 option --xlate-stripe-light -Mstripe
 option --xlate-stripe-dark  -Mstripe::config=darkmode
 option --xlate-stripe-auto \
-	-Mtermcolor::bg(light=-Mstripe,dark=-Mstripe::config=darkmode)
+        -Mtermcolor::bg(light=-Mstripe,dark=-Mstripe::config=darkmode)
 
 option --lineify-cm \
-	-Mxlate::Filter --of &lineify_cm
+        -Mxlate::Filter --of &lineify_cm
 
 option --lineify-colon \
-	-Mxlate::Filter --of &lineify_colon
+        -Mxlate::Filter --of &lineify_colon
 
 #  LocalWords:  deepl ifdef unifdef Greple greple perl DeepL ChatGPT
 #  LocalWords:  gpt html img src xlabor

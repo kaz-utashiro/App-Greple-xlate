@@ -125,8 +125,8 @@ my %param = (
     model   => 'gpt-5.5',
     max     => 3000,
     options => [ [ reasoning_effort => 'none' ],
-		 [ verbosity        => 'low'  ],
-		 [ max_tokens       => 16000  ] ],
+                 [ verbosity        => 'low'  ],
+                 [ max_tokens       => 16000  ] ],
     prompt  => <<'END',
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.
@@ -151,7 +151,7 @@ sub initialize {
 
 sub xlate {
     App::Greple::xlate::llm::xlate_with(
-	{ %param, lang_from => $lang_from, lang_to => $lang_to }, @_);
+        { %param, lang_from => $lang_from, lang_to => $lang_to }, @_);
 }
 
 1;

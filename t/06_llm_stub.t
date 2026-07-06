@@ -17,14 +17,14 @@ sub run_stub {
     my %args = @_;
     local %ENV = (%ENV, %{$args{env} // {}});
     Command::Run->new->command($stub, @{$args{argv} // []})
-	->run(stdin => $args{stdin} // '', stderr => 'capture');
+        ->run(stdin => $args{stdin} // '', stderr => 'capture');
 }
 
 subtest 'ok mode' => sub {
     my $log = "$tmpdir/ok.log";
     my $r = run_stub(argv  => ['-m', 'test-model'],
-		     stdin => q(["hello\n"]),
-		     env   => { LLM_STUB_LOG => $log });
+                     stdin => q(["hello\n"]),
+                     env   => { LLM_STUB_LOG => $log });
     is($r->{result}, 0, 'exit status 0');
     is_deeply(JSON::PP->new->decode($r->{data}), ["HELLO\n"], 'uppercased array');
     open my $fh, '<', $log or die "$log: $!";

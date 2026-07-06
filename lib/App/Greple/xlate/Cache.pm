@@ -79,16 +79,16 @@ sub get {
 sub set {
     my $obj = shift;
     pairmap {
-	if (ref $a eq 'ARRAY' and ref $b eq 'ARRAY') {
-	    @$a == @$b or die;
-	    $obj->set(mesh $a, $b);
-	} else {
-	    my $c = $obj->current->{$a} //= delete $obj->saved->{$a};
-	    if (not defined $c or $c ne $b) {
-		$obj->current->{$a} = $b;
-		$obj->updated++;
-	    }
-	}
+        if (ref $a eq 'ARRAY' and ref $b eq 'ARRAY') {
+            @$a == @$b or die;
+            $obj->set(mesh $a, $b);
+        } else {
+            my $c = $obj->current->{$a} //= delete $obj->saved->{$a};
+            if (not defined $c or $c ne $b) {
+                $obj->current->{$a} = $b;
+                $obj->updated++;
+            }
+        }
     } @_;
     $obj;
 }
@@ -101,22 +101,22 @@ sub open {
     my $obj = shift;
     my $file = $obj->name || return;
     if ($obj->clear) {
-	warn "created $file\n" unless -f $file;
-	open my $fh, '>', $file or die "$file: $!\n";
-	print $fh "{}\n";
+        warn "created $file\n" unless -f $file;
+        open my $fh, '>', $file or die "$file: $!\n";
+        print $fh "{}\n";
     }
     my $json_obj //= &json;
     if (CORE::open my $fh, $file) {
-	my $data = do { local $/; <$fh> };
-	my $json = $data eq '' ? {} : $json_obj->decode($data);
-	$obj->{saved} = do {
-	    if    (ref $json eq 'HASH')  { $json }
-	    elsif (ref $json eq 'ARRAY') { +{ map @{$_}[0,1], @$json } }
-	    else  { die "unexpected json data." }
-	};
-	warn "read cache from $file\n";
+        my $data = do { local $/; <$fh> };
+        my $json = $data eq '' ? {} : $json_obj->decode($data);
+        $obj->{saved} = do {
+            if    (ref $json eq 'HASH')  { $json }
+            elsif (ref $json eq 'ARRAY') { +{ map @{$_}[0,1], @$json } }
+            else  { die "unexpected json data." }
+        };
+        warn "read cache from $file\n";
     } else {
-	$obj->{saved} = {};
+        $obj->{saved} = {};
     }
     $obj;
 }
@@ -125,26 +125,26 @@ sub update {
     my $obj = shift;
     my $file = $obj->name || return;
     if (not $obj->force_update and $obj->updated == 0) {
-	if (%{$obj->saved} == 0) {
-	    return;
-	} elsif ($obj->accumulate) {
-	    for (keys %{$obj->saved}) {
-		$obj->current->{$_} //= delete $obj->saved->{$_};
-	    }
-	}
+        if (%{$obj->saved} == 0) {
+            return;
+        } elsif ($obj->accumulate) {
+            for (keys %{$obj->saved}) {
+                $obj->current->{$_} //= delete $obj->saved->{$_};
+            }
+        }
     }
     while (my($k, $v) = each %{$obj->current}) {
-	delete $obj->current->{$k} if not defined $v;
+        delete $obj->current->{$k} if not defined $v;
     }
     %{$obj->current} > 0 or return;
     my $json_obj //= &json; # this is necessary to be called from DESTROY
     if (CORE::open my $fh, '>', $file) {
-	my $data = $obj->format eq 'list' ? $obj->list_data : $obj->hash_data;
-	my $json = $json_obj->encode($data);
-	print $fh $json;
-	warn "write cache to $file\n";
+        my $data = $obj->format eq 'list' ? $obj->list_data : $obj->hash_data;
+        my $json = $json_obj->encode($data);
+        print $fh $json;
+        warn "write cache to $file\n";
     } else {
-	warn "$file: $!\n";
+        warn "$file: $!\n";
     }
 }
 
@@ -158,15 +158,15 @@ sub list_data {
     my %hash = %{$obj->current};
     my @list;
     for my $key (@{$obj->order}) {
-	if (exists $hash{$key}) {
-	    push @list, [ $key => delete $hash{$key} ];
-	} else {
-	    warn "$key: not in cache.";
-	}
+        if (exists $hash{$key}) {
+            push @list, [ $key => delete $hash{$key} ];
+        } else {
+            warn "$key: not in cache.";
+        }
     }
     for my $key (sort keys %hash) {
-	warn "$key: not in order list.";
-	push @list, [ $key => delete $hash{$key} ];
+        warn "$key: not in order list.";
+        push @list, [ $key => delete $hash{$key} ];
     }
     die if %hash;
     \@list;

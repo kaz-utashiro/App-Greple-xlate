@@ -26,7 +26,7 @@ our $method = __PACKAGE__ =~ s/.*://r;
 
 my %param = (
     gpt4 => { engine => 'gpt-4.1', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => <<END
+              prompt => <<END
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.
 If an element is a blank string or an XML-style marker tag (e.g., "<m id=1 />"), leave it unchanged and do not translate it.
@@ -41,7 +41,7 @@ Your entire output must be valid JSON.
 Do not include any explanations, code blocks, or text outside of the JSON array.
 If you cannot produce a valid JSON array, return an empty JSON array ([]).
 END
-	  },
+          },
 );
 
 sub initialize {
@@ -55,21 +55,21 @@ sub gpty {
     my $param = $param{$method};
     my $prompt = opt('prompt') || $param->{prompt};
     my @vars = do {
-	if ($prompt =~ /%s/) {
-	    $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
-	} else {
-	    ();
-	}
+        if ($prompt =~ /%s/) {
+            $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
+        } else {
+            ();
+        }
     };
     my $system = sprintf($prompt, @vars);
     my @command = (
-	'gpty',
-	-e => $param->{engine},
-	-t => $param->{temp},
-	-s => $system,
+        'gpty',
+        -e => $param->{engine},
+        -t => $param->{temp},
+        -s => $system,
     );
     if (my @contexts = @{$opt{contexts}}) {
-	push @command, map { (-s => "Translation context: $_") } @contexts;
+        push @command, map { (-s => "Translation context: $_") } @contexts;
     }
     push @command, '-';
     warn Dumper \@command if opt('debug');
@@ -93,9 +93,9 @@ sub xlate_each {
     my @out = map { s/(?<!\n)\z/\n/r } @$obj;
     _progress("To:\n", map s/^/\t> /mgr, @out);
     if (@out < @in) {
-	my $to = join '', @out;
-	die sprintf("Unexpected response (%d < %d):\n\n%s\n",
-		    int(@out), int(@in), $to);
+        my $to = join '', @out;
+        die sprintf("Unexpected response (%d < %d):\n\n%s\n",
+                    int(@out), int(@in), $to);
     }
     map { join '', splice @out, 0, $_ } @count;
 }
@@ -105,19 +105,19 @@ sub xlate {
     my @to;
     my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
     if (my @len = grep { $_ > $max } map length, @from) {
-	die "Contain lines longer than max length (@len > $max).\n";
+        die "Contain lines longer than max length (@len > $max).\n";
     }
     while (@from) {
-	my @tmp;
-	my $len = 0;
-	while (@from) {
-	    my $next = length $from[0];
-	    last if $len + $next > $max;
-	    $len += $next;
-	    push @tmp, shift @from;
-	}
-	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
-	push @to, xlate_each @tmp;
+        my @tmp;
+        my $len = 0;
+        while (@from) {
+            my $next = length $from[0];
+            last if $len + $next > $max;
+            $len += $next;
+            push @tmp, shift @from;
+        }
+        @tmp > 0 or die "Probably text is longer than max length ($max).\n";
+        push @to, xlate_each @tmp;
     }
     @to;
 }

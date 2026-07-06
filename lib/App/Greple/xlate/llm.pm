@@ -65,15 +65,15 @@ sub build_system {
     my $param = shift;
     my $prompt = opt('prompt') || $param->{prompt};
     my @vars = do {
-	if ($prompt =~ /%s/) {
-	    $LANGNAME{$param->{lang_to}} // die "$param->{lang_to}: unknown lang.\n";
-	} else {
-	    ();
-	}
+        if ($prompt =~ /%s/) {
+            $LANGNAME{$param->{lang_to}} // die "$param->{lang_to}: unknown lang.\n";
+        } else {
+            ();
+        }
     };
     my $system = sprintf($prompt, @vars);
     if (my @contexts = @{$opt{contexts}}) {
-	$system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
+        $system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
     }
     $system;
 }
@@ -82,7 +82,7 @@ sub llm_command {
     my($param, $system) = @_;
     my @command = ('llm', '-m' => $param->{model}, '-s' => $system);
     for my $kv (@{$param->{options} // []}) {
-	push @command, '-o', @$kv;
+        push @command, '-o', @$kv;
     }
     push @command, '--no-stream', '--no-log';
     @command;
@@ -110,9 +110,9 @@ sub run_llm {
     my @command = llm_command($param, build_system($param));
     warn Dumper \@command if opt('debug');
     my $result = $run->command(@command)
-		     ->run(stdin => $text, stderr => 'capture');
+                     ->run(stdin => $text, stderr => 'capture');
     if ($result->{result} != 0) {
-	die diagnose($param, $result);
+        die diagnose($param, $result);
     }
     print STDERR $result->{error} if $result->{error};
     $result->{data};
@@ -126,16 +126,16 @@ sub diagnose {
     my($param, $result) = @_;
     my $stderr = $result->{error} // '';
     if (! _llm_in_path()) {
-	return _not_found();
+        return _not_found();
     }
     my $model = $param->{model};
     my $models = Command::Run->new->command('llm', 'models')
-	->run(stderr => 'capture')->{data} // '';
+        ->run(stderr => 'capture')->{data} // '';
     if ($models !~ /\Q$model\E/) {
-	return "llm does not know model \"$model\".\n" .
-	       "Upgrade llm (\"pip install -U llm\") or register the model " .
-	       "in extra-openai-models.yaml.\n" .
-	       ($stderr ? "\n$stderr" : "");
+        return "llm does not know model \"$model\".\n" .
+               "Upgrade llm (\"pip install -U llm\") or register the model " .
+               "in extra-openai-models.yaml.\n" .
+               ($stderr ? "\n$stderr" : "");
     }
     return "llm failed:\n$stderr";
 }
@@ -148,13 +148,13 @@ sub xlate_each {
     my $out = run_llm($param, $json->encode(\@in));
     my $obj = eval { $json->decode($out) };
     ref $obj eq 'ARRAY'
-	or die "Invalid JSON response:\n\n$out\n";
+        or die "Invalid JSON response:\n\n$out\n";
     my @out = map { s/(?<!\n)\z/\n/r } @$obj;
     _progress("To:\n", map s/^/\t> /mgr, @out);
     if (@out < @in) {
-	my $to = join '', @out;
-	die sprintf("Unexpected response (%d < %d):\n\n%s\n",
-		    int(@out), int(@in), $to);
+        my $to = join '', @out;
+        die sprintf("Unexpected response (%d < %d):\n\n%s\n",
+                    int(@out), int(@in), $to);
     }
     map { join '', splice @out, 0, $_ } @count;
 }
@@ -170,20 +170,20 @@ sub xlate_with {
     my $max = $App::Greple::xlate::max_length || $param->{max} // die;
     my $maxline = $App::Greple::xlate::max_line;
     if (my @len = grep { $_ > $max } map length, @from) {
-	die "Contain lines longer than max length (@len > $max).\n";
+        die "Contain lines longer than max length (@len > $max).\n";
     }
     while (@from) {
-	my @tmp;
-	my $len = 0;
-	while (@from) {
-	    my $next = length $from[0];
-	    last if $len + $next > $max;
-	    $len += $next;
-	    push @tmp, shift @from;
-	    last if $maxline > 0 and @tmp >= $maxline;
-	}
-	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
-	push @to, xlate_each($param, @tmp);
+        my @tmp;
+        my $len = 0;
+        while (@from) {
+            my $next = length $from[0];
+            last if $len + $next > $max;
+            $len += $next;
+            push @tmp, shift @from;
+            last if $maxline > 0 and @tmp >= $maxline;
+        }
+        @tmp > 0 or die "Probably text is longer than max length ($max).\n";
+        push @to, xlate_each($param, @tmp);
     }
     @to;
 }

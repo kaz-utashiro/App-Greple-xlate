@@ -92,6 +92,13 @@ The system generates `.json` cache files alongside source files to store transla
 - This is mandatory for proper file handling and to avoid issues with text processing tools, git, and other utilities
 - Before finalizing any file operation, verify the content ends with '\n'
 
+## Coding Style
+- **Never use tab characters for indentation** — indent with spaces only
+  (the codebase was fully de-tabbed in 2026-07; former tabs were expanded
+  at 8-column stops)
+- The only exception is Makefiles (`share/XLATE.mk`, `docs/Makefile`,
+  `examples/Makefile`, etc.), where make syntax requires tabs
+
 ## Important Behavior Guidelines
 - **警告やエラーを無視しない**: git statusの警告、テストの失敗、Dockerのエラーなど、問題が発生したら「外部の問題」「関係ない」と推測で片付けずに、必ず原因を調査する
 - **推測で判断しない**: 「〜だろう」「〜のはず」で済ませず、実際に確認してから判断する

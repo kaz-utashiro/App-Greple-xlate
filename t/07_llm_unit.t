@@ -24,47 +24,47 @@ my %param = (
 subtest 'build_system' => sub {
     my $system = App::Greple::xlate::llm::build_system(\%param);
     like($system, qr/\ATranslate the following JSON array into Japanese\./,
-	 '%s expands to language name');
+         '%s expands to language name');
 
     {
-	my @saved = @{$opt{contexts}};
-	@{$opt{contexts}} = ('background info');
-	my $system = App::Greple::xlate::llm::build_system(\%param);
-	like($system, qr/Translation context:\n- background info/,
-	     '--xlate-context is appended');
-	@{$opt{contexts}} = @saved;
+        my @saved = @{$opt{contexts}};
+        @{$opt{contexts}} = ('background info');
+        my $system = App::Greple::xlate::llm::build_system(\%param);
+        like($system, qr/Translation context:\n- background info/,
+             '--xlate-context is appended');
+        @{$opt{contexts}} = @saved;
     }
     {
-	my $saved = ${$opt{prompt}};
-	${$opt{prompt}} = "Custom prompt.";
-	my $system = App::Greple::xlate::llm::build_system(\%param);
-	is($system, "Custom prompt.", '--xlate-prompt replaces the default');
-	${$opt{prompt}} = $saved;
+        my $saved = ${$opt{prompt}};
+        ${$opt{prompt}} = "Custom prompt.";
+        my $system = App::Greple::xlate::llm::build_system(\%param);
+        is($system, "Custom prompt.", '--xlate-prompt replaces the default');
+        ${$opt{prompt}} = $saved;
     }
     {
-	my %p = (%param, lang_to => 'XX');
-	ok(!eval { App::Greple::xlate::llm::build_system(\%p); 1 },
-	   'unknown language dies');
-	like($@, qr/XX: unknown lang/, 'die message names the language');
+        my %p = (%param, lang_to => 'XX');
+        ok(!eval { App::Greple::xlate::llm::build_system(\%p); 1 },
+           'unknown language dies');
+        like($@, qr/XX: unknown lang/, 'die message names the language');
     }
 };
 
 subtest 'llm_command' => sub {
     my @cmd = App::Greple::xlate::llm::llm_command(\%param, 'SYSTEM PROMPT');
     is_deeply(\@cmd,
-	      [ 'llm', '-m', 'test-model', '-s', 'SYSTEM PROMPT',
-		'-o', 'alpha', 'one', '-o', 'beta', 'two',
-		'--no-stream', '--no-log' ],
-	      'command line assembled in order');
+              [ 'llm', '-m', 'test-model', '-s', 'SYSTEM PROMPT',
+                '-o', 'alpha', 'one', '-o', 'beta', 'two',
+                '--no-stream', '--no-log' ],
+              'command line assembled in order');
 };
 
 my $bin = File::Spec->rel2abs('t/bin');
 my $tmpdir = tempdir(CLEANUP => 1);
 
 sub trap (&) {
-	my $code = shift;
-	eval { $code->() };
-	$@;
+        my $code = shift;
+        eval { $code->() };
+        $@;
 }
 
 subtest 'xlate_with via stub' => sub {
@@ -95,26 +95,26 @@ subtest 'batching by maxlen' => sub {
 subtest 'error handling' => sub {
     local $ENV{PATH} = "$bin:$ENV{PATH}";
     {
-    	local $ENV{LLM_STUB_MODE} = 'short';
-    	like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n", "b\n") },
-    	     qr/Unexpected response \(1 < 2\)/, 'element count mismatch dies');
+        local $ENV{LLM_STUB_MODE} = 'short';
+        like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n", "b\n") },
+             qr/Unexpected response \(1 < 2\)/, 'element count mismatch dies');
     }
     {
-    	local $ENV{LLM_STUB_MODE} = 'badjson';
-    	like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") },
-    	     qr/Invalid JSON response/, 'non-JSON response dies');
+        local $ENV{LLM_STUB_MODE} = 'badjson';
+        like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") },
+             qr/Invalid JSON response/, 'non-JSON response dies');
     }
     {
-    	local $ENV{LLM_STUB_MODE} = 'fail';
-    	my $err = trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") };
-    	like($err, qr/llm failed/, 'generic failure reported');
-    	like($err, qr/simulated failure/, 'stderr from llm included');
+        local $ENV{LLM_STUB_MODE} = 'fail';
+        my $err = trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") };
+        like($err, qr/llm failed/, 'generic failure reported');
+        like($err, qr/simulated failure/, 'stderr from llm included');
     }
     {
-    	local $ENV{LLM_STUB_MODE} = 'nomodel';
-    	my %p = (%param, model => 'gpt-5.5');
-    	like(trap { App::Greple::xlate::llm::xlate_with(\%p, "a\n") },
-    	     qr/does not know model "gpt-5\.5"/, 'unknown model diagnosed');
+        local $ENV{LLM_STUB_MODE} = 'nomodel';
+        my %p = (%param, model => 'gpt-5.5');
+        like(trap { App::Greple::xlate::llm::xlate_with(\%p, "a\n") },
+             qr/does not know model "gpt-5\.5"/, 'unknown model diagnosed');
     }
 };
 

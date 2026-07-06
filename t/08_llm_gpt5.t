@@ -44,6 +44,6 @@ like($system, qr/\ATranslate the following JSON array into American English\./,
 like($system, qr/XML-style marker tag/, 'mask tag instruction preserved');
 
 is_deeply(JSON::PP->new->decode($rec->{stdin}), ["hello world\n"],
-	  'stdin is JSON array of lines');
+          'stdin is JSON array of lines');
 
 done_testing;

@@ -242,7 +242,7 @@ our $method = __PACKAGE__ =~ s/.*://r;
 my %param = (
     gpt5 => { engine => 'gpt-5.5', temp => '1', max => 3000, sub => \&gpty,
               reasoning_effort => 'none', verbosity => 'low', max_completion_tokens => 16000,
-	      prompt => <<END
+              prompt => <<END
 Translate the following JSON array into %s.
 For each input array element, output only the corresponding translated element at the same array index.
 If an element is a blank string or an XML-style marker tag (e.g., "<m id=1 />"), leave it unchanged and do not translate it.
@@ -257,7 +257,7 @@ Your entire output must be valid JSON.
 Do not include any explanations, code blocks, or text outside of the JSON array.
 If you cannot produce a valid JSON array, return an empty JSON array ([]).
 END
-	  },
+          },
 );
 
 sub initialize {
@@ -271,35 +271,35 @@ sub gpty {
     my $param = $param{$method};
     my $prompt = opt('prompt') || $param->{prompt};
     my @vars = do {
-	if ($prompt =~ /%s/) {
-	    $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
-	} else {
-	    ();
-	}
+        if ($prompt =~ /%s/) {
+            $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
+        } else {
+            ();
+        }
     };
     my $system = sprintf($prompt, @vars);
     # Add context information directly to the main system prompt
     if (my @contexts = @{$opt{contexts}}) {
-	$system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
+        $system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
     }
     my @command = (
-	'gpty',
-	'--engine' => $param->{engine},
-	'--system' => $system,
+        'gpty',
+        '--engine' => $param->{engine},
+        '--system' => $system,
     );
     # Add temperature if specified and supported
     if (defined $param->{temp}) {
-	push @command, '--temperature' => $param->{temp};
+        push @command, '--temperature' => $param->{temp};
     }
     # Add GPT-5/O1 specific parameters if they exist
     if (defined $param->{max_completion_tokens}) {
-	push @command, '--max-completion-tokens' => $param->{max_completion_tokens};
+        push @command, '--max-completion-tokens' => $param->{max_completion_tokens};
     }
     if (defined $param->{reasoning_effort}) {
-	push @command, '--reasoning-effort' => $param->{reasoning_effort};
+        push @command, '--reasoning-effort' => $param->{reasoning_effort};
     }
     if (defined $param->{verbosity}) {
-	push @command, '--verbosity' => $param->{verbosity};
+        push @command, '--verbosity' => $param->{verbosity};
     }
     push @command, '-';
     warn Dumper \@command if opt('debug');
@@ -323,9 +323,9 @@ sub xlate_each {
     my @out = map { s/(?<!\n)\z/\n/r } @$obj;
     _progress("To:\n", map s/^/\t> /mgr, @out);
     if (@out < @in) {
-	my $to = join '', @out;
-	die sprintf("Unexpected response (%d < %d):\n\n%s\n",
-		    int(@out), int(@in), $to);
+        my $to = join '', @out;
+        die sprintf("Unexpected response (%d < %d):\n\n%s\n",
+                    int(@out), int(@in), $to);
     }
     map { join '', splice @out, 0, $_ } @count;
 }
@@ -336,20 +336,20 @@ sub xlate {
     my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
     my $maxline = $App::Greple::xlate::max_line;
     if (my @len = grep { $_ > $max } map length, @from) {
-	die "Contain lines longer than max length (@len > $max).\n";
+        die "Contain lines longer than max length (@len > $max).\n";
     }
     while (@from) {
-	my @tmp;
-	my $len = 0;
-	while (@from) {
-	    my $next = length $from[0];
-	    last if $len + $next > $max;
-	    $len += $next;
-	    push @tmp, shift @from;
-	    last if $maxline > 0 and @tmp >= $maxline;
-	}
-	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
-	push @to, xlate_each @tmp;
+        my @tmp;
+        my $len = 0;
+        while (@from) {
+            my $next = length $from[0];
+            last if $len + $next > $max;
+            $len += $next;
+            push @tmp, shift @from;
+            last if $maxline > 0 and @tmp >= $maxline;
+        }
+        @tmp > 0 or die "Probably text is longer than max length ($max).\n";
+        push @to, xlate_each @tmp;
     }
     @to;
 }

@@ -24,10 +24,10 @@ my $mode = $ENV{LLM_STUB_MODE} // 'ok';
 # "llm models" subcommand (used by the failure diagnosis)
 if (@ARGV and $ARGV[0] eq 'models') {
     if ($mode eq 'nomodel') {
-	print "OpenAI Chat: gpt-4o-mini\n";
+        print "OpenAI Chat: gpt-4o-mini\n";
     } else {
-	print "OpenAI Chat: gpt-5.5\n";
-	print "OpenAI Chat: test-model\n";
+        print "OpenAI Chat: gpt-5.5\n";
+        print "OpenAI Chat: test-model\n";
     }
     exit 0;
 }

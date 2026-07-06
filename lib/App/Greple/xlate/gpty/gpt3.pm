@@ -21,11 +21,11 @@ our $method = __PACKAGE__ =~ s/.*://r;
 
 my %param = (
     gpt3 => { engine => 'gpt-3.5-turbo', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => 'Translate following entire text into %s, line-by-line.',
-	  },
+              prompt => 'Translate following entire text into %s, line-by-line.',
+          },
     gpt4 => { engine => 'gpt-4-1106-preview', temp => '0.0', max => 3000, sub => \&gpty,
-	      prompt => 'Translate following entire text into %s, line-by-line.',
-	  },
+              prompt => 'Translate following entire text into %s, line-by-line.',
+          },
 );
 
 sub initialize {
@@ -39,19 +39,19 @@ sub gpty {
     my $param = $param{$method};
     my $prompt = opt('prompt') || $param->{prompt};
     my @vars = do {
-	if ($prompt =~ /%s/) {
-	    $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
-	} else {
-	    ();
-	}
+        if ($prompt =~ /%s/) {
+            $LANGNAME{$lang_to} // die "$lang_to: unknown lang.\n"
+        } else {
+            ();
+        }
     };
     my $system = sprintf($prompt, @vars);
     my @command = (
-	'gpty',
-	-e => $param->{engine},
-	-t => $param->{temp},
-	-s => $system,
-	'-',
+        'gpty',
+        -e => $param->{engine},
+        -t => $param->{temp},
+        -s => $system,
+        '-',
     );
     warn Dumper \@command if opt('debug');
     $gpty->command(@command)->with(stdin => $text)->update->data;
@@ -69,7 +69,7 @@ sub xlate_each {
     my @out = $to =~ /^.+\n/mg;
     _progress("To:\n", map s/^/\t> /mgr, @out);
     if (@out < sum @count) {
-	die "Unexpected response:\n\n$to\n";
+        die "Unexpected response:\n\n$to\n";
     }
     map { join '', splice @out, 0, $_ } @count;
 }
@@ -79,19 +79,19 @@ sub xlate {
     my @to;
     my $max = $App::Greple::xlate::max_length || $param{$method}->{max} // die;
     if (my @len = grep { $_ > $max } map length, @from) {
-	die "Contain lines longer than max length (@len > $max).\n";
+        die "Contain lines longer than max length (@len > $max).\n";
     }
     while (@from) {
-	my @tmp;
-	my $len = 0;
-	while (@from) {
-	    my $next = length $from[0];
-	    last if $len + $next > $max;
-	    $len += $next;
-	    push @tmp, shift @from;
-	}
-	@tmp > 0 or die "Probably text is longer than max length ($max).\n";
-	push @to, xlate_each @tmp;
+        my @tmp;
+        my $len = 0;
+        while (@from) {
+            my $next = length $from[0];
+            last if $len + $next > $max;
+            $len += $next;
+            push @tmp, shift @from;
+        }
+        @tmp > 0 or die "Probably text is longer than max length ($max).\n";
+        push @to, xlate_each @tmp;
     }
     @to;
 }
