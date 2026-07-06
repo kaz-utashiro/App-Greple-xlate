@@ -79,6 +79,12 @@ sub build_system {
     if (my @contexts = @{$opt{contexts}}) {
         $system .= "\n\nTranslation context:\n" . join("\n", map "- $_", @contexts);
     }
+    if (defined(my $tre = App::Greple::xlate::template_regex())) {
+        $system .= "\n\nThe input contains template expressions"
+                 . " (such as {{ ... }} or {% ... %})."
+                 . " Treat them as opaque placeholders: copy each one"
+                 . " to the output unchanged, byte for byte.";
+    }
     $system .= context_sections();
     $system;
 }

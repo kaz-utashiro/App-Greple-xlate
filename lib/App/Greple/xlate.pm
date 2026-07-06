@@ -642,6 +642,7 @@ our %opt = (
     context_window => \(our $context_window = 2),
     anonymize => \(our $anonymize_file),
     anonymize_mark => \(our $anonymize_mark),
+    template => \(our $template_option),
     contexts => (\our @contexts),
 );
 lock_keys %opt;
@@ -812,6 +813,13 @@ sub postgrep {
 
 our $CONTEXT_SOURCE_MAX = 2000;   # per-side raw source slice limit
 
+our $TEMPLATE_DEFAULT = q[\{\{.*?\}\}|\{%.*?%\}|\{#.*?#\}];
+
+sub template_regex {
+    return undef unless defined $template_option;
+    length($template_option) ? $template_option : $TEMPLATE_DEFAULT;
+}
+
 ##
 ## Build the per-region context (surrounding source slices, neighbor
 ## pairs, previous-version pairs).
@@ -963,6 +971,17 @@ sub cache_update {
         }
 
         _progress({label => "To"}, @to);
+        if (defined(my $tre = template_regex())) {
+            for my $i (0 .. $#from) {
+                my @want = $from[$i] =~ /($tre)/g;
+                my @got  = ($to[$i] // '') =~ /($tre)/g;
+                if ("@want" ne "@got") {
+                    die sprintf("Template expressions broken in response:\n" .
+                                "  expected: %s\n  got: %s\n",
+                                "@want", "@got");
+                }
+            }
+        }
         die "Unmatched response:\n@to" if @from != @to;
         @cache{@{$region->{texts}}} = @to;
         if (my $obj = tied %cache) {
@@ -1117,6 +1136,7 @@ builtin xlate-context=s    @contexts
 builtin xlate-context-window=i $context_window
 builtin xlate-anonymize=s      $anonymize_file
 builtin xlate-anonymize-mark:s $anonymize_mark
+builtin xlate-template:s   $template_option
 builtin xlate-cache-seed=s $cache_seed
 
 builtin deepl-auth-key=s   $App::Greple::xlate::deepl::auth_key
