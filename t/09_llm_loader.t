@@ -41,4 +41,24 @@ $r = probe('nonexistent');
 isnt($r->{result}, 0, 'unknown engine fails');
 like($r->{error}, qr/not available/, 'clear error message');
 
+use File::Temp qw(tempdir);
+use File::Path qw(make_path);
+
+subtest 'engine compile errors are not swallowed' => sub {
+    my $fixdir = tempdir(CLEANUP => 1);
+    make_path("$fixdir/App/Greple/xlate/llm");
+    open my $fh, '>', "$fixdir/App/Greple/xlate/llm/broken.pm" or die $!;
+    print $fh "package App::Greple::xlate::llm::broken;\nthis is not perl ((\n1;\n";
+    close $fh;
+
+    my $r = Command::Run->new
+        ->command($^X, '-Ilib', "-I$fixdir", '-e', $probe, 'broken')
+        ->run(stderr => 'capture');
+    isnt($r->{result}, 0, 'broken engine fails');
+    like($r->{error}, qr/broken\.pm/, 'error names the broken module');
+    unlike($r->{error}, qr/not available/,
+           'did not fall through to "not available"');
+};
+
 done_testing;
+

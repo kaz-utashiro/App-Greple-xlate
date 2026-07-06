@@ -694,6 +694,11 @@ sub setup {
         for my $cand ((map __PACKAGE__ . "::$_\::$xlate_engine", @backend),
                       __PACKAGE__ . "::$xlate_engine") {
             if (eval "require $cand; 1") { $mod = $cand; last }
+            # Fall through only when the candidate itself is missing;
+            # a syntax error or a missing dependency inside an existing
+            # module must be reported, not silently skipped.
+            (my $path = $cand) =~ s{::}{/}g;
+            die $@ unless $@ =~ /^Can't locate \Q$path.pm\E /;
         }
         $mod or die "Engine $xlate_engine is not available.\n";
         $mod->import;
