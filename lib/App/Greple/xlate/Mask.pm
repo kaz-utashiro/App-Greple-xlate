@@ -110,6 +110,7 @@ sub load_anonymize_file {
     my($obj, $path) = @_;
     open my $fh, '<:encoding(utf8)', $path or die "$path: $!\n";
     my $data = do { local $/; <$fh> };
+    $data =~ s/\A\x{FEFF}//;    # tolerate a UTF-8 BOM
     if ($data =~ /\A\s*\[/) {
         my $list = JSON->new->decode($data);
         ref $list eq 'ARRAY' or die "$path: JSON array expected.\n";

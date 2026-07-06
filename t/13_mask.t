@@ -102,7 +102,7 @@ sub write_file {
 
 subtest 'dictionary: JSON format' => sub {
     my $f = "$dir/dict.json";
-    write_file($f, <<'END');
+    write_file($f, "\x{FEFF}" . <<'END');
 [
   { "category": "person",  "text": "山田太郎", "note": "ignored" },
   { "category": "company", "regex": "アクメ(?:株式会社)?" }

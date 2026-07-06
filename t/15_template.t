@@ -129,7 +129,7 @@ subtest 'front matter: excluded, values anonymized, slices adjusted' => sub {
     write_file($doc, <<'END');
 ---
 template: report.j2
-報告者: yamada taro
+報告者: "yamada taro"
 発注会社: acme corporation
 ---
 opening paragraph of the body
