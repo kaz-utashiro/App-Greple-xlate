@@ -129,6 +129,7 @@ sub load_data {
     } else {
         die "unexpected json data.";
     }
+    $obj->{old_pos} = undef;    # invalidate memoized position map
 }
 
 sub old_size {
