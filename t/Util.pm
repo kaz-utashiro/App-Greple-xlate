@@ -18,7 +18,7 @@ sub run {
 }
 
 sub xlate {
-    greple('-Mxlate', @_);
+    greple '-Mxlate', @_;
 }
 
 sub slurp {
