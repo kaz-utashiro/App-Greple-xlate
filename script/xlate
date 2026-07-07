@@ -623,7 +623,9 @@ masking.  In make mode (C<-M>), this option always means C<make -n>.
 
 Use the translation API.  This is the default since 2.0; use
 B<--no-api> to fall back to the clipboard-based manual translation
-(labor) mode.
+(labor) mode.  In make mode (C<-M>), the clipboard mode is not
+available; C<XLATE_USEAPI> is kept only for backward compatibility,
+since the API is used by default regardless of its value.
 
 =item B<-c>, B<--check>
 

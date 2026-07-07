@@ -137,14 +137,14 @@ subtest 'XLATE.mk expansion' => sub {
     $out = $run->('XLATE_ANONYMIZE=dict.json', 'XLATE_CONTEXT_WINDOW=3',
                   'XLATE_FRONTMATTER=1', 'XLATE_TEMPLATE=1',
                   'XLATE_MARK=1', 'XLATE_SEED=prev.json');
-    like($out, qr/--anonymize=dict\.json/, 'XLATE_ANONYMIZE');
-    like($out, qr/--context-window=3/,     'XLATE_CONTEXT_WINDOW');
+    like($out, qr/--anonymize='dict\.json'/, 'XLATE_ANONYMIZE');
+    like($out, qr/--context-window='3'/,     'XLATE_CONTEXT_WINDOW');
     like($out, qr/--frontmatter/,          'XLATE_FRONTMATTER');
     like($out, qr/--template(?:\s|$)/m,    'XLATE_TEMPLATE=1 -> bare --template');
     like($out, qr/--mark(?:\s|$)/m,        'XLATE_MARK=1 -> bare --mark');
-    like($out, qr/--seed=prev\.json/,      'XLATE_SEED');
+    like($out, qr/--seed='prev\.json'/,    'XLATE_SEED');
     $out = $run->('XLATE_TEMPLATE=X%.*?%X');
-    like($out, qr/--template=X%\.\*\?%X/,  'XLATE_TEMPLATE=regex');
+    like($out, qr/--template='X%\.\*\?%X'/, 'XLATE_TEMPLATE=regex');
     # xlate -M は値を二重引用符で包んで渡す (XLATE_MARK="1") が、
     # GNU Make はコマンドライン変数代入の引用符を剥がさないので、
     # REMOVE_QUOTE で剥がされて往復することを確認する
@@ -152,16 +152,43 @@ subtest 'XLATE.mk expansion' => sub {
                   q{XLATE_ANONYMIZE='"dict.json"'});
     like($out, qr/--mark(?:\s|$)/m,     'quoted XLATE_MARK="1" -> bare --mark');
     like($out, qr/--template(?:\s|$)/m, 'quoted XLATE_TEMPLATE="1" -> bare --template');
-    like($out, qr/--anonymize=dict\.json/, 'quoted XLATE_ANONYMIZE unquoted');
-    unlike($out, qr/--anonymize="/, 'no literal quotes leak into option');
+    like($out, qr/--anonymize='dict\.json'/, 'quoted XLATE_ANONYMIZE unquoted');
+    unlike($out, qr/--anonymize='?"/, 'no literal double quotes leak into option');
     # FILE.ANONYMIZE は XLATE_ANONYMIZE より優先
     write_file("$sub/doc.txt.ANONYMIZE", qq([{"category":"person","text":"X"}]\n));
     $out = $run->('XLATE_ANONYMIZE=global.json');
-    like($out, qr/--anonymize=doc\.txt\.ANONYMIZE/, 'FILE.ANONYMIZE wins');
+    like($out, qr/--anonymize='doc\.txt\.ANONYMIZE'/, 'FILE.ANONYMIZE wins');
     unlike($out, qr/--anonymize=global\.json/, 'variable overridden');
 };
 
+subtest 'XOPT quotes values so custom regexes survive the shell' => sub {
+    my $gmake = find_gmake() or plan skip_all => 'GNU make not found';
+    my $mk   = abs_path('share/XLATE.mk');
+    my $sub2 = "$dir/mk3"; mkdir $sub2;
+    mkdir "$sub2/bin" or die $!;
+    write_file("$sub2/bin/xlate", "#!/bin/sh\nprintf '%s\\n' \"\$@\"\n");
+    chmod 0755, "$sub2/bin/xlate";
+    write_file("$sub2/doc.txt", "hello\n");
+    # A realistic custom mark regex: unquoted parentheses in XLATE_MARK
+    # are a hard /bin/sh syntax error at recipe execution time (make -n
+    # never shows it, since -n never invokes the shell).
+    my $mark_re = '@@(?<category>[a-z]+):(?<text>[^@]+)@@';
+    my $target  = 'doc.gpt5-JA.xtxt';
+    my $cmd = "cd '$sub2' && PATH='$sub2/bin:'\"\$PATH\" '$gmake' -f '$mk' " .
+              "XLATE_LANG=JA 'XLATE_MARK=$mark_re' '$target' 2>&1";
+    my $out = qx($cmd);
+    my $status = $? >> 8;
+    is($status, 0, 'make exits 0 (no shell syntax error from unquoted regex)')
+        or diag($out);
+    my $content = -f "$sub2/$target"
+        ? do { open my $fh, '<', "$sub2/$target" or die; local $/; <$fh> }
+        : '';
+    like($content, qr/^--mark=\Q$mark_re\E$/m,
+         'mark regex reaches xlate intact; quotes are stripped only by the shell');
+};
+
 subtest 'xlate -M passes new variables' => sub {
+    my $gmake = find_gmake() or plan skip_all => 'GNU make not found';
     # インストール済みの古い share/XLATE.mk が解決されうるので、
     # make 出力ではなく --trace (set -x) の exec 行で転送を検証する
     my $sub = "$dir/mk2"; mkdir $sub;
