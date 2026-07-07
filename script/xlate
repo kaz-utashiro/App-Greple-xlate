@@ -23,15 +23,15 @@ xlate [ options ] -t LANG FILE [ greple options ]
         --version     show version
     -d, --debug       debug mode (currently enables trace)
         --trace       trace mode
-    -n, --dryrun      dry-run
-    -a, --api         use API
+    -n, --dryrun      dry-run (-nn: preview transmission)
+    -a, --api         use API (default; negate with --no-api)
     -c, --check       just check translation area
     -r, --refresh     refresh cache
     -u, --update      force update cache
     -s, --silent      silent mode
     -t, --to-lang=#   target language (required, no default)
     -b, --from-lang=# base language (informational)
-    -e, --engine=#    translation engine (*deepl, gpt5, ...)
+    -e, --engine=#    translation engine (*gpt5, deepl, ...)
     -p, --pattern=#   pattern string to determine translation area
     -f, --file=#      pattern file to determine translation area
     -o, --format=#    output format (*xtxt, cm, ifdef, space, space+, colon)
@@ -69,7 +69,7 @@ xlate [ options ] -t LANG FILE [ greple options ]
   Control Files:
     *.LANG    translation languages
     *.FORMAT  translation format (xtxt, cm, ifdef, colon, space)
-    *.ENGINE  translation engine (deepl, gpt5, ...)
+    *.ENGINE  translation engine (gpt5, deepl, ...)
 
 =head1 VERSION
 
@@ -246,12 +246,12 @@ declare -A OPTS=(
     [      help | h  !  # show help                        ]=
     [   version      !  # show version                     ]=
     # Translation options
-    [       api | a     # use API                          ]=
+    [       api | a     # use API (default)                ]=1
     [     check | c     # just check translation area      ]=
     [   refresh | r     # refresh cache                    ]=
     [    update | u     # force update cache               ]=
     [    silent | s     # silent mode                      ]=
-    [    dryrun | n     # dry-run                          ]=
+    [    dryrun | n +   # dry-run (-nn: preview)           ]=
     [    engine | e :   # translation engine               ]=
     [      wrap | w :   # wrap line width                  ]=
     [    format | o :   # output format                    ]=
@@ -344,7 +344,7 @@ if [[ ! ${to_lang:-} ]]; then
 fi
 
 : ${format:=xtxt}
-: ${engine:=deepl}
+: ${engine:=gpt5}
 
 if [[ $format =~ ^(.+)-fold$ ]]; then
     format=${BASH_REMATCH[1]}
@@ -359,8 +359,8 @@ option+=(--xlate-to="$to_lang" --xlate-format="$format" --xlate-cache=yes)
 option+=(--all)
 
 [[ ${from_lang:-}  ]] && option+=(--xlate-from "$from_lang")
-[[ ${api:-}        ]] || use_clipboard=yes
-[[ ${check:-}      ]] || option+=(--xlate${use_clipboard:+-labor})
+[[ ${api:-}        ]] || labor=yes
+[[ ${check:-}      ]] || option+=(--xlate${labor:+-labor})
 [[ ${wrap:-}       ]] && option+=(--xlate-fold-line --xlate-fold-width=$wrap)
 [[ ${trace:-}      ]] && option+=(-dmo)
 [[ ${refresh:-}    ]] && option+=(--xlate-cache=clear)
@@ -415,8 +415,10 @@ else
     option+=("${area[@]}")
 fi
 
+(( ${dryrun:-0} >= 2 )) && option+=(--xlate-dryrun)
+
 exec=(greple "${module[@]}" "${option[@]}" "$@")
-[[ ${dryrun:-} ]] && exec=(echo "${exec[@]}")
+(( ${dryrun:-0} == 1 )) && exec=(echo "${exec[@]}")
 
 exec "${exec[@]}"
 
