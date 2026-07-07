@@ -1115,6 +1115,8 @@ sub cache_update {
             $maskobj->reset;
         }
         _progress({label => "From"}, @preview);
+        # Populate cache with original text so callback can fetch it
+        @cache{@{$region->{texts}}} = @from;
         return @from;
     }
     my @result = eval {

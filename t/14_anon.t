@@ -168,6 +168,9 @@ subtest 'dryrun previews the anonymized form' => sub {
     my $before = do { open my $fh, '<', $cache or die; local $/; <$fh> };
     my $r = run_xlate($doc, '--xlate-dryrun', "--xlate-anonymize=$dict");
     is($r->status, 0, 'dryrun succeeds');
+    unlike($r->stdout, qr/TRANSLATION ERROR/, 'no error marker on cache miss');
+    like($r->stdout, qr/yamada taro visited acme corporation/,
+         'original text passes through');
     like($r->stdout, qr/<person id=1 \/> visited <company id=1 \/>/,
          'From preview shows the anonymized payload');
     my $after = do { open my $fh, '<', $cache or die; local $/; <$fh> };
