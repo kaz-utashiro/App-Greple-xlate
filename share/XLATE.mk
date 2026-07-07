@@ -5,19 +5,26 @@
 # XLATE_MAXLEN: Set maximum length for API call
 # XLATE_USEAPI: Use API
 # XLATE_UPDATE: Force update cache
+# XLATE_ANONYMIZE:      Anonymization dictionary file
+# XLATE_MARK:           Inline anonymization marks (1 or custom regex)
+# XLATE_TEMPLATE:       Protect template expressions (1 or custom regex)
+# XLATE_FRONTMATTER:    Exclude/anonymize YAML front matter
+# XLATE_SEED:           Seed cache from another cache file
+# XLATE_CONTEXT_WINDOW: Context blocks for re-translation
 #
 
 #
 # PARAMETER FILES
-#   If the source file is acompanied with parameter files with 
+#   If the source file is acompanied with parameter files with
 #   following extension, they are used to override default parameters.
 #
 # .LANG:   Languages translated to
 # .FORMAT: Format of output files
+# .ANONYMIZE: Anonymization dictionary for the file
 #
 
 XLATE_FORMAT ?= xtxt cm
-XLATE_ENGINE ?= deepl
+XLATE_ENGINE ?= gpt5
 
 ifeq ($(strip $(XLATE_FILES)),)
 override XLATE_FILES := \
@@ -74,10 +81,10 @@ TEMPFILES += $(foreach file,$(XLATE_FILES),$(call STXT,$(file)))
 define DEFINE_RULE
 ifeq ($5,1)
 $(basename $3).$1.$2: $3 $(call STXT,$3)
-	$$(XLATE) -e $4 -t $1 -o $2 $$< > $$@
+	$$(XLATE) $$(call XOPT,$3) -e $4 -t $1 -o $2 $$< > $$@
 else
 $(basename $3).$4-$1.$2: $3 $(call STXT,$3)
-	$$(XLATE) -e $4 -t $1 -o $2 $$< > $$@
+	$$(XLATE) $$(call XOPT,$3) -e $4 -t $1 -o $2 $$< > $$@
 endif
 endef
 $(eval $(call FOREACH,DEFINE_RULE))
@@ -87,6 +94,14 @@ XLATE = xlate \
 	$(if $(XLATE_MAXLEN),-m$(XLATE_MAXLEN)) \
 	$(if $(XLATE_USEAPI),-a) \
 	$(if $(XLATE_UPDATE),-u)
+
+XOPT = $(if $(wildcard $1.ANONYMIZE),--anonymize=$1.ANONYMIZE,\
+	$(if $(XLATE_ANONYMIZE),--anonymize=$(XLATE_ANONYMIZE))) \
+	$(if $(XLATE_MARK),$(if $(filter 1,$(XLATE_MARK)),--mark,--mark=$(XLATE_MARK))) \
+	$(if $(XLATE_TEMPLATE),$(if $(filter 1,$(XLATE_TEMPLATE)),--template,--template=$(XLATE_TEMPLATE))) \
+	$(if $(XLATE_FRONTMATTER),--frontmatter) \
+	$(if $(XLATE_SEED),--seed=$(XLATE_SEED)) \
+	$(if $(XLATE_CONTEXT_WINDOW),--context-window=$(XLATE_CONTEXT_WINDOW))
 
 .PHONY: clean
 clean:

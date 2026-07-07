@@ -345,6 +345,12 @@ if [[ ${make:-} ]]; then
          XLATE_UPDATE=${update:-} \
          ${engine:+XLATE_ENGINE=\""$engine"\"} \
          ${format:+XLATE_FORMAT=\""$format"\"} \
+         ${anonymize:+XLATE_ANONYMIZE=\""$anonymize"\"} \
+         ${mark+XLATE_MARK=\""${mark:-1}"\"} \
+         ${template+XLATE_TEMPLATE=\""${template:-1}"\"} \
+         ${frontmatter:+XLATE_FRONTMATTER=1} \
+         ${seed:+XLATE_SEED=\""$seed"\"} \
+         ${context_window:+XLATE_CONTEXT_WINDOW=\""$context_window"\"} \
          ${files:+XLATE_FILES=\""$files"\"} \
          "${opt[@]}" \
     || exit 1

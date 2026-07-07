@@ -115,4 +115,56 @@ subtest 'file type presets unchanged' => sub {
     like($pmout, qr/--pod/, 'pod option for .pm');
 };
 
+sub find_gmake {
+    for my $make (qw(gmake make)) {
+        my $v = qx($make --version 2>/dev/null) // '';
+        return $make if $v =~ /GNU/;
+    }
+    return;
+}
+
+subtest 'XLATE.mk expansion' => sub {
+    my $gmake = find_gmake() or plan skip_all => 'GNU make not found';
+    my $mk  = abs_path('share/XLATE.mk');
+    my $sub = "$dir/mk"; mkdir $sub;
+    write_file("$sub/doc.txt", "hello\n");
+    my $run = sub {
+        my(@vars) = @_;
+        qx(cd '$sub' && '$gmake' -n -f '$mk' XLATE_LANG=JA @vars 2>&1);
+    };
+    my $out = $run->();
+    like($out, qr/-e gpt5/, 'default engine is gpt5');
+    $out = $run->('XLATE_ANONYMIZE=dict.json', 'XLATE_CONTEXT_WINDOW=3',
+                  'XLATE_FRONTMATTER=1', 'XLATE_TEMPLATE=1',
+                  'XLATE_MARK=1', 'XLATE_SEED=prev.json');
+    like($out, qr/--anonymize=dict\.json/, 'XLATE_ANONYMIZE');
+    like($out, qr/--context-window=3/,     'XLATE_CONTEXT_WINDOW');
+    like($out, qr/--frontmatter/,          'XLATE_FRONTMATTER');
+    like($out, qr/--template(?:\s|$)/m,    'XLATE_TEMPLATE=1 -> bare --template');
+    like($out, qr/--mark(?:\s|$)/m,        'XLATE_MARK=1 -> bare --mark');
+    like($out, qr/--seed=prev\.json/,      'XLATE_SEED');
+    $out = $run->('XLATE_TEMPLATE=X%.*?%X');
+    like($out, qr/--template=X%\.\*\?%X/,  'XLATE_TEMPLATE=regex');
+    # FILE.ANONYMIZE は XLATE_ANONYMIZE より優先
+    write_file("$sub/doc.txt.ANONYMIZE", qq([{"category":"person","text":"X"}]\n));
+    $out = $run->('XLATE_ANONYMIZE=global.json');
+    like($out, qr/--anonymize=doc\.txt\.ANONYMIZE/, 'FILE.ANONYMIZE wins');
+    unlike($out, qr/--anonymize=global\.json/, 'variable overridden');
+};
+
+subtest 'xlate -M passes new variables' => sub {
+    # インストール済みの古い share/XLATE.mk が解決されうるので、
+    # make 出力ではなく --trace (set -x) の exec 行で転送を検証する
+    my $sub = "$dir/mk2"; mkdir $sub;
+    write_file("$sub/doc.txt", "hello\n");
+    my $cwd = Cwd::getcwd();
+    chdir $sub or die;
+    my $r = run_cli(qw(-M -n --trace -t JA --anonymize=dict.json --context-window=3 --frontmatter));
+    chdir $cwd or die;
+    is($r->{status}, 0, 'exit 0') or diag($r->{err});
+    like($r->{err}, qr/XLATE_ANONYMIZE=.?dict\.json/, 'XLATE_ANONYMIZE passed');
+    like($r->{err}, qr/XLATE_CONTEXT_WINDOW=.?3/,     'XLATE_CONTEXT_WINDOW passed');
+    like($r->{err}, qr/XLATE_FRONTMATTER=1/,          'XLATE_FRONTMATTER passed');
+};
+
 done_testing;
