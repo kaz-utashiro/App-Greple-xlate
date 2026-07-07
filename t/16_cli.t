@@ -145,6 +145,15 @@ subtest 'XLATE.mk expansion' => sub {
     like($out, qr/--seed=prev\.json/,      'XLATE_SEED');
     $out = $run->('XLATE_TEMPLATE=X%.*?%X');
     like($out, qr/--template=X%\.\*\?%X/,  'XLATE_TEMPLATE=regex');
+    # xlate -M は値を二重引用符で包んで渡す (XLATE_MARK="1") が、
+    # GNU Make はコマンドライン変数代入の引用符を剥がさないので、
+    # REMOVE_QUOTE で剥がされて往復することを確認する
+    $out = $run->(q{XLATE_MARK='"1"'}, q{XLATE_TEMPLATE='"1"'},
+                  q{XLATE_ANONYMIZE='"dict.json"'});
+    like($out, qr/--mark(?:\s|$)/m,     'quoted XLATE_MARK="1" -> bare --mark');
+    like($out, qr/--template(?:\s|$)/m, 'quoted XLATE_TEMPLATE="1" -> bare --template');
+    like($out, qr/--anonymize=dict\.json/, 'quoted XLATE_ANONYMIZE unquoted');
+    unlike($out, qr/--anonymize="/, 'no literal quotes leak into option');
     # FILE.ANONYMIZE は XLATE_ANONYMIZE より優先
     write_file("$sub/doc.txt.ANONYMIZE", qq([{"category":"person","text":"X"}]\n));
     $out = $run->('XLATE_ANONYMIZE=global.json');

@@ -41,7 +41,9 @@ override XLATE_LANG := $(subst $(comma), ,$(XLATE_LANG))
 define REMOVE_QUOTE
   override $1 := $$(subst ",,$$($1))
 endef
-$(foreach name,XLATE_LANG XLATE_FORMAT XLATE_FILES,\
+$(foreach name,XLATE_LANG XLATE_FORMAT XLATE_FILES \
+	XLATE_ANONYMIZE XLATE_MARK XLATE_TEMPLATE \
+	XLATE_FRONTMATTER XLATE_SEED XLATE_CONTEXT_WINDOW,\
 	$(eval $(call REMOVE_QUOTE,$(name))))
 
 define FOREACH
