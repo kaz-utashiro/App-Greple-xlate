@@ -88,7 +88,7 @@ subtest 'new 2.0 options map to module options' => sub {
         [ ['--template=<%.*?%>'],     qr/--xlate-template=<%\.\*\?%>/ ],
         [ ['--frontmatter'],          qr/--xlate-frontmatter/ ],
         [ ['--seed=prev.json'],       qr/--xlate-cache-seed=prev\.json/ ],
-        [ ['--context-window=3'],     qr/--xlate-context-window=3/ ],
+        [ ['--context=3'],            qr/--xlate-context-window=3/ ],
     );
     for my $c (@cases) {
         my($args, $want) = @$c;
@@ -138,7 +138,7 @@ subtest 'XLATE.mk expansion' => sub {
                   'XLATE_FRONTMATTER=1', 'XLATE_TEMPLATE=1',
                   'XLATE_MARK=1', 'XLATE_SEED=prev.json');
     like($out, qr/--anonymize='dict\.json'/, 'XLATE_ANONYMIZE');
-    like($out, qr/--context-window='3'/,     'XLATE_CONTEXT_WINDOW');
+    like($out, qr/--context='3'/,     'XLATE_CONTEXT_WINDOW');
     like($out, qr/--frontmatter/,          'XLATE_FRONTMATTER');
     like($out, qr/--template(?:\s|$)/m,    'XLATE_TEMPLATE=1 -> bare --template');
     like($out, qr/--mark(?:\s|$)/m,        'XLATE_MARK=1 -> bare --mark');
@@ -195,7 +195,7 @@ subtest 'xlate -M passes new variables' => sub {
     write_file("$sub/doc.txt", "hello\n");
     my $cwd = Cwd::getcwd();
     chdir $sub or die;
-    my $r = run_cli(qw(-M -n --trace -t JA --anonymize=dict.json --context-window=3 --frontmatter));
+    my $r = run_cli(qw(-M -n --trace -t JA --anonymize=dict.json --context=3 --frontmatter));
     chdir $cwd or die;
     is($r->{status}, 0, 'exit 0') or diag($r->{err});
     like($r->{err}, qr/XLATE_ANONYMIZE=.?dict\.json/, 'XLATE_ANONYMIZE passed');

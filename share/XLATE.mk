@@ -115,7 +115,7 @@ XOPT = $(if $(wildcard $1.ANONYMIZE),--anonymize='$1.ANONYMIZE',\
 	$(if $(XLATE_TEMPLATE),$(if $(filter 1,$(XLATE_TEMPLATE)),--template,--template='$(XLATE_TEMPLATE)')) \
 	$(if $(XLATE_FRONTMATTER),--frontmatter) \
 	$(if $(XLATE_SEED),--seed='$(XLATE_SEED)') \
-	$(if $(XLATE_CONTEXT_WINDOW),--context-window='$(XLATE_CONTEXT_WINDOW)')
+	$(if $(XLATE_CONTEXT_WINDOW),--context='$(XLATE_CONTEXT_WINDOW)')
 
 .PHONY: clean
 clean:

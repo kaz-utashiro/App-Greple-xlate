@@ -42,7 +42,7 @@ xlate [ options ] -t LANG FILE [ greple options ]
     --template[=#]    protect template expressions
     --frontmatter     exclude/anonymize YAML front matter
     --seed=#          seed cache from another cache file
-    --context-window=# context blocks for re-translation
+    --context=#       context blocks for re-translation
     -w, --wrap=#      wrap line by # width
     -m, --maxlen=#    max length per API call
     -l, --library=#   show library files (XLATE.mk, xlate.el)
@@ -291,7 +291,7 @@ declare -A OPTS=(
     [ template       ?  # protect template expressions     ]=
     [ frontmatter       # YAML front matter                ]=
     [ seed           :  # seed cache from another file     ]=
-    [ context-window :  # context window size              ]=
+    [ context        :  # context window size              ]=
     [   pattern | p @   # pattern to determine area        ]=
     [      file | f @   # pattern file                     ]=
     [   library | l :!  # show library files               ]=
@@ -370,7 +370,7 @@ if [[ ${make:-} ]]; then
          ${template+XLATE_TEMPLATE=\""${template:-1}"\"} \
          ${frontmatter:+XLATE_FRONTMATTER=1} \
          ${seed:+XLATE_SEED=\""$seed"\"} \
-         ${context_window:+XLATE_CONTEXT_WINDOW=\""$context_window"\"} \
+         ${context:+XLATE_CONTEXT_WINDOW=\""$context"\"} \
          ${files:+XLATE_FILES=\""$files"\"} \
          "${opt[@]}" \
     || exit 1
@@ -412,7 +412,7 @@ option+=(--all)
 [[ ${template+set}     ]] && option+=(--xlate-template="$template")
 [[ ${frontmatter:-}    ]] && option+=(--xlate-frontmatter)
 [[ ${seed:-}           ]] && option+=(--xlate-cache-seed="$seed")
-[[ ${context_window:-} ]] && option+=(--xlate-context-window="$context_window")
+[[ ${context:-}        ]] && option+=(--xlate-context-window="$context")
 
 declare -a area
 case ${1:-} in
@@ -708,7 +708,7 @@ closing C<--->.
 Initialize a new document's translation cache from another
 document's cache I<file>.  Useful for periodic reports.
 
-=item B<--context-window>=I<n>
+=item B<--context>=I<n>
 
 Number of surrounding translated blocks passed as context when
 re-translating changed blocks (default 2, 0 to disable).
