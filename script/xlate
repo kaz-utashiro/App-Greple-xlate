@@ -37,6 +37,12 @@ xlate [ options ] -t LANG FILE [ greple options ]
     -o, --format=#    output format (*xtxt, cm, ifdef, space, space+, colon)
     -x, --maskfile=#  file containing mask patterns
     -g, --glossary=#  glossary file
+        --anonymize=#      anonymization dictionary file
+        --mark[=#]         collect inline anonymization marks
+        --template[=#]     protect template expressions
+        --frontmatter      exclude/anonymize YAML front matter
+        --seed=#           seed cache from another cache file
+        --context-window=# context blocks for re-translation
     -w, --wrap=#      wrap line by # width
     -m, --maxlen=#    max length per API call
     -l, --library=#   show library files (XLATE.mk, xlate.el)
@@ -260,6 +266,12 @@ declare -A OPTS=(
     [    maxlen | m :   # max length per API call          ]=
     [  maskfile | x :   # mask patterns file               ]=
     [  glossary | g :   # glossary file                    ]=
+    [ anonymize      :  # anonymization dictionary         ]=
+    [ mark           ?  # inline anonymization marks       ]=
+    [ template       ?  # protect template expressions     ]=
+    [ frontmatter       # YAML front matter                ]=
+    [ seed           :  # seed cache from another file     ]=
+    [ context-window :  # context window size              ]=
     [   pattern | p @   # pattern to determine area        ]=
     [      file | f @   # pattern file                     ]=
     [   library | l :!  # show library files               ]=
@@ -369,6 +381,12 @@ option+=(--all)
 [[ ${maxlen:-}     ]] && option+=(--xlate-maxlen="$maxlen")
 [[ ${maskfile:-}   ]] && option+=(--xlate-setopt "maskfile=$maskfile")
 [[ ${glossary:-}   ]] && option+=(--xlate-glossary "$glossary")
+[[ ${anonymize:-}      ]] && option+=(--xlate-anonymize="$anonymize")
+[[ ${mark+set}         ]] && option+=(--xlate-anonymize-mark="$mark")
+[[ ${template+set}     ]] && option+=(--xlate-template="$template")
+[[ ${frontmatter:-}    ]] && option+=(--xlate-frontmatter)
+[[ ${seed:-}           ]] && option+=(--xlate-cache-seed="$seed")
+[[ ${context_window:-} ]] && option+=(--xlate-context-window="$context_window")
 
 declare -a area
 case ${1:-} in

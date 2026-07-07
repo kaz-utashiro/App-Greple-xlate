@@ -79,4 +79,40 @@ subtest '-nn runs greple with --xlate-dryrun' => sub {
     unlike($r->{out}, qr/^greple /m, 'not an echoed command line');
 };
 
+subtest 'new 2.0 options map to module options' => sub {
+    my @cases = (
+        [ ['--anonymize=dict.json'],  qr/--xlate-anonymize=dict\.json/ ],
+        [ ['--mark'],                 qr/--xlate-anonymize-mark=(?:\s|$)/m ],
+        [ ['--mark=@@(.+)@@'],        qr/--xlate-anonymize-mark=\@\@\(\.\+\)\@\@/ ],
+        [ ['--template'],             qr/--xlate-template=(?:\s|$)/m ],
+        [ ['--template=<%.*?%>'],     qr/--xlate-template=<%\.\*\?%>/ ],
+        [ ['--frontmatter'],          qr/--xlate-frontmatter/ ],
+        [ ['--seed=prev.json'],       qr/--xlate-cache-seed=prev\.json/ ],
+        [ ['--context-window=3'],     qr/--xlate-context-window=3/ ],
+    );
+    for my $c (@cases) {
+        my($args, $want) = @$c;
+        my $r = run_cli('-n', @$args, '-t', 'JA', $doc);
+        is($r->{status}, 0, "@$args: exit 0");
+        like($r->{out}, $want, "@$args maps correctly");
+    }
+};
+
+subtest 'options absent by default' => sub {
+    my $r = run_cli(qw(-n -t JA), $doc);
+    unlike($r->{out}, qr/--xlate-anonymize|--xlate-template|--xlate-frontmatter|--xlate-cache-seed|--xlate-context-window/,
+           'no new module options without CLI flags');
+};
+
+subtest 'file type presets unchanged' => sub {
+    my $md = "$dir/f.md";
+    my $pm = "$dir/f.pm";
+    write_file($md, "# title\n");
+    write_file($pm, "package F;\n1;\n");
+    like(run_cli(qw(-n -t JA), $md)->{out}, qr/\^\[-\+#\]/, 'markdown area pattern');
+    my $pmout = run_cli(qw(-n -t JA), $pm)->{out};
+    like($pmout, qr/-Mperl/, 'perl module loaded for .pm');
+    like($pmout, qr/--pod/, 'pod option for .pm');
+};
+
 done_testing;
