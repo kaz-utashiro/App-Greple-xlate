@@ -80,7 +80,7 @@ xlate [ options ] -t LANG FILE [ greple options ]
 
 =head1 VERSION
 
-    Version 2.00
+    Version 2.01
 
 =head1 INCOMPATIBLE CHANGES IN 2.0
 
