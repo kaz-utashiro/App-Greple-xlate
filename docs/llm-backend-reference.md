@@ -25,7 +25,8 @@ printf '%s' "$json" | llm -m gpt-5.6-terra \
     --no-stream --no-log
 ```
 
-- **stdin**（パイプ）がユーザプロンプトになる。位置引数のプロンプトも与える
+- **stdin**（パイプ）がユーザプロンプトになる。xlate は `input` 配列と、必要に
+  応じて `context` オブジェクトを持つ JSON request を流す。位置引数のプロンプトも与える
   と `stdin + " " + 引数` で連結されるので、**本文は stdin に流し、位置引数は
   与えない**こと。（`llm/cli.py: read_prompt()`）
 - **stdout** にはモデルの回答テキストのみが出る（gpty 同様にそのまま取得可）。
@@ -173,11 +174,15 @@ gpty より llm を選ぶ理由＝プラグインで他プロバイダに対応�
 ## 9. xlate 実装に向けたメモ・決定事項
 
 - **バックエンド呼び出し**: `gpty/gpt5.pm` の `gpty()` シェルアウトを `llm`
-  シェルアウト（Command::Run）に置換。JSON 配列を stdin に流し、`-s` で
+  シェルアウト（Command::Run）に置換。JSON request を stdin に流し、`-s` で
   system、`-o` で reasoning_effort/verbosity（max_tokens は §3 の注意により
-  送らない）、加えて
-  `--no-stream --no-log`。JSON 配列プロトコル（`xlate`/`xlate_each`）は
-  バックエンド非依存なのでそのまま再利用。
+  送らない）、加えて `--no-stream --no-log`。request の `input` は翻訳対象の
+  文字列配列、任意の `context` は周辺原文・周辺対訳・旧版対訳などの参照データ。
+  応答は `input` と同じ要素数・順序の JSON 配列とする。
+- **プロンプト境界**: system prompt には固定の翻訳方針だけを置く。原文や
+  キャッシュ由来の旧訳は、命令ではない明示的に untrusted な文書データとして
+  user request の `input` / `context` に置く。これにより、文書内の命令らしい
+  文言が system 指示に混入するのを防ぐ。
 - **モデル検出**: バージョン番号でなく「`llm models` に対象モデルが居るか」で
   検出し、無ければ明確なメッセージで失敗させる（実装は xlate::llm の
   diagnose）。

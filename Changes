@@ -10,6 +10,9 @@ Revision history for Perl extension App-Greple-xlate
     - Make one-to-one source revisions explicit in the translation context,
       and add --xlate-review / --review to show minimal source and target
       revision spans without another API call.
+    - Keep fixed translation policy in the system prompt and send source,
+      previous translations, and surrounding references as structured,
+      explicitly untrusted document data in the JSON user request.
 
 2.01 2026-07-09T05:59:30Z
 

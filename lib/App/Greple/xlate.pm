@@ -378,6 +378,11 @@ option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>)
 but not for DeepL.  You can customize the translation behavior by
 providing specific instructions to the AI model.  If the prompt
 contains C<%s>, it will be replaced with the target language name.
+For the llm-backed C<gpt5> engine, the document is supplied separately
+as a JSON request whose C<input> member is the array to translate and
+whose optional C<context> member contains reference data.  A fixed
+instruction that treats those members as document data, not commands,
+is appended even when a custom prompt is used.
 
 =item B<--xlate-context>=I<text>
 
@@ -397,9 +402,10 @@ of the changed text recovered from the cache, so that unchanged
 wording is preserved.  Set to 0 to disable context-aware translation
 entirely.
 Note that each changed region is translated in its own API call and
-the context can add up to about 8000 characters to the system
-prompt, so context-aware translation trades some extra cost for
-consistency.
+the context can add up to about 8000 characters to the JSON user
+request, so context-aware translation trades some extra cost for
+consistency.  Document-derived context is kept out of the system
+prompt.
 
 =item B<--xlate-cache-seed>=I<file>
 

@@ -4,7 +4,7 @@
 ## Stub llm command for testing App::Greple::xlate::llm without API access.
 ##
 ## LLM_STUB_MODE:
-##   ok      - (default) return input JSON array elements uppercased
+##   ok      - (default) uppercase the request's input array elements
 ##   fail    - exit 1 with an error message on stderr
 ##   nomodel - prompt call fails; "llm models" output lacks gpt-5.6-terra
 ##   short   - drop the last element from the response array
@@ -58,7 +58,9 @@ if ($mode eq 'badjson') {
     exit 0;
 }
 
-my $list = JSON::PP->new->decode($input);
+my $request = JSON::PP->new->decode($input);
+my $list = ref($request) eq 'HASH' ? $request->{input} : $request;
+ref($list) eq 'ARRAY' or die "stub llm: input array missing\n";
 # A well-behaved model keeps XML-style marker tags verbatim; mimic
 # that: uppercase everything except tag-shaped spans.
 sub transform {

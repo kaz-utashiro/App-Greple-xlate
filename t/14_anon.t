@@ -80,11 +80,14 @@ subtest 'dictionary anonymization end to end' => sub {
     is(scalar @calls, 1, 'one call');
     my $payload = $calls[0]{stdin};
     my $sys = sys_of($calls[0]);
+    my $request = JSON::PP->new->decode($payload);
+    my $context = JSON::PP->new->canonical->encode($request->{context});
     unlike($payload, qr/yamada taro/, 'payload has no real name');
     like($payload, qr/<person id=1 \/>/, 'payload uses category tag');
-    unlike($sys, qr/yamada taro/, 'context sections have no real name');
-    unlike($sys, qr/acme corporation/, 'context sections have no company');
-    like($sys, qr/<person id=1 \/>/, 'context uses the same tag');
+    unlike($sys, qr/yamada taro/, 'system prompt has no real name');
+    unlike($sys, qr/acme corporation/, 'system prompt has no company');
+    unlike($sys, qr/<person id=1 \/>/, 'system prompt has no document tag');
+    like($context, qr/<person id=1 \/>/, 'context uses the same tag');
     like($r->stdout, qr/yamada taro CAME BACK ONCE MORE/,
          'restored name stays lowercase; only surrounding text upcased');
 };
@@ -106,8 +109,10 @@ END
     my $r = run_xlate($doc, '--xlate-anonymize-mark=');
     is($r->status, 0, 'run succeeds');
     my @calls = stub_calls($log);
-    my $payload = join '',
-        map { join '', @{ JSON::PP->new->decode($_->{stdin}) } } @calls;
+    my $payload = join '', map {
+        my $request = JSON::PP->new->decode($_->{stdin});
+        join '', @{$request->{input}};
+    } @calls;
     unlike($payload, qr/suzuki hanako/, 'marked name gone everywhere');
     like($payload, qr/\{\{ person\("<person id=1 \/>"\) \}\}/,
          'mark syntax survives around the tag');
