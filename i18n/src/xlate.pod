@@ -17,7 +17,7 @@ Version 2.01
 =head1 DESCRIPTION
 
 B<Greple> B<xlate> module find desired text blocks and replace them by
-the translated text.  The primary engine is GPT-5.5 (F<llm/gpt5.pm>),
+the translated text.  The primary engine is GPT-5.6 Terra (F<llm/gpt5.pm>),
 which calls the L<llm|https://llm.datasette.io/> command; DeepL
 (F<deepl.pm>) and legacy B<gpty>-based engines are also included.
 
@@ -233,7 +233,7 @@ At this time, the following engines are available
 
 =over 2
 
-=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
+=item * B<gpt5>: gpt-5.6-terra (via the C<llm> command)
 
 =item * B<deepl>: DeepL API (via the C<deepl> command)
 
@@ -509,6 +509,14 @@ machine and for estimating the cost of a run.
 See the translation result in real time in the STDERR output.  The
 C<From> payload is shown as transmitted, after anonymization and
 masking.
+
+=item B<--xlate-review>
+
+For a one-to-one changed block, show the smallest contiguous changed
+span in the old and new source, followed by the corresponding span in
+the old and new translation.  The report is written to STDERR, makes no
+additional API call, and is omitted when old and new blocks cannot be
+paired unambiguously.
 
 =item B<--xlate-stripe>
 

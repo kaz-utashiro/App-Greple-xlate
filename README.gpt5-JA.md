@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。主要なエンジンは GPT-5.5（`llm/gpt5.pm`）で、[llm](https://llm.datasette.io/) コマンドを呼び出します。DeepL（`deepl.pm`）および従来の **gpty** ベースのエンジンも含まれています。
+**Greple** **xlate** モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。主要なエンジンは GPT-5.6 Terra（`llm/gpt5.pm`）で、[llm](https://llm.datasette.io/) コマンドを呼び出します。DeepL（`deepl.pm`）および従来の **gpty** ベースのエンジンも含まれています。
 
 翻訳はファイルごとにキャッシュされるため、変更されていないテキストについてはコマンドを再実行してもコストはかかりません。文書が編集された場合、変更された段落だけが再度 API に送信されます。コンテキスト対応エンジンには、周囲の翻訳、変更箇所の周辺の生のソーステキスト、および編集された段落の以前のバージョンも渡されるため、新しい翻訳は確立済みの言い回しを維持します（**--xlate-context-window** を参照）。機密文字列は送信前に隠蔽できます（["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates) を参照）。
 
@@ -140,7 +140,7 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 
     現時点では、以下のエンジンが利用可能です。
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -303,6 +303,10 @@ Perlのpodスタイルで書かれた文書内の通常のテキストブロッ�
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     STDERR 出力で翻訳結果をリアルタイムに確認します。`From` ペイロードは、匿名化およびマスキング後に送信されるとおりに表示されます。
+
+- **--xlate-review**
+
+    1 対 1 で変更されたブロックについて、旧ソースと新ソースで変更された最小の連続範囲を表示し、続いて旧翻訳と新翻訳の対応する範囲を表示します。レポートは STDERR に出力され、追加の API 呼び出しは行わず、旧ブロックと新ブロックを曖昧さなく対応付けられない場合は省略されます。
 
 - **--xlate-stripe**
 

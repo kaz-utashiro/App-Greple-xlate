@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-App::Greple::xlate is a Perl module that provides translation support for the greple text processor. The primary engine is GPT-5.5 (`gpt5`, via the `llm` command); DeepL and the legacy gpty-based GPT-3.5/GPT-4/GPT-4o engines are also available.
+App::Greple::xlate is a Perl module that provides translation support for the greple text processor. The primary engine is GPT-5.6 Terra (`gpt5`, via the `llm` command); DeepL and the legacy gpty-based GPT-3.5/GPT-4/GPT-4o engines are also available.
 
 ## Build and Development Commands
 
@@ -46,7 +46,7 @@ prove -lv t/02_run.t
   - `gpt3.pm` - GPT-3.5 integration
   - `gpt4.pm` - GPT-4 integration
   - `gpt4o.pm` - GPT-4o integration
-  - `gpt5.pm` - GPT-5.5 integration (engine name is still `gpt5`)
+  - `gpt5.pm` - GPT-5.6 Terra integration (engine name is still `gpt5`)
   - These are reached as `--xlate-engine=gpt3` etc.; the cache file name keeps
     the bare engine name (e.g. `gpt5`), unaffected by the gpty namespace.
 

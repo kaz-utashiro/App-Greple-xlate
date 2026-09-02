@@ -114,7 +114,7 @@ subtest 'context sections appear in the system prompt' => sub {
     write_file($doc, $mod);
     my $log = "$dir/context.log";
     local $ENV{LLM_STUB_LOG} = $log;
-    my $r = run_xlate($doc);
+    my $r = run_xlate($doc, '--xlate-review');
     is($r->status, 0, 'run succeeds');
     my @calls = stub_calls($log);
     is(scalar @calls, 1, 'one llm call');
@@ -131,8 +131,16 @@ subtest 'context sections appear in the system prompt' => sub {
     like($sys, qr/Previous version of the passage/, 'previous section');
     like($sys, qr/beta paragraph revised text/, 'old source pair');
     like($sys, qr/BETA PARAGRAPH REVISED TEXT/, 'old translation pair');
+    like($sys, qr/Explicit source change/, 'one-to-one source change is explicit');
+    like($sys, qr/"current_source":"beta paragraph rerevised text\\n"/,
+         'source change identifies the current version');
 
     like($r->stdout, qr/BETA PARAGRAPH REREVISED TEXT/, 'output updated');
+    like($r->stdout, qr/\[xlate\.pm\] Review:/, 'review report is shown');
+    like($r->stdout, qr/source \@\d+: "" -> "re"/,
+         'review isolates the changed source span');
+    like($r->stdout, qr/target \@\d+: "" -> "RE"/,
+         'review isolates the changed translation span');
 };
 
 subtest 'truncation drops far flanks first' => sub {
@@ -154,6 +162,27 @@ subtest 'truncation drops far flanks first' => sub {
     like($text, qr/NEAR A/, 'near flank kept (after)');
     unlike($text, qr/FAR B/, 'far flank dropped');
     like($text, qr/OLD TRANS/, 'old pair survives truncation');
+};
+
+subtest 'truncation drops explicit change before the old pair' => sub {
+    require App::Greple::xlate::llm;
+    my $old = "o" x 2800;
+    my $new = "n" x 2800;
+    my $translation = "t" x 2800;
+    local $App::Greple::xlate::call_context = {
+        source_before => '',
+        source_after  => '',
+        hits_before   => [],
+        hits_after    => [],
+        old_pairs     => [ [ $old, $translation ] ],
+        new_texts     => [ $new ],
+    };
+    my $text = App::Greple::xlate::llm::context_sections();
+    cmp_ok(length($text), '<=', $App::Greple::xlate::llm::CONTEXT_MAX,
+           'within limit');
+    like($text, qr/\Q$translation\E/, 'old translation remains available');
+    unlike($text, qr/Explicit source change/,
+           'duplicated source-change section is dropped first');
 };
 
 subtest 'empty context renders nothing' => sub {

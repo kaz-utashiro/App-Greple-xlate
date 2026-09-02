@@ -105,8 +105,10 @@ sub context_sections {
     my @before = @{$ctx->{hits_before} // []};   # near to far
     my @after  = @{$ctx->{hits_after}  // []};   # near to far
     my @old    = @{$ctx->{old_pairs}   // []};   # document order
+    my @new    = @{$ctx->{new_texts}   // []};   # current region order
     my $sb = $ctx->{source_before} // '';
     my $sa = $ctx->{source_after}  // '';
+    my $show_change = @old == 1 && @new == 1;
 
     my $render = sub {
         my $out = '';
@@ -128,6 +130,16 @@ sub context_sections {
                   . "version, keep the previous translation's wording exactly;\n"
                   . "change only what the source changes require:\n"
                   . _pairs_json(@old);
+        }
+        if ($show_change) {
+            $out .= "\n\nExplicit source change for this one-to-one revision.\n"
+                  . "Use it to identify what the translation actually needs to\n"
+                  . "change; preserve all other wording from the previous\n"
+                  . "translation:\n"
+                  . $json_flat->encode({
+                        previous_source => $old[0][0],
+                        current_source  => $new[0],
+                    });
         }
         $out;
     };
@@ -156,6 +168,7 @@ sub context_sections {
             elsif (@after)  { pop @after;  1 }
             else  { 0 }
         },
+        sub { $show_change ? do { $show_change = 0; 1 } : 0 },
         sub { @old ? do { pop @old; 1 } : 0 },
     );
     my $text = $render->();
@@ -240,13 +253,18 @@ sub xlate_each {
     my $obj = eval { $json->decode($out) };
     ref $obj eq 'ARRAY'
         or die "Invalid JSON response:\n\n$out\n";
+    if (@$obj != @in) {
+        die sprintf("Unexpected response element count (%d != %d):\n\n%s\n",
+                    scalar(@$obj), scalar(@in), $out);
+    }
+    for my $i (0 .. $#$obj) {
+        defined($obj->[$i]) && !ref($obj->[$i])
+            && $json_flat->encode($obj->[$i]) =~ /\A"/
+            or die sprintf("Invalid response element %d (expected string):\n\n%s\n",
+                           $i, $out);
+    }
     my @out = map { s/(?<!\n)\z/\n/r } @$obj;
     _progress("To:\n", map s/^/\t> /mgr, @out);
-    if (@out < @in) {
-        my $to = join '', @out;
-        die sprintf("Unexpected response (%d < %d):\n\n%s\n",
-                    int(@out), int(@in), $to);
-    }
     map { join '', splice @out, 0, $_ } @count;
 }
 

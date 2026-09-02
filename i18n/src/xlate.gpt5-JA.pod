@@ -16,7 +16,7 @@ Version 2.01
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。主要なエンジンは GPT-5.5（F<llm/gpt5.pm>）で、L<llm|https://llm.datasette.io/> コマンドを呼び出します。DeepL（F<deepl.pm>）および従来の B<gpty> ベースのエンジンも含まれています。
+B<Greple> B<xlate> モジュールは目的のテキストブロックを見つけ、それらを翻訳されたテキストに置き換えます。主要なエンジンは GPT-5.6 Terra（F<llm/gpt5.pm>）で、L<llm|https://llm.datasette.io/> コマンドを呼び出します。DeepL（F<deepl.pm>）および従来の B<gpty> ベースのエンジンも含まれています。
 
 翻訳はファイルごとにキャッシュされるため、変更されていないテキストについてはコマンドを再実行してもコストはかかりません。文書が編集された場合、変更された段落だけが再度 API に送信されます。コンテキスト対応エンジンには、周囲の翻訳、変更箇所の周辺の生のソーステキスト、および編集された段落の以前のバージョンも渡されるため、新しい翻訳は確立済みの言い回しを維持します（B<--xlate-context-window> を参照）。機密文字列は送信前に隠蔽できます（L</ANONYMIZATION AND TEMPLATES> を参照）。
 
@@ -158,7 +158,7 @@ B<--xlate-fold> オプションを指定すると、変換後のテキストは�
 
 =over 2
 
-=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
+=item * B<gpt5>: gpt-5.6-terra (via the C<llm> command)
 
 =item * B<deepl>: DeepL API (via the C<deepl> command)
 
@@ -332,6 +332,10 @@ C<xtxt> 以外の以下の形式は、翻訳対象部分が行の集合である
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 STDERR 出力で翻訳結果をリアルタイムに確認します。C<From> ペイロードは、匿名化およびマスキング後に送信されるとおりに表示されます。
+
+=item B<--xlate-review>
+
+1 対 1 で変更されたブロックについて、旧ソースと新ソースで変更された最小の連続範囲を表示し、続いて旧翻訳と新翻訳の対応する範囲を表示します。レポートは STDERR に出力され、追加の API 呼び出しは行わず、旧ブロックと新ブロックを曖昧さなく対応付けられない場合は省略されます。
 
 =item B<--xlate-stripe>
 

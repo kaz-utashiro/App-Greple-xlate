@@ -2,7 +2,7 @@
 
 App::Greple::xlate に `llm` ベースの翻訳バックエンドを実装する（`gpty` バック
 エンドの置き換え）ための参考資料。一次情報は `llm` のソース
-（`~/Clone/llm`、バージョン **0.32a3**）と CLI の実機確認。
+（バージョン **0.33**）と CLI の実機確認。
 
 `llm` は Simon Willison 製の各種 LLM 用コマンドラインクライアント
 （<https://llm.datasette.io/>）。活発にメンテされ PyPI で配布され、xlate /
@@ -18,9 +18,9 @@ xlate のエンジンがやることは「テキストを入れ、訳文を受�
 対応づく。
 
 ```sh
-printf '%s' "$json" | llm -m gpt-5.5 \
+printf '%s' "$json" | llm -m gpt-5.6-terra \
     --system "$system_prompt" \
-    -o reasoning_effort none \
+    -o reasoning_effort low \
     -o verbosity low \
     --no-stream --no-log
 ```
@@ -41,12 +41,12 @@ printf '%s' "$json" | llm -m gpt-5.5 \
 
 | オプション | xlate での用途 |
 |---|---|
-| `-m, --model ID` | 使用モデル（例 `gpt-5.5`）。環境変数 `LLM_MODEL`。 |
+| `-m, --model ID` | 使用モデル（例 `gpt-5.6-terra`）。環境変数 `LLM_MODEL`。 |
 | `-s, --system TEXT` | system プロンプト（翻訳指示）。 |
 | `-o, --option KEY VALUE` | モデルオプション。複数可。gpty のパラメータを対応。 |
 | `--no-stream` | ストリーミングせず一括で返す。 |
 | `-n, --no-log` | プロンプト/応答を llm の sqlite ログに**書かない**。バッチ翻訳では DB 肥大防止に付ける。 |
-| `-R, --hide-reasoning` | reasoning 出力を抑制（保険。`reasoning_effort none` なら元々出ない）。 |
+| `-R, --hide-reasoning` | reasoning 出力を抑制（保険）。 |
 | `--key KEY` | API キー上書き（無指定なら環境変数/保存キー）。 |
 | `--options` | （診断）選択モデルの利用可能オプションを表示。 |
 | `-u, --usage` | （診断）トークン使用量を stderr に表示。 |
@@ -67,9 +67,8 @@ OpenAI モデルのオプションは `SharedOptions` ＋モデル別の追加
 
 reasoning モデルの追加オプション:
 
-- **`reasoning_effort`** — 列挙: `none`, `minimal`, `low`, `medium`,
-  `high`, `xhigh`（出典 `ReasoningEffortEnum`）。低いほど高速・トークン少。
-  xlate は翻訳用途で **`none`**。
+- **`reasoning_effort`** — llm 0.33 の `gpt-5.6-terra` では `low`,
+  `medium`, `high`。低いほど高速・トークン少。xlate は翻訳用途で **`low`**。
 - **`verbosity`** — 列挙: `low`, `medium`, `high`（`VerbosityEnum`）。
   xlate は **`low`**。
 - **`chat_completions`** — 真値で `/v1/responses` でなく旧
@@ -79,12 +78,8 @@ reasoning モデルの追加オプション:
 
 - **`max_tokens`** が出力上限。Responses API モデルでは
   `max_output_tokens` として送られる（gpty の `--max-completion-tokens`）。
-  **注意 (2026-07-06 実機確認)**: llm 0.31 の Chat Completions 経路では
-  `max_tokens` がそのまま送られ、reasoning モデル (gpt-5.5) は 400 で拒否
-  する（API は `max_completion_tokens` を要求するが llm 0.31 は公開して
-  いない）。したがって **xlate は `-o max_tokens` を送らない**
-  （0.31/0.32+ 両対応。翻訳出力は入力量に律速されるため上限なしで実害なし）。
-- **`temperature`**: gpt-5.5 では**渡さない**こと。llm はオプションを指定した
+  xlate は翻訳出力が入力量に律速されるため、**`-o max_tokens` を送らない**。
+- **`temperature`**: gpt-5.6-terra では**渡さない**こと。llm はオプションを指定した
   ときだけ temperature を送る。reasoning モデルは既定以外の temperature を
   拒否するので、付けないのが正しい（gpty は特別処理していたが、llm では単に
   `-o temperature` を付けなければよい）。
@@ -95,9 +90,9 @@ reasoning モデルの追加オプション:
 
 | gpty | llm |
 |---|---|
-| `--engine gpt-5.5` | `-m gpt-5.5` |
+| `--engine gpt-5.5` | `-m gpt-5.6-terra` |
 | `--system TEXT` | `-s TEXT` |
-| `--reasoning-effort none` | `-o reasoning_effort none` |
+| `--reasoning-effort none` | `-o reasoning_effort low` |
 | `--verbosity low` | `-o verbosity low` |
 | `--max-completion-tokens 16000` | *（送らない — §3 の注意参照）* |
 | `--temperature 1`（gpt-5* では無視） | *（省略）* |
@@ -105,20 +100,14 @@ reasoning モデルの追加オプション:
 
 ---
 
-## 4. gpt-5.5 モデルの利用可否
+## 4. gpt-5.6-terra モデルの利用可否
 
-- **llm 0.32+ は `gpt-5.5`（および `gpt-5.5-2026-04-23`）を組み込みモデルと
-  して同梱**。**Responses API** 経由・`reasoning=True`・`verbosity=True` で
-  登録済み（出典 `openai_models.py` の "GPT-5.5" ブロック）。よって新しめの
-  llm なら**追加設定なしで `-m gpt-5.5` がそのまま使える**。
-- 古い llm（例: ホストの 0.27.1）は `gpt-5` までしか知らず `verbosity` も無い。
-  **したがって llm バックエンドは新しめの llm を要求すべき**（gpt-5.5 を含む
-  バージョン＝0.32+ を要件に）。
-- 各環境での確認: `llm models | grep gpt-5.5`。
-- **実機確認 (2026-07-06)**: llm **0.31** でも `gpt-5.5` /
-  `gpt-5.5-2026-04-23` はコア組み込みで利用可能(ただし Responses でなく
-  Chat Completions 経由)。したがって実装はバージョン番号でなく
-  「`llm models` にモデルが居るか」で検出する(xlate::llm の diagnose)。
+- **llm 0.33 は `gpt-5.6-terra` を組み込みモデルとして登録**している。
+  Responses API 経由で `reasoning_effort` と `verbosity` を利用できるため、
+  追加設定なしで `-m gpt-5.6-terra` を使用できる。
+- 各環境での確認: `llm models | grep gpt-5.6-terra`。
+- 実装はバージョン番号でなく「`llm models` に対象モデルが居るか」で検出する
+  （xlate::llm の diagnose）。
 
 ---
 
@@ -136,14 +125,14 @@ gpty は旧 **`/v1/chat/completions`** を使っていた。xlate から見た�
 
 ## 6. カスタムモデル登録（フォールバック）
 
-インストール済み llm が gpt-5.5 より古い場合や、私設/プロキシのモデルを足す
+インストール済み llm が gpt-5.6-terra を持たない場合や、私設/プロキシのモデルを足す
 場合のみ必要。ファイル: `<llm user dir>/extra-openai-models.yaml`
 （macOS: `~/Library/Application Support/io.datasette.llm/`。場所は
 `dirname "$(llm logs path)"` で判明）。書式（`openai_models.py` のローダ）:
 
 ```yaml
-- model_id: gpt-5.5
-  model_name: gpt-5.5
+- model_id: gpt-5.6-terra
+  model_name: gpt-5.6-terra
   responses: true        # Responses API を使う（省略すると Chat Completions）
   reasoning: true        # -o reasoning_effort を有効化
   supports_schema: true
@@ -152,7 +141,7 @@ gpty は旧 **`/v1/chat/completions`** を使っていた。xlate から見た�
 ```
 
 推奨方針: **このファイルを同梱せず、新しめの llm を要求して組み込みの
-`gpt-5.5` に頼る**。
+`gpt-5.6-terra` に頼る**。
 
 ---
 
@@ -176,7 +165,7 @@ gpty より llm を選ぶ理由＝プラグインで他プロバイダに対応�
 各プラグインは独自のモデル ID と `-o` オプションを持つ（reasoning 系の制御は
 プロバイダごとに異なる）。導入済み一覧は `llm models`、モデル別オプションは
 `llm models --options -m MODEL`。汎用 llm バックエンドなら `-m` と `-o` を
-変えるだけで Claude/Gemini の翻訳エンジンも出せる——最初の gpt-5.5 ステップの
+変えるだけで Claude/Gemini の翻訳エンジンも出せる——最初の gpt-5.6-terra ステップの
 範囲外だが、これが移行の動機。
 
 ---
@@ -190,20 +179,20 @@ gpty より llm を選ぶ理由＝プラグインで他プロバイダに対応�
   `--no-stream --no-log`。JSON 配列プロトコル（`xlate`/`xlate_each`）は
   バックエンド非依存なのでそのまま再利用。
 - **モデル検出**: バージョン番号でなく「`llm models` に対象モデルが居るか」で
-  検出し、無ければ明確なメッセージで失敗させる（§4 の実機確認どおり 0.31 でも
-  gpt-5.5 は使えるため。実装は xlate::llm の diagnose）。
-- **再現性/同等性**: 同一モデル＋`reasoning_effort none` なら gpty バックエンド
-  と同等の結果になる前提（移行の仮定）なので、共通の `gpt5` キャッシュは有効
-  のまま。厳密に合わせたい場合は `-o chat_completions 1` で gpty と同じ
-  エンドポイントを再現。
+  検出し、無ければ明確なメッセージで失敗させる（実装は xlate::llm の
+  diagnose）。
+- **キャッシュ互換性**: エンジン名は `gpt5` のままなので既存キャッシュは有効
+  のまま使われる。全体を gpt-5.6-terra で再翻訳したい場合だけ、キャッシュを
+  明示的に更新または削除する。
 - **出力の清浄性**: stdout に訳文のみが出るようにする——`--no-stream` を使い、
-  `reasoning_effort none` で reasoning は出ず、`-R` も保険として使える。
+  `reasoning_effort low` を指定する。必要に応じて `-R` で reasoning 表示を
+  抑制できる。
 - **エラー**: 非ゼロ終了＋stderr。gpty 経路と同様に利用者へ伝える。
 
 ---
 
-*出典: `~/Clone/llm` @ 0.32a3 — `llm/cli.py`（`prompt` オプション、
+*出典: llm 0.33 — `llm/cli.py`（`prompt` オプション、
 `read_prompt`）、`llm/default_plugins/openai_models.py`（`SharedOptions`、
-`ReasoningEffortEnum`、`VerbosityEnum`、`build_options_class`、GPT-5.5 を
+`ReasoningEffortEnum`、`VerbosityEnum`、`build_options_class`、GPT-5.6 Terra を
 含むモデル登録、`extra-openai-models.yaml` ローダ）、公式 docs
 `docs/openai-models.md`、`docs/usage.md`。*

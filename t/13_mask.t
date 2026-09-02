@@ -74,6 +74,39 @@ subtest 'missing tracked tag dies' => sub {
     $m->reset;
 };
 
+subtest 'stable mode verifies exact payload tag counts' => sub {
+    my $m = App::Greple::xlate::Mask->new(STABLE => 1);
+    $m->add_rule(person => quotemeta('山田太郎'));
+    my @t = ("山田太郎と山田太郎\n");
+    $m->mask(@t);
+    is($t[0], "<person id=1 />と<person id=1 />\n",
+       'same stable tag occurs twice in the payload');
+    my @ok = @t;
+    ok(!trap { $m->unmask(@ok) }, 'matching occurrence count succeeds');
+    is($ok[0], "山田太郎と山田太郎\n", 'both occurrences restored');
+
+    $m->reset;
+    @t = ("山田太郎です\n");
+    $m->mask(@t);
+    my @dup = ("<person id=1 />と<person id=1 />です\n");
+    like(trap { $m->unmask(@dup) }, qr/count mismatch \(expected 1, got 2\)/,
+         'duplicated payload tag dies');
+    $m->reset;
+};
+
+subtest 'reference-only stable tag must not leak into output' => sub {
+    my $m = App::Greple::xlate::Mask->new(STABLE => 1);
+    $m->add_rule(person => quotemeta('山田太郎'));
+    my @payload = ("本文です\n");
+    my @context = ("文脈には山田太郎がいる\n");
+    $m->mask(@payload);
+    $m->mask_reference(@context);
+    my @resp = ("本文に<person id=1 />を追加した\n");
+    like(trap { $m->unmask(@resp) }, qr/count mismatch \(expected 0, got 1\)/,
+         'tag copied from context is rejected');
+    $m->reset;
+};
+
 subtest 'escape layer round trip with nesting' => sub {
     my $m = App::Greple::xlate::Mask->new(STABLE => 1);
     $m->add_escape_rule;

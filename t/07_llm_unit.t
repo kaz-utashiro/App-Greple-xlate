@@ -97,7 +97,26 @@ subtest 'error handling' => sub {
     {
         local $ENV{LLM_STUB_MODE} = 'short';
         like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n", "b\n") },
-             qr/Unexpected response \(1 < 2\)/, 'element count mismatch dies');
+             qr/Unexpected response element count \(1 != 2\)/,
+             'missing response element dies');
+    }
+    {
+        local $ENV{LLM_STUB_MODE} = 'long';
+        like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n", "b\n") },
+             qr/Unexpected response element count \(3 != 2\)/,
+             'extra response element dies');
+    }
+    {
+        local $ENV{LLM_STUB_MODE} = 'badtype';
+        like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") },
+             qr/Invalid response element 0 \(expected string\)/,
+             'non-string response element dies');
+    }
+    {
+        local $ENV{LLM_STUB_MODE} = 'number';
+        like(trap { App::Greple::xlate::llm::xlate_with(\%param, "a\n") },
+             qr/Invalid response element 0 \(expected string\)/,
+             'numeric response element dies');
     }
     {
         local $ENV{LLM_STUB_MODE} = 'badjson';
@@ -112,9 +131,9 @@ subtest 'error handling' => sub {
     }
     {
         local $ENV{LLM_STUB_MODE} = 'nomodel';
-        my %p = (%param, model => 'gpt-5.5');
+        my %p = (%param, model => 'gpt-5.6-terra');
         like(trap { App::Greple::xlate::llm::xlate_with(\%p, "a\n") },
-             qr/does not know model "gpt-5\.5"/, 'unknown model diagnosed');
+             qr/does not know model "gpt-5\.6-terra"/, 'unknown model diagnosed');
     }
 };
 

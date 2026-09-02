@@ -6,7 +6,7 @@ our $VERSION = "2.01";
 
 =head1 NAME
 
-App::Greple::xlate::llm::gpt5 - GPT-5.5 translation engine (llm backend) for greple xlate module
+App::Greple::xlate::llm::gpt5 - GPT-5.6 Terra translation engine (llm backend) for greple xlate module
 
 =head1 SYNOPSIS
 
@@ -14,16 +14,15 @@ App::Greple::xlate::llm::gpt5 - GPT-5.5 translation engine (llm backend) for gre
 
 =head1 DESCRIPTION
 
-This module provides GPT-5.5 translation support for the
+This module provides GPT-5.6 Terra translation support for the
 App::Greple::xlate module, calling the model through the C<llm>
 command line tool (L<https://llm.datasette.io/>) instead of the
 older C<gpty> command.  The engine name, translation prompt, and
 cache files (C<*.xlate-gpt5-*.json>) are fully compatible with the
 gpty backend engine L<App::Greple::xlate::gpty::gpt5>.
 
-The C<llm> command must be installed and must know the C<gpt-5.5>
-model (llm 0.31 or later ships it built in; check with
-C<llm models | grep gpt-5.5>).  If the call fails, this module
+The C<llm> command must be installed and must know the C<gpt-5.6-terra>
+model (check with C<llm models | grep gpt-5.6-terra>).  If the call fails, this module
 inspects the environment and reports what is missing.
 
 This engine is context-aware: when re-translating changed blocks it
@@ -37,9 +36,9 @@ This engine uses the following defaults:
 
 =over 4
 
-=item * B<model>: gpt-5.5
+=item * B<model>: gpt-5.6-terra
 
-=item * B<reasoning_effort>: none (fastest; suitable for translation)
+=item * B<reasoning_effort>: low (lowest effort supported by llm for GPT-5.6 Terra)
 
 =item * B<verbosity>: low
 
@@ -50,13 +49,9 @@ This engine uses the following defaults:
 No C<temperature> option is sent: reasoning models reject non-default
 temperatures, and C<llm> only sends the option when specified.
 
-No C<max_tokens> option is sent either.  On llm 0.31 the gpt-5.5
-model goes through the Chat Completions API, which rejects
-C<max_tokens> for reasoning models (it requires
-C<max_completion_tokens>, which llm does not expose); on llm 0.32+
-the Responses API would accept it as C<max_output_tokens>.  Omitting
-the cap works on both, and translation output is naturally bounded
-by the input size.
+No C<max_tokens> option is sent either.  Omitting the cap leaves the
+translation output naturally bounded by the input size and avoids
+endpoint-specific output-token option differences.
 
 =head1 ENVIRONMENT VARIABLES
 
@@ -134,9 +129,9 @@ our $method = __PACKAGE__ =~ s/.*://r;
 our $XLATE_CONTEXT = 1;     # consumes $App::Greple::xlate::call_context
 
 my %param = (
-    model   => 'gpt-5.5',
+    model   => 'gpt-5.6-terra',
     max     => 3000,
-    options => [ [ reasoning_effort => 'none' ],
+    options => [ [ reasoning_effort => 'low' ],
                  [ verbosity        => 'low'  ] ],
     prompt  => <<'END',
 Translate the following JSON array into %s.

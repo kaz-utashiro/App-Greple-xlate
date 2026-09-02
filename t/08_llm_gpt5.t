@@ -29,8 +29,8 @@ my @argv = @{$rec->{argv}};
 my $argv_str = join ' ', @argv;
 
 is($argv[0], '-m', 'first option is -m');
-is($argv[1], 'gpt-5.5', 'model is gpt-5.5');
-like($argv_str, qr/-o reasoning_effort none/, 'reasoning_effort none');
+is($argv[1], 'gpt-5.6-terra', 'model is gpt-5.6-terra');
+like($argv_str, qr/-o reasoning_effort low/, 'reasoning_effort low');
 like($argv_str, qr/-o verbosity low/, 'verbosity low');
 like($argv_str, qr/--no-stream/, 'no-stream');
 like($argv_str, qr/--no-log/, 'no-log');

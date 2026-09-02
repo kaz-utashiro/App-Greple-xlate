@@ -16,7 +16,7 @@ Version 2.01
 # DESCRIPTION
 
 **Greple** **xlate** module find desired text blocks and replace them by
-the translated text.  The primary engine is GPT-5.5 (`llm/gpt5.pm`),
+the translated text.  The primary engine is GPT-5.6 Terra (`llm/gpt5.pm`),
 which calls the [llm](https://llm.datasette.io/) command; DeepL
 (`deepl.pm`) and legacy **gpty**-based engines are also included.
 
@@ -216,7 +216,7 @@ Exclude embedz blocks from translation when a document contains them:
 
     At this time, the following engines are available
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -481,6 +481,14 @@ Exclude embedz blocks from translation when a document contains them:
     See the translation result in real time in the STDERR output.  The
     `From` payload is shown as transmitted, after anonymization and
     masking.
+
+- **--xlate-review**
+
+    For a one-to-one changed block, show the smallest contiguous changed
+    span in the old and new source, followed by the corresponding span in
+    the old and new translation.  The report is written to STDERR, makes no
+    additional API call, and is omitted when old and new blocks cannot be
+    paired unambiguously.
 
 - **--xlate-stripe**
 
