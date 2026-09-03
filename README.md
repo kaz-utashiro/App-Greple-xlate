@@ -132,6 +132,14 @@ escaped newline.
 How the text is transformed by masking can be seen by **--xlate-mask**
 option.
 
+Mask placeholders are well-formed self-closing XML tags such as
+`<m id="1" />`.  JSON-based LLM engines receive the tags in their
+input arrays.  For DeepL, a request containing marker tags is escaped
+and enclosed in a temporary `<xlate>` root, with XML tag handling
+enabled and each marker category registered as a non-splitting tag.
+The wrapper is removed before the placeholders are validated and
+restored.
+
 Masking protects markup from being translated.  To conceal sensitive
 strings from the translation service itself, see ["ANONYMIZATION AND
 TEMPLATES"](#anonymization-and-templates); both can be used together.
@@ -346,6 +354,11 @@ Exclude embedz blocks from translation when a document contains them:
     but not for DeepL.  You can customize the translation behavior by
     providing specific instructions to the AI model.  If the prompt
     contains `%s`, it will be replaced with the target language name.
+    For the llm-backed `gpt5` engine, the document is supplied separately
+    as a JSON request whose `input` member is the array to translate and
+    whose optional `context` member contains reference data.  A fixed
+    instruction that treats those members as document data, not commands,
+    is appended even when a custom prompt is used.
 
 - **--xlate-context**=_text_
 
@@ -365,9 +378,10 @@ Exclude embedz blocks from translation when a document contains them:
     wording is preserved.  Set to 0 to disable context-aware translation
     entirely.
     Note that each changed region is translated in its own API call and
-    the context can add up to about 8000 characters to the system
-    prompt, so context-aware translation trades some extra cost for
-    consistency.
+    the context can add up to about 8000 characters to the JSON user
+    request, so context-aware translation trades some extra cost for
+    consistency.  Document-derived context is kept out of the system
+    prompt.
 
 - **--xlate-cache-seed**=_file_
 
