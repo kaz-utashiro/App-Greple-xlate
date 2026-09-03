@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** : le module recherche les blocs de texte souhaités et les remplace par le texte traduit. Le moteur principal est GPT-5.5 (`llm/gpt5.pm`), qui appelle la commande [llm](https://llm.datasette.io/) ; DeepL (`deepl.pm`) et les moteurs hérités basés sur **gpty** sont également inclus.
+**Greple** **xlate** : le module recherche les blocs de texte souhaités et les remplace par le texte traduit. Le moteur principal est GPT-5.6 Terra (`llm/gpt5.pm`), qui appelle la commande [llm](https://llm.datasette.io/) ; DeepL (`deepl.pm`) et les moteurs hérités basés sur **gpty** sont également inclus.
 
 Les traductions sont mises en cache par fichier ; ainsi, relancer une commande ne coûte rien pour le texte inchangé. Lorsqu’un document est modifié, seuls les paragraphes modifiés sont renvoyés à l’API ; un moteur sensible au contexte reçoit également les traductions environnantes, le texte source brut entourant la modification et la version précédente du paragraphe modifié, de sorte que la nouvelle traduction conserve la formulation établie (voir **--xlate-context-window**). Les chaînes sensibles peuvent être masquées avant la transmission (voir ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Excluez les blocs embedz de la traduction lorsqu’un document en contient :
 
     À l'heure actuelle, les moteurs suivants sont disponibles
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Excluez les blocs embedz de la traduction lorsqu’un document en contient :
 
 - **--xlate-prompt**=_text_
 
-    Spécifiez une invite personnalisée à envoyer au moteur de traduction. Cette option est disponible pour les moteurs LLM (`gpt3`, `gpt4o`, `gpt5`), mais pas pour DeepL. Vous pouvez personnaliser le comportement de traduction en fournissant des instructions spécifiques au modèle d’IA. Si la consigne contient `%s`, celle-ci sera remplacée par le nom de la langue cible.
+    Spécifiez une invite personnalisée à envoyer au moteur de traduction. Cette option est disponible pour les moteurs LLM (`gpt3`, `gpt4o`, `gpt5`), mais pas pour DeepL. Vous pouvez personnaliser le comportement de la traduction en fournissant des instructions spécifiques au modèle d’IA. Si la consigne contient `%s`, celle-ci sera remplacée par le nom de la langue cible. Pour le moteur `gpt5` basé sur un LLM, le document est fourni séparément sous la forme d’une requête JSON dont le membre `input` correspond au tableau à traduire et dont le membre optionnel `context` contient des données de référence. Une instruction fixe qui traite ces éléments comme des données du document, et non comme des commandes, est ajoutée même lorsqu’une invite personnalisée est utilisée.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Excluez les blocs embedz de la traduction lorsqu’un document en contient :
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Nombre de blocs traduits environnants transmis comme contexte de référence lors de la retraduction des blocs modifiés (valeur par défaut : 2). Le contexte inclut également le texte source brut entourant la zone modifiée (titres, structure de liste, légendes) et, le cas échéant, la version précédente du texte modifié récupérée dans le cache, afin de préserver les formulations inchangées. Définissez cette valeur sur 0 pour désactiver complètement la traduction contextuelle. Notez que chaque zone modifiée est traduite via son propre appel API et que le contexte peut ajouter jusqu’à environ 8 000 caractères à la commande système ; la traduction contextuelle implique donc un surcoût en échange d’une meilleure cohérence.
+    Nombre de blocs traduits environnants transmis comme contexte de référence lors de la retraduction des blocs modifiés (valeur par défaut : 2). Le contexte inclut également le texte source brut entourant la région modifiée (titres, structure de liste, légendes) et, lorsqu’elle est disponible, la version précédente du texte modifié récupérée dans le cache, afin de préserver les formulations inchangées. Définissez cette valeur sur 0 pour désactiver complètement la traduction tenant compte du contexte. Notez que chaque zone modifiée est traduite via son propre appel d’API et que le contexte peut ajouter jusqu’à environ 8 000 caractères à la requête JSON de l’utilisateur ; la traduction tenant compte du contexte implique donc un surcoût en échange d’une meilleure cohérence. Le contexte dérivé du document est exclu de l’invite système.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Excluez les blocs embedz de la traduction lorsqu’un document en contient :
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Consultez le résultat de la traduction en temps réel dans la sortie STDERR. La charge utile `From` est affichée telle qu’elle est transmise, après anonymisation et masquage.
+
+- **--xlate-review**
+
+    Pour un bloc modifié en correspondance biunivoque, affichez la plus petite portion contiguë modifiée dans l’ancienne et la nouvelle source, suivie de la portion correspondante dans l’ancienne et la nouvelle traduction. Le rapport est écrit dans STDERR, ne génère aucun appel API supplémentaire et est omis lorsque les anciens et nouveaux blocs ne peuvent pas être appariés sans ambiguïté.
 
 - **--xlate-stripe**
 

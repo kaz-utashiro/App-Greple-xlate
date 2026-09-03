@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** modulul identifică blocurile de text dorite și le înlocuiește cu textul tradus. Motorul principal este GPT-5.5 (`llm/gpt5.pm`), care apelează comanda [llm](https://llm.datasette.io/); Sunt incluse, de asemenea, DeepL (`deepl.pm`) și motoarele vechi bazate pe **gpty**.
+**Greple** **xlate** modulul găsește blocurile de text dorite și le înlocuiește cu textul tradus. Motorul principal este GPT-5.6 Terra (`llm/gpt5.pm`), care apelează comanda [llm](https://llm.datasette.io/); sunt incluse, de asemenea, DeepL (`deepl.pm`) și motoarele vechi bazate pe **gpty**.
 
 Traducerile sunt stocate în cache pentru fiecare fișier, astfel încât rulați din nou o comandă nu implică costuri suplimentare pentru textul nemodificat. Când un document este editat, doar paragrafele modificate sunt trimise din nou către API; un motor sensibil la context primește, de asemenea, traducerile din jur, textul sursă brut din jurul modificării și versiunea anterioară a paragrafului editat, astfel încât noua traducere păstrează formularea stabilită (vezi **--xlate-context-window**). Șirurile sensibile pot fi ascunse înainte de transmitere (vezi ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Excludeți blocurile embedz din traducere atunci când un document le conține:
 
     În acest moment, sunt disponibile următoarele motoare
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Excludeți blocurile embedz din traducere atunci când un document le conține:
 
 - **--xlate-prompt**=_text_
 
-    Specificați o solicitare personalizată care să fie trimisă motorului de traducere. Această opțiune este disponibilă pentru motoarele LLM (`gpt3`, `gpt4o`, `gpt5`), dar nu și pentru DeepL. Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului de IA. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă.
+    Specificați o solicitare personalizată care să fie trimisă motorului de traducere. Această opțiune este disponibilă pentru motoarele LLM (`gpt3`, `gpt4o`, `gpt5`), dar nu și pentru DeepL. Puteți personaliza comportamentul traducerii oferind instrucțiuni specifice modelului de IA. Dacă promptul conține `%s`, acesta va fi înlocuit cu numele limbii țintă. Pentru motorul `gpt5` bazat pe LLM, documentul este furnizat separat sub forma unei solicitări JSON al cărei element `input` reprezintă matricea care urmează să fie tradusă, iar elementul opțional `context` conține date de referință. O instrucțiune fixă care tratează acești membri ca date ale documentului, nu ca comenzi, este adăugată chiar și atunci când se utilizează o solicitare personalizată.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Excludeți blocurile embedz din traducere atunci când un document le conține:
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Numărul de blocuri traduse înconjurătoare transmise ca context de referință la retraducerea blocurilor modificate (implicit 2). Contextul include, de asemenea, textul sursă brut din jurul regiunii modificate (titluri, structura listei, legende) și, atunci când este disponibilă, versiunea anterioară a textului modificat recuperată din cache, astfel încât formularea nemodificată să fie păstrată. Setați la 0 pentru a dezactiva complet traducerea bazată pe context. Rețineți că fiecare regiune modificată este tradusă într-un apel API separat, iar contextul poate adăuga până la aproximativ 8000 de caractere la promptul sistemului, astfel încât traducerea bazată pe context implică un cost suplimentar în schimbul consecvenței.
+    Numărul de blocuri traduse înconjurătoare transmise ca context de referință la retraducerea blocurilor modificate (implicit 2). Contextul include, de asemenea, textul sursă brut din jurul regiunii modificate (titluri, structura listei, legende) și, atunci când este disponibilă, versiunea anterioară a textului modificat recuperată din cache, astfel încât formularea neschimbată să fie păstrată. Setați la 0 pentru a dezactiva complet traducerea bazată pe context. Rețineți că fiecare regiune modificată este tradusă printr-un apel API separat, iar contextul poate adăuga până la aproximativ 8000 de caractere la solicitarea JSON a utilizatorului; astfel, traducerea bazată pe context implică un cost suplimentar în schimbul consecvenței. Contextul derivat din document este exclus din promptul sistemului.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Excludeți blocurile embedz din traducere atunci când un document le conține:
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Vedeți rezultatul traducerii în timp real în ieșirea STDERR. Datele `From` sunt afișate așa cum sunt transmise, după anonimizare și mascare.
+
+- **--xlate-review**
+
+    Pentru un bloc modificat unu-la-unu, afișați cel mai mic interval contiguu modificat din sursa veche și cea nouă, urmat de intervalul corespunzător din traducerea veche și cea nouă. Raportul este scris în STDERR, nu efectuează niciun apel API suplimentar și este omis atunci când blocurile vechi și noi nu pot fi împerecheate fără ambiguitate.
 
 - **--xlate-stripe**
 

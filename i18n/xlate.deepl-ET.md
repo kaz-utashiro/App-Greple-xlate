@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** moodulid leiavad soovitud tekstilõigud ja asendavad need tõlgitud tekstiga. Peamine mootor on GPT-5.5 (`llm/gpt5.pm`), mis kutsub välja käsu [llm](https://llm.datasette.io/); Samuti on kaasatud DeepL (`deepl.pm`) ja vanemad **gpty**-põhised mootorid.
+**Greple** **xlate** mooduliga leidke soovitud tekstilõigud ja asendage need tõlgitud tekstiga. Peamine mootor on GPT-5.6 Terra (`llm/gpt5.pm`), mis kasutab käsku [llm](https://llm.datasette.io/); lisaks on kaasatud ka DeepL (`deepl.pm`) ja vanemad **gpty**-põhised mootorid.
 
 Tõlked salvestatakse failipõhiselt vahemällu, seega ei maksa muutumatu teksti puhul käsu uuesti käivitamine midagi. Dokumendi redigeerimisel saadetakse API-le uuesti ainult muudetud lõigud; kontekstist lähtuv mootor saab ka ümbritsevad tõlked, muudatuse ümbruse algteksti ning redigeeritud lõigu eelmise versiooni, nii et uus tõlge säilitab väljakujunenud sõnastuse (vt **--xlate-context-window**). Tundlikud stringid saab enne edastamist varjata (vt ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Jäta embedz-plokid tõlkimisest välja, kui dokument neid sisaldab:
 
     Praegu on saadaval järgmised mootorid
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Jäta embedz-plokid tõlkimisest välja, kui dokument neid sisaldab:
 
 - **--xlate-prompt**=_text_
 
-    Määrake tõlkemootorile saadetav kohandatud käsk. See valik on saadaval LLM-mootorite (`gpt3`, `gpt4o`, `gpt5`) puhul, kuid mitte DeepL-i puhul. Võite kohandada tõlkimiskäitumist, andes AI-mudelile konkreetseid juhiseid. Kui käsk sisaldab `%s`, asendatakse see sihtkeele nimega.
+    Määrake tõlkemootorile saadetav kohandatud käsk. See valik on saadaval LLM-mootorite (`gpt3`, `gpt4o`, `gpt5`) puhul, kuid mitte DeepL-i puhul. Võite kohandada tõlkimiskäitumist, andes AI-mudelile konkreetseid juhiseid. Kui käsk sisaldab `%s`, asendatakse see sihtkeele nimega. LLM-põhise `gpt5` mootori puhul esitatakse dokument eraldi JSON-päringuna, mille `input` liige on tõlgitav massiiv ja mille valikuline `context` liige sisaldab viiteandmeid. Isegi kui kasutatakse kohandatud käskluse teksti, lisatakse kindel juhis, mis käsitleb neid liikmeid dokumendi andmetena, mitte käskudena.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Jäta embedz-plokid tõlkimisest välja, kui dokument neid sisaldab:
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Muudetud plokkide uuesti tõlkimisel viitekontekstina edastatavate ümbritsevate tõlgitud plokkide arv (vaikimisi 2). Kontekst hõlmab ka muudetud piirkonna ümbruses olevat töötlemata allikateksti (pealkirjad, loendistruktuur, allkirjad) ning, kui see on kättesaadav, vahemälust taastatud muudetud teksti eelmist versiooni, et säilitada muutmata sõnastus. Määrake väärtuseks 0, et kontekstipõhine tõlkimine täielikult välja lülitada. Pange tähele, et iga muudetud piirkond tõlgitakse omaette API-kõnes ning kontekst võib süsteemi käsklusele lisada kuni umbes 8000 tähemärki, seega kontekstipõhine tõlkimine toob järjepidevuse nimel kaasa mõningaid lisakulusid.
+    Muudetud plokkide uuesti tõlkimisel viitekontekstina edastatavate ümbritsevate tõlgitud plokkide arv (vaikimisi 2). Kontekst hõlmab ka muudetud piirkonna ümbruses olevat töötlemata allikateksti (pealkirjad, loendistruktuur, pildiallkirjad) ning, kui see on kättesaadav, vahemälust taastatud muudetud teksti eelmist versiooni, et säilitada muutmata sõnastus. Määrake väärtuseks 0, et kontekstipõhine tõlkimine täielikult välja lülitada. Pange tähele, et iga muudetud piirkond tõlgitakse omaette API-kõnes ning kontekst võib JSON-kasutaja päringule lisada kuni umbes 8000 tähemärki, seega kontekstipõhine tõlkimine toob järjepidevuse nimel kaasa mõningaid lisakulusid. Dokumendist tuletatud kontekst jäetakse süsteemi käsklusest välja.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Jäta embedz-plokid tõlkimisest välja, kui dokument neid sisaldab:
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Vaata tõlketulemust reaalajas STDERR-väljundis. Andmepakett `From` kuvatakse edastatuna, pärast anonüümimist ja maskeerimist.
+
+- **--xlate-review**
+
+    Ühe-ühele muudetud ploki puhul näidatakse vanas ja uues allikas väikseimat järjestikust muudetud lõiku, millele järgneb vastav lõik vanas ja uues tõlkes. Aruanne kirjutatakse STDERR-i, see ei tee täiendavaid API-kõnesid ning jäetakse välja, kui vanu ja uusi plokke ei ole võimalik üheselt paari panna.
 
 - **--xlate-stripe**
 

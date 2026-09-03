@@ -156,7 +156,7 @@ anonymization rules are available: a dictionary file
 (B<--xlate-anonymize>), inline marks in the document itself
 (B<--xlate-anonymize-mark>), and YAML front matter values
 (B<--xlate-frontmatter>).  Each string is replaced by a category tag
-such as C<< <person id=1 /> >> during transmission.  The concealment
+such as C<< <person id="1" /> >> during transmission.  The concealment
 target is API transmission only: local cache files store restored
 plain text.  Use B<--xlate-dryrun> to inspect exactly what would be
 transmitted.
@@ -374,6 +374,11 @@ option is available for the LLM engines (C<gpt3>, C<gpt4o>, C<gpt5>)
 but not for DeepL.  You can customize the translation behavior by
 providing specific instructions to the AI model.  If the prompt
 contains C<%s>, it will be replaced with the target language name.
+For the llm-backed C<gpt5> engine, the document is supplied separately
+as a JSON request whose C<input> member is the array to translate and
+whose optional C<context> member contains reference data.  A fixed
+instruction that treats those members as document data, not commands,
+is appended even when a custom prompt is used.
 
 =item B<--xlate-context>=I<text>
 
@@ -393,9 +398,10 @@ of the changed text recovered from the cache, so that unchanged
 wording is preserved.  Set to 0 to disable context-aware translation
 entirely.
 Note that each changed region is translated in its own API call and
-the context can add up to about 8000 characters to the system
-prompt, so context-aware translation trades some extra cost for
-consistency.
+the context can add up to about 8000 characters to the JSON user
+request, so context-aware translation trades some extra cost for
+consistency.  Document-derived context is kept out of the system
+prompt.
 
 =item B<--xlate-cache-seed>=I<file>
 
@@ -417,7 +423,7 @@ entry per item: in JSON (canonical, machine-generatable)
       { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
 or in a simple line format (C<category pattern>, C</.../> for regex).
-Each item is replaced by a category tag such as C<< <person id=1 /> >>;
+Each item is replaced by a category tag such as C<< <person id="1" /> >>;
 the same string always gets the same tag, so the model can keep track
 of who is who.  Unknown JSON fields are ignored, so generators (e.g. a
 local LLM extracting entities) may add their own annotations.

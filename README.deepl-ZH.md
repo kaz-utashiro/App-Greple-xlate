@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** 模块会查找目标文本块并将其替换为翻译后的文本。主要引擎是 GPT-5.5 (`llm/gpt5.pm`)，它会调用 [llm](https://llm.datasette.io/) 命令； DeepL (`deepl.pm`) 以及基于 **gpty** 的旧版引擎也包含在内。
+**Greple** **xlate**  模块会查找目标文本块并将其替换为翻译后的文本。主要引擎是 GPT-5.6 Terra (`llm/gpt5.pm`)，它会调用  命令[llm](https://llm.datasette.io/)；DeepL (`deepl.pm`) 以及**gpty**基于旧版模型的引擎也包含在内。
 
 翻译结果按文件进行缓存，因此对于未更改的文本，重新运行命令无需额外成本。 当文档被编辑时，仅将更改过的段落再次发送至 API；基于上下文的引擎还会接收周围的翻译内容、更改处周围的原始源文本以及被编辑段落的上一版本，因此新翻译能保持既定的措辞（参见 **--xlate-context-window**）。 敏感字符串可在传输前进行隐藏（参见 ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)）。
 
@@ -140,7 +140,7 @@ Version 2.01
 
     目前有以下引擎
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Version 2.01
 
 - **--xlate-prompt**=_text_
 
-    指定要发送给翻译引擎的自定义提示词。此选项适用于 LLM 引擎（`gpt3`、`gpt4o`、`gpt5`），但不适用于 DeepL。 您可以通过向 AI 模型提供具体指令来自定义翻译行为。如果提示语中包含 `%s`，它将被目标语言名称替换。
+    指定要发送给翻译引擎的自定义提示词。此选项适用于 LLM 引擎（`gpt3`, `gpt4o`, `gpt5`），但不适用于 DeepL。您可以通过向 AI 模型提供具体指令来自定义翻译行为。如果提示词中包含 `%s`，它将被替换为目标语言名称。 对于基于 LLM 的`gpt5`引擎，文档将作为单独的 JSON 请求提供，其中 \`content\` `input`成员为待翻译的数组，可选的 \`reference\` `context`成员包含参考数据。即使使用自定义提示词，系统也会在请求末尾附加一条固定指令，将这些成员视为文档数据而非命令。
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Version 2.01
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    在重新翻译已修改的块时，作为参考上下文传递的周围已翻译块的数量（默认值为 2）。该上下文还包括已修改区域周围的原始源文本（标题、列表结构、图注），以及（如有）从缓存中恢复的已修改文本的先前版本，以便保留未更改的措辞。 设置为 0 可完全禁用基于上下文的翻译。请注意，每个已更改区域都会通过单独的 API 调用进行翻译，且上下文可能会使系统提示符增加约 8000 个字符，因此基于上下文的翻译是在牺牲部分额外成本的同时换取一致性。
+    在重新翻译已修改的块时，作为参考上下文传递的周围已翻译块的数量（默认值为 2）。该上下文还包括已修改区域周围的原始源文本（标题、列表结构、图注）以及（如有）从缓存中恢复的已修改文本的先前版本，以便保留未更改的措辞。 将该值设为 0 可完全禁用基于上下文的翻译。请注意，每个已更改区域都在单独的 API 调用中进行翻译，且上下文可能会使 JSON 用户请求增加约 8000 个字符，因此基于上下文的翻译是以牺牲部分额外开销来换取一致性的。文档衍生的上下文不会包含在系统提示中。
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Version 2.01
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     可在 STDERR 输出中实时查看翻译结果。`From` 有效负载以传输时的形式显示，即经过匿名化和屏蔽处理后的状态。
+
+- **--xlate-review**
+
+    对于一对一的更改块，应显示源文本新旧版本中最小且连续的更改范围，随后显示翻译文本新旧版本中对应的范围。该报告将写入 STDERR，不会产生额外的 API 调用，且当新旧块无法明确配对时将省略该报告。
 
 - **--xlate-stripe**
 

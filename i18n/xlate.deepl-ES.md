@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate**: el módulo busca los bloques de texto deseados y los sustituye por el texto traducido. El motor principal es GPT-5.5 (`llm/gpt5.pm`), que ejecuta el comando [llm](https://llm.datasette.io/); También se incluyen DeepL (`deepl.pm`) y motores heredados basados en **gpty**.
+**Greple** **xlate**: el módulo busca los bloques de texto deseados y los sustituye por el texto traducido. El motor principal es GPT-5.6 Terra (`llm/gpt5.pm`), que ejecuta el comando [llm](https://llm.datasette.io/); también se incluyen DeepL (`deepl.pm`) y los motores heredados basados en **gpty**.
 
 Las traducciones se almacenan en caché por archivo, por lo que volver a ejecutar un comando no supone ningún coste para el texto que no haya cambiado. Cuando se edita un documento, solo se envían de nuevo a la API los párrafos modificados; además, un motor sensible al contexto recibe las traducciones circundantes, el texto fuente sin procesar que rodea el cambio y la versión anterior del párrafo editado, de modo que la nueva traducción mantiene la redacción establecida (véase **--xlate-context-window**). Las cadenas sensibles pueden ocultarse antes de la transmisión (véase ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Excluye los bloques «embedz» de la traducción cuando un documento los conteng
 
     En este momento, están disponibles los siguientes motores
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Excluye los bloques «embedz» de la traducción cuando un documento los conteng
 
 - **--xlate-prompt**=_text_
 
-    Especifica una indicación personalizada que se enviará al motor de traducción. Esta opción está disponible para los motores LLM (`gpt3`, `gpt4o`, `gpt5`), pero no para DeepL. Puedes personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la indicación contiene `%s`, se sustituirá por el nombre del idioma de destino.
+    Especifica una indicación personalizada que se enviará al motor de traducción. Esta opción está disponible para los motores LLM (`gpt3`, `gpt4o`, `gpt5`), pero no para DeepL. Puedes personalizar el comportamiento de la traducción proporcionando instrucciones específicas al modelo de IA. Si la indicación contiene `%s`, se sustituirá por el nombre del idioma de destino. En el caso del motor `gpt5` basado en LLM, el documento se proporciona por separado como una solicitud JSON cuyo miembro `input` es la matriz que se va a traducir y cuyo miembro opcional `context` contiene datos de referencia. Se añade una instrucción fija que trata esos miembros como datos del documento, y no como comandos, incluso cuando se utiliza una solicitud personalizada.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Excluye los bloques «embedz» de la traducción cuando un documento los conteng
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Número de bloques traducidos circundantes que se pasan como contexto de referencia al volver a traducir los bloques modificados (por defecto, 2). El contexto también incluye el texto fuente sin procesar que rodea la región modificada (encabezados, estructura de listas, pies de foto) y, cuando esté disponible, la versión anterior del texto modificado recuperada de la caché, de modo que se conserve la redacción no modificada. Establecer en 0 para desactivar por completo la traducción sensible al contexto. Ten en cuenta que cada región modificada se traduce en su propia llamada a la API y que el contexto puede sumar hasta unos 8000 caracteres a la indicación del sistema, por lo que la traducción sensible al contexto implica un coste adicional a cambio de la coherencia.
+    Número de bloques traducidos circundantes que se pasan como contexto de referencia al volver a traducir los bloques modificados (por defecto, 2). El contexto también incluye el texto fuente sin procesar que rodea la región modificada (encabezados, estructura de listas, pies de foto) y, cuando esté disponible, la versión anterior del texto modificado recuperada de la caché, de modo que se conserve la redacción no modificada. Establecer en 0 para desactivar por completo la traducción sensible al contexto. Ten en cuenta que cada región modificada se traduce en su propia llamada a la API y que el contexto puede sumar hasta unos 8000 caracteres a la solicitud JSON del usuario, por lo que la traducción sensible al contexto sacrifica algo de rendimiento a cambio de la coherencia. El contexto derivado del documento se mantiene fuera del mensaje del sistema.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Excluye los bloques «embedz» de la traducción cuando un documento los conteng
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Consulta el resultado de la traducción en tiempo real en la salida de STDERR. La carga útil `From` se muestra tal y como se transmite, tras la anonimización y el enmascaramiento.
+
+- **--xlate-review**
+
+    En el caso de un bloque modificado uno a uno, se muestra el fragmento contiguo más pequeño que ha cambiado en el texto de origen antiguo y nuevo, seguido del fragmento correspondiente en la traducción antigua y nueva. El informe se escribe en STDERR, no realiza ninguna llamada a la API adicional y se omite cuando los bloques antiguos y nuevos no pueden emparejarse sin ambigüedad.
 
 - **--xlate-stripe**
 

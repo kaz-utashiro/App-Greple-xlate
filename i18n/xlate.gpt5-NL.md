@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. De primaire engine is GPT-5.5 (`llm/gpt5.pm`), die het [llm](https://llm.datasette.io/)-commando aanroept; DeepL (`deepl.pm`) en legacy **gpty**-gebaseerde engines zijn ook inbegrepen.
+**Greple** **xlate** module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. De primaire engine is GPT-5.6 Terra (`llm/gpt5.pm`), die het [llm](https://llm.datasette.io/)-commando aanroept; DeepL (`deepl.pm`) en legacy **gpty**-gebaseerde engines zijn ook inbegrepen.
 
 Vertalingen worden per bestand gecachet, dus het opnieuw uitvoeren van een commando kost niets voor ongewijzigde tekst. Wanneer een document wordt bewerkt, worden alleen de gewijzigde alinea's opnieuw naar de API gestuurd; een contextbewuste engine ontvangt ook de omringende vertalingen, de ruwe brontekst rond de wijziging en de vorige versie van de bewerkte alinea, zodat de nieuwe vertaling de gevestigde formulering behoudt (zie **--xlate-context-window**). Gevoelige strings kunnen vóór verzending worden verborgen (zie ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Sluit embedz-blokken uit van vertaling wanneer een document ze bevat:
 
     Op dit moment zijn de volgende engines beschikbaar
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Sluit embedz-blokken uit van vertaling wanneer een document ze bevat:
 
 - **--xlate-prompt**=_text_
 
-    Geef een aangepaste prompt op die naar de vertaalengine wordt gestuurd. Deze optie is beschikbaar voor de LLM-engines (`gpt3`, `gpt4o`, `gpt5`), maar niet voor DeepL. U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt dit vervangen door de naam van de doeltaal.
+    Geef een aangepaste prompt op die naar de vertaalengine wordt gestuurd. Deze optie is beschikbaar voor de LLM-engines (`gpt3`, `gpt4o`, `gpt5`), maar niet voor DeepL. U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt `%s` bevat, wordt dit vervangen door de naam van de doeltaal. Voor de door llm ondersteunde engine `gpt5` wordt het document afzonderlijk geleverd als een JSON-verzoek waarvan het lid `input` de te vertalen array is en het optionele lid `context` referentiegegevens bevat. Een vaste instructie die deze leden als documentgegevens behandelt, niet als opdrachten, wordt toegevoegd, zelfs wanneer een aangepaste prompt wordt gebruikt.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Sluit embedz-blokken uit van vertaling wanneer een document ze bevat:
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Aantal omringende vertaalde blokken dat als referentiecontext wordt meegegeven bij het opnieuw vertalen van gewijzigde blokken (standaard 2). De context omvat ook de ruwe brontekst rond het gewijzigde gebied (koppen, lijststructuur, bijschriften) en, indien beschikbaar, de vorige versie van de gewijzigde tekst die uit de cache is hersteld, zodat ongewijzigde formuleringen behouden blijven. Stel in op 0 om contextbewuste vertaling volledig uit te schakelen. Merk op dat elk gewijzigd gebied in een eigen API-aanroep wordt vertaald en dat de context tot ongeveer 8000 tekens aan de systeemprompt kan toevoegen, dus contextbewuste vertaling ruilt enige extra kosten in voor consistentie.
+    Aantal omringende vertaalde blokken dat als referentiecontext wordt meegegeven bij het opnieuw vertalen van gewijzigde blokken (standaard 2). De context omvat ook de ruwe brontekst rond het gewijzigde gebied (koppen, lijststructuur, bijschriften) en, indien beschikbaar, de vorige versie van de gewijzigde tekst die uit de cache is hersteld, zodat ongewijzigde formuleringen behouden blijven. Stel in op 0 om contextbewuste vertaling volledig uit te schakelen. Merk op dat elk gewijzigd gebied in een eigen API-aanroep wordt vertaald en dat de context tot ongeveer 8000 tekens aan het JSON-gebruikersverzoek kan toevoegen, dus contextbewuste vertaling ruilt enige extra kosten in voor consistentie. Context die van het document is afgeleid, wordt buiten de systeemprompt gehouden.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Sluit embedz-blokken uit van vertaling wanneer een document ze bevat:
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Bekijk het vertaalresultaat in realtime in de STDERR-uitvoer. De `From`-payload wordt getoond zoals verzonden, na anonimisering en masking.
+
+- **--xlate-review**
+
+    Voor een één-op-één gewijzigd blok toont u de kleinste aaneengesloten gewijzigde reeks in de oude en nieuwe bron, gevolgd door de overeenkomstige reeks in de oude en nieuwe vertaling. Het rapport wordt naar STDERR geschreven, doet geen extra API-aanroep en wordt weggelaten wanneer oude en nieuwe blokken niet eenduidig kunnen worden gekoppeld.
 
 - **--xlate-stripe**
 

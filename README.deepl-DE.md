@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** Das Modul sucht die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.5 (`llm/gpt5.pm`), die den Befehl [llm](https://llm.datasette.io/) aufruft; DeepL (`deepl.pm`) und ältere, auf **gpty** basierende Engines sind ebenfalls enthalten.
+**Greple** **xlate** Das Modul sucht die gewünschten Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.6 Terra (`llm/gpt5.pm`), die den Befehl [llm](https://llm.datasette.io/) aufruft; DeepL (`deepl.pm`) und ältere, auf **gpty** basierende Engines sind ebenfalls enthalten.
 
 Übersetzungen werden pro Datei zwischengespeichert, sodass die erneute Ausführung eines Befehls für unveränderten Text keine Kosten verursacht. Wenn ein Dokument bearbeitet wird, werden nur die geänderten Absätze erneut an die API gesendet; eine kontextbezogene Engine erhält zudem die umgebenden Übersetzungen, den Rohquelltext rund um die Änderung sowie die vorherige Version des bearbeiteten Absatzes, sodass die neue Übersetzung die etablierte Formulierung beibehält (siehe **--xlate-context-window**). Sensible Zeichenfolgen können vor der Übertragung ausgeblendet werden (siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Schließen Sie „embedz“-Blöcke von der Übersetzung aus, wenn ein Dokument 
 
     Zur Zeit sind die folgenden Engines verfügbar
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Schließen Sie „embedz“-Blöcke von der Übersetzung aus, wenn ein Dokument 
 
 - **--xlate-prompt**=_text_
 
-    Geben Sie eine benutzerdefinierte Eingabeaufforderung an, die an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (`gpt3`, `gpt4o`, `gpt5`) verfügbar, nicht jedoch für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn die Eingabeaufforderung `%s` enthält, wird diese durch den Namen der Zielsprache ersetzt.
+    Geben Sie eine benutzerdefinierte Eingabe an, die an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (`gpt3`, `gpt4o`, `gpt5`) verfügbar, nicht jedoch für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn die Eingabeaufforderung `%s` enthält, wird diese durch den Namen der Zielsprache ersetzt. Bei der LLM-gestützten `gpt5`-Engine wird das Dokument separat als JSON-Anfrage bereitgestellt, deren `input`-Element das zu übersetzende Array ist und deren optionales `context`-Element Referenzdaten enthält. Eine feste Anweisung, die diese Elemente als Dokumentdaten und nicht als Befehle behandelt, wird auch dann angehängt, wenn eine benutzerdefinierte Eingabeaufforderung verwendet wird.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Schließen Sie „embedz“-Blöcke von der Übersetzung aus, wenn ein Dokument 
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Anzahl der umgebenden übersetzten Blöcke, die bei der Neuübersetzung geänderter Blöcke als Referenzkontext übergeben werden (Standardwert 2). Der Kontext umfasst auch den Rohquelltext rund um den geänderten Bereich (Überschriften, Listenstruktur, Bildunterschriften) sowie, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, sodass unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um die kontextbezogene Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext die System-Eingabeaufforderung um bis zu etwa 8000 Zeichen erweitern kann; die kontextbezogene Übersetzung erkauft sich also Konsistenz mit etwas zusätzlichem Aufwand.
+    Anzahl der umgebenden übersetzten Blöcke, die bei der Neuübersetzung geänderter Blöcke als Referenzkontext übergeben werden (Standardwert 2). Der Kontext umfasst auch den rohen Quelltext rund um den geänderten Bereich (Überschriften, Listenstruktur, Bildunterschriften) sowie, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, damit unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um die kontextbezogene Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext die JSON-Benutzeranfrage um bis zu etwa 8.000 Zeichen erweitern kann; daher geht die kontextbezogene Übersetzung mit einem gewissen Mehraufwand zugunsten der Konsistenz einher. Aus dem Dokument abgeleiteter Kontext wird aus der System-Eingabeaufforderung ausgeklammert.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Schließen Sie „embedz“-Blöcke von der Übersetzung aus, wenn ein Dokument 
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Sehen Sie sich das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe an. Die `From`-Nutzlast wird so angezeigt, wie sie nach Anonymisierung und Maskierung übertragen wurde.
+
+- **--xlate-review**
+
+    Bei einem eins-zu-eins geänderten Block wird der kleinste zusammenhängende geänderte Abschnitt in der alten und neuen Quelle angezeigt, gefolgt vom entsprechenden Abschnitt in der alten und neuen Übersetzung. Der Bericht wird an STDERR geschrieben, führt keinen zusätzlichen API-Aufruf durch und wird weggelassen, wenn alte und neue Blöcke nicht eindeutig zugeordnet werden können.
 
 - **--xlate-stripe**
 

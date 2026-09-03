@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate**-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.5 (`llm/gpt5.pm`), die den Befehl [llm](https://llm.datasette.io/) aufruft; DeepL (`deepl.pm`) und ältere auf **gpty** basierende Engines sind ebenfalls enthalten.
+**Greple** **xlate**-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.6 Terra (`llm/gpt5.pm`), die den [llm](https://llm.datasette.io/)-Befehl aufruft; DeepL (`deepl.pm`) und ältere auf **gpty** basierende Engines sind ebenfalls enthalten.
 
 Übersetzungen werden pro Datei zwischengespeichert, sodass das erneute Ausführen eines Befehls für unveränderten Text nichts kostet. Wenn ein Dokument bearbeitet wird, werden nur die geänderten Absätze erneut an die API gesendet; eine kontextbewusste Engine erhält außerdem die umgebenden Übersetzungen, den rohen Quelltext um die Änderung herum und die vorherige Version des bearbeiteten Absatzes, sodass die neue Übersetzung die etablierte Wortwahl beibehält (siehe **--xlate-context-window**). Vertrauliche Zeichenketten können vor der Übertragung verborgen werden (siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
     Derzeit sind die folgenden Engines verfügbar
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 
 - **--xlate-prompt**=_text_
 
-    Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (`gpt3`, `gpt4o`, `gpt5`) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt `%s` enthält, wird er durch den Namen der Zielsprache ersetzt.
+    Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (`gpt3`, `gpt4o`, `gpt5`) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt `%s` enthält, wird er durch den Namen der Zielsprache ersetzt. Für die LLM-gestützte Engine `gpt5` wird das Dokument separat als JSON-Anfrage bereitgestellt, deren Mitglied `input` das zu übersetzende Array ist und deren optionales Mitglied `context` Referenzdaten enthält. Eine feste Anweisung, die diese Mitglieder als Dokumentdaten und nicht als Befehle behandelt, wird auch bei Verwendung eines benutzerdefinierten Prompts angehängt.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Anzahl der umgebenden übersetzten Blöcke, die beim erneuten Übersetzen geänderter Blöcke als Referenzkontext übergeben werden (Standard: 2). Der Kontext umfasst außerdem den unverarbeiteten Quelltext um den geänderten Bereich (Überschriften, Listenstruktur, Beschriftungen) und, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, sodass unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um kontextbewusste Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext bis zu etwa 8000 Zeichen zum System-Prompt hinzufügen kann; kontextbewusste Übersetzung tauscht daher etwas zusätzliche Kosten gegen Konsistenz ein.
+    Anzahl der umgebenden übersetzten Blöcke, die beim erneuten Übersetzen geänderter Blöcke als Referenzkontext übergeben werden (Standard: 2). Der Kontext umfasst außerdem den unverarbeiteten Quelltext um den geänderten Bereich (Überschriften, Listenstruktur, Beschriftungen) und, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, sodass unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um kontextbewusste Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext bis zu etwa 8000 Zeichen zur JSON-Benutzeranfrage hinzufügen kann; kontextbewusste Übersetzung tauscht daher etwas zusätzliche Kosten gegen Konsistenz ein. Aus dem Dokument abgeleiteter Kontext wird aus dem System-Prompt herausgehalten.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe. Die `From`-Payload wird so angezeigt, wie sie nach Anonymisierung und Maskierung übertragen wurde.
+
+- **--xlate-review**
+
+    Zeigen Sie bei einem eins-zu-eins geänderten Block den kleinsten zusammenhängenden geänderten Bereich im alten und neuen Quelltext, gefolgt vom entsprechenden Bereich in der alten und neuen Übersetzung. Der Bericht wird nach STDERR geschrieben, verursacht keinen zusätzlichen API-Aufruf und entfällt, wenn alte und neue Blöcke nicht eindeutig zugeordnet werden können.
 
 - **--xlate-stripe**
 

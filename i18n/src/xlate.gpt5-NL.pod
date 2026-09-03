@@ -16,7 +16,7 @@ Version 2.01
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. De primaire engine is GPT-5.5 (F<llm/gpt5.pm>), die het L<llm|https://llm.datasette.io/>-commando aanroept; DeepL (F<deepl.pm>) en legacy B<gpty>-gebaseerde engines zijn ook inbegrepen.
+B<Greple> B<xlate> module vindt gewenste tekstblokken en vervangt deze door de vertaalde tekst. De primaire engine is GPT-5.6 Terra (F<llm/gpt5.pm>), die het L<llm|https://llm.datasette.io/>-commando aanroept; DeepL (F<deepl.pm>) en legacy B<gpty>-gebaseerde engines zijn ook inbegrepen.
 
 Vertalingen worden per bestand gecachet, dus het opnieuw uitvoeren van een commando kost niets voor ongewijzigde tekst. Wanneer een document wordt bewerkt, worden alleen de gewijzigde alinea's opnieuw naar de API gestuurd; een contextbewuste engine ontvangt ook de omringende vertalingen, de ruwe brontekst rond de wijziging en de vorige versie van de bewerkte alinea, zodat de nieuwe vertaling de gevestigde formulering behoudt (zie B<--xlate-context-window>). Gevoelige strings kunnen vóór verzending worden verborgen (zie L</ANONYMIZATION AND TEMPLATES>).
 
@@ -158,7 +158,7 @@ Op dit moment zijn de volgende engines beschikbaar
 
 =over 2
 
-=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
+=item * B<gpt5>: gpt-5.6-terra (via the C<llm> command)
 
 =item * B<deepl>: DeepL API (via the C<deepl> command)
 
@@ -267,7 +267,7 @@ Stel deze waarde in op 1 als u één regel per keer wilt vertalen. Deze optie he
 
 =item B<--xlate-prompt>=I<text>
 
-Geef een aangepaste prompt op die naar de vertaalengine wordt gestuurd. Deze optie is beschikbaar voor de LLM-engines (C<gpt3>, C<gpt4o>, C<gpt5>), maar niet voor DeepL. U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt C<%s> bevat, wordt dit vervangen door de naam van de doeltaal.
+Geef een aangepaste prompt op die naar de vertaalengine wordt gestuurd. Deze optie is beschikbaar voor de LLM-engines (C<gpt3>, C<gpt4o>, C<gpt5>), maar niet voor DeepL. U kunt het vertaalgedrag aanpassen door specifieke instructies aan het AI-model te geven. Als de prompt C<%s> bevat, wordt dit vervangen door de naam van de doeltaal. Voor de door llm ondersteunde engine C<gpt5> wordt het document afzonderlijk geleverd als een JSON-verzoek waarvan het lid C<input> de te vertalen array is en het optionele lid C<context> referentiegegevens bevat. Een vaste instructie die deze leden als documentgegevens behandelt, niet als opdrachten, wordt toegevoegd, zelfs wanneer een aangepaste prompt wordt gebruikt.
 
 =item B<--xlate-context>=I<text>
 
@@ -276,7 +276,7 @@ Geef extra contextinformatie op die naar de vertaalmachine wordt gestuurd. Deze 
 =item B<--xlate-context-window>=I<n>
 
 (Context-aware engines only, e.g. C<gpt5> on the llm backend)
-Aantal omringende vertaalde blokken dat als referentiecontext wordt meegegeven bij het opnieuw vertalen van gewijzigde blokken (standaard 2). De context omvat ook de ruwe brontekst rond het gewijzigde gebied (koppen, lijststructuur, bijschriften) en, indien beschikbaar, de vorige versie van de gewijzigde tekst die uit de cache is hersteld, zodat ongewijzigde formuleringen behouden blijven. Stel in op 0 om contextbewuste vertaling volledig uit te schakelen. Merk op dat elk gewijzigd gebied in een eigen API-aanroep wordt vertaald en dat de context tot ongeveer 8000 tekens aan de systeemprompt kan toevoegen, dus contextbewuste vertaling ruilt enige extra kosten in voor consistentie.
+Aantal omringende vertaalde blokken dat als referentiecontext wordt meegegeven bij het opnieuw vertalen van gewijzigde blokken (standaard 2). De context omvat ook de ruwe brontekst rond het gewijzigde gebied (koppen, lijststructuur, bijschriften) en, indien beschikbaar, de vorige versie van de gewijzigde tekst die uit de cache is hersteld, zodat ongewijzigde formuleringen behouden blijven. Stel in op 0 om contextbewuste vertaling volledig uit te schakelen. Merk op dat elk gewijzigd gebied in een eigen API-aanroep wordt vertaald en dat de context tot ongeveer 8000 tekens aan het JSON-gebruikersverzoek kan toevoegen, dus contextbewuste vertaling ruilt enige extra kosten in voor consistentie. Context die van het document is afgeleid, wordt buiten de systeemprompt gehouden.
 
 =item B<--xlate-cache-seed>=I<file>
 
@@ -332,6 +332,10 @@ Roep de vertaal-API niet aan; toon in plaats daarvan, via de voortgangsweergave,
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Bekijk het vertaalresultaat in realtime in de STDERR-uitvoer. De C<From>-payload wordt getoond zoals verzonden, na anonimisering en masking.
+
+=item B<--xlate-review>
+
+Voor een één-op-één gewijzigd blok toont u de kleinste aaneengesloten gewijzigde reeks in de oude en nieuwe bron, gevolgd door de overeenkomstige reeks in de oude en nieuwe vertaling. Het rapport wordt naar STDERR geschreven, doet geen extra API-aanroep en wordt weggelaten wanneer oude en nieuwe blokken niet eenduidig kunnen worden gekoppeld.
 
 =item B<--xlate-stripe>
 

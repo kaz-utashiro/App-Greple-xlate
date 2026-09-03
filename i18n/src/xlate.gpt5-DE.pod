@@ -16,7 +16,7 @@ Version 2.01
 
 =head1 DESCRIPTION
 
-B<Greple> B<xlate>-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.5 (F<llm/gpt5.pm>), die den Befehl L<llm|https://llm.datasette.io/> aufruft; DeepL (F<deepl.pm>) und ältere auf B<gpty> basierende Engines sind ebenfalls enthalten.
+B<Greple> B<xlate>-Modul findet gewünschte Textblöcke und ersetzt sie durch den übersetzten Text. Die primäre Engine ist GPT-5.6 Terra (F<llm/gpt5.pm>), die den L<llm|https://llm.datasette.io/>-Befehl aufruft; DeepL (F<deepl.pm>) und ältere auf B<gpty> basierende Engines sind ebenfalls enthalten.
 
 Übersetzungen werden pro Datei zwischengespeichert, sodass das erneute Ausführen eines Befehls für unveränderten Text nichts kostet. Wenn ein Dokument bearbeitet wird, werden nur die geänderten Absätze erneut an die API gesendet; eine kontextbewusste Engine erhält außerdem die umgebenden Übersetzungen, den rohen Quelltext um die Änderung herum und die vorherige Version des bearbeiteten Absatzes, sodass die neue Übersetzung die etablierte Wortwahl beibehält (siehe B<--xlate-context-window>). Vertrauliche Zeichenketten können vor der Übertragung verborgen werden (siehe L</ANONYMIZATION AND TEMPLATES>).
 
@@ -158,7 +158,7 @@ Derzeit sind die folgenden Engines verfügbar
 
 =over 2
 
-=item * B<gpt5>: gpt-5.5 (via the C<llm> command)
+=item * B<gpt5>: gpt-5.6-terra (via the C<llm> command)
 
 =item * B<deepl>: DeepL API (via the C<deepl> command)
 
@@ -267,7 +267,7 @@ Setzen Sie diesen Wert auf 1, wenn Sie eine Zeile nach der anderen übersetzen m
 
 =item B<--xlate-prompt>=I<text>
 
-Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (C<gpt3>, C<gpt4o>, C<gpt5>) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt C<%s> enthält, wird er durch den Namen der Zielsprache ersetzt.
+Geben Sie einen benutzerdefinierten Prompt an, der an die Übersetzungs-Engine gesendet werden soll. Diese Option ist für die LLM-Engines (C<gpt3>, C<gpt4o>, C<gpt5>) verfügbar, jedoch nicht für DeepL. Sie können das Übersetzungsverhalten anpassen, indem Sie dem KI-Modell spezifische Anweisungen geben. Wenn der Prompt C<%s> enthält, wird er durch den Namen der Zielsprache ersetzt. Für die LLM-gestützte Engine C<gpt5> wird das Dokument separat als JSON-Anfrage bereitgestellt, deren Mitglied C<input> das zu übersetzende Array ist und deren optionales Mitglied C<context> Referenzdaten enthält. Eine feste Anweisung, die diese Mitglieder als Dokumentdaten und nicht als Befehle behandelt, wird auch bei Verwendung eines benutzerdefinierten Prompts angehängt.
 
 =item B<--xlate-context>=I<text>
 
@@ -276,7 +276,7 @@ Geben Sie zusätzliche Kontextinformationen an, die an die Übersetzungs-Engine 
 =item B<--xlate-context-window>=I<n>
 
 (Context-aware engines only, e.g. C<gpt5> on the llm backend)
-Anzahl der umgebenden übersetzten Blöcke, die beim erneuten Übersetzen geänderter Blöcke als Referenzkontext übergeben werden (Standard: 2). Der Kontext umfasst außerdem den unverarbeiteten Quelltext um den geänderten Bereich (Überschriften, Listenstruktur, Beschriftungen) und, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, sodass unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um kontextbewusste Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext bis zu etwa 8000 Zeichen zum System-Prompt hinzufügen kann; kontextbewusste Übersetzung tauscht daher etwas zusätzliche Kosten gegen Konsistenz ein.
+Anzahl der umgebenden übersetzten Blöcke, die beim erneuten Übersetzen geänderter Blöcke als Referenzkontext übergeben werden (Standard: 2). Der Kontext umfasst außerdem den unverarbeiteten Quelltext um den geänderten Bereich (Überschriften, Listenstruktur, Beschriftungen) und, sofern verfügbar, die aus dem Cache wiederhergestellte vorherige Version des geänderten Textes, sodass unveränderte Formulierungen erhalten bleiben. Setzen Sie den Wert auf 0, um kontextbewusste Übersetzung vollständig zu deaktivieren. Beachten Sie, dass jeder geänderte Bereich in einem eigenen API-Aufruf übersetzt wird und der Kontext bis zu etwa 8000 Zeichen zur JSON-Benutzeranfrage hinzufügen kann; kontextbewusste Übersetzung tauscht daher etwas zusätzliche Kosten gegen Konsistenz ein. Aus dem Dokument abgeleiteter Kontext wird aus dem System-Prompt herausgehalten.
 
 =item B<--xlate-cache-seed>=I<file>
 
@@ -332,6 +332,10 @@ Rufen Sie die Übersetzungs-API nicht auf; zeigen Sie stattdessen über die Fort
 =item B<-->[B<no->]B<xlate-progress> (Default: True)
 
 Sehen Sie das Übersetzungsergebnis in Echtzeit in der STDERR-Ausgabe. Die C<From>-Payload wird so angezeigt, wie sie nach Anonymisierung und Maskierung übertragen wurde.
+
+=item B<--xlate-review>
+
+Zeigen Sie bei einem eins-zu-eins geänderten Block den kleinsten zusammenhängenden geänderten Bereich im alten und neuen Quelltext, gefolgt vom entsprechenden Bereich in der alten und neuen Übersetzung. Der Bericht wird nach STDERR geschrieben, verursacht keinen zusätzlichen API-Aufruf und entfällt, wenn alte und neue Blöcke nicht eindeutig zugeordnet werden können.
 
 =item B<--xlate-stripe>
 

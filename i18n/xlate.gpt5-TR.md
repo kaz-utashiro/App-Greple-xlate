@@ -14,7 +14,7 @@ Version 2.01
 
 # DESCRIPTION
 
-**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Birincil motor, [llm](https://llm.datasette.io/) komutunu çağıran GPT-5.5 (`llm/gpt5.pm`)'tir; DeepL (`deepl.pm`) ve eski **gpty** tabanlı motorlar da dahildir.
+**Greple** **xlate** modülü istenen metin bloklarını bulur ve bunları çevrilmiş metinle değiştirir. Birincil motor, [llm](https://llm.datasette.io/) komutunu çağıran GPT-5.6 Terra'dır (`llm/gpt5.pm`); DeepL (`deepl.pm`) ve eski **gpty** tabanlı motorlar da dahildir.
 
 Çeviriler dosya başına önbelleğe alınır, bu nedenle bir komutu yeniden çalıştırmak değişmemiş metin için hiçbir maliyet getirmez. Bir belge düzenlendiğinde, yalnızca değiştirilen paragraflar API'ye yeniden gönderilir; bağlamdan haberdar bir motor ayrıca çevredeki çevirileri, değişikliğin etrafındaki ham kaynak metni ve düzenlenen paragrafın önceki sürümünü de alır, böylece yeni çeviri yerleşik ifadeleri korur (bkz. **--xlate-context-window**). Hassas dizgeler iletimden önce gizlenebilir (bkz. ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates)).
 
@@ -140,7 +140,7 @@ Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
 
     Şu anda aşağıdaki motorlar mevcuttur
 
-    - **gpt5**: gpt-5.5 (via the `llm` command)
+    - **gpt5**: gpt-5.6-terra (via the `llm` command)
     - **deepl**: DeepL API (via the `deepl` command)
     - **gpt3**: gpt-3.5-turbo (legacy, via the `gpty` command)
     - **gpt4o**: gpt-4o-mini (legacy, via the `gpty` command)
@@ -238,7 +238,7 @@ Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
 
 - **--xlate-prompt**=_text_
 
-    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek LLM motorları (`gpt3`, `gpt4o`, `gpt5`) için kullanılabilir, ancak DeepL için kullanılamaz. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem `%s` içeriyorsa, hedef dil adıyla değiştirilecektir.
+    Çeviri motoruna gönderilecek özel bir istem belirtin. Bu seçenek LLM motorları (`gpt3`, `gpt4o`, `gpt5`) için kullanılabilir, ancak DeepL için kullanılamaz. AI modeline belirli talimatlar sağlayarak çeviri davranışını özelleştirebilirsiniz. İstem `%s` içeriyorsa, hedef dil adıyla değiştirilecektir. llm destekli `gpt5` motoru için belge, `input` üyesi çevrilecek dizi olan ve isteğe bağlı `context` üyesi referans verilerini içeren bir JSON isteği olarak ayrı ayrı sağlanır. Bu üyeleri komutlar değil belge verileri olarak ele alan sabit bir talimat, özel bir istem kullanıldığında bile eklenir.
 
 - **--xlate-context**=_text_
 
@@ -247,7 +247,7 @@ Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
 - **--xlate-context-window**=_n_
 
     (Context-aware engines only, e.g. `gpt5` on the llm backend)
-    Değişen bloklar yeniden çevrilirken referans bağlam olarak geçirilen çevredeki çevrilmiş blok sayısı (varsayılan 2). Bağlam ayrıca değişen bölgenin etrafındaki ham kaynak metni (başlıklar, liste yapısı, açıklamalar) ve kullanılabilir olduğunda, değişmemiş ifadelerin korunması için önbellekten kurtarılan değişen metnin önceki sürümünü içerir. Bağlama duyarlı çeviriyi tamamen devre dışı bırakmak için 0 olarak ayarlayın. Her değişen bölgenin kendi API çağrısında çevrildiğini ve bağlamın sistem istemine yaklaşık 8000 karaktere kadar ekleyebileceğini unutmayın; bu nedenle bağlama duyarlı çeviri, tutarlılık için bir miktar ek maliyeti göze alır.
+    Değişen bloklar yeniden çevrilirken referans bağlam olarak geçirilen çevredeki çevrilmiş blok sayısı (varsayılan 2). Bağlam ayrıca değişen bölgenin etrafındaki ham kaynak metni (başlıklar, liste yapısı, açıklamalar) ve kullanılabilir olduğunda, değişmemiş ifadelerin korunması için önbellekten kurtarılan değişen metnin önceki sürümünü içerir. Bağlama duyarlı çeviriyi tamamen devre dışı bırakmak için 0 olarak ayarlayın. Her değişen bölgenin kendi API çağrısında çevrildiğini ve bağlamın JSON kullanıcı isteğine yaklaşık 8000 karaktere kadar ekleyebileceğini unutmayın; bu nedenle bağlama duyarlı çeviri, tutarlılık için bir miktar ek maliyeti göze alır. Belgeden türetilen bağlam sistem isteminden ayrı tutulur.
 
 - **--xlate-cache-seed**=_file_
 
@@ -303,6 +303,10 @@ Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
 - **--**\[**no-**\]**xlate-progress** (Default: True)
 
     Çeviri sonucunu gerçek zamanlı olarak STDERR çıktısında görün. `From` payload'u, anonimleştirme ve maskelemeden sonra iletildiği gibi gösterilir.
+
+- **--xlate-review**
+
+    Bire bir değiştirilmiş bir blok için, eski ve yeni kaynakta değişen en küçük bitişik aralığı, ardından eski ve yeni çevirideki karşılık gelen aralığı gösterin. Rapor STDERR'e yazılır, ek API çağrısı yapmaz ve eski ile yeni bloklar açıkça eşleştirilemediğinde atlanır.
 
 - **--xlate-stripe**
 
