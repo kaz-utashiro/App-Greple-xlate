@@ -81,13 +81,15 @@ Keerukat mustrit saab kirjutada mitmele reale, kasutades tagurpidi kaldkriipsuga
 
 Kuidas tekst maskeerimise käigus muundatakse, on nähtav valikuga **--xlate-mask**.
 
+Maski kohatäited on korrektselt moodustatud isesulguvad XML-sildid, näiteks `<m id="1" />`. JSON-põhised LLM-mootorid saavad sildid oma sisendmassiivides. DeepLi puhul paojärjestatakse märgendsilte sisaldav päring ja suletakse ajutisse juurelementi `<xlate>`, XML-siltide töötlemine lubatakse ning iga markeri kategooria registreeritakse mittepoolitatava sildina. Ümbris eemaldatakse enne kohatäidete valideerimist ja taastamist.
+
 Maskeerimine kaitseb märgistust tõlkimise eest. Tundlike stringide peitmiseks tõlketeenuse enda eest vt ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); mõlemat saab kasutada koos.
 
 See liides on eksperimentaalne ja võib tulevikus muutuda.
 
 # ANONYMIZATION AND TEMPLATES
 
-Tundlikud stringid saab peita enne nende saatmist tõlke-API-sse ja väljundis taastada. Saadaval on kolm anonüümimisreeglite allikat: sõnastikufail (**--xlate-anonymize**), dokumendis endas olevad reasisesed märgid (**--xlate-anonymize-mark**) ja YAML-i front matter väärtused (**--xlate-frontmatter**). Iga string asendatakse edastamise ajal kategooriasildiga, näiteks `<person id=1 />`. Peitmise sihtmärk on ainult API-edastus: kohalikud vahemälufailid salvestavad taastatud lihtteksti. Kasutage käsku **--xlate-dryrun**, et kontrollida täpselt, mida edastataks.
+Tundlikud stringid saab peita enne nende saatmist tõlke-API-sse ja väljundis taastada. Saadaval on kolm anonüümimisreeglite allikat: sõnastikufail (**--xlate-anonymize**), dokumendis endas olevad reasisesed märgid (**--xlate-anonymize-mark**) ja YAML-i front matter väärtused (**--xlate-frontmatter**). Iga string asendatakse edastamise ajal kategooriasildiga, näiteks `<person id="1" />`. Peitmise sihtmärk on ainult API-edastus: kohalikud vahemälufailid salvestavad taastatud lihtteksti. Kasutage käsku **--xlate-dryrun**, et kontrollida täpselt, mida edastataks.
 
 Vormidokumentide (kvartaliaruanded ja muu sarnane) puhul määratlege osalised kohe alguses ja viidake neile põhitekstis:
 
@@ -260,7 +262,7 @@ Välistage embedz-plokid tõlkimisest, kui dokument neid sisaldab:
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    või lihtsas reaformaadis (`category pattern`, `/.../` regexi jaoks). Iga üksus asendatakse kategooriasildiga, näiteks `<person id=1 />`; sama string saab alati sama sildi, nii et mudel saab jälgida, kes on kes. Tundmatuid JSON-välju eiratakse, seega võivad generaatorid (nt kohalik LLM, mis ekstraheerib olemeid) lisada oma annotatsioone. Kategooria `lit` on reserveeritud. Kohalikud vahemälufailid talletavad endiselt taastatud lihtteksti: varjamise siht on ainult API-edastus.
+    või lihtsas reaformaadis (`category pattern`, `/.../` regexi jaoks). Iga üksus asendatakse kategooriasildiga, näiteks `<person id="1" />`; sama string saab alati sama sildi, nii et mudel saab jälgida, kes on kes. Tundmatuid JSON-välju eiratakse, seega võivad generaatorid (nt kohalik LLM, mis ekstraheerib olemeid) lisada oma annotatsioone. Kategooria `lit` on reserveeritud. Kohalikud vahemälufailid talletavad endiselt taastatud lihtteksti: varjamise siht on ainult API-edastus.
 
     Sõnastiku saab genereerida välise tööriistaga -- näiteks kohalik mudel, mis ekstraheerib tundlikke olemeid:
 

@@ -81,13 +81,15 @@ Un motif complexe peut être écrit sur plusieurs lignes avec un retour à la li
 
 La manière dont le texte est transformé par le masquage peut être visualisée avec l’option **--xlate-mask**.
 
+Les espaces réservés de masquage sont des balises XML autofermantes bien formées, telles que `<m id="1" />`. Les moteurs LLM basés sur JSON reçoivent les balises dans leurs tableaux d’entrée. Pour DeepL, une requête contenant des balises de marqueur est échappée et entourée d’une racine temporaire `<xlate>`, avec la gestion des balises XML activée et chaque catégorie de marqueur enregistrée comme balise ne provoquant pas de découpage. L’enveloppe est supprimée avant que les espaces réservés soient validés et restaurés.
+
 Le masquage protège le balisage contre la traduction. Pour dissimuler les chaînes sensibles au service de traduction lui-même, voir ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates) ; les deux peuvent être utilisés ensemble.
 
 Cette interface est expérimentale et susceptible d’évoluer à l’avenir.
 
 # ANONYMIZATION AND TEMPLATES
 
-Les chaînes sensibles peuvent être dissimulées avant d’être envoyées à l’API de traduction et restaurées dans la sortie. Trois sources de règles d’anonymisation sont disponibles : un fichier dictionnaire (**--xlate-anonymize**), des marques inline dans le document lui-même (**--xlate-anonymize-mark**) et des valeurs de front matter YAML (**--xlate-frontmatter**). Chaque chaîne est remplacée par une balise de catégorie telle que `<person id=1 />` pendant la transmission. La cible de la dissimulation est uniquement la transmission à l’API : les fichiers de cache locaux stockent le texte brut restauré. Utilisez **--xlate-dryrun** pour examiner exactement ce qui serait transmis.
+Les chaînes sensibles peuvent être dissimulées avant d’être envoyées à l’API de traduction et restaurées dans la sortie. Trois sources de règles d’anonymisation sont disponibles : un fichier dictionnaire (**--xlate-anonymize**), des marques inline dans le document lui-même (**--xlate-anonymize-mark**) et des valeurs de front matter YAML (**--xlate-frontmatter**). Chaque chaîne est remplacée par une balise de catégorie telle que `<person id="1" />` pendant la transmission. La cible de la dissimulation est uniquement la transmission à l’API : les fichiers de cache locaux stockent le texte brut restauré. Utilisez **--xlate-dryrun** pour examiner exactement ce qui serait transmis.
 
 Pour les documents de formulaire (rapports trimestriels et similaires), définissez les acteurs en amont et référencez-les dans le corps :
 
@@ -260,7 +262,7 @@ Excluez les blocs embedz de la traduction lorsqu’un document en contient :
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    ou dans un format simple par ligne (`category pattern`, `/.../` pour les regex). Chaque élément est remplacé par une étiquette de catégorie telle que `<person id=1 />` ; la même chaîne reçoit toujours la même étiquette, de sorte que le modèle peut suivre qui est qui. Les champs JSON inconnus sont ignorés, de sorte que les générateurs (par exemple un LLM local extrayant des entités) peuvent ajouter leurs propres annotations. La catégorie `lit` est réservée. Les fichiers de cache locaux stockent toujours le texte brut restauré : la cible de la dissimulation est uniquement la transmission à l’API.
+    ou dans un format simple par ligne (`category pattern`, `/.../` pour les regex). Chaque élément est remplacé par une étiquette de catégorie telle que `<person id="1" />` ; la même chaîne reçoit toujours la même étiquette, de sorte que le modèle peut suivre qui est qui. Les champs JSON inconnus sont ignorés, de sorte que les générateurs (par exemple un LLM local extrayant des entités) peuvent ajouter leurs propres annotations. La catégorie `lit` est réservée. Les fichiers de cache locaux stockent toujours le texte brut restauré : la cible de la dissimulation est uniquement la transmission à l’API.
 
     Un dictionnaire peut être généré par un outil externe — par exemple un modèle local extrayant des entités sensibles :
 

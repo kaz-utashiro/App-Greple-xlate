@@ -81,13 +81,15 @@ Komplexe Muster können über mehrere Zeilen hinweg geschrieben werden, wobei Ze
 
 Wie der Text durch die Maskierung umgewandelt wird, können Sie mit der Option **--xlate-mask** sehen.
 
+Platzhalter sind wohlgeformte, selbstschließende XML-Tags wie z. B. `<m id="1" />`. JSON-basierte LLM-Engines erhalten die Tags in ihren Eingabe-Arrays. Bei DeepL wird eine Anfrage, die Marker-Tags enthält, mit Escape-Zeichen versehen und in eine temporäre  `<xlate>`Root eingeschlossen, wobei die XML-Tag-Verarbeitung aktiviert ist und jede Marker-Kategorie als nicht teilbares Tag registriert wird. Der Wrapper wird entfernt, bevor die Platzhalter validiert und wiederhergestellt werden.
+
 Durch Maskierung wird das Markup vor der Übersetzung geschützt. Um sensible Zeichenfolgen vor dem Übersetzungsdienst selbst zu verbergen, siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); beide Funktionen können zusammen verwendet werden.
 
 Diese Schnittstelle ist experimentell und kann sich in Zukunft noch ändern.
 
 # ANONYMIZATION AND TEMPLATES
 
-Sensible Zeichenfolgen können vor dem Senden an die Übersetzungs-API ausgeblendet und in der Ausgabe wiederhergestellt werden. Es stehen drei Quellen für Anonymisierungsregeln zur Verfügung: eine Wörterbuchdatei (**--xlate-anonymize**), Inline-Markierungen im Dokument selbst (**--xlate-anonymize-mark**) und YAML-Front-Matter-Werte (**--xlate-frontmatter**). Jede Zeichenfolge wird während der Übertragung durch ein Kategorie-Tag wie `<person id=1 />` ersetzt. Die Ausblendung gilt nur für die API-Übertragung: Lokale Cache-Dateien speichern den wiederhergestellten Klartext. Verwenden Sie **--xlate-dryrun**, um genau zu überprüfen, was übertragen würde.
+Sensible Zeichenfolgen können vor dem Versand an die Übersetzungs-API ausgeblendet und in der Ausgabe wiederhergestellt werden. Es stehen drei Quellen für Anonymisierungsregeln zur Verfügung: eine Wörterbuchdatei (**--xlate-anonymize**), Inline-Markierungen im Dokument selbst (**--xlate-anonymize-mark**) und YAML-Frontmatter-Werte (**--xlate-frontmatter**). Jede Zeichenfolge wird während`<person id="1" />` der Übertragung durch ein Kategorie-Tag wie  ersetzt. Das Ziel der Ausblendung ist ausschließlich die API-Übertragung: Lokale Cache-Dateien speichern den wiederhergestellten Klartext. Verwenden Sie  , um**--xlate-dryrun** genau zu überprüfen, was übertragen würde.
 
 Bei Formulardokumenten (Quartalsberichte und Ähnliches) definieren Sie die Akteure im Vorfeld und verweisen im Hauptteil darauf:
 
@@ -260,7 +262,7 @@ Schließen Sie „embedz“-Blöcke von der Übersetzung aus, wenn ein Dokument 
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    oder in einem einfachen Zeilenformat (`category pattern`, `/.../` für reguläre Ausdrücke). Jedes Element wird durch ein Kategorie-Tag wie `<person id=1 />` ersetzt; dieselbe Zeichenfolge erhält immer dasselbe Tag, sodass das Modell den Überblick darüber behalten kann, wer wer ist. Unbekannte JSON-Felder werden ignoriert, sodass Generatoren (z. B. ein lokales LLM, das Entitäten extrahiert) ihre eigenen Anmerkungen hinzufügen können. Die Kategorie `lit` ist reserviert. Lokale Cache-Dateien speichern weiterhin den wiederhergestellten Klartext: Das Ziel der Verschleierung ist ausschließlich die API-Übertragung.
+    oder in einem einfachen Zeilenformat (`category pattern`,  für`/.../` reguläre Ausdrücke). Jedes Element wird durch ein Kategorie-Tag wie  ersetzt`<person id="1" />`; dieselbe Zeichenfolge erhält immer dasselbe Tag, sodass das Modell den Überblick darüber behalten kann, wer wer ist. Unbekannte JSON-Felder werden ignoriert, sodass Generatoren (z. B. ein lokales LLM, das Entitäten extrahiert) eigene Anmerkungen hinzufügen können. Die Kategorie  `lit`ist reserviert. Lokale Cache-Dateien speichern weiterhin den wiederhergestellten Klartext: Die Verschleierung gilt ausschließlich für die API-Übertragung.
 
     Ein Wörterbuch kann von einem externen Tool generiert werden – zum Beispiel von einem lokalen Modell, das sensible Entitäten extrahiert:
 

@@ -84,6 +84,10 @@
       "Bagaimana teks diubah oleh masking dapat dilihat dengan opsi B<--xlate-mask>.\n"
    ],
    [
+      "Mask placeholders are well-formed self-closing XML tags such as C<< <m id=\"1\" /> >>. JSON-based LLM engines receive the tags in their input arrays. For DeepL, a request containing marker tags is escaped and enclosed in a temporary C<< <xlate> >> root, with XML tag handling enabled and each marker category registered as a non-splitting tag. The wrapper is removed before the placeholders are validated and restored.\n",
+      "Placeholder mask adalah tag XML self-closing yang terbentuk dengan baik, seperti C<< <m id=\"1\" /> >>. Mesin LLM berbasis JSON menerima tag tersebut dalam array inputnya. Untuk DeepL, permintaan yang berisi tag penanda di-escape dan dibungkus dalam root C<< <xlate> >> sementara, dengan penanganan tag XML diaktifkan dan setiap kategori penanda didaftarkan sebagai tag yang tidak dipisahkan. Pembungkus dihapus sebelum placeholder divalidasi dan dipulihkan.\n"
+   ],
+   [
       "Masking protects markup from being translated. To conceal sensitive strings from the translation service itself, see L</ANONYMIZATION AND TEMPLATES>; both can be used together.\n",
       "Masking melindungi markup agar tidak diterjemahkan. Untuk menyembunyikan string sensitif dari layanan terjemahan itu sendiri, lihat L</ANONYMIZATION AND TEMPLATES>; keduanya dapat digunakan bersama.\n"
    ],
@@ -92,8 +96,8 @@
       "Antarmuka ini bersifat eksperimental dan dapat berubah di masa mendatang.\n"
    ],
    [
-      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=1 /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
-      "String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam output. Tersedia tiga sumber aturan anonimisasi: berkas kamus (B<--xlate-anonymize>), tanda inline dalam dokumen itu sendiri (B<--xlate-anonymize-mark>), dan nilai front matter YAML (B<--xlate-frontmatter>). Setiap string diganti dengan tag kategori seperti C<< <person id=1 /> >> selama transmisi. Target penyembunyian hanya transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan B<--xlate-dryrun> untuk memeriksa secara persis apa yang akan ditransmisikan.\n"
+      "Sensitive strings can be concealed before they are sent to the translation API and restored in the output. Three sources of anonymization rules are available: a dictionary file (B<--xlate-anonymize>), inline marks in the document itself (B<--xlate-anonymize-mark>), and YAML front matter values (B<--xlate-frontmatter>). Each string is replaced by a category tag such as C<< <person id=\"1\" /> >> during transmission. The concealment target is API transmission only: local cache files store restored plain text. Use B<--xlate-dryrun> to inspect exactly what would be transmitted.\n",
+      "String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam output. Tersedia tiga sumber aturan anonimisasi: berkas kamus (B<--xlate-anonymize>), tanda inline dalam dokumen itu sendiri (B<--xlate-anonymize-mark>), dan nilai front matter YAML (B<--xlate-frontmatter>). Setiap string diganti dengan tag kategori seperti C<< <person id=\"1\" /> >> selama transmisi. Target penyembunyian hanya transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan B<--xlate-dryrun> untuk memeriksa secara persis apa yang akan ditransmisikan.\n"
    ],
    [
       "For form documents (quarterly reports and the like), define the actors up front and reference them in the body:\n",
@@ -232,8 +236,8 @@
       "Anonimkan string sensitif sebelum dikirim ke API terjemahan, dan pulihkan string tersebut dalam keluaran. File kamus memberikan satu entri per item: dalam JSON (kanonis, dapat dihasilkan mesin)\n"
    ],
    [
-      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=1 /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
-      "atau dalam format baris sederhana (C<category pattern>, C</.../> untuk regex). Setiap item diganti dengan tag kategori seperti C<< <person id=1 /> >>; string yang sama selalu mendapatkan tag yang sama, sehingga model dapat melacak siapa itu siapa. Field JSON yang tidak dikenal diabaikan, sehingga generator (mis. LLM lokal yang mengekstrak entitas) dapat menambahkan anotasi mereka sendiri. Kategori C<lit> dicadangkan. File cache lokal tetap menyimpan teks biasa yang dipulihkan: target penyembunyian hanya transmisi API.\n"
+      "or in a simple line format (C<category pattern>, C</.../> for regex). Each item is replaced by a category tag such as C<< <person id=\"1\" /> >>; the same string always gets the same tag, so the model can keep track of who is who. Unknown JSON fields are ignored, so generators (e.g. a local LLM extracting entities) may add their own annotations. Category C<lit> is reserved. Local cache files still store restored plain text: the concealment target is API transmission only.\n",
+      "atau dalam format baris sederhana (C<category pattern>, C</.../> untuk regex). Setiap item diganti dengan tag kategori seperti C<< <person id=\"1\" /> >>; string yang sama selalu mendapatkan tag yang sama, sehingga model dapat melacak siapa itu siapa. Field JSON yang tidak dikenal diabaikan, sehingga generator (mis. LLM lokal yang mengekstrak entitas) dapat menambahkan anotasi mereka sendiri. Kategori C<lit> dicadangkan. File cache lokal tetap menyimpan teks biasa yang dipulihkan: target penyembunyian hanya transmisi API.\n"
    ],
    [
       "A dictionary can be generated by an external tool -- for example a local model extracting sensitive entities:\n",

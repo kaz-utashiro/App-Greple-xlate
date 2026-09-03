@@ -81,13 +81,15 @@ Komplexe Muster können mit einem durch Backslash maskierten Zeilenumbruch über
 
 Wie der Text durch Maskierung transformiert wird, kann mit der Option **--xlate-mask** gesehen werden.
 
+Maskierungsplatzhalter sind wohlgeformte selbstschließende XML-Tags wie `<m id="1" />`. JSON-basierte LLM-Engines erhalten die Tags in ihren Eingabe-Arrays. Für DeepL wird eine Anfrage mit Marker-Tags maskiert und in ein temporäres Wurzelelement `<xlate>` eingeschlossen, wobei die XML-Tag-Verarbeitung aktiviert und jede Markerkategorie als nicht trennendes Tag registriert wird. Der Wrapper wird entfernt, bevor die Platzhalter validiert und wiederhergestellt werden.
+
 Maskierung schützt Markup davor, übersetzt zu werden. Um sensible Zeichenfolgen vor dem Übersetzungsdienst selbst zu verbergen, siehe ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); beides kann zusammen verwendet werden.
 
 Diese Schnittstelle ist experimentell und kann sich in Zukunft ändern.
 
 # ANONYMIZATION AND TEMPLATES
 
-Sensible Zeichenketten können verborgen werden, bevor sie an die Übersetzungs-API gesendet werden, und in der Ausgabe wiederhergestellt werden. Drei Quellen für Anonymisierungsregeln stehen zur Verfügung: eine Wörterbuchdatei (**--xlate-anonymize**), Inline-Markierungen im Dokument selbst (**--xlate-anonymize-mark**) und YAML-Front-Matter-Werte (**--xlate-frontmatter**). Jede Zeichenkette wird während der Übertragung durch ein Kategorie-Tag wie `<person id=1 />` ersetzt. Das Ziel der Verschleierung ist nur die API-Übertragung: lokale Cache-Dateien speichern wiederhergestellten Klartext. Verwenden Sie **--xlate-dryrun**, um genau zu prüfen, was übertragen würde.
+Sensible Zeichenketten können verborgen werden, bevor sie an die Übersetzungs-API gesendet werden, und in der Ausgabe wiederhergestellt werden. Drei Quellen für Anonymisierungsregeln stehen zur Verfügung: eine Wörterbuchdatei (**--xlate-anonymize**), Inline-Markierungen im Dokument selbst (**--xlate-anonymize-mark**) und YAML-Front-Matter-Werte (**--xlate-frontmatter**). Jede Zeichenkette wird während der Übertragung durch ein Kategorie-Tag wie `<person id="1" />` ersetzt. Das Ziel der Verschleierung ist nur die API-Übertragung: lokale Cache-Dateien speichern wiederhergestellten Klartext. Verwenden Sie **--xlate-dryrun**, um genau zu prüfen, was übertragen würde.
 
 Definieren Sie bei Formulardokumenten (Quartalsberichte und dergleichen) die Akteure im Voraus und verweisen Sie im Haupttext auf sie:
 
@@ -260,7 +262,7 @@ Schließen Sie embedz-Blöcke von der Übersetzung aus, wenn ein Dokument sie en
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    oder in einem einfachen Zeilenformat (`category pattern`, `/.../` für Regex). Jedes Element wird durch ein Kategorie-Tag wie `<person id=1 />` ersetzt; dieselbe Zeichenfolge erhält immer dasselbe Tag, sodass das Modell nachverfolgen kann, wer wer ist. Unbekannte JSON-Felder werden ignoriert, sodass Generatoren (z. B. ein lokales LLM, das Entitäten extrahiert) eigene Annotationen hinzufügen können. Kategorie `lit` ist reserviert. Lokale Cache-Dateien speichern weiterhin wiederhergestellten Klartext: Das Ziel der Verschleierung ist ausschließlich die API-Übertragung.
+    oder in einem einfachen Zeilenformat (`category pattern`, `/.../` für Regex). Jedes Element wird durch ein Kategorie-Tag wie `<person id="1" />` ersetzt; dieselbe Zeichenfolge erhält immer dasselbe Tag, sodass das Modell nachverfolgen kann, wer wer ist. Unbekannte JSON-Felder werden ignoriert, sodass Generatoren (z. B. ein lokales LLM, das Entitäten extrahiert) eigene Annotationen hinzufügen können. Kategorie `lit` ist reserviert. Lokale Cache-Dateien speichern weiterhin wiederhergestellten Klartext: Das Ziel der Verschleierung ist ausschließlich die API-Übertragung.
 
     Ein Wörterbuch kann von einem externen Tool erzeugt werden – zum Beispiel von einem lokalen Modell, das sensible Entitäten extrahiert:
 

@@ -92,13 +92,15 @@ Pola yang kompleks dapat ditulis dalam beberapa baris dengan baris baru yang di-
 
 Bagaimana teks diubah dengan masking dapat dilihat dengan opsi B<--xlate-mask>.
 
+Penanda tempat (placeholder) berupa tag XML yang terbentuk dengan baik dan tertutup sendiri, seperti C<< <m id="1" /> >>. Mesin LLM berbasis JSON menerima tag-tag tersebut dalam array masukan mereka. Untuk DeepL, permintaan yang berisi tag penanda di-escape dan dibungkus dalam akarC<< <xlate> >> sementara, dengan penanganan tag XML diaktifkan dan setiap kategori penanda didaftarkan sebagai tag yang tidak dapat dipisahkan. Pembungkus tersebut dihapus sebelum penanda tempat divalidasi dan dipulihkan.
+
 Penyamaran melindungi markup agar tidak diterjemahkan. Untuk menyembunyikan string sensitif dari layanan terjemahan itu sendiri, lihat L</ANONYMIZATION AND TEMPLATES>; keduanya dapat digunakan bersamaan.
 
 Antarmuka ini bersifat eksperimental dan dapat berubah di masa depan.
 
 =head1 ANONYMIZATION AND TEMPLATES
 
-String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam hasil terjemahan. Tersedia tiga sumber aturan anonimisasi: berkas kamus (B<--xlate-anonymize>), tanda inline dalam dokumen itu sendiri (B<--xlate-anonymize-mark>), dan nilai front matter YAML (B<--xlate-frontmatter>). Setiap string diganti dengan tag kategori seperti C<< <person id=1 /> >> selama transmisi. Sasaran penyembunyian hanya pada transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan B<--xlate-dryrun> untuk memeriksa dengan tepat apa yang akan dikirimkan.
+String sensitif dapat disembunyikan sebelum dikirim ke API terjemahan dan dipulihkan dalam keluaran. Tersedia tiga sumber aturan anonimisasi: berkas kamus (B<--xlate-anonymize>), penanda inline dalam dokumen itu sendiri (B<--xlate-anonymize-mark>), dan nilai front matter YAML (B<--xlate-frontmatter>). Setiap string diganti dengan tag kategori seperti  C<< <person id="1" /> >>selama transmisi. Sasaran penyembunyian hanya pada transmisi API: berkas cache lokal menyimpan teks biasa yang telah dipulihkan. Gunakan  B<--xlate-dryrun>untuk memeriksa secara tepat apa yang akan dikirimkan.
 
 Untuk dokumen formulir (laporan triwulanan dan sejenisnya), tentukan aktor di bagian awal dan rujuk mereka di bagian isi:
 
@@ -289,7 +291,7 @@ Anonimkan string sensitif sebelum dikirim ke API terjemahan, dan pulihkan kembal
     [ { "category": "person",  "text": "山田太郎" },
       { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-atau dalam format baris sederhana (C<category pattern>, C</.../> untuk regex). Setiap item diganti dengan tag kategori seperti C<< <person id=1 /> >>; string yang sama selalu mendapatkan tag yang sama, sehingga model dapat melacak identitas masing-masing. Bidang JSON yang tidak dikenal diabaikan, sehingga generator (misalnya LLM lokal yang mengekstrak entitas) dapat menambahkan anotasi mereka sendiri. Kategori C<lit> dicadangkan. File cache lokal tetap menyimpan teks biasa yang dipulihkan: penyembunyian hanya ditujukan untuk transmisi API.
+atau dalam format baris sederhana (C<category pattern>,  C</.../>untuk regex). Setiap item diganti dengan tag kategori seperti C<< <person id="1" /> >>; string yang sama selalu mendapatkan tag yang sama, sehingga model dapat melacak siapa adalah siapa. Bidang JSON yang tidak dikenal diabaikan, sehingga generator (misalnya LLM lokal yang mengekstrak entitas) dapat menambahkan anotasi mereka sendiri. Kategori  C<lit>dicadangkan. File cache lokal tetap menyimpan teks biasa yang dipulihkan: target penyembunyian hanya berlaku untuk transmisi API.
 
 Kamus dapat dihasilkan oleh alat eksternal — misalnya model lokal yang mengekstrak entitas sensitif:
 

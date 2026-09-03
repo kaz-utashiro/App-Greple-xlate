@@ -92,13 +92,15 @@ Los patrones complejos pueden escribirse en varias líneas con saltos de línea 
 
 Cómo se transforma el texto mediante el enmascaramiento puede verse con la opción B<--xlate-mask>.
 
+Los marcadores de posición son etiquetas XML bien formadas y autocerráables, como C<< <m id="1" /> >>. Los motores LLM basados en JSON reciben las etiquetas en sus matrices de entrada. En el caso de DeepL, una solicitud que contenga etiquetas de marcador se escapa y se encierra en una C<< <xlate> >>raíz temporal, con el manejo de etiquetas XML habilitado y cada categoría de marcador registrada como una etiqueta no divisible. El contenedor se elimina antes de que se validen y se restablezcan los marcadores de posición.
+
 El enmascaramiento evita que se traduzcan los elementos de marcado. Para ocultar cadenas sensibles al propio servicio de traducción, consulta L</ANONYMIZATION AND TEMPLATES>; ambas opciones pueden utilizarse conjuntamente.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 =head1 ANONYMIZATION AND TEMPLATES
 
-Las cadenas sensibles pueden ocultarse antes de enviarlas a la API de traducción y restaurarse en el resultado. Hay tres fuentes de reglas de anonimización disponibles: un archivo de diccionario (B<--xlate-anonymize>), marcas en línea en el propio documento (B<--xlate-anonymize-mark>) y valores de front matter YAML (B<--xlate-frontmatter>). Cada cadena se sustituye por una etiqueta de categoría, como C<< <person id=1 /> >>, durante la transmisión. La ocultación se aplica únicamente a la transmisión a la API: los archivos de caché locales almacenan el texto sin formato restaurado. Utiliza B<--xlate-dryrun> para comprobar exactamente qué se transmitiría.
+Las cadenas sensibles pueden ocultarse antes de enviarlas a la API de traducción y restaurarse en la salida. Hay tres fuentes de reglas de anonimización disponibles: un archivo de diccionario (B<--xlate-anonymize>), marcas en línea en el propio documento (B<--xlate-anonymize-mark>) y valores de front matter YAML (B<--xlate-frontmatter>). Cada cadena se sustituye por una etiqueta de categoría, como  C<< <person id="1" /> >>durante la transmisión. El objetivo de ocultación es únicamente la transmisión a la API: los archivos de caché locales almacenan el texto sin formato restaurado. Utiliza  B<--xlate-dryrun>para comprobar exactamente qué se transmitiría.
 
 Para los documentos de formulario (informes trimestrales y similares), define los actores desde el principio y haz referencia a ellos en el cuerpo:
 
@@ -289,7 +291,7 @@ Anonimiza las cadenas sensibles antes de enviarlas a la API de traducción y las
     [ { "category": "person",  "text": "山田太郎" },
       { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-o en un formato de línea simple (C<category pattern>, C</.../> para expresiones regulares). Cada elemento se sustituye por una etiqueta de categoría como C<< <person id=1 /> >>; a la misma cadena siempre se le asigna la misma etiqueta, de modo que el modelo puede llevar un registro de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extraiga entidades) pueden añadir sus propias anotaciones. La categoría C<lit> está reservada. Los archivos de caché locales siguen almacenando el texto sin formato restaurado: el objetivo de ocultación se limita únicamente a la transmisión a través de la API.
+o en un formato de línea simple (C<category pattern>,  C</.../>para expresiones regulares). Cada elemento se sustituye por una etiqueta de categoría como C<< <person id="1" /> >>; a la misma cadena siempre se le asigna la misma etiqueta, por lo que el modelo puede llevar un registro de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extraiga entidades) pueden añadir sus propias anotaciones. La categoría  C<lit>está reservada. Los archivos de caché local siguen almacenando el texto sin formato restaurado: el objetivo de ocultación es únicamente la transmisión a través de la API.
 
 Se puede generar un diccionario mediante una herramienta externa —por ejemplo, un modelo local que extraiga entidades sensibles—:
 

@@ -92,13 +92,15 @@ Modelele complexe pot fi scrise pe mai multe linii, cu caracterul de linie nouă
 
 Modul în care textul este transformat prin mascare poate fi văzut prin opțiunea B<--xlate-mask>.
 
+Marcatorii de substituție sunt etichete XML auto-închise, bine formate, precum C<< <m id="1" /> >>. Motoarele LLM bazate pe JSON primesc etichetele în matricile lor de intrare. Pentru DeepL, o cerere care conține etichete de marcator este escapată și încadrată într-o C<< <xlate> >>rădăcină temporară, cu gestionarea etichetelor XML activată și fiecare categorie de marcator înregistrată ca etichetă care nu se împarte. Învelișul este eliminat înainte ca substituenții să fie validați și restabiliți.
+
 Mascarea protejează marcajul împotriva traducerii. Pentru a ascunde șirurile sensibile chiar de serviciul de traducere, consultați L</ANONYMIZATION AND TEMPLATES>; ambele opțiuni pot fi utilizate împreună.
 
 Această interfață este experimentală și poate fi modificată în viitor.
 
 =head1 ANONYMIZATION AND TEMPLATES
 
-Șirurile sensibile pot fi ascunse înainte de a fi trimise către API-ul de traducere și restabilite în rezultatul final. Sunt disponibile trei surse de reguli de anonimizare: un fișier dicționar (B<--xlate-anonymize>), marcaje încorporate în documentul propriu-zis (B<--xlate-anonymize-mark>) și valori din secțiunea de antet YAML (B<--xlate-frontmatter>). Fiecare șir este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id=1 /> >>, în timpul transmiterii. Ascunderea vizează doar transmiterea către API: fișierele din cache-ul local stochează textul simplu restaurat. Utilizați B<--xlate-dryrun> pentru a verifica exact ce ar fi transmis.
+Șirurile sensibile pot fi ascunse înainte de a fi trimise către API-ul de traducere și restabilite în ieșire. Sunt disponibile trei surse de reguli de anonimizare: un fișier dicționar (B<--xlate-anonymize>), marcaje încorporate în documentul propriu-zis (B<--xlate-anonymize-mark>) și valori din secțiunea de antet YAML (B<--xlate-frontmatter>). Fiecare șir este înlocuit cu o etichetă de categorie, cum ar fi  C<< <person id="1" /> >>în timpul transmiterii. Obiectivul ascunderii vizează exclusiv transmisia către API: fișierele din cache-ul local stochează textul simplu restaurat. Utilizați  B<--xlate-dryrun>pentru a verifica exact ce ar fi transmis.
 
 Pentru documentele de tip formular (rapoarte trimestriale și altele asemenea), definiți actorii de la început și faceți referire la ei în corpul textului:
 
@@ -289,7 +291,7 @@ Anonimizează șirurile sensibile înainte ca acestea să fie trimise către API
     [ { "category": "person",  "text": "山田太郎" },
       { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-sau într-un format simplu pe linii (C<category pattern>, C</.../> pentru expresii regulate). Fiecare element este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id=1 /> >>; același șir primește întotdeauna aceeași etichetă, astfel încât modelul să poată ține evidența identității fiecăruia. Câmpurile JSON necunoscute sunt ignorate, astfel încât generatoarele (de exemplu, un LLM local care extrage entități) pot adăuga propriile adnotări. Categoria C<lit> este rezervată. Fișierele din cache-ul local stochează în continuare textul simplu restaurat: obiectivul ascunderii vizează doar transmiterea prin API.
+sau într-un format simplu de linie (C<category pattern>,  C</.../>pentru expresii regulate). Fiecare element este înlocuit cu o etichetă de categorie, cum ar fi C<< <person id="1" /> >>; același șir primește întotdeauna aceeași etichetă, astfel încât modelul să poată ține evidența identității fiecăruia. Câmpurile JSON necunoscute sunt ignorate, astfel încât generatoarele (de exemplu, un LLM local care extrage entități) pot adăuga propriile adnotări. Categoria  C<lit>este rezervată. Fișierele din cache-ul local stochează în continuare textul simplu restaurat: ascunderea vizează doar transmiterea prin API.
 
 Un dicționar poate fi generat de un instrument extern — de exemplu, un model local care extrage entități sensibile:
 

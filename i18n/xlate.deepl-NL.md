@@ -81,13 +81,15 @@ Complexe patronen kunnen over meerdere regels worden geschreven met een door een
 
 Hoe de tekst door het maskeren wordt omgezet, kun je zien met de optie **--xlate-mask**.
 
+Maskerplaatshouders zijn correct gevormde, zelfsluitende XML-tags, zoals `<m id="1" />`. Op JSON gebaseerde LLM-engines ontvangen de tags in hun invoerarrays. Voor DeepL wordt een verzoek dat markertags bevat, geëscape en ingekapseld in een tijdelijke  `<xlate>`root, waarbij de verwerking van XML-tags is ingeschakeld en elke markercategorie is geregistreerd als een niet-splitsbare tag. De wrapper wordt verwijderd voordat de plaatshouders worden gevalideerd en hersteld.
+
 Door maskering wordt markup beschermd tegen vertaling. Om gevoelige tekenreeksen te verbergen voor de vertaaldienst zelf, zie ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); beide kunnen samen worden gebruikt.
 
 Deze interface is experimenteel en kan in de toekomst veranderen.
 
 # ANONYMIZATION AND TEMPLATES
 
-Gevoelige tekenreeksen kunnen worden verborgen voordat ze naar de vertaal-API worden verzonden en in de uitvoer weer worden weergegeven. Er zijn drie bronnen voor anonimiseringsregels beschikbaar: een woordenboekbestand (**--xlate-anonymize**), inline-markeringen in het document zelf (**--xlate-anonymize-mark**) en YAML-frontmatter-waarden (**--xlate-frontmatter**). Elke tekenreeks wordt tijdens de overdracht vervangen door een categorietag, zoals `<person id=1 />`. Het verbergen geldt alleen voor de API-overdracht: lokale cachebestanden slaan de herstelde platte tekst op. Gebruik **--xlate-dryrun** om precies te controleren wat er zou worden verzonden.
+Gevoelige tekenreeksen kunnen worden verborgen voordat ze naar de vertaal-API worden verzonden en in de uitvoer worden hersteld. Er zijn drie bronnen van anonimiseringsregels beschikbaar: een woordenboekbestand (**--xlate-anonymize**), inline-markeringen in het document zelf (**--xlate-anonymize-mark**) en YAML-frontmatter-waarden (**--xlate-frontmatter**). Elke tekenreeks wordt tijdens`<person id="1" />` de verzending vervangen door een categorietag, zoals . Het verbergen is uitsluitend bedoeld voor verzending via de API: lokale cachebestanden slaan de herstelde platte tekst op. Gebruik  **--xlate-dryrun**om precies te bekijken wat er zou worden verzonden.
 
 Voor formulierdocumenten (kwartaalrapporten en dergelijke) definieer je de actoren vooraf en verwijs je ernaar in de hoofdtekst:
 
@@ -260,7 +262,7 @@ Sluit embedz-blokken uit van vertaling wanneer een document deze bevat:
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    of in een eenvoudig regelformaat (`category pattern`, `/.../` voor regex). Elk item wordt vervangen door een categorietag zoals `<person id=1 />`; dezelfde tekenreeks krijgt altijd dezelfde tag, zodat het model kan bijhouden wie wie is. Onbekende JSON-velden worden genegeerd, zodat generatoren (bijv. een lokale LLM die entiteiten extraheert) hun eigen annotaties kunnen toevoegen. Categorie `lit` is gereserveerd. Lokale cachebestanden slaan nog steeds de herstelde platte tekst op: het verbergen is uitsluitend bedoeld voor API-overdracht.
+    of in een eenvoudige regelindeling (`category pattern`,  `/.../`voor reguliere expressies). Elk item wordt vervangen door een categorietag zoals `<person id="1" />`; dezelfde tekenreeks krijgt altijd dezelfde tag, zodat het model kan bijhouden wie wie is. Onbekende JSON-velden worden genegeerd, zodat generatoren (bijv. een lokale LLM die entiteiten extraheert) hun eigen annotaties kunnen toevoegen. Categorie  `lit`is gereserveerd. Lokale cachebestanden bevatten nog steeds de gereconstrueerde platte tekst: het verbergen geldt alleen voor API-overdracht.
 
     Een woordenboek kan worden gegenereerd door een externe tool – bijvoorbeeld een lokaal model dat gevoelige entiteiten extraheert:
 

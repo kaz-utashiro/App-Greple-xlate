@@ -81,13 +81,15 @@ Un patrón complejo puede escribirse en múltiples líneas con salto de línea e
 
 Cómo se transforma el texto mediante el enmascaramiento puede verse con la opción **--xlate-mask**.
 
+Los marcadores de enmascaramiento son etiquetas XML autocerradas bien formadas, como `<m id="1" />`. Los motores LLM basados en JSON reciben las etiquetas en sus matrices de entrada. Para DeepL, una solicitud que contiene etiquetas de marcador se escapa y se encierra en una raíz temporal `<xlate>`, con el manejo de etiquetas XML activado y cada categoría de marcador registrada como una etiqueta no divisible. El envoltorio se elimina antes de validar y restaurar los marcadores.
+
 El enmascaramiento protege el marcado para que no se traduzca. Para ocultar cadenas sensibles al propio servicio de traducción, consulte ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); ambos pueden usarse juntos.
 
 Esta interfaz es experimental y está sujeta a cambios en el futuro.
 
 # ANONYMIZATION AND TEMPLATES
 
-Las cadenas sensibles pueden ocultarse antes de enviarse a la API de traducción y restaurarse en la salida. Hay tres fuentes de reglas de anonimización disponibles: un archivo de diccionario (**--xlate-anonymize**), marcas en línea en el propio documento (**--xlate-anonymize-mark**) y valores de front matter YAML (**--xlate-frontmatter**). Cada cadena se sustituye por una etiqueta de categoría como `<person id=1 />` durante la transmisión. El objetivo de la ocultación es únicamente la transmisión a la API: los archivos de caché locales almacenan el texto sin formato restaurado. Use **--xlate-dryrun** para inspeccionar exactamente qué se transmitiría.
+Las cadenas sensibles pueden ocultarse antes de enviarse a la API de traducción y restaurarse en la salida. Hay tres fuentes de reglas de anonimización disponibles: un archivo de diccionario (**--xlate-anonymize**), marcas en línea en el propio documento (**--xlate-anonymize-mark**) y valores de front matter YAML (**--xlate-frontmatter**). Cada cadena se sustituye por una etiqueta de categoría como `<person id="1" />` durante la transmisión. El objetivo de la ocultación es únicamente la transmisión a la API: los archivos de caché locales almacenan el texto sin formato restaurado. Use **--xlate-dryrun** para inspeccionar exactamente qué se transmitiría.
 
 Para documentos de formulario (informes trimestrales y similares), defina los actores al principio y haga referencia a ellos en el cuerpo:
 
@@ -260,7 +262,7 @@ Excluya los bloques embedz de la traducción cuando un documento los contenga:
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    o en un formato de línea simple (`category pattern`, `/.../` para regex). Cada elemento se reemplaza por una etiqueta de categoría como `<person id=1 />`; la misma cadena siempre obtiene la misma etiqueta, por lo que el modelo puede llevar la cuenta de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extrae entidades) pueden añadir sus propias anotaciones. La categoría `lit` está reservada. Los archivos de caché locales siguen almacenando texto plano restaurado: el objetivo de la ocultación es únicamente la transmisión a la API.
+    o en un formato de línea simple (`category pattern`, `/.../` para regex). Cada elemento se reemplaza por una etiqueta de categoría como `<person id="1" />`; la misma cadena siempre obtiene la misma etiqueta, por lo que el modelo puede llevar la cuenta de quién es quién. Los campos JSON desconocidos se ignoran, por lo que los generadores (por ejemplo, un LLM local que extrae entidades) pueden añadir sus propias anotaciones. La categoría `lit` está reservada. Los archivos de caché locales siguen almacenando texto plano restaurado: el objetivo de la ocultación es únicamente la transmisión a la API.
 
     Un diccionario puede generarse mediante una herramienta externa; por ejemplo, un modelo local que extrae entidades sensibles:
 

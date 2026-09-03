@@ -81,13 +81,15 @@ Karmaşık desen, ters eğik çizgi ile kaçışlı satır sonları kullanılara
 
 Metnin maskeleme ile nasıl dönüştürüldüğü **--xlate-mask** seçeneğiyle görülebilir.
 
+Maske yer tutucuları, `<m id="1" />` gibi düzgün biçimlendirilmiş kendini kapatan XML etiketleridir. JSON tabanlı LLM motorları etiketleri giriş dizilerinde alır. DeepL için, işaretçi etiketleri içeren bir istek kaçışlanır ve geçici bir `<xlate>` kökü içine alınır; XML etiket işleme etkinleştirilir ve her işaretçi kategorisi bölünmeyen etiket olarak kaydedilir. Sarmalayıcı, yer tutucular doğrulanıp geri yüklenmeden önce kaldırılır.
+
 Maskeleme, işaretlemenin çevrilmesini önler. Hassas dizeleri çeviri hizmetinin kendisinden gizlemek için bkz. ["ANONYMIZATION AND TEMPLATES"](#anonymization-and-templates); ikisi birlikte kullanılabilir.
 
 Bu arayüz deneyseldir ve gelecekte değişime tabidir.
 
 # ANONYMIZATION AND TEMPLATES
 
-Hassas dizgeler çeviri API'sine gönderilmeden önce gizlenebilir ve çıktıda geri yüklenebilir. Üç anonimleştirme kuralı kaynağı kullanılabilir: sözlük dosyası (**--xlate-anonymize**), belgenin içindeki satır içi işaretler (**--xlate-anonymize-mark**) ve YAML front matter değerleri (**--xlate-frontmatter**). Her dizge iletim sırasında `<person id=1 />` gibi bir kategori etiketiyle değiştirilir. Gizleme hedefi yalnızca API iletimidir: yerel önbellek dosyaları geri yüklenmiş düz metni saklar. Tam olarak neyin iletileceğini incelemek için **--xlate-dryrun** kullanın.
+Hassas dizgeler çeviri API'sine gönderilmeden önce gizlenebilir ve çıktıda geri yüklenebilir. Üç anonimleştirme kuralı kaynağı kullanılabilir: sözlük dosyası (**--xlate-anonymize**), belgenin içindeki satır içi işaretler (**--xlate-anonymize-mark**) ve YAML front matter değerleri (**--xlate-frontmatter**). Her dizge iletim sırasında `<person id="1" />` gibi bir kategori etiketiyle değiştirilir. Gizleme hedefi yalnızca API iletimidir: yerel önbellek dosyaları geri yüklenmiş düz metni saklar. Tam olarak neyin iletileceğini incelemek için **--xlate-dryrun** kullanın.
 
 Form belgeleri (üç aylık raporlar ve benzerleri) için, aktörleri baştan tanımlayın ve gövdede onlara başvurun:
 
@@ -260,7 +262,7 @@ Bir belge embedz blokları içerdiğinde bunları çeviriden hariç tutun:
         [ { "category": "person",  "text": "山田太郎" },
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
-    veya basit bir satır biçiminde (`category pattern`, regex için `/.../`). Her öğe `<person id=1 />` gibi bir kategori etiketiyle değiştirilir; aynı dize her zaman aynı etiketi alır, böylece model kimin kim olduğunu takip edebilir. Bilinmeyen JSON alanları yok sayılır; bu nedenle üreteçler (örn. varlıkları çıkaran yerel bir LLM) kendi ek açıklamalarını ekleyebilir. `lit` kategorisi ayrılmıştır. Yerel önbellek dosyaları hâlâ geri yüklenmiş düz metni saklar: gizleme hedefi yalnızca API iletimidir.
+    veya basit bir satır biçiminde (`category pattern`, regex için `/.../`). Her öğe `<person id="1" />` gibi bir kategori etiketiyle değiştirilir; aynı dize her zaman aynı etiketi alır, böylece model kimin kim olduğunu takip edebilir. Bilinmeyen JSON alanları yok sayılır; bu nedenle üreteçler (örn. varlıkları çıkaran yerel bir LLM) kendi ek açıklamalarını ekleyebilir. `lit` kategorisi ayrılmıştır. Yerel önbellek dosyaları hâlâ geri yüklenmiş düz metni saklar: gizleme hedefi yalnızca API iletimidir.
 
     Bir sözlük harici bir araç tarafından üretilebilir -- örneğin hassas varlıkları çıkaran yerel bir model:
 

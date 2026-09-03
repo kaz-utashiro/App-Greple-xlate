@@ -142,6 +142,14 @@ escaped newline.
 How the text is transformed by masking can be seen by B<--xlate-mask>
 option.
 
+Mask placeholders are well-formed self-closing XML tags such as
+C<< <m id="1" /> >>.  JSON-based LLM engines receive the tags in their
+input arrays.  For DeepL, a request containing marker tags is escaped
+and enclosed in a temporary C<< <xlate> >> root, with XML tag handling
+enabled and each marker category registered as a non-splitting tag.
+The wrapper is removed before the placeholders are validated and
+restored.
+
 Masking protects markup from being translated.  To conceal sensitive
 strings from the translation service itself, see L</ANONYMIZATION AND
 TEMPLATES>; both can be used together.
