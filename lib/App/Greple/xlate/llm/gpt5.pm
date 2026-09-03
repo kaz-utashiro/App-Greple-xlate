@@ -143,7 +143,7 @@ The items in "previous_versions" are in document order and contain source and tr
 For a one-to-one "revision", identify what the source change actually requires.
 Where the current source is unchanged from a previous version, keep the previous translation's wording exactly.
 Change only what the source changes require.
-If an element is a blank string or an XML-style marker tag (e.g., "<m id=1 />" or "<person id=2 />"), leave it unchanged and do not translate it.
+Leave blank strings unchanged. Within every element, preserve XML-style marker tags (e.g., '<m id="1" />' or '<person id="2" />') exactly and translate only the surrounding text.
 If an element is a heading, list item, caption, or other structural element rather than body text, follow the target language's conventions for that kind of element (e.g. heading capitalization).
 Do not output the original (pre-translation) text under any circumstances.
 The number and order of output elements must always match the "input" array exactly: output element n must correspond to input element n.

@@ -89,7 +89,10 @@ sub file_rules {
 ##
 sub add_escape_rule {
     my $obj = shift;
-    unshift @{$obj->{RULES}}, [ 'lit', '<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ */>' ];
+    unshift @{$obj->{RULES}}, [
+        'lit',
+        q{<[a-z][a-z0-9_]* [a-z0-9_]+=(?:"\d+"|'\d+'|\d+) */>},
+    ];
     $obj;
 }
 
@@ -172,7 +175,7 @@ sub _stable_tag {
     my($obj, $tag, $matched) = @_;
     my $key = "$tag\0$matched";
     $obj->{ASSIGNED}{$key} //= do {
-        my $t = sprintf("<%s %s=%d />",
+        my $t = sprintf('<%s %s="%d" />',
                         $tag, $obj->{INDEX}, ++$obj->{COUNTER}{$tag});
         $obj->{ORIGIN}{$t} = $matched;
         push @{$obj->{ASSIGN_ORDER}}, $t;
@@ -208,7 +211,7 @@ sub mask {
         for my $pat (@patterns) {
             next if $pat =~ /^\s*(#|$)/;
             s{$pat}{
-                my $tag = sprintf("<%s %s=%d />",
+                my $tag = sprintf('<%s %s="%d" />',
                                   $obj->{TAG}, $obj->{INDEX}, ++$obj->{NUMBER});
                 push @$fromto, [ $tag, ${^MATCH} ];
                 $tag;

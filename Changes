@@ -13,6 +13,9 @@ Revision history for Perl extension App-Greple-xlate
     - Keep fixed translation policy in the system prompt and send source,
       previous translations, and surrounding references as structured,
       explicitly untrusted document data in the JSON user request.
+    - Emit well-formed XML-style mask tags with quoted IDs and enable
+      DeepL XML tag handling for masked payloads, so numbered placeholders
+      retain their tag names and IDs during translation.
 
 2.01 2026-07-09T05:59:30Z
 

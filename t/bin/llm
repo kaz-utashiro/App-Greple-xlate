@@ -66,8 +66,8 @@ ref($list) eq 'ARRAY' or die "stub llm: input array missing\n";
 sub transform {
     my $s = shift;
     join '', map {
-        /\A<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ *\/>\z/ ? $_ : uc
-    } split /(<[a-z][a-z0-9_]* [a-z0-9_]+=\d+ *\/>)/, $s;
+        /\A<[a-z][a-z0-9_]* [a-z0-9_]+="\d+" *\/>\z/ ? $_ : uc
+    } split /(<[a-z][a-z0-9_]* [a-z0-9_]+="\d+" *\/>)/, $s;
 }
 my @out = map { transform($_) } @$list;
 if ($mode eq 'swap') {

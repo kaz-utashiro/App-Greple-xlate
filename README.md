@@ -146,7 +146,7 @@ anonymization rules are available: a dictionary file
 (**--xlate-anonymize**), inline marks in the document itself
 (**--xlate-anonymize-mark**), and YAML front matter values
 (**--xlate-frontmatter**).  Each string is replaced by a category tag
-such as `<person id=1 />` during transmission.  The concealment
+such as `<person id="1" />` during transmission.  The concealment
 target is API transmission only: local cache files store restored
 plain text.  Use **--xlate-dryrun** to inspect exactly what would be
 transmitted.
@@ -389,7 +389,7 @@ Exclude embedz blocks from translation when a document contains them:
           { "category": "company", "regex": "アクメ(株式会社)?" } ]
 
     or in a simple line format (`category pattern`, `/.../` for regex).
-    Each item is replaced by a category tag such as `<person id=1 />`;
+    Each item is replaced by a category tag such as `<person id="1" />`;
     the same string always gets the same tag, so the model can keep track
     of who is who.  Unknown JSON fields are ignored, so generators (e.g. a
     local LLM extracting entities) may add their own annotations.
