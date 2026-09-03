@@ -10,7 +10,7 @@ App::Greple::xlate - ενότητα υποστήριξης μετάφρασης 
 
 # VERSION
 
-Version 2.01
+Version 2.02
 
 # DESCRIPTION
 

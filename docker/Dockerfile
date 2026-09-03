@@ -48,17 +48,19 @@ RUN apt-get update && apt-get -yq upgrade \
     && apt-get -yq install \
        python3 python3-venv
 
-# Python tools (DeepL, GPT, LLM) in an isolated virtualenv.
-# Ubuntu 26.04's system Python is externally-managed (PEP 668): installing
-# into it makes pip fail to upgrade apt-managed packages such as "packaging"
-# ("Cannot uninstall ...: no RECORD file"). A venv avoids this entirely.
-RUN python3 -m venv /opt/venv
-ENV PATH=/opt/venv/bin:$PATH
-RUN pip install --upgrade \
-       packaging deepl \
-       git+https://github.com/tecolicom/App-gpty.git \
-       llm \
-    && llm install llm-gemini llm-claude-3 llm-perplexity llm-openrouter
+# Python tools in isolated virtualenvs.  Recent llm releases require
+# openai 3.x, while the legacy gpty command currently requires openai 2.x.
+# Keep them separate so the default llm/gpt5 engine and legacy gpty engines
+# can coexist.  Venvs also avoid Ubuntu's externally-managed system Python.
+RUN python3 -m venv /opt/venv-llm \
+    && python3 -m venv /opt/venv-gpty
+ENV PATH=/opt/venv-llm/bin:/opt/venv-gpty/bin:$PATH
+RUN /opt/venv-llm/bin/pip install --upgrade \
+       packaging deepl llm \
+    && /opt/venv-llm/bin/llm install \
+       llm-gemini llm-anthropic llm-perplexity llm-openrouter
+RUN /opt/venv-gpty/bin/pip install --upgrade \
+       git+https://github.com/tecolicom/App-gpty.git
 
 # Verify installations
 RUN deepl --version
