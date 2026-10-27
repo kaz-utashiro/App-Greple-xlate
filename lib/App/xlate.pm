@@ -1,6 +1,6 @@
 package App::xlate;
 
-our $VERSION = "2.02";
+our $VERSION = "2.03";
 
 1;
 =encoding utf-8
@@ -76,7 +76,7 @@ xlate [ options ] -t LANG FILE [ greple options ]
 
 =head1 VERSION
 
-    Version 2.02
+    Version 2.03
 
 =head1 INCOMPATIBLE CHANGES IN 2.0
 

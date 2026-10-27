@@ -18,7 +18,7 @@ instructions in [App::Greple::xlate::llm::gpt6](https://metacpan.org/pod/App%3A%
 
 # VERSION
 
-Version 2.02
+Version 2.03
 
 # DESCRIPTION
 

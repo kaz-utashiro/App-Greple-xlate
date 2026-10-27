@@ -1,6 +1,6 @@
 package App::Greple::xlate;
 
-our $VERSION = "2.02";
+our $VERSION = "2.03";
 
 =encoding utf-8
 
@@ -23,7 +23,7 @@ instructions in L<App::Greple::xlate::llm::gpt6>.
 
 =head1 VERSION
 
-Version 2.02
+Version 2.03
 
 =head1 DESCRIPTION
 
