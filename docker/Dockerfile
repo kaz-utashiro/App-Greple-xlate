@@ -34,6 +34,7 @@ RUN cpanm -qn \
     App::optex::textconv \
     App::ansicolumn App::ansifold App::ansiexpand \
     App::sdif \
+    App::mdee \
     App::Greple::msdoc \
     App::Greple::xp \
     App::Greple::git \
